@@ -1,0 +1,145 @@
+[
+  {
+    "book_id": "69d5abf3d0bd3547a5654427",
+    "slot": 1,
+    "title": "Kitab al-Qanun fi al-Tibb",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Medici Press 1593 Arabic Canon of Avicenna. It belongs in the McGill/Osler medical-history and Toronto collections.",
+    "rights_flag": null,
+    "structure_note": "The leaf carries two printed numbers: an Arabic-numeral number in the head and a European-numeral '150' at the foot. That fits the OCR's <page-num>150. The pagination double system and section restarts likely account for most of the 89 backsteps and 370 repeats, so this does not look like a splice. The structure count of pages_translated is 0, but the field says 1022. That is an instrument mismatch, not a defect on the page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 766,
+        "right_page": "yes",
+        "printed_marker": "head: Arabic numeral, read as \"١٤٥\" (uncertain at this resolution); foot: \"150\"",
+        "layout": "single column inside a ruled frame, centred chapter headings, star ornaments flanking the part/treatise titles, a strip of the facing page visible at the left edge, no marginal notes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>\n(في الهامش الأيمن):\nآفة الشعر\nالصلع\nالقرع",
+            "image": "no marginal notes on this leaf; the right margin is blank and the only text outside the frame is the facing page's strip on the left",
+            "problem": "an invented right-margin keyword index (ten terms drawn from the body), then translated as '(In the right margin): Disorder of the hair / Baldness …'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "وعلاجه التنبى البحري وقد قال",
+            "image": "وعلاجه علاج التنين البحري والرتيلا وقد قال",
+            "problem": "'علاج' and 'والرتيلا' dropped: the treatment is the treatment used for the sea dragon and the tarantula, not the sea dragon itself",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "لانسداد مسامه لشدة لزجه لدرزه لبرده لحرارة المزاج وهؤلاء كلهم يسرع في حار المزاج",
+            "image": "لانسداد مسامه لشدة تلززه ليبسه كما هو من المعاون على الصلع ويسرع في حار المزاج",
+            "problem": "garbled and partly invented: 'coldness' and 'heat of temperament' made causes; 'as is one of the aids to baldness' lost",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "بملح او رماد معجون بخل العنصل",
+            "image": "بملح او رماد بشراب او رماد معجون بخل العنصل",
+            "problem": "'بشراب او رماد' (ash with wine, or…) dropped by eye-skip",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "يكون علاجها بالترباق",
+            "image": "يكون علاجها بالترياق الكبير وما يجانسه",
+            "problem": "'the great theriac and what resembles it' cut to 'theriac'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "وفي اخر الجرم لما بمس المزاج فضاق المسام",
+            "image": "وفي اخر العمر لما ييبس المزاج فتضيق المسام",
+            "problem": "'at the end of life' misread, so the old-age clause is lost in the translation",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ويشهد ان يكون علاجها الرتبلا",
+            "image": "ويشبه ان يكون علاجها علاج الرتيلا",
+            "problem": "'علاج' dropped and ويشبه misread; the translation recovers the sense",
+            "severity": "minor"
+          },
+          {
+            "ocr": "الفن السابع محمل في الزينة",
+            "image": "الفن السابع كلام محمل في الزينة",
+            "problem": "'كلام' dropped from the part title",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "وعلاجه التنبى البحري",
+            "english": "Its treatment is the sea dragon <note>probably a fish, perhaps the weever, used here as an antidote</note>",
+            "problem": "the print says the treatment is the treatment for the sea dragon (and the tarantula). The note turns the fish into the remedy, building false learning on the OCR omission.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "لانسداد مسامه لشدة لزجه لدرزه لبرده لحرارة المزاج وهؤلاء كلهم",
+            "english": "blocked by excessive viscosity, by their density, by coldness, or by heat of temperament. All of these act quickly in a hot temperament",
+            "problem": "translates the garbled OCR fluently. The print gives compactness and dryness, not viscosity, coldness and heat.",
+            "severity": "moderate"
+          },
+          {
+            "source": "وفي اخر الجرم لما بمس المزاج فضاق المسام",
+            "english": "In the other case, the temperament is dry, so the pores narrow",
+            "problem": "'at the end of life (old age)' rendered as 'In the other case'",
+            "severity": "moderate"
+          },
+          {
+            "source": "يكون علاجها بالترباق",
+            "english": "their treatment is likely to be with <term>theriac</term>",
+            "problem": "the print's 'great theriac and the like' (from the image) is lost",
+            "severity": "minor"
+          },
+          {
+            "source": "### فصل في عض الضفادع البحرية الجر",
+            "english": "### Chapter: On the Bite of Sea Frogs\n<note>the last word of this heading is uncertain in the print</note>",
+            "problem": "the word الجر is clearly printed. It is left untranslated and blamed on the print.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the invented margin block is shown to the reader as '(In the right margin):' with ten English keywords that are not on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "note": "'->In the name of God, the Compassionate, the Merciful<-' shows arrow markup in the reader text",
+            "severity": "minor"
+          },
+          {
+            "note": "<meta> claims the page 'continues from previous page: the chapter on the terrestrial and marine centipede'; the leaf does not name the creature",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "a venomous spider, the tarantula", "verdict": "ok", "helpful": true },
+            { "quote": "the print reads \"burnt poison\"; \"garlic\" is a likely correct", "verdict": "ok", "helpful": true },
+            { "quote": "probably a fish, perhaps the weever, used here as an antidote", "verdict": "wrong", "helpful": false },
+            { "quote": "the last word of this heading is uncertain in the print", "verdict": "wrong", "helpful": false },
+            { "quote": "a compound antidote against poisons", "verdict": "ok", "helpful": true },
+            { "quote": "dandruff, scurf of the scalp", "verdict": "ok", "helpful": true },
+            { "quote": "scald-head, a scalp disease causing bald patches", "verdict": "ok", "helpful": true },
+            { "quote": "\"the serpent disease,\" ophiasis, a winding pattern of hair lo", "verdict": "ok", "helpful": true },
+            { "quote": "\"the fox disease,\" alopecia", "verdict": "ok", "helpful": true },
+            { "quote": "a reference to the Hippocratic Aphorisms, VI.34", "verdict": "unsupported", "helpful": false },
+            { "quote": "peoples of East Africa", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "Hair is generated from smoky vapour", "why": "'smoky vapour' is a humoral-physiology term; a general reader does not know it means the dry, earthy exhalation of the body" },
+            { "english": "because of the heat of their temperament", "why": "'temperament' (mizāj) is used throughout in its technical sense of a body's balance of hot, cold, moist and dry; unexplained" },
+            { "english": "ash kneaded with squill vinegar", "why": "squill (sea onion) is an unfamiliar drug to a general reader" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real and important early Arabic printing of the Canon. On this page, though, the OCR invents a right-margin keyword index that is not on the leaf, and it drops words in several places. One drop leads the translation to make the sea dragon the remedy, and a note backs that misreading with false learning."
+  }
+]

@@ -71,6 +71,18 @@
    }
   ]
  },
+ "/articles/sacred-baths/tudela-temazcal.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/9305c43632c7-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/9305c43632c7-1920.avif",
+    "w": 1811
+   }
+  ]
+ },
  "/articles/sea-road-china-gulf/ormus-kaempfer.jpg": {
   "srcset": [
    {

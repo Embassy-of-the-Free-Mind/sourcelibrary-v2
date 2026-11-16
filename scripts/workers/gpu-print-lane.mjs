@@ -46,9 +46,16 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/gpu-print-lane.mjs frame
  * Options: --dir <lane dir> (default $LANE_DIR or /root/jobs/gpu-print-6871)  --book <id>  --books <file>  --limit N
- *   --lang en|en19|fr (default $LANE_LANG, else the lane dir's `lang` file, else en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
+ *   --lang en|en19|fr|sa (default $LANE_LANG, else the lane dir's `lang` file, else en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
  *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
  *   --max-pages N (plan: N pages spread through each book, for a pilot)
+ * Sanskrit (v3 #95; the v2#7243 decision): --lang sa, printed Devanagari read by Surya 2 (scripts/gpu/surya-print-gpu.sh,
+ *   which gpu-print-gpu.sh hands over to when the lane dir's `lang` file says sa). Policy: scripts/lib/surya-print-lane.mjs.
+ *   The frame is the books held `sanskrit-print-surya-lane`, hidden included; the lane places and releases NO hold. A
+ *   manuscript by the catalogue is a final plan skip. apply judges the whole book first (bookScriptGate: a book whose
+ *   reads are mostly Bengali, Roman … is refused, one rejected row a page, refused-books.jsonl), then each page (loop,
+ *   blank, engine note, not_devanagari, index_columns). `scripts` lists the not_devanagari pages by script.
+ *   LANE_DIR=/root/jobs/gpu-print-sa-95; echo sa > $LANE_DIR/lang; gpu-print-lane.mjs frame --dir $LANE_DIR
  * French (#6871, Derek 2026-11-07): the French 1800+ pages Flash-Lite refused, read by the GPU steward, written bare:
  *   LANE_DIR=/root/jobs/gpu-print-fr19r-6871 (manifest.tsv, out/ and runs/ from the steward's reads)
  *   gpu-print-lane.mjs plan --lang fr --books <ids> --from-manifest --apply; then apply --lang fr --apply
@@ -62,7 +69,8 @@ import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, releaseBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
-import { GPU_LANE_HOLDS, armcEuroSkip } from '../batch/cli-ocr-lane.mjs';
+import { GPU_LANE_HOLDS, armcEuroSkip, manuscriptReason } from '../batch/cli-ocr-lane.mjs';
+import { SA_PROFILE, refusedBookRows } from '../lib/surya-print-lane.mjs';
 import { keepRead, reuseHash } from '../lib/candidate-reads.mjs';
 import {
   LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, LIGHTON,
@@ -85,10 +93,22 @@ const LIMIT = Number(arg('--limit', 0)) || 0;
 // the lane dir's `lang` file names its profile, so ocr-filler.sh's gpu-print task (which passes only --dir) runs it right
 const LANG_FILE = path.join(DIR, 'lang');
 const LANG = arg('--lang', process.env.LANE_LANG || (fs.existsSync(LANG_FILE) ? fs.readFileSync(LANG_FILE, 'utf8').trim() : 'en'));
-if (!LANGS[LANG]) { console.error(`--lang must be one of ${Object.keys(LANGS).join('|')}`); process.exit(2); }
-const L = LANGS[LANG];
+// Profiles: the LightOnOCR languages (LANGS) and Sanskrit printed Devanagari on Surya 2 (v3 #95, scripts/lib/surya-print-lane.mjs).
+const PROFILES = { ...LANGS, sa: SA_PROFILE };
+if (!PROFILES[LANG]) { console.error(`--lang must be one of ${Object.keys(PROFILES).join('|')}`); process.exit(2); }
+const L = PROFILES[LANG];
 const LN = L.lane;
 const CELL = arg('--cell', L.cell);
+// Profile hooks: what a profile may replace. A LANGS profile sets none of them, so the English and French lanes run as
+// before. `holds`: the only holds the lane writes under; `heldOnly`: it reads held books only and places and releases
+// no hold; `frameQuery` / `minYear` / `bookSkip`: its books; `pageVerdict` / `bookGate` / `convert` / `ocrField`: its
+// guards and its provenance; `keepReasons` / `finalReasons` / `scriptReason`: what happens to its rejected reads.
+const ENGINE = L.engine || LIGHTON;
+const ISSUE = L.issue || LANE_ISSUE;
+const MIN_YEAR = L.minYear === undefined ? 1800 : L.minYear;
+const verdictOf = (read) => (L.pageVerdict ? L.pageVerdict(read) : pageVerdict(read.text, { finish: read.finish }));
+const bodyOf = (read) => (L.convert ? L.convert(read.text) : convertRead(read.text));
+const fieldOf = (text, o) => (L.ocrField ? L.ocrField(text, o) : ocrField(text, { ...o, lang: LANG }));
 
 const F = {
   frame: path.join(DIR, 'frame-books.json'), planDir: path.join(DIR, 'plan'), outDir: path.join(DIR, 'out'),
@@ -96,7 +116,7 @@ const F = {
   applied: path.join(DIR, 'applied.jsonl'), skipped: path.join(DIR, 'skipped.jsonl'), rejected: path.join(DIR, 'rejected.jsonl'),
   bookLog: path.join(DIR, 'applied-books.jsonl'), released: path.join(DIR, 'released.jsonl'), planSkipped: path.join(DIR, 'plan-skipped.jsonl'),
   rejudged: path.join(DIR, 'rejudged.jsonl'), kept: path.join(DIR, 'kept-reads.jsonl'), translitBooks: path.join(DIR, 'translit-books.json'),
-  otherScript: path.join(DIR, 'other-script.jsonl'), requeued: path.join(DIR, 'requeued.jsonl'),
+  otherScript: path.join(DIR, 'other-script.jsonl'), requeued: path.join(DIR, 'requeued.jsonl'), refusedBooks: path.join(DIR, 'refused-books.jsonl'),
 };
 /** Pages the lane is finished with: applied, skipped or rejected, less a read_error that was requeued (doneKeys). */
 const doneSet = () => doneKeys({ applied: readJsonl(F.applied), skipped: readJsonl(F.skipped), rejected: readJsonl(F.rejected), requeued: readJsonl(F.requeued) });
@@ -112,7 +132,7 @@ const readJsonl = (file) => fs.existsSync(file) ? fs.readFileSync(file, 'utf8').
 const readJson = (file, d) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : d;
 const rank = (id) => crypto.createHash('sha256').update(`6871gpuprint:${id}`).digest('hex');
 /** Holds this lane may write under: its own, and the scans-only holds that wait for a GPU read. Only its own is ever released. */
-const LANE_HOLDS = new Set([HOLD_REASON, ...GPU_LANE_HOLDS]);
+const LANE_HOLDS = new Set(L.holds || [HOLD_REASON, ...GPU_LANE_HOLDS]);
 const NO_TEXT = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': { $regex: /^\s*$/ } }] };
 
 // ── frame (read-only) ────────────────────────────────────────────────────────────────────
@@ -123,19 +143,21 @@ async function frame() {
   let out = [];
   await withMongo(async (db) => {
     const books = await db.collection('books').find(
-      { visible: true, language: { $regex: `^${L.language}` }, year: { $gte: 1800, $lte: 2030 }, pages_count: { $gt: 0 } },
+      L.frameQuery ? L.frameQuery() : { visible: true, language: { $regex: `^${L.language}` }, year: { $gte: 1800, $lte: 2030 }, pages_count: { $gt: 0 } },
       { projection: { id: 1, title: 1, year: 1, language: 1, pages_count: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1 } }).toArray();
     const rows = [];
     for (const b of books) {
       if (!L.isBook(b.language) || isUnsplitSpread(b)) continue;
-      if (isHeld(b) ? !LANE_HOLDS.has(b.pipeline_auto.hold.reason) : !flag('--free')) continue;
+      if (isHeld(b) ? !LANE_HOLDS.has(b.pipeline_auto.hold.reason) : (L.heldOnly || !flag('--free'))) continue;
       const owed = await db.collection('pages').countDocuments({ book_id: b.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT, 'ocr.edited_by': { $exists: false } });
       if (!owed || (maxPages && owed > maxPages)) continue;
       rows.push({ bid: b.id, title: b.title, year: b.year, pages_count: b.pages_count, owed, hold: b.pipeline_auto?.hold?.reason ?? null });
     }
     out = rows.sort((a, b) => rank(a.bid).localeCompare(rank(b.bid)));
   }, { timeoutMs: 3 * 3600 * 1000 });
-  fs.writeFileSync(F.frame, JSON.stringify({ built_at: new Date().toISOString(), rule: `visible ${L.language} 1800+, held under ${[...LANE_HOLDS].join('|')}${flag('--free') ? ' or not held' : ''}, pages with no text`, books: out }, null, 1));
+  const rule = L.frameQuery ? `${L.language} books held ${[...LANE_HOLDS].join('|')} (hidden included), pages with no text`
+    : `visible ${L.language} 1800+, held under ${[...LANE_HOLDS].join('|')}${flag('--free') ? ' or not held' : ''}, pages with no text`;
+  fs.writeFileSync(F.frame, JSON.stringify({ built_at: new Date().toISOString(), rule, books: out }, null, 1));
   log(`FRAME ${out.length} books, ${out.reduce((s, r) => s + r.owed, 0)} pages with no text → ${F.frame}`);
 }
 
@@ -151,7 +173,8 @@ async function plan() {
   ids = ids.filter((id) => !fs.existsSync(planFile(id)) && !gone.has(id));
   // A page this lane already turned away as another script is not English: it is never planned again (a book whose
   // plan file was removed would otherwise send the same Greek or Devanagari pages round the GPU for ever).
-  const notEnglish = new Set(readJsonl(F.rejected).filter((r) => r.reason === 'other_script').map((r) => r.pid));
+  const finalReasons = new Set(L.finalReasons || ['other_script']);
+  const notEnglish = new Set(readJsonl(F.rejected).filter((r) => finalReasons.has(r.reason)).map((r) => r.pid));
   const FROM_MANIFEST = flag('--from-manifest');
   // pid → the image url the GPU read; a page whose image source has changed since is not planned (the read is of another image)
   const inManifest = FROM_MANIFEST ? new Map((fs.existsSync(F.manifest) ? fs.readFileSync(F.manifest, 'utf8') : '').split('\n').filter(Boolean).map((l) => { const c = l.split('\t'); return [c[2], c[3]]; })) : null;
@@ -168,13 +191,18 @@ async function plan() {
       if (LIMIT && tally.books >= LIMIT) break;
       const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, year: 1, published: 1, image_source: 1, pages_state: 1, pipeline_auto: 1, pages_count: 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { finalSkip(bid, 'not_found'); continue; }
-      if (!L.isBook(book.language) || !(book.year >= 1800)) { finalSkip(bid, `not ${L.language} 1800+`); continue; }
+      if (!L.isBook(book.language) || (MIN_YEAR != null && !(book.year >= MIN_YEAR))) { finalSkip(bid, `not ${L.language}${MIN_YEAR != null ? ` ${MIN_YEAR}+` : ''}`); continue; }
+      // the profile's own book rule (Sanskrit: a manuscript by the catalogue is not print): a recorded, final skip
+      const profileSkip = L.bookSkip ? L.bookSkip(book, { manuscript: manuscriptReason(book) }) : null;
+      if (profileSkip) { finalSkip(bid, profileSkip); continue; }
       // the cell's book rule (holds, year, manuscript, page records, pipeline status) — a book this lane already
       // holds is past it; retried next time, not final (a hold or a status changes)
       const cellSkip = CELL && book.pipeline_auto?.hold?.reason !== HOLD_REASON ? armcEuroSkip(book, CELL) : null;
       if (cellSkip) { tally.skipped_books.push({ bid, why: `cell ${CELL}: ${cellSkip}` }); continue; }
       if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && !LANE_HOLDS.has(book.pipeline_auto.hold.reason)) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
+      // a held-only profile reads books under its holds and nothing else: it never places a hold, so it never plans a free book
+      if (L.heldOnly && !isHeld(book)) { tally.skipped_books.push({ bid, why: `not held ${[...LANE_HOLDS].join('|')}: this lane places no hold` }); continue; }
       const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT }, { projection: {
         id: 1, page_number: 1, ocr: 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, crop: 1,
       } }).sort({ page_number: 1 }).toArray();
@@ -196,7 +224,7 @@ async function plan() {
       // the hold BEFORE anything else: no other lane reads these pages while the GPU does. A book already under a
       // GPU-lane hold keeps that hold (nothing else reads it); a free book (--free frame) is held for this lane.
       const h = isHeld(book) ? { outcome: 'already_held', from: book.pipeline_auto.hold.held_from_status ?? null }
-        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LN, detail: { engine: LIGHTON.model, planned_pages: rows.length } });
+        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LN, detail: { engine: ENGINE.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); continue; }
       fs.writeFileSync(planFile(book.id), JSON.stringify({ bid: book.id, title: book.title, language: book.language, year: book.year, hold: book.pipeline_auto?.hold?.reason ?? HOLD_REASON, placed_hold: h.outcome === 'held', held_from: h.from ?? null, planned_at: new Date().toISOString(), pages: rows }));
       if (!FROM_MANIFEST) fs.appendFileSync(F.manifest, rows.map((r) => `${book.id}\t${r.pn}\t${r.pid}\t${r.src}`).join('\n') + '\n');
@@ -247,6 +275,7 @@ async function apply() {
   }
   const { name: runName, box } = latestRun();
   const runId = `${LN}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
+  const refusedBooks = new Map(readJsonl(F.refusedBooks).map((r) => [r.bid, r]));
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
     for (const { bid, pl, pages } of ready) {
@@ -254,6 +283,26 @@ async function apply() {
       if (!book) { log(`${bid} not found — skipping`); continue; }
       if (book.pipeline_auto?.held === true) { log(`${bid} pipeline_auto.held — refusing to write`); totals.not_held++; continue; }
       if (!LANE_HOLDS.has(book.pipeline_auto?.hold?.reason)) { log(`${bid} NOT held for this lane (${[...LANE_HOLDS].join('|')}) — refusing to write`); totals.not_held++; continue; }
+      // A profile's book gate (Sanskrit: is this a Devanagari book at all?) judges the whole book from its reads before
+      // any page is written. A refused book gets one rejected row a page and stays held; refused-books.jsonl makes the
+      // refusal stick for a page that comes back later (a requeued read error).
+      if (L.bookGate) {
+        const was = refusedBooks.get(bid);
+        const gate = was || L.bookGate(pl.pages.map((p) => readJson(outFile(bid, p.pn, 'json'), null)).filter(Boolean));
+        if (was || !gate.ok) {
+          totals.rejected += pages.length; totals.why[gate.reason] = (totals.why[gate.reason] || 0) + pages.length; totals.books_refused = (totals.books_refused || 0) + 1;
+          log(`${bid} REFUSED ${gate.reason}: ${gate.devanagari_pages}/${gate.text_pages} text pages are Devanagari, most are ${gate.script} | ${String(book.title || '').slice(0, 50)}`);
+          if (APPLY) {
+            for (const row of refusedBookRows(bid, pages, gate)) append(F.rejected, row);
+            if (!was) {
+              append(F.refusedBooks, { bid, reason: gate.reason, script: gate.script, text_pages: gate.text_pages, devanagari_pages: gate.devanagari_pages, by_script: gate.by_script });
+              await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'book-refused', detail: { issue: ISSUE, engine: ENGINE.model, reason: gate.reason, script: gate.script, text_pages: gate.text_pages, devanagari_pages: gate.devanagari_pages, by_script: gate.by_script,
+                note: 'the reads of this book are mostly another script than the lane reads: nothing written, the book keeps its hold; the route for that script should read it' } });
+            }
+          }
+          continue;
+        }
+      }
       const live = new Map((await P.find({ id: { $in: pages.map((p) => p.pid) } }, { projection: { id: 1, page_number: 1, book_id: 1, ocr: 1 } }).toArray()).map((p) => [p.id, p]));
       const writes = [];
       for (const pg of pages) {
@@ -264,18 +313,18 @@ async function apply() {
         if (!hasNoText(p.ocr)) { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'has_text_now' }); totals.has_text_now++; continue; }
         if (fs.existsSync(outFile(bid, pg.pn, 'err'))) { if (APPLY) append(F.rejected, { bid, pn: pg.pn, pid: pg.pid, reason: 'read_error', detail: fs.readFileSync(outFile(bid, pg.pn, 'err'), 'utf8').slice(0, 300) }); totals.errors++; continue; }
         const r = readJson(outFile(bid, pg.pn, 'json'));
-        const v = pageVerdict(r.text, { finish: r.finish });
+        const v = verdictOf(r);
         if (v.verdict === 'textless') { if (APPLY) append(F.skipped, { bid, pn: pg.pn, why: 'textless', chars: (r.text || '').length }); totals.textless++; continue; }
         if (v.verdict === 'reject') {
           if (APPLY) {
             append(F.rejected, { bid, pn: pg.pn, pid: pg.pid, reason: v.reason, detail: v.detail });
             if (KEEP_REASONS.has(v.reason)) await keepReject({ bid, pn: pg.pn, pid: pg.pid, reason: v.reason, detail: v.detail }, r, pg.src, runName);
-            await recordLoopRefusal(db, { pageId: pg.pid, bookId: bid, pageNumber: pg.pn, text: r.text || '', model: LIGHTON.model, verdict: { share: v.detail?.share ?? 1, body: (r.text || '').length, period: v.detail?.period ?? 0, reps: v.detail?.reps ?? 0 } });
+            await recordLoopRefusal(db, { pageId: pg.pid, bookId: bid, pageNumber: pg.pn, text: r.text || '', model: ENGINE.model, verdict: { share: v.detail?.share ?? 1, body: (r.text || '').length, period: v.detail?.period ?? 0, reps: v.detail?.reps ?? 0 } });
           }
           totals.rejected++; totals.why[v.reason] = (totals.why[v.reason] || 0) + 1; continue;
         }
         const text = envelope(v.body, L.language);
-        const field = ocrField(text, { run: `${LN}/${runName}`, imageUrl: pg.src, imageSha256: r.image_sha256 || null, box, why: pg.why, finish: r.finish ?? null, lang: LANG });
+        const field = fieldOf(text, { run: `${LN}/${runName}`, imageUrl: pg.src, imageSha256: r.image_sha256 || null, box, why: pg.why, finish: r.finish ?? null });
         writes.push({ pg, p, text, field });
       }
       if (!writes.length) { log(`${bid} nothing to write`); continue; }
@@ -294,19 +343,19 @@ async function apply() {
  * the book_events row. Shared by apply and rejudge. `writes`: [{ pg, p, text, field, extra? }].
  */
 async function writeBook(db, { bid, title, planned, writes, runId, action = 'transcribed' }) {
-  await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'transcribe-started', detail: { issue: LANE_ISSUE, engine: LIGHTON.model, pages: writes.length, run: runId } });
+  await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'transcribe-started', detail: { issue: ISSUE, engine: ENGINE.model, pages: writes.length, run: runId } });
   const now = new Date();
   let written = 0, conflicts = 0;
   for (const w of writes) {
-    const r = await writeLanePage(db, w.p.id, { ...w.field, updated_at: now }, { run: runId });
+    const r = await writeLanePage(db, w.p.id, { ...w.field, updated_at: now }, { run: runId, reason: L.revisionReason });
     if (r.status === 'written') { written++; append(F.applied, { bid, pn: w.pg.pn, pid: w.p.id, why: w.pg.why, chars: w.text.length, revision: r.revision_id, ...(w.extra || {}) }); }
     else { conflicts++; append(F.skipped, { bid, pn: w.pg.pn, why: `write_${r.status}` }); }
   }
   const { after: counts } = await recountBook(db, bid, { reason: LN, now });
-  await recordSweepAction(db, { sweep: LN, book_id: bid, action, detail: { issue: LANE_ISSUE, engine: LIGHTON.model, pages_written: written, conflicts, run: runId } });
+  await recordSweepAction(db, { sweep: LN, book_id: bid, action, detail: { issue: ISSUE, engine: ENGINE.model, pages_written: written, conflicts, run: runId } });
   await db.collection('book_events').updateOne(
     { book_id: bid, type: BOOK_EVENT },
-    { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LN, 'details.issue': LANE_ISSUE, 'details.engine': LIGHTON.model, 'details.repo': LIGHTON.repo },
+    { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LN, 'details.issue': ISSUE, 'details.engine': ENGINE.model, 'details.repo': ENGINE.repo },
       $set: { 'details.last_apply_at': now, 'details.pages_ocr_after': counts?.pages_ocr ?? null, 'details.planned': planned },
       $inc: { 'details.pages_written': written } },
     { upsert: true },
@@ -319,17 +368,17 @@ async function writeBook(db, { bid, title, planned, writes, runId, action = 'tra
 // ── rejected reads (#6871, 2026-10-31) ──────────────────────────────────────────────────
 
 /** Rejected reads worth keeping as a correction pass's draft: the read is whole and mostly right. */
-const KEEP_REASONS = new Set(['transliteration_dense', 'engine_commentary']);
+const KEEP_REASONS = new Set(L.keepReasons || ['transliteration_dense', 'engine_commentary']);
 
 /** Keep one rejected read in R2 candidate-reads (best effort; never throws). */
 async function keepReject(row, read, src, runName) {
-  const body = convertRead(read.text);
+  const body = bodyOf(read);
   const k = await keepRead({
-    page_id: row.pid, book_id: row.bid, page_number: row.pn, field: 'ocr', text: envelope(body, L.language), model: LIGHTON.model,
-    prompt_hash: reuseHash({ field: 'ocr', prompt: LIGHTON.prompt, input: read.image_sha256 || src, variant: LN }),
+    page_id: row.pid, book_id: row.bid, page_number: row.pn, field: 'ocr', text: envelope(body, L.language), model: ENGINE.model,
+    prompt_hash: reuseHash({ field: 'ocr', prompt: ENGINE.prompt, input: read.image_sha256 || src, variant: LN }),
     job: `${LN}/${runName}`,
-    meta: { model: LIGHTON.model, read_site: 'scripts/workers/gpu-print-lane.mjs', outcome: `rejected:${row.reason}`, gate: row.reason, detail: row.detail ?? null,
-      finish: read.finish ?? null, image_url: src, image_sha256: read.image_sha256 || null, decode: LIGHTON.decode, issue: LANE_ISSUE, finished_at: new Date().toISOString() },
+    meta: { model: ENGINE.model, read_site: 'scripts/workers/gpu-print-lane.mjs', outcome: `rejected:${row.reason}`, gate: row.reason, detail: row.detail ?? null,
+      finish: read.finish ?? null, image_url: src, image_sha256: read.image_sha256 || null, decode: ENGINE.decode, issue: ISSUE, finished_at: new Date().toISOString() },
   });
   append(F.kept, { bid: row.bid, pn: row.pn, pid: row.pid, reason: row.reason, kept: k.kept, key: k.key ?? null, why: k.why ?? null });
   return k;
@@ -372,11 +421,11 @@ async function rejudge() {
         if (!hasNoText(p.ocr)) { totals.has_text_now++; if (APPLY) append(F.rejudged, { bid, pn: r.pn, from: reason, outcome: 'has_text_now' }); continue; }
         const read = readJson(outFile(bid, r.pn, 'json'), null);
         if (!read) continue;
-        const v = pageVerdict(read.text, { finish: read.finish });
+        const v = verdictOf(read);
         if (v.verdict !== 'write') { const k = `${v.verdict}:${v.reason}`; totals.still[k] = (totals.still[k] || 0) + 1; if (APPLY) append(F.rejudged, { bid, pn: r.pn, from: reason, outcome: k }); continue; }
         const text = envelope(v.body, L.language);
         writes.push({ pg, p, text, extra: { rejudged_from: reason, ...(v.detail || {}) },
-          field: ocrField(text, { run: runId, imageUrl: pg.src, imageSha256: read.image_sha256 || null, box, why: pg.why, finish: read.finish ?? null, lang: LANG }) });
+          field: fieldOf(text, { run: runId, imageUrl: pg.src, imageSha256: read.image_sha256 || null, box, why: pg.why, finish: read.finish ?? null }) });
         out.push({ bid, pn: r.pn, pid: r.pid, note: v.detail?.note ?? null });
       }
       if (!writes.length) continue;
@@ -423,7 +472,7 @@ async function keepRejects() {
 }
 
 async function scripts() {
-  const rows = rejectedRows('other_script');
+  const rows = rejectedRows(L.scriptReason || 'other_script');
   const done = new Set(readJsonl(F.otherScript).map((r) => `${r.bid}/${r.pn}`));
   const byBook = new Map(), tally = {};
   for (const r of rows) {
@@ -443,8 +492,9 @@ async function scripts() {
       const by = {};
       for (const p of fresh) (by[p.script] ??= []).push(p.pn);
       await recordSweepAction(db, { sweep: LN, book_id: bid, action: 'other-script-pages', detail: {
-        issue: LANE_ISSUE, engine: LIGHTON.model, pages: fresh.length, by_script: by,
-        note: 'LightOnOCR read these pages as another script than Latin: not English print, not written by this lane; the language route for the script should read them' } });
+        issue: ISSUE, engine: ENGINE.model, pages: fresh.length, by_script: by,
+        note: L.scriptReason ? `${ENGINE.name} read these pages as another script than the lane reads: not written by this lane; the route for the script should read them`
+          : 'LightOnOCR read these pages as another script than Latin: not English print, not written by this lane; the language route for the script should read them' } });
       for (const p of fresh) append(F.otherScript, p);
     }
   }, { timeoutMs: 3600 * 1000 });
@@ -481,6 +531,8 @@ async function requeueErrors() {
  * end of `apply --apply`.
  */
 async function releaseSweep(db, { abandon = false } = {}) {
+  // a held-only profile placed no hold, so it has none to release: its books keep the hold they came in under
+  if (L.heldOnly) return { released: 0, candidates: 0, why: {} };
   const done = doneSet();
   let books = fs.existsSync(F.planDir) ? fs.readdirSync(F.planDir).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)) : [];
   if (BOOK) books = books.filter((b) => b === BOOK);

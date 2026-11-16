@@ -15,7 +15,8 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear, assertableYear, historicalTimelineDate } from '@/lib/publication-date';
 import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
 import { bylineDynasty, sibuClass, sibuRowForWork } from '@/lib/sibu-catalogue';
-import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
+import { isHiddenBook, findVisibleDuplicateKeeper, findDeletedDuplicateKeeper } from '@/lib/book-access';
+import { slugBeforePastedText } from '@/lib/not-found-recovery';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
@@ -45,6 +46,8 @@ import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
 import TranslatedSiblingNotice from '@/components/book/TranslatedSiblingNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
 import VolumeSetStrip from '@/components/book/VolumeSetStrip';
+import BookOpeningPassage from '@/components/book/BookOpeningPassage';
+import { loadOpeningPassageCandidates, pickOpeningPassage, type OpeningPassageBook } from '@/lib/book-opening-passage';
 import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
@@ -884,7 +887,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center max-w-md px-6">
-          <h2 className="text-2xl font-display text-primary mb-3">{t.temporarilyUnavailable}</h2>
+          <h2 className="text-2xl font-serif text-primary mb-3">{t.temporarilyUnavailable}</h2>
           <p className="text-secondary mb-6">{t.temporarilyUnavailableBody}</p>
           <Link href={lp(`/${tenantSlug || ''}`)} className="text-accent-rust hover:underline">{t.returnToLibrary}</Link>
         </div>
@@ -1147,6 +1150,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // What a stored quality check found in this book (#6199). One indexed read; never throws.
     // Promise only; awaited together with the related-books / shelf / entity lookups below (#7057).
     const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id]));
+    // A short passage of the book's own words (#103): candidate pages from the free sample. English
+    // page of the main site only; an English edition has no translation to quote. One indexed range
+    // read, awaited with the lookups below. A failed read shows no passage and is retried at the next
+    // revalidation (this page has a numeric `revalidate`), the same contract as the warning above.
+    const showOpeningPassage = lang === 'en' && !isEmbedded && !tenantSlug && !englishOriginalHere && !previewProposed;
+    const openingPassageBook = book as unknown as OpeningPassageBook;
+    const openingCandidatesP: Promise<Page[]> = showOpeningPassage
+      ? getReadDb()
+        .then(pdb => loadOpeningPassageCandidates(pdb, openingPassageBook, (book.chapters as { pageNumber?: number }[] | undefined)?.[0]?.pageNumber))
+        .catch((err) => { console.error(`[opening-passage] could not read pages for ${book.id}:`, (err as Error).message); return []; })
+      : Promise.resolve([]);
     const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
@@ -1336,10 +1350,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // The four lookups above are independent (entity terms, quality warning,
     // related books, holder shelf): run them concurrently instead of one after
     // another. Only synchronous code sits between their creation and this await.
-    const [summaryEntities, qualityWarnings, tagRelated, librarySection] = await Promise.all([
-      summaryEntitiesP, bookWarningP, tagRelatedP, librarySectionP,
+    const [summaryEntities, qualityWarnings, tagRelated, librarySection, openingCandidates] = await Promise.all([
+      summaryEntitiesP, bookWarningP, tagRelatedP, librarySectionP, openingCandidatesP,
     ]);
     const { book: bookWarning, checked: bookChecked } = qualityWarnings;
+    // No passage from a book a stored check found serious errors in, nor from a page with a warning.
+    const openingPassage = showOpeningPassage && !bookWarning
+      ? pickOpeningPassage(openingCandidates, openingPassageBook, { warnedPages: qualityWarnings.pages })
+      : null;
     const hasRelated = tagRelated.length > 0;
 
     // Publisher / place only — the DATE is surfaced separately as a labelled
@@ -1642,11 +1660,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             locale={lang}
           /></Suspense>
         )}
+        {openingPassage && (
+          <BookOpeningPassage passage={openingPassage} href={`/book/${bookSlug}/page/${openingPassage.pageId}`} />
+        )}
         {hasReadingGuide && (
           <AISection kind="reading-guide" className="card reveal-in">
             <details className="group sl-collapse">
               <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-                <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.readingGuide}</h3>
+                <h3 className="font-serif font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.readingGuide}</h3>
                 <PlusToggle />
               </summary>
               <div className="px-4 pb-4 md:px-6 md:pb-6">
@@ -1660,7 +1681,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {(!!book.chapters?.length || !!tocPage) && (
         <details id="contents" className="card group scroll-mt-24 sl-collapse reveal-in">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-            <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.contents}</h3>
+            <h3 className="font-serif font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.contents}</h3>
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
@@ -1693,7 +1714,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     className="flex items-baseline justify-between gap-4 py-2 border-b transition-colors hover:bg-[#f4efe6]"
                     style={{ borderColor: '#ece6da', paddingLeft: `${(ch.level || 0) * 14}px` }}
                   >
-                    <span className="font-display text-[14.5px] leading-snug" style={{ color: '#4a443b' }}>{localizedChapters?.[i] || ch.titleEn || ch.title}</span>
+                    <span className="font-body text-[14.5px] leading-snug" style={{ color: '#4a443b' }}>{localizedChapters?.[i] || ch.titleEn || ch.title}</span>
                     {typeof ch.pageNumber === 'number' ? <span className="font-mono text-[12px] whitespace-nowrap" style={{ color: '#a09884' }}>{t.pageAbbrev(ch.pageNumber)}</span> : null}
                   </Link>
                 ))}
@@ -1715,7 +1736,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* Bibliographic information — the source's own record only. */}
         <details className="card group sl-collapse reveal-in">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-            <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.bibliographicInformation}</h3>
+            <h3 className="font-serif font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.bibliographicInformation}</h3>
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
@@ -1772,7 +1793,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* Search this book — styled like a dropdown card but always open; the
             card grows to show results (max-height + scroll) as you type. */}
         <div className="card p-4 md:p-6 reveal-in">
-          <h3 className="font-display font-medium text-[17px] md:text-[22px] mb-4" style={{ color: '#2b2620' }}>{t.searchThisBook}</h3>
+          <h3 className="font-serif font-medium text-[17px] md:text-[22px] mb-4" style={{ color: '#2b2620' }}>{t.searchThisBook}</h3>
           <SearchPanel bookId={book.id} inline theme="light" placeholder={t.searchPlaceholder} />
         </div>
       </>
@@ -1892,7 +1913,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   )}
                 </div>
               )}
-              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-3 md:mb-4 break-words" style={{ color: '#f7f2ea' }}>
+              <h1 className="font-serif font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-3 md:mb-4 break-words" style={{ color: '#f7f2ea' }}>
                 {shownTitle}
               </h1>
               {titleBeneath && (() => {
@@ -2156,7 +2177,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {galleryPlates.length > 0 && (
           <section id="illustrations" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
-              <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.illustrations}</h2>
+              <h2 className="font-serif font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.illustrations}</h2>
               <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{t.illustrationsNote}</p>
               <GalleryMasonry plates={galleryPlates} />
               {imageCount > galleryPlates.length && !isEmbedded && (
@@ -2183,7 +2204,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {hasRelated && (
           <section id="related" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
-              <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.relatedBooks}</h2>
+              <h2 className="font-serif font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.relatedBooks}</h2>
               <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>{t.relatedBooksNote}</p>
               <BookSlider books={tagRelated as unknown as MiniBook[]} lang={lang} />
             </div>
@@ -2890,6 +2911,29 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // once internally on transient errors.
   const earlyBook = await getBookForMetadata(id, tenantId, tenantSlug);
   if (!earlyBook) {
+    // Two dead links whose target is certain (#102). Main site only: a partner
+    // frame or host keeps its 404 (the keeper lookup is not tenant-scoped). Both
+    // run only on this already-missing branch.
+    if (!isEmbedded && !tenantId && !previewProposed) {
+      const localePrefix = lang !== 'en' ? `/${lang}` : '';
+      // (1) A slug or id with pasted text after it (`…al-majriti.`, `…kircher)의`):
+      // the book it names, only when the front is exactly a live book's slug, id
+      // or alias.
+      const front = slugBeforePastedText(id);
+      if (front) {
+        const named = await getBookForMetadata(front, tenantId, tenantSlug);
+        const namedSlug = (named as { slug?: string } | null)?.slug;
+        if (named && namedSlug && !isHiddenBook(named)) {
+          permanentRedirect(`${localePrefix}/book/${namedSlug}`);
+        }
+      }
+      // (2) A duplicate that dedup DELETED (#2209 moved 1,483 twins to
+      // deleted_books): the copy it kept, named in the deletion record.
+      const kept = await findDeletedDuplicateKeeper(await getReadDb(), [id]).catch(() => null);
+      if (kept) {
+        permanentRedirect(kept.artworkSlug ? `/artwork/${kept.artworkSlug}` : `${localePrefix}/book/${kept.slug}`);
+      }
+    }
     notFound();
   }
 

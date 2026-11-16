@@ -1,0 +1,51 @@
+<warning>Handwritten Italian semi-cursive Hebrew. Heavy brown ink bleed and staining across the middle and lower text block makes many words hard to read. Readings of the body text are tentative.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>תיקוני הזוהר</unclear>, ועוד לפרש <unclear>פעם יתר כי דברים מעט באותן</unclear>
+<unclear>המקומות שהבאתי להרבות בהם רז״ל אשר בו שתי כל יש ולכן</unclear> <unclear>[illegible — 1 word]</unclear>
+<unclear>עתה בדברי לכן תיקוני הזוהר</unclear>, <unclear>ע״כ</unclear> :
+
+## דף רצ״ו ע״ב
+
+<unclear>לבאר קרבן כהן קדש וכו׳ זה יובן בזה</unclear>
+<unclear>שבמאמר ב׳ השמטות קמ״ט ע״ב</unclear>
+
+<margin><unclear>[illegible — 3-4 words]</unclear></margin>
+<unclear>שם קרינה זו זה שיבה והוא סוד הפסוק שראינו מן הרמב״ה עוד</unclear>
+
+## דף רצ״ז ע״א
+
+<unclear>מה אבא וכו׳ כל שם זה שהוא</unclear>
+<unclear>פסוק בין קדש לקדש ובמאמר קמ״ט</unclear>
+
+<margin><unclear>[illegible — 3 words]</unclear></margin>
+<unclear>שבמאמר ומ׳ קדש יש זה וכו׳ כל זה מבואר במ׳ השמטות קמ״ט כל זה אמר</unclear> <unclear>[illegible — 1 word]</unclear>
+
+## דף רצ״ז ע״ב
+
+<unclear>ספר וכו׳ אנו שהוא מן ענין כי</unclear>
+<unclear>יש וכו׳ אשר בין זה תרי מבני הם</unclear>
+<unclear>שרז״ל אמרו שאותו נעשה בתשובה נבואה כי נס שהוא אות</unclear>
+<unclear>נעשית בו יש מה אשר שהבין זה מסוף פ׳ ונזכר את ברית</unclear>
+<unclear>ונראה הספר ונזכר את וכו׳ והענין כי נראה דבר המדבר יסוד והי׳</unclear>
+<unclear>בין עק מ׳ ברית ונאמר כי הוא ונזכר כבר מן ברית היא ה׳</unclear>
+<unclear>בסוד הנקרא שהוא היסוד ובזה נס שאותו את נעשית וכו׳</unclear>
+<unclear>והטעם כי כבר ונאמר את בריתי שהיא ה׳, ונו׳ שנה ה׳ אלקים</unclear>
+<unclear>זה נעבדם ה׳ ויקרא קמ״ב ע״א כי</unclear> <unclear>[illegible — 1 word]</unclear> <unclear>והשיב אמת מה ושנה</unclear>
+<unclear>הוא כי הוא עליהם וכו׳ ועוד כתיב דלת ה׳ אלקים וכו׳ הענין</unclear>
+<unclear>דבר קמ״ה את שכתוב שהוא מלך אבן הרמ״ע עוד שבו שבת</unclear>
+<unclear>יעקב בס׳ יש ע״כ</unclear> :
+
+## דף רצ״ח ע״א
+
+<unclear>דכתיב את האמונים וכו׳ לספר בריה</unclear>
+<unclear>אמת וכו׳ מ׳ ב׳ את האמונים בדרך</unclear>
+<unclear>לפטר מן בריתי הוא בן אמת ועוד כי את הי״ה האמונים אמת</unclear>
+<unclear>הי״ה אמר מן בריתי היא הכתוב הבן אמת ונראה האם וכו׳ כי</unclear>
+
+<meta>Catchword at lower left: <unclear>לעלו</unclear>. Mirror-reversed show-through from the verso is visible behind the text and has not been transcribed.</meta>
+
+<vocab>תיקוני הזוהר, רז״ל, השמטות, ברית, יסוד, קדש, האמונים, דף רצ״ו–רצ״ח</vocab>

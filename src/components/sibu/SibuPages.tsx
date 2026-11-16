@@ -84,7 +84,7 @@ export function SibuIndex({ lang }: { lang: SibuLang }) {
         <Link href={localePath('/collections', lang)} className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary mb-6">
           <ArrowLeft className="w-4 h-4" />{t.collections}
         </Link>
-        <h1 className="text-4xl sm:text-5xl font-display text-primary mb-4">{t.title}</h1>
+        <h1 className="text-4xl sm:text-5xl font-serif text-primary mb-4">{t.title}</h1>
         <p className="text-lg leading-relaxed text-primary/90 max-w-3xl mb-3">{t.intro}</p>
         <p className="leading-relaxed text-primary/90 max-w-3xl mb-3">{t.gap}</p>
         <p className="text-sm text-muted mb-10">
@@ -98,7 +98,7 @@ export function SibuIndex({ lang }: { lang: SibuLang }) {
           return (
             <section key={part.code} className="mb-10">
               <h2 className="flex flex-wrap items-baseline gap-3 border-b border-primary/20 pb-2 mb-1">
-                <span className="text-2xl sm:text-3xl font-display text-primary">{lang === 'zh' ? part.zh : part.en}</span>
+                <span className="text-2xl sm:text-3xl font-serif text-primary">{lang === 'zh' ? part.zh : part.en}</span>
                 {lang === 'en' && <span className="text-lg text-muted" lang="zh-Hans">{part.zh}</span>}
                 <span className="text-sm text-muted tabular-nums">{t.stats(nf(count.works, lang), nf(count.vols, lang))}</span>
               </h2>
@@ -122,7 +122,7 @@ export function SibuIndex({ lang }: { lang: SibuLang }) {
 
         <section className="mb-10">
           <h2 className="flex flex-wrap items-baseline gap-3 border-b border-primary/20 pb-2 mb-3">
-            <Link href={localePath(`/sibu/${OUTSIDE_CODE}`, lang)} className="text-2xl sm:text-3xl font-display text-primary hover:text-accent-rust">{t.outside}</Link>
+            <Link href={localePath(`/sibu/${OUTSIDE_CODE}`, lang)} className="text-2xl sm:text-3xl font-serif text-primary hover:text-accent-rust">{t.outside}</Link>
             <span className="text-sm text-muted tabular-nums">{t.stats(nf(outside.works, lang), nf(outside.vols, lang))}</span>
           </h2>
           <p className="leading-relaxed text-primary/90 max-w-3xl">{t.outsideNote}</p>
@@ -147,7 +147,7 @@ export function SibuClassPage({ lang, code }: { lang: SibuLang; code: string }) 
           <ArrowLeft className="w-4 h-4" />{t.back}
         </Link>
         {eyebrow && <p className="text-sm text-muted mb-1">{eyebrow}</p>}
-        <h1 className="text-4xl sm:text-5xl font-display text-primary mb-3">{heading}</h1>
+        <h1 className="text-4xl sm:text-5xl font-serif text-primary mb-3">{heading}</h1>
         <p className="text-sm text-muted tabular-nums mb-3">{t.stats(nf(count.works, lang), nf(count.vols, lang))}</p>
         {code === OUTSIDE_CODE && <p className="leading-relaxed text-primary/90 max-w-3xl mb-3">{t.outsideNote}</p>}
         {rows.length === 0 && <p className="text-muted mt-6">{t.emptyClass}</p>}

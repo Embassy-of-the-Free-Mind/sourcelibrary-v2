@@ -1,0 +1,2319 @@
+{
+ "generated_by": "scripts/eval/test-set-264/seal.mjs",
+ "issue": 264,
+ "seed": "test-set-264/2026-11-13",
+ "drawn_at": "2026-11-13T18:27:17.559Z",
+ "sealed_at": "2026-11-13T18:41:59.278Z",
+ "router_table": "2026-11-01-validated-7263",
+ "frame_sha256": "2903d1dd7d2012f517f33231223e63f7ad79bb31b07384c35f50aac3e4c8e4ce",
+ "size_rule": {
+  "decision": {
+   "min_waiting": 100000,
+   "books": 50
+  },
+  "directional": {
+   "min_waiting": 20000,
+   "books": 30
+  },
+  "pooled_small": 15,
+  "reserve_share": 0.2
+ },
+ "totals": {
+  "pages_waiting": 7176034,
+  "drawn_pages": 1156,
+  "drawn_books": 1156,
+  "reserve_pages": 232,
+  "existing_rows": 834,
+  "cells": 32,
+  "observed_differs": 94,
+  "image_unfetched": 13
+ },
+ "engines_scored": [],
+ "cells": [
+  {
+   "id": "latin-lite/print",
+   "router_cells": [
+    "latin-lite/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 835238,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 17,
+    "judged_books": 33,
+    "canonical_reference_books": 1
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 33,
+    "reference: EEBO-TCP A03054": 1,
+    "reference: CAMENA poemata/melis1": 1,
+    "reference: CAMENA thesaurus/p2": 1,
+    "reference: la.wikisource Liber:PRAETORIUS, Michael - Syntagma musicum 1": 1,
+    "reference: EEBO-TCP A06769": 1,
+    "reference: EEBO-TCP A42256": 1,
+    "reference: CAMENA poemata/drama": 1,
+    "reference: EEBO-TCP A61502": 1,
+    "reference: CAMENA historicapolitica/matthiae1": 1,
+    "reference: CAMENA historicapolitica/bornitz2": 1,
+    "reference: CAMENA poemata/poemata/baldeelegiae.xml": 1,
+    "reference: CAMENA historicapolitica/besold6": 1,
+    "reference: CAMENA historicapolitica/besold1": 1,
+    "reference: CAMENA historicapolitica/curione1": 1,
+    "reference: EEBO-TCP A52456": 1,
+    "reference: CAMENA historicapolitica/besold14": 1,
+    "reference: EEBO-TCP A14631": 1
+   },
+   "observed_kind": {
+    "print": 50
+   },
+   "observed_script": {
+    "latin": 50
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 25,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 13067,
+    "cell already full": 6453,
+    "Latin text by agy: no router cell (not waiting, or no cell for this engine)": 126,
+    "page_type blank": 63,
+    "page_type illustration": 23,
+    "page_type map": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Latin",
+     "books_in_catalogue": 162312,
+     "examined": 20000
+    }
+   ],
+   "truth_holders": {
+    "judged read": 33,
+    "CAMENA": 10,
+    "EEBO-TCP": 6,
+    "la.wikisource": 1
+   },
+   "exclusions": {
+    "references_mapped": 49,
+    "references_pass": 38,
+    "judged_mapped": 188,
+    "judged_pass": 174,
+    "failed": {
+     "judged on translation, not transcription": 14,
+     "reference made by a model": 8,
+     "reference corrected from our own OCR": 3
+    }
+   },
+   "share_of_library": 0.11639270382498187,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "latin-lite/manuscript",
+   "router_cells": [
+    "latin-lite/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 26268,
+   "target_books": 30,
+   "drawn_books": 28,
+   "drawn_pages": 28,
+   "reserve_pages": 6,
+   "short_router_cells": [
+    {
+     "id": "latin-lite/manuscript",
+     "drawn": 28,
+     "quota": 30
+    }
+   ],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 8,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 8
+   },
+   "observed_kind": {
+    "manuscript": 20,
+    "print": 6,
+    "mixed": 2
+   },
+   "observed_script": {
+    "latin": 28
+   },
+   "observed_differs": 8,
+   "class_source": {
+    "book_class (#5768), book level": 28
+   },
+   "catalogue_visible": 26,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 13067,
+    "cell already full": 6453,
+    "Latin text by agy: no router cell (not waiting, or no cell for this engine)": 126,
+    "page_type blank": 63,
+    "page_type illustration": 23,
+    "page_type map": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Latin",
+     "books_in_catalogue": 162312,
+     "examined": 20000
+    }
+   ],
+   "truth_holders": {
+    "judged read": 8
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 15,
+    "judged_pass": 14,
+    "failed": {
+     "judged on translation, not transcription": 1
+    }
+   },
+   "share_of_library": 0.0036605177734665138,
+   "share_of_set": 0.02422145328719723
+  },
+  {
+   "id": "latin-flash3/print",
+   "router_cells": [
+    "latin-flash3/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 692318,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 50,
+    "judged_books": 0,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "reference: CAMENA poemata/hayne1": 1,
+    "reference: CAMENA historicapolitica/welser1": 1,
+    "reference: EEBO-TCP A30431": 1,
+    "reference: CAMENA historicapolitica/fritsch17": 1,
+    "reference: EEBO-TCP A07382": 1,
+    "reference: EEBO-TCP A33731": 1,
+    "reference: EEBO-TCP A58151": 1,
+    "reference: EEBO-TCP A66675": 1,
+    "reference: CAMENA cera/witzel1": 1,
+    "reference: CAMENA thesaurus/bd1": 1,
+    "reference: EEBO-TCP A36017": 1,
+    "reference: EEBO-TCP A09349": 1,
+    "reference: EEBO-TCP A43130": 1,
+    "reference: CAMENA cera/conring2": 1,
+    "reference: CAMENA cera/puteanus2": 1,
+    "reference: CAMENA historicapolitica/fritsch02": 1,
+    "reference: EEBO-TCP A62554": 1,
+    "reference: EEBO-TCP A16649": 1,
+    "reference: EEBO-TCP A04814": 1,
+    "reference: la.wikisource Liber:Principia newton la.djvu": 1,
+    "reference: CAMENA poemata/frisc2": 1,
+    "reference: EEBO-TCP A19129": 1,
+    "reference: CAMENA cera/scaliger1": 1,
+    "reference: EEBO-TCP A20623": 1,
+    "reference: EEBO-TCP A03932": 1,
+    "reference: EEBO-TCP A67819": 1,
+    "reference: CAMENA historicapolitica/besold2": 1,
+    "reference: EEBO-TCP A01809": 1,
+    "reference: CAMENA poemata/locher2": 1,
+    "reference: CAMENA poemata/camer1": 1,
+    "reference: CAMENA historicapolitica/bornitz4": 1,
+    "reference: CAMENA poemata/bald10": 1,
+    "reference: CAMENA poemata/naogeorg3": 1,
+    "reference: EEBO-TCP A21194": 1,
+    "reference: CAMENA thesaurus/thesaurus/Beze_icones.xml": 1,
+    "reference: CAMENA historicapolitica/besold18": 1,
+    "reference: la.wikisource Liber:Nicolai Copernici torinensis De revoluti": 1,
+    "reference: CAMENA historicapolitica/besold4": 1,
+    "reference: EEBO-TCP A05302": 1,
+    "reference: EEBO-TCP A69934": 1,
+    "reference: EEBO-TCP A67147": 1,
+    "reference: CAMENA cera/scholz1": 1,
+    "reference: EEBO-TCP A17090": 1,
+    "reference: CAMENA poemata/corvi1": 1,
+    "reference: la.wikisource Liber:Athanasius Kircher - Turris Babel - 1679": 1,
+    "reference: CAMENA cera/richter1": 1,
+    "reference: CAMENA poemata/bider1": 1,
+    "reference: CAMENA cera/lange1": 1,
+    "reference: CAMENA poemata/bald6": 1,
+    "reference: EEBO-TCP A32705": 1
+   },
+   "observed_kind": {
+    "print": 50
+   },
+   "observed_script": {
+    "latin": 49,
+    "greek": 1
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 29,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 13067,
+    "cell already full": 6453,
+    "Latin text by agy: no router cell (not waiting, or no cell for this engine)": 126,
+    "page_type blank": 63,
+    "page_type illustration": 23,
+    "page_type map": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Latin",
+     "books_in_catalogue": 162312,
+     "examined": 20000
+    }
+   ],
+   "truth_holders": {
+    "CAMENA": 25,
+    "EEBO-TCP": 22,
+    "la.wikisource": 3
+   },
+   "exclusions": {
+    "references_mapped": 131,
+    "references_pass": 119,
+    "judged_mapped": 269,
+    "judged_pass": 266,
+    "failed": {
+     "reference made by a model": 6,
+     "reference corrected from our own OCR": 6,
+     "judged on translation, not transcription": 3
+    }
+   },
+   "share_of_library": 0.09647641022882555,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "latin-flash3/manuscript",
+   "router_cells": [
+    "latin-flash3/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 76402,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 11,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 11
+   },
+   "observed_kind": {
+    "manuscript": 16,
+    "print": 14
+   },
+   "observed_script": {
+    "latin": 30
+   },
+   "observed_differs": 14,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 26,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 13067,
+    "cell already full": 6453,
+    "Latin text by agy: no router cell (not waiting, or no cell for this engine)": 126,
+    "page_type blank": 63,
+    "page_type illustration": 23,
+    "page_type map": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Latin",
+     "books_in_catalogue": 162312,
+     "examined": 20000
+    }
+   ],
+   "truth_holders": {
+    "judged read": 11
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 16,
+    "judged_pass": 16,
+    "failed": {}
+   },
+   "share_of_library": 0.010646828038997585,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "latin-flash3/unknown",
+   "router_cells": [
+    "latin-flash3/unknown"
+   ],
+   "pooled": false,
+   "pages_waiting": 549086,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 6,
+    "judged_books": 44,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 44,
+    "reference: CAMENA historicapolitica/besold4": 1,
+    "reference: CAMENA historicapolitica/besold7": 1,
+    "reference: CAMENA thesaurus/declarationes1": 1,
+    "reference: CAMENA historicapolitica/besold2": 1,
+    "reference: CAMENA historicapolitica/estienne1": 1,
+    "reference: EEBO-TCP A66493": 1
+   },
+   "observed_kind": {
+    "print": 45,
+    "manuscript": 5
+   },
+   "observed_script": {
+    "latin": 49,
+    "greek": 1
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 48,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 13067,
+    "cell already full": 6453,
+    "Latin text by agy: no router cell (not waiting, or no cell for this engine)": 126,
+    "page_type blank": 63,
+    "page_type illustration": 23,
+    "page_type map": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Latin",
+     "books_in_catalogue": 162312,
+     "examined": 20000
+    }
+   ],
+   "truth_holders": {
+    "judged read": 44,
+    "CAMENA": 5,
+    "EEBO-TCP": 1
+   },
+   "exclusions": {
+    "references_mapped": 20,
+    "references_pass": 18,
+    "judged_mapped": 92,
+    "judged_pass": 92,
+    "failed": {
+     "reference corrected from our own OCR": 2
+    }
+   },
+   "share_of_library": 0.07651663857779938,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "german-lite/print",
+   "router_cells": [
+    "german-lite/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 409596,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 50,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 50
+   },
+   "observed_kind": {
+    "print": 50
+   },
+   "observed_script": {
+    "latin": 50
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 48,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 16031,
+    "cell already full": 1023,
+    "German text by agy: no router cell (not waiting, or no cell for this engine)": 175,
+    "page_type blank": 21,
+    "German text by other: no router cell (not waiting, or no cell for this engine)": 1,
+    "German text by claude: no router cell (not waiting, or no cell for this engine)": 1
+   },
+   "draw_languages": [
+    {
+     "language": "German",
+     "books_in_catalogue": 147161,
+     "examined": 17459
+    }
+   ],
+   "truth_holders": {
+    "judged read": 50
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 488,
+    "judged_pass": 340,
+    "failed": {
+     "judged on translation, not transcription": 148
+    }
+   },
+   "share_of_library": 0.05707832487973162,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "german-flash3/print",
+   "router_cells": [
+    "german-flash3/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 139496,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 35,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 35
+   },
+   "observed_kind": {
+    "print": 49,
+    "mixed": 1
+   },
+   "observed_script": {
+    "latin": 50
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 46,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 16031,
+    "cell already full": 1023,
+    "German text by agy: no router cell (not waiting, or no cell for this engine)": 175,
+    "page_type blank": 21,
+    "German text by other: no router cell (not waiting, or no cell for this engine)": 1,
+    "German text by claude: no router cell (not waiting, or no cell for this engine)": 1
+   },
+   "draw_languages": [
+    {
+     "language": "German",
+     "books_in_catalogue": 147161,
+     "examined": 17459
+    }
+   ],
+   "truth_holders": {
+    "judged read": 35
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 142,
+    "judged_pass": 65,
+    "failed": {
+     "judged on translation, not transcription": 77
+    }
+   },
+   "share_of_library": 0.01943914981450757,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "german-flash3/unknown",
+   "router_cells": [
+    "german-flash3/unknown"
+   ],
+   "pooled": false,
+   "pages_waiting": 211906,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 14,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 14
+   },
+   "observed_kind": {
+    "print": 46,
+    "manuscript": 4
+   },
+   "observed_script": {
+    "latin": 50
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 50,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 16031,
+    "cell already full": 1023,
+    "German text by agy: no router cell (not waiting, or no cell for this engine)": 175,
+    "page_type blank": 21,
+    "German text by other: no router cell (not waiting, or no cell for this engine)": 1,
+    "German text by claude: no router cell (not waiting, or no cell for this engine)": 1
+   },
+   "draw_languages": [
+    {
+     "language": "German",
+     "books_in_catalogue": 147161,
+     "examined": 17459
+    }
+   ],
+   "truth_holders": {
+    "judged read": 14
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 43,
+    "judged_pass": 16,
+    "failed": {
+     "judged on translation, not transcription": 27
+    }
+   },
+   "share_of_library": 0.02952968171555486,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "french-lite/print",
+   "router_cells": [
+    "french-lite/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 143663,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 50,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 50
+   },
+   "observed_kind": {
+    "print": 49,
+    "mixed": 1
+   },
+   "observed_script": {
+    "latin": 49,
+    "greek": 1
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 49,
+    "read by eye (Claude Opus), page level": 1
+   },
+   "catalogue_visible": 50,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 2126,
+    "cell already full": 169,
+    "French text by flash3: no router cell (not waiting, or no cell for this engine)": 63,
+    "French text by agy: no router cell (not waiting, or no cell for this engine)": 23,
+    "page_type blank": 8,
+    "page_type illustration": 5
+   },
+   "draw_languages": [
+    {
+     "language": "French",
+     "books_in_catalogue": 15697,
+     "examined": 2482
+    }
+   ],
+   "truth_holders": {
+    "judged read": 50
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 75,
+    "judged_pass": 67,
+    "failed": {
+     "judged on translation, not transcription": 8
+    }
+   },
+   "share_of_library": 0.020019832681952177,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "greek-flash3/print",
+   "router_cells": [
+    "greek-flash3/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 208482,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 50,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 50
+   },
+   "observed_kind": {
+    "print": 49,
+    "mixed": 1
+   },
+   "observed_script": {
+    "greek": 50
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 48,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Greek text by none: no router cell (not waiting, or no cell for this engine)": 2136,
+    "drawn page number not found": 788,
+    "cell already full": 474,
+    "page_type illustration": 18,
+    "page_type blank": 13,
+    "Greek text by agy: no router cell (not waiting, or no cell for this engine)": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Greek",
+     "books_in_catalogue": 5951,
+     "examined": 3615
+    }
+   ],
+   "truth_holders": {
+    "judged read": 50
+   },
+   "exclusions": {
+    "references_mapped": 38,
+    "references_pass": 0,
+    "judged_mapped": 109,
+    "judged_pass": 107,
+    "failed": {
+     "reference never checked against its leaf": 38,
+     "reference with no text": 15,
+     "judged on translation, not transcription": 2
+    }
+   },
+   "share_of_library": 0.029052537933906112,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "greek-flash3/manuscript",
+   "router_cells": [
+    "greek-flash3/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 46508,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 4,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 4
+   },
+   "observed_kind": {
+    "manuscript": 28,
+    "print": 2
+   },
+   "observed_script": {
+    "greek": 30
+   },
+   "observed_differs": 2,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 29,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Greek text by none: no router cell (not waiting, or no cell for this engine)": 2136,
+    "drawn page number not found": 788,
+    "cell already full": 474,
+    "page_type illustration": 18,
+    "page_type blank": 13,
+    "Greek text by agy: no router cell (not waiting, or no cell for this engine)": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Greek",
+     "books_in_catalogue": 5951,
+     "examined": 3615
+    }
+   ],
+   "truth_holders": {
+    "judged read": 4
+   },
+   "exclusions": {
+    "references_mapped": 1,
+    "references_pass": 0,
+    "judged_mapped": 11,
+    "judged_pass": 11,
+    "failed": {
+     "reference with no text": 1,
+     "reference never checked against its leaf": 1
+    }
+   },
+   "share_of_library": 0.006481017230408886,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "greek-flash3/unknown",
+   "router_cells": [
+    "greek-flash3/unknown"
+   ],
+   "pooled": false,
+   "pages_waiting": 164160,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 50,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 50
+   },
+   "observed_kind": {
+    "print": 33,
+    "manuscript": 17
+   },
+   "observed_script": {
+    "greek": 50
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 49,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Greek text by none: no router cell (not waiting, or no cell for this engine)": 2136,
+    "drawn page number not found": 788,
+    "cell already full": 474,
+    "page_type illustration": 18,
+    "page_type blank": 13,
+    "Greek text by agy: no router cell (not waiting, or no cell for this engine)": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Greek",
+     "books_in_catalogue": 5951,
+     "examined": 3615
+    }
+   ],
+   "truth_holders": {
+    "judged read": 50
+   },
+   "exclusions": {
+    "references_mapped": 20,
+    "references_pass": 0,
+    "judged_mapped": 65,
+    "judged_pass": 65,
+    "failed": {
+     "reference never checked against its leaf": 20,
+     "reference with no text": 11
+    }
+   },
+   "share_of_library": 0.022876145793066197,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "tibetan-yigdzin/manuscript",
+   "router_cells": [
+    "tibetan-yigdzin/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 272550,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 50,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 50
+   },
+   "observed_kind": {
+    "manuscript": 41,
+    "print": 7,
+    "mixed": 2
+   },
+   "observed_script": {
+    "tibetan": 49,
+    "indic": 1
+   },
+   "observed_differs": 9,
+   "class_source": {
+    "book_class (#5768), book level": 50
+   },
+   "catalogue_visible": 41,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "cell already full": 287,
+    "Tibetan text by none: no router cell (not waiting, or no cell for this engine)": 81,
+    "Tibetan text by flash3: no router cell (not waiting, or no cell for this engine)": 14,
+    "Tibetan text by lite: no router cell (not waiting, or no cell for this engine)": 12,
+    "drawn page number not found": 8,
+    "Tibetan text by agy: no router cell (not waiting, or no cell for this engine)": 5
+   },
+   "draw_languages": [
+    {
+     "language": "Tibetan",
+     "books_in_catalogue": 2392,
+     "examined": 478
+    }
+   ],
+   "truth_holders": {
+    "judged read": 50
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 117,
+    "judged_pass": 117,
+    "failed": {}
+   },
+   "share_of_library": 0.03798058927814445,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "zh-paddle-dice-lt090/manuscript",
+   "router_cells": [
+    "zh-paddle-dice-lt090/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 453715,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 50,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 50
+   },
+   "observed_kind": {
+    "manuscript": 49,
+    "print": 1
+   },
+   "observed_script": {
+    "cjk": 50
+   },
+   "observed_differs": 1,
+   "class_source": {
+    "book_class (#5768), book level": 48,
+    "read by eye (Claude Opus), page level": 2
+   },
+   "catalogue_visible": 48,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Chinese text by none: no router cell (not waiting, or no cell for this engine)": 4445,
+    "Paddle text with Kanripo dice >= 0.90 or unscreened: not waiting": 1942,
+    "cell already full": 693,
+    "drawn page number not found": 93,
+    "Chinese text by claude: no router cell (not waiting, or no cell for this engine)": 48,
+    "page_type illustration": 6
+   },
+   "draw_languages": [
+    {
+     "language": "Chinese",
+     "books_in_catalogue": 31773,
+     "examined": 7364
+    }
+   ],
+   "truth_holders": {
+    "judged read": 50
+   },
+   "exclusions": {
+    "references_mapped": 17,
+    "references_pass": 0,
+    "judged_mapped": 130,
+    "judged_pass": 124,
+    "failed": {
+     "reference never checked against its leaf": 17,
+     "judged on translation, not transcription": 6,
+     "reference with no text": 4
+    }
+   },
+   "share_of_library": 0.06322642841435813,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "chinese-flash3/print",
+   "router_cells": [
+    "chinese-flash3/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 84721,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 30,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 30
+   },
+   "observed_kind": {
+    "manuscript": 25,
+    "print": 5
+   },
+   "observed_script": {
+    "cjk": 30
+   },
+   "observed_differs": 25,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 27,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Chinese text by none: no router cell (not waiting, or no cell for this engine)": 4445,
+    "Paddle text with Kanripo dice >= 0.90 or unscreened: not waiting": 1942,
+    "cell already full": 693,
+    "drawn page number not found": 93,
+    "Chinese text by claude: no router cell (not waiting, or no cell for this engine)": 48,
+    "page_type illustration": 6
+   },
+   "draw_languages": [
+    {
+     "language": "Chinese",
+     "books_in_catalogue": 31773,
+     "examined": 7364
+    }
+   ],
+   "truth_holders": {
+    "judged read": 30
+   },
+   "exclusions": {
+    "references_mapped": 6,
+    "references_pass": 0,
+    "judged_mapped": 149,
+    "judged_pass": 139,
+    "failed": {
+     "judged on translation, not transcription": 10,
+     "reference never checked against its leaf": 6,
+     "reference with no text": 2
+    }
+   },
+   "share_of_library": 0.01180610348278729,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "zh-frame-6871/manuscript",
+   "router_cells": [
+    "zh-frame-6871/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 22220,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 29,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 29
+   },
+   "observed_kind": {
+    "manuscript": 30
+   },
+   "observed_script": {
+    "cjk": 30
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 30,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Chinese text by none: no router cell (not waiting, or no cell for this engine)": 4445,
+    "Paddle text with Kanripo dice >= 0.90 or unscreened: not waiting": 1942,
+    "cell already full": 693,
+    "drawn page number not found": 93,
+    "Chinese text by claude: no router cell (not waiting, or no cell for this engine)": 48,
+    "page_type illustration": 6
+   },
+   "draw_languages": [
+    {
+     "language": "Chinese",
+     "books_in_catalogue": 31773,
+     "examined": 7364
+    }
+   ],
+   "truth_holders": {
+    "judged read": 29
+   },
+   "exclusions": {
+    "references_mapped": 1,
+    "references_pass": 0,
+    "judged_mapped": 34,
+    "judged_pass": 34,
+    "failed": {
+     "reference never checked against its leaf": 1
+    }
+   },
+   "share_of_library": 0.0030964178820780393,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "hebrew-flash3/unknown",
+   "router_cells": [
+    "hebrew-flash3/unknown"
+   ],
+   "pooled": false,
+   "pages_waiting": 31242,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 30,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 30
+   },
+   "observed_kind": {
+    "print": 19,
+    "manuscript": 10,
+    "mixed": 1
+   },
+   "observed_script": {
+    "hebrew": 30
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 27,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 638,
+    "Hebrew text by none: no router cell (not waiting, or no cell for this engine)": 431,
+    "cell already full": 56,
+    "Hebrew text by lite: no router cell (not waiting, or no cell for this engine)": 25,
+    "page_type blank": 9,
+    "page_type illustration": 4
+   },
+   "draw_languages": [
+    {
+     "language": "Hebrew",
+     "books_in_catalogue": 2135,
+     "examined": 1225
+    }
+   ],
+   "truth_holders": {
+    "judged read": 30
+   },
+   "exclusions": {
+    "references_mapped": 1,
+    "references_pass": 0,
+    "judged_mapped": 44,
+    "judged_pass": 44,
+    "failed": {
+     "reference corrected from our own OCR": 1,
+     "reference never checked against its leaf": 1
+    }
+   },
+   "share_of_library": 0.004353658302064901,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "greek-lite/manuscript",
+   "router_cells": [
+    "greek-lite/manuscript"
+   ],
+   "pooled": false,
+   "pages_waiting": 30117,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 8,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 8
+   },
+   "observed_kind": {
+    "manuscript": 27,
+    "print": 3
+   },
+   "observed_script": {
+    "greek": 30
+   },
+   "observed_differs": 3,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 28,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Greek text by none: no router cell (not waiting, or no cell for this engine)": 2136,
+    "drawn page number not found": 788,
+    "cell already full": 474,
+    "page_type illustration": 18,
+    "page_type blank": 13,
+    "Greek text by agy: no router cell (not waiting, or no cell for this engine)": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Greek",
+     "books_in_catalogue": 5951,
+     "examined": 3615
+    }
+   ],
+   "truth_holders": {
+    "judged read": 8
+   },
+   "exclusions": {
+    "references_mapped": 1,
+    "references_pass": 0,
+    "judged_mapped": 256,
+    "judged_pass": 256,
+    "failed": {
+     "reference with no text": 1,
+     "reference never checked against its leaf": 1
+    }
+   },
+   "share_of_library": 0.004196886469601454,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "sanskrit-lite/print",
+   "router_cells": [
+    "sanskrit-lite/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 36624,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 13,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 13
+   },
+   "observed_kind": {
+    "print": 30
+   },
+   "observed_script": {
+    "indic": 27,
+    "latin": 1,
+    "unknown": 1,
+    "arabic": 1
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 18,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "no frame cell sanskrit-blank/unknown": 11011,
+    "drawn page number not found": 2020,
+    "cell already full": 988,
+    "Sanskrit text by flash3: no router cell (not waiting, or no cell for this engine)": 266,
+    "page_type blank": 29,
+    "page_type illustration": 6
+   },
+   "draw_languages": [
+    {
+     "language": "Sanskrit",
+     "books_in_catalogue": 14433,
+     "examined": 14367
+    }
+   ],
+   "truth_holders": {
+    "judged read": 13
+   },
+   "exclusions": {
+    "references_mapped": 9,
+    "references_pass": 0,
+    "judged_mapped": 256,
+    "judged_pass": 255,
+    "failed": {
+     "reference corrected from our own OCR": 9,
+     "reference never checked against its leaf": 9,
+     "judged on translation, not transcription": 1
+    }
+   },
+   "share_of_library": 0.0051036547485700315,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "italian-lite/print",
+   "router_cells": [
+    "italian-lite/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 45202,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 11,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 11
+   },
+   "observed_kind": {
+    "print": 30
+   },
+   "observed_script": {
+    "latin": 30
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 29,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 777,
+    "Italian text by none: no router cell (not waiting, or no cell for this engine)": 159,
+    "Italian text by flash3: no router cell (not waiting, or no cell for this engine)": 83,
+    "page_type illustration": 5,
+    "page_type blank": 4,
+    "Italian text by agy: no router cell (not waiting, or no cell for this engine)": 3
+   },
+   "draw_languages": [
+    {
+     "language": "Italian",
+     "books_in_catalogue": 4232,
+     "examined": 1068
+    }
+   ],
+   "truth_holders": {
+    "judged read": 11
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 45,
+    "judged_pass": 40,
+    "failed": {
+     "judged on translation, not transcription": 5
+    }
+   },
+   "share_of_library": 0.00629902255201132,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "latin-blank/print",
+   "router_cells": [
+    "latin-blank/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 2070214,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 50,
+    "judged_books": 0,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "reference: CAMENA cera/languet3": 2,
+    "reference: CAMENA thesaurus/Beze_icones": 2,
+    "reference: CAMENA historicapolitica/welser1": 2,
+    "reference: CAMENA poemata/drama": 2,
+    "reference: EEBO-TCP A00325": 2,
+    "reference: EEBO-TCP A52251": 2,
+    "reference: EEBO-TCP A51379": 1,
+    "reference: EEBO-TCP A04023": 1,
+    "reference: EEBO-TCP A67147": 1,
+    "reference: EEBO-TCP A50530": 1,
+    "reference: CAMENA poemata/Weitenauer_carmina": 1,
+    "reference: EEBO-TCP A20623": 1,
+    "reference: EEBO-TCP A16626": 1,
+    "reference: CAMENA poemata/Atrocianus_elegia": 1,
+    "reference: CAMENA poemata/bider1": 1,
+    "reference: EEBO-TCP A14289": 1,
+    "reference: CAMENA thesaurus/witzel1": 1,
+    "reference: CAMENA cera/p2": 1,
+    "reference: CAMENA historicapolitica/bornitz4": 1,
+    "reference: CAMENA poemata/frisc2": 1,
+    "reference: EEBO-TCP A43130": 1,
+    "reference: CAMENA poemata/bald10": 1,
+    "reference: CAMENA historicapolitica/besold16": 1,
+    "reference: CAMENA poemata/melis1": 1,
+    "reference: CAMENA cera/schurzfleisch2": 1,
+    "reference: EEBO-TCP A34333": 1,
+    "reference: CAMENA historicapolitica/knipschild1": 1,
+    "reference: CAMENA cera/lange1": 1,
+    "reference: la.wikisource Liber:Sphaera Ioannis de Sacrobosco emendata. ": 1,
+    "reference: CAMENA thesaurus/masen6": 1,
+    "reference: CAMENA poemata/pont1": 1,
+    "reference: CAMENA poemata/gwalt2": 1,
+    "reference: CAMENA cera/scholz1": 1,
+    "reference: EEBO-TCP A33731": 1,
+    "reference: CAMENA poemata/barza1": 1,
+    "reference: CAMENA poemata/gwalt1": 1,
+    "reference: EEBO-TCP A21113": 1,
+    "reference: EEBO-TCP A07600": 1,
+    "reference: EEBO-TCP A68344": 1,
+    "reference: CAMENA cera/gesner1": 1,
+    "reference: CAMENA poemata/locher2": 1,
+    "reference: CAMENA thesaurus/Boschius_symbolographia": 1,
+    "reference: EEBO-TCP A32705": 1,
+    "reference: EEBO-TCP A36017": 1
+   },
+   "observed_kind": {
+    "print": 49,
+    "manuscript": 1
+   },
+   "observed_script": {
+    "latin": 45,
+    "blackletter": 4,
+    "greek": 1
+   },
+   "observed_differs": 1,
+   "class_source": {
+    "book_class (#5768), book level": 39,
+    "read by eye (Claude Opus), page level": 11
+   },
+   "catalogue_visible": 30,
+   "image_unfetched": 1,
+   "draw_skips": {
+    "drawn page number not found": 13067,
+    "cell already full": 6453,
+    "Latin text by agy: no router cell (not waiting, or no cell for this engine)": 126,
+    "page_type blank": 63,
+    "page_type illustration": 23,
+    "page_type map": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Latin",
+     "books_in_catalogue": 162312,
+     "examined": 20000
+    }
+   ],
+   "truth_holders": {
+    "CAMENA": 30,
+    "EEBO-TCP": 19,
+    "la.wikisource": 1
+   },
+   "exclusions": {
+    "references_mapped": 273,
+    "references_pass": 180,
+    "judged_mapped": 36,
+    "judged_pass": 36,
+    "failed": {
+     "reference made by a model": 85,
+     "reference with no text": 8,
+     "reference never checked against its leaf": 8
+    }
+   },
+   "share_of_library": 0.2884899932190957,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "german-blank/print",
+   "router_cells": [
+    "german-blank/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 320128,
+   "target_books": 50,
+   "drawn_books": 50,
+   "drawn_pages": 50,
+   "reserve_pages": 10,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 6,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 6
+   },
+   "observed_kind": {
+    "print": 34,
+    "manuscript": 7,
+    "none": 6,
+    "unknown": 3
+   },
+   "observed_script": {
+    "blackletter": 27,
+    "latin": 14,
+    "none": 6,
+    "unknown": 3
+   },
+   "observed_differs": 7,
+   "class_source": {
+    "read by eye (Claude Opus), page level": 35,
+    "book_class (#5768), book level": 12,
+    "not classified": 3
+   },
+   "catalogue_visible": 28,
+   "image_unfetched": 3,
+   "draw_skips": {
+    "drawn page number not found": 16031,
+    "cell already full": 1023,
+    "German text by agy: no router cell (not waiting, or no cell for this engine)": 175,
+    "page_type blank": 21,
+    "German text by other: no router cell (not waiting, or no cell for this engine)": 1,
+    "German text by claude: no router cell (not waiting, or no cell for this engine)": 1
+   },
+   "draw_languages": [
+    {
+     "language": "German",
+     "books_in_catalogue": 147161,
+     "examined": 17459
+    }
+   ],
+   "truth_holders": {
+    "judged read": 6
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 6,
+    "judged_pass": 6,
+    "failed": {}
+   },
+   "share_of_library": 0.04461071394031857,
+   "share_of_set": 0.04325259515570934
+  },
+  {
+   "id": "french-blank/print",
+   "router_cells": [
+    "french-blank/print"
+   ],
+   "pooled": false,
+   "pages_waiting": 36242,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 17,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 17
+   },
+   "observed_kind": {
+    "print": 20,
+    "unknown": 7,
+    "manuscript": 2,
+    "mixed": 1
+   },
+   "observed_script": {
+    "latin": 21,
+    "unknown": 7,
+    "greek": 1,
+    "blackletter": 1
+   },
+   "observed_differs": 2,
+   "class_source": {
+    "read by eye (Claude Opus), page level": 14,
+    "book_class (#5768), book level": 9,
+    "not classified": 7
+   },
+   "catalogue_visible": 24,
+   "image_unfetched": 7,
+   "draw_skips": {
+    "drawn page number not found": 2126,
+    "cell already full": 169,
+    "French text by flash3: no router cell (not waiting, or no cell for this engine)": 63,
+    "French text by agy: no router cell (not waiting, or no cell for this engine)": 23,
+    "page_type blank": 8,
+    "page_type illustration": 5
+   },
+   "draw_languages": [
+    {
+     "language": "French",
+     "books_in_catalogue": 15697,
+     "examined": 2482
+    }
+   ],
+   "truth_holders": {
+    "judged read": 17
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 19,
+    "judged_pass": 19,
+    "failed": {}
+   },
+   "share_of_library": 0.005050422001902443,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "english-blank-pre1800/unknown",
+   "router_cells": [
+    "english-blank-pre1800/unknown"
+   ],
+   "pooled": false,
+   "pages_waiting": 41224,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 2,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 2
+   },
+   "observed_kind": {
+    "print": 27,
+    "unknown": 2,
+    "mixed": 1
+   },
+   "observed_script": {
+    "latin": 24,
+    "blackletter": 4,
+    "unknown": 2
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "read by eye (Claude Opus), page level": 16,
+    "book_class (#5768), book level": 12,
+    "not classified": 2
+   },
+   "catalogue_visible": 14,
+   "image_unfetched": 2,
+   "draw_skips": {
+    "drawn page number not found": 945,
+    "English text by other: no router cell (not waiting, or no cell for this engine)": 28,
+    "English text by lite: no router cell (not waiting, or no cell for this engine)": 23,
+    "English text by flash3: no router cell (not waiting, or no cell for this engine)": 22,
+    "English, no stored text, 1800 or later or undated: no cell": 20,
+    "page_type illustration": 2
+   },
+   "draw_languages": [
+    {
+     "language": "English",
+     "books_in_catalogue": 59978,
+     "examined": 1073
+    }
+   ],
+   "truth_holders": {
+    "judged read": 2
+   },
+   "exclusions": {
+    "references_mapped": 22,
+    "references_pass": 0,
+    "judged_mapped": 3,
+    "judged_pass": 3,
+    "failed": {
+     "reference made by a model": 22
+    }
+   },
+   "share_of_library": 0.005744677352420571,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "other-latin-script",
+   "router_cells": [
+    "german-lite/manuscript",
+    "german-flash3/manuscript",
+    "french-lite/manuscript",
+    "italian-lite/manuscript",
+    "spanish-lite/print",
+    "spanish-lite/manuscript",
+    "portuguese-lite/print",
+    "portuguese-lite/manuscript",
+    "danish-lite/print",
+    "danish-lite/manuscript",
+    "middle-english-lite/print",
+    "middle-english-lite/manuscript",
+    "mhg-lite/print",
+    "mhg-lite/manuscript",
+    "old-french-lite/print",
+    "old-french-lite/manuscript",
+    "turkish-lite/print",
+    "turkish-lite/manuscript"
+   ],
+   "pooled": true,
+   "pages_waiting": 53114,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 30,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 30
+   },
+   "observed_kind": {
+    "print": 22,
+    "manuscript": 8
+   },
+   "observed_script": {
+    "latin": 30
+   },
+   "observed_differs": 6,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 30,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 20526,
+    "cell already full": 1196,
+    "German text by agy: no router cell (not waiting, or no cell for this engine)": 175,
+    "Spanish text by none: no router cell (not waiting, or no cell for this engine)": 172,
+    "Italian text by none: no router cell (not waiting, or no cell for this engine)": 159,
+    "Italian text by flash3: no router cell (not waiting, or no cell for this engine)": 83
+   },
+   "draw_languages": [
+    {
+     "language": "German",
+     "books_in_catalogue": 147161,
+     "examined": 17459
+    },
+    {
+     "language": "French",
+     "books_in_catalogue": 15697,
+     "examined": 2482
+    },
+    {
+     "language": "Italian",
+     "books_in_catalogue": 4232,
+     "examined": 1068
+    },
+    {
+     "language": "Spanish",
+     "books_in_catalogue": 676,
+     "examined": 286
+    },
+    {
+     "language": "Portuguese",
+     "books_in_catalogue": 121,
+     "examined": 6
+    },
+    {
+     "language": "Danish",
+     "books_in_catalogue": 5947,
+     "examined": 1527
+    },
+    {
+     "language": "Middle English",
+     "books_in_catalogue": 32,
+     "examined": 8
+    },
+    {
+     "language": "Middle High German",
+     "books_in_catalogue": 30,
+     "examined": 2
+    },
+    {
+     "language": "Old French",
+     "books_in_catalogue": 17,
+     "examined": 1
+    }
+   ],
+   "truth_holders": {
+    "judged read": 30
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 83,
+    "judged_pass": 68,
+    "failed": {
+     "judged on translation, not transcription": 15
+    }
+   },
+   "share_of_library": 0.007401581430634247,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "other-tibetan",
+   "router_cells": [
+    "tibetan-yigdzin/print",
+    "tibetan-yigdzin/unknown"
+   ],
+   "pooled": true,
+   "pages_waiting": 8074,
+   "target_books": 15,
+   "drawn_books": 15,
+   "drawn_pages": 15,
+   "reserve_pages": 3,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 2,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 2
+   },
+   "observed_kind": {
+    "print": 12,
+    "manuscript": 3
+   },
+   "observed_script": {
+    "tibetan": 15
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 15
+   },
+   "catalogue_visible": 2,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "cell already full": 287,
+    "Tibetan text by none: no router cell (not waiting, or no cell for this engine)": 81,
+    "Tibetan text by flash3: no router cell (not waiting, or no cell for this engine)": 14,
+    "Tibetan text by lite: no router cell (not waiting, or no cell for this engine)": 12,
+    "drawn page number not found": 8,
+    "Tibetan text by agy: no router cell (not waiting, or no cell for this engine)": 5
+   },
+   "draw_languages": [
+    {
+     "language": "Tibetan",
+     "books_in_catalogue": 2392,
+     "examined": 478
+    }
+   ],
+   "truth_holders": {
+    "judged read": 2
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 2,
+    "judged_pass": 2,
+    "failed": {}
+   },
+   "share_of_library": 0.0011251340224976637,
+   "share_of_set": 0.012975778546712802
+  },
+  {
+   "id": "other-cjk",
+   "router_cells": [
+    "chinese-flash3/manuscript",
+    "chinese-flash3/unknown",
+    "zh-lite/print",
+    "zh-lite/manuscript",
+    "korean-lite/print",
+    "korean-lite/manuscript"
+   ],
+   "pooled": true,
+   "pages_waiting": 54457,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 30,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 30
+   },
+   "observed_kind": {
+    "print": 20,
+    "manuscript": 9,
+    "mixed": 1
+   },
+   "observed_script": {
+    "cjk": 30
+   },
+   "observed_differs": 10,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 28,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Chinese text by none: no router cell (not waiting, or no cell for this engine)": 4445,
+    "Paddle text with Kanripo dice >= 0.90 or unscreened: not waiting": 1942,
+    "cell already full": 695,
+    "drawn page number not found": 94,
+    "Chinese text by claude: no router cell (not waiting, or no cell for this engine)": 48,
+    "page_type illustration": 6
+   },
+   "draw_languages": [
+    {
+     "language": "Chinese",
+     "books_in_catalogue": 31773,
+     "examined": 7364
+    },
+    {
+     "language": "Korean",
+     "books_in_catalogue": 319,
+     "examined": 21
+    }
+   ],
+   "truth_holders": {
+    "judged read": 30
+   },
+   "exclusions": {
+    "references_mapped": 12,
+    "references_pass": 0,
+    "judged_mapped": 167,
+    "judged_pass": 165,
+    "failed": {
+     "reference never checked against its leaf": 12,
+     "reference with no text": 9,
+     "judged on translation, not transcription": 2
+    }
+   },
+   "share_of_library": 0.007588732160410611,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "other-hebrew",
+   "router_cells": [
+    "hebrew-flash3/print",
+    "hebrew-flash3/manuscript"
+   ],
+   "pooled": true,
+   "pages_waiting": 20117,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 12,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 12
+   },
+   "observed_kind": {
+    "manuscript": 16,
+    "print": 14
+   },
+   "observed_script": {
+    "hebrew": 29,
+    "arabic": 1
+   },
+   "observed_differs": 6,
+   "class_source": {
+    "book_class (#5768), book level": 30
+   },
+   "catalogue_visible": 29,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "drawn page number not found": 638,
+    "Hebrew text by none: no router cell (not waiting, or no cell for this engine)": 431,
+    "cell already full": 56,
+    "Hebrew text by lite: no router cell (not waiting, or no cell for this engine)": 25,
+    "page_type blank": 9,
+    "page_type illustration": 4
+   },
+   "draw_languages": [
+    {
+     "language": "Hebrew",
+     "books_in_catalogue": 2135,
+     "examined": 1225
+    }
+   ],
+   "truth_holders": {
+    "judged read": 12
+   },
+   "exclusions": {
+    "references_mapped": 4,
+    "references_pass": 0,
+    "judged_mapped": 23,
+    "judged_pass": 23,
+    "failed": {
+     "reference corrected from our own OCR": 4,
+     "reference never checked against its leaf": 4
+    }
+   },
+   "share_of_library": 0.002803359069926369,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "other-arabic",
+   "router_cells": [
+    "arabic-flash3/print",
+    "arabic-flash3/manuscript",
+    "arabic-flash3/unknown",
+    "arabic-lite/print",
+    "arabic-lite/manuscript",
+    "ottoman-lite/print",
+    "ottoman-lite/manuscript"
+   ],
+   "pooled": true,
+   "pages_waiting": 58034,
+   "target_books": 30,
+   "drawn_books": 30,
+   "drawn_pages": 30,
+   "reserve_pages": 6,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 30,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 30
+   },
+   "observed_kind": {
+    "manuscript": 14,
+    "print": 13,
+    "none": 2,
+    "mixed": 1
+   },
+   "observed_script": {
+    "arabic": 28,
+    "none": 2
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 20,
+    "read by eye (Claude Opus), page level": 10
+   },
+   "catalogue_visible": 19,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Arabic text by agy: no router cell (not waiting, or no cell for this engine)": 180,
+    "Arabic text by none: no router cell (not waiting, or no cell for this engine)": 140,
+    "cell already full": 128,
+    "page_type blank": 34,
+    "page_type illustration": 9,
+    "Arabic text by claude: no router cell (not waiting, or no cell for this engine)": 5
+   },
+   "draw_languages": [
+    {
+     "language": "Arabic",
+     "books_in_catalogue": 3236,
+     "examined": 527
+    }
+   ],
+   "truth_holders": {
+    "judged read": 30
+   },
+   "exclusions": {
+    "references_mapped": 11,
+    "references_pass": 0,
+    "judged_mapped": 335,
+    "judged_pass": 332,
+    "failed": {
+     "reference corrected from our own OCR": 11,
+     "reference never checked against its leaf": 11,
+     "judged on translation, not transcription": 3
+    }
+   },
+   "share_of_library": 0.008087196911274389,
+   "share_of_set": 0.025951557093425604
+  },
+  {
+   "id": "other-greek",
+   "router_cells": [
+    "greek-lite/print"
+   ],
+   "pooled": true,
+   "pages_waiting": 12799,
+   "target_books": 15,
+   "drawn_books": 15,
+   "drawn_pages": 15,
+   "reserve_pages": 3,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 7,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 7
+   },
+   "observed_kind": {
+    "print": 15
+   },
+   "observed_script": {
+    "greek": 15
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 15
+   },
+   "catalogue_visible": 9,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Greek text by none: no router cell (not waiting, or no cell for this engine)": 2136,
+    "drawn page number not found": 788,
+    "cell already full": 474,
+    "page_type illustration": 18,
+    "page_type blank": 13,
+    "Greek text by agy: no router cell (not waiting, or no cell for this engine)": 7
+   },
+   "draw_languages": [
+    {
+     "language": "Greek",
+     "books_in_catalogue": 5951,
+     "examined": 3615
+    }
+   ],
+   "truth_holders": {
+    "judged read": 7
+   },
+   "exclusions": {
+    "references_mapped": 2,
+    "references_pass": 0,
+    "judged_mapped": 15,
+    "judged_pass": 8,
+    "failed": {
+     "judged on translation, not transcription": 7,
+     "reference never checked against its leaf": 2,
+     "reference with no text": 1
+    }
+   },
+   "share_of_library": 0.0017835757188441415,
+   "share_of_set": 0.012975778546712802
+  },
+  {
+   "id": "other-indic",
+   "router_cells": [
+    "sanskrit-lite/manuscript",
+    "sanskrit-lite/unknown",
+    "hindi-lite/print",
+    "tamil-lite/print",
+    "tamil-lite/manuscript"
+   ],
+   "pooled": true,
+   "pages_waiting": 3165,
+   "target_books": 15,
+   "drawn_books": 13,
+   "drawn_pages": 13,
+   "reserve_pages": 3,
+   "short_router_cells": [
+    {
+     "id": "sanskrit-lite/unknown",
+     "drawn": 0,
+     "quota": 2
+    }
+   ],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 2,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 2
+   },
+   "observed_kind": {
+    "manuscript": 12,
+    "print": 1
+   },
+   "observed_script": {
+    "indic": 13
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 13
+   },
+   "catalogue_visible": 1,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "no frame cell sanskrit-blank/unknown": 11011,
+    "drawn page number not found": 2020,
+    "cell already full": 988,
+    "Tamil text by none: no router cell (not waiting, or no cell for this engine)": 979,
+    "Sanskrit text by flash3: no router cell (not waiting, or no cell for this engine)": 266,
+    "page_type blank": 29
+   },
+   "draw_languages": [
+    {
+     "language": "Sanskrit",
+     "books_in_catalogue": 14433,
+     "examined": 14367
+    },
+    {
+     "language": "Tamil",
+     "books_in_catalogue": 2686,
+     "examined": 983
+    }
+   ],
+   "truth_holders": {
+    "judged read": 2
+   },
+   "exclusions": {
+    "references_mapped": 1,
+    "references_pass": 0,
+    "judged_mapped": 2,
+    "judged_pass": 2,
+    "failed": {
+     "reference corrected from our own OCR": 1,
+     "reference never checked against its leaf": 1
+    }
+   },
+   "share_of_library": 0.00044105142199716446,
+   "share_of_set": 0.01124567474048443
+  },
+  {
+   "id": "other-cyrillic",
+   "router_cells": [
+    "russian-lite/print",
+    "russian-lite/manuscript"
+   ],
+   "pooled": true,
+   "pages_waiting": 18952,
+   "target_books": 15,
+   "drawn_books": 15,
+   "drawn_pages": 15,
+   "reserve_pages": 3,
+   "short_router_cells": [],
+   "existing": {
+    "reference_books": 0,
+    "judged_books": 3,
+    "canonical_reference_books": 0
+   },
+   "truth_sources": {
+    "judged read (lane_judge_verdicts)": 3
+   },
+   "observed_kind": {
+    "print": 15
+   },
+   "observed_script": {
+    "cyrillic": 15
+   },
+   "observed_differs": 0,
+   "class_source": {
+    "book_class (#5768), book level": 15
+   },
+   "catalogue_visible": 14,
+   "image_unfetched": 0,
+   "draw_skips": {
+    "Russian text by flash3: no router cell (not waiting, or no cell for this engine)": 74,
+    "Russian text by none: no router cell (not waiting, or no cell for this engine)": 30,
+    "drawn page number not found": 16,
+    "page_type blank": 3,
+    "Russian text by agy: no router cell (not waiting, or no cell for this engine)": 1,
+    "page_type illustration": 1
+   },
+   "draw_languages": [
+    {
+     "language": "Russian",
+     "books_in_catalogue": 405,
+     "examined": 140
+    }
+   ],
+   "truth_holders": {
+    "judged read": 3
+   },
+   "exclusions": {
+    "references_mapped": 0,
+    "references_pass": 0,
+    "judged_mapped": 5,
+    "judged_pass": 3,
+    "failed": {
+     "judged on translation, not transcription": 2
+    }
+   },
+   "share_of_library": 0.0026410131278642216,
+   "share_of_set": 0.012975778546712802
+  }
+ ]
+}

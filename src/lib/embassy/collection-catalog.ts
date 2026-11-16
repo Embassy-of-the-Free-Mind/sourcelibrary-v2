@@ -105,3 +105,14 @@ export async function resolveCollectionSlug(input: string | null | undefined): P
   // Require a majority token overlap to avoid spurious weighting.
   return best && best.score >= 0.5 ? best.slug : null;
 }
+
+/**
+ * The reader-facing name of a collection, for text a reader sees (a search
+ * step's status row). Null when the slug is unknown: say nothing rather than
+ * print a slug (v3#250: "focused on before-ficino").
+ */
+export async function collectionNameForSlug(slug: string | null | undefined): Promise<string | null> {
+  if (!slug) return null;
+  const entry = (await getCollectionCatalog()).find(e => e.slug === slug);
+  return entry?.name ?? null;
+}

@@ -32,7 +32,7 @@ import { execFileSync, execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 export const NEVER_CLOSE = ['blocked', 'keep'];
-export const REQUIRED_CHECKS = ['test', 'DCO'];
+export const REQUIRED_CHECKS = ['test', 'static', 'DCO']; // static: split out of test (#239)
 const HOLD_GRACE_DAYS = 30;
 
 const isBot = (a) => !a || a.is_bot || /\[bot\]$|^app\//.test(a.login || '') || a.login === 'dependabot';

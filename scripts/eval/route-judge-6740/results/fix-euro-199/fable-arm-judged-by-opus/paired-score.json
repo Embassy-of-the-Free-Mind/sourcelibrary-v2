@@ -1,0 +1,149 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "model",
+  "issue": 199,
+  "stage": "ocr",
+  "languages": [
+   "German",
+   "English",
+   "Italian",
+   "French",
+   "Dutch",
+   "Spanish"
+  ],
+  "baseline": "stored",
+  "arms": [
+   "stored",
+   "stored-fable"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — a pooled test of untested euro cells (30 pages, 10 cells); no cell reaches the table n",
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "euro": {
+     "routes": {
+      "stored": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "9/30",
+       "accept_wilson": [
+        0.167,
+        0.479
+       ],
+       "accept_by_book": [
+        0.133,
+        0.467
+       ],
+       "wrong_text_pages": "17/30",
+       "wrong_text_wilson": [
+        0.392,
+        0.726
+       ],
+       "fidelity_mean": 3.27,
+       "counts": true,
+       "words": 9867,
+       "misleads_per_1k": 5.07,
+       "wrong_text_per_1k": 4.26
+      },
+      "stored-fable": {
+       "n": 28,
+       "books": 28,
+       "unjudged": 0,
+       "accept": "27/28",
+       "accept_wilson": [
+        0.823,
+        0.994
+       ],
+       "accept_by_book": [
+        0.893,
+        1
+       ],
+       "wrong_text_pages": "0/28",
+       "wrong_text_wilson": [
+        0,
+        0.121
+       ],
+       "fidelity_mean": 4.64,
+       "counts": true,
+       "words": 10286,
+       "misleads_per_1k": 0.68,
+       "wrong_text_per_1k": 0
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 3,
+       "passed": true
+      },
+      "stored-fable": {
+       "n": 3,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 5,
+      "accept_flips": "0/5",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0.4
+     },
+     "against_baseline": {
+      "stored -> stored-fable": {
+       "shared_pages": 28,
+       "better": "23/28",
+       "worse": "0/28",
+       "accept_gained": 18,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.25
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "2 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 2 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "5 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

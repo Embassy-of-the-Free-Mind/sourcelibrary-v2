@@ -1,0 +1,2 @@
+{"page_id":"69dbc8e91040d1d5e209d619","run_id":"cli-ocr-20261112140807-3336375","reverted_at":"2026-11-12","revert_run":"revert:cli-ocr-20261112140807-3336375","why":"both audit judges: worse (index page written as blank)"}
+{"page_id":"69dbcb371040d1d5e20b3c5a","run_id":"cli-ocr-20261112141428-3358584","reverted_at":"2026-11-12","revert_run":"revert:cli-ocr-20261112141428-3358584","why":"both audit judges: worse (new misreads)"}

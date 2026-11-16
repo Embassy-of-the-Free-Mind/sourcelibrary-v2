@@ -27,6 +27,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { entryFromCredit, ledgerOp, LEDGER } from './ledger-lib.mjs';
+import { englishOriginEvidence } from './english-origin.mjs';
 
 const DIR = process.argv[2];
 const APPLY = process.argv.includes('--apply');
@@ -119,6 +120,9 @@ function handle(r, inheritedFrom = null) {
       action = 'first_confirmed_search_added';
       if (!b.first_translation?.best_attempt_id) set['first_translation.best_attempt_id'] = attempt_id;
     } else if (ENGLISH.test(`${b.language ?? ''} ${b.original_language ?? ''}`)) action = 'none_found_english_book';
+    // The search's own words say the work was English to begin with (v3#32): no badge, whatever the language tag.
+    // A sibling is handled with its representative's answer (work_identified kept, card replaced), so it is withheld too.
+    else if (englishOriginEvidence(r)) action = 'none_found_english_origin';
     else if ((b.pages_translated ?? 0) > 0 && b.visible) {
       set.is_first_translation = true;
       set.first_translation = { verdict: 'first_no_prior', evidence_strength: 'weak', best_attempt_id: attempt_id, decided_at: NOW, decided_by: BY };
@@ -148,7 +152,7 @@ for (const r of recs) {
   // Only a repeat-free none_found travels; a credit, a partial or an unclear answer leaves the siblings eligible.
   if (!attemptId || r.verdict !== 'none_found') continue;
   for (const sib of SIBLINGS[r._book] || []) {
-    const sr = handle({ ...r, _book: sib, prior: null, metadata_issue: null, card: `Searched for an earlier English translation of this work (via another volume of it); none found.` }, attemptId);
+    const sr = handle({ ...r, _book: sib, prior: null, metadata_issue: null, card: `${englishOriginEvidence(r) ? `${r.card || ''} ` : ''}Searched for an earlier English translation of this work (via another volume of it); none found.` }, attemptId);
     if (sr) inc('sibling_inherited');
   }
 }

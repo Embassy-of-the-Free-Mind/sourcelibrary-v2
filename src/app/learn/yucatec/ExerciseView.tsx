@@ -393,7 +393,7 @@ export function Feedback({ ex, correct, explanation, misses }: { ex: Exercise; c
 
   return (
     <div className="text-base">
-      <p className={`flex items-center gap-2 font-bold text-xl mb-1 ${correct ? 'text-emerald-700' : 'text-accent-rust'}`}>
+      <p className={`flex items-center gap-2 font-semibold text-xl mb-1 ${correct ? 'text-emerald-700' : 'text-accent-rust'}`}>
         <span aria-hidden className={`inline-flex w-8 h-8 yk-pill items-center justify-center text-white text-lg yk-pop ${correct ? 'bg-emerald-600' : 'bg-accent-rust'}`}>{correct ? '✓' : '×'}</span>
         {correct ? 'Yes.' : 'Not quite.'}
       </p>

@@ -108,6 +108,14 @@ describe('parseReadableFigures', () => {
   it('returns nothing when the copy changed', () => {
     expect(parseReadableFigures('<p>20,189 translated books</p>')).toEqual([]);
   });
+  it('drops a count-up counter\'s server-rendered 0 when the page carries the figure too (/about, 2026-11-12)', () => {
+    const about = '<div role="img" aria-label="12630 first translations and 24007 books readable in English, out of 71315 books online"></div>'
+      + '<dt><span class="font-serif">0</span></dt><dd class="mt-3">readable in English</dd>';
+    expect(parseReadableFigures(about)).toEqual([24007]);
+  });
+  it('keeps a 0 that is the only figure, so a broken stats source still fails', () => {
+    expect(parseReadableFigures('<span>0</span><dd>readable in English</dd>')).toEqual([0]);
+  });
 });
 
 describe('isCarryForwardShape', () => {

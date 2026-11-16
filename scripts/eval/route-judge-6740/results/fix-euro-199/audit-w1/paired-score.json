@@ -1,0 +1,111 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": null,
+ "judges": {
+  "fable": {
+   "cells": {
+    "euro": {
+     "routes": {
+      "stored": {
+       "n": 10,
+       "books": 9,
+       "unjudged": 0,
+       "accept": "4/10",
+       "accept_wilson": [
+        0.168,
+        0.687
+       ],
+       "accept_by_book": [
+        0,
+        0.727
+       ],
+       "wrong_text_pages": "6/10",
+       "wrong_text_wilson": [
+        0.313,
+        0.832
+       ],
+       "fidelity_mean": 3.4,
+       "counts": true,
+       "words": 2806,
+       "misleads_per_1k": 6.77,
+       "wrong_text_per_1k": 3.92
+      },
+      "written": {
+       "n": 10,
+       "books": 9,
+       "unjudged": 0,
+       "accept": "10/10",
+       "accept_wilson": [
+        0.722,
+        1
+       ],
+       "accept_by_book": [
+        1,
+        1
+       ],
+       "wrong_text_pages": "0/10",
+       "wrong_text_wilson": [
+        0,
+        0.278
+       ],
+       "fidelity_mean": 4.9,
+       "counts": true,
+       "words": 2941,
+       "misleads_per_1k": 0,
+       "wrong_text_per_1k": 0
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 2,
+       "passed": true
+      },
+      "written": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R0",
+   "ok": false,
+   "detail": "no recipe.json: run `init` and state the design before judging"
+  },
+  {
+   "rule": "R1",
+   "ok": false,
+   "detail": "euro/stored: 1 book(s) with more than one page (69c8839e6c6f3cc53c8597e3×2); euro/written: 1 book(s) with more than one page (69c8839e6c6f3cc53c8597e3×2)",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 2 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": false,
+   "detail": "no noise floor: 0 'repeat' rows (need >= 5) and no recipe.noise_floor.from",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": false,
+   "detail": "recipe.batch.pages_per_call not stated",
+   "waived": false
+  }
+ ]
+}

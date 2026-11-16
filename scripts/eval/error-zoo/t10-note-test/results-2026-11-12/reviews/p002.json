@@ -1,0 +1,98 @@
+[
+  {
+    "book_id": "69d5ac04d0bd3547a5654b83",
+    "slot": 1,
+    "title": "Armenian Manuscript (Armenien 128)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Armenian manuscript catalogued as Armenian. The page is hagiography in a handwritten Armenian hand. No tradition or collection is given to test it against.",
+    "rights_flag": null,
+    "structure_note": "Only 282 of 582 records carry a printed number, so the 14 backsteps and 17 repeats most likely come from pencil foliation that was misread or written irregularly, not from a broken sequence. The counts disagree with each other: structure pages_translated is 0, but the book field says 554 (E2). The OCR <vocab> says '14th century manuscript', which nothing on this paper leaf supports.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 533,
+        "right_page": "yes",
+        "printed_marker": "271",
+        "layout": "two ruled columns; a small two-line marginal note left of column 1 at about line 13; first line of column 2 struck through; several faded or erased lines below column 2; pencil number 271 at the foot",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ելեալ յառաջ փառաց. նմա",
+            "image": "the first line of column 2 is struck through in ink",
+            "problem": "a cancelled line is transcribed as running text with no deletion mark, so the translation reads it as part of the narrative ('He went forth before glory')",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "վասն յաւիտեանս յաւիտեան.",
+            "image": "below the last line of column 2 there are several faded or erased lines and a short final line",
+            "problem": "the faded lines are left out with no lacuna or illegibility marker",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Բաղումէ ... Բաղով ... ըստ Բաղայ ... Բաղայեալ ... Բաղում ... Բաղեաց ... Բաղյ ... Բաղա",
+            "image": "at this resolution the hand cannot be checked word by word",
+            "problem": "a stem 'Բաղ-' recurs about ten times in forms that do not hang together grammatically. That is a typical sign of a misread repeated across the page. Column 2 also seems to have about 22 lines on the image against 20 in the OCR. I cannot confirm either point.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "եկային քահանայք Բաղով\nհազար ըստ Բաղայ ելեալ\nցեալք եդեալք հարկանէին",
+            "english": "There\ncame priests with <unclear>Bagh</unclear>,\na thousand, <unclear>going out according to Bagh, set down</unclear>, and they struck",
+            "problem": "it renders word by word OCR that is probably garbled. The hedging is honest, but what results is not a sentence the source says.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ելեալ յառաջ փառաց. նմա",
+            "english": "He went forth before glory. To him",
+            "problem": "a line the scribe struck through is translated as text",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "source": "line-broken manuscript text",
+            "english": "Then,\nhaving kept a heavenly vigil,\nthe bishops, the bishops\nof <unclear>Baghum</unclear>.",
+            "problem": "the manuscript's line breaks are carried into the English prose",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "a raw <column-break/> tag sits in the middle of the English reader text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "the English contains '<margin>Note</margin>', a single marginal word rendered as 'Note' and placed inside the sentence ('they struck <margin>Note</margin> his two')",
+            "severity": "minor"
+          },
+          {
+            "note": "the OCR <vocab> asserts '14th century manuscript', a date that is not on the leaf",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [],
+          "missing": [
+            {
+              "english": "the holy\nCross was revealed, which is at <unclear>Varag</unclear>",
+              "why": "the Holy Cross of Varag is an Armenian relic tradition, and a general reader will not know what Varag is or why its Cross matters"
+            },
+            {
+              "english": "<margin>Note</margin>",
+              "why": "nothing tells the reader that this is a marginal annotation in the manuscript, or what it marks"
+            }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "The leaf matches its record: two columns of Armenian hagiography with pencil foliation 271. I could not check the bolorgir word by word at this resolution, and the OCR looks shaky (a repeated 'Բաղ-' stem, a struck-through line kept as text, faded lines dropped). The English hedges heavily with <unclear>, but it shows a raw <column-break/> and carries no notes."
+  }
+]

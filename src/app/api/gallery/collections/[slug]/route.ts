@@ -88,7 +88,7 @@ export const PATCH = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * POST /api/gallery/collections/[slug] with ?action=delete
@@ -120,7 +120,7 @@ export const POST = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * Resolve gallery image IDs to full item data.

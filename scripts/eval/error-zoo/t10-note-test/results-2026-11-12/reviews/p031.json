@@ -1,0 +1,59 @@
+[
+  {
+    "book_id": "31f820f4-d3d8-4a68-a025-40b69230d35f",
+    "slot": 1,
+    "title": "Polygraphia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1561 French Trithemius (Collange translation) printed on hand-made paper; it belongs in a historical cryptography/early-print collection. 'americana' looks like a catch-all Internet Archive tag rather than a subject fit, but it does no harm.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree: structure.pages_translated is 0, but pages_translated_field is 644. The 35 printed backsteps and 27 repeats are most likely not real defects. This page shows why: the OCR puts the alphabet numbers '88, 89, 90' into <page-num> although the leaf has no page number, so cipher-table numbers are being counted as page numbers (O11).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 352,
+        "right_page": "yes",
+        "printed_marker": "a ſama- (catchword); no page number visible (88, 89, 90 are alphabet numbers)",
+        "layout": "three-column cipher table (letter + code word), running head 'LIVRE TROISIESME', catchword bottom right",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "**m** memoran", "image": "m emoran", "problem": "The code word is printed 'emoran' after the key letter m. The OCR doubled the m, and the translation and a note then build on 'Memoran'.", "severity": "moderate", "class": "O6" },
+          { "ocr": "<page-num>88, 89, 90</page-num>", "image": "88 / 89 / 90 as alphabet headings; no page number on the leaf", "problem": "Alphabet numbers are tagged as the page number, which corrupts the printed-number counts", "severity": "moderate", "class": "O11" },
+          { "ocr": "Catchword \"a fama-\" at bottom right.", "image": "a ſama-", "problem": "Long s in the catchword is read as f (in the meta only)", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "**m** amores / **q** equales / **r** arcades / **u** rutiles / **e** zefires", "english": "| m | **Loves** <note>original: \"amores\"</note> |  … **Equals**, **Arcadians**, **Ruddy ones**, **Zephyrs**", "problem": "In a cipher alphabet the code words are the content. Five cells replace the printed code word with an English rendering, so the table no longer gives the word to write for each letter. The original appears only in a note. The treatment is also inconsistent: 'Abates', 'Adipes' and 'Andres' are kept as printed.", "severity": "moderate", "class": "T16" },
+          { "source": "<header>LIVRE TROISIESME</header>", "english": "# BOOK THREE", "problem": "Running head promoted to an H1 heading", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "Raw '<column-break/>' tags appear twice in the reader text between the tables", "severity": "moderate", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "Recalls Latin \"schola\", school.", "verdict": "ok", "helpful": false },
+            { "quote": "Recalls \"chorus\", a choir or dance.", "verdict": "ok", "helpful": false },
+            { "quote": "Recalls the Roman orator Cicero.", "verdict": "ok", "helpful": false },
+            { "quote": "Recalls Latin \"memorare\", to remember.", "verdict": "wrong", "helpful": false },
+            { "quote": "Recalls Europe or the mythical princess Europa.", "verdict": "ok", "helpful": false },
+            { "quote": "Possibly recalls Bithynia, a region of Asia Minor.", "verdict": "unsupported", "helpful": false },
+            { "quote": "Recalls \"abbots\".", "verdict": "ok", "helpful": false },
+            { "quote": "Latin \"adipes\", fats.", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"zefires\"; gentle west winds.", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"amores\"", "verdict": "ok", "helpful": true },
+            { "quote": "Recalls Greek \"andres\", men.", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"equales\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"arcades\"; people of Arcadia in Greece.", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"rutiles\"; from Latin \"rutilus\", reddish or glowi", "verdict": "ok", "helpful": true },
+            { "quote": "Catchword at the bottom right: \"a fama-\", the first syllab", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            { "english": "### 88", "why": "Nothing tells the reader that 88, 89 and 90 are the numbers of the cipher alphabets in Trithemius's series, not page or section numbers." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf, transcribed accurately apart from one doubled letter ('memoran' for 'emoran') and the alphabet numbers tagged as a page number. The English replaces five cipher code words with English glosses, which breaks the table as a cipher, and it leaks raw <column-break/> tags into the reader text."
+  }
+]

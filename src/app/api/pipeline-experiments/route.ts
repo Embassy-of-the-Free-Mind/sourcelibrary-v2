@@ -83,7 +83,7 @@ export const POST = withAuth(async (request, session) => {
     console.error('Error creating pipeline experiment:', error);
     return NextResponse.json({ error: 'Failed to create experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // GET /api/experiments/pipeline - List experiments
 export const GET = withAuth(async (request, session) => {
@@ -100,5 +100,5 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error fetching experiments:', error);
     return NextResponse.json({ error: 'Failed to fetch experiments' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 

@@ -1,0 +1,66 @@
+[
+  {
+    "book_id": "69af43aeff29693470c6b04d",
+    "slot": 1,
+    "title": "Grammatici Latini Vol. VI Pt. 1: Scriptores Artis Metricae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Keil's Grammatici Latini (Teubner, 1857); the page is Marius Victorinus's Ars grammatica on metre, Latin text with the editor's apparatus. It fits a Toronto/PIMS scan collection.",
+    "rights_flag": null,
+    "structure_note": "Record 148 carries printed p. 142, which is a steady front-matter offset of 6. The 3 backsteps and 3 repeats are most likely misread or absent numerals, not a splice; nothing on this page points to a splice. structure.pages_translated is 0 but pages_translated_field is 294, so the counter and the field disagree.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "printed_marker": "142",
+        "layout": "single column with centred verse quotations, line numbers every 5 in the outer margin, Paris/Göttingen page references under the running head, two footnote blocks (parallels, then critical apparatus)",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "30 tres trocheis eadem speciem", "image": "tres trochęis (e with a hook) eadem speciem", "problem": "the e-caudata in the apparatus is normalised to e. This is my reading at this resolution.", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The centring markers ->…<- around the verse quotations are carried into the English (for example ->\"Damoetas and Lyctian Aegon.\"<-). The reader sees them if the renderer does not consume them.", "severity": "minor", "class": "D1" },
+          { "note": "The <summary> says Victorinus 'continues his account of how Archilochus derived new meters', and the keywords list 'Archilochus'. The page never names the subject; it says only 'edidit', 'protulit'. The attribution may come from the previous page, but it cannot be confirmed from this one.", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"cantabunt mihi Damoetas et Lyctius Aegon\"; a full d", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Damoetas et Lyctius Aegon\"; the same line with its", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"o crudelis Alexi, nihil mea carmina curas\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"o crudelis Alexi nihil mea\"; the line is cut off a", "verdict": "ok", "helpful": true },
+            { "quote": "eleven-syllable line", "verdict": "ok", "helpful": true },
+            { "quote": "\"mouse-tailed,\" a line that tapers at its end", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"beatus ille qui procul negotiis\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"beatus ille qui procul quiescit\"", "verdict": "ok", "helpful": false },
+            { "quote": "a lyric meter named after the poet Phalaecus", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"tollor in montes vagus entheus repente\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"entheus repente\"", "verdict": "ok", "helpful": false },
+            { "quote": "longer metrical segments", "verdict": "ok", "helpful": true },
+            { "quote": "shorter metrical segments", "verdict": "ok", "helpful": true },
+            { "quote": "\"after five half-feet\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"incipe Maenalios, incipe Maenalios\"; Maenalus is", "verdict": "ok", "helpful": false },
+            { "quote": "\"three penthemimers\"", "verdict": "ok", "helpful": false },
+            { "quote": "\"put together from three parts\"", "verdict": "ok", "helpful": true },
+            { "quote": "the editor marks a repeated \"quoque\" <gloss>also</gloss> here", "verdict": "ok", "helpful": true },
+            { "quote": "also", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"solvitur acris hiems grata vice\"; Horace, Odes 1.4", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"veris et favoni\"", "verdict": "ok", "helpful": false },
+            { "quote": "siglum ς", "verdict": "ok", "helpful": false },
+            { "quote": "\"trisyntheton\" ς", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "the two feet and a half-foot of the heroic verse", "why": "'heroic verse' means the dactylic hexameter, and the whole penthemimeral derivation depends on knowing that" },
+            { "english": "with its dipody placed in front", "why": "'dipody' (a pair of feet taken as one unit) is left unexplained" },
+            { "english": "\"supremo detracta\" B and Valerius; \"detracta\" with \"supremo\" written above A", "why": "the apparatus sigla A and B (the manuscripts) and 'Valerius' (an earlier editor) are never identified, so a general reader cannot follow the variant notes" },
+            { "english": "by taking the last syllable from the iambic trimeter", "why": "'iambic trimeter' is a technical term with no gloss, though 'hendecasyllable' next to it gets one" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page. The OCR is faithful to Keil's text and apparatus, and the translation is accurate, with correct, mostly helpful glosses. The only issues are cosmetic: centring arrows in the English, and a summary that names Archilochus, who does not appear on this page."
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "book_id": "69a5e61ee751f06e74b89835",
+    "slot": 1,
+    "title": "Euripidis Hecuba, Orestes, Phoenissae (Barocci 120)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A glossed Byzantine manuscript of Euripides (Orestes 954–981 on this leaf), 14th c. It fits a classical/Greek manuscript shelf. No tradition or collection is set, so there is nothing more to check it against.",
+    "rights_flag": null,
+    "structure_note": "The structure says pages_translated 0, but the book field says 217 and this page carries a translation, so the counters disagree (E2). There are 15 printed backsteps and 15 repeats over 120 'printed' numbers. That reads as manuscript foliation (or numerals the OCR guessed at) taken as page numbers, not as a broken sequence: this verso carries no number, only a '+' mark at the head. The facing recto shows as a strip at the right edge; the OCR rightly ignores it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single column of verse (drama) with dense interlinear glosses, scholia in the left margin, red speaker sigla in the left margin, a '+' at the head; strip of the facing recto at right",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "# Ἀντιστροφή", "image": "a small interlinear gloss over line 1 (seemingly 'ἀντὶ τοῦ …'), not a heading; the page opens with the end of the Messenger's speech", "problem": "invented section heading; the strophe and the antistrophe both begin lower down", "severity": "moderate", "class": "O11" },
+          { "ocr": "ἀλλὰ ψάλλεται", "image": "ἀλλ' ἀπώλεσεν", "problem": "'but destroyed [you]' misread as 'but it is sung'", "severity": "serious", "class": "O6" },
+          { "ocr": "ὢ Ζεῦ τίς αἷμα πᾶν ἔρρεψεν ὥς ξυνήρρεψεν", "image": "ὦ σχέτλια παρθέν' ὡς ξυνηρεφ[ὲς]", "problem": "line invented: Zeus and blood are not on the leaf; the Chorus addresses the wretched maiden (Electra)", "severity": "serious", "class": "O1" },
+          { "ocr": "πτόσον τοῖς εἰς ἡμᾶς βαλόντας ἀφθοράς.", "image": "πρόσωπον εἰς γῆν σὸν βαλοῦσ' ἄφθογγος [εἶ]", "problem": "line garbled into a different sense", "severity": "serious", "class": "O6" },
+          { "ocr": "ὥς εἴς τε μανίαν καὶ γόους δεδυκυῖαν", "image": "ὡς εἰς στεναγμοὺς καὶ γόους δραμουμένη", "problem": "'madness' for 'groans'", "severity": "moderate", "class": "O6" },
+          { "ocr": "καὶ τρομὸν τε καὶ μανίαν καὶ ἀηδία", "image": "κατάρχομαι στεναγμὸν ὦ πελασγία", "problem": "the opening of Electra's strophe ('I begin the lament, O Pelasgian land') becomes 'trembling and madness and loathing'", "severity": "serious", "class": "O1" },
+          { "ocr": "τί θυίει λακωνομανίαν πᾶν κὶ δόμον", "image": "τιθεῖσα λευκὸν ὄνυχα διὰ παρηΐδων", "problem": "'setting a white nail to my cheeks' becomes an invented 'Laconian madness … house'", "severity": "serious", "class": "O1" },
+          { "ocr": "αἱ μάτυρον α τὸν", "image": "αἱματηρὸν ἄταν", "problem": "'bloody ruin' garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "(absent)", "image": "κτύπον τε κρατός· ὃν ἔλαχεν ἁ κατὰ χθονός", "problem": "a whole body line silently omitted ('and beating of the head, which the one below the earth has as her portion')", "severity": "serious", "class": "O5" },
+          { "ocr": "<gloss>μερτέρων</gloss> <gloss>τεροσεφα</gloss>", "image": "νερτέρων περσέφασσα καλλίπαις θεά (body line)", "problem": "a body line of the play, naming Persephone, broken up and tagged as interlinear glosses", "severity": "serious", "class": "O12" },
+          { "ocr": "ἴσχει τω οἶ γὰρ κύκλω τια", "image": "ἰαχείτω δὲ γᾶ κυκλωπία", "problem": "'let the Cyclopean land cry aloud' (the antistrophe's opening) misread", "severity": "serious", "class": "O6" },
+          { "ocr": "σὶ δαροῦ πίκρα τίθεται κούριμοι", "image": "σίδαρον ἐπὶ κάρα τιθεῖσα κούριμον", "problem": "'setting the shearing iron to the head' misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "ἀεὶ τάλας τῶν ἐμὰ οἳ πρό του των", "image": "στρατηλατῶν ἑλλάδος ποτ' ὄντων (as far as can be read)", "problem": "'of those once generals of Hellas' lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "βιβάζει πρὸς βιβάζειν", "image": "βέβακε γὰρ βέβακεν", "problem": "'gone, gone' misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "ἀπὸ τὰ γεῖνα πέλοπος ὅτε τῷ μακρῷ", "image": "πᾶσα γέννα πέλοπος ὅ τ' ἐπὶ μακαρίοις", "problem": "'all the race of Pelops' misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "θεόθεν χ' τοῖς διομηνεῖς", "image": "θεόθεν ἅ τε δυσμενής", "problem": "misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "φονιταῖς ἐν πολίταις·", "image": "φοινία ψῆφος ἐν πολίταις", "problem": "'the bloody vote among the citizens' loses the vote (ψῆφος)", "severity": "moderate", "class": "O6" },
+          { "ocr": "<insert>$\\text{*}_{\\chi^{\\rho}}$</insert>", "image": "red speaker siglum ΗΛ (Electra) in the left margin", "problem": "the speaker change to Electra is turned into a meaningless LaTeX mark", "severity": "moderate", "class": "O14" },
+          { "ocr": "<margin>\n$\\chi^{\\rho}$ καὶ τρομὸν τε καὶ μανίαν καὶ ἀηδία", "image": "no such marginal block; these are the interlinear lines and the body", "problem": "body text repeated as an invented margin block", "severity": "moderate", "class": "O4" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "ὢ Ζεῦ τίς αἷμα πᾶν ἔρρεψεν ὥς ξυνήρρεψεν", "english": "O Zeus, who let all the blood stream down, as he made it stream together", "problem": "fluent English built on an invented line; the leaf reads 'O wretched maiden, how with veiled face…'", "severity": "serious", "class": "T7" },
+          { "source": "πτόσον τοῖς εἰς ἡμᾶς βαλόντας ἀφθοράς.", "english": "the fear for those who cast incorruption upon us.", "problem": "garble given a sense; the leaf reads 'casting your face to the ground, you are voiceless'", "severity": "serious", "class": "T7" },
+          { "source": "καὶ τρομὸν τε καὶ μανίαν καὶ ἀηδία", "english": "and trembling and madness and loathing", "problem": "the leaf reads 'I begin the lament, O Pelasgian land'", "severity": "serious", "class": "T7" },
+          { "source": "τί θυίει λακωνομανίαν πᾶν κὶ δόμον", "english": "What rages, a Laconian madness, the whole house", "problem": "an invented 'Laconian madness'; the leaf reads 'setting a white nail to my cheeks'", "severity": "serious", "class": "T7" },
+          { "source": "ἴσχει τω οἶ γὰρ κύκλω τια, συμμαχίαν αὐτοθὶ", "english": "holds, for those in a circle, an alliance right there", "problem": "the leaf reads 'let the Cyclopean land cry aloud'", "severity": "serious", "class": "T7" },
+          { "source": "<gloss>μερτέρων</gloss> <gloss>τεροσεφα</gloss>", "english": "<gloss>of mothers</gloss> <gloss>terosepha</gloss>", "problem": "the line naming Persephone ('Persephassa of those below, goddess of fair children') comes out as gloss fragments and gibberish", "severity": "serious", "class": "T7" },
+          { "source": "ἀλλὰ ψάλλεται", "english": "but it is sung", "problem": "the leaf reads 'but destroyed [you]'", "severity": "moderate", "class": "T7" },
+          { "source": "βιβάζει πρὸς βιβάζειν", "english": "it drives toward driving", "problem": "the leaf reads 'gone, gone'", "severity": "moderate", "class": "T7" },
+          { "source": "ἀπὸ τὰ γεῖνα πέλοπος", "english": "from the earth-born race of Pelops", "problem": "'earth-born' is not in the source; γέννα means race or offspring", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "invented heading '# Antistrophe' over a page that opens with the Messenger's last lines and holds a Chorus passage plus Electra's strophe and antistrophe", "severity": "moderate", "class": "T16" },
+          { "note": "LaTeX shown in the reader text: '<insert>$\\text{*}_{\\chi^{\\epsilon}}$</insert>' and '$\\chi^{\\rho}$' inside a <margin>", "severity": "moderate", "class": "D1" },
+          { "note": "gibberish glosses shown to the reader: 'terosepha', 'ai... a... a', 'and having placed toward thr'", "severity": "moderate", "class": "D1" },
+          { "note": "the summary calls the page 'the antistrophe of a choral lament' and builds on the invented text; the speaker changes (Messenger, Chorus, Electra) are lost", "severity": "moderate", "class": "E1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "upon", "verdict": "unsupported", "helpful": false },
+            { "quote": "gloomy", "verdict": "ok", "helpful": false },
+            { "quote": "gloomy", "verdict": "wrong", "helpful": false },
+            { "quote": "lest at some time he shows to whom", "verdict": "unsupported", "helpful": false },
+            { "quote": "that is to say", "verdict": "ok", "helpful": false },
+            { "quote": "a testimony of him", "verdict": "unsupported", "helpful": false },
+            { "quote": "ai... a... a", "verdict": "wrong", "helpful": false },
+            { "quote": "on behalf of", "verdict": "unsupported", "helpful": false },
+            { "quote": "sacrificial offerings", "verdict": "unsupported", "helpful": false },
+            { "quote": "often the", "verdict": "unsupported", "helpful": false },
+            { "quote": "and having placed toward thr", "verdict": "wrong", "helpful": false },
+            { "quote": "instead of the children; who are also children; who are wond", "verdict": "wrong", "helpful": false },
+            { "quote": "such things also concerning murder", "verdict": "unsupported", "helpful": false },
+            { "quote": "servant", "verdict": "wrong", "helpful": false },
+            { "quote": "faithful", "verdict": "unsupported", "helpful": false },
+            { "quote": "from all around he will stop the uproar; in the house", "verdict": "unsupported", "helpful": false },
+            { "quote": "of mothers", "verdict": "wrong", "helpful": false },
+            { "quote": "terosepha", "verdict": "wrong", "helpful": false },
+            { "quote": "these things", "verdict": "unsupported", "helpful": false },
+            { "quote": "blessed in fair children, divine", "verdict": "wrong", "helpful": false },
+            { "quote": "a gathering", "verdict": "unsupported", "helpful": false },
+            { "quote": "it is there beside it", "verdict": "unsupported", "helpful": false },
+            { "quote": "is laid upon", "verdict": "ok", "helpful": false },
+            { "quote": "of pity, or of showing, or of the divine being honored, it wi", "verdict": "unsupported", "helpful": false },
+            { "quote": "why here too", "verdict": "unsupported", "helpful": false },
+            { "quote": "frees the children", "verdict": "unsupported", "helpful": false },
+            { "quote": "to the child", "verdict": "unsupported", "helpful": false },
+            { "quote": "they destroyed the uproar", "verdict": "unsupported", "helpful": false },
+            { "quote": "they look upon", "verdict": "ok", "helpful": false },
+            { "quote": "the earth-born things; or a child will be born", "verdict": "wrong", "helpful": false },
+            { "quote": "to the blessed", "verdict": "ok", "helpful": false },
+            { "quote": "they are indignant", "verdict": "ok", "helpful": false },
+            { "quote": "it happened", "verdict": "unsupported", "helpful": false },
+            { "quote": "to the poor", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "No one with oracles <gloss>upon</gloss>, nor the Pythian\nPhoebus seated on the tripod", "why": "Nothing tells the reader that this is the Messenger's closing line to Orestes, or that the Pythian Phoebus is Apollo of Delphi, whose oracle ordered the matricide. Without that the line means nothing." },
+            { "english": "as one sunk into madness and laments", "why": "The red speaker marks on the leaf (Chorus, then Electra) are dropped, so the reader cannot tell who speaks or where Electra's lament begins." },
+            { "english": "from the earth-born race of Pelops", "why": "A general reader needs to know that Pelops is the ancestor of Orestes' house (the Atreids), the house whose ruin the song mourns." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf is Orestes 954–981 (the end of the Messenger's speech, the Chorus, and Electra's strophe and antistrophe). The OCR invents or garbles most body lines, drops one line, and breaks the Persephone line into fake glosses. The translation turns all of this into confident English with an invented 'Antistrophe' heading and LaTeX leaks. A Hellenist would flag it on sight."
+  }
+]

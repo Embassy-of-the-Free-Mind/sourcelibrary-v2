@@ -1,0 +1,14 @@
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<warning>Handwritten Sephardic/Byzantine semi-cursive script. The folio is extremely degraded, severely faded throughout with major worm damage and ink bleed-through, rendering the vast majority of the text illegible.</warning>
+
+<unclear>1 column of approximately 35 lines of handwritten Hebrew text, severely faded and mostly illegible</unclear>
+
+<column-break/>
+
+<unclear>1 column of approximately 35 lines of handwritten Hebrew text, severely faded and mostly illegible</unclear>
+
+<vocab>Hebrew manuscript, Rabbinic literature, semi-cursive script</vocab>

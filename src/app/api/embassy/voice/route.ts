@@ -11,10 +11,11 @@ export const dynamic = 'force-dynamic';
  *
  * Open to everyone, but anonymous visitors get 5 voice sessions/hour (each
  * "Begin" fetches a fresh signed URL); past that we return 401 with a sign-in
- * CTA. Signed-in users, SEO crawlers, and internal warmers are exempt.
+ * CTA. Signed-in users and internal warmers are exempt (crawlers are not:
+ * each session is billed, and a User-Agent is not proof of a crawler).
  */
 export async function GET(request: Request) {
-  const gate = await anonActionGate(request, { name: 'voice-anon', limit: 5 });
+  const gate = await anonActionGate(request, { name: 'voice-anon', limit: 5, allowBotBypass: false });
   if (!gate.allowed) {
     return NextResponse.json(
       {

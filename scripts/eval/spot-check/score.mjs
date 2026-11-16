@@ -16,6 +16,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { bootstrapRatioCI, bootstrapCI, resetSeed } from '../lib/paired-stats.mjs';
 import { kindOfFinding, kOfNBooks, kOfNMarkdown } from '../../lib/review-vocabulary.mjs';
+import { servedResults } from './lib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -52,7 +53,13 @@ function validate(dir) {
     }
   }
   for (const r of results) if (!sample.some((b) => b.book_id === r.book_id)) problems.push(`${r.book_id}: result for a book not in the sample`);
-  return { problems, sample, results };
+  // Scored on the text the reader is served (v3#154): findings in a stored translation the reader is not shown are
+  // set aside, by the exposure the run's own draw recorded. results.json on disk is not changed.
+  const served = servedResults(results, drawExposure(dir));
+  return { problems, sample, results: served.results, notServed: served.notServed };
+}
+function drawExposure(dir) {
+  try { return read(join(dir, 'draw-log.json')).exposure ?? {}; } catch { return {}; }
 }
 
 /** Per-book units for one run. */
@@ -116,18 +123,20 @@ for (const d of windowRuns) {
  * each run's draw-log.json (draw.mjs); a run drawn before 2026-10-12 has none and counts as `unrecorded`.
  */
 function typedRows(dir, results) {
-  let exposure = {};
-  try { exposure = read(join(dir, 'draw-log.json')).exposure ?? {}; } catch { /* no draw log */ }
+  const exposure = drawExposure(dir);
+  // A `rewrite_not_served` page counts as served: the reader gets its transcription as the English, and the findings
+  // left on it (servedResults took out the stored rewrite's) are in that transcription or the image.
+  const asRead = (e) => (e === 'rewrite_not_served' ? 'served' : e ?? 'unrecorded');
   return results.flatMap((r) => (r.pages ?? []).map((p) => {
     const serious = items(p).filter((e) => e.severity === 'serious');
-    return { book_id: r.book_id, page_number: p.page_number, exposure: exposure[r.book_id]?.[p.page_number] ?? 'unrecorded',
+    return { book_id: r.book_id, page_number: p.page_number, exposure: asRead(exposure[r.book_id]?.[p.page_number]),
       serious: serious.length > 0 || p.right_page === 'no', kinds: [...new Set([...serious.map(kindOfFinding).filter(Boolean), ...(p.right_page === 'no' ? ['wrong_leaf'] : [])])] };
   }));
 }
 const typed = kOfNBooks(typedRows(join(ROOT, DATE), run.results), { seed: DATE });
 const fortnight = summarise(units(run.results));
 const windowSum = { runs: windowRuns, ...summarise(units(windowResults)) };
-const report = { issue: 5914, date: DATE, typed, fortnight, window: windowSum, window_days: WINDOW_DAYS, top_classes: topClasses(run.results), window_top_classes: topClasses(windowResults) };
+const report = { issue: 5914, date: DATE, typed, not_served: run.notServed, fortnight, window: windowSum, window_days: WINDOW_DAYS, top_classes: topClasses(run.results), window_top_classes: topClasses(windowResults) };
 writeFileSync(join(ROOT, DATE, 'report.json'), JSON.stringify(report, null, 1));
 
 const pct = (x) => (x == null ? '—' : (100 * x).toFixed(0));
@@ -139,6 +148,7 @@ const md = [
   `# Spot check ${DATE} (#5914)`, '', ...kOfNMarkdown(typed, { what: `${frame} frame` }), '',
   `Fortnight: ${fortnight.books} books, ${fortnight.pages} pages; ${fortnight.pages_with_serious} pages with ≥ 1 serious error (${fortnight.serious_errors} serious errors); ${fortnight.books_on_sight_defect} books with an on-sight defect.`,
   `Rolling ${WINDOW_DAYS / 7}-week window (${windowRuns.join(', ')}): pages with a serious error ${pct(windowSum.page_rate)}% (95% CI ${ci(windowSum.page_rate_ci)}, resampled by book, n=${windowSum.books} books); books with an on-sight defect ${pct(windowSum.book_defect_rate)}% (${ci(windowSum.book_defect_rate_ci)}).`,
+  ...(run.notServed.findings ? [`Not counted above: ${run.notServed.findings} findings (${run.notServed.serious} serious) on ${run.notServed.pages} pages of ${run.notServed.books} books are in a stored translation of an English leaf, which the reader is not shown (the transcription is served there).`] : []),
   `Top classes this fortnight (pages × severity): ${report.top_classes.map((c) => `${c.class} (score ${c.score}, ${c.pages} pages)`).join('; ') || 'none'}.`,
   '', 'Series row:', '', row, '',
 ].join('\n');

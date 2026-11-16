@@ -53,7 +53,7 @@ await withMongo(async (db) => {
     console.log(`unique visitors (${DAYS}d)      ${uniq}`);
     console.log(`new signups (${DAYS}d)          ${newSignups}`);
     console.log(`visitor -> signup conversion  ${pct(newSignups, uniq)}`);
-    console.log(`email verified                ${verified}/${totalUsers}  (${pct(verified, totalUsers)})`);
+    console.log(`signed up by email link        ${verified}/${totalUsers}  (${pct(verified, totalUsers)})  (the rest used Google sign-in; not a verification rate, #48)`);
     console.log(`ever logged in                ${everLoggedIn}/${totalUsers}  (${pct(everLoggedIn, totalUsers)})`);
     console.log(`returning accounts (login>=2) ${repeatLogin}/${totalUsers}  (${pct(repeatLogin, totalUsers)})`);
 

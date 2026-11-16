@@ -1,0 +1,56 @@
+[
+  {
+    "book_id": "69906ed78a353648e1ed085f",
+    "slot": 1,
+    "title": "Ars Notoria sive Flores Aurei",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A two-column Gothic manuscript of the Ars Notoria: the Latin prayers, the nomina barbara and the hour prologues match the title. Tradition and collections are empty, so there is no shelf to test against.",
+    "rights_flag": "The scan has a burned-in footer reading \"Copyright © Biblioteca Apostolica Vaticana / powered by AMLAD·NTT DATA\" and a diagonal watermark across the text reading \"ALL RIGHTS RESERVED © Biblioteca Apostolica\". The text itself is medieval, but the image carries a holder's rights claim.",
+    "structure_note": "The structure counts give pages_translated 0, but the book field gives 70: the counts disagree. Only 19 of 72 pages have a printed number, and 5 of those step backwards. The folio numbers on this leaf are faint pencil/ink in the corner, so the backsteps are most likely misread numerals rather than a broken sequence. One page cannot settle that.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "printed_marker": "4",
+        "layout": "two ruled columns, red rubrics, a long block of nomina barbara in the left column; a strip of the facing leaf at the left edge; Vatican copyright banner at the foot and a watermark over the text",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "### Incipit prolog’ prim hore sexte.", "image": "Incipit plog’ postior oróis quinte", "problem": "The red rubric at the top of the right column introduces the later prologue of the FIFTH prayer. The OCR turns it into a 'first prologue of the sixth hour', so the page shows two sixth-hour headings and the section is mislabelled.", "severity": "serious", "class": "O6" },
+          { "ocr": "ut sit in membris meis sapientia tua", "image": "ut sit in ſſibus meis sapi tua (sensibus)", "problem": "'senses' misread as 'members'", "severity": "moderate" },
+          { "ocr": "per te & in te mi uiuātus", "image": "p te 7 in te illuiatus (illuminatus)", "problem": "'illuminated' misread, and the English renders it as 'living'", "severity": "moderate" },
+          { "ocr": "qui ſaluos ſauies mitere", "image": "qui saluos ſp'antes in te (salvos facis sperantes in te)", "problem": "The psalm phrase is garbled, and the English gives 'you who save <unclear>the saved</unclear>'", "severity": "moderate" },
+          { "ocr": "Ad adorationū tuorum & dñi lonez misericor-", "image": "Ad cogitatonū ſmonū 7 dni bonoz institutoz (approximate reading)", "problem": "The opening line of the right-column prologue is misread, and the English builds 'To your adorations, O Lord, good and merciful' on it", "severity": "moderate" },
+          { "ocr": "regno eternitatis regis maiestatis tue", "image": "regno etnitatis atq; maiestatis tue", "problem": "'atque' read as 'regis'", "severity": "minor" },
+          { "ocr": "iustitie dñay oſinat s idio amz mĩerphuab’ to r", "image": "in albis stantibus auxilio tuo iusticie ... (abbreviated lines)", "problem": "Several lines of the right column's abbreviated text come out as unreadable strings", "severity": "moderate" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "### Incipit prolog’ prim hore sexte.", "english": "### Here begins the prologue of the first prayer of the sixth hour.", "problem": "The heading follows the misread rubric. The leaf calls this the later prologue of the fifth prayer. The English shows the same heading twice in a row, so the reader is misled about the structure of the rite.", "severity": "serious", "class": "O6" },
+          { "source": "ut sit in membris meis sapientia tua", "english": "And may your wisdom be in my members", "problem": "The leaf reads 'senses'; the English follows the misread", "severity": "moderate" },
+          { "source": "au celit rre mior r imsinus", "english": "in heaven and on earth and in the depths", "problem": "The leaf has 'mare' (sea); the English drops it", "severity": "minor" },
+          { "source": "regno eternitatis regis maiestatis tue", "english": "kingdom of eternity of the King of your majesty", "problem": "Built on the misread 'regis'; the leaf has 'kingdom of eternity and of your majesty'", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "Two identical headings in a row: \"Here begins the prologue of the first prayer of the sixth hour.\" A reader sees this without reading the source.", "severity": "moderate", "class": "O6" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "This echoes Revelation 3:7, itself drawing on Isaiah 22:22.", "verdict": "ok", "helpful": true },
+            { "quote": "What follows is a string of \"barbarous names\" (<term>nomina b", "verdict": "unsupported", "helpful": true },
+            { "quote": "sacred words of power, untranslatable by design", "verdict": "ok", "helpful": true },
+            { "quote": "an echo of Romans 4:17", "verdict": "ok", "helpful": false },
+            { "quote": "an echo of 1 Peter 1:12", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Here begins the fifth prayer, which is of the sacred particles", "why": "'Sacred particles' is opaque. A reader needs to know what the rubric's 'particulae' are: the divisions of the Ars Notoria's prayer sequence." },
+            { "english": "the prologue of the first prayer of the sixth hour", "why": "The 'hours' (horae) are the Notory Art's ritual sequence of prayers, not liturgical hours, and nothing tells the reader this." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The Ars Notoria leaf is the right page and the translation is broadly faithful. However, the OCR misreads a rubric ('posterior prologue of the fifth prayer' becomes 'first prologue of the sixth hour'), so two identical sixth-hour headings appear and the section is mislabelled. Several abbreviated lines are garbled, and the scan carries a Vatican 'All rights reserved' watermark."
+  }
+]

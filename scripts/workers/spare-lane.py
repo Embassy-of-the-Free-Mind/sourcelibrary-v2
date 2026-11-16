@@ -11,12 +11,22 @@ Each job either fixes its issue end to end (PR with `Closes #n`) or comments why
 can't and labels it `spare-skip`. Nothing it does adds to Derek's decision queue:
 hold-list work is skipped, not asked about.
 
-Fallback (#6781): in the last 48 h of the week, when no issue is eligible, the lane runs one
-Opus-only round of the #6420 convergent audit instead (scripts/audit/convergent-audit-weekly.sh
-with a fresh seed, scored, NOT posted) as job `spare-audit-<date>-<n>`, under the same job cap.
-That work never runs dry and asks nobody anything. Once the account's week has reset and its
-rounds are finished, the lane posts them as ONE pooled comment on #6420
-(scripts/audit/convergent-audit-pool.mjs), not one per round.
+Fallback (#6781, v3#197): in the last 48 h of the week, when no issue is eligible, the lane runs one
+paired-fifths round instead (scripts/audit/spare-paired-fifths.mjs: 24 served books drawn uniformly
+inside language x print/manuscript cells, emptiest cell this month first, plus 16 from the head of
+book-check-priority.mjs; 10 pages and 5 page breaks a book, 5 Opus calls) as job
+`spare-pf-<date>-<n>`, under the same job cap. Its verdicts are book_checks rows, which the Monday
+loop turns into repair-queue rows (labels.mjs). That work never runs dry and asks nobody anything.
+Once the account's week has reset and its rounds are finished, the lane posts them as ONE pooled
+comment on #6420 (spare-paired-fifths.mjs pool), not one per round.
+The #6420 Opus-only convergent round (`spare-audit-<date>-<n>`, one page a call, no page break) is
+retired as a lane round (v3#381): the lane never starts it, and SPARE_LANE_ROUND no longer selects it.
+Rounds of it recorded before then are still pooled by convergent-audit-pool.mjs. On cloudlayer the
+paired-fifths check also runs every day on its own cron (scripts/audit/paired-fifths-daily.sh, v3#381).
+
+Reflection (#8632 decision 4): on main, in the last 48 h but not the last 12 (the 99% stop ends lane jobs), when the weekly audit has written a
+digest the lane has not yet reflected on, it starts `spare-reflect-<date>` before any issue: one job that compares
+the digests and turns a pattern seen in two or more weeks into at most one tested PR, or says on #8632 why not.
 
 Runs on every job box, each spending the account that box is logged in as
 (main: team@sourcelibrary; cloudlayer: derek@playpowerlabs; l7a: derek@sourcelibrary;
@@ -45,7 +55,9 @@ Gates, all from the box's own climits poll (/root/.claude-limits/latest.json):
                         in the final hour, when a job would spill into the new week. It passes the job
                         wrapper's 90% refusal (JOB_IGNORE_LIMIT). Extra usage is off on every account.
                         The work is always an Opus QA round (the fallback below), never an issue.
-  box                   load1 < cores, at most MAX_JOBS lane jobs (1 on the shared guest boxes),
+  box                   `claude-job.sh where` says ready=yes (#70: the wrapper's one answer to "may a job
+                        start here now?": setup, root disk 15% free, 5-minute load at most 1.5 per core, the
+                        account's week), at most MAX_JOBS lane jobs (1 on the shared guest boxes),
                         poll data < 15 min old on main, < 45 min old from Mongo on a guest
 """
 from __future__ import annotations
@@ -53,10 +65,12 @@ from __future__ import annotations
 import datetime as dt
 import json
 import os
+import re
 import socket
 import random
 import subprocess
 import sys
+import re
 import tempfile
 
 LATEST = "/root/.claude-limits/latest.json"  # main only: the box's own climits poll
@@ -65,9 +79,15 @@ SHARE = [ "node", "--env-file=.env.production.local", "scripts/workers/claude-li
 GUEST = os.path.isdir("/data/scratch/sl/sourcelibrary")
 STATE = "/root/claude-jobs/spare-lane-state.json"  # issues already tried: never retried
 JOB = "/root/bin/claude-job.sh"
+# The open-issue backlog stayed on the public v2 repo at the 2026-11-12 move; code and PRs are on v3.
 REPO = "Embassy-of-the-Free-Mind/sourcelibrary-v2"
 GEX45 = socket.gethostname() == "gex45-1"  # dedicated x86 GPU box (#5660): no volume, job output under /root/jobs
-AUDIT_BASE = ("/data/scratch/sl/jobs" if GUEST else "/root/jobs" if GEX45 else "/mnt/HC_Volume_105839809/jobs") + "/spare-audit"
+JOBS_BASE = "/data/scratch/sl/jobs" if GUEST else "/root/jobs" if GEX45 else "/mnt/HC_Volume_105839809/jobs"
+AUDIT_BASE = JOBS_BASE + "/spare-audit"
+PF_BASE = JOBS_BASE + "/spare-pf"
+# The fallback round (v3#197) is always paired fifths. The #6420 convergent round it replaced is not startable
+# (v3#381: on 2026-11-14 cloudlayer still ran it, before #258 reached main); AUDIT_BASE stays for pooling old runs.
+PF_UNIFORM, PF_RISK = 24, 16  # 40 books = 200 Opus calls, about the tokens of one 80-page convergent round
 
 MAX_JOBS = 1 if GUEST else 2  # guests share the box with a live public service
 LABEL_ORDER = ("bug", "user-feedback", "data-quality")
@@ -103,6 +123,22 @@ def sh(*cmd, timeout=60) -> str:
 def lane_jobs() -> list[str]:
     out = sh("tmux", "ls", "-F", "#{session_name}")
     return [s[len("job-"):] for s in out.split() if s.startswith("job-spare-")]
+
+
+def box_ready() -> str:
+    """'yes', or 'no:<reasons>': the job wrapper's own answer to "may a job start on this box now?" (#70).
+
+    It is the `ready=` field of `claude-job.sh where`, which `start` acts on too, so asking here first means the
+    lane never calls a `start` that will be refused. Until 2026-11-12 the lane checked only the 1-minute load: on
+    gex45, with 13% of the root disk free, it called `start` every 30 minutes, and every refusal paged Derek at
+    high priority. No answer counts as not ready: the lane waits for its next run.
+    """
+    try:
+        out = sh(JOB, "where", timeout=90)
+    except (OSError, subprocess.SubprocessError) as e:
+        return f"no:where-failed ({type(e).__name__})"
+    m = re.search(r"(?:^|\s)ready=(\S+)", out)
+    return m.group(1) if m else "no:where-gave-no-answer"
 
 
 def read_fresh_local() -> dict | None:
@@ -242,7 +278,7 @@ def pick_issue(tried: set[int]) -> dict | None:
     return None
 
 
-BRIEF = """Lands: #{n}
+BRIEF = """Lands: v2#{n}
 PR: if it fixes the issue (a skip commits nothing and expects no PR)
 
 Spare-lane job (#6395): you are using Claude subscription allowance that would otherwise expire.
@@ -251,7 +287,7 @@ https://github.com/{repo}/issues/{n}
 Why this issue: {why}
 
 1. Read the issue and its comments (`gh issue view {n} -R {repo} --comments`). Check nobody has it:
-   `gh pr list -R {repo} --state all --search "{n}"` and recent comments. If a PR or a claim exists, comment
+   `gh pr list -R Embassy-of-the-Free-Mind/sourcelibrary-v3 --state all --search "{n}"` and recent comments. If a PR or a claim exists, comment
    "spare-lane: already in hand (<link>)", add label spare-skip, and stop.
 2. Decide if it is spare-lane work: self-contained, finishable in about two hours, $0 (subscription Claude,
    the Gemini CLI `agy -p`; NO paid API calls of any kind), and touching nothing on the hold list
@@ -280,26 +316,102 @@ Why this issue: {why}
 """
 
 
-AUDIT_BRIEF = """Lands: none
+PF_BRIEF = """Lands: none
 PR: no
 
-Spare-lane fallback job (#6781): this account is in the last 48 h of its week and the spare lane found no
-eligible issue, so you run ONE Opus-only round of the #6420 convergent audit (lane D) to use the allowance.
-Do not comment anywhere, open nothing, decide nothing: the lane posts all of this account-week's rounds as
-one pooled comment on #6420 after the week resets (scripts/audit/convergent-audit-pool.mjs).
+Spare-lane fallback job (v3#197): this account is in the last 48 h of its week and the spare lane found no
+eligible issue, so you run ONE paired-fifths round to use the allowance: {uniform} served books drawn uniformly
+inside language x print/manuscript cells and {risk} from the book-check priority queue, each read by Opus a pair
+of facing pages at a time (10 pages, 5 page breaks, 5 calls a book). The verdicts are book_checks rows; nothing
+touches page text. Do not comment anywhere, open nothing, decide nothing: the lane posts all of this account-week's
+rounds as one pooled comment on #6420 after the week resets.
 
-1. Run the round from the main checkout (read-only use of its scripts; no git commands there), detached,
-   and wait for it in the FOREGROUND as the HEADLESS RULES say:
-     cd {sl} && AUDIT_OPUS_ONLY=1 AUDIT_POST=0 AUDIT_SEED={seed} AUDIT_BASE={base} AUDIT_LOCK={base}/{name}.lock \\
-       nohup scripts/audit/convergent-audit-weekly.sh {name} > {base}/{name}.log 2>&1 &
-   It draws ~80 pages, reads each with Opus in a sealed `claude -p` (4 at a time), and scores. Done when the
-   log has a line starting `== ` and ending `done (Opus only, not posted)`.
-2. If it stops early (draw failed, a reader error), read the log, fix what is local (a re-run of the same
-   command resumes: every step skips what is done), at most twice. If it still fails, stop: the pool counts
-   whatever pages were read.
-3. Check {base}/{name}/report.md exists. Do NOT pass --post and do NOT run convergent-audit-pool.mjs.
-4. Touch the done file as the HEADLESS RULES say.
+All commands run from the main checkout (read-only use of its scripts; no git commands there).
+1. Draw (Mongo reads only, about a minute; a re-run keeps the existing draw):
+     cd {sl} && node --env-file=.env.production.local scripts/audit/spare-paired-fifths.mjs draw --run {base}/{name} \\
+       --seed {seed} --uniform {uniform} --risk {risk} >> {base}/{name}.log 2>&1
+2. Read, detached, and wait for it in the FOREGROUND as the HEADLESS RULES say:
+     cd {sl} && nohup node --env-file=.env.production.local scripts/audit/spare-paired-fifths.mjs run --run {base}/{name} \\
+       --concurrency 5 >> {base}/{name}.log 2>&1 &
+   About an hour. Done when the log has a line starting `== ` that contains `round {name} done`.
+3. If it stops early (a crash, a reader error), read the log and re-run step 2, at most twice: it resumes from the
+   evidence file and never writes a row twice. A quota or pace stop ("stopped: quota" / "stopped: pace") is the end:
+   do not re-run. The pool counts the books that were finished.
+4. Do NOT run `pool` and do NOT post. Touch the done file as the HEADLESS RULES say.
 """
+
+
+REFLECT_BRIEF = """Lands: v2#8632
+PR: yes
+
+Spare-lane weekly reflection (v2#8632 decision 4, Derek 2026-11-12). The weekly audit wrote a new loop digest:
+  {digest}
+Earlier digests sit beside it under {loop}/<date>/digest.md, each with its repair-queue.json and labels.jsonl.
+Issue v2#8632 lives on the public mirror: read and comment with `gh ... -R Embassy-of-the-Free-Mind/sourcelibrary-v2`.
+PRs and the class issues are on sourcelibrary-v3 (origin).
+Read scripts/eval/experiments/2026-11-12-audit-policy-replay-8632.md,
+scripts/eval/experiments/2026-11-12-free-ocr-english-checks-8632.md and the v2#8632 thread first.
+
+Your job: turn what REPEATS in the digests into at most ONE tested change, or say why there is none.
+1. Compare the newest digest with the up-to-three before it. Look for a pattern seen in two or more weeks: an
+   error class or language rising, a router cell whose no-route count grows, the risk stratum failing to beat the
+   random stratum, a second-read confirmation rate moving, a detector that keeps missing what the audit finds.
+   One week alone is noise: do not act on it.
+2. If a pattern holds, pick the smallest change that addresses it and can be tested on the labels already on disk,
+   with no new model calls beyond this job's own Claude quota: a classifier or keyword rule, a feature or target
+   in scripts/eval/error-zoo/, a draw parameter, a route-test design (design only), a detector threshold.
+   Test it by replay against the labels (state the before/after numbers and n), then open ONE PR with the
+   change and an experiments file (scripts/eval/experiments/, with its header lint), "Part of v2#8632".
+3. If no pattern holds, take the next test instead from the open error-class issues on v3, the ones whose title
+   starts "Error class". Pick the one whose last comment is oldest, and run its "Next test" when it is free (a
+   detector-suite run with scripts/eval/error-zoo/detector-suite.mjs, a replay, a feature added to the predictor).
+   Comment the result on that issue against its definition of done. A next test that needs spend or a prompt change
+   is a DECISION line, not an action. If nothing is free to run, open no PR.
+4. Either way, post ONE comment on v2#8632: what you compared, the pattern (or none), the test and its result, the
+   PR link if any.
+LIMITS: no production writes, no withholding, no crontab, no new paid API or GPU spend. Anything like that
+(including a route test that needs reads) becomes a line `DECISION: <what> — default: <what happens if nobody
+answers>` in that comment, not an action. Keep CPU light: the box runs the paid pipeline.
+"""
+LOOP_DIR = "/mnt/HC_Volume_105839809/jobs/convergent-audit-6420/loop"  # main's weekly audit writes <date>/digest.md
+
+
+def pending_digest(state: dict) -> str | None:
+    """The newest weekly digest not yet reflected on, on the box that runs the weekly audit (main), else None."""
+    if GUEST or GEX45:
+        return None
+    try:
+        ds = [os.path.join(LOOP_DIR, d, "digest.md") for d in os.listdir(LOOP_DIR)]
+    except OSError:
+        return None
+    # By week (the run directory is the audit's date), not mtime: re-finishing an old week rewrites its digest.
+    ds = sorted(d for d in ds if os.path.isfile(d) and re.match(r"\d{4}-\d{2}-\d{2}$", os.path.basename(os.path.dirname(d))))
+    if not ds:
+        return None
+    last = state.get("reflect", {}).get("last_digest") or ""
+    newest = ds[-1]
+    return newest if os.path.basename(os.path.dirname(newest)) > os.path.basename(os.path.dirname(last)) else None
+
+
+def start_reflection(email: str, why: str, state: dict, digest: str):
+    """One reflection job per new digest (#8632), recorded so the next digest is the next job."""
+    name = f"spare-reflect-{NOW:%Y%m%d}"
+    log(f"start {name} ({email}): {why} — reason: weekly reflection on {digest} (#8632)")
+    if DRY:
+        return
+    with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as fh:
+        fh.write(REFLECT_BRIEF.format(digest=digest, loop=LOOP_DIR))
+    try:
+        out = sh(JOB, "start", name, fh.name, timeout=120).strip()
+    except subprocess.TimeoutExpired:
+        out = "timed out"
+    print(out, flush=True)
+    # Recorded only once the job is running, so a refused start is tried again on the next run.
+    if out.startswith("started "):
+        state.setdefault("reflect", {})["last_digest"] = digest
+        save_state(state)
+    else:
+        log(f"{name} did not start ({out[:160]}); the digest stays pending")
 
 
 def load_state() -> dict:
@@ -320,49 +432,70 @@ def box_name() -> str:
 
 
 def start_fallback_audit(email: str, limits: dict, why: str, state: dict):
-    """One Opus-only #6420 round, recorded under this account's week for the pooled comment."""
+    """One paired-fifths round, recorded under this account's week for the pooled comment."""
     reset = parse_iso(limits["weekly_all"]["resets_at"])
     # The reset jitters by a second between polls (21:59:59, 22:00:00): key it by the nearest hour.
     week = f"{email}|{reset + dt.timedelta(minutes=30):%Y-%m-%dT%H}"
     rounds = state.setdefault("audit", {})
-    day = f"spare-audit-{NOW:%Y%m%d}-"
-    n = 1 + sum(1 for w in rounds.values() for r in w["runs"] if os.path.basename(r).startswith(day))
+    key, base = "pf_runs", PF_BASE
+    day = f"spare-pf-{NOW:%Y%m%d}-"
+    n = 1 + sum(1 for w in rounds.values() for r in w.get(key, []) if os.path.basename(r).startswith(day))
     name = f"{day}{n}"
     seed = random.SystemRandom().randrange(10**8, 10**9)  # the draw's default seed is the date: same day, same pages
-    log(f"start {name} ({email}): {why} — reason: fallback audit (no eligible issue; #6420 Opus-only round, seed {seed})")
+    what = f"paired-fifths round, {PF_UNIFORM} uniform + {PF_RISK} risk books (v3#197)"
+    log(f"start {name} ({email}): {why} — reason: fallback audit (no eligible issue; {what}, seed {seed})")
     if DRY:
         return
-    os.makedirs(AUDIT_BASE, exist_ok=True)
+    os.makedirs(base, exist_ok=True)
     with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as fh:
-        fh.write(AUDIT_BRIEF.format(sl=SL, seed=seed, base=AUDIT_BASE, name=name))
-    rounds.setdefault(week, {"runs": [], "posted": False})["runs"].append(os.path.join(AUDIT_BASE, name))
+        fh.write(PF_BRIEF.format(sl=SL, seed=seed, base=base, name=name, uniform=PF_UNIFORM, risk=PF_RISK))
+    rec = rounds.setdefault(week, {"runs": [], "posted": False})
+    rec.setdefault(key, []).append(os.path.join(base, name))
     save_state(state)
     print(sh(JOB, "start", name, fh.name, timeout=120).strip(), flush=True)
 
 
+def pool_commands(rec: dict, label: str) -> list[tuple[str, list[str]]]:
+    """The pooled-comment commands for one account-week: one per kind of round it ran."""
+    out = []
+    if rec.get("runs"):
+        out.append(("convergent", ["node", "scripts/audit/convergent-audit-pool.mjs", "--label", label, "--post", *rec["runs"]]))
+    if rec.get("pf_runs"):
+        out.append(("paired-fifths", ["node", "--env-file=.env.production.local", "scripts/audit/spare-paired-fifths.mjs", "pool",
+                                      "--label", label, "--post", *rec["pf_runs"]]))
+    return out
+
+
 def post_pooled_audits(state: dict, running: list[str]):
-    """One #6420 comment per account-week, once the week has reset and none of its rounds is still running."""
+    """One #6420 comment per account-week and kind of round, once the week has reset and none of its rounds is running."""
     changed = False
     for week, rec in (state.get("audit") or {}).items():
         reset = parse_iso(week.split("|", 1)[1] + ":00:00+00:00")
         if rec.get("posted") or not reset or NOW < reset:
             continue
-        if any(os.path.basename(r) in running for r in rec["runs"]):
+        if any(os.path.basename(r) in running for r in rec.get("runs", []) + rec.get("pf_runs", [])):
             continue
         label = f"{box_name()}, account week to {reset:%Y-%m-%d %H}:00Z"
-        log(f"post pooled audit: {len(rec['runs'])} round(s) of {week} on #6420")
-        if DRY:
-            continue
-        r = subprocess.run(["node", "scripts/audit/convergent-audit-pool.mjs", "--label", label, "--post", *rec["runs"]],
-                           cwd=SL, capture_output=True, text=True, timeout=300)
-        if r.returncode == 0:
+        done = rec.setdefault("posted_kinds", [])
+        for kind, cmd in pool_commands(rec, label):
+            if kind in done:
+                continue  # a week with both kinds whose second post failed: never post the first twice
+            log(f"post pooled {kind} rounds of {week} on #6420")
+            if DRY:
+                continue
+            try:
+                r = subprocess.run(cmd, cwd=SL, capture_output=True, text=True, timeout=600)
+            except subprocess.TimeoutExpired:
+                log(f"warn: pooled {kind} post timed out, retrying next run")  # never let a post stop the lane's start
+                continue
+            if r.returncode == 0 or "no round has a draw" in r.stderr:
+                done.append(kind)
+                changed = True
+            else:
+                log(f"warn: pooled {kind} post failed, retrying next run: {r.stderr.strip()[-200:]}")
+        if not DRY and all(k in done for k, _ in pool_commands(rec, label)):
             rec["posted"] = NOW.isoformat()
-        elif "no round has a draw" in r.stderr:
-            rec["posted"] = "nothing to pool"
-        else:
-            log(f"warn: pooled audit post failed, retrying next run: {r.stderr.strip()[-200:]}")
-            continue
-        changed = True
+            changed = True
     if changed:
         save_state(state)
 
@@ -397,12 +530,14 @@ def main():
         log(f"idle ({email}): {why}; {len(running)} lane job(s) running")
         return
 
-    load1, cores = os.getloadavg()[0], os.cpu_count() or 1
-    if load1 >= cores:
-        log(f"wait: {why}, but load {load1:.1f} on {cores} cores")
-        return
     if len(running) >= MAX_JOBS:
         log(f"full: {why}; running {', '.join(running)}")
+        return
+    # Ask before starting (#70). The drain's JOB_IGNORE_LIMIT, set above, reaches `where` through the environment,
+    # so a drain is not held back by the weekly-limit reason it exists to pass.
+    ready = box_ready()
+    if ready != "yes":
+        log(f"wait: {why}, but this box is not ready for a job ({ready})")
         return
 
     state = load_state()
@@ -411,6 +546,14 @@ def main():
         # job has a two-hour budget and may be stopped at 99% half done. Claude reviews here and writes no page
         # text; translation stays on agy.
         start_fallback_audit(email, limits, why, state)
+        return
+    # The weekly reflection (#8632): once per new digest, in the last 48 h, before issue work. Not in the drain:
+    # a reflection may open a PR, which does not fit the last hours (the drain runs an audit round instead).
+    # Not in the final 12 h either: the stop at 99% ends every lane job, and a reflection cut off mid-PR leaves a mess.
+    hours_left = (parse_iso(limits["weekly_all"]["resets_at"]) - NOW).total_seconds() / 3600
+    digest = pending_digest(state) if in_last_stretch(limits) and hours_left >= 12 else None
+    if digest:
+        start_reflection(email, why, state, digest)
         return
     tried = {int(k) for k in state["tried"]}
     starts = state.get("starts", 0)

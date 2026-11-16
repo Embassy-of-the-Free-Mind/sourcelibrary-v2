@@ -1,0 +1,62 @@
+[
+  {
+    "book_id": "6a3c6ba639b4508b04e44d09",
+    "slot": 1,
+    "title": "天原發微·卷四下 (vol 7)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu copy of Bao Yunlong's Tianyuan fawei (Song Neo-Confucian cosmology and numerology, with Bao Ning's notes), in the general 'universallibrary' collection. Nothing is out of place.",
+    "rights_flag": null,
+    "structure_note": "The structure count gives pages_translated 0, but the book field gives 74, and this page does have a translation. The counter seems to miss this book's translation records; it does not look like missing English. Only 9 of 74 pages have a printed number. That fits Siku Quanshu leaves, whose folio number sits low in the block-heart and is often cut off or unread, as it is here. No backsteps and no repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 72,
+        "right_page": "yes",
+        "printed_marker": "卷四下",
+        "layout": "half-leaf of a ruled Siku Quanshu manuscript, vertical columns read right to left; the block-heart strip at the right edge shows 欽定四庫全書 (partly cut off) and 卷四下; the first column is a note in small characters, two rows per column",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "Master Zhu Xi's *Introduction to the Study of the Changes*",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "\"Mutual generation\" and \"mutual overcoming\" are the two cl",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Cai Jiufeng is Cai Chen (1167–1230), a disciple of Zhu Xi kn",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "Only the final digit of each product is placed on the Luo Wr",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "Ning's note:",
+              "why": "Readers are not told that 寧按 introduces a note by the Ming commentator Bao Ning, which is set off on the leaf in small characters. Without that, 'Ning' is an unexplained name, and the reader cannot tell this note apart from the main text."
+            },
+            {
+              "english": "the River Diagram moves from the east toward the south",
+              "why": "Readers are not told that the River Diagram (Hetu) and the Luo Writing (Luoshu) are the two traditional number diagrams the whole page argues about."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches the leaf line for line, and the translation is faithful. Its notes are accurate. One note adds Cai Chen's identity and dates, which are correct but not on the page."
+  }
+]

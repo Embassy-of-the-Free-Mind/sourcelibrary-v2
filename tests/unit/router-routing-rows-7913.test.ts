@@ -13,7 +13,7 @@ import path from 'node:path';
 import { plan, cellRows, withCellRows, isTranslationCell, routeLabel, KEY } from '../../scripts/maintenance/router-routing-rows.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { effectiveMode, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
+import { boundRoute, effectiveMode, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
 
 const ROOT = path.resolve(__dirname, '../..');
 
@@ -34,14 +34,17 @@ describe('router_cells and the doc tables are generated from current.json', () =
     expect(routeLabel('flash-lite')).toBe('flash-lite (off menu)');
   });
 
-  it('every decided cell of the live table has one row, in the table of its task', () => {
+  // A cell has a row when it BINDS a route (boundRoute), not only when it is decided: since the 2026-11-07 binding default
+  // (#8283), a build's HOLD cell binds `bound_route` too (its live route, or the agy default). Counting keep/switch only
+  // failed every nightly bind from the first one that carried bound_route (106 rows against 88, PR #17, #360).
+  it('every cell of the live table that binds a route has one row, in the table of its task, with that route', () => {
     const t = loadCurrentTable();
     const rows = cellRows(t);
-    const decided = [...t.rows.values()].filter((r: { decision: string }) => /^(keep|switch)\b/.test(r.decision) && !/UNTESTED/.test(r.decision));
-    expect(rows.ocr.length + rows.translation.length).toBe(decided.length);
+    const binding = [...t.rows.values()].filter((r) => boundRoute(r));
+    expect(rows.ocr.length + rows.translation.length).toBe(binding.length);
     for (const r of rows.translation) expect(isTranslationCell({ id: r.cell })).toBe(true);
     for (const r of rows.ocr) expect(isTranslationCell({ id: r.cell })).toBe(false);
-    for (const r of [...rows.ocr, ...rows.translation]) expect(r.route).toBe(t.rows.get(r.cell).route);
+    for (const r of [...rows.ocr, ...rows.translation]) expect(r.route).toBe(boundRoute(t.rows.get(r.cell)));
   });
 
   it('the hand rows and every other key stay as they were', () => {

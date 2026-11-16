@@ -27,7 +27,7 @@ import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
-// Labels are letterspaced Inter caps (house style; the site sets no monospace).
+// Labels are letterspaced Source Sans 3 caps (house style; the site sets no monospace).
 
 /** Ink-bar foreground: cream at a given opacity (on --bg-dark surfaces). */
 export function onInk(opacity: number): string {

@@ -5,7 +5,7 @@ import { WorkBrowser } from './WorkBrowser';
 
 const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const LINK = 'text-accent-rust hover:underline';
-const HEADING = 'font-sans !font-bold tracking-tight text-stone-950';
+const HEADING = 'font-sans !font-semibold tracking-tight text-stone-950';
 
 function Part({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (

@@ -98,8 +98,15 @@
  * the images under neutral names p01.jpg … in one workspace, the live prompt, then the block wrapper (agy-cli.mjs
  * ocrBlockInstruction) asking for each page between <<<PAGE n BEGIN>>> / <<<PAGE n END>>>. The reply is split ONLY by
  * those markers (splitPageBlocks): a reply missing, repeating or reordering any page's markers, or with text outside
- * them, is refused whole, retried once as a block, then each of its pages is read one per call on the ordinary
- * prompt. A page of an accepted block that fails the chatter or write guard is read again alone. The prompt sent is
+ * them, is refused. REFUSED BLOCKS (#68; a fifth of the first-read lane's 8-page calls in November 2026, most of them
+ * cut by Gemini's output filter or declined by the model on a long run of a well-known text): the block is not sent
+ * again at its size (that was refused again 77% of the time). The whole pages before a filter cut are kept
+ * (agy-cli.mjs cutReplyPages), the page the filter cut is read alone, the pages after it go out in blocks of half the
+ * size, and the rest of the book is read at that size for the run (refusedBlockPlan). A call that failed in the CLI
+ * (exit, timeout, empty) is still tried once more as the same block, then read one page per call.
+ * `read --refused-retry` restores the earlier handling (one retry at the same size, then one page per call, nothing
+ * kept from a cut reply); --no-alone implies it. A page of an accepted block that fails the chatter or write guard is
+ * read again alone. The prompt sent is
  * kept as prompts/<hash>.txt (apply hashes it); the whole reply as raw/<call id>.txt; each page's meta carries the
  * call (call_id, call_pages, call_position, per_call) and the call's agy usage, and the kept-read variant names the
  * call's page count, so a 1/call read and an N/call read never stand in for each other. A one-page remainder is read
@@ -147,7 +154,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, imageReadDenied, cliExitCode } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, cutReplyPages, refusedBlockPlan, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, imageReadDenied, cliExitCode } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { strandedLift, STRANDED_WINDOW } from '../lib/stranded-leaf-gate.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
@@ -163,6 +170,7 @@ import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
 import { fitLongEdge, prepImage } from '../lib/image-long-edge.mjs';
 import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../lib/correction-diff-guard.mjs';
+import { blankReadOverText } from '../lib/blank-page-guard.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -202,6 +210,8 @@ const LONG_EDGE = arg('long-edge') ? Number(arg('long-edge')) : null;
 if (STAGE === 'read' && LONG_EDGE !== null && !(Number.isInteger(LONG_EDGE) && LONG_EDGE >= 256 && LONG_EDGE <= 8000)) { console.error('--long-edge must be 256 to 8000 px'); process.exit(2); }
 const IMAGE_CACHE = arg('image-cache') && path.resolve(arg('image-cache'));
 const NO_ALONE = process.argv.includes('--no-alone');
+// #68: how a block whose markers do not match is handled (REFUSED BLOCKS in the header). --refused-retry: as before #68.
+const SPLIT_REFUSED = !NO_ALONE && !process.argv.includes('--refused-retry');
 const IMAGE_PREP = arg('image-prep') || null;
 if (STAGE === 'read' && IMAGE_PREP && IMAGE_PREP !== 'gnu') { console.error('--image-prep must be gnu'); process.exit(2); }
 if (STAGE === 'read' && NO_ALONE && PER_CALL < 2) { console.error('--no-alone is for --per-call >= 2'); process.exit(2); }
@@ -420,8 +430,11 @@ if (STAGE === 'read') {
     };
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
     // Kept the moment it is paid for (#7075); best effort, never fails the read.
-    if (meta.exit === 0 && !meta.error_class && !meta.wrapper) await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, prompt_text: CORRECT_PROMPT ? sent : null, source_path: path.join(OUT, `${key}.txt`) });
-    console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
+    // A reply the chatter guard or the write guard still rejects after its one re-read (a "blocked by Gemini's filters"
+    // tail, a prompt echo, a cut text) is not kept: a later run would reuse it instead of reading the page again (#99).
+    const unread = meta.chatter || meta.write_guard === 'truncated';
+    if (meta.exit === 0 && !meta.error_class && !meta.wrapper && !unread) await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, prompt_text: CORRECT_PROMPT ? sent : null, source_path: path.join(OUT, `${key}.txt`) });
+    console.log(`  ${p.page_number} ${r.cls || (unread ? `not a read (${meta.chatter || 'truncated'})` : 'ok')}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
   };
   // ── --per-call=N (#7522): several consecutive pages of one book in one call ──
   const fetchImage = async (p) => {
@@ -444,7 +457,11 @@ if (STAGE === 'read') {
   // Correct mode (#7701 arm C): the block carries each page's draft, so the prompt is the group's, not the count's.
   const blockPrompt = (n, group) => (CORRECT_PROMPT ? correctBlockPrompt(base, group.map((q) => q.ocr.data)) : base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT }));
   const blockReuseKey = (sent, imageSha, n) => reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(CORRECT_PROMPT ? 'correct' : null, LANE, PROMPT_VARIANT, n) });
-  /** One block call. Returns the pages to read again one per call ([] when every page was kept), or null when the call was refused whole. */
+  /**
+   * One block call. Returns { redo, rest, refusal }: `redo` the delivered pages a guard sends to a one-page read, `rest`
+   * the pages the reply did not deliver, `refusal` null for an accepted block, 'cut' (Gemini's filter cut the reply; its
+   * whole pages were kept), 'markers' (the markers do not match and nothing was kept) or the CLI's error class.
+   */
   const readBlock = async (group, imgs, attempt) => {
     const n = group.length, first = group[0], last = group[n - 1];
     const sent = blockPrompt(n, group);
@@ -479,12 +496,17 @@ if (STAGE === 'read') {
       }
       break;
     }
-    const texts = r.cls ? null : splitPageBlocks(r.text, n);
+    const whole = r.cls ? null : splitPageBlocks(r.text, n);
+    // #68: a reply the filter cut still holds its first pages whole; they go through every guard below like any block's.
+    const cut = !r.cls && !whole && SPLIT_REFUSED ? cutReplyPages(r.text, n) : null;
+    const texts = whole || cut;
+    const kept = texts ? group.slice(0, texts.length) : [];
     fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
     fs.writeFileSync(path.join(OUT, 'raw', `${callId}.txt`), r.text);   // the whole reply, so a refused call can be read
     const tools = gateCalls(gateLog);
-    fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), model: MODEL, secs: Math.round((Date.now() - t0) / 1000), cls: r.cls || (texts ? null : 'page_markers_mismatch'), calls, nudged, usage, tool_calls: tools }) + '\n');
-    if (!texts) { console.log(`  p.${first.page_number}-${last.page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round((Date.now() - t0) / 1000)}s)`); return null; }
+    fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), model: MODEL, secs: Math.round((Date.now() - t0) / 1000), cls: r.cls || (whole ? null : 'page_markers_mismatch'), ...(cut && { cut_after: cut.length }), calls, nudged, usage, tool_calls: tools }) + '\n');
+    if (!whole) console.log(`  p.${first.page_number}-${last.page_number}: ${r.cls || 'page markers do not match: call refused'}${cut ? `; cut by Gemini's filter, ${cut.length} whole page(s) before the cut` : ''} (${Math.round((Date.now() - t0) / 1000)}s)`);
+    if (!texts) return { redo: [], rest: group, refusal: r.cls || 'markers' };
     const redo = [];
     // #5021 (block-page-guard.mjs ocrBlockRefusals): a page whose read holds its neighbour's leaf, against the page's
     // stored text where it has one (the draft, or the text a re-read replaces), or that prints the same page number as
@@ -492,11 +514,11 @@ if (STAGE === 'read') {
     const asRead = texts.map((t) => (CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(t) ? '' : t));
     const stored = new Map(group.map((q) => [q.id, q.ocr?.data || storedText.get(q.id) || '']));
     const wrongLeaf = new Set();
-    for (const g of ocrBlockRefusals(group, asRead, { stored })) {
+    for (const g of ocrBlockRefusals(kept, asRead, { stored })) {
       wrongLeaf.add(g.page_number);
       fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: g }) + '\n');
     }
-    for (const [i, p] of group.entries()) {
+    for (const [i, p] of kept.entries()) {
       const text = texts[i];
       if (wrongLeaf.has(p.page_number)) { redo.push(p); continue; }
       // A correction's UNCHANGED / CONTAIN answer is not a transcription: no chatter or cut-text check (readOne: the same).
@@ -512,7 +534,7 @@ if (STAGE === 'read') {
         page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
         started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: null, ...(r.hung_after_reply && { hung_after_reply: true }),
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
-        prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
+        prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id), ...(cut && { call_cut_after: cut.length }),
         wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
         prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
         ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
@@ -521,14 +543,18 @@ if (STAGE === 'read') {
       // Kept the moment it is paid for (#7075), keyed on this call's page count; best effort, never fails the read.
       await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text, model: MODEL, prompt_hash: blockReuseKey(sent, imgs[i].sha, n), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
     }
-    console.log(`  p.${first.page_number}-${last.page_number}: ok ${texts.map((t) => t.length).join('/')} chars${redo.length ? `; ${redo.length} to read alone (guard)` : ''} (${Math.round((Date.now() - t0) / 1000)}s)`);
-    return redo;
+    if (whole) console.log(`  p.${first.page_number}-${last.page_number}: ok ${texts.map((t) => t.length).join('/')} chars${redo.length ? `; ${redo.length} to read alone (guard)` : ''} (${Math.round((Date.now() - t0) / 1000)}s)`);
+    else if (kept.length) console.log(`  p.${first.page_number}-${kept[kept.length - 1].page_number}: kept from the cut reply ${texts.map((t) => t.length).join('/')} chars${redo.length ? `; ${redo.length} to read alone (guard)` : ''}`);
+    return { redo, rest: group.slice(kept.length), refusal: whole ? null : 'cut' };
   };
-  const readGroup = async (group) => {
-    if (group.length === 1) return readOne(group[0], PER_CALL > 1 ? 'remainder' : null);
+  // #68: the size the rest of a book is read at once one of its blocks was refused for its markers (only ever lowered).
+  const bookCap = new Map();
+  /** `fetched`: the images of a refused block (page id -> image), when this group is a part of it sent again smaller. */
+  const readGroup = async (group, fetched = null) => {
+    if (group.length === 1) return readOne(group[0], fetched ? 'refused' : PER_CALL > 1 ? 'remainder' : null);
     const imgs = [];
     for (const p of group) {
-      const im = await fetchImage(p);
+      const im = fetched?.get(p.id) || await fetchImage(p);
       if (im.error) { console.log(`  ${p.page_number} ${im.error}: its call's ${group.length} pages are read one per call`); for (const q of group) await readOne(q, 'image'); return; }
       imgs.push(im);
     }
@@ -544,12 +570,20 @@ if (STAGE === 'read') {
       }
     }
     if (REUSE_ONLY) { noKept += group.length; return; }
-    let redo = await readBlock(group, imgs, 0);
-    if (redo === null) redo = await readBlock(group, imgs, 1);
-    // Still refused: each page alone, so one hard page does not cost its neighbours.
-    const from = redo === null ? 'refused' : 'guard';
-    if (NO_ALONE) { for (const p of redo ?? group) notRead(p, from, `${JOB}-${group[0].book_id}-${group[0].page_number}-${group.length}`); return; }
-    for (const p of redo ?? group) await readOne(p, from);
+    let res = await readBlock(group, imgs, 0);
+    // A reply whose markers do not match is not sent again at the same size (#68); a CLI failure is, once.
+    const split = SPLIT_REFUSED && (res.refusal === 'cut' || res.refusal === 'markers');
+    if (res.refusal && !split) res = await readBlock(group, imgs, 1);
+    if (NO_ALONE) { for (const p of res.refusal ? group : res.redo) notRead(p, res.refusal ? 'refused' : 'guard', `${JOB}-${group[0].book_id}-${group[0].page_number}-${group.length}`); return; }
+    for (const p of res.redo) await readOne(p, 'guard');
+    if (!res.rest.length) return;
+    // Still refused after the retry, or --refused-retry: each page alone, so one hard page does not cost its neighbours.
+    if (!split) { for (const p of res.rest) await readOne(p, 'refused'); return; }
+    const plan = refusedBlockPlan(group.length, group.length - res.rest.length, { cut: res.refusal === 'cut' });
+    bookCap.set(group[0].book_id, Math.min(plan.cap, bookCap.get(group[0].book_id) ?? plan.cap));
+    const held = new Map(group.map((p, i) => [p.id, imgs[i]]));
+    for (const i of plan.alone) await readOne(group[i], 'refused');
+    for (const part of plan.blocks) await readGroup(part.map((i) => group[i]), held);
   };
   let groups = pages.map((p) => [p]);
   // The stored transcription of each page, for the block guard (#5021); read apart from the page, so a first read is
@@ -574,7 +608,14 @@ if (STAGE === 'read') {
     console.log(`--per-call=${PER_CALL}: ${groups.length} calls planned (${groups.filter((g) => g.length > 1).length} of several pages)`);
   }
   const queue = [...groups];
-  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readGroup(queue.shift()); }));
+  // The next call's pages: a planned group, cut to its book's size once a block of that book was refused (#68).
+  const nextGroup = () => {
+    const g = queue.shift(), cap = bookCap.get(g[0].book_id);
+    if (!cap || g.length <= cap) return g;
+    for (let i = Math.ceil(g.length / cap) - 1; i >= 1; i--) queue.unshift(g.slice(i * cap, (i + 1) * cap));
+    return g.slice(0, cap);
+  };
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readGroup(nextGroup()); }));
   console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
   if (REUSE_ONLY) console.log(`reuse-only: ${noKept} page(s) had no matching kept read and were not called`);
   await client.close();
@@ -839,6 +880,13 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       yat.reverted = yat.hits - yat.kept;
     }
   } else if (page.ocr?.data && !LANE_GATE) {
+    // #8632: a blank read over a stored transcription is refused unless a by-eye check of this read says it matches
+    // the image. The shared-word floor below misses it whenever the stored text has under 40 long words.
+    const blankOver = blankReadOverText(page.ocr.data, text);
+    if (blankOver) {
+      const eye = BY_EYE.get(page.id);
+      if (!(eye && eye.read_sha256 === sha256(text) && eye.verdict === 'read-matches-image')) { skip(m, blankOver); continue; }
+    }
     const was = longWords(page.ocr.data), now = longWords(text);
     const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
     if (was.size >= 40 && shared < MIN_SHARED) {

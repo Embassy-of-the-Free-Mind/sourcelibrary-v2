@@ -1,0 +1,144 @@
+[
+  {
+    "book_id": "6a358874d8c4016326cdcb7f",
+    "slot": 1,
+    "title": "مخزن الادویه (Makhzan al-Adviyah, Persian materia medica)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A lithographed Persian materia medica. This leaf is from its drug-name glossary (farhang). It belongs on the McGill Osler / Medical Heritage Library shelves it is catalogued under.",
+    "rights_flag": null,
+    "structure_note": "The running head reads 'فرهنگ مخزن الادویه فارسی مع تحفة المؤمنین', which marks this leaf as the appended glossary. That glossary has its own pagination ('۵۴' or '۵۳' here, at record 758), so the 43 backsteps and 15 repeats most likely come from separately paginated parts (main text, glossary, Tuhfa), not from a broken scan order. Only 145 of 778 pages have a printed number, so some of the steps may also be misread numerals. The counts disagree: structure.pages_translated is 0, but pages_translated_field is 731 and this page has a translation. One of the two instruments is wrong (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 758,
+        "right_page": "yes",
+        "printed_marker": "۵۴ (in a pointed cartouche in the right margin, beside the table; the second digit might be ۳ at this resolution; running head 'فرهنگ مخزن الادویه فارسی مع تحفة المؤمنین')",
+        "layout": "lithographed nastaliq; central ruled block of five narrow columns of glossary entries, framed on top, right and bottom by panels of diagonally written text",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>\n<unclear>عبارت</unclear> از گیاهی است که در اراضی نمناک میروید و برگ آن شبیه به برگ بارهنگ است...\n</margin>\n\n<margin>\nدر بیان ماهیت آن و آنچه بدان ماند...\n</margin>",
+            "image": "The top panel, the right-hand panel and the bottom panel together hold dozens of lines of diagonal lithographed text. The bottom panel alone has about ten long lines.",
+            "problem": "Most of the page's text, everything outside the central table, is reduced to two short lines that end in '...'. The rest is silently left out.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "| کلنوی اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی |",
+            "image": "Columns 2–5 have different entries at this height. In each column the lower half is a run of distinct headwords and glosses.",
+            "problem": "Filler rows repeat themselves in columns 2–5: 'کلر است و نیز لغازی' four times in one row, 'کلر نام است' again and again, 'کل شبا به است اسم فارسی' repeated. These are not on the leaf. Column 1, the leftmost, is well anchored (for example 'عمان اسم صندل اصفر', 'سرطان', 'هرات میشود و رنگ آن سیاه'). The lower parts of the other columns are invented.",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "| ستون اول | ستون دوم | ستون سوم | ستون چهارم | ستون پنجم |",
+            "image": "Five independent vertical lists. Each entry runs on over several lines within its own column, and the columns are not aligned row by row.",
+            "problem": "Recasting the page as a row-aligned table splices fragments from unrelated columns into rows. The real entries survive only if the reader reads down a column, and row lengths no longer match the leaf (23 rows against about 30 lines per column).",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "و گویند بسپای لغت یونانی است به معنی کثیر الارجل و گویند بسپای لغت یونانی است به معنی کثیر الارجل و گویند بسپای لغت یونانی است به معنی کثیر الارجل...",
+            "image": "The bottom panel continues with about ten different lines. The clause is not repeated three times.",
+            "problem": "A token-level repetition loop stands in for the bottom panel's text.",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "<header>فرهنگ مخزن الادویه فارسی مع ترجمه الارمنین</header>",
+            "image": "فرهنگ مخزن الادویه فارسی مع تحفة المؤمنین",
+            "problem": "The title of the companion work in the running head is misread ('ترجمه الارمنین' for 'تحفة المؤمنین').",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<page-num>۵۳</page-num>",
+            "image": "۵۴ (probable)",
+            "problem": "The printed page number appears to be ۵۴. Confidence is low because the numeral is small.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<warning>The page contains extensive marginalia in a diagonal handwritten Nastaliq script surrounding the central printed table.</warning>",
+            "image": "The diagonal panels are part of the same lithograph as the table.",
+            "problem": "The warning calls the printed side panels handwritten marginalia. This is probably why they were skipped.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "<term>Kalar</term> is a name | <term>Kalar</term> is a name | <term>Kal</term> is a Persian word |",
+            "english": "<term>Kalak</term>, with <term>a</term>, is a Persian name | <term>Kalak</term>, with <term>a</term>, is a Persian name | <term>Kalak</term>, with <term>a</term>, is a Persian name | <term>Kalak</term>, with <term>a</term>, is a Persian name |",
+            "problem": "The translator turns the OCR's looped and invented rows into fluent glossary English, so a reader sees entries that are not on the leaf. The hidden <meta> admits the OCR is 'heavily garbled and repetitive', but nothing in the reading text marks it.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "فرهنگ مخزن الادویه فارسی مع ترجمه الارمنین",
+            "english": "Dictionary of the Storehouse of Medicaments in Persian, with the Translation of the Believers",
+            "problem": "The visible heading invents a work, 'the Translation of the Believers'. The leaf names Tuhfat al-Mu'minin ('the Gift of the Believers'). The guess appears only in the <meta>.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "'-> Kulukh Mansali <-' arrow markup appears in the reader text",
+            "severity": "minor"
+          },
+          {
+            "note": "'<note>A small decorative floral ornament marks the end of the text block.</note>' puts a page description into the reading flow. No such ornament is visible at the foot of the leaf.",
+            "severity": "minor"
+          },
+          {
+            "note": "In the English the reader sees visibly repeated rows and 'they say baspay is a Greek word meaning \"many-footed\"' three times. Both are obvious on sight.",
+            "severity": "moderate"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "\"elephant's ear\"", "verdict": "ok", "helpful": true },
+            { "quote": "agaric", "verdict": "ok", "helpful": true },
+            { "quote": "centaury", "verdict": "ok", "helpful": true },
+            { "quote": "clove flower", "verdict": "ok", "helpful": false },
+            { "quote": "fragrant flower", "verdict": "ok", "helpful": false },
+            { "quote": "violet", "verdict": "ok", "helpful": true },
+            { "quote": "blood-red flower", "verdict": "ok", "helpful": false },
+            { "quote": "tulip", "verdict": "ok", "helpful": true },
+            { "quote": "safflower", "verdict": "ok", "helpful": true },
+            { "quote": "yellow flower", "verdict": "ok", "helpful": false },
+            { "quote": "wallflower", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"عقیق\"", "verdict": "ok", "helpful": false },
+            { "quote": "stone flower", "verdict": "ok", "helpful": false },
+            { "quote": "cabbage", "verdict": "ok", "helpful": true },
+            { "quote": "red flower", "verdict": "ok", "helpful": false },
+            { "quote": "red rose", "verdict": "ok", "helpful": true },
+            { "quote": "elephant flower", "verdict": "ok", "helpful": false },
+            { "quote": "Roman cabbage", "verdict": "ok", "helpful": false },
+            { "quote": "cauliflower", "verdict": "ok", "helpful": true },
+            { "quote": "stone flower", "verdict": "ok", "helpful": false },
+            { "quote": "pharmacopoeia", "verdict": "ok", "helpful": true },
+            { "quote": "agaric", "verdict": "ok", "helpful": true },
+            { "quote": "mugwort", "verdict": "ok", "helpful": true },
+            { "quote": "colocynth", "verdict": "ok", "helpful": true },
+            { "quote": "anemone, red poppy", "verdict": "ok", "helpful": true },
+            { "quote": "yellow sandalwood", "verdict": "ok", "helpful": true },
+            { "quote": "scorpion flower", "verdict": "ok", "helpful": false },
+            { "quote": "centaury", "verdict": "ok", "helpful": true },
+            { "quote": "crab", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"کثیر الارجل\"; this matches the Greek name of po", "verdict": "ok", "helpful": true },
+            { "quote": "A small decorative floral ornament marks the end of the text", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Dictionary of the Storehouse of Medicaments in Persian, with the Translation of the Believers", "why": "The reader is not told that the companion work is Tuhfat al-Mu'minin, the pharmacological dictionary bound with this book. The identification sits only in the hidden <meta>, and the English title is wrong." },
+            { "english": "<term>Kalkala</term>, with <term>a</term> on the first letter and the second letter unvowelled", "why": "This is the lexicographers' pronunciation formula (bi-fatḥ-i avval va sukūn-i thānī). A general reader cannot tell it is a pronunciation guide, so it reads as nonsense." },
+            { "english": "<term>Kalaft</term> in the Zand language is a worm which in Arabic", "why": "'Zand' (the Middle Persian / Avestan glossary language, as Persian lexicographers use the term) is not explained." },
+            { "english": "it is stated in the <term>Majma'</term> that in Persian it is called <term>payiz</term>", "why": "The source the passage cites, a book called 'Majma'', is not identified." },
+            { "english": "<term>Kalkunin</term> is Greek for <term>bajayis</term>", "why": "The drug name 'bajayis' recurs on the page without a gloss, so the equation tells the reader nothing." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is a genuine 1913 Persian materia medica on the right shelf. On this glossary leaf, though, the OCR drops nearly all of the diagonal side-panel text, fills the lower table and the closing passage with repetition loops, and the translation renders that garble as fluent English. An expert would flag the leaf on sight."
+  }
+]

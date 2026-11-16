@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<header>QUESTIO II.</header>
+<meta>catchword: debere</meta>
+<warning>Bleed-through from the reverse side of the page is visible but does not significantly impede legibility of the primary text.</warning>
+
+## An Concordatis Germaniae opponi possit praescriptio.
+
+<margin>1</margin> Pro affirmativa parte videntur haec argumenta. Primò, praescriptione possumus acquirere alienam iurisdictionem: ius conferendi beneficia indifferenter in omnibus mensibus est species iurisdictionis, ergò illud erit acquisibile per praescriptionem. 
+
+<margin>2</margin> Secundò: Quicquid possumus obtinere privilegio, vel indulti specialis concessione, id etiam possumus acquirere praescriptione; at privilegia, et indulta huiusmodi passim à Summis Pontificibus conceduntur Electoribus Imperii, et magnis Principibus ecclesiasticis: ergò praescriptione idem consequi poterimus. 
+
+<margin>3</margin> Tertiò: quia Cassadorus super Regulae Cancellariae decisionis 11. Regulam de triennali possessore extendit in favorem provisi ab Ordinario de praepositura, seu prima dignitate, non obstantibus 
+
+<margin>4</margin> Concordatis. Verùm negativa est vera, et tenenda; quia praescriptio non datur ubi deest titulus, et bona fides cum possessione, Abbas in capitulo cum nostris de concessione praebendae. sed nec titulum, nec possessionem, nec bonam fidem habere possunt, qui Concordatis se opponunt, igitur allegata praescriptio in fumum transit. 
+
+<margin>5</margin> Minor propositio est clara ex Decreto irritante in textu ibi: 
+
+> Et insuper quoque; irritum et inane, si secus super his à quoquam quavis authoritate scienter, vel ignoranter contigerit attentari: Nulli ergò omninò hominum, et cetera.
+
+<margin>6</margin> Decretum autem irritans inficit titulum, et possessionem Caputaquensis decisionis 15. pars 3. Flaminius Parisius de Resignationibus libro 6. quaestio 5. 
+
+<margin>7</margin> numero 57. Et Decretum irritans ligat ignorantes. idem Flaminius libro 5. quaestio 6. numero 220. allegans ad hoc capitulo 1. de concessione praebendae et capitulo dudum, eo titulo libro 6. glossa Clementis 1. dicto titulo de concessione praebendae Cardinalis Zabarella in 6. eodem titulo Butrio consilio 43. Gabriel 
+
+<margin>8</margin> consilio 3. Unde loco citato dictus Flaminius concludit Episcopum debere
+
+<vocab>Concordatis Germaniae, praescriptio, iurisdictio, Summis Pontificibus, Cassadorus, Decreto irritante, Flaminius Parisius, Cardinalis Zabarella</vocab>

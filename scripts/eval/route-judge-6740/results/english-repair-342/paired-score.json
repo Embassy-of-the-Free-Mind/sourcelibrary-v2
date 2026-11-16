@@ -1,0 +1,546 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "prompt",
+  "issue": 342,
+  "stage": "translation",
+  "languages": [
+   "la",
+   "zh",
+   "de",
+   "grc",
+   "fr",
+   "he",
+   "it",
+   "sa",
+   "nl",
+   "ru",
+   "ja",
+   "ar",
+   "ko",
+   "bo",
+   "es",
+   "fa",
+   "syc",
+   "pra",
+   "zu"
+  ],
+  "baseline": "stored",
+  "arms": [
+   "stored",
+   "retranslate",
+   "guided",
+   "blind"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null,
+   "note": "12 same-arm repeat rows (3 per arm, one per group)"
+  },
+  "feeds": "route",
+  "router_evidence": "none — a second-pass (repair) test on the live translation route's model, not a route comparison for a router cell; no rules.json cell changes",
+  "decision_rule": "Written 2026-11-14 before judging. An arm is recommended as an English repair pass if, on the flagged pages (en_only + both pooled), its judged serious defects (misleads + wrong_text) per 1,000 words are at least one third below stored (A), with the by-book 95% interval of the difference excluding 0, AND on CLEAN pages it adds no more than 0.5 serious defects per 1,000 words over A (upper by-book bound). Why: flagged pages are ~31% of served pages (421/1,344); a one-third cut on them is about 0.3/1k across all pages, so a pass run on every page must not add more than that on the ~69% that are clean. Sizing: A's audit rate on flagged pages is ~2.7-3.3 serious per 1k (~1.3 per page at ~420 words); a one-third cut is ~0.45 defects a page; with a per-page SD of the paired difference ~1.2 that needs ~60 pages per comparison (alpha 0.05, power 0.8) — 100 pooled flagged pages, 50 per group (each group alone shows a ~45% cut). CLEAN: +0.5/1k is ~0.17 defects a page at ~350 words; with SD ~0.6 that needs ~100 pages. Set: 50 en_only, 50 both, 100 clean.",
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "both": {
+     "routes": {
+      "stored": {
+       "n": 50,
+       "books": 50,
+       "unjudged": 0,
+       "accept": "0/50",
+       "accept_wilson": [
+        0,
+        0.071
+       ],
+       "accept_by_book": [
+        0,
+        0
+       ],
+       "wrong_text_pages": "49/50",
+       "wrong_text_wilson": [
+        0.895,
+        0.996
+       ],
+       "fidelity_mean": 2.44,
+       "counts": true,
+       "words": 29376,
+       "misleads_per_1k": 6.03,
+       "wrong_text_per_1k": 7.39
+      },
+      "retranslate": {
+       "n": 50,
+       "books": 50,
+       "unjudged": 0,
+       "accept": "2/50",
+       "accept_wilson": [
+        0.011,
+        0.135
+       ],
+       "accept_by_book": [
+        0,
+        0.1
+       ],
+       "wrong_text_pages": "46/50",
+       "wrong_text_wilson": [
+        0.812,
+        0.968
+       ],
+       "fidelity_mean": 2.56,
+       "counts": true,
+       "words": 30174,
+       "misleads_per_1k": 4.81,
+       "wrong_text_per_1k": 5.7
+      },
+      "guided": {
+       "n": 49,
+       "books": 49,
+       "unjudged": 0,
+       "accept": "24/49",
+       "accept_wilson": [
+        0.356,
+        0.625
+       ],
+       "accept_by_book": [
+        0.347,
+        0.633
+       ],
+       "wrong_text_pages": "18/49",
+       "wrong_text_wilson": [
+        0.247,
+        0.507
+       ],
+       "fidelity_mean": 3.45,
+       "counts": true,
+       "words": 29387,
+       "misleads_per_1k": 3.61,
+       "wrong_text_per_1k": 2.25
+      },
+      "blind": {
+       "n": 49,
+       "books": 49,
+       "unjudged": 0,
+       "accept": "10/49",
+       "accept_wilson": [
+        0.115,
+        0.336
+       ],
+       "accept_by_book": [
+        0.102,
+        0.327
+       ],
+       "wrong_text_pages": "29/49",
+       "wrong_text_wilson": [
+        0.452,
+        0.718
+       ],
+       "fidelity_mean": 2.92,
+       "counts": true,
+       "words": 29490,
+       "misleads_per_1k": 4.61,
+       "wrong_text_per_1k": 3.93
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 1,
+       "passed": true
+      },
+      "retranslate": {
+       "n": 1,
+       "passed": true
+      },
+      "guided": {
+       "n": 1,
+       "passed": true
+      },
+      "blind": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 4,
+      "accept_flips": "0/4",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0
+     },
+     "against_baseline": {
+      "stored -> retranslate": {
+       "shared_pages": 50,
+       "better": "8/50",
+       "worse": "3/50",
+       "accept_gained": 2,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0.5,
+       "fidelity_diff": 0.12
+      },
+      "stored -> guided": {
+       "shared_pages": 49,
+       "better": "38/49",
+       "worse": "0/49",
+       "accept_gained": 24,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1
+      },
+      "stored -> blind": {
+       "shared_pages": 49,
+       "better": "21/49",
+       "worse": "1/49",
+       "accept_gained": 10,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 0.47
+      }
+     }
+    },
+    "en_only": {
+     "routes": {
+      "stored": {
+       "n": 50,
+       "books": 50,
+       "unjudged": 0,
+       "accept": "1/50",
+       "accept_wilson": [
+        0.004,
+        0.105
+       ],
+       "accept_by_book": [
+        0,
+        0.06
+       ],
+       "wrong_text_pages": "36/50",
+       "wrong_text_wilson": [
+        0.583,
+        0.825
+       ],
+       "fidelity_mean": 2.9,
+       "counts": true,
+       "words": 24058,
+       "misleads_per_1k": 5.94,
+       "wrong_text_per_1k": 2.41
+      },
+      "retranslate": {
+       "n": 50,
+       "books": 50,
+       "unjudged": 0,
+       "accept": "27/50",
+       "accept_wilson": [
+        0.404,
+        0.67
+       ],
+       "accept_by_book": [
+        0.4,
+        0.68
+       ],
+       "wrong_text_pages": "12/50",
+       "wrong_text_wilson": [
+        0.143,
+        0.374
+       ],
+       "fidelity_mean": 3.72,
+       "counts": true,
+       "words": 25418,
+       "misleads_per_1k": 3.23,
+       "wrong_text_per_1k": 0.83
+      },
+      "guided": {
+       "n": 50,
+       "books": 50,
+       "unjudged": 0,
+       "accept": "41/50",
+       "accept_wilson": [
+        0.692,
+        0.902
+       ],
+       "accept_by_book": [
+        0.72,
+        0.92
+       ],
+       "wrong_text_pages": "5/50",
+       "wrong_text_wilson": [
+        0.043,
+        0.214
+       ],
+       "fidelity_mean": 4.02,
+       "counts": true,
+       "words": 23528,
+       "misleads_per_1k": 2.3,
+       "wrong_text_per_1k": 0.34
+      },
+      "blind": {
+       "n": 50,
+       "books": 50,
+       "unjudged": 0,
+       "accept": "22/50",
+       "accept_wilson": [
+        0.312,
+        0.577
+       ],
+       "accept_by_book": [
+        0.32,
+        0.58
+       ],
+       "wrong_text_pages": "13/50",
+       "wrong_text_wilson": [
+        0.159,
+        0.396
+       ],
+       "fidelity_mean": 3.56,
+       "counts": true,
+       "words": 23767,
+       "misleads_per_1k": 3.7,
+       "wrong_text_per_1k": 1.09
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 1,
+       "passed": true
+      },
+      "retranslate": {
+       "n": 1,
+       "passed": true
+      },
+      "guided": {
+       "n": 1,
+       "passed": true
+      },
+      "blind": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 4,
+      "accept_flips": "0/4",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0
+     },
+     "against_baseline": {
+      "stored -> retranslate": {
+       "shared_pages": 50,
+       "better": "36/50",
+       "worse": "2/50",
+       "accept_gained": 27,
+       "accept_lost": 1,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 0.82
+      },
+      "stored -> guided": {
+       "shared_pages": 50,
+       "better": "43/50",
+       "worse": "1/50",
+       "accept_gained": 40,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.12
+      },
+      "stored -> blind": {
+       "shared_pages": 50,
+       "better": "26/50",
+       "worse": "2/50",
+       "accept_gained": 22,
+       "accept_lost": 1,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 0.66
+      }
+     }
+    },
+    "clean": {
+     "routes": {
+      "stored": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "58/100",
+       "accept_wilson": [
+        0.482,
+        0.672
+       ],
+       "accept_by_book": [
+        0.48,
+        0.68
+       ],
+       "wrong_text_pages": "23/100",
+       "wrong_text_wilson": [
+        0.158,
+        0.322
+       ],
+       "fidelity_mean": 3.73,
+       "counts": true,
+       "words": 36798,
+       "misleads_per_1k": 4.24,
+       "wrong_text_per_1k": 0.82
+      },
+      "retranslate": {
+       "n": 97,
+       "books": 97,
+       "unjudged": 0,
+       "accept": "72/97",
+       "accept_wilson": [
+        0.647,
+        0.819
+       ],
+       "accept_by_book": [
+        0.66,
+        0.825
+       ],
+       "wrong_text_pages": "12/97",
+       "wrong_text_wilson": [
+        0.072,
+        0.204
+       ],
+       "fidelity_mean": 4.09,
+       "counts": true,
+       "words": 36912,
+       "misleads_per_1k": 2.57,
+       "wrong_text_per_1k": 0.33
+      },
+      "guided": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "83/100",
+       "accept_wilson": [
+        0.745,
+        0.891
+       ],
+       "accept_by_book": [
+        0.75,
+        0.9
+       ],
+       "wrong_text_pages": "10/100",
+       "wrong_text_wilson": [
+        0.055,
+        0.174
+       ],
+       "fidelity_mean": 4.15,
+       "counts": true,
+       "words": 36469,
+       "misleads_per_1k": 1.59,
+       "wrong_text_per_1k": 0.3
+      },
+      "blind": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "77/100",
+       "accept_wilson": [
+        0.678,
+        0.842
+       ],
+       "accept_by_book": [
+        0.69,
+        0.85
+       ],
+       "wrong_text_pages": "13/100",
+       "wrong_text_wilson": [
+        0.078,
+        0.21
+       ],
+       "fidelity_mean": 3.97,
+       "counts": true,
+       "words": 36250,
+       "misleads_per_1k": 2.48,
+       "wrong_text_per_1k": 0.44
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 1,
+       "passed": true
+      },
+      "retranslate": {
+       "n": 1,
+       "passed": true
+      },
+      "guided": {
+       "n": 1,
+       "passed": true
+      },
+      "blind": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 4,
+      "accept_flips": "0/4",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0.25
+     },
+     "against_baseline": {
+      "stored -> retranslate": {
+       "shared_pages": 97,
+       "better": "36/97",
+       "worse": "6/97",
+       "accept_gained": 22,
+       "accept_lost": 8,
+       "accept_sign_test_p": 0.02,
+       "fidelity_diff": 0.32
+      },
+      "stored -> guided": {
+       "shared_pages": 100,
+       "better": "45/100",
+       "worse": "3/100",
+       "accept_gained": 29,
+       "accept_lost": 4,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 0.42
+      },
+      "stored -> blind": {
+       "shared_pages": 100,
+       "better": "29/100",
+       "worse": "4/100",
+       "accept_gained": 23,
+       "accept_lost": 4,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 0.24
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "12 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 12 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "12 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

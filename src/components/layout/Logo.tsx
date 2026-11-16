@@ -79,7 +79,7 @@ export default function Logo({ white, compact, mini, alwaysWordmark, lang = 'en'
         <circle cx="12" cy="12" r="4" stroke={strokeColor} strokeWidth="1" />
       </svg>
       <span
-        className={`${textSize} uppercase tracking-wider ${wordmarkVisibility}`}
+        className={`${textSize} font-logo uppercase tracking-wider ${wordmarkVisibility}`}
       >
         <span className="font-semibold">Source</span>
         <span className="font-light">Library</span>

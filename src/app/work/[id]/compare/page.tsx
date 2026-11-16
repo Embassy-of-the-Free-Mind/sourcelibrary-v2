@@ -134,6 +134,9 @@ export default async function CompareWorkPage({ params }: PageProps) {
     if (target) redirect(`/work/${encodeURIComponent(target)}/compare`);
   }
   const editions = await getEditionsForCompare(id);
+  // One edition: the work exists and there is nothing to set beside it. The
+  // work page is what the link was about; none at all stays a 404 (#102).
+  if (editions.length === 1) redirect(`/work/${encodeURIComponent(id)}`);
   if (editions.length < 2) notFound();
 
   const title = canonWork(id)?.title || workTitleFromEditions(editions, id);

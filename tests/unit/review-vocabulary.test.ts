@@ -44,6 +44,31 @@ describe('exposure', () => {
   it('an English-language book serves its transcription', () => {
     expect(v.exposureOf({ book: { ...live, language: 'English' }, page: { ocr: { data: 'Of the nature of things' } } })).toBe('served');
   });
+  // v3#154. Round 7 of the spot check read the stored rewording of three English books as served text.
+  const ENGLISH_LEAF = 'WHEN confronted with a problem involving the use of the reasoning faculties, individuals of strong intellect keep their poise, and seek to reach a solution by obtaining facts bearing upon the question.';
+  const REWORDING = 'When faced with a problem that requires the use of reason, people of strong mind stay calm and look for the facts.';
+  it('an English leaf of an English edition with a stored translation is rewrite_not_served', () => {
+    const english = { ...live, language: 'English', translation_state: { english_original: true } };
+    const page = { ocr: { data: ENGLISH_LEAF }, translation: { data: REWORDING } };
+    expect(v.exposureOf({ book: english, page })).toBe('rewrite_not_served');
+    // Unstamped: the first-language test stands in, so a caller that projects only `language` still gets it.
+    expect(v.exposureOf({ book: { ...live, language: 'English' }, page })).toBe('rewrite_not_served');
+    // A facing-page edition with a published translation, whatever its catalogued language.
+    expect(v.exposureOf({ book: { ...live, language: 'Greek', facing_translation: { source: 'published' } }, page })).toBe('rewrite_not_served');
+    expect(v.EXPOSURES).toContain('rewrite_not_served');
+    expect(v.exposureProblems([{ page_number: 1, exposure: 'rewrite_not_served' }], [1])).toEqual([]);
+  });
+  it('negative controls: the same stored translation is served where the leaf or the book is not English', () => {
+    const page = { ocr: { data: ENGLISH_LEAF }, translation: { data: REWORDING } };
+    // A Latin book: the English leaf's stored text is that book's translation lane output, and it is served.
+    expect(v.exposureOf({ book: live, page })).toBe('served');
+    // An English edition's Latin leaf keeps its real translation.
+    const latinLeaf = { ocr: { data: 'In principio creavit Deus caelum et terram. Terra autem erat inanis et vacua, et tenebrae erant super faciem abyssi, et spiritus Dei ferebatur super aquas.' }, translation: { data: 'In the beginning God created heaven and earth.' } };
+    expect(v.exposureOf({ book: { ...live, language: 'English' }, page: latinLeaf })).toBe('served');
+    // Withheld and hidden still win.
+    expect(v.exposureOf({ book: { ...live, language: 'English' }, page: { ...page, translation_withheld: { reason: 'x' } } })).toBe('withheld');
+    expect(v.exposureOf({ book: { ...live, language: 'English', visible: false }, page })).toBe('hidden');
+  });
   it('a check must give one exposure per page read', () => {
     expect(v.exposureProblems([{ page_number: 1, exposure: 'served' }], [1])).toEqual([]);
     expect(v.exposureProblems([{ page_number: 1, exposure: 'served' }], [1, 2]).join()).toMatch(/exposure for page 2/);

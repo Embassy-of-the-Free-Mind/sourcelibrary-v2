@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Flag a revert-by-conflict-resolution: lines this PR ADDS that a merge to main
- * REMOVED in the last 14 days. Warn only — one comment, never a failing check.
+ * REMOVED in the last 14 days. One comment, never a failing check; with --hold it
+ * also moves the PR to `tier:hold`, so auto-merge waits for a session to look.
  *
  * PRIOR ART: scripts/maintenance/pr-tier.mjs — reads the same `gh pr diff` and
  * classifies risk by path; it has no notion of what main did to a line. This is
@@ -21,6 +22,14 @@
  * Usage:
  *   node scripts/maintenance/pr-reintroduced-lines.mjs --pr 5269            # print findings
  *   node scripts/maintenance/pr-reintroduced-lines.mjs --pr 5269 --comment  # also post ONE comment
+ *   node scripts/maintenance/pr-reintroduced-lines.mjs --pr 5269 --comment --hold  # and label tier:hold
+ *
+ * WHY --hold (#100): a comment is not a durable signal (CLAUDE.md, "To block a PR"). On a
+ * tier:auto PR nobody is obliged to read it, and auto-merge.yml squash-merges ten minutes
+ * after the last push, so the warning arrived after the revert it warned about. The same
+ * shape had shipped three times (the 2026-07-29 backlog sweep, #5269, #5415) before this
+ * check existed. A hold is sticky (pr-tier.mjs never lifts it), so a false positive costs
+ * one look and a hand merge (scripts/maintenance/safe-merge.sh), not a silent revert.
  * Needs `gh` authenticated and origin/main history for the window (the workflow
  * fetches `--shallow-since`; locally a normal clone has it).
  */
@@ -96,7 +105,7 @@ export function findReintroduced(diff) {
 
 function body(number, r) {
   const out = [MARKER, `**This PR re-introduces ${r.findings.length} line${r.findings.length === 1 ? '' : 's'} that a merge to \`main\` removed in the last 14 days — deliberate?**`, '',
-    'A rebase or merge-main resolution that keeps "ours" on a line the PR never meant to change silently reverts someone else\'s merged work (#5415: a $60-a-book footnote came back one line under a figure that contradicted it). Warn only — if these are intended, ignore this.', ''];
+    'A rebase or merge-main resolution that keeps "ours" on a line the PR never meant to change silently reverts someone else\'s merged work (#5415: a $60-a-book footnote came back one line under a figure that contradicted it). This PR is now `tier:hold`, so it will not auto-merge: if these lines are intended, merge it by hand with `scripts/maintenance/safe-merge.sh`; if not, drop them and push.', ''];
   for (const f of r.findings.slice(0, 15)) {
     out.push(`- \`${f.file}\` — removed by ${f.hits.map((h) => h.ref).join(', ')}`);
     out.push(`  \`${f.line.slice(0, 160)}\``);
@@ -108,7 +117,7 @@ function body(number, r) {
 
 function main() {
   const number = parseInt(val('--pr'), 10);
-  if (!number) { console.error('usage: --pr N [--comment]'); process.exit(1); }
+  if (!number) { console.error('usage: --pr N [--comment] [--hold]'); process.exit(1); }
   // `sh` swallows errors, so a refused diff (#5794: HTTP 406 past 300 files or
   // 20K lines) used to read as "empty diff". Rebuild it from per-file patches.
   let diff;
@@ -123,7 +132,14 @@ function main() {
   r.unread = unread.length;
   console.log(`#${number}: ${r.findings.length} re-introduced line(s) among ${r.checked}/${r.total} checked`);
   for (const f of r.findings) console.log(`  ${f.file}  ← removed by ${f.hits.map((h) => h.ref).join(', ')}\n    ${f.line.slice(0, 120)}`);
-  if (!r.findings.length || !has('--comment')) return;
+  if (!r.findings.length) return;
+  if (has('--hold')) {
+    // Before the comment, so a failed comment still leaves the PR held.
+    sh(`gh pr edit ${number} --add-label tier:hold`);
+    sh(`gh pr edit ${number} --remove-label tier:auto`); // separate: fails harmlessly when absent
+    console.log('labelled tier:hold');
+  }
+  if (!has('--comment')) return;
   const pr = JSON.parse(sh(`gh pr view ${number} --json comments`));
   if ((pr.comments || []).some((c) => (c.body || '').includes(MARKER))) { console.log('already commented; not repeating'); return; }
   sh(`gh pr comment ${number} --body-file -`, { input: body(number, r) });

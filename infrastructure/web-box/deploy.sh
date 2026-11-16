@@ -19,7 +19,7 @@
 # serves at /_box/_next/static/*, so a tab holding the previous release's HTML still finds
 # its chunks (the box's own skew protection). Folders older than 7 days are pruned.
 set -euo pipefail
-REPO="${SL_WEB_REPO:-https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2.git}"
+REPO="${SL_WEB_REPO:-https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v3.git}"
 ROOT=/srv/sl-web
 PORTS="${SL_WEB_PORTS:-3101 3102 3103 3104}"
 LOG="$ROOT/log/deploy.log"

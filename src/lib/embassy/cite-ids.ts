@@ -62,7 +62,9 @@ export class CiteIds {
   }
 
   pageUrl(p: CitePage): string {
-    return `${this.base}/book/${p.slug}?page=${p.page}`;
+    // One page-link form across an answer (v3#250): the form grounding.ts and
+    // the citation passes write; see canonicalPageLinks in markdown-prep.ts.
+    return `${this.base}/book/${p.slug}/page-number/${p.page}`;
   }
 
   /**

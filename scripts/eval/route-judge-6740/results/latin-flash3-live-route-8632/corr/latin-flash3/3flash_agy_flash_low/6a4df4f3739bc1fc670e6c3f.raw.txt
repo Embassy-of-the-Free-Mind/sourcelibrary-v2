@@ -1,0 +1,18 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>ORATIO.</header>
+<meta>catchword: Quod</meta>
+
+De qua uideo necessariò iam mihi esse disserendum. Homerum uerò ac Virgilium celebrare, eosdemque inter se comparare, nonne eius tantum est, qui eorum uirtutes omnes perspexerit, penitusque cognouerit? qualem adhuc neminem fuisse accepimus: quod à me munus praetermitti nullo modo licet, et imbecillitatem meam agnosco, et iudicia uestra pertimesco. Quid igitur agam? aut considerandum fuit diligentius, quod uobis reciperem: aut fides publicè, praesertim ex isto loco uobis data, fallenda non fuit.
+
+> Me uerò primum dulces ante omnia Musae,
+> Quarum sacra fero ingenti perculsus amore,
+> Dicendi claro rationem lumine monstrent.
+
+Deinde à uobis peto, ut me non solum de poetica, deque iis poetis loquentem, quibus Deus et natura nihil tulit perfectius, benignè et attentè, quemadmodum facere consueuistis, audiatis: sed etiam mihi in tanta, tamque difficili re uobis non satisfacienti ignoscatis, Et eo quidem hoc tempore iustius, quod cum existimarem mihi otium datum esse ad huius meae uobis promissae operae meditationem atque tractationem, ecce repente Venetias ad lites abreptus fui, ubi aequitate causae superatis aduersariis, ab iis molestiis quae perpetuò esse in illis rebus solent, paulò antè respirans de Poetica, déque summis nostris Poetis, Homero atque Virgilio cogor apud uos uerba facere.
+
+<vocab>Homerus, Virgilius, Poetica, Venetias, Musae, oratio, lites</vocab>
+<<<END>>>

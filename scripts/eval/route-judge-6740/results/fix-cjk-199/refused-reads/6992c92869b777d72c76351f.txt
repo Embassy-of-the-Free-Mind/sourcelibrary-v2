@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>56</page-num>
+<header>斷易天機三</header>
+<meta>Woodblock print, vertical text read right to left. Folio number 廿八 at the upper right edge. A tab reading 既濟卦 appears at the left edge, outside the frame.</meta>
+
+坎上離下 六親 ○戊子水 戊戌土 戊申金 己亥水 己丑土 己卯木 飛己亥水
+
+<insert>春平 夏凶 秋平 冬吉</insert>
+
+# 水火既濟
+
+應 ‥ 世 ‥ <note>hexagram lines are shown as dots</note> 正月卦
+
+坎水三世 <gloss>外卦出現</gloss> ○兄弟 官鬼 父母 兄弟 官鬼 子孫 伏 <gloss>戊午</gloss>火
+
+評曰 <gloss>既濟者合也</gloss>
+
+此卦季布在周家潜藏卜得之遂遇高皇帝也
+
+水火相遇會合之義往渡得一船成功必濟所求必從所欲必遂斯不失時謂之既濟
+
+<image-desc size="large" type="woodcut" significance="high">A figure in official robes and a cap stands on a riverbank beside a moored boat. Two small boys in robes stand to the right. A hill, water lines and stylized clouds fill the background.</image-desc>
+
+<insert>解曰</insert> 人在岸上 一船來 <gloss>接濟也</gloss> 一堆錢 <gloss>大利也</gloss> 雲中雨下 <gloss>沛澤也</gloss> 二小兒在雨中行 <gloss>主年少沾君之澤也</gloss> 兩文書一策 <gloss>書名姓字也</gloss>
+
+○舟止横清川之課 陰陽配合之象
+
+<vocab>水火既濟, 坎宮, 六親, 飛伏, 世應, 季布, 高皇帝, 解曰, 斷易天機</vocab>

@@ -1,0 +1,43 @@
+[
+  {
+    "book_id": "6984e84e018466b0ebaa3653",
+    "slot": 1,
+    "title": "[Cyrillic:] Of the ancient mysteries",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is given. The leaf is an 18th-century Russian civil-type print on the Egyptian and Eleusinian mysteries. That matches the record (Starck, 'Of the ancient mysteries', Russian, 1785) and suits a library of historical esoteric sources.",
+    "rights_flag": null,
+    "structure_note": "Page record 21 carries printed page 13, so about 8 leaves of front matter come before it, which is plausible. The counts disagree: 226 page records against a pages_count field of 212, and structure.pages_translated is 0 against a field value of 209. There are 18 printed backsteps and 25 repeats out of 205 numbered pages. That is more than a few misread numerals would explain, so it may point to duplicate or out-of-order leaves or to repeated imports. From this one page I cannot tell which.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "printed_marker": "13",
+        "layout": "single column of civil type; ornamental double rule at head with page number top right; catchword 'ныхъ' at foot right",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "original: \"Элевзисъ\"",
+              "verdict": "ok",
+              "helpful": false
+            }
+          ],
+          "missing": [
+            {
+              "english": "The Greek mysteries, celebrated at *Eleusis*",
+              "why": "A general reader may not know that Eleusis near Athens was the seat of the Eleusinian mysteries of Demeter and Persephone, the main example the argument rests on. The note given only repeats the Russian spelling."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches the leaf (printed p. 13) word for word, including the printer's 'пренесены', and the English is faithful and complete. The only note is harmless but adds nothing. Nothing is wrong on this page. The book-level page counts (226 vs 212, many backsteps and repeats) deserve a structural check."
+  }
+]

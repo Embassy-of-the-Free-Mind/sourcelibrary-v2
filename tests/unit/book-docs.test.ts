@@ -96,6 +96,26 @@ describe('makeBookDoc', () => {
     expect('pages_count' in bare).toBe(false);
   });
 
+  it('spells out a bare language code at the write boundary (v2#8628)', () => {
+    const doc = makeBookDoc({
+      title: 'Rolandslied', language: 'de', original_language: 'GER', languages: ['de', 'la', 'German'],
+    });
+    expect(doc.language).toBe('German');
+    expect(doc.original_language).toBe('German');
+    expect(doc.languages).toEqual(['German', 'Latin']);
+    expect(makeBookDoc({ title: 't', language: 'de-DE' }).language).toBe('German');
+    // Historical stages keep their own name; they are not folded into the parent.
+    expect(makeBookDoc({ title: 't', language: 'gmh' }).language).toBe('Middle High German');
+  });
+
+  it('leaves names, compounds, placeholders and unknown codes as given', () => {
+    for (const v of ['German', 'Latin-German', 'Hebrew and Aramaic', 'Unknown', 'und', 'mul', 'zxx', 'nds', 'qhe', 'Mam', 'N/A']) {
+      expect(makeBookDoc({ title: 't', language: v }).language, v).toBe(v);
+    }
+    expect('language' in makeBookDoc({ title: 't' })).toBe(false);
+    expect(makeBookDoc({ title: 't', language: null }).language).toBeNull();
+  });
+
   it('throws on a non-object input', () => {
     expect(() => makeBookDoc(null as never)).toThrow(/plain object/);
     expect(() => makeBookDoc(['title'] as never)).toThrow(/plain object/);

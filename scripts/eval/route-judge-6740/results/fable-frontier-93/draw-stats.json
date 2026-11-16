@@ -1,0 +1,67 @@
+{
+ "Persian": {
+  "books": 193,
+  "excluded_6545": 33,
+  "known_english": 15,
+  "none_found": 8,
+  "untold": 137,
+  "scanned": 144,
+  "no_page": 137,
+  "drawn_none": 7,
+  "drawn_untold": 0,
+  "want": 20,
+  "drawn": 7
+ },
+ "Sanskrit": {
+  "books": 509,
+  "excluded_6545": 41,
+  "known_english": 234,
+  "none_found": 58,
+  "untold": 176,
+  "scanned": 24,
+  "no_page": 0,
+  "drawn_none": 24,
+  "drawn_untold": 0,
+  "want": 24,
+  "drawn": 24
+ },
+ "Classical Chinese": {
+  "books": 13242,
+  "excluded_6545": 46,
+  "known_english": 760,
+  "none_found": 2131,
+  "untold": 10305,
+  "scanned": 26,
+  "no_page": 2,
+  "drawn_none": 24,
+  "drawn_untold": 0,
+  "want": 24,
+  "drawn": 24
+ },
+ "Greek": {
+  "books": 1486,
+  "excluded_6545": 163,
+  "known_english": 873,
+  "none_found": 110,
+  "untold": 340,
+  "scanned": 32,
+  "no_page": 8,
+  "drawn_none": 24,
+  "drawn_untold": 0,
+  "want": 24,
+  "drawn": 24
+ },
+ "Hebrew": {
+  "books": 915,
+  "excluded_6545": 40,
+  "known_english": 125,
+  "none_found": 82,
+  "untold": 668,
+  "scanned": 30,
+  "no_page": 6,
+  "drawn_none": 24,
+  "drawn_untold": 0,
+  "want": 24,
+  "drawn": 24
+ }
+}

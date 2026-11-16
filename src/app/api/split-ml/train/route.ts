@@ -58,7 +58,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * GET - Get current model status and training stats
@@ -116,4 +116,4 @@ export const GET = withAuth(async () => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

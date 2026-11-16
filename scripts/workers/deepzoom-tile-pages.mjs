@@ -40,6 +40,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
+import { checkR2Ceiling, CEILING_EXIT } from '../lib/r2-storage-ceiling.mjs';
 import { chooseOwnLeaf } from '../lib/deepzoom-own-leaf.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { revalidatePaths } from '../lib/revalidate.mjs';
@@ -191,6 +192,18 @@ await client.connect();
 const db = client.db('bookstore');
 const books = db.collection('books');
 const pages = db.collection('pages');
+
+// The standing R2 storage budget (scripts/lib/r2-storage-ceiling.mjs). Every new tile is a new object (v3#94:
+// 4.48M tiles, 46 GB, none of it asked). A dry run writes nothing and a --book-id run is a human's call on one
+// book, so only a sweep asks; --own-leaf is always a sweep.
+if (!DRY_RUN && (OWN_LEAF || !BOOK_ID)) {
+  const ceiling = await checkR2Ceiling(db);
+  console.log(ceiling.reason);
+  if (!ceiling.ok) {
+    await client.close();
+    process.exit(CEILING_EXIT);
+  }
+}
 
 if (OWN_LEAF) {
   await runOwnLeaf();

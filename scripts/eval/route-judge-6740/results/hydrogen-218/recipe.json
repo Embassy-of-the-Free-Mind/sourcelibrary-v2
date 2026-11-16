@@ -1,0 +1,22 @@
+{
+  "question": "route",
+  "issue": 218,
+  "stage": "ocr",
+  "languages": ["German", "Latin"],
+  "about": "#218 stage A. Gemini 4 Hydrogen (agy, james@ pool, the Flash-low rule lifted for this job only) on the three router cells whose live route is Opus (de-lite lite>opus, de-flash3 3flash>opus) or HOLD (latin-flash3): as a corrector of the stored draft (<draft>>hydrogen-low) and as a fresh reader (hydrogen-low, hydrogen-medium). Same 90 pages as router-tests-2026-10-26 (draw --from, one page per book). The baselines are NOT re-read: the stored draft, <draft>>agy-flash-low and <draft>>opus-correct keep the verdicts the same judge (Opus, judge.mjs judgePrompt, one output a call, image attached) gave them on these pages: router-tests-2026-10-26 for the German cells (judged 26 October), latin-flash3-live-route-8632 for Latin (judged 12 November). They pair by page at score time. 2 de-lite pages now hold an agy correction (agy-correct-lite-7558), not the lite draft: they leave the corrector arm (the correction() hash check drops them) and their stored-draft verdicts stay as judged on 26 October.",
+  "precision_statement": "30 pages a cell, one per book. A difference under about 6 pages of 30 is inside the Wilson intervals: this run can show Hydrogen far better or far worse than a baseline, or in the same band; it cannot rank two routes two or three pages apart.",
+  "baseline": "<draft>>opus-correct (the live route on de-lite and de-flash3; the HOLD cell latin-flash3's measured best)",
+  "arms": ["lite>hydrogen-low", "3flash>hydrogen-low", "hydrogen-low", "hydrogen-medium"],
+  "baseline_arms_from_stored_verdicts": ["lite", "3flash", "lite>agy-flash-low", "3flash>agy-flash-low", "lite>opus-correct", "3flash>opus-correct"],
+  "batch": {
+    "pages_per_call": 1,
+    "tested": null
+  },
+  "noise_floor": {
+    "repeat_kind": "repeat",
+    "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "german-lite, german-flash3, latin-flash3",
+  "waive": {}
+}

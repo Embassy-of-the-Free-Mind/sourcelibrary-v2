@@ -1,0 +1,86 @@
+[
+  {
+    "book_id": "6a4c16fe0af972fc7bae75ff",
+    "slot": 1,
+    "title": "Panegyris Solennis. De Armorum Ac Literarum Harmonia: In Actu Introductionis Collegii, Scholaeque Stargardiensis Novi Professoris, & Rectoris, Publice Habita A Georgio Hegenwald, I.D. Comite Palatino Caesareo",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collections assigned; the leaf is a 17th-century Latin school oration (arms and letters, Stargard school rector), consistent with the 1677 record.",
+    "rights_flag": null,
+    "structure_note": "structure.pages_translated is 0 while the book field pages_translated is 20, and this page has a translation: the counts disagree (an instrument mismatch, not a page defect). Only 1 of 29 pages carries a printed number, which fits a quarto pamphlet that prints signatures and catchwords rather than page numbers. No backsteps or repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "printed_marker": "cum",
+        "layout": "single column of roman type, italic for the rector's name, catchword at the foot, no marginal notes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Denique sic, sic, Romano-Germanicum",
+            "image": "Deniq; ſic, ſic, Romano-Germanicum",
+            "problem": "long s normalised and abbreviations expanded without any mark throughout (Deniq; → Denique, absq; → absque, multorū capitū → multorum capitum); a diplomatic reader cannot see what was printed",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "recte fraternizare (liceat mihi cum Jurisconsultis sic loqui)",
+            "image": "recte fraternizare ( liceat mihi cum JCtis ſic loqui)",
+            "problem": "the abbreviation JCtis silently expanded to Jurisconsultis; the expansion is correct but unmarked",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "provida Dominorum PATRONORUM",
+            "image": "provida DNN. PATRONORUM",
+            "problem": "the abbreviation DNN. expanded without a mark; likewise \"Dn. M.\" → \"Dominum Magistrum\"",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "(quae singularis ac beneficia fuit divina dispensatio)",
+            "image": "(quæ ſingularis ac benefic[?]a fuit divina diſpenſatio)",
+            "problem": "the printed word is partly damaged; grammar requires benefica (agreeing with dispensatio), and \"beneficia\" (benefits) is a noun. The translation's \"beneficent\" follows the right reading",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "Christophorum\nPratorium",
+            "image": "Chriſtophorum Prætorium (italic; the second letter group looks like æ)",
+            "problem": "the rector's surname may be Prætorius (Praetorius), not Pratorius; the italic is small, so this is uncertain",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"inter, Arma, Leges, Ipsasque Musas silere\"", "verdict": "ok", "helpful": false },
+            { "quote": "a name proverbial for a carping, spiteful critic", "verdict": "ok", "helpful": true },
+            { "quote": "legal scholars", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"Literaria Palaestra\"; the school itself", "verdict": "ok", "helpful": true },
+            { "quote": "Roman goddess of war", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            {
+              "english": "resting partly on feet of iron according to the prophecy of the Sacred Oracle",
+              "why": "an allusion to Nebuchadnezzar's statue in Daniel 2 (the four monarchies, the last with feet partly of iron); without it a reader cannot see why the Empire is the 'last Monarchy' or what the iron feet mean"
+            },
+            {
+              "english": "a Beast of many heads",
+              "why": "Horace's 'belua multorum capitum' for the mob, a recognisable classical tag the sentence rests on"
+            },
+            {
+              "english": "furies, din, and slaughters of Mars and of Death",
+              "why": "the war meant is presumably the recent wars in Pomerania; a reader may need to know that Mars is the war god and which conflict the school survived (lower priority)"
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page: the OCR has the right text, with unmarked normalisation and expansions and one uncertain surname, and the translation is faithful, with five short, correct notes. An expert would flag nothing on sight, though the Daniel allusion deserved a note."
+  }
+]

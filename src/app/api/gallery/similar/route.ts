@@ -290,7 +290,7 @@ async function metadataFallback(
           from: 'books',
           let: { bookId: '$book_id' },
           pipeline: [
-            { $match: { $expr: { $eq: ['$id', '$$bookId'] } } },
+            { $match: { $expr: { $eq: ['$id', '$$bookId'] }, visible: true } },
             { $project: { title: 1, display_title: 1, author: 1, year: 1 } },
           ],
           as: 'book',
@@ -397,7 +397,7 @@ async function resolveGalleryItems(
           from: 'books',
           let: { bookId: '$book_id' },
           pipeline: [
-            { $match: { $expr: { $eq: ['$id', '$$bookId'] } } },
+            { $match: { $expr: { $eq: ['$id', '$$bookId'] }, visible: true } },
             { $project: { title: 1, display_title: 1, author: 1, year: 1 } },
           ],
           as: 'book',

@@ -64,7 +64,9 @@ describe('batch_jobs writers stamp submitted_by', () => {
 
   it('finds the known writers (positive control)', () => {
     // If the scan matches nothing, every assertion below passes vacuously.
-    expect(sites.length).toBeGreaterThanOrEqual(20);
+    // 13 after the eight batch routes were retired (v2#8590); they held the rest of the old floor of 20.
+    // 11 after two dead hand-run OCR scripts moved to scripts/_archived/2026-11-batch-doors (v3#241).
+    expect(sites.length).toBeGreaterThanOrEqual(11);
     expect(sites.some((s) => s.file === 'scripts/workers/pipeline-orchestrator.mjs')).toBe(true);
   });
 

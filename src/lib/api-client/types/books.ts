@@ -45,32 +45,6 @@ export interface BookCategorizeResponse {
   errors?: Array<{ book_id: string; error: string }>;
 }
 
-export interface BatchTranslateRequest {
-  mode?: 'missing' | 'all';
-  model?: string;
-  prompt_id?: string;
-  page_ids?: string[];
-  use_batch_api?: boolean;
-}
-
-export interface BatchTranslateResponse {
-  job_id: string;
-  message: string;
-}
-
-export interface BatchOcrRequest {
-  mode?: 'missing' | 'all';
-  model?: string;
-  prompt_id?: string;
-  page_ids?: string[];
-  use_batch_api?: boolean;
-}
-
-export interface BatchOcrResponse {
-  job_id: string;
-  message: string;
-}
-
 export interface BookReimportRequest {
   mode?: 'full' | 'soft' | 'metadata_only';
 }

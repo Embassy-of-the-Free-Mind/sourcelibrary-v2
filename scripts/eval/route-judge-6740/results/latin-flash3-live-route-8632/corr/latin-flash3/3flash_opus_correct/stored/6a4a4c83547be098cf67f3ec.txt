@@ -1,0 +1,55 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>24</page-num>
+<header>) 24 (</header>
+
+<image-desc size="small" type="decorative" significance="low">Page header with the number 24 enclosed in parentheses and flanked by stylized foliate printer's ornaments.</image-desc>
+
+siquidem ea non extenditur etiam ad majora expressis. c. 4. de
+Procurat. in 6. clem. 2. eod. Rebuff. in praxi in form. Vicariat. n. 102.
+& de vnion. n. 37. Petr. de Perus. c. 4. n. 32. Stephan. Gratian.
+discept. for. c. 278. n. 35. Barbos. jur. Eccles. tit. de Vnion. n. 56. Fra-
+gos. d. l. n. 10.
+
+Ab Episcopo inferiores, veluti Praelati, Abbates, Prio-
+res, vniendi potestatem minimè sibi vindicare poterunt. Ideo-
+que si Prior vel Abbas monasterium monasterio subjecerit vel
+vnierit, Episcopi consensu minimè requisito, quod in consul-
+to Praesule fecerit, non subsistet, nec subjectionem vel vnio-
+nem Metropolitani consensus vel confirmatio sustinebit, cum
+is in diaecesi sui suffraganei absque ipsius assensu non debeat
+aliquid contra Constitutiones Canonicas attentare. §. 3. Inst.
+Jur. Can. de Vnion. Eccl. A qua tamen regula duas communiter
+Doctores ponunt exceptiones, dicentes, si vel ex privilegio aliquo
+pontificio, vel ex Legitima praescriptione hoc vniendi jus ha-
+beant, tum vtique vnire posse inferiores Episcopo. Rebuff.
+prax. benef. tit. de Vnion. n. 32. & 33. alijque.
+
+Disputant verô hic Doctores. An praeter duas has Exceptio-
+nes detur etiam tertia, veluti quando praelati pleno jure Eccle-
+sias sibi habent subjectas. Et multi sunt qui negant, inter quos
+est Innocent. in cap. sicut vnire X. de excess. Prael. Gloss. in Clem. 2. verb.
+Episcopum. de reb. Eccl. non ali. gl. ubi Imola n. 9. Gloss. in Clem. 1. §. ad-
+haec. verb. Ordinarios de statu Monach. caeterique. Ducuntur praecipuè
+ex c. 8. X. de excess. praelat. Vbi Vnire dicitur esse proprium Epi-
+scoporum. Verùm haec non obstant, quo minus contrariae
+sententiae subscribamus, cum Garcia. d. l. n. 72. Fragos. d. l. n.
+9. Abbate in d. c. sicut vnire: inquiente.
+
+> Aut prelatus inferior vult
+> potestate sua ordinaria à jure tributa hanc vnionem facere, & non pot-
+> est, quia ista tanquam graviora solis Episcopis sunt reservata : vt hic.
+> Hoc fallit, vbi pralatus et cetera & paulò post : Aut iste pralatus vult hoc
+> facere autoritate speciali, vt quia praescripsit jurisdictionem quasi Episco-
+> palem in illis Ecclesiis, quod fieri potest per c. 15. & 18. X. de praescript.
+> Nam ex quo habet jurisdictionem quasi Episcopalem, & vnire est jurisdi-
+> ctionis Episcopalis, ergò vnire poterit.
+
+Hinc duas ponit regulas ni-
+mirum:
+
+<meta>catchword: mirum;</meta>
+
+<vocab>Episcopus, unio, praelati, Rebuffus, Barbosa, Fragoso, iurisdictio, consensus, canonicas, Innocentius, Garcia, praescriptio</vocab>

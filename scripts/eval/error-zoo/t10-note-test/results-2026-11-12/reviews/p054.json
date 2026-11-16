@@ -1,0 +1,70 @@
+[
+  {
+    "book_id": "69af43aeff29693470c6b04d",
+    "slot": 1,
+    "title": "Grammatici Latini Vol. VI Pt. 1: Scriptores Artis Metricae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Keil's 1857 Teubner edition of the Latin metricians (this page: Marius Victorinus). It fits a Toronto/PIMS collection of Latin grammatical texts.",
+    "rights_flag": null,
+    "structure_note": "This record is page 148 and the printed page is 142, a steady offset of 6 for front matter. The 3 backsteps and 3 repeats are probably misread numerals or plates; nothing on this page points to a splice. The counts disagree on translations: structure.pages_translated is 0, but pages_translated_field is 294, so one of the counters is stale.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "printed_marker": "142",
+        "layout": "single column; verse quotations indented and spaced; line numbers 5–30 in the outer margin; two footnote blocks below a rule (loci paralleli, then critical apparatus)",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "30 tres trocheis eadem speciem", "image": "30 tres trochęis eadem speciem (e-caudata)", "problem": "e-caudata normalised to plain e in the apparatus. This is a manuscript reading, so the spelling counts as data.", "severity": "minor" },
+          { "ocr": "<margin>1 cantabunt] *Verg. bucol. 5, 72*", "image": "footnote apparatus below a rule at the foot of the page", "problem": "Both footnote blocks (parallels and critical apparatus) are tagged <margin> instead of as notes or apparatus", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "8 suprema detracta ς supremo detracta *B Val.*", "english": "Line 8, \"suprema detracta\" is the reading of the later manuscripts <note>siglum ς</note>; \"supremo detracta\" B and Valerius", "problem": "The translator expands the sigla. The page does not say that ς means 'later manuscripts', and in Keil it usually marks the old editions. 'Val.' is expanded to a person, 'Valerius', but it is more likely a witness siglum (a manuscript or edition). Both expansions are unsupported and misdescribe the apparatus. The Latin body text is not affected.", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "Centering arrows '->…<-' around the verse quotations, carried from the OCR into the translation (e.g. '->\"Damoetas and Lyctian Aegon.\"<-'). They are raw markup if the renderer does not convert them.", "severity": "minor" },
+          { "note": "The summary names Archilochus as the subject ('how Archilochus derived new meters'), but no name appears on this page. The subject of 'edidit/protulit' comes from an earlier page.", "severity": "minor" },
+          { "note": "The OCR <meta> line 'p. 2589. 90 P. p. 194. 95 G.' (concordance with the Putsch and Gaisford editions) appears as a <margin> in the translation, with no explanation", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"cantabunt mihi Damoetas et Lyctius Aegon\"; a full dact", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"Damoetas et Lyctius Aegon\"; the same line with its o", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"o crudelis Alexi, nihil mea carmina curas\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"o crudelis Alexi nihil mea\"; the line is cut off a", "verdict": "ok", "helpful": true },
+            { "quote": "eleven-syllable line", "verdict": "ok", "helpful": true },
+            { "quote": "\"mouse-tailed,\" a line that tapers at its end", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"beatus ille qui procul negotiis\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"beatus ille qui procul quiescit\"", "verdict": "ok", "helpful": false },
+            { "quote": "a lyric meter named after the poet Phalaecus", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"tollor in montes vagus entheus repente\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"entheus repente\"", "verdict": "ok", "helpful": false },
+            { "quote": "longer metrical segments", "verdict": "ok", "helpful": true },
+            { "quote": "shorter metrical segments", "verdict": "ok", "helpful": true },
+            { "quote": "\"after five half-feet\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"incipe Maenalios, incipe Maenalios\"; Maenalus is", "verdict": "ok", "helpful": false },
+            { "quote": "\"three penthemimers\"", "verdict": "ok", "helpful": false },
+            { "quote": "\"put together from three parts\"", "verdict": "ok", "helpful": true },
+            { "quote": "the editor marks a repeated \"quoque\" <gloss>also</gloss> here", "verdict": "ok", "helpful": true },
+            { "quote": "also", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"solvitur acris hiems grata vice\"; Horace, Odes 1.", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"veris et favoni\"", "verdict": "ok", "helpful": false },
+            { "quote": "siglum ς", "verdict": "ok", "helpful": false },
+            { "quote": "\"trisyntheton\" ς", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "\"incipe maenalios incipe elegiacum maenalios\" A B", "why": "The witness sigla A, B and ς are never explained. The reader cannot tell manuscripts from editions, and the inline expansion 'later manuscripts' is unsupported." },
+            { "english": "\"supremo detracta\" B and Valerius", "why": "'Val.' is a siglum (a witness), not a scholar named Valerius. The reader needs to know what it denotes." },
+            { "english": "that is, with its dipody placed in front", "why": "'dipody' (a unit of two feet) is a technical term left unexplained" },
+            { "english": "<margin>p. 2589. 90 P. p. 194. 95 G.</margin>", "why": "This is a concordance to the pages of the Putsch (P.) and Gaisford (G.) editions. Without a note it is unintelligible." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this Keil page is close to exact, and the translation is faithful, with accurate, useful glosses on the metrical terms. The only weak spot is the rendered apparatus, where the sigla ς and 'Val.' are expanded on guesswork ('later manuscripts', 'Valerius')."
+  }
+]

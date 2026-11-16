@@ -5,7 +5,8 @@
  *
  * Two intents, deliberately separated:
  *
- *  1. SEARCH-INDEX crawlers (Googlebot, Bingbot, Claude-SearchBot, OAI-SearchBot)
+ *  1. SEARCH-INDEX crawlers (Googlebot, Bingbot, Applebot, Claude-SearchBot,
+ *     OAI-SearchBot, PerplexityBot)
  *     are ALLOWED on content. They are how readers discover and are sent to us;
  *     surfacing our pages in search/answers serves the mission.
  *
@@ -143,6 +144,23 @@ const USER_FETCHERS = ['Claude-User', 'ChatGPT-User', 'Perplexity-User'];
 // declares this; the page budget in src/lib/api-budget.ts is what holds it.
 const USER_FETCH_API = ['/api/search', '/api/books/*/quote', '/api/books/*/search', SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH];
 
+// ── AI SEARCH CRAWLERS ──
+// They fill the search index an assistant answers from, so they read content like
+// Googlebot does. A named group replaces '*', so it has to repeat the defaults: until
+// #79 these two groups carried none of them and spent their crawl on URLs with nothing
+// to index. Cloudflare, 2026-11-11: Claude-SearchBot made 20,087 of its 104,505
+// requests to /book/*/page-number/ (redirect only); OAI-SearchBot, which renders
+// pages, made 28,805 of 97,194 to /api/ (likes, session, presence).
+// /encyclopedia/ stays open to them: it is where assistants find us for a general
+// question today (v2#8161 baseline, 2026-11-05).
+// PerplexityBot joined on 2026-11-12 (Derek, #79). Perplexity's own page says it
+// builds their search index and "is not used to crawl content for AI foundation
+// models" (docs.perplexity.ai/guides/bots), so `Disallow: /` kept us out of its
+// answers and reserved nothing. Cloudflare also enforces our robots.txt for AI bots
+// at the edge, so the old group 403'd it even on /articles, which that group allowed.
+const AI_SEARCH_CRAWLERS = ['Claude-SearchBot', 'OAI-SearchBot', 'PerplexityBot'];
+const AI_SEARCH_DISALLOW = DEFAULT_DISALLOW.filter((path) => path !== '/encyclopedia/');
+
 type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 
 // ── SEARCH-INDEX crawlers: explicitly welcome on content ──
@@ -169,8 +187,7 @@ const GROUPS: Group[] = [
     allow: ['/', ...USER_FETCH_API],
     disallow: DEFAULT_DISALLOW.filter((path) => path !== SEARCH_TEXT_PATH),
   })),
-  { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH] },
-  { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH] },
+  ...AI_SEARCH_CRAWLERS.map((userAgent) => ({ userAgent, allow: ['/'], disallow: AI_SEARCH_DISALLOW })),
   { userAgent: 'GPTBot', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'Claude-Web', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'ClaudeBot', allow: DOCS_ONLY, disallow: ['/'] },
@@ -185,8 +202,11 @@ const GROUPS: Group[] = [
   { userAgent: 'Diffbot', allow: DOCS_ONLY, disallow: ['/'] },
   { userAgent: 'Omgilibot', allow: DOCS_ONLY, disallow: ['/'] },
   { userAgent: 'FacebookBot', allow: DOCS_ONLY, disallow: ['/'] },
-  { userAgent: 'Applebot', allow: DOCS_ONLY, disallow: ['/'] },
-  { userAgent: 'PerplexityBot', allow: DOCS_ONLY, disallow: ['/'] },
+  // No `Applebot` group, on purpose (Derek 2026-11-12, #79): Applebot is Apple's
+  // search crawler (Siri, Spotlight, Safari), so it reads under '*' like Googlebot.
+  // Apple's training control is `Applebot-Extended`, which stays reserved above.
+  // Amazon is the same split: `Amazonbot` is reserved here, and `Amzn-SearchBot`
+  // has no group, so '*' allows it.
   { userAgent: 'Amazonbot', allow: DOCS_ONLY, disallow: ['/'] },
   { userAgent: 'cohere-ai', allow: DOCS_ONLY, disallow: ['/'] },
 ];

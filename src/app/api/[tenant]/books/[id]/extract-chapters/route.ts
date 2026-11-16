@@ -37,7 +37,7 @@ export const POST = withAuth(async (request, session, context) => {
     const status = message === 'Book not found' || message.includes('No pages') ? 404 : 500;
     return NextResponse.json({ error: message }, { status });
   }
-});
+}, { minRole: 'editor' });
 
 // GET endpoint to retrieve existing chapters
 export const GET = withAuth(async (request, session, context) => {
@@ -67,4 +67,4 @@ export const GET = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

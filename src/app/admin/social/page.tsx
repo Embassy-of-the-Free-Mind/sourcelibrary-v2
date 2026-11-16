@@ -1449,11 +1449,11 @@ export default function SocialAdminPage() {
               <h2 className="text-lg font-medium mb-4">Usage</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-2xl font-bold">{config.usage.tweets_today}</p>
+                  <p className="text-2xl font-semibold">{config.usage.tweets_today}</p>
                   <p className="text-sm text-stone-400">Tweets today</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{config.usage.tweets_this_month}</p>
+                  <p className="text-2xl font-semibold">{config.usage.tweets_this_month}</p>
                   <p className="text-sm text-stone-400">This month</p>
                 </div>
               </div>
@@ -1617,7 +1617,7 @@ function PostCard({
                     <div className="flex gap-2 mb-2">
                       <div className="w-10 h-10 bg-stone-300 rounded-full flex-shrink-0" />
                       <div>
-                        <div className="font-bold">Embassy of the Free Mind</div>
+                        <div className="font-semibold">Embassy of the Free Mind</div>
                         <div className="text-stone-500 text-xs">@EmbassyFreeMind</div>
                       </div>
                     </div>

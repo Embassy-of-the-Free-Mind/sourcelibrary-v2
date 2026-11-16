@@ -11,7 +11,7 @@
  * under 80% of the pages is named with the reason (quota, no reply, unparsable; convergent-audit-lib.mjs readerStatus)
  * and its rates and the agreement line are left out, never printed as dashes (#6203: the 2026-10-12 run).
  *
- *   node --env-file=.env.production.local scripts/audit/convergent-audit-weekly.mjs draw  --run R [--books 60] [--written 20] [--risk 0] [--risk-pool scripts/audit/risk-pool/current.json] [--seed N]
+ *   node --env-file=.env.production.local scripts/audit/convergent-audit-weekly.mjs draw  --run R [--books 60] [--written 20] [--risk 0] [--risk-pool scripts/audit/risk-pool/current.json] [--fill 0] [--fill-history DIR[,DIR]] [--seed N]
  *   scripts/eval/second-reader/run-readers.sh R opus claude opus read 4
  *   node scripts/eval/second-reader/second-reader.mjs cli-requests --run R --reader gemini37
  *   python3 scripts/eval/run-cli-arm.py --requests R/readers/gemini37/requests.jsonl --out R/readers/gemini37/cli-out.jsonl \
@@ -32,6 +32,7 @@ import { validateOutput, wilson, keyOf, redactRecord } from '../eval/second-read
 import { makeRng } from '../eval/lib/paired-stats.mjs';
 import { exposureOf, kOfNBooks, kOfNMarkdown } from '../lib/review-vocabulary.mjs';
 import { readerStatus, seriousKinds, isSeriousPage, kindAgreement, MIN_READ_SHARE } from './convergent-audit-lib.mjs';
+import { cellOf, pickFill } from './cell-fill.mjs';
 
 const argv = process.argv.slice(2);
 const cmd = argv[0];
@@ -118,6 +119,40 @@ if (cmd === 'draw') {
     const rec = await makeRecord(w.book_id, p, 'lane-b-written', all);
     if (rec) records.push(rec);
   }
+  // Stratum 4 (#244), opt-in: `--fill N` random books from the language × half-century cells read least so far, so the
+  // heat map on /quality fills in. Counts come from the random and cell-fill pages of every earlier run under
+  // `--fill-history` (comma-separated dirs of runs; default: this run's parent). Uniform within a cell, not across
+  // cells: these pages join a cell's share on the map, never the headline rate (scripts/audit/cell-fill.mjs).
+  const nFill = Number(opt('fill', 0));
+  if (nFill > 0) {
+    const histDirs = String(opt('fill-history', path.dirname(path.resolve(R)))).split(',').filter(Boolean);
+    const seenBooks = [];
+    for (const dir of histDirs) {
+      if (!fs.existsSync(dir)) { reasons.fill_history_missing = [...(reasons.fill_history_missing || []), dir]; continue; }
+      for (const run of fs.readdirSync(dir)) {
+        const f = path.join(dir, run, 'draw.json');
+        if (path.resolve(dir, run) === path.resolve(R) || !fs.existsSync(f)) continue;
+        for (const p of read(f).pages || []) if (p.stratum === 'random' || p.stratum === 'cell-fill') seenBooks.push(p.book_id);
+      }
+    }
+    const facts = { _id: 0, id: 1, language: 1, published: 1, year: 1, est_year: 1 };
+    const seenDocs = new Map((await db.collection('books').find({ id: { $in: [...new Set(seenBooks)] } }, { projection: facts }).toArray()).map((b) => [b.id, b]));
+    const counts = new Map();
+    for (const id of seenBooks) { const c = cellOf(seenDocs.get(id)); if (c) counts.set(c, (counts.get(c) ?? 0) + 1); }
+    for (const r of records.filter((x) => x.stratum === 'random')) { const c = cellOf(r.book); if (c) counts.set(c, (counts.get(c) ?? 0) + 1); }
+    const fillFrame = await db.collection('books').find({ id: { $in: frame } }, { projection: facts }).toArray();
+    const taken = new Set(records.map((r) => r.book_id));
+    // Ask for three candidates per page wanted: a book with no eligible page or no image is skipped, not retried.
+    for (const { id } of pickFill({ frame: fillFrame, counts, n: nFill * 3, exclude: taken, shuffle })) {
+      if (records.filter((r) => r.stratum === 'cell-fill').length >= nFill) break;
+      const all = await db.collection('pages').find({ book_id: id }, { projection: proj }).sort({ page_number: 1 }).toArray();
+      const el = all.filter(eligible);
+      if (!el.length) { reasons.fill_no_eligible_page = (reasons.fill_no_eligible_page || 0) + 1; continue; }
+      const rec = await makeRecord(id, el[Math.floor(rng() * el.length)], 'cell-fill', all);
+      if (!rec) { reasons.image_unavailable = (reasons.image_unavailable || 0) + 1; continue; }
+      records.push(rec);
+    }
+  }
   let riskPool = null;
   if (nRisk > 0) {
     try { riskPool = read(riskPoolPath); } catch { reasons.risk_pool_missing = riskPoolPath; }
@@ -146,7 +181,7 @@ if (cmd === 'draw') {
   write(J('draw.json'), { seed, drawn_at: new Date().toISOString(), frame_books: frame.length, rejected: reasons, lane_b_written_pages: writtenRows.length,
     risk_pool: riskPool ? { path: riskPoolPath, generated_at: riskPool.generated_at, target: riskPool.target, n_candidates: riskPool.n_candidates, top_decile: riskPool.candidates.filter((c) => c.pct >= 0.9).length, cv_auc_within_audit_random: riskPool.cv_auc_within_audit_random } : null,
     pages: records.map((r, i) => ({ packet: `p${String(i).padStart(3, '0')}`, stratum: r.stratum, exposure: r.exposure, book_id: r.book_id, page_number: r.pages[0].page_number, language: r.book?.language, ocr_model: r.pages[0].ocr_model })) });
-  console.log(`drew ${records.length} pages: ${records.filter((r) => r.stratum === 'random').length} random books (frame ${frame.length}), ${records.filter((r) => r.stratum === 'lane-b-written').length} lane-B-written (of ${writtenRows.length}), ${records.filter((r) => r.stratum === 'risk-top-decile').length} risk top decile${nRisk && !riskPool ? ` (none: ${reasons.risk_pool_missing ? 'no pool' : reasons.risk_pool_stale})` : ''}; seed ${seed}`);
+  console.log(`drew ${records.length} pages: ${records.filter((r) => r.stratum === 'random').length} random books (frame ${frame.length}), ${records.filter((r) => r.stratum === 'lane-b-written').length} lane-B-written (of ${writtenRows.length}), ${records.filter((r) => r.stratum === 'risk-top-decile').length} risk top decile, ${records.filter((r) => r.stratum === "cell-fill").length} cell-fill${nRisk && !riskPool ? ` (none: ${reasons.risk_pool_missing ? 'no pool' : reasons.risk_pool_stale})` : ''}; seed ${seed}`);
 }
 
 else if (cmd === 'score') {
@@ -167,7 +202,7 @@ else if (cmd === 'score') {
     byReader[name] = got;
   }
   // risk-top-decile only when the draw has it, so older runs score exactly as before
-  const strata = ['random', 'lane-b-written', ...(draw.pages.some((d) => d.stratum === 'risk-top-decile') ? ['risk-top-decile'] : [])];
+  const strata = ['random', 'lane-b-written', ...['risk-top-decile', 'cell-fill'].filter((s) => draw.pages.some((d) => d.stratum === s))];
   // Why a reader has the verdicts it has. A reader under MIN_READ_SHARE is not a reader of this run.
   const lines = (f) => { try { return fs.readFileSync(f, 'utf8').split('\n').filter(Boolean); } catch { return []; } };
   const parse = (l) => { try { return JSON.parse(l); } catch { return null; } };

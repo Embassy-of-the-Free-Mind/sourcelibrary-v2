@@ -6,10 +6,83 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
+  checks: read
+  statuses: read
+
+# One run per PR (or per branch, for pushes to main): a new push cancels the run it supersedes.
+# On 2026-11-13, when the job was pinned to the three arm64 cloudlayer runners (~11 min a run), the
+# queue held 23 test runs, 7 of them for commits already superseded, the oldest waiting 2.5 h.
+concurrency:
+  group: unit-tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # The suites in three shards (#239): one job ran both suites in series, ~5 min of a ~10 min PR wait on
+  # 2026-11-13 (run 43462653029, gex45-4: unit 938 files 187 s, integration 31 files 121 s). Each shard runs its
+  # third of each suite. The integration step runs even when the unit step failed, so both report.
+  test-shard:
+    name: test shard ${{ matrix.shard }}/3
+    # Any sl runner (nine: gex45 x6, cloudlayer x3). The arm64-only pin (#71) queued tests for 5 h with gex45's
+    # runners idle; the two timing tests it worked around were made load-tolerant instead (2026-11-13).
+    runs-on: [self-hosted, sl]
+    timeout-minutes: 20  # a cold self-hosted runner spends ~6 min on setup-node + npm ci first (v3 move). 5 cancelled green runs at 10 min (v2#6629)
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+        id: deps
+
+      # The same two runs as `npm test` (package.json), each cut to this shard.
+      - name: Unit tests (shard ${{ matrix.shard }}/3)
+        run: npx vitest run --shard=${{ matrix.shard }}/3 --passWithNoTests
+        env:
+          # Self-hosted gex45 runners share 20 threads with each other and the GPU jobs; uncapped,
+          # vitest starts one worker per thread in every concurrent job and time-bound tests fail.
+          VITEST_MAX_WORKERS: "4"
+          # mongodb-memory-server makes a mongo-mem-* dbPath under os.tmpdir() per suite and leaves it when
+          # a launch times out or the job is cancelled: 101 of them held 17.7 GB of gex45's /tmp on
+          # 2026-11-12 (#90). RUNNER_TEMP is emptied by the runner at the start and end of every job.
+          TMPDIR: ${{ runner.temp }}
+
+      - name: Integration tests (shard ${{ matrix.shard }}/3)
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
+        run: npx vitest run --config vitest.integration.config.ts --shard=${{ matrix.shard }}/3 --passWithNoTests
+        env:
+          VITEST_MAX_WORKERS: "4"
+          TMPDIR: ${{ runner.temp }}  # see the unit step
+
+  # The one check auto-merge, safe-merge and reap-prs read is still named `test`: it passes only when every
+  # shard passed. `!cancelled()` so a failed shard still yields a red `test`, not a skipped one (a skipped
+  # check reads as no result at all).
   test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10  # the job runs ~5 min (npm test ~2 min, tsc ~1.7 min); 5 cancelled green runs at the wall (#6629)
+    needs: test-shard
+    if: ${{ !cancelled() }}
+    runs-on: [self-hosted, sl]
+    timeout-minutes: 5
+    steps:
+      - name: Every shard passed
+        run: |
+          echo "shards: ${{ needs.test-shard.result }}"
+          test "${{ needs.test-shard.result }}" = success
+
+  # Static checks in their own job, beside `test` (#239). Before, they ran after the tests in one job, so a test
+  # failure hid a type error (PR #285, 2026-11-13: tsc and the six checks never ran), and a green PR waited for the
+  # sum: npm test 310 s + tsc 158 s + eslint 26 s on gex45-4. Both jobs are gating checks in auto-merge.mjs.
+  static:
+    runs-on: [self-hosted, sl]
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -17,15 +90,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - run: npm ci
+        id: deps
 
-      - name: Run unit & integration tests
-        run: npm test
+      # Each check below runs even when an earlier one failed (but not when npm ci did), so one red check never
+      # hides another: the job still fails, and the log names every check that did.
 
+      # tsconfig sets `incremental`, but its default tsbuildinfo sits in the workspace, and checkout's
+      # `git clean -ffdx` deletes it, so every run was a cold ~260 s check (#252). Kept outside the
+      # workspace, one file per runner, it survives between jobs. tsc compares file hashes, so a
+      # stale file costs only speed, never correctness.
       - name: Type check
-        run: npx tsc --noEmit
+        run: |
+          mkdir -p "$HOME/.cache/sl-ci"
+          npx tsc --noEmit --incremental --tsBuildInfoFile "$HOME/.cache/sl-ci/tsc-${{ runner.name }}.tsbuildinfo"
 
       # `node --check` validates syntax, not scope; tsc does not cover plain
       # .mjs. This is the only guard against an undeclared identifier in the
@@ -33,6 +112,7 @@ jobs:
       # own config on purpose: eslint.config.mjs loads eslint-config-next's
       # TypeScript layer, which crashes on load under the lockfile's ESLint 10.
       - name: Lint plain-node scripts (no-undef)
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: npx eslint -c eslint.scripts.config.mjs "scripts/**/*.mjs" --quiet
 
       # scripts/eval/EXPERIMENTS.md and INDEX.md are generated on main after merge
@@ -40,7 +120,7 @@ jobs:
       # the append-to-one-tail conflict that blocked 6 of 11 PRs on 2026-10-01; a
       # PR that regenerates one correctly is allowed but told it was unnecessary.
       - name: Generated eval ledgers untouched
-        if: github.event_name == 'pull_request'
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' && github.event_name == 'pull_request' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/audit/append-only-ledgers.mjs --pr ${{ github.event.pull_request.number }}
@@ -50,7 +130,7 @@ jobs:
       # #5939). Older entries are grandfathered until the backfill lands; any header
       # present must be valid.
       - name: Experiment headers valid
-        if: github.event_name == 'pull_request'
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' && github.event_name == 'pull_request' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/eval/experiments-lint.mjs --pr ${{ github.event.pull_request.number }}
@@ -60,16 +140,19 @@ jobs:
       # (#3645); this refuses new hardcoded Blob URLs (plain OR percent-encoded)
       # and new direct `@vercel/blob` imports that bypass storagePut().
       - name: No new Vercel Blob dependencies
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: node scripts/audit/no-vercel-blob.mjs
 
       # Static source check (#6215): an em dash in reader-visible copy under
       # src/app or src/components (JSX text, string literals; comments are
       # fine) fails unless the file's ratchet in em-dash-allowlist.txt allows it.
       - name: No new em dashes in reader-facing copy
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: node scripts/maintenance/check-em-dashes.mjs
       # Static source check (#5942): a NEW file that reads pages.translation.data directly fails;
       # the book's words come through getTranslationText() (src/lib/translation-text.ts and its
       # scripts/lib twin), which checks translation.text against the data it was parsed from.
       # Baseline in scripts/lib/translation-data-readers-baseline.json, a list to shrink.
       - name: No new direct readers of translation.data
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' }}
         run: node scripts/audit/translation-data-readers.mjs

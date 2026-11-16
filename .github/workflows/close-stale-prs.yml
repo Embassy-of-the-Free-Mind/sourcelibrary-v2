@@ -19,10 +19,12 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  checks: read     # a private repo hides check results from a token that does not ask (v3 move, 2026-11-12)
+  statuses: read
 
 jobs:
   close:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4

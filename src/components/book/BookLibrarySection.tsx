@@ -54,7 +54,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
         <div className={`grid grid-cols-1 gap-9 md:gap-10 items-center ${hasCovers || data.ownImage ? 'md:grid-cols-[minmax(0,1fr)_50%]' : ''}`}>
           {/* Text side */}
           <div className="min-w-0">
-            <h2 className="font-display font-medium text-[26px] md:text-[34px] leading-[1.08] mb-1.5" style={{ color: '#2b2620' }}>{data.heading}</h2>
+            <h2 className="font-serif font-medium text-[26px] md:text-[34px] leading-[1.08] mb-1.5" style={{ color: '#2b2620' }}>{data.heading}</h2>
             {data.description && (
               <p className="text-[14px] mb-4" style={{ color: '#8a8170' }}>{data.description}</p>
             )}

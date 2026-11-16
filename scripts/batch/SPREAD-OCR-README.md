@@ -1,5 +1,7 @@
 # BPH Spread OCR — Batch Submission Guide
 
+> **RETIRED 2026-11-12 (v2#8590).** `submit-spread-ocr.mjs` and the `batch-ocr-async` route it posted to are deleted. A spread book is split first (`scripts/maintenance/split-spreads-agy.mjs`, #7454) and its leaves are read by the lane the router names (`.claude/docs/routing.md`). Kept as history.
+
 ## What this does
 
 Submits BPH two-page spread books for combined split detection + OCR via the existing Gemini Batch API infrastructure. One API call per spread page returns:

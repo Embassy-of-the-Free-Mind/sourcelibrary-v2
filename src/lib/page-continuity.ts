@@ -79,6 +79,49 @@ const CLOSERS = '[»”"\'’)\\]]*';
 const ELLIPSIS_TAIL = new RegExp(`(?:…|\\.\\s*\\.\\s*\\.)\\s*${CLOSERS}\\s*$`, 'u');
 const ELLIPSIS_HEAD = new RegExp(`^\\s*[«“"'‘(\\[]*\\s*(?:…|\\.\\s*\\.\\s*\\.)`, 'u');
 
+/**
+ * Four shapes where both flags said "no" above text that runs on (v3#30).
+ *
+ * A member's research report listed about forty such pages. Thirteen of its
+ * lines were read against the stored text on 2026-11-13; the real ones fell into
+ * the four shapes below, each pinned by the full captured page in
+ * tests/fixtures/page-continuity-report-30.json. The first two are furniture the
+ * strip did not know; the last two are the translator tidying the edge, which
+ * only the ORIGINAL can show — the same reason the hyphen signal reads it.
+ *
+ *  1. THE ELLIPSIS BEHIND A RUNNING HEAD. `ELLIPSIS_HEAD` is anchored on the
+ *     first words left after the furniture strip, and an untagged running head
+ *     in mixed case or markdown is not furniture: "# ON THE MOTIONS OF THE STAR
+ *     MARS", "Pratyabhijñā-Hṛdayam [Sutra 12]", "LIBER SEXTVS. 57" then "[Right
+ *     Column - Latin Text]". The translator's "...the hypothesis" sat on line
+ *     two or three and was never tested. So the first few lines are each tried
+ *     as the opening, for as long as the lines above are short.
+ *  2. THE PRINTED FOOTNOTE AT THE FOOT, written "^1 Some of these cases…". It
+ *     ends in a full stop; the body above it ("…relatives and acquaintances")
+ *     does not. Cut before the edge test, and only in the lower half of a page.
+ *  3. THE ORIGINAL OPENS LOWERCASE, the translation with a capital: "atque
+ *     omnem prorsus viam…" served as a fresh English sentence. Latin script
+ *     only. Greek editions print sentence openings in lowercase, so the same
+ *     test there would fire on nearly every page.
+ *  4. THE ORIGINAL ENDS ON A COMMA, the translation on a full stop or question
+ *     mark: "…ταῦτ’ ἀκούοντες," above "…when they hear this?". The translator
+ *     closed a sentence the leaf leaves open.
+ *
+ * NOT covered, and still wrong today: a translator closing a sentence whose
+ * original ends on a bare word (the Asclepius manuscript's "statuas futuror/"),
+ * a Greek page opening mid-word under a capitalised translation, and caseless
+ * originals with untagged apparatus at the foot (Kṣemarāja). Reading every
+ * original tail for "no terminal mark" would catch the first, and would also
+ * fire on each stored OCR that ends in an untagged apparatus line or a
+ * `<detected-images>` block.
+ */
+const HEAD_LINES_TRIED = 4;
+const SHORT_HEAD_LINE = 60;
+/** A column or section siglum before the marker: "A ...fleeing to our sweet homeland". */
+const SIGLUM_ELLIPSIS_HEAD = /^\p{Lu}\s+(?:…|\.\s*\.\s*\.)/u;
+const LATIN_LOWERCASE_HEAD = /^[«“"'‘(]*(?=\p{Script=Latin})\p{Ll}/u;
+const FOOTNOTE_AT_FOOT = /\n[ \t]*(?:\^\d{1,3}|\[\^\d{1,3}\]:?)[ \t]+\S/;
+
 /** A trailing hyphen directly after a letter: the word itself is cut in half. */
 const HYPHEN_SPLIT = /[\p{L}]-$/u;
 
@@ -318,9 +361,27 @@ function headOf(text: string): string {
   return stripInlineNoise(stripLeadingFurniture(text.replace(ZERO_WIDTH, '')).replace(INLINE_TAG, '')).trim();
 }
 
+/** Shape 2 above: drop printed footnotes at the foot, so the BODY's last words are read. */
+function cutFootnotes(text: string): string {
+  const at = text.search(FOOTNOTE_AT_FOOT);
+  return at !== -1 && at >= text.length / 2 ? text.slice(0, at) : text;
+}
+
 /** The text as it flows OUT of this page — furniture at the foot removed. */
 function tailOf(text: string): string {
-  return stripInlineNoise(stripTrailingFurniture(text.replace(ZERO_WIDTH, '')).replace(INLINE_TAG, '')).trim();
+  return stripInlineNoise(stripTrailingFurniture(cutFootnotes(text.replace(ZERO_WIDTH, ''))).replace(INLINE_TAG, '')).trim();
+}
+
+/** Shape 1 above: the translator's "cut off here" marker under an untagged running head. */
+function ellipsisUnderRunningHead(text: string): boolean {
+  const lines = text.replace(ZERO_WIDTH, '').split('\n').filter((line) => line.trim());
+  for (let i = 0; i < Math.min(HEAD_LINES_TRIED, lines.length); i++) {
+    const opening = headOf(lines.slice(i).join('\n'));
+    if (ELLIPSIS_HEAD.test(opening) || SIGLUM_ELLIPSIS_HEAD.test(opening)) return true;
+    // A long line is prose, not a head: whatever follows it is not the opening.
+    if (lines[i].trim().length > SHORT_HEAD_LINE) return false;
+  }
+  return false;
 }
 
 export interface PageContinuity {
@@ -386,8 +447,14 @@ export function pageContinuity(
   return {
     // An edge ellipsis is the translator saying "cut off here" — see ELLIPSIS_*.
     // Tested BEFORE the punctuation rules, because those two read it backwards.
-    continues_from_previous: ELLIPSIS_HEAD.test(head) || /^\p{Ll}/u.test(head),
-    continues_on_next: hyphen_split_at_end || ELLIPSIS_TAIL.test(tail) || !TERMINAL.test(tail),
+    // The last two tests on each line are the v3#30 shapes; see HEAD_LINES_TRIED.
+    continues_from_previous:
+      ELLIPSIS_HEAD.test(head) ||
+      /^\p{Ll}/u.test(head) ||
+      ellipsisUnderRunningHead(text) ||
+      (!!originalText && LATIN_LOWERCASE_HEAD.test(headOf(originalText))),
+    continues_on_next:
+      hyphen_split_at_end || ELLIPSIS_TAIL.test(tail) || !TERMINAL.test(tail) || hyphenTail.endsWith(','),
     hyphen_split_at_end,
   };
 }

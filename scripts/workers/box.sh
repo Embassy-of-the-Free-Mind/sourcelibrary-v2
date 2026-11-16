@@ -50,6 +50,8 @@ case "${1:-}" in
   self) self ;;
   pick)  # prints "<box>" of the emptiest ready box, or nothing. Score: load per core + jobs/100, using the 5-minute
          # load when the box reports it: l7a's archive tick fires every 10 min and swings load1 from ~1 to ~60.
+         # Only boxes whose `where` says ready=yes count: since #70 that answer is no on a root disk under 15% free
+         # and on a 5-minute load over 1.5 per core, so a box that would refuse or crawl is never picked.
     ex=""; [ "${2:-}" = --exclude ] && ex="${3:-}"; me=$(self)
     for b in $BOXES; do b=${b%%=*}; [ "$b" = "$ex" ] && continue
       if [ "$b" = "$me" ]; then line=$(/root/bin/claude-job.sh where 2>/dev/null); else line=$(call "$b" where </dev/null 2>/dev/null); fi

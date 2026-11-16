@@ -48,7 +48,7 @@ export const LIVE_BOOK_MATCH = { visible: true, pages_count: { $gt: 0 } };
  * so its counts are untrustworthy — report the probe broken, never 0 coverage.
  */
 export function finalizeMeasurement(measurement, controlOk) {
-  const { stage, covered, total, queue_depth, detail } = measurement;
+  const { stage, covered, total, queue_depth, residue, detail } = measurement;
   if (!controlOk) {
     return {
       stage,
@@ -65,6 +65,7 @@ export function finalizeMeasurement(measurement, controlOk) {
     covered,
     total,
     queue_depth,
+    ...(residue !== undefined ? { residue } : {}),
     ...(detail !== undefined ? { detail } : {}),
   };
 }
@@ -166,15 +167,37 @@ export function compareCounters(rows) {
   };
 }
 
+// How many books to draw BEFORE filtering to materialized ones. On 2026-11-14
+// `books` held 598,759 rows of which 408,920 were manifest-only (#7343), so
+// ~32% survive the filter: 1,500 draws yield ~470 candidates for 100 slots.
+const COUNTER_SAMPLE_POOL = 1500;
+
+/**
+ * Pure: the aggregation that picks the books to recount (#359).
+ *
+ * `$sample` MUST be the first stage. Behind a `$match`, Mongo cannot use the
+ * random cursor: it walks the pages_count index and FETCHes every matching
+ * book (570,899 of them, 4.7 GB collection) to test pages_state, then samples
+ * in memory — measured 87.6 s against the 60 s limit on 2026-11-14, and the
+ * archived/ocr/translated rows went probe_broken on about half the nights from
+ * 2026-10-31 as the manifest-only imports grew `books` past half a million rows.
+ * First-stage `$sample` returns in ~20 ms. The random cursor is not perfectly
+ * uniform, which is acceptable for a drift check (not for an estimate).
+ */
+export function buildCounterSamplePipeline(sampleSize = COUNTER_CHECK_BOOKS, pool = COUNTER_SAMPLE_POOL) {
+  return [
+    { $sample: { size: Math.max(pool, sampleSize) } },
+    // A manifest-only book (#7343) has no pages by design: not counter drift.
+    { $match: { pages_count: { $gt: 0 }, ...PAGES_MATERIALIZED_FILTER } },
+    { $limit: sampleSize },
+    { $project: { _id: 0, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1 } },
+  ];
+}
+
 /** Recount COUNTER_CHECK_BOOKS random books exactly from `pages`; compare to their counters. */
 async function checkPageCounters(db, sampleSize = COUNTER_CHECK_BOOKS) {
   const books = await db.collection('books').aggregate(
-    [
-      // A manifest-only book (#7343) has no pages by design: not counter drift.
-      { $match: { pages_count: { $gt: 0 }, ...PAGES_MATERIALIZED_FILTER } },
-      { $sample: { size: sampleSize } },
-      { $project: { _id: 0, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1 } },
-    ],
+    buildCounterSamplePipeline(sampleSize),
     { maxTimeMS: CONTROL_MAX_TIME_MS },
   ).toArray();
   const rows = [];
@@ -277,12 +300,44 @@ export async function measureChapters(db) {
   );
 }
 
+// ── Queues count only what a worker will take (#368) ───────────────────────
+//
+// A queue that holds rows no worker selects never drains, so findStalled pages
+// "STALLED" every night nothing new arrives (images 532 and identity 755, the
+// same numbers every night from 10-29 to 11-14). Each queue below counts the
+// rows its worker would take; the rest is `residue` ("no worker takes these"),
+// kept beside it so it stays visible. Positive control for the rule: rows the
+// worker WOULD take, left unprocessed, still stall (tests/unit/stage-coverage).
+
+/**
+ * The thumbnail maker's own selection, per detection (scripts/workers/
+ * generate-thumbnails.mjs matchFilter + its per-detection loop, run from cron
+ * with --min-quality=0.5): a bbox, no extracted_url, a detection_source it
+ * accepts, gallery_quality at or above the bar ON THE PAGE'S detection, and a
+ * page with a source image to crop from. The test pins these against the
+ * worker's source so the two cannot drift apart silently.
+ */
+export const THUMBNAILER_SOURCES = ['vision_model', 'manual', 'ocr_tag'];
+export const THUMBNAILER_MIN_QUALITY = 0.5;
+export const PAGE_SOURCE_FIELDS = ['archived_photo', 'cropped_photo', 'photo_original', 'photo'];
+export function thumbnailerTakes(page, detectionIndex) {
+  const det = page?.detected_images?.[detectionIndex];
+  if (!det || !det.bbox || det.extracted_url) return false;
+  if (!THUMBNAILER_SOURCES.includes(det.detection_source)) return false;
+  if ((det.gallery_quality || 0) < THUMBNAILER_MIN_QUALITY) return false;
+  return PAGE_SOURCE_FIELDS.some((f) => page[f] != null);
+}
+
+/** Above this many bbox-only rows the page lookup is skipped and every row counts as queue (the conservative side). */
+export const IMAGE_QUEUE_CHECK_CAP = 20_000;
+
 /**
  * images — gallery_images rows with a materialized extracted_url.
- * queue_depth is the #2430 canary: detections above the thumbnail-quality bar
- * (gallery_quality >= 0.5, generate-thumbnails' --min-quality) with no
- * extracted_url — bbox-only rows the batch collector wrote that the
- * thumbnail materializer hasn't picked up.
+ * queue_depth is the #2430 canary narrowed to what the thumbnail maker takes:
+ * bbox-only gallery rows (gallery_quality >= 0.5, no extracted_url) whose page
+ * detection the maker would select. The rest — on 2026-11-14 all 532, whose
+ * page detections carry gallery_quality null (#359) — is `residue`. Pages are
+ * read by `id` (indexed), only for the bbox-only rows.
  */
 export async function measureImages(db) {
   const gallery = db.collection('gallery_images');
@@ -290,21 +345,46 @@ export async function measureImages(db) {
   if (!(await controlFound(gallery, coveredPredicate))) {
     return finalizeMeasurement({ stage: 'images' }, false);
   }
+  const bboxOnly = {
+    $or: [{ extracted_url: { $exists: false } }, { extracted_url: null }],
+    gallery_quality: { $gte: THUMBNAILER_MIN_QUALITY },
+  };
   const [total, covered, bboxOnlyPending] = await Promise.all([
     gallery.estimatedDocumentCount(),
     count(gallery, coveredPredicate),
-    count(gallery, {
-      $or: [{ extracted_url: { $exists: false } }, { extracted_url: null }],
-      gallery_quality: { $gte: 0.5 },
-    }),
+    count(gallery, bboxOnly),
   ]);
+  let queue = bboxOnlyPending;
+  let residue = 0;
+  let checked = false;
+  if (bboxOnlyPending > 0 && bboxOnlyPending <= IMAGE_QUEUE_CHECK_CAP) {
+    const rows = await gallery
+      .find(bboxOnly, { projection: { page_id: 1, detection_index: 1 }, maxTimeMS: COUNT_MAX_TIME_MS })
+      .toArray();
+    const pageIds = [...new Set(rows.map((r) => r.page_id).filter(Boolean))];
+    const pages = new Map();
+    for (let i = 0; i < pageIds.length; i += 1000) {
+      const batch = await db
+        .collection('pages')
+        .find(
+          { id: { $in: pageIds.slice(i, i + 1000) } },
+          { projection: { id: 1, detected_images: 1, ...Object.fromEntries(PAGE_SOURCE_FIELDS.map((f) => [f, 1])) }, maxTimeMS: COUNT_MAX_TIME_MS },
+        )
+        .toArray();
+      for (const p of batch) pages.set(p.id, p);
+    }
+    queue = rows.filter((r) => thumbnailerTakes(pages.get(r.page_id), r.detection_index)).length;
+    residue = rows.length - queue;
+    checked = true;
+  }
   return finalizeMeasurement(
     {
       stage: 'images',
       covered,
       total,
-      queue_depth: bboxOnlyPending,
-      detail: { bbox_only_pending: bboxOnlyPending },
+      queue_depth: queue,
+      residue: checked ? residue : null,
+      detail: { bbox_only_pending: bboxOnlyPending, thumbnailer_takes: checked ? queue : null },
     },
     true,
   );
@@ -377,29 +457,146 @@ export async function measureEmbeddings(db, { fetchImpl = fetch } = {}) {
   );
 }
 
+/**
+ * What the two identity workers will take (#368):
+ *  - identity-worker (every 2 h): non-artwork books whose edition_key or
+ *    normalized_title is ABSENT (its ABSENCE_QUEUE; null = computed, unkeyable,
+ *    never re-selected).
+ *  - mint-local-work-ids (02:30 nightly): books with no work_id in a textual
+ *    language. It re-selects every such book each night but refuses most of
+ *    them for good (dry run 2026-11-15: 13,355 selected, 31 mintable; 10,523
+ *    "author-unnormalisable"), so a book still without one after
+ *    MINTER_RETRY_DAYS is one it has refused — identity-worker's own "older than
+ *    7 days = not done" line. Those are residue until the minter changes.
+ */
+export const MINTER_RETRY_DAYS = 7;
+export function identityQueueMatch(now = new Date()) {
+  const since = new Date(now.getTime() - MINTER_RETRY_DAYS * 86400_000);
+  return {
+    $or: [
+      {
+        content_type: { $ne: 'artwork' },
+        $or: [{ edition_key: { $exists: false } }, { normalized_title: { $exists: false } }],
+      },
+      {
+        language: { $nin: ['Visual', 'Unknown', null] },
+        $or: [{ work_id: { $exists: false } }, { work_id: null }],
+        created_at: { $gte: since },
+      },
+    ],
+  };
+}
+
 /** identity — live books carrying BOTH work_id and edition_key (#3260/#3710). */
-export async function measureIdentity(db) {
+export async function measureIdentity(db, { now = new Date() } = {}) {
   const books = db.collection('books');
   const nonEmpty = { $exists: true, $nin: [null, ''] };
   const coveredPredicate = { ...LIVE_BOOK_MATCH, work_id: nonEmpty, edition_key: nonEmpty };
   if (!(await controlFound(books, coveredPredicate))) {
     return finalizeMeasurement({ stage: 'identity' }, false);
   }
-  const [total, covered, withWork, withEdition] = await Promise.all([
+  const notCovered = { ...LIVE_BOOK_MATCH, $nor: [{ work_id: nonEmpty, edition_key: nonEmpty }] };
+  const [total, covered, withWork, withEdition, queue] = await Promise.all([
     count(books, LIVE_BOOK_MATCH),
     count(books, coveredPredicate),
     count(books, { ...LIVE_BOOK_MATCH, work_id: nonEmpty }),
     count(books, { ...LIVE_BOOK_MATCH, edition_key: nonEmpty }),
+    count(books, { $and: [notCovered, identityQueueMatch(now)] }),
   ]);
   return finalizeMeasurement(
     {
       stage: 'identity',
       covered,
       total,
-      queue_depth: Math.max(0, total - covered),
+      queue_depth: queue,
+      residue: Math.max(0, total - covered - queue),
       detail: { with_work_id: withWork, with_edition_key: withEdition },
     },
     true,
+  );
+}
+
+// ── Reporting (#359) ─────────────────────────────────────────────────────────
+//
+// A broken probe says nothing about the pipeline; a stalled stage says the
+// pipeline stopped. On 2026-11-14 both went out as one "Pipeline line: 5
+// issue(s)" page, and nobody could tell which half was the instrument. They
+// are reported separately everywhere a human reads them: the log line and
+// two different ntfy pushes.
+
+/** Pure: why a probe is broken, in one short phrase. */
+export function brokenReason(stage) {
+  const d = stage?.detail ?? {};
+  if (d.error) return String(d.error).replace(/^.*::\s*caused by\s*::\s*/, '').slice(0, 120);
+  if (d.counters_checked === 0) return 'the counter check drew no materialized books to recount';
+  if (typeof d.counters_drifted === 'number') {
+    return `page counters disagree with a recount on ${d.counters_drifted}/${d.counters_checked} books`;
+  }
+  return 'positive control found nothing';
+}
+
+/** Pure: broken stages grouped by reason — ["archived,ocr,translated: <reason>"]. */
+export function describeBroken(stages) {
+  const byReason = new Map();
+  for (const s of stages ?? []) {
+    if (s.status !== 'probe_broken') continue;
+    const r = brokenReason(s);
+    byReason.set(r, [...(byReason.get(r) ?? []), s.stage]);
+  }
+  return [...byReason].map(([reason, names]) => `${names.join(',')}: ${reason}`);
+}
+
+/**
+ * Pure: the ntfy pushes for one snapshot. Pipeline problems (stalls, the
+ * collector, aging batches) and instrument problems (broken probes) never share
+ * a push or a count.
+ */
+export function buildAlertPushes({ stages, stalled, collectorAgeHours, agingUncollected }) {
+  const pushes = [];
+  const pipeline = [];
+  if (stalled?.length) pipeline.push(`STALLED (queue>0, no progress since last snapshot): ${stalled.join(', ')}`);
+  if (collectorAgeHours === Infinity) pipeline.push('Batch collector last ran NEVER (cron is every 30min)');
+  else if (collectorAgeHours > 2) pipeline.push(`Batch collector last ran ${Math.round(collectorAgeHours)}h ago (cron is every 30min)`);
+  if (typeof agingUncollected === 'number' && agingUncollected > 0) {
+    pipeline.push(`${agingUncollected} paid batch job(s) uncollected >24h — Gemini discards output at ~2 days`);
+  }
+  if (pipeline.length) {
+    pushes.push({
+      title: `Pipeline line: ${pipeline.length} pipeline issue(s)`,
+      body: pipeline.join('\n') + '\n\nsourcelibrary.org/platform/admin/line',
+      priority: 'high',
+    });
+  }
+  const broken = (stages ?? []).filter((s) => s.status === 'probe_broken');
+  if (broken.length) {
+    pushes.push({
+      title: `Pipeline line INSTRUMENT broken: ${broken.map((s) => s.stage).join(', ')}`,
+      body:
+        'These probes could not measure. This is the monitor failing, NOT a stalled stage: ' +
+        'it says nothing about whether these stages moved.\n' +
+        describeBroken(broken).join('\n') +
+        '\n\nscripts/lib/stage-coverage.mjs · sourcelibrary.org/platform/admin/line',
+      priority: 'default',
+    });
+  }
+  return pushes;
+}
+
+/** Pure: the one-line cron-log summary. A broken probe is never printed as a coverage figure or a stall. */
+export function formatSummaryLine(doc, { dryRun = false } = {}) {
+  const stages = doc.stages ?? [];
+  const cell = (s) =>
+    s.status !== 'ok' ? 'n/a'
+      : (s.total ? `${((100 * s.covered) / s.total).toFixed(1)}%` : '—') +
+        (typeof s.residue === 'number' && s.residue > 0 ? ` (queue ${s.queue_depth}, residue ${s.residue} no worker takes)` : '');
+  const broken = describeBroken(stages);
+  const stalled = doc.stalled ?? [];
+  return (
+    `[stage-coverage] ${stages.map((s) => `${s.stage} ${cell(s)}`).join(' | ')}` +
+    ` | stalled: ${stalled.length ? stalled.join(',') : 'none'}` +
+    ` | instrument broken: ${broken.length ? broken.join('; ') : 'none'}` +
+    ` | dial: ${doc.dial?.paused ? 'PAUSED' : 'running'} budget=$${doc.dial?.daily_budget_usd ?? 'unset'}` +
+    ` spend=$${Number(doc.spend_today_usd ?? 0).toFixed(2)} | ${doc.duration_ms}ms${dryRun ? ' (dry-run)' : ''}`
   );
 }
 

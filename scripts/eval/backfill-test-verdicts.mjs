@@ -163,11 +163,12 @@ function stepT() {
 }
 
 /** route-judge-6740/results/<dir>: key.json items joined to verdicts-opus by judged_as (or id). */
-function routeJudgeDir(dirName) {
+function routeJudgeDir(dirName, issueOverride = null) {
   const dir = `scripts/eval/route-judge-6740/results/${dirName}`;
   const key = readJson(`${dir}/key.json`), V = new Map(readJsonl(`${dir}/verdicts-opus.jsonl.gz`).map((v) => [v.id, v]));
   const S = readJson(`${dir}/score.json`), scorePath = `${dir}/score.json`;
-  const issue = Number(dirName.match(/-(\d{4})-/)?.[1] ?? 7263) || 7263;
+  // v3 issues have fewer than four digits: a folder named for one passes it (indic-ocr-cells-225 -> #225, not #7263).
+  const issue = issueOverride ?? (Number(dirName.match(/-(\d{4})-/)?.[1] ?? 7263) || 7263);
   const rows = [], published = [];
   for (const k of key) {
     const v = V.get(k.judged_as ?? k.id);
@@ -242,7 +243,9 @@ export const TESTS = {
   'sonnet-router-7263': () => flagsOnly({ testId: 'sonnet-router-7263', file: 'scripts/eval/results/sonnet-router-7263/verdicts.json', score: 'sonnet-router-7263.score.json',
     cellOf: (g) => g, arms: (g) => ({ _: g === 'latin-lite' ? 'lite>sonnet' : 'sonnet-read' }), record: 'scripts/eval/experiments/2026-11-03-sonnet-router-7263.md' }),
   ...Object.fromEntries(['pilot-2026-10-26', 'router-tests-2026-10-26', 'tibetan-30-2026-10-27', 'router-tests-2026-10-28', 'router-next-2026-10-28', 'agy-opus-7545-2026-10-28', 'fresh-7517-2026-10-27',
-    'first-read-7701-2026-10-29'].map((d) => [`route-judge:${d}`, () => routeJudgeDir(d)])),
+    'first-read-7701-2026-10-29', 'flash3-cell-tests-8632-2026-11-13'].map((d) => [`route-judge:${d}`, () => routeJudgeDir(d)])),
+  'route-judge:hydrogen-218': () => routeJudgeDir('hydrogen-218', 218),
+  'route-judge:indic-ocr-cells-225': () => routeJudgeDir('indic-ocr-cells-225', 225),
 };
 
 /** Same verdict reused by a later test (route-judge folders reuse the pilot's): one row, the later test in also_in. */

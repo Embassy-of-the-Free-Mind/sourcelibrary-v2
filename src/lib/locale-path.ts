@@ -107,7 +107,7 @@ export const LOCALIZED_PATHS: Record<PrefixedLocale, Set<string>> = {
   // quoted in it. Dutch has no search twin yet.
   la: new Set<string>(['/', '/about', '/search']),
   nl: new Set<string>(['/', '/about']),
-  zh: new Set<string>(['/', '/about', '/search']),
+  zh: new Set<string>(['/', '/about', '/search', '/librarian']),
 };
 
 // Path SHAPES with a twin, per locale. One pattern per route under

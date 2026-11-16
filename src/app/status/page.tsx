@@ -168,7 +168,7 @@ function TrendArrow({ trend }: { trend: string }) {
     critical: '#ef4444',
   };
   return (
-    <span style={{ color: colors[trend] || '#9ca3af', fontWeight: 'bold' }}>
+    <span style={{ color: colors[trend] || '#9ca3af', fontWeight: 600 }}>
       {arrows[trend] || '?'}
     </span>
   );
@@ -398,7 +398,7 @@ function WarmthGauge({ warmth }: { warmth: number }) {
   return (
     <div style={{ marginBottom: 8 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
-        <span style={{ fontSize: 28, fontWeight: 700, color }}>{warmth}%</span>
+        <span style={{ fontSize: 28, fontWeight: 600, color }}>{warmth}%</span>
         <span style={{ fontSize: 11, color: '#6b7280' }}>
           {warmth >= 70 ? 'Hot' : warmth >= 40 ? 'Warming' : 'Cold'}
         </span>

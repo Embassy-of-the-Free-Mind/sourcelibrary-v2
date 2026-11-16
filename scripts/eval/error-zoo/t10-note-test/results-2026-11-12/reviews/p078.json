@@ -1,0 +1,118 @@
+[
+  {
+    "book_id": "69d5ac04d0bd3547a5654b83",
+    "slot": 1,
+    "title": "Armenian Manuscript (Armenien 128)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A handwritten Armenian hagiographic text in two columns. It matches the record's language and title. No tradition or collection is given to test it against.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree: structure.pages_translated is 0, but pages_translated_field is 554. One of them is wrong (E2). The OCR's <page-num>271 matches the handwritten '271' on the leaf. Page 533 carrying number 271 fits numbering on one side of each leaf only, with some unnumbered leaves. On that pattern, the 14 backsteps and 17 repeats in 282 numbered pages probably come from misread or uncertain handwritten numerals, not a broken sequence. One page cannot confirm that.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 533,
+        "right_page": "yes",
+        "printed_marker": "271",
+        "layout": "two ruled columns of small cursive Armenian; the first line of the right column is struck through; a short marginal word in the left margin beside left-column line 13; several erased or faded lines below the right column; '271' written at the foot",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ելեալ յառաջ փառաց. նմա",
+            "image": "the first line of the right column is struck through with a heavy ink line",
+            "problem": "A cancelled line is transcribed as live text with no deletion mark, and the translation renders it as 'He went forth before the glory.'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "զծով արծմայ Բաղայեալ\nէրէին ելսորդանիս իւր",
+            "image": "two lines of small cursive I cannot read word by word at this resolution",
+            "problem": "Many forms here and across the page are not Classical Armenian words, e.g. 'արծմայ', 'ելսորդանիս', 'կոկապանան', 'աստօսեղեալ', 'հարստմաց'. That points to widespread misreading. The translator's own <meta> says so as well. I cannot give the right readings from the image.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<script>handwritten</script>\n<warning>Handwritten Armenian Bolorgir script</warning>",
+            "image": "a small slanted cursive hand that looks more like notrgir than upright bolorgir",
+            "problem": "The script label in the tag may be wrong (O16). Low confidence.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(nothing after 'վասն յաւիտեանս յաւիտեան.')",
+            "image": "several faded or erased lines below the right column, mostly illegible",
+            "problem": "The erased lines are neither transcribed nor noted.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "զծով արծմայ Բաղայեալ\nէրէին ելսորդանիս իւր",
+            "english": "out of the sea, the bound one, Baghay,\nwas raised up with his attendants;",
+            "problem": "Fluent narrative built on OCR nonwords, with no uncertainty marker at this point. 'The bound one', 'raised up' and 'attendants' cannot be traced to the source tokens. The resurrection-like event is presented as fact.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "եկր Բաղա\nկանին հայոց ճէմմայ վերայ",
+            "english": "came upon\nthe Armenian church,",
+            "problem": "No token in the transcription reads 'church'. The English supplies a sense the OCR does not carry. A note says the reading is uncertain, which hedges it only in part.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "զերկուս սին ծառայս նր",
+            "english": "his two faithful servants",
+            "problem": "'սին' means vain or empty, not 'faithful'. The adjective is invented or reversed.",
+            "severity": "moderate"
+          },
+          {
+            "source": "ձոյ հանդերձից ծաղկեալն\nփորձ մինչև յարևմտեանն",
+            "english": "with garments, and the flourishing\ntrial lasted until the West;",
+            "problem": "Garbled source is rendered as English that has no meaning, instead of being marked as untranslatable.",
+            "severity": "moderate"
+          },
+          {
+            "source": "հարստ\nմաց նր զանինն զոր խօսե:",
+            "english": "and told\nhim the vision of which he spoke.",
+            "problem": "'Vision' is supplied. 'զանինն' does not mean vision. The translator is guessing from context.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Two <meta> blocks at the head of the translation, one a continuity summary and one about OCR quality. They show up in the metadata box, and the continuity claim about relics of Stephen cannot be checked from this page.",
+            "severity": "minor"
+          },
+          {
+            "note": "A raw <column-break/> tag in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "reading uncertain; possibly a place name", "verdict": "ok", "helpful": true },
+            { "quote": "the sense of this line is uncertain", "verdict": "ok", "helpful": true },
+            { "quote": "reading uncertain", "verdict": "ok", "helpful": true },
+            { "quote": "reading uncertain", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            {
+              "english": "Coming\nout of the sea, the bound one, Baghay,\nwas raised up with his attendants;",
+              "why": "This is the least reliable passage on the page and has no uncertainty note. A reader takes a miracle as stated."
+            },
+            {
+              "english": "the patrician saw the same\nvision",
+              "why": "The patrician is not identified on this page. A reader cannot tell who this is or which earlier vision is meant."
+            },
+            {
+              "english": "Philip,\nthe nephew of Simon",
+              "why": "The person and the Simon referred to are not identified."
+            }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "This is the right leaf, and the layout and page number agree. But the OCR of this small cursive hand is full of nonwords, and it passes over a struck-through line and erased text. The translation, though it hedges at the top and in its notes, turns garbled lines into confident narrative. A specialist would flag it on sight."
+  }
+]

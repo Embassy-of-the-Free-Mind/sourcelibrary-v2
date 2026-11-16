@@ -1,5 +1,6 @@
 import type { Db } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
+import { sourceExpr, sourceFilter } from '../../scripts/lib/pageview-source.mjs';
 
 /**
  * First-party traffic aggregation, read directly from MongoDB.
@@ -62,6 +63,8 @@ export async function getTrafficData(days = 30): Promise<TrafficData> {
     .aggregate(
       [
         { $match: { timestamp: { $gte: since }, path: { $ne: null }, ...excludePool(pool) } },
+        // utm tag first, then referrer: a ChatGPT link arrives tagged and with no referrer.
+        { $addFields: { _source: sourceExpr() } },
         {
           $facet: {
             totals: [
@@ -73,8 +76,8 @@ export async function getTrafficData(days = 30): Promise<TrafficData> {
               { $limit: 10 },
             ],
             topReferrers: [
-              { $match: { referrer: { $nin: [null, '', 'direct'] } } },
-              { $group: { _id: '$referrer', count: { $sum: 1 } } },
+              { $match: { _source: { $nin: [null, '', 'direct'] } } },
+              { $group: { _id: '$_source', count: { $sum: 1 } } },
               { $sort: { count: -1 } },
               { $limit: 10 },
             ],
@@ -140,12 +143,18 @@ export interface TrafficDashboardData {
   sections: Array<{ section: string; count: number }>;
   sites: Array<{ host: string; count: number }>;
   topPages: Array<{ path: string; count: number }>;
+  // Both lists name a row's SOURCE: its utm tag when it has one, otherwise its
+  // referrer (scripts/lib/pageview-source.mjs). The field keeps the name `referrer`.
+  // Tags are stored only from 2026-11-11 (#8507).
   topReferrers: Array<{ referrer: string; count: number }>;
   // Clicks (= distinct visitors) per source, not pageviews. `referrer` is
   // frozen at the visit's entry point and re-sent on every in-app navigation,
   // so topReferrers above counts every page a visitor reads under their
   // arrival source. Deduping by anonymized IP collapses that back to one
   // "click" per visitor, which is the number comparable to Search Console.
+  // A utm tag also repeats while a reader turns pages (2026-11-11/12: 1,399
+  // rows tagged chatgpt.com from 489 visitor-days), so this list, not the
+  // pageview list, is the one to compare sources by.
   clicksBySource: Array<{ referrer: string; count: number }>;
   topCountries: Array<{ country: string; count: number }>;
   // Automated traffic, shown separately and never in the figures above.
@@ -263,7 +272,9 @@ export async function getTrafficDashboard(opts: {
   // still offer every section to switch to).
   const filterMatch: Record<string, unknown> = { path: { $ne: null } };
   if (filters.country) filterMatch.country = filters.country;
-  if (filters.referrer) filterMatch.referrer = filters.referrer;
+  // `referrer` in the filter is a SOURCE as the lists below name it (utm tag first,
+  // then referrer), so clicking "ChatGPT" selects its tagged arrivals too.
+  if (filters.referrer) Object.assign(filterMatch, sourceFilter(filters.referrer));
   if (filters.host) filterMatch.host = filters.host;
   const baseMatch = { ...filterMatch, ...excludePool(pool) };
 
@@ -277,8 +288,8 @@ export async function getTrafficDashboard(opts: {
         { $match: { ...baseMatch, timestamp: { $gte: since } } },
         // Carry only the fields the facets read: $facet materialises its input,
         // and a full pageview row (user agent, headers) is several times larger.
-        { $project: { _id: 0, path: 1, timestamp: 1, ip: 1, host: 1, referrer: 1, country: 1 } },
-        { $addFields: { _section: SECTION_EXPR } },
+        { $project: { _id: 0, path: 1, timestamp: 1, ip: 1, host: 1, referrer: 1, 'utm.source': 1, country: 1 } },
+        { $addFields: { _section: SECTION_EXPR, _source: sourceExpr() } },
         {
           $facet: {
             totals: [
@@ -315,16 +326,16 @@ export async function getTrafficDashboard(opts: {
             ],
             topReferrers: [
               ...sectionMatch,
-              { $match: { referrer: { $nin: [null, '', 'direct'] } } },
-              { $group: { _id: '$referrer', count: { $sum: 1 } } },
+              { $match: { _source: { $nin: [null, '', 'direct'] } } },
+              { $group: { _id: '$_source', count: { $sum: 1 } } },
               { $sort: { count: -1 } },
               { $limit: 10 },
             ],
             clicksBySource: [
               ...sectionMatch,
-              { $match: { referrer: { $nin: [null, '', 'direct'] } } },
+              { $match: { _source: { $nin: [null, '', 'direct'] } } },
               // Dedupe to one click per distinct visitor (anonymized IP) per source.
-              { $group: { _id: '$referrer', ips: { $addToSet: '$ip' } } },
+              { $group: { _id: '$_source', ips: { $addToSet: '$ip' } } },
               { $project: { count: { $size: '$ips' } } },
               { $sort: { count: -1 } },
               { $limit: 10 },

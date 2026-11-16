@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { clientIpFromHeaders } from '@/lib/analytics-ingest';
+import { parseDeadContentLink } from '@/lib/not-found-recovery';
 
 /**
  * Auto-log 404 page hits.
@@ -20,6 +21,10 @@ export async function POST(request: NextRequest) {
 
     const ip = clientIpFromHeaders(request.headers);
     const ua = request.headers.get('user-agent') || '';
+    // The 404 page posts to its own origin, so this is the host the reader was
+    // on. Without it a row for /bph/collections/x cannot be told apart between
+    // the partner's subdomain (a bug) and the main site (#102).
+    const host = (request.headers.get('host') || '').toLowerCase().slice(0, 100);
 
     const dbWork = (async () => {
       const db = await getDb();
@@ -34,12 +39,16 @@ export async function POST(request: NextRequest) {
       // /artwork/<slug> URLs — they were the largest cluster in the log by
       // 2026-08. The art-<slug> twin is included because /artwork resolves it
       // (see src/lib/artwork-slug.ts).
-      const contentMatch = url.match(/^\/(book|artwork)\/([^/?#]+)/);
-      if (contentMatch) {
-        const slug = decodeURIComponent(contentMatch[2]);
+      // The locale prefix is stripped first (parseDeadContentLink): without that,
+      // /es/book/<hidden> and its /la, /zh, /nl twins were all recorded, 516 of
+      // 5,333 rows in the 90 days to 2026-11-12 and the largest single cause
+      // after declared crawlers (#102).
+      const dead = parseDeadContentLink(url);
+      if (dead && (dead.kind === 'book' || dead.kind === 'artwork')) {
+        const slug = dead.slug;
         const or: Record<string, string>[] = [{ slug }, { id: slug }];
         // The art-<slug> twin only resolves on /artwork URLs.
-        if (contentMatch[1] === 'artwork') or.push({ slug: `art-${slug}` });
+        if (dead.kind === 'artwork') or.push({ slug: `art-${slug}` });
         const book = await db.collection('books').findOne(
           { $or: or },
           { projection: { visible: 1, hidden: 1 } },
@@ -58,6 +67,7 @@ export async function POST(request: NextRequest) {
         {
           $setOnInsert: {
             url,
+            host: host || null,
             referrer: referrer || null,
             ip: anonIp,
             ua: ua.slice(0, 200),

@@ -131,8 +131,8 @@ export function renderKindTable(table) {
   return [
     KIND_BEGIN, '',
     `As of ${table.as_of} (#${table.issue}). Status: settled = measured and decided; provisional = decided on thin or by-eye evidence; open = no reader chosen on evidence yet. Routed: whether production does this today.`, '',
-    `"Reader" is what NEW pages get. "Stored now" is what readers have: ${table.census.method} Counted ${table.census.date}; source: ${table.census.source}.`, '',
-    '| page kind (`id`) | reader (new pages) | stored now | status · routed | production today | evidence |',
+    `**These rows describe kinds of page; they are not routes.** "Reader" is the engine the row's evidence chose, as of that evidence: it can be stale, and it is not what a new page gets. The route a page gets today is the router table (\`router_cells\` in \`scripts/lib/ocr-routing-table.json\`, from \`current.json\`; see \`.claude/docs/routing.md\`). "Stored now" is what readers have: ${table.census.method} Counted ${table.census.date}; source: ${table.census.source}.`, '',
+    '| page kind (`id`) | reader (as of its evidence, not the route) | stored now | status · routed | production today | evidence |',
     '|---|---|---|---|---|---|',
     ...table.rows.map((r) => `| ${kindCell(r.kind)} (\`${r.id}\`) | ${kindCell(r.reader)} | ${kindCell(r.stored ?? 'not counted')} | ${r.status} · ${r.routed} | ${kindCell(r.production)} | ${r.evidence.map(evidenceLabel).map(kindCell).join('; ')} |`),
     '', 'Tested and not adopted:', '',

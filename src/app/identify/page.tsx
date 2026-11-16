@@ -421,7 +421,7 @@ export default function IdentifyPage() {
         <SiteHeader variant="dark" />
         {(image || result) && (
           <div className="max-w-2xl mx-auto px-4 py-6">
-            <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
+            <h1 className="text-2xl sm:text-3xl font-serif font-semibold">Identify</h1>
             <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
           </div>
         )}
@@ -466,7 +466,7 @@ export default function IdentifyPage() {
               <p className="text-[11px] uppercase tracking-[0.22em] text-white/60 mb-3">
                 Embassy of the Free Mind · Amsterdam
               </p>
-              <h1 className="font-display text-white font-semibold leading-[1.05] text-[clamp(2.1rem,5.5vw,3.8rem)] max-w-3xl [text-shadow:0_1px_24px_rgba(0,0,0,0.45)]">
+              <h1 className="font-serif text-white font-semibold leading-[1.05] text-[clamp(2.1rem,5.5vw,3.8rem)] max-w-3xl [text-shadow:0_1px_24px_rgba(0,0,0,0.45)]">
                 Every picture here comes from a book.
               </h1>
               <p className="text-white/85 mt-4 max-w-xl text-base sm:text-lg leading-relaxed">
@@ -627,7 +627,7 @@ export default function IdentifyPage() {
                   </div>
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <ProvenanceChip kind="catalogue" />
-                    <p className="font-display font-semibold text-primary">
+                    <p className="font-serif font-semibold text-primary">
                       {c.source_book?.book_title || c.book_title}
                       {/* "scan page", not "page": the work's own plate numbering
                           (e.g. the Codex Borgia's "Page 56") can differ from our
@@ -719,7 +719,7 @@ export default function IdentifyPage() {
             <div className="card p-5 space-y-3">
               <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+                  <h2 className="text-lg font-serif font-semibold text-primary">Analysis</h2>
                   <ProvenanceChip kind="ai-reading" />
                 </div>
                 {result.identification.confidence && (
@@ -882,7 +882,7 @@ export default function IdentifyPage() {
                  comparison saw — mostly look-alikes — so it folds away */
               <details open={!result.confirmed}>
                 <summary className="flex items-center gap-2 mb-3 cursor-pointer select-none">
-                  <h2 className="text-lg font-display font-semibold text-primary">
+                  <h2 className="text-lg font-serif font-semibold text-primary">
                     {result.confirmed
                       ? `Other candidates we compared (${result.matches.filter(m => m.id !== result.confirmed!.book_id).length})`
                       : result.matches.length === 1 ? 'Closest Match' : `${result.matches.length} Possible Matches`}

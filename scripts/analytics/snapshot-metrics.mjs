@@ -18,9 +18,20 @@
 
 import { withMongo } from '../lib/mongo.mjs';
 import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
-import { activePoolFingerprints, excludePoolFilter } from '../lib/suspected-pool.mjs';
+import { activePoolFingerprints, excludePoolFilter, poolWindowFilter } from '../lib/suspected-pool.mjs';
+import {
+  LIKELY_HUMAN_METHOD, OWN_TOOL_UA, fingerprintSignals, isLikely, likelyHumanDailyChunked, likelyHumanTotal, median, mergeDaily,
+} from '../lib/likely-human.mjs';
+import { createSourceTally, UTM_SINCE } from '../lib/pageview-source.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
+// --dry-run computes everything and writes nothing: for testing a change to this
+// script against production without touching the dashboard or the history.
+const DRY_RUN = process.argv.includes('--dry-run');
+// --backfill-likely rebuilds the whole likely-human daily series from raw page
+// views (about two minutes). Run by hand: once after this field first ships,
+// and again whenever the rule in scripts/lib/likely-human.mjs changes.
+const BACKFILL_LIKELY = process.argv.includes('--backfill-likely');
 const norm = (e) => (e || '').trim().toLowerCase();
 const BOT_RE = /(bot|crawler|spider|preview|monitor|uptime|wget|curl|python-requests|libwww|http-client|headless|chrome-lighthouse|MCP)/i;
 const isBot = (ua) => !ua || BOT_RE.test(ua);
@@ -109,10 +120,11 @@ await withMongo(async (db) => {
     users.countDocuments({ createdAt: { $gt: d7 } }),
     users.countDocuments({ createdAt: { $gt: d1 } }),
   ]);
+  // `newsletter_subscribers` was snapshotted here until #77; nothing ever wrote
+  // that collection, so the field was a constant 0. The newsletter's reach is
+  // the Resend audience, not a Mongo count.
   const subscribers = {};
-  for (const cn of ['beta_subscribers', 'newsletter_subscribers']) {
-    try { subscribers[cn] = await db.collection(cn).countDocuments({}); } catch { subscribers[cn] = null; }
-  }
+  try { subscribers.beta_subscribers = await db.collection('beta_subscribers').countDocuments({}); } catch { subscribers.beta_subscribers = null; }
   // Prior-period signups for week-over-week / month-over-month deltas.
   const [prev7, prev30] = await Promise.all([
     users.countDocuments({ createdAt: { $gt: d14, $lte: d7 } }),
@@ -153,31 +165,76 @@ await withMongo(async (db) => {
   const dau = dauSeries.filter((d) => d._id >= day(14));
   const avgDau = Math.round(dau.reduce((s, d) => s + d.users, 0) / (dau.length || 1));
 
+  // ─── LIKELY-HUMAN READERS: the headline (#48) ─────────────────────────────
+  // `mau` and `avgDau` above count fingerprints, and most fingerprints are
+  // fleets the bot pattern and the pool list cannot see. The rule, its test
+  // against known humans and a known fleet, and what a fingerprint is not:
+  // scripts/lib/likely-human.mjs.
+  //
+  // The daily series is kept in the snapshot and topped up: each run recomputes
+  // the last LIKELY_REFRESH_DAYS full days from raw page views and merges them
+  // over the stored series. Recomputing the whole series every morning does not
+  // fit this script's 240 s budget (30 days is ~20 s; 90 days timed out), and a
+  // snapshot that times out leaves the whole dashboard stale. History comes
+  // from one hand run with --backfill-likely, which is also what a change to
+  // the rule needs: a stored series under another method is discarded, never
+  // spliced, so the line cannot carry a step where the definition changed.
+  const LIKELY_KEEP_DAYS = 220, LIKELY_REFRESH_DAYS = 7, LIKELY_FIRST_RUN_DAYS = 30;
+  const humanMatch = { userAgent: { $exists: true, $not: BOT_RE } };
+  const prevSnap = await db.collection('system_config').findOne(
+    { _id: 'metrics_snapshot' }, { projection: { 'likely.method': 1, 'series.likelyDaily': 1 } },
+  );
+  const storedDaily = prevSnap?.likely?.method === LIKELY_HUMAN_METHOD ? (prevSnap.series?.likelyDaily || []) : [];
+  const refreshDays = BACKFILL_LIKELY ? LIKELY_KEEP_DAYS : storedDaily.length ? LIKELY_REFRESH_DAYS : LIKELY_FIRST_RUN_DAYS;
+  if (!storedDaily.length && !BACKFILL_LIKELY) console.log(`  [snapshot] no stored likely-human series under ${LIKELY_HUMAN_METHOD}: starting from ${LIKELY_FIRST_RUN_DAYS} days. Run once with --backfill-likely for the full history.`);
+  // A flagged string is excluded only on the days its pool ran: over 220 days
+  // a blanket exclusion would drop the real readers who wear the same stock
+  // Chrome string in every other week (suspected-pool.mjs, poolWindowFilter).
+  const notPoolSeries = await poolWindowFilter(db);
+  const likelyDaily = mergeDaily(
+    BACKFILL_LIKELY ? [] : storedDaily,
+    await likelyHumanDailyChunked(pv, { days: refreshDays, match: { ...humanMatch, ...notPoolSeries }, now }),
+    { keepDays: LIKELY_KEEP_DAYS, now },
+  );
+  const likely30 = await likelyHumanTotal(pv, { from: d30, match: { ...humanMatch, ...notPool } });
+  const last14 = likelyDaily.slice(-14);
+  const likely = {
+    method: LIKELY_HUMAN_METHOD,
+    mau: likely30.likely, mauStrict: likely30.strict, mauAll: likely30.all,
+    pageviews30: likely30.likelyPageviews, pageviewsAll30: likely30.pageviews,
+    // Median, not mean: 2026-11-06 alone (46,668 fingerprints) put the 14-day mean at 6,844.
+    dau: median(last14.map((d) => d.likely)),
+    dauStrict: median(last14.map((d) => d.strict)),
+    dauAll: median(last14.map((d) => d.all)),
+    dauDays: last14.length,
+  };
+
+  // --backfill-likely rebuilds this one series and stops. The rest of the
+  // snapshot is the 05:45 cron's job and stays as that run wrote it.
+  if (BACKFILL_LIKELY) {
+    console.log(`likely-human series rebuilt: ${likelyDaily.length} days, ${likelyDaily[0]?.date} to ${likelyDaily.at(-1)?.date}; ${likely.dau}/day median of the last ${likely.dauDays} (strict ${likely.dauStrict}, all fingerprints ${likely.dauAll}); 30 days ${likely.mau} of ${likely.mauAll}.`);
+    if (DRY_RUN) { console.log('DRY RUN, nothing written.'); console.log(likelyDaily.map((d) => `${d.date.slice(5)}:${d.likely}/${d.strict}/${d.all}`).join(' ')); return; }
+    const r = await db.collection('system_config').updateOne({ _id: 'metrics_snapshot' }, { $set: { likely, 'series.likelyDaily': likelyDaily } });
+    console.log(`metrics_snapshot.likely and series.likelyDaily written (matched=${r.matchedCount} modified=${r.modifiedCount}).`);
+    return;
+  }
+
   // ─── GEOGRAPHY: likely-human visitors by country (#8522) ──────────────────
-  // The fingerprint counts above still carry residential-proxy fleets: they run
-  // JavaScript and wear stock browser UAs, so neither BOT_RE nor the pool list
-  // sees most of them (measurement-instruments.md, 2026-08-09). Their signature
-  // is behavioural: desktop, no referrer, one or two pages. A fingerprint counts
-  // as LIKELY HUMAN when it breaks that signature in at least one way: it came
-  // from another site, read 3+ pages, or used a phone. On 2026-11-11 this kept
-  // 26,778 of 141,124 thirty-day fingerprints, and the three signals agreed on
-  // the Latin America share (6.0-6.9%), which is the two-instrument check.
-  // `referrer` is stored as a bare domain ('direct', 'google.com', ...).
-  const EXTERNAL_REF = '^(?!direct$|localhost|127\\.|([a-z0-9-]+\\.)*sourcelibrary\\.org$).+';
+  // The same rule, grouped by country. On 2026-11-11 it kept 26,778 of 141,124
+  // thirty-day fingerprints, and the three signals agreed on the Latin America
+  // share (6.0-6.9%), which is the two-instrument check.
   const geoByCountry = async (from) => (await pv.aggregate([
-    { $match: { timestamp: { $gt: from }, userAgent: { $exists: true, $not: BOT_RE }, ...notPool } },
+    { $match: { timestamp: { $gt: from }, ...humanMatch, ...notPool } },
     { $group: {
       _id: { ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } },
       country: { $first: '$country' },
-      pv: { $sum: 1 },
-      referred: { $max: { $cond: [{ $regexMatch: { input: { $ifNull: ['$referrer', 'direct'] }, regex: EXTERNAL_REF } }, 1, 0] } },
-      phone: { $max: { $cond: [{ $regexMatch: { input: '$userAgent', regex: 'Mobile|Android|iPhone|iPad' } }, 1, 0] } },
+      ...fingerprintSignals,
     } },
     { $group: {
       _id: { $ifNull: ['$country', 'unknown'] },
       all: { $sum: 1 },
       referred: { $sum: '$referred' },
-      likely: { $sum: { $cond: [{ $or: [{ $eq: ['$referred', 1] }, { $gte: ['$pv', 3] }, { $eq: ['$phone', 1] }] }, 1, 0] } },
+      likely: { $sum: { $cond: [isLikely, 1, 0] } },
     } },
   ], { allowDiskUse: true }).toArray())
     .map((r) => ({ country: r._id, all: r.all, likely: r.likely, referred: r.referred }))
@@ -327,9 +384,12 @@ await withMongo(async (db) => {
   } catch { /* noop */ }
 
   // ─── TRAFFIC SHAPE / TOP CONTENT / REFERRERS (last DAYS, human-filtered) ──
-  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } }).batchSize(1000);
+  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, utm: 1, ip: 1, country: 1, timestamp: 1 } }).batchSize(1000);
   let humanPvs = 0, botPvs = 0;
-  const dailyHits = new Map(), bookHits = new Map(), collectionHits = new Map(), referrers = new Map(), countries = new Map();
+  const dailyHits = new Map(), bookHits = new Map(), collectionHits = new Map(), countries = new Map();
+  // A row's source is its utm tag, else its referrer, else direct (scripts/lib/pageview-source.mjs).
+  // Reading the referrer alone filed every ChatGPT arrival under "direct" (v2#8161).
+  const sources = createSourceTally();
   while (await pvCursor.hasNext()) {
     const d = await pvCursor.next();
     if (isBot(d.userAgent)) { botPvs++; continue; }
@@ -339,8 +399,7 @@ await withMongo(async (db) => {
     dailyHits.set(dstr, (dailyHits.get(dstr) || 0) + 1);
     if (cls.kind === 'book' && cls.slug) bookHits.set(cls.slug, (bookHits.get(cls.slug) || 0) + 1);
     if (cls.kind === 'collection' && cls.slug) collectionHits.set(cls.slug, (collectionHits.get(cls.slug) || 0) + 1);
-    const refDomain = (d.referrer || 'direct').replace(/^https?:\/\//, '').split('/')[0] || 'direct';
-    referrers.set(refDomain, (referrers.get(refDomain) || 0) + 1);
+    sources.add(d, `${d.ip}::${(d.userAgent || '').slice(0, 60)}`, dstr);
     countries.set(d.country || 'unknown', (countries.get(d.country || 'unknown') || 0) + 1);
   }
   const topN = (m, n) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
@@ -374,14 +433,25 @@ await withMongo(async (db) => {
   }
   const topBooks = [...mergedBooks.values()].sort((a, b) => b.hits - a.hits).slice(0, 15);
   const topCollections = topN(collectionHits, 10).map(([slug, hits]) => ({ slug, hits }));
-  const topReferrers = topN(referrers, 12).map(([referrer, hits]) => ({ referrer, hits }));
+  // `referrer` and `hits` keep their names for readers of older snapshots; `referrer` now
+  // holds the source. `visitors` (address + user agent, distinct over the window) is the
+  // figure to compare sources by, and the order here: a tag or a referrer repeats on
+  // several pages of one visit, so `hits` are pageviews, not arrivals.
+  const topReferrers = sources.rows().slice(0, 15).map((r) => ({ referrer: r.source, hits: r.pageviews, visitors: r.visitors }));
+  // Readers arriving from an assistant, all assistants together. Tags exist from utmSince,
+  // so the window's earlier days hold only the assistants that send a referrer.
+  const fromAssistants = { ...sources.assistants(), utmSince: UTM_SINCE };
   const topCountries = topN(countries, 12).map(([country, hits]) => ({ country, hits }));
 
   // ─── SEARCH BEHAVIOR ──────────────────────────────────────────────────────
   let search = null;
   try {
     const sqAll = await db.collection('search_queries').find({ ts: { $gte: SINCE } }, { projection: { query: 1, total: 1, ms: 1, user_agent: 1 } }).toArray();
-    const sqHuman = sqAll.filter((s) => !isBot(s.user_agent));
+    // Our own tools are not readers. The search probe replays a fixed panel of
+    // ten queries all day under `sl-search-probe/1`, which the crawler pattern
+    // does not match: it filled the whole top-ten table at ~5,000 each (#48).
+    const sqOwn = sqAll.filter((s) => OWN_TOOL_UA.test(s.user_agent || ''));
+    const sqHuman = sqAll.filter((s) => !isBot(s.user_agent) && !OWN_TOOL_UA.test(s.user_agent));
     const zero = sqHuman.filter((s) => (s.total || 0) === 0);
     const qCounts = new Map(), zCounts = new Map();
     for (const s of sqHuman) { const q = (s.query || '').toLowerCase().trim(); if (q) qCounts.set(q, (qCounts.get(q) || 0) + 1); }
@@ -390,6 +460,7 @@ await withMongo(async (db) => {
     search = {
       total: sqAll.length,
       human: sqHuman.length,
+      ownTools: sqOwn.length,
       zeroResult: zero.length,
       topQueries: topN(qCounts, 15).map(([query, count]) => ({ query: query.slice(0, 80), count })),
       zeroQueries: topN(zCounts, 15).map(([query, count]) => ({ query: query.slice(0, 80), count })),
@@ -464,7 +535,9 @@ await withMongo(async (db) => {
       signupsByDay,          // [{date,n}] daily NEW signups, 90d
       signupsBaseline: signupsBefore90, // cumulative total before the 90d window
       dau: dauSeries.map((d) => ({ date: d._id, users: d.users })), // 30d
+      likelyDaily, // [{date,all,likely,strict,pageviews,likelyPageviews}] full UTC days, up to 220 (#48)
     },
+    likely,
     engagement: {
       mau, avgDau,
       dauLast3: dau.slice(-3).map((d) => ({ date: d._id, users: d.users })),
@@ -477,7 +550,7 @@ await withMongo(async (db) => {
     reading,
     readingMembers,
     missionActions,
-    traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, topCountries },
+    traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, fromAssistants, topCountries },
     geo,
     ...(geoReaders ? { geoReaders } : {}),
     ...(readersMonthly ? { readersMonthly } : {}),
@@ -487,6 +560,12 @@ await withMongo(async (db) => {
     ai,
     pipelineCost,
   };
+
+  if (DRY_RUN) {
+    console.log('DRY RUN, nothing written.');
+    console.log(JSON.stringify({ likely, likelyDailyDays: likelyDaily.length, likelyDailyFirst: likelyDaily[0], likelyDailyLast: likelyDaily.at(-1), search: search && { total: search.total, human: search.human, ownTools: search.ownTools, topQueries: search.topQueries.slice(0, 5) } }, null, 1));
+    return;
+  }
 
   const res = await db.collection('system_config').updateOne(
     { _id: 'metrics_snapshot' },
@@ -505,6 +584,8 @@ await withMongo(async (db) => {
     dwellMedianSec: dwellMedian, dwellMeanSec: dwellMean,
     uniqVisitors, returningVisitors: multiDay, returningTotal: totalFp,
     humanPvs7: pvLast7,
+    // The rolling 30-day likely-human total cannot be rebuilt cheaply later, so it is kept per day (#48).
+    likelyMau: likely.mau, likelyMauStrict: likely.mauStrict, likelyDau: likely.dau, likelyDauStrict: likely.dauStrict,
     ...(geoLikely ? { geoLikely } : {}), // likely-human visitors per country, last 24h (#8522)
   };
   // The two headline corpus counts, copied from homepage_stats (recomputed 05:00
@@ -531,5 +612,6 @@ await withMongo(async (db) => {
 
   console.log(`metrics_snapshot written (matched=${res.matchedCount} upserted=${res.upsertedCount ? 1 : 0}). generatedAt=${snapshot.generatedAt.toISOString()}`);
   console.log(`  users.total=${total} (+${new7}/7d, prev ${prev7})  MAU=${mau}  avgDAU=${avgDau}  humanPV(${DAYS}d)=${humanPvs}  dwellMedian=${dwellMedian}s`);
+  console.log(`  likely human: ${likely.dau}/day median of ${likely.dauDays} days (strict ${likely.dauStrict}, all fingerprints ${likely.dauAll}); 30 days ${likely.mau} of ${likely.mauAll} fingerprints; own-tool searches removed ${search?.ownTools ?? 'n/a'}`);
   if (histRes) console.log(`  metrics_history[${todayStr}] ${histRes.upsertedCount ? 'inserted' : 'updated'}.`);
-}, { timeoutMs: 240000 });
+}, { timeoutMs: BACKFILL_LIKELY ? 900000 : 240000 });

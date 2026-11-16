@@ -1,0 +1,62 @@
+[
+  {
+    "book_id": "69b525ce6be6046083032ac7",
+    "slot": 1,
+    "title": "Architecture, peinture et sculpture de la maison de ville d'Amsterdam, représentée en CIX figures en taille-douce ...",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is assigned. The leaf is an authentic 1719 French commentary on the sculpture of the Amsterdam Town Hall (plates LXXIII–LXXXIV), which matches the title and date.",
+    "rights_flag": null,
+    "structure_note": "This record is an unsplit two-page opening (printed pp. 18 and 19). The OCR transcribes both pages in order and the translation says so in a meta, so nothing is lost here. If other records are spreads too, that would explain the printed_backsteps (4) and printed_repeats (2): each record carries two printed numbers and only one gets parsed. It would also explain the low with_printed_number (16 of 169) in a book that is mostly plates. structure.pages_translated is 0 while the book field says 127 and this page has an English text, so the structure count is unreliable (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "printed_marker": "\"18\" and \"19\" (two-page opening); signature \"E 2\"; catchwords \"che\" (p.18) and \"Chien;\" (p.19)",
+        "layout": "two-page opening, each page in two columns, centred PLANCHE headings, running heads across the spread, no illustrations",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "s'enfuit pas qu'elles ne puiſſent",
+            "image": "s'enſuit pas (long s)",
+            "problem": "long s read as f. The translation still renders it correctly as 'it does not follow'",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "A raw <column-break/> tag stands twice in the English reading text: after \"hardly different at all from the previous one.\" and after \"the greatest beauties are not themselves\". Unless the renderer strips it, the reader sees it.",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "The continuity meta \"continues from previous page: description of the ornaments of the Pedestal of Mercury\" names a subject the leaf does not name. The emblems (winged hat, caduceus) imply Mercury, but 'Pedestal' and 'Plate LXXII' are not on this page.",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "here meaning symbolic emblems", "verdict": "ok", "helpful": true },
+            { "quote": "A joke on the cuckold, traditionally pictured with horns lik", "verdict": "ok", "helpful": true },
+            { "quote": "Latin \"serere,\" past participle \"satum\"", "verdict": "ok", "helpful": false },
+            { "quote": "the Fates", "verdict": "ok", "helpful": true },
+            { "quote": "the source writes \"Diane\"; classical tradition names her mo", "verdict": "ok", "helpful": true },
+            { "quote": "the prize awarded by Paris as the fairest of the goddesses", "verdict": "ok", "helpful": false },
+            { "quote": "to carry off Europa", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "She was the Daughter of Jupiter and Latona", "why": "Latona is the Latin name of Leto, mother of Apollo and Artemis. Many general readers will not know her." },
+            { "english": "the Chamber of the Extraordinary Aldermen", "why": "This renders the Dutch civic office (Extraordinaris Schepenen). 'Extraordinary Aldermen' means nothing to a modern reader without a gloss." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR and translation of this spread are clean and faithful: one long-s slip, and the notes are correct and modest. The only visible blemishes are a raw <column-break/> in the English and a continuity meta that goes beyond the page."
+  }
+]

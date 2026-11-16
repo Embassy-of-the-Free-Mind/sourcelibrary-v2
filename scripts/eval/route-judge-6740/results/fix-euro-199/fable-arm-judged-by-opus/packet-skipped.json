@@ -1,0 +1,16 @@
+[
+ {
+  "page_id": "697705e11c19c572b4df416c",
+  "book_id": "697704f4e3cf0372d885d0e1",
+  "route": "stored-fable",
+  "why": "contain: The draft is an invention — a Latin Bible title page (Zürich, Froschauer) that is not on this leaf, whose only marks are faint mirror-reversed show-through of a German title page from the other side, so this side is blank.",
+  "contain": true
+ },
+ {
+  "page_id": "69754b17e1e76d343872cdec",
+  "book_id": "6974b63d19126e775cf6d7d3",
+  "route": "stored-fable",
+  "why": "contain: The draft is not this leaf's text — the only marks on this side are faint mirror-reversed show-through of the title page printed on the other side of the leaf (which the draft de-mirrored and partly invented), so this side is blank.",
+  "contain": true
+ }
+]

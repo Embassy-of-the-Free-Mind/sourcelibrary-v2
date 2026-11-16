@@ -30,7 +30,7 @@ export default async function BrowsePage() {
     <>
       <SiteHeader variant="light" />
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-12 md:py-20">
-        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+        <h1 className="text-3xl md:text-4xl font-serif mb-2" style={{ color: 'var(--text-primary)' }}>
           Browse the Collection
         </h1>
         <p className="text-lg mb-12" style={{ color: 'var(--text-muted)' }}>
@@ -39,7 +39,7 @@ export default async function BrowsePage() {
 
         {/* By Title */}
         <section className="mb-12">
-          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
             By Title
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -67,7 +67,7 @@ export default async function BrowsePage() {
 
         {/* By Author */}
         <section className="mb-12">
-          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
             By Author
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -86,7 +86,7 @@ export default async function BrowsePage() {
 
         {/* By Artist */}
         <section className="mb-12">
-          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
             By Artist
           </h2>
           <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
@@ -108,7 +108,7 @@ export default async function BrowsePage() {
 
         {/* By Subject */}
         <section className="mb-12">
-          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
             By Subject
           </h2>
           <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
@@ -125,7 +125,7 @@ export default async function BrowsePage() {
 
         {/* By Period */}
         <section className="mb-12">
-          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
             By Period
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

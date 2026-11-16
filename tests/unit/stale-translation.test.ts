@@ -175,6 +175,21 @@ describe('withholdUpdate / restoreUpdate', () => {
     expect(JSON.stringify(u)).not.toContain('English');
   });
 
+  it('does NOT keep the annotation-layer copy (`text`) either', () => {
+    // #5942 added `translation.text` (the parser's copy of the same words) beside
+    // `data`. Dropping only `data` left the English in translation_withheld.text
+    // on 470 withheld pages (v2#8518). The fixture above has no `text`, which is
+    // how the test missed it.
+    const p = page({ translation: {
+      data: 'English [[note: n]]', text: 'English', model: 'm', updated_at: BEFORE,
+      text_from: { source: 'parser', parser_version: 'annotation-layer/3', data_hash: 'abc', annotations: 1 },
+    } });
+    const u = withholdUpdate(p, WITHHOLD_REASONS.STALE_AFTER_REOCR);
+    expect(u.$set.translation_withheld.text).toBeUndefined();
+    expect(u.$set.translation_withheld.text_from).toMatchObject({ data_hash: 'abc' });
+    expect(JSON.stringify(u)).not.toContain('English');
+  });
+
   it('round-trips through the snapshot: restore rebuilds the original', () => {
     const original = page().translation;
     const u = withholdUpdate(page(), WITHHOLD_REASONS.STALE_AFTER_REOCR);

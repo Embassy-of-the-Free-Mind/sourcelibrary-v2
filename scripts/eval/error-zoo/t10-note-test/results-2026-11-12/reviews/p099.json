@@ -1,0 +1,46 @@
+[
+  {
+    "book_id": "6a4a8968393655740c43b2df",
+    "slot": 1,
+    "title": "De scriptura sacra, theses ad disputandum propositae, in scholis theologorum academiae Argentoratensis: de quibus praeside doctore Johanne pappo, XII.et XIII.ianuarii respondebit M.nicolaus herrenbergerus Argentinensis, qui theses ipsas conscripsit.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Strasbourg Lutheran disputation on Scripture, printed in italic type (theses C–CVII on Schwenckfeldians and Papists). No collection is set, and nothing on the leaf conflicts with the record.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree: structure.pages_translated is 0, but pages_translated_field is 19 (E2-type instrument disagreement). On this leaf the only page number is a later handwritten folio '59' in the top corner. A handwritten foliation that is sometimes misread could explain the 2 backsteps and 1 repeat, so they probably come from reading the numbers, not from a scan splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "printed_marker": "59 (handwritten, top right); signature \"C\" at foot",
+        "layout": "single column of numbered theses (C–CVII) in italic type, centred thesis numerals, a handwritten marginal note and pen strokes in the outer margin",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<script>handwritten</script>", "image": "printed italic type (only the marginal note and folio are by hand)", "problem": "the self-reported script tag and the warning 'Handwritten [Humanist italic hand]' call a printed page handwritten", "severity": "minor", "class": "O16" },
+          { "ocr": "art.\n<unclear>Hst.</unclear>", "image": "the handwritten note seems to end with one word 'Art.' on its third line", "problem": "the last line of the marginal note looks transcribed twice, once as 'art.' and once as the guess 'Hst.' (low confidence on the hand)", "severity": "minor" },
+          { "ocr": "is sit error Schwenc-", "image": "the note opens with a word ending in '-s' (probably 'Quis')", "problem": "the first word of the note is truncated", "severity": "minor" },
+          { "ocr": "secundum Diuinitatis personam", "image": "ſecundam Diuinitatis perſonam", "problem": "the printed misprint 'secundam' is silently normalised to 'secundum'", "severity": "minor" },
+          { "ocr": "predicatum verò", "image": "prædicatum verò", "problem": "the æ ligature is dropped", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<unclear>Hst.</unclear>", "english": "<unclear>History</unclear>", "problem": "turns an unclear OCR stub into an English word the note does not support; the note probably ends 'art.' (article)", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "followers of Caspar Schwenckfeld (1489–1561), a Silesian refo", "verdict": "unsupported", "helpful": true },
+            { "quote": "Christ, the eternal Word, as opposed to the spoken or writte", "verdict": "ok", "helpful": true },
+            { "quote": "Word", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "And although fanatics fasten a foreign sense onto Scripture", "why": "'fanatics' (fanatici) is a Lutheran polemical term for the radical spiritualists and Anabaptists, not the modern sense; a general reader will not know whom it means" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription and translation of this printed thesis page are accurate. The flaws are minor: the OCR calls the page handwritten, the later-hand marginal note is partly garbled and its stub is rendered as 'History', and the Schwenckfeld note adds dates that are not on the page (they are correct, but unsupported). The book's translated-page counts disagree."
+  }
+]

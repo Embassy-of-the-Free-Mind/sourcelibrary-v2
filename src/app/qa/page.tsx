@@ -81,25 +81,25 @@ export default function QASamplingPage() {
             {/* Population Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white rounded-lg border border-stone-200 p-4">
-                <div className="text-2xl font-bold text-stone-900">
+                <div className="text-2xl font-semibold text-stone-900">
                   {data.population.translatedPages.toLocaleString('en-US')}
                 </div>
                 <div className="text-sm text-stone-500">Translated Pages</div>
               </div>
               <div className="bg-white rounded-lg border border-stone-200 p-4">
-                <div className="text-2xl font-bold text-stone-900">{data.population.sampleSize}</div>
+                <div className="text-2xl font-semibold text-stone-900">{data.population.sampleSize}</div>
                 <div className="text-sm text-stone-500">
                   Sample Size ({formatPercent(data.population.samplingRate)})
                 </div>
               </div>
               <div className="bg-white rounded-lg border border-stone-200 p-4">
-                <div className={`text-2xl font-bold ${data.estimate.issueRate > 0.1 ? 'text-status-error' : data.estimate.issueRate > 0.05 ? 'text-accent-rust' : 'text-status-success'}`}>
+                <div className={`text-2xl font-semibold ${data.estimate.issueRate > 0.1 ? 'text-status-error' : data.estimate.issueRate > 0.05 ? 'text-accent-rust' : 'text-status-success'}`}>
                   {formatPercent(data.estimate.issueRate)}
                 </div>
                 <div className="text-sm text-stone-500">Issue Rate (sample)</div>
               </div>
               <div className="bg-white rounded-lg border border-stone-200 p-4">
-                <div className="text-lg font-bold text-stone-900">
+                <div className="text-lg font-semibold text-stone-900">
                   {data.estimate.estimatedPagesWithIssues.lower} - {data.estimate.estimatedPagesWithIssues.upper}
                 </div>
                 <div className="text-sm text-stone-500">Est. Pages with Issues (95% CI)</div>

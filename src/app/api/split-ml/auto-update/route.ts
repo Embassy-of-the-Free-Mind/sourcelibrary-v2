@@ -198,7 +198,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * GET - Check auto-update status and recommendations
@@ -260,4 +260,4 @@ export const GET = withAuth(async () => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

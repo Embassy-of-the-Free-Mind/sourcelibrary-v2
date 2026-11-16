@@ -44,6 +44,7 @@ import { MongoClient } from 'mongodb';
 import { loadLaneTable } from '../catalog-coverage/archive-lanes.mjs';
 import {
   measureByProvider, laneOfProvider, laneRates, quietLanes, alarmTransition, SNAPSHOT_TYPE, ALARM_ID, QUIET_HOURS,
+  archivedBooksTotal, ARCHIVED_BOOKS_TARGET,
 } from '../lib/archive-progress.mjs';
 import {
   classifyPageRecord,
@@ -264,6 +265,14 @@ async function progress(db) {
   const first = snaps[0], last = snaps[snaps.length - 1];
   console.log(`archive progress per lane — ${snaps.length} snapshots, ${first.at.toISOString().slice(0, 16)} → ${last.at.toISOString().slice(0, 16)} UTC`);
   if (first.r2 && last.r2) console.log(`R2 bucket: ${(last.r2.bytes / 1e12).toFixed(3)} TB (+${((last.r2.bytes - first.r2.bytes) / 1e9).toFixed(1)} GB over the window)`);
+  // The goal (#58): books with every page archived, by each book's own counter or ledger (RECORD tier).
+  const done = archivedBooksTotal(last.by_provider);
+  if (done != null) {
+    const before = archivedBooksTotal(first.by_provider);
+    console.log(`books fully archived: ${num(done)} of a ${num(ARCHIVED_BOOKS_TARGET)} goal${before != null ? ` (${done - before >= 0 ? '+' : ''}${num(done - before)} over the window)` : ''}`);
+    const out = Object.values(last.by_provider).reduce((s, r) => ({ books: s.books + (r.catalogue_only_books || 0), pages: s.pages + (r.catalogue_only_pages || 0) }), { books: 0, pages: 0 });
+    console.log(`catalogue-only, not copied until wanted: ${num(out.books)} books, ${num(out.pages)} pages (not in "remaining")`);
+  }
   console.log('  lane                     pages/day   +24h(span h)   +6h   remaining    finish      books (lazy)');
   const rows = Object.entries(rates).filter(([, r]) => r.remaining > 0 || r.added_24h > 0).sort((a, b) => b[1].remaining - a[1].remaining);
   for (const [lane, r] of rows) {

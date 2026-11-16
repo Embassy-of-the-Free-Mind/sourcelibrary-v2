@@ -1,0 +1,6 @@
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>blank</page-type>
+<warning>show-through from the other side only</warning>
+<meta>The faint brown writing is mirror-reversed cursive Hebrew showing through from the other side of the leaf, so it is not transcribed. The dark specks at the upper left and the small blots look like foxing or dirt, not writing. There is no page number, header or signature on this side.</meta>

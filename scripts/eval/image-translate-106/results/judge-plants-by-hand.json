@@ -1,0 +1,5 @@
+{
+ "69906161ef12272ffdc8d70f": {"caught": true, "why": "misleads on the planted span itself: '1 Samuel 10:8 ... is 10:1, not 10:8' (the matcher's tail test missed it)"},
+ "69dbc93d1040d1d5e20a1736": {"caught": false, "why": "the planted 'will not' was quoted but graded cosmetic ('the rhetorical sense survives'): not a serious catch"},
+ "69b4ccc4d5b6c3815e1a2379": {"caught": true, "why": "wrong_text on 'Fig. 14 ... The page says Fig. 7, not Fig. 14' (the matcher's tail test missed it)"}
+}

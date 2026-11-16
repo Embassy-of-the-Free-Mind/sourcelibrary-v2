@@ -34,12 +34,14 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 jobs:
   feedback-clusters:
     # Daily cron + manual runs.
     if: github.event.schedule != '0 7 * * 1'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -91,7 +93,7 @@ jobs:
   alignment-sample:
     # Weekly cron + manual runs.
     if: github.event.schedule != '0 8 * * *'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -141,7 +143,7 @@ jobs:
     # string that looks exactly like a real slug, so 111 books sat at
     # /book/unknown-N for six months with good titles one field over.
     if: github.event.schedule != '0 7 * * 1'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

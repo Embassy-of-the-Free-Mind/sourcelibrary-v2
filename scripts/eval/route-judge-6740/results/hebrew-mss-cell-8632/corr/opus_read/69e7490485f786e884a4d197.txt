@@ -1,0 +1,73 @@
+<warning>Handwritten square Hebrew script (Yemenite-type hand). The page has Hebrew verses (Song of Songs 4:8–4:12) alternating with Aramaic Targum and Judeo-Arabic translation. The columns are given in Hebrew reading order, right column first, so the text runs in sequence. Some Judeo-Arabic words and the small Masoretic notes are hard to read.</warning>
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>Small mark in the upper margin above the columns: שיל (uncertain). A parchment tab is attached at the right edge.</meta>
+
+בריש טור תלגא ואומיא דבחרמון
+ויהון מסקין לך מסין יתבי כרכין
+תקיפין ואינון גברין כאריון ותקרבתא
+מן קרוי טוריא דחסינין מן נמורים׃
+<unclear>מעי</unclear> מן אלבנאן יא כנה <unclear>תעאלי מעי</unclear>
+מן אלבנאן <unclear>תבין תטלעין</unclear> מן ראס
+ברא מן ראס שניר וחרמון מואטן
+אלאסד מן גבל נמורים׃ לִבַּבְתִּנִי אֲחֹתִי
+<margin>באחת</margin>
+כַלָּה לִבַּבְתִּנִי בְּאַחַד מֵעֵינַיִךְ בְּאַחַד
+<margin>ק̇ ב̇ חס</margin>
+עֲנָק מִצַּוְּרֹנָיִךְ׃ קביע על לוח לבי
+חבת זוטר דבניך והוא כחד מן <unclear>רבני</unclear>
+סנהדרין וכחד מן לניפי דהיא צניעא
+קביע על מלכיא דבית יהודה דהוה
+יהיב כלילא דמלכותא על צואריך׃
+אכתלבתי יא אכתי יא ערוס אכתלבתי
+קלבי בואחדה מן עיניך במכנקה
+ואחדה מן ענקך׃ מַה יָּפוּ דֹדַיִךְ אֲחֹתִי
+<margin>ב̇</margin>
+כַלָּה מַה טֹּבוּ דֹדַיִךְ מִיַּיִן וְרֵיחַ שְׁמָנַיִךְ
+מִכָּל בְּשָׂמִים׃ כמה שפירין על ריר
+חיבתיך אחתי כנשתא דישראל
+דמתילא לניפי דהיא צניעא כמה
+טבן עלי חבתיך יתיר מן שבעין
+אומיא ושום דצדיקין נדיף מכל
+בסמהון׃ מא אחסן תודדך יא אכתי
+
+<column-break/>
+
+יא ערוס מא אגוד מחבתך אטיב מן
+אלכמר ורואיח אדהאנך אכיר מן ואלאטיאב׃
+<margin>ב̇</margin>
+נֹפֶת תִּטֹּפְנָה שִׂפְתוֹתַיִךְ כַּלָּה דְּבַשׁ
+<margin>ג̇ ה̇</margin>
+וְחָלָב תַּחַת לְשׁוֹנֵךְ וְרֵיחַ שַׂלְמֹתַיִךְ
+<margin>א̇</margin>
+כְּרֵיחַ לְבָנוֹן׃ ובעידן דמצלין כהניא
+<margin>פיסו׳ ראש וסופו ז̇</margin>
+בעזרתא דקודשא ולהון שפותהון
+כיערת דובשא לישנך כנפי צניעא
+במללותיך שירין ותשבחן מתילן
+<margin><unclear>בשמין</unclear></margin>
+כחלב ודבש וריח לבושי כהנין כריח
+לבנון׃ שפתאך תנטף שהדא יא
+ערוס אלעסל ואללבן תחת לסאנך ור׳
+<margin>ב̇</margin>
+וואיחה בזך כראיחת אלבנאן׃ גַּן
+נָעוּל אֲחֹתִי כַלָּה גַּל נָעוּל מַעְיָן חָתוּם׃
+<margin>ב̇</margin>
+ונשיין דמתנסבן לגברין צניען כנפי
+שינעא וכגינתא דעדן דלית רשו
+לגבר למיעל לגוה אלהין צדיקיא
+דנפשהון משתלחין תמן על יד
+מלאכיא ובתוליך טמירין כגנזין
+דאלפורין וחתימין תמן במבועא
+דמיא חיין מתחות עיקרי אילנא
+דחיין בנהרא דנפיק מעדן ומתפרש
+לארבעא רישי נהרין ואלמלי דהוות
+חתים בשמא רבא וקדישא הוה
+נפיק ומבע ושטיף כל עלמא׃ יא
+
+<margin>עד יא בטעמים סוף פסוקי׳ <unclear>שלחך דדתה אבדך שובך חיתם קרקרן קרקרו לשמים עד שתחפץ ג̇ בו</unclear> … נעול ב̇ ואבן בחד פיסו׳</margin>
+
+<vocab>Song of Songs 4:8–12, Targum, Judeo-Arabic translation, Tafsir, Masorah, לבבתני, גן נעול, מעין חתום, נפת תטפנה, כנשתא דישראל, סנהדרין, באחת (qere)</vocab>

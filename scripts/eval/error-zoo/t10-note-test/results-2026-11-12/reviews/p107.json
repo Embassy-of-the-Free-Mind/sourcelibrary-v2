@@ -1,0 +1,43 @@
+[
+  {
+    "book_id": "69a5ef38bfd8cafd91e43e69",
+    "slot": 1,
+    "title": "Charta lusoria",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is assigned (catalog_metadata.collections empty), so there is no shelf to contradict; a 1588 Amman playing-card book is plausible for the library. Only the cover was seen, so the title itself cannot be checked against this page.",
+    "rights_flag": null,
+    "structure_note": "Counts disagree: structure.pages_translated is 0, but pages_translated_field is 103, and this page carries a translation. That looks like an instrument problem (E2), not missing English. 4 backsteps and 4 repeats among only 62 printed numbers: in a woodcut book with little letterpress these are more likely misread or mis-tagged numerals (O11) than a scan splice, but one cover page cannot confirm that.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "front board covered in combed (peacock) marbled paper, pale paper/vellum spine strip at left, asterisk-bordered shelfmark label in the upper left reading 'Res. 4º / Gymn. / 3'",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<page-type>text</page-type>", "image": "a marbled front cover with only a shelfmark label, no text page", "problem": "page type self-reported as text on a cover", "severity": "minor" },
+          { "ocr": "<insert>", "image": "a pasted library shelfmark label", "problem": "a library label is tagged as an insertion in the text", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "->Gymn.<-", "english": "->.<-", "problem": "'Gymn.' (the Gymnasium collection line of the shelfmark) is dropped in the English, and the summary repeats the shortened mark as \"Res. 4º 3\"", "severity": "moderate" },
+          { "source": "Res. 4º", "english": "marks it as a quarto in a reserved collection", "problem": "the summary reads 'Res.' as 'reserved collection'. That is a plausible guess, but the label does not say it", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "Raw transcription markup appears in the reader's English: '<insert>', '->**********<-', '->Res. 4º<-', '->.<-', '->3<-'. The asterisk border of the label is rendered as rows of stars.", "severity": "moderate", "class": "D1" },
+          { "note": "The OCR's <image-desc> of the cover is served as a <note> in the reading flow in place of a translation, so a cover is presented as if it had translatable content", "severity": "moderate", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The front cover of a book bound in marbled paper with a \"pea", "verdict": "ok", "helpful": false }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is the marbled front cover, and the OCR transcribes it correctly. The English drops 'Gymn.' from the shelfmark and lets raw ->…<- and <insert> markup, plus the image description, into the reader text. That markup is the on-sight embarrassment."
+  }
+]

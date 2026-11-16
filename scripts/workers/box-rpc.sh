@@ -16,6 +16,7 @@
 #   ping                      "pong <host> <installed wrapper commit>"
 #   where | status            the job wrapper's own one-line placement record / job list
 #   decisions | taken | landings   the last 300 lines of that job ledger
+#   decisions-mark (stdin)    mark decisions.txt rows triaged in place: "[TRIAGED …] <exact row>" per line (#90)
 #   usage                     "USAGE <email> <json>" per Claude login here, read with its own token, never refreshed
 #   put-limits  (stdin)       the climits meter's latest.json, ≤ 64 KB, must parse with an accounts list
 #   brief <name>              that job's brief here (≤ 200 lines): what it was told, its Route/Lands/Dispatched-by lines
@@ -32,9 +33,10 @@
 # Exit codes: 0 ok, 2 bad request, 3 refused, 4 failed.
 set -u
 LOG=${BOX_RPC_LOG:-/var/log/box-rpc.log}
-CJ=/root/bin/claude-job.sh
+CJ=${BOX_RPC_TEST_CJ:-/root/bin/claude-job.sh}  # tests only: sshd passes no caller environment to a forced command
 MESH_MAX_STARTS_PER_HOUR=${MESH_MAX_STARTS_PER_HOUR:-6}
-if [ -d /data/scratch/sl/claude-jobs ]; then JD=/data/scratch/sl/claude-jobs; else JD=/root/claude-jobs; fi
+if [ -n "${BOX_RPC_TEST_JD:-}" ]; then JD=$BOX_RPC_TEST_JD
+elif [ -d /data/scratch/sl/claude-jobs ]; then JD=/data/scratch/sl/claude-jobs; else JD=/root/claude-jobs; fi
 caller=${SSH_CLIENT%% *}; caller=${caller:-local}
 log() { echo "$(date -u +%FT%TZ) $caller $*" >> "$LOG" 2>/dev/null || true; }
 die() { log "$verb -> $2: $3"; echo "box-rpc: $3" >&2; exit "$1"; }
@@ -61,6 +63,29 @@ case "$verb" in
     log "$verb"; exec "$CJ" "$verb" ;;
   decisions|taken|landings)
     log "$verb"; f="$JD/$verb.txt"; [ -f "$f" ] && tail -n 300 "$f"; exit 0 ;;
+  decisions-mark)
+    # Mark rows of this box's decisions.txt as triaged, from main (job decision-triage-8551, #90 item 6). stdin:
+    # one line per row, "[TRIAGED …] <the row exactly as it stands>" (or [DECIDED …]), ≤ 500 lines / 256 KB.
+    # A row is replaced only when it matches exactly and is still unmarked; nothing is added or deleted, and
+    # every other row is kept byte for byte. Prints "marked N, not found M" and each line not found.
+    f="$JD/decisions.txt"; [ -f "$f" ] || die 3 refused "no decisions.txt here"
+    tmp=$(mktemp /tmp/box-rpc-marks.XXXXXX); head -c 262145 > "$tmp"
+    { [ "$(stat -c %s "$tmp")" -le 262144 ] && [ "$(wc -l < "$tmp")" -le 500 ]; } || { rm -f "$tmp"; die 2 bad "marks over 256 KB or 500 lines"; }
+    grep -vqE '^\[(TRIAGED|DECIDED)[^]]*\] [0-9]{4}-[0-9]{2}-[0-9]{2} \| [^|]+ \| DECISION: ' "$tmp" \
+      && { rm -f "$tmp"; die 2 bad "every line must be '[TRIAGED …] <date> | <job> | DECISION: …' (or [DECIDED …])"; }
+    out=$( (
+      flock -w 30 9 || { echo "LOCKFAIL"; exit 0; }
+      new=$(mktemp "$JD/.decisions.XXXXXX")
+      awk -v marks="$tmp" 'BEGIN { while ((getline l < marks) > 0) { r = l; sub(/^\[[^]]*\] /, "", r); m[r] = l } }
+        { if ($0 in m && !done[$0]) { print m[$0]; done[$0] = 1; n++ } else print }
+        END { for (r in m) if (!done[r]) { miss++; print "NOTFOUND " r > "/dev/stderr" }
+              printf "marked %d, not found %d\n", n, miss > "/dev/stderr" }' "$f" > "$new" 2>"$new.err"
+      if [ "$(wc -l < "$new")" = "$(wc -l < "$f")" ]; then chmod --reference="$f" "$new" 2>/dev/null; mv -f "$new" "$f"; else rm -f "$new"; echo "COUNTFAIL"; fi
+      cat "$new.err"; rm -f "$new.err"
+    ) 9>"$f.lock" )
+    rm -f "$tmp"
+    case "$out" in LOCKFAIL*) die 4 failed "decisions.txt is locked" ;; COUNTFAIL*) die 4 failed "row count changed; nothing written" ;; esac
+    log "decisions-mark $(echo "$out" | tail -1)"; echo "$out"; exit 0 ;;
   brief)
     [[ "$arg" =~ ^[a-z0-9][a-z0-9-]{2,62}$ ]] || die 2 bad "job name must be lowercase letters, digits and dashes"
     [ -f "$JD/$arg.brief.txt" ] || die 3 refused "no job named $arg here"
@@ -161,11 +186,12 @@ PY
     # A remote start must say where it lands. On 2026-10-10 a mesh test sent the one-word brief "hi" under a
     # name that existed only on another box; it started, and a job ran on nothing. The header lines are
     # what a real brief always has (JOB-HOSTS.md), so their absence means the caller sent the wrong thing.
-    head -15 "$tmp" | grep -qiE '^[[:space:]]*Lands:[[:space:]]*(#?[0-9]{3,5}|none)' && head -15 "$tmp" | grep -qiE '^[[:space:]]*PR:[[:space:]]*(yes|no)' \
+    # v3 issues are numbered from #1 (2026-11-12), so one digit is a real header; v2#NNNN names an old issue (#90).
+    head -15 "$tmp" | grep -qiE '^[[:space:]]*Lands:[[:space:]]*((v2)?#?[0-9]{1,5}|none)' && head -15 "$tmp" | grep -qiE '^[[:space:]]*PR:[[:space:]]*(yes|no)' \
       || { rm -f "$tmp"; die 2 bad "brief needs 'Lands: #NNNN|none' and 'PR: yes|no' in its first 15 lines"; }
     out=$("$CJ" start "$arg" "$tmp" 2>&1); rc=$?; rm -f "$tmp"
     echo "$out"
     if [ $rc -eq 0 ]; then log "start $arg ok"; else log "start $arg failed rc=$rc"; exit 4; fi ;;
   *)
-    die 2 bad "unknown verb '${verb}' (ping where status decisions taken landings brief ledger health gpu gpu-probe tail ls put gpu-add usage put-limits start)" ;;
+    die 2 bad "unknown verb '${verb}' (ping where status decisions decisions-mark taken landings brief ledger health gpu gpu-probe tail ls put gpu-add usage put-limits start)" ;;
 esac

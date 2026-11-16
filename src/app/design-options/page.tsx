@@ -289,7 +289,7 @@ export default async function DesignOptionsPage() {
           <Link href="/" className="text-sm text-muted hover:text-accent-rust transition-colors">
             &larr; Back to home
           </Link>
-          <h1 className="text-3xl md:text-4xl font-display text-primary mt-4">
+          <h1 className="text-3xl md:text-4xl font-serif text-primary mt-4">
             Featured Collection: Design Options
           </h1>
           <p className="text-muted mt-2 max-w-2xl">
@@ -305,7 +305,7 @@ export default async function DesignOptionsPage() {
 
       <div className="max-w-[1500px] mx-auto px-6 md:px-12 mt-12 mb-6">
         <div className="border-b-2 border-accent-rust/20 pb-2 mb-2">
-          <h2 className="text-xl font-display text-accent-rust uppercase tracking-wider">Existing Versions</h2>
+          <h2 className="text-xl font-serif text-accent-rust uppercase tracking-wider">Existing Versions</h2>
         </div>
         <p className="text-sm text-muted">Currently built components, shown with real data.</p>
       </div>
@@ -314,7 +314,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-10 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 1</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Dark Carousel (current home page)</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Dark Carousel (current home page)</h2>
           <p className="text-sm text-muted mt-1">
             The current implementation. Dark background, text left + book thumbnail grid right,
             carousel dots and arrows to flip between collections.
@@ -327,7 +327,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 2</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Category Card Grid</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Category Card Grid</h2>
           <p className="text-sm text-muted mt-1">
             6 collections in a 3-col grid with category color-coding, theme pills, and date ranges.
             No images, text-only cards. Rotates daily via seeded shuffle.
@@ -340,7 +340,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 3</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Image Showcase (two-tier)</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Image Showcase (two-tier)</h2>
           <p className="text-sm text-muted mt-1">
             Photo-heavy cards with gradient overlays. Top 6 large (2-col), rest smaller (3-col).
             Used on the search/library page. Shows book count, languages, subtitle.
@@ -355,7 +355,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 4 · Yesterday ~12:00</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Gallery Hero + Side Squares</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Gallery Hero + Side Squares</h2>
           <p className="text-sm text-muted mt-1">
             Gallery illustration as the main hero image (3fr) with two square gallery images stacked beside it (2fr).
             Falls back to book thumbnail grid when no gallery images are available.
@@ -369,7 +369,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 5 · Yesterday ~16:00</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Three-Column: Text | Hero Illustration | Book List</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Three-Column: Text | Hero Illustration | Book List</h2>
           <p className="text-sm text-muted mt-1">
             Three-column layout: text description left, tall gallery illustration center (280x420, object-contain),
             book title list with tiny thumbnails right. Keyboard arrow support. Most editorial of the existing versions.
@@ -384,7 +384,7 @@ export default async function DesignOptionsPage() {
 
       <div className="max-w-[1500px] mx-auto px-6 md:px-12 mt-8 mb-6">
         <div className="border-b-2 border-accent-rust/20 pb-2 mb-2">
-          <h2 className="text-xl font-display text-accent-rust uppercase tracking-wider">New Options</h2>
+          <h2 className="text-xl font-serif text-accent-rust uppercase tracking-wider">New Options</h2>
         </div>
         <p className="text-sm text-muted">
           Three new approaches, all showing <strong>{collection.name}</strong>.
@@ -399,7 +399,7 @@ export default async function DesignOptionsPage() {
         ═══════════════════════════════════════════════════════════════ */}
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">Option A</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Editorial Spread</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Editorial Spread</h2>
           <p className="text-sm text-muted mt-1">
             Magazine-style hero with a large background image, overlaid text, and a horizontal book strip below.
             Dramatic and visual-first. It draws the eye like a museum exhibition entrance.
@@ -430,7 +430,7 @@ export default async function DesignOptionsPage() {
             <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
               Featured Collection
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white leading-[1.1] mb-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.1] mb-4">
               {collection.name}
             </h2>
             {collection.subtitle && (
@@ -496,7 +496,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-20 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">Option B</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Gallery Wall</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Gallery Wall</h2>
           <p className="text-sm text-muted mt-1">
             Light, airy layout with a masonry-style book grid. Museum gallery feel:
             the books are the art, displayed like objects on a white wall.
@@ -515,7 +515,7 @@ export default async function DesignOptionsPage() {
                   Featured Collection
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-display text-primary leading-tight mb-3">
+              <h2 className="text-3xl md:text-4xl font-serif text-primary leading-tight mb-3">
                 {collection.name}
               </h2>
               {collection.subtitle && (
@@ -587,7 +587,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-20 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">Option C</span>
-          <h2 className="text-2xl font-display text-primary mt-1">Cabinet of Curiosities</h2>
+          <h2 className="text-2xl font-serif text-primary mt-1">Cabinet of Curiosities</h2>
           <p className="text-sm text-muted mt-1">
             Intimate, scholar&apos;s-study feel. One hero book large, with supporting texts arranged around it.
             Warm and dark, like peering into a private collection by candlelight.
@@ -606,7 +606,7 @@ export default async function DesignOptionsPage() {
                   Featured Collection
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-display text-white leading-tight">
+              <h2 className="text-3xl md:text-4xl font-serif text-white leading-tight">
                 {collection.name}
               </h2>
             </div>
@@ -651,7 +651,7 @@ export default async function DesignOptionsPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                     <p className="text-sm text-white/50 mb-1">{books[0].author}</p>
-                    <h3 className="text-xl md:text-2xl font-display text-white group-hover:text-accent-gold transition-colors leading-tight">
+                    <h3 className="text-xl md:text-2xl font-serif text-white group-hover:text-accent-gold transition-colors leading-tight">
                       {bookTitle(books[0])}
                     </h3>
                   </div>

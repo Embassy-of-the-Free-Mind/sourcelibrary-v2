@@ -197,9 +197,6 @@ describe('the writers', () => {
     'scripts/batch/collect-batch-results.mjs',       // manual batch collect
     'scripts/lib/translate-core.mjs',                // the door (chained + seam batch lanes, retranslate, restore)
     'src/workers/translation-processor-logic.ts',    // Lambda
-    'src/app/api/books/[id]/batch-translate-async/route.ts',
-    'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts',
-    'src/app/api/batch-save/route.ts',
     'src/app/api/process/route.ts',
     'src/app/api/contribute/process/route.ts',
   ];

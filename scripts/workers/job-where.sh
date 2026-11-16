@@ -12,6 +12,9 @@
 # memory or 15 GB of job disk free, has under 15% of its root disk free (claude-job.sh refuses there, #6223), has a 5-minute load above 1.5 per core, or does not answer. The load
 # ceiling came on 2026-10-15: main ran 42 model processes at load 50 on 16 cores (3.1 per core) and this
 # script still called it "ok".
+# Since #70 each box applies the root-disk and load lines itself and says so in `where` (ready=no:root-NNpct-free,
+# load-N.NN-per-core), which is what box.sh pick and the spare lane read. The same two tests stay here for a box whose
+# installed wrapper is older, and so MIN_ROOT_FREE_PCT and MAX_LOAD_PER_CORE set on this machine still count.
 #
 # Headroom (#6751): Claude jobs are bound by the box account's 5-hour and weekly windows, not its CPU. On
 # 2026-10-15 main and l7a sat at their 5-hour ceilings while cloudlayer idled with ~43% of its week about to

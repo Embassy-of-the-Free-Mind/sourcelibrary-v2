@@ -1,0 +1,66 @@
+[
+  {
+    "book_id": "69907e19b91bcb2db3f6e40d",
+    "slot": 1,
+    "title": "ParsiPrakashVinodVedangRai563GhaAlm3Shlf4DevanagariJyotish",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Devanagari paper manuscript of a Persian-for-Sanskrit-readers grammar/lexicon (Persian verb forms in Devanagari, each with its Sanskrit equivalent), in the eGangotri / Dharmartha Trust J&K collection. That matches the collections listed. '1643' is presumably the date of the work, not of this copy.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree with each other: 110 page records, all with OCR, against pages_count 42; pages_translated 0 in the structure counts against pages_translated_field 42, yet this page carries a translation (E2-type instrument mismatch). Only 19 pages have a printed number, and this leaf has two in its margin (Devanagari २४ with a later Western 14). The 4 backsteps and 3 repeats are most likely the parser switching between these two numberings, or misreading Devanagari numerals, rather than leaves out of order. That is not confirmed from one page.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "printed_marker": "२४ (with a later hand's \"14\" beneath, left margin)",
+        "layout": "single-column oblong pothi-style leaf, 11 lines of Devanagari, folio numbers in the left margin, repository stamp line at the foot",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "मे शवे म भवा भो भवानीत्यर्थे मे शवे भवत्यर्थे", "image": "मेशवेम भवामो भवामीत्यर्थे मेशवं भवत्(व)र्थे", "problem": "'bhavāmo' and 'bhavāmi' misread as 'bhavā bho bhavānī', and 'meśavaṃ' (Persian mī-shavam, 'I become') misread as 'meśave', so the person in the paradigm is lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "मे शृ दी", "image": "मेशुदी", "problem": "शु misread as शृ throughout the 'shud' forms (also 'शृ द्वा ही शृ द', 'मे शृ दं')", "severity": "moderate", "class": "O6" },
+          { "ocr": "जदनं रूनने प्रोक्तं दंत्यर्थे", "image": "जदनं हनने प्रोक्तं हंत्यर्थे", "problem": "'hanane' / 'hantyarthe' (striking / he strikes) misread as 'rūnane' / 'dantyarthe'", "severity": "moderate", "class": "O6" },
+          { "ocr": "प्रोक्त्यर्थे मे", "image": "भुक्त्यर्थे मे (reading uncertain)", "problem": "'bhukti' (eating) read as 'prokti', which hides the verb's meaning", "severity": "moderate", "class": "O6" },
+          { "ocr": "पचा च युक्त मु क्ती न म पचः", "image": "पचा च पुक्त पुक्तीन म पचः", "problem": "पु (Persian pukht) misread as यु/मु, so the cooking forms become 'mukta' (the same misreading recurs in 'श्वा रु म मुक्त')", "severity": "moderate", "class": "O6" },
+          { "ocr": "श्वा रु म मुक्त", "image": "ख्वाहम् पुक्त (approx.)", "problem": "the future auxiliary khwāh- is read as 'śvā ru' here and elsewhere ('श्वा रु द खर्द्')", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "मे शवे भवत्यर्थे", "english": "**Me-śave** is used in the sense of \"they become.\"", "problem": "Nothing on the page says 'they': the OCR has bhavaty-arthe ('he becomes'), and the image shows 'bhavāmīty-arthe meśavaṃ' ('I become'). The person is wrong in a conjugation paradigm.", "severity": "moderate", "class": "T8" },
+          { "source": "पचा च युक्त मु क्ती न म पचः", "english": "For the past \"cooked,\" **Mukta** and **Pacaḥ** and so on are used likewise.", "problem": "The English carries the OCR misread 'mukta'. The image shows pukht-forms, as the translator's own note guesses.", "severity": "moderate", "class": "O6" },
+          { "source": "श्वा रु म मुक्त", "english": "For \"I will cook,\" it is **Śvāru-ma Mukta**.", "problem": "The headword inherits two misreads (khwāh → śvāru, pukht → mukta). The note recovers the right Persian, but the body does not.", "severity": "minor" },
+          { "source": "तु शवे म भवाम्यर्थे", "english": "In the sense of \"may I become,\" **Tu-śave** is stated.", "problem": "bhavāmi is indicative ('I become'), not optative", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "Probably Persian *mī-shavīm* \"we become\" and *mī-shavand* \"they", "verdict": "wrong", "helpful": false },
+            { "quote": "Probably the Persian subjunctive with the prefix *bi-*, as in", "verdict": "ok", "helpful": true },
+            { "quote": "This phrase is badly garbled in the OCR and its reading is unc", "verdict": "ok", "helpful": true },
+            { "quote": "*Śrud* most likely stands for Persian *shud* \"he became,\" the", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāhad shud* \"he will become\" and *khwāham shud* \"I", "verdict": "ok", "helpful": true },
+            { "quote": "Probably Persian *mī-shud*, *mī-shudī*, *mī-shudam*, the past c", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *zadan* \"to strike.\" The OCR reads *rūnane*, almost ce", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *mī-zanad* \"he strikes,\" *mī-zanī* \"you strike,\" *mī-z", "verdict": "ok", "helpful": true },
+            { "quote": "Persian imperative and subjunctive *bi-zanad*, *bi-zanam*, *bi", "verdict": "ok", "helpful": true },
+            { "quote": "Probably the Persian past forms *zad*, *zadī*, *zadam*, *zadīm*", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāhad zad* \"he will strike,\" *khwāham zad* \"I will", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khurdan* \"to eat\": *mī-khurad* \"he eats,\" *mī-khurī* ", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāhad khurd* \"he will eat.\"", "verdict": "ok", "helpful": true },
+            { "quote": "This phrase is garbled and its meaning is uncertain.", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *pukhtan* \"to cook,\" present stem *paz-*: *mī-pazad* \"", "verdict": "ok", "helpful": true },
+            { "quote": "Probably Persian *pukht* \"he cooked.\"", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāham pukht* \"I will cook\" and *khwāhad pukht* \"he ", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *mī-pukht*, *mī-pukhtī* \"he would have cooked,\" \"you w", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *dīdan* \"to see,\" present stem *bīn-*: *mī-bīnad* \"he ", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "In the sense of \"I,\" it is **U-kharbhe**.", "why": "Nothing explains what this form is (in the image it is probably a subjunctive 'bi-khuram', 'that I may eat'). As it stands, a reader cannot make sense of 'in the sense of \"I\"'." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf, with a careful translation that names its uncertainty and has mostly sound Persian-identification notes. But the cursive Devanagari OCR has several meaning-bearing misreads (शु→शृ, हनने→रूनने, पुक्त→मुक्त) that the English headwords carry, and the opening note and sentence assign the wrong person ('they become'). Book counts are internally inconsistent (110 records vs 42; 0 vs 42 translated). The CC-0 eGangotri stamp at the foot is a public-domain mark, not a rights problem."
+  }
+]

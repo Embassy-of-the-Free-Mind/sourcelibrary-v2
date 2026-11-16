@@ -1,0 +1,62 @@
+[
+  {
+    "book_id": "6a3c640439b4508b04e237f1",
+    "slot": 1,
+    "title": "御定佩文韻府·卷二十六之九 (vol 435)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu (欽定四庫全書) copy of the Peiwen yunfu, a Qing imperial rhyme dictionary of phrases. It belongs on a general Chinese classics shelf such as universallibrary.",
+    "rights_flag": null,
+    "structure_note": "There are 131 records and 131 distinct numbers, with OCR on 130. The book field says 126 pages translated, but the structure count says 0, even though this page has a full translation. That looks like a counter problem (E2), not missing translations. Only 8 pages carry a printed number, so the 3 backsteps and 2 repeats most likely come from misread or partly cropped block-heart folio numerals. On this leaf the folio number at the foot of the block heart is cut off at the right edge. I don't think the backsteps mean the order is broken.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "printed_marker": "欽定四庫全書 / 卷二十六之九 (block heart; leaf number cut off at the right edge, none legible)",
+        "layout": "half-leaf of a bordered Siku Quanshu page, 16 vertical lines in ruled columns, block heart with fishtail at right edge, large-character heading 相繆 with double-line small text beneath",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "韋應物詩空虛為世薄子獨意丨丨",
+            "english": "Empty humility is scorned by the world; you alone hold to it with close devotion.",
+            "problem": "空虛 is rendered as 'humility', and 意綢繆 as holding to that virtue. The line more likely means 'you alone feel a close attachment (to me)'. The slip is small and the sense can be recovered.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The block-heart running head 欽定四庫全書 卷二十六之九 is translated into the reading text as its own first line, 'Imperially Commissioned Complete Library of the Four Treasuries, Juan Twenty-six, Part Nine', so it reads like a heading of the text.",
+            "severity": "minor"
+          },
+          {
+            "note": "The <meta> says the page 'continues from previous page: the entry on 綢繆, \"bound closely,\" citing the Classic of Poetry and its commentaries'. The Classic of Poetry is never named on this leaf. The claim is plausible, since the 疏 on 先王先公 fits a Shijing commentary, but the page itself does not support it.",
+            "severity": "minor"
+          },
+          {
+            "note": "The OCR's <script>printed</script> may be wrong. Siku Quanshu copies are hand-written in regular script, and the strokes here look brushed rather than cut. Low confidence: this could be a reproduction.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"切磋\" (qiecuo), a figure for friends improving each other", "verdict": "ok", "helpful": true },
+            { "quote": "names of stars", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"二紀五緯\"; the sun and moon, and the five planets", "verdict": "ok", "helpful": true },
+            { "quote": "Original: 相繆 (Xiangmou)", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "are **bound closely** in mutual cutting and polishing", "why": "On the leaf the headword appears only as the ditto mark 丨丨, standing for 綢繆. No note on the page tells the reader that every bold phrase translates the one entry word 綢繆. Only the <meta> names it, so a reader can't see that this is a dictionary of citations for a single phrase." },
+            { "english": "Parted and reunited at Chenghua, inwardly **bound close** for more than a year.", "why": "Chenghua (承華) is the heir-apparent's palace. Without that, the line's setting means nothing to the reader." },
+            { "english": "In the *Seven Exhortations*:", "why": "The work (七啓) has no author given. It is Cao Zhi's, and a general reader can't identify it otherwise." },
+            { "english": "like bundled thornwood my thoughts are **entangled**", "why": "束楚 echoes the Shijing ode 'Choumou' (綢繆束楚). The allusion is why the line was chosen, and nothing explains it." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches this Siku Quanshu Peiwen yunfu leaf character for character, including the 丨丨 ditto marks. The translation is faithful, and its few notes are correct. The only blemishes are cosmetic: the running head is translated as a heading, and the translated-page counter says 0."
+  }
+]

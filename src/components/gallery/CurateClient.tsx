@@ -205,7 +205,7 @@ const ImageTile = memo(function ImageTile({
         <button
           onClick={(e) => onDuplicate(item, e)}
           className={`
-            rounded-full px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide leading-none
+            rounded-full px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide leading-none
             transition-all duration-150 drop-shadow-md
             ${isDuplicate ? 'text-amber-400 scale-110' : 'bg-black/30 hover:bg-black/50 text-white'}
           `}
@@ -929,7 +929,7 @@ export default function CurateClient() {
                   {' / '}
                   <span className="text-amber-500 font-medium">{duplicateCount}</span>
                   {' '}
-                  <span className="text-[10px] font-bold uppercase text-amber-500">dupe</span>
+                  <span className="text-[10px] font-semibold uppercase text-amber-500">dupe</span>
                 </>
               )}
               {' / '}

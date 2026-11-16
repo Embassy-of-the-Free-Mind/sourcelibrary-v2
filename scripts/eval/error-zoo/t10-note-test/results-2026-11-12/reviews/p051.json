@@ -1,0 +1,44 @@
+[
+  {
+    "book_id": "6a26c11faad44c98627bf8cb",
+    "slot": 1,
+    "title": "Pegasus Firmamenti. Sive introductio brevis in veterum sapientiam, quae olim ab Aegyptiis & Persis Magia, hodie vero a Venerabili Fraternitate Roseae crucis Pansophia recte vocatur",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1619 Latin Rosicrucian/pansophic tract (Hirsch). The page is Latin theology on the Light of Grace with scriptural proofs, which matches the title. No tradition or collection is set, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "Only 2 of 94 pages have a printed number. This leaf shows no page number or signature, and the top edge sits tight on the first text line, so the running head and number may be cropped or may never have been printed. With only two numbers, the single backstep is almost certainly a misread numeral or furniture, not a splice. The structure count pages_translated=0 contradicts pages_translated_field=93, and this page carries a translation, so the count looks like an instrument fault (E2), not missing translations.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 75,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single column of roman text, marginal note in the outer (right) margin ('1. Gradus DEI instinctus.'), no ornaments",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "euntur", "image": "cuntur (du-|cuntur = ducuntur)", "problem": "c read as e at the line break; the translation still gives the right sense ('led')", "severity": "minor" },
+          { "ocr": "in Ecclesia, sivè in Republica", "image": "in Ecclesiâ, sive in Republicâ", "problem": "circumflexes on the ablatives dropped (also 'adepta' for 'adeptâ')", "severity": "minor" },
+          { "ocr": "filij uestri & filiæ uestræ", "image": "filij vestri & filiæ vestræ", "problem": "v normalised to u here and in 'uocati' and 'Dauid', though the print has v ('David'). Inconsistent with 'divinitus' and 'sivè', which keep v; 'Ierosolymitanum' for printed 'Jerosolymitanum'", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "Ita Simeon Spiritus\nDEI instinctu Templum Ierosolymi-\ntanum", "english": "Thus Simeon, by the prompting of the Spirit of God, came into the Temple of Jerusalem", "problem": "The verb 'came into' is not on this page; the sentence breaks before its verb. It is supplied without a bracket to close the sentence (fabricated bridge). Plausible (Luke 2:27), but it is invented.", "severity": "minor", "class": "T6" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"In Animas sanctas se transfert\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"DEI instinctus\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Wisdom, chapter 7: Into holy souls she passes", "why": "A general reader will not know that 'Wisdom' is the Book of Wisdom (Wisdom of Solomon, 7:27), a deuterocanonical book, not a general reference to wisdom" },
+            { "english": "Thus Simeon, by the prompting of the Spirit of God, came into the Temple of Jerusalem", "why": "Simeon is the old man of Luke 2:25–27 who comes into the Temple 'by the Spirit'. Without that, the example of divine prompting is opaque" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page: the transcription has only diplomatic slips (u/v, dropped circumflexes, one c/e misread), and the translation is faithful apart from an unbracketed bridging verb at the page break. The two notes are harmless 'original:' quotations, and the Book of Wisdom and Simeon references would benefit from short glosses."
+  }
+]

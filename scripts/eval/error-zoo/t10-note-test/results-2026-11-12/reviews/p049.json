@@ -1,0 +1,67 @@
+[
+  {
+    "book_id": "69907e19b91bcb2db3f6e40d",
+    "slot": 1,
+    "title": "ParsiPrakashVinodVedangRai563GhaAlm3Shlf4DevanagariJyotish",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Devanagari paper pothi leaf from the Dharmartha Trust J&K (eGangotri) scans, so it fits that collection. Its content is a Sanskrit-medium manual of Persian verb forms written in Devanagari, which matches the Pārasīprakāśa title. The display title 'The Delight of Persian Illumination' is a loose rendering of the catalogue string.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree. There are 110 page records, all with OCR, but pages_count_field is 42, and pages_translated is 0 against pages_translated_field 42. One of these sets of fields is stale or the record was re-imported. Only 19 pages have a printed number, with 4 backsteps and 3 repeats. In a pothi the folio number is written on one side only, and this leaf carries two numberings ('२४' and a later '14'), so I read the backsteps and repeats as numbering artefacts rather than a splice. Page 30 carries folio २४.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "printed_marker": "२४ (and a later '14' below it, left margin)",
+        "layout": "landscape pothi leaf, one block of 11 lines, folio numerals in the left margin, 'CC-0 Dharmartha Trust J&K. An eGangotri-Vaidika Bharata Initiative' stamped at the foot",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "जदनं रूनने प्रोक्तं", "image": "appears to read जदनं हनने प्रोक्तं", "problem": "ह misread as रू. The translation's note repairs it.", "severity": "moderate", "class": "O6" },
+          { "ocr": "प्रोक्त्यर्थे मे", "image": "appears to read भुक्त्यर्थे मे (line 7, end)", "problem": "Misreading of 'in the sense of eating'. The translation's note guesses the repair.", "severity": "moderate", "class": "O6" },
+          { "ocr": "मे खर्दुन्नः", "image": "appears to read मेखर्दं पुनः", "problem": "पुनः ('again') fused into a false verb form", "severity": "minor" },
+          { "ocr": "उ शवे उ शवे भवो त्यर्थ के", "image": "word division unclear; the hand runs words together", "problem": "Word segmentation is arbitrary throughout, which splits the Persian forms into meaningless syllables (e.g. 'स्याज्ञ्नु रर्थे')", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "मे वाय उ शवे भवेत्", "english": "In the sense of \"may we become,\" **Me-vāy U-śave** applies.", "problem": "मेवाय is Persian mī-bāyad 'must', and उ is 'he': this means 'he must become' (glossed by optative bhavet), not first person plural 'may we become'.", "severity": "moderate" },
+          { "source": "उ शवे भवेत् ... तु शवे", "english": "the scribe's *u* and *tu* likely represent this prefix.", "problem": "In this manual u and tu are the Persian pronouns u 'he' and tu 'you' prefixed to the verb, not the subjunctive bi- prefix. The note misexplains the paradigm.", "severity": "moderate", "class": "T10" },
+          { "source": "भुत्ते खर्दे कीर्तनं", "english": "For \"he ate\" <term>bhukte</term>, the form stated is **Kharde**.", "problem": "bhukte is present tense ('eats'), not past. The English tense follows the Persian guess, not the Sanskrit gloss.", "severity": "minor" },
+          { "source": "यत्रवार्थे तु द मु देवमिवि निवाचकम्", "english": "Where the meaning is past, **Tu-d-mu-devam-ivi** is the expression.", "problem": "The transcription has no word for 'past'. The image may read भूत-, but this is not legible to me at this resolution.", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "The OCR's own <meta> calls the text 'a grammatical commentary or a treatise on verbal roots (dhatupatha)'. It is a Persian-in-Devanagari verb manual. This sits in the metadata box, not the reading text.", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "Probably Persian *mī-shavīm* \"we become\" and *mī-shavand* \"t", "verdict": "ok", "helpful": true },
+            { "quote": "Probably the Persian subjunctive with the prefix *bi-*, as i", "verdict": "wrong", "helpful": false },
+            { "quote": "This phrase is badly garbled in the OCR and its reading is u", "verdict": "ok", "helpful": true },
+            { "quote": "*Śrud* most likely stands for Persian *shud* \"he became,\" th", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāhad shud* \"he will become\" and *khwāham shud* \"", "verdict": "ok", "helpful": true },
+            { "quote": "Probably Persian *mī-shud*, *mī-shudī*, *mī-shudam*, the pas", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *zadan* \"to strike.\" The OCR reads *rūnane*, almost", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *mī-zanad* \"he strikes,\" *mī-zanī* \"you strike,\" *mī", "verdict": "ok", "helpful": true },
+            { "quote": "Persian imperative and subjunctive *bi-zanad*, *bi-zanam*, *", "verdict": "ok", "helpful": true },
+            { "quote": "Probably the Persian past forms *zad*, *zadī*, *zadam*, *zad", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāhad zad* \"he will strike,\" *khwāham zad* \"I wi", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khurdan* \"to eat\": *mī-khurad* \"he eats,\" *mī-khur", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāhad khurd* \"he will eat.\"", "verdict": "ok", "helpful": true },
+            { "quote": "This phrase is garbled and its meaning is uncertain.", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *pukhtan* \"to cook,\" present stem *paz-*: *mī-pazad", "verdict": "ok", "helpful": true },
+            { "quote": "Probably Persian *pukht* \"he cooked.\"", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *khwāham pukht* \"I will cook\" and *khwāhad pukht* \"h", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *mī-pukht*, *mī-pukhtī* \"he would have cooked,\" \"you", "verdict": "ok", "helpful": true },
+            { "quote": "Persian *dīdan* \"to see,\" present stem *bīn-*: *mī-bīnad* \"h", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "In the sense of \"may we become,\" **Me-vāy U-śave** applies.", "why": "Me-vāy is Persian mī-bāyad 'must'. Without that gloss the form is opaque, and the English mistranslates it." },
+            { "english": "**Śrūyau Śru-d**: in forms such as **Mu-devī**, one should infer many more in the same way.", "why": "Śrūyau and Mu-devī are left unexplained, so a reader cannot tell what paradigm the sentence refers to." }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "A genuine 17th-century-style Devanagari manual of Persian verb conjugation, glossed in Sanskrit. The OCR gets the leaf's lines but segments words arbitrarily and misreads a few glosses. The translation sensibly identifies the Persian forms in notes and admits where the text is garbled, but it misexplains the pronoun prefixes u/tu and mistranslates mī-bāyad. The record's page and translation counts disagree."
+  }
+]

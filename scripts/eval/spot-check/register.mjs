@@ -25,6 +25,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod, pageExposure } from '../../lib/book-checks.mjs';
 import { seriousClasses, pageFindings, derivedFortnightly, pageRecords, packetProvenance, runCost, checkedAtOf } from './check-rows.mjs';
+import { servedResults } from './lib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -53,10 +54,13 @@ if (args.includes('--cluster')) {
 const dir = opt('dir');
 if (!dir) { console.error('--dir <run dir> or --cluster'); process.exit(1); }
 const sample = JSON.parse(readFileSync(join(dir, 'sample.json'), 'utf8'));
-const results = JSON.parse(readFileSync(join(dir, 'results.json'), 'utf8'));
+const drawLog = existsSync(join(dir, 'draw-log.json')) ? JSON.parse(readFileSync(join(dir, 'draw-log.json'), 'utf8')) : {};
+// Findings in a stored translation the reader is not shown are not registered against the book (v3#154).
+const { results, notServed } = servedResults(JSON.parse(readFileSync(join(dir, 'results.json'), 'utf8')), drawLog.exposure);
+if (notServed.findings) console.log(`${notServed.findings} findings (${notServed.serious} serious) on ${notServed.pages} pages are in text the reader is not served: not registered`);
 const forms = opt('forms') ? JSON.parse(readFileSync(opt('forms'), 'utf8')) : {};
 const round = dir.split('/').filter(Boolean).pop();
-const frame = existsSync(join(dir, 'draw-log.json')) ? JSON.parse(readFileSync(join(dir, 'draw-log.json'), 'utf8')).frame : 'unrecorded';
+const frame = drawLog.frame ?? 'unrecorded';
 const sampleBooks = sample.books || sample;
 const rows = [];
 for (const book of results) {

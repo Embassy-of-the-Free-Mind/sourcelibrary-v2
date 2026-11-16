@@ -217,7 +217,7 @@ export async function seamStage(db, OUT, { model = SEAM_PASS_MODEL, editBefore =
  * `undo`), one turn at a time against the STORED texts as they now are, all under ONE run id of their own. A turn whose
  * stored edges no longer hold the spans is skipped. `apply` false: a dry run.
  */
-export async function applySeamPass(db, OUT, { apply = false, log = console.log } = {}) {
+export async function applySeamPass(db, OUT, { apply = false, log = console.log, runId: runIdIn = null } = {}) {
   const fs = await import('node:fs');
   const path = await import('node:path');
   const { writeRepairs, edgeRefusal, sha } = await import('../maintenance/seam-repair-6742/seam-repair.mjs');
@@ -226,7 +226,8 @@ export async function applySeamPass(db, OUT, { apply = false, log = console.log 
   const file = path.join(OUT, 'seam-pass.jsonl');
   if (!fs.existsSync(file)) return null;
   const joins = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((j) => !j.run_done && j.changed && !j.refused);
-  const runId = `seam-pass-8399-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+  // runId: a caller writing a test's sample (v3#104) names its own run; cli-translate keeps the #8399 default.
+  const runId = runIdIn || `seam-pass-8399-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
   const tally = { run: runId, apply, turns: joins.length, written: 0, skipped: {} };
   const skip = (why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; };
   for (const j of joins) {

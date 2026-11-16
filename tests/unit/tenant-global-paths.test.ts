@@ -350,6 +350,9 @@ describe('wiring', () => {
       'src/lib/site-features.json',
       // Page names in the cleanup triage table, printed as text.
       'src/app/admin/page-cleanup/data.ts',
+      // A list of paths the feedback band hides itself on, compared with
+      // usePathname(); it renders no link (v3#235).
+      'src/components/feedback/FeedbackCallout.tsx',
     ]);
     // Rendered only by HomeView, i.e. the apex home and its locale twins; the
     // proxy serves the partner's own home at `/` and 308s locale prefixes.

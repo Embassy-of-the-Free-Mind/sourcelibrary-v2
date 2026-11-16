@@ -70,7 +70,7 @@ export default async function SubjectsPage() {
       <SiteHeader variant="light" />
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20">
         <div className="mb-12">
-          <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="text-3xl md:text-4xl font-serif mb-2" style={{ color: 'var(--text-primary)' }}>
             Browse by Subject
           </h1>
           <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
@@ -104,7 +104,7 @@ export default async function SubjectsPage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h2 className="text-white font-display text-lg leading-tight">{cat.label}</h2>
+                    <h2 className="text-white font-serif text-lg leading-tight">{cat.label}</h2>
                     <p className="text-white/75 text-xs mt-0.5">
                       {n(cat.count)} images · {n(cat.book_count)} books
                     </p>

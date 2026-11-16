@@ -223,7 +223,7 @@ export const POST = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // PATCH /api/books/[id]/editions - Update edition (add DOI after minting)
 export const PATCH = withAuth(async (request, session, context) => {
@@ -300,4 +300,4 @@ export const PATCH = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

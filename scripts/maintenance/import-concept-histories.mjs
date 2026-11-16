@@ -22,7 +22,7 @@
 //   - Private asides: generic rules below ("For Derek" sections, "How we got here" paragraphs), then the per-file
 //     redaction lists (--redactions DIR of JSON arrays {file, find, replace, why}); each `find` must match exactly once
 //     or the run fails, so a stale list cannot silently publish what it was meant to remove.
-//   - Concepts with no essays are skipped, and so is any concept in SKIP.
+//   - Concepts with no essays are skipped, and so is any concept in SKIP; an essay in SKIP_ESSAYS is left out whole.
 //
 //   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/import-concept-histories.mjs \
 //     --repo /root/conceptual-histories --redactions <dir> [--dry-run] [--report <file.json>]
@@ -46,11 +46,20 @@ const DRY = process.argv.includes('--dry-run');
 if (!SRC || !RED_DIR) { console.error('usage: import-concept-histories.mjs --repo <conceptual-histories checkout> --redactions <dir> [--dry-run] [--report f.json]'); process.exit(1); }
 const REPO = path.resolve(new URL('../..', import.meta.url).pathname);
 const OUT = path.join(REPO, 'src/app/explore/histories/content'); // not data/: .gitignore drops every data/ dir
-const SKIP = new Set([]); // a concept still being built goes here (consciousness waited for its wave 1, conceptual-histories#4)
+// a concept still being built, or not yet asked for, goes here (consciousness waited for its wave 1, conceptual-histories#4)
+const SKIP = new Set(['enlightenment', 'humanity', 'marriage', 'steganography', 'wisdom']);
+// One essay of a published concept that is not published, with why. An essay written for one private reader (a
+// project, a builder, a decision) belongs to that reader: it is left out whole rather than redacted line by line.
+// A link to it from another essay loses its link, like any unpublished essay.
+const SKIP_ESSAYS = new Map([
+  ['bath/ideas/02-what-this-says-to-a-bath-builder.md', 'written for one private reader deciding what a public bath is for; not for the public site (Derek, 2026-11-13)'],
+  ['magic/ideas/21-demons-in-the-machine.md', 'still a working draft: answer sketch, job and issue notes, private asides inline; publish once rewritten for readers (2026-11-14)'],
+]);
 const BASE = '/explore/histories';
 
 // One reader-facing sentence per concept. PURPOSE.md is addressed to the project and is not shown.
 const QUESTION = {
+  bath: 'What did people seek in the bath, and what did they fear in it? The sweat house as a person, the spring with an owner, the physicians’ waters, purity measured by law, the city bath and its moralists, the inner bath, and the bath of rebirth, from the temazcalli and the mikveh to the hammam, the tirtha, the hot springs of China and Japan, and the alchemists’ balneum.',
   consciousness: 'Where did each tradition put experience: in the soul, the body, their union, a lower vehicle, a faculty, an act of attention, the One? From aisthēsis, synaisthēsis and cit to Cudworth’s and Locke’s “consciousness”, Bewusstsein and the hard problem.',
   aliveness: 'What did people take life to be? Each era’s definition of being alive, the words that carried it in each language, and what people did to make, keep or prolong life.',
   harmony: 'What did people take harmony and resonance to be, from Philolaus and the Chinese classics to Kepler, Helmholtz and the free-energy principle? Ratio and consonance, unlike things joined in one whole, and strings that answer each other.',
@@ -60,7 +69,7 @@ const QUESTION = {
   soul: 'What is a soul made of, where does it sit, how many does a person have, who has one, does it survive death, and could a machine have one? What each tradition meant by the word we translate “soul”.',
   sympathy: 'Did sympathy move from the cosmos into things, then into the body, the feelings, the brain and society, as the usual story says? And what separates sympathy and resonance (like answering like) from harmony (unlikes joined)?',
 };
-const TITLE = { aliveness: 'Aliveness', consciousness: 'Consciousness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
+const TITLE = { aliveness: 'Aliveness', bath: 'The bath', consciousness: 'Consciousness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
 // a concept with a map: the map is the history's sources view (#7646); its slug is the concept's
 const MAP = { consciousness: `${BASE}/consciousness/sources`, harmony: `${BASE}/harmony/sources`, magic: `${BASE}/magic/sources` };
 
@@ -201,6 +210,8 @@ function buildEssay(concept, file, raw, claimIndex, essaySlugs, stats) {
   md = md.replace(/`([a-z]+)(?:-kb)?:([a-z0-9][a-z0-9-]*[a-z0-9])`/g, (m, c, id) => known(c) ? ref(c, id) : m);
   md = md.replace(/\b([a-z]+)-kb\s+`([a-z0-9][a-z0-9-]*[a-z0-9])`/g, (m, c, id) => known(c) ? `${c === concept ? '' : TITLE[c] || c} ${ref(c, id)}`.trim() : m);
   md = md.replace(/\[\[(?:([a-z]+)(?:-kb)?:)?([^\]\s|]+)\]\]/g, (m, c, id) => ref(c && known(c) ? c : concept, id));
+  // single-bracket refs, [id] or [id, interpretive] (bath): only an id this concept knows, never a markdown link
+  md = md.replace(/\[([a-z0-9][a-z0-9-]*[a-z0-9])(?:,\s*[a-z ]+)?\](?!\()/g, (m, id) => (claimIndex.get(concept)?.has(id) || STATUS.has(`${concept}:${id}`) ? ref(concept, id) : m));
   md = md.replace(/(?<![a-z-])([a-z]+)-kb:([a-z0-9][a-z0-9-]*[a-z0-9])/g, (m, c, id) => known(c) ? ref(c, id) : m);
   md = md.replace(/`([a-z0-9][a-z0-9-]*[a-z0-9])`/g, (m, id) => (claimIndex.get(concept)?.has(id) || STATUS.has(`${concept}:${id}`) ? ref(concept, id) : m));
   md = md.replace(/\u0001(\d+)\u0002/g, (_, i) => marks[+i]);
@@ -228,7 +239,7 @@ const report = { generated: new Date().toISOString().slice(0, 10), concepts: {},
 const raw = {};
 for (const c of concepts) {
   const dir = path.join(SRC, 'concepts', c);
-  const ideas = fs.existsSync(path.join(dir, 'ideas')) ? fs.readdirSync(path.join(dir, 'ideas')).filter((f) => f.endsWith('.md') && f !== 'README.md').sort() : [];
+  const ideas = fs.existsSync(path.join(dir, 'ideas')) ? fs.readdirSync(path.join(dir, 'ideas')).filter((f) => f.endsWith('.md') && f !== 'README.md' && !SKIP_ESSAYS.has(`${c}/ideas/${f}`)).sort() : [];
   if (SKIP.has(c)) { report.skipped.push({ concept: c, why: 'in SKIP' }); continue; }
   if (!ideas.length) { report.skipped.push({ concept: c, why: 'no essays yet' }); continue; }
   if (!TITLE[c] || !QUESTION[c]) throw new Error(`${c}: no TITLE/QUESTION entry — write the reader-facing question before publishing it`);
@@ -238,6 +249,7 @@ for (const c of concepts) {
   raw[c] = { dir, ideas, reg, claims };
 }
 
+for (const f of SKIP_ESSAYS.keys()) if (!fs.existsSync(path.join(SRC, 'concepts', f))) throw new Error(`SKIP_ESSAYS: ${f} not found — the essay moved or was renamed, so it would publish`);
 const STATUS = new Map(Object.entries(raw).flatMap(([c, v]) => v.claims.map((cl) => [`${c}:${cl.id}`, cl.verification?.status])));
 const refs = new Set();
 for (const { reg, claims } of Object.values(raw)) for (const cl of claims) for (const s of cl.sources || []) {
@@ -325,6 +337,7 @@ const unused = REDACTIONS.filter((r) => !r.used && essaySlugs.get(r.file.split('
 if (unused.length) throw new Error(`redactions never applied: ${unused.map((r) => r.file).join(', ')}`);
 if (!DRY) { const f = path.join(OUT, 'index.json'); fs.writeFileSync(f, JSON.stringify(index, null, 1) + '\n'); total += fs.statSync(f).size; }
 report.redactions = redLog;
+report.essaysSkipped = [...SKIP_ESSAYS].map(([file, why]) => ({ file, why }));
 console.table(Object.fromEntries(Object.entries(report.concepts).map(([c, s]) => [c, { shown: s.verified + s.partial, partial: s.partial, dropped: s.dropped.unverified + s.dropped.disputed + s.dropped.other, essays: s.essays, quotesKept: s.quotesKept, quotesCopyright: s.quotesDroppedCopyright, quotesNotPublic: s.quotesDroppedNotPublic, refsLinked: s.refsLinked, refsPlain: s.refsPlain }])));
 console.log('skipped', report.skipped, '\nredactions', redLog.length, DRY ? '(dry run, nothing written)' : `\nwrote ${OUT} ${(total / 1e6).toFixed(2)} MB`);
 if (REPORT) fs.writeFileSync(REPORT, JSON.stringify(report, null, 1));

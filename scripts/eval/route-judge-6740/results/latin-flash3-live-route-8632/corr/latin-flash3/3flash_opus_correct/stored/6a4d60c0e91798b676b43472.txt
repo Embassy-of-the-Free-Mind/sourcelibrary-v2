@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<sig>b</sig>
+<header>hystoria.v.de amore.</header>
+
+Addo aliam luxurie conditionem quia temporalia dissipat. Qui nutrit scortum perdet substantiam ait Salomon proverbio.xxix. Figura de filio prodigo qui desinsuit substantiam suam viuendo luxuriose. Lu.xv et sic de multis aliis.
+
+### Hystoria de amore quinta
+
+<image-desc size="small" type="decorative" significance="low">Large decorative initial letter I in a square frame.</image-desc>
+
+In hystoria romanorum legitur quod quidem princeps magnus duos habuit filios. Senior cum patre in quodam morabatur palatio. Junior vero in quodam castro periculoso quidam pater qui et epistolas tres per nuntios tres scripsit diversos sed quartam per seniorem illum. Primarum litterarum tenor ad filium hic erat per nuntium primum Peccatum et inmundiciam totaliter relinque et honestati te iunge. Secundarum tenor per secundum nuntium. Dilige deum corde et
+
+<column-break/>
+
+voluntate quoniam ad similitudinem suam te creauit Epistole tertie tenor per tertius nuncium. Sine amore non poteris saluari propter carentia enim eius homo perierat. Quarte epistole hic tenor per nuntium quartum scilicet seniorem. De omnibus tuis michi peto nisi ut me diligas ut germanum tuum Ad propositum. Princeps iste est dominus qui duos habuit filios quorum senior est christus qui cum patre in celo tanquam in palatio moratur proprio. Junior filius humana est natura que in mundo tanquam in castro moratur. Deus pro humane nate has quatuor litteras destinauit. In prima epystola est peccatum et inmunditiam et cetera hec in lege nature per abraham patriarcham primus fuit missa quia ipse ita mundus vixit in matrimonio ut. Beatus dicat. Augustinus in libro de bono conjugali. quod castitas quam habuit Johannes. Beatus sua in virgini
+
+<vocab>luxuria, Salomon, Abraham, Augustinus, castitas, matrimonium</vocab>

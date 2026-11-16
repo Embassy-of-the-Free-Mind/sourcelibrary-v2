@@ -1,0 +1,580 @@
+{
+ "drawn_at": "2026-11-13T12:45:44.324Z",
+ "n": 30,
+ "router_tests": true,
+ "cells": {
+  "hebrew-flash3-manuscript": {
+   "task": "ocr",
+   "lang": "Hebrew",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "3flash",
+   "routes": [
+    "3flash",
+    "3flash>opus-correct",
+    "opus-read",
+    "3flash>agy-flash-low"
+   ],
+   "correctors": {
+    "3flash>opus-correct": {
+     "by": "opus"
+    },
+    "opus-read": {
+     "by": "opus-read",
+     "fresh": true
+    },
+    "3flash>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "3flash": "served (the stored draft)",
+    "3flash>opus-correct": "this run's correction of the stored draft, not served (opus)",
+    "opus-read": "this run's fresh read of the image, not served (opus-read undefined)",
+    "3flash>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "69c1bb3c8522835be845dab4",
+     "book_id": "69c1bb3c8522835be845d9af",
+     "page_number": 261,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "06418d2684b3dcc1",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb3c8522835be845dab4"
+     ]
+    },
+    {
+     "page_id": "69c1bc0d8522835be84615d4",
+     "book_id": "69c1bc0d8522835be8461541",
+     "page_number": 147,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "b8ec152dfdace4cb",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc0d8522835be84615d4"
+     ]
+    },
+    {
+     "page_id": "69c1ba978522835be845992f",
+     "book_id": "69c1ba978522835be845973b",
+     "page_number": 500,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8be39ce10c745a32",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1ba978522835be845992f"
+     ]
+    },
+    {
+     "page_id": "69c1bd708522835be846a2b4",
+     "book_id": "69c1bd708522835be846a1df",
+     "page_number": 213,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c49214a9f5931baf",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bd708522835be846a2b4"
+     ]
+    },
+    {
+     "page_id": "69c1bb178522835be845ce1a",
+     "book_id": "69c1bb178522835be845ccc2",
+     "page_number": 344,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "18fb77a702b2b4c5",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb178522835be845ce1a"
+     ]
+    },
+    {
+     "page_id": "69c1bb478522835be845e5de",
+     "book_id": "69c1bb478522835be845e4d1",
+     "page_number": 269,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8f0bf7bb9697c35d",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb478522835be845e5de"
+     ]
+    },
+    {
+     "page_id": "69f3302c876dd827cbc46905",
+     "book_id": "69f3302c876dd827cbc46814",
+     "page_number": 241,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "4bcbd6aa5774b6c6",
+     "script": "manuscript",
+     "script_basis": "page",
+     "block": [
+      "69f3302c876dd827cbc46905"
+     ]
+    },
+    {
+     "page_id": "69c1bb5a8522835be845f28e",
+     "book_id": "69c1bb5a8522835be845f27d",
+     "page_number": 17,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "d850b8e3fb216c83",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb5a8522835be845f28e"
+     ]
+    },
+    {
+     "page_id": "69c1bb558522835be845f047",
+     "book_id": "69c1bb558522835be845f021",
+     "page_number": 38,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "58894d82bde9b4e1",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb558522835be845f047"
+     ]
+    },
+    {
+     "page_id": "69c1bb4c8522835be845eaa7",
+     "book_id": "69c1bb4c8522835be845e9f3",
+     "page_number": 180,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "2ffd614f3a749f1d",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb4c8522835be845eaa7"
+     ]
+    },
+    {
+     "page_id": "69c1bb398522835be845d956",
+     "book_id": "69c1bb398522835be845d733",
+     "page_number": 547,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "84caf83ad458060f",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb398522835be845d956"
+     ]
+    },
+    {
+     "page_id": "69c1bb6c8522835be845fceb",
+     "book_id": "69c1bb6c8522835be845fafb",
+     "page_number": 496,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "b4a0a9536663de74",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb6c8522835be845fceb"
+     ]
+    },
+    {
+     "page_id": "69c1bb588522835be845f1d4",
+     "book_id": "69c1bb588522835be845f08d",
+     "page_number": 327,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "1fc1c912976c6bb0",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb588522835be845f1d4"
+     ]
+    },
+    {
+     "page_id": "69b3e67c304c1c6b3950b918",
+     "book_id": "69b3e67c304c1c6b3950b7c3",
+     "page_number": 341,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c30ee044fc0407d4",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69b3e67c304c1c6b3950b918"
+     ]
+    },
+    {
+     "page_id": "69c1bae58522835be845b564",
+     "book_id": "69c1bae58522835be845b540",
+     "page_number": 36,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "155374a241028630",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bae58522835be845b564"
+     ]
+    },
+    {
+     "page_id": "69520c10ab34727b1f0440c9",
+     "book_id": "69520c0fab34727b1f043e63",
+     "page_number": 614,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "981d89374f06f104",
+     "script": "manuscript",
+     "script_basis": "page",
+     "block": [
+      "69520c10ab34727b1f0440c9"
+     ]
+    },
+    {
+     "page_id": "69c1ba928522835be84596c8",
+     "book_id": "69c1ba928522835be845954d",
+     "page_number": 379,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "84a3578ccdc7c4ad",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1ba928522835be84596c8"
+     ]
+    },
+    {
+     "page_id": "69c1bb218522835be845d1d1",
+     "book_id": "69c1bb218522835be845d0eb",
+     "page_number": 230,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "d74373a3df4b6958",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb218522835be845d1d1"
+     ]
+    },
+    {
+     "page_id": "69c1bc728522835be8463665",
+     "book_id": "69c1bc728522835be8463572",
+     "page_number": 243,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "2b49aabe4804dc55",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc728522835be8463665"
+     ]
+    },
+    {
+     "page_id": "69c1bc148522835be846165f",
+     "book_id": "69c1bc148522835be846161f",
+     "page_number": 64,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "bef93487796a5f3d",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc148522835be846165f"
+     ]
+    },
+    {
+     "page_id": "69c1bc858522835be8463899",
+     "book_id": "69c1bc858522835be8463804",
+     "page_number": 149,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "e930a0b977605dce",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc858522835be8463899"
+     ]
+    },
+    {
+     "page_id": "69c1bad58522835be845ae46",
+     "book_id": "69c1bad58522835be845ae24",
+     "page_number": 34,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "7412a34a5223f22c",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bad58522835be845ae46"
+     ]
+    },
+    {
+     "page_id": "69c1bb3e8522835be845ddb7",
+     "book_id": "69c1bb3e8522835be845dcd3",
+     "page_number": 228,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "dd74cb31ac0ee40b",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb3e8522835be845ddb7"
+     ]
+    },
+    {
+     "page_id": "69b3e679304c1c6b3950b736",
+     "book_id": "69b3e679304c1c6b3950b712",
+     "page_number": 36,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8a935fee4b298d96",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69b3e679304c1c6b3950b736"
+     ]
+    },
+    {
+     "page_id": "69c1baba8522835be8459ec6",
+     "book_id": "69c1baba8522835be8459dc6",
+     "page_number": 256,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "22c1b592f9e92110",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1baba8522835be8459ec6"
+     ]
+    },
+    {
+     "page_id": "69e7490485f786e884a4d197",
+     "book_id": "69e7490485f786e884a4d186",
+     "page_number": 17,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "32b5d53cbe9c8842",
+     "script": "manuscript",
+     "script_basis": "page",
+     "block": [
+      "69e7490485f786e884a4d197"
+     ]
+    },
+    {
+     "page_id": "6a7de037fd8615d37af98e48",
+     "book_id": "6a7de037fd8615d37af98df8",
+     "page_number": 80,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "ce02b010cac913c3",
+     "script": "manuscript",
+     "script_basis": "page",
+     "block": [
+      "6a7de037fd8615d37af98e48"
+     ]
+    },
+    {
+     "page_id": "69c1bb0c8522835be845c8ec",
+     "book_id": "69c1bb0c8522835be845c840",
+     "page_number": 172,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "9329920ff4eeacfb",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb0c8522835be845c8ec"
+     ]
+    },
+    {
+     "page_id": "69c1bc098522835be84613a3",
+     "book_id": "69c1bc098522835be846135b",
+     "page_number": 72,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "d5bdd9a8b7b2a7e1",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc098522835be84613a3"
+     ]
+    },
+    {
+     "page_id": "69c1bb078522835be845c660",
+     "book_id": "69c1bb078522835be845c606",
+     "page_number": 90,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "246acce3e125f463",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb078522835be845c660"
+     ]
+    },
+    {
+     "page_id": "69c1bc6b8522835be84633a1",
+     "book_id": "69c1bc6b8522835be8463238",
+     "page_number": 361,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "db293611bf64b6fb",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc6b8522835be84633a1"
+     ]
+    },
+    {
+     "page_id": "6aa7d1a6de752164bcc8141e",
+     "book_id": "6aa7cf86fd6dd3b07d31d96c",
+     "page_number": 132,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "e60529789747bcb5",
+     "script": "manuscript",
+     "script_basis": "page",
+     "block": [
+      "6aa7d1a6de752164bcc8141e"
+     ]
+    },
+    {
+     "page_id": "69c1bad18522835be845ac71",
+     "book_id": "69c1bad18522835be845aabc",
+     "page_number": 437,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "ecb86d964234d6f2",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bad18522835be845ac71"
+     ]
+    },
+    {
+     "page_id": "69c1bab38522835be8459cbf",
+     "book_id": "69c1bab38522835be8459bf4",
+     "page_number": 203,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "6e5a1a0dd9eb7577",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bab38522835be8459cbf"
+     ]
+    },
+    {
+     "page_id": "69c1bb438522835be845e109",
+     "book_id": "69c1bb438522835be845df1f",
+     "page_number": 490,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "d481d68fa7acd4f1",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb438522835be845e109"
+     ]
+    },
+    {
+     "page_id": "69b52bd1d6bd9f58edb24c62",
+     "book_id": "69b52bd1d6bd9f58edb24c2c",
+     "page_number": 54,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "4d363b99c70dd70e",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69b52bd1d6bd9f58edb24c62"
+     ]
+    },
+    {
+     "page_id": "69b3e5c1304c1c6b3950a109",
+     "book_id": "69b3e5c1304c1c6b3950a0a3",
+     "page_number": 102,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c8a4478500b24143",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69b3e5c1304c1c6b3950a109"
+     ]
+    },
+    {
+     "page_id": "69c1baee8522835be845b881",
+     "book_id": "69c1baee8522835be845b7b6",
+     "page_number": 203,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "756b0db74da08a62",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1baee8522835be845b881"
+     ]
+    },
+    {
+     "page_id": "69c1bc6d8522835be84634da",
+     "book_id": "69c1bc6d8522835be8463468",
+     "page_number": 114,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "e2fbaef40af19af5",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bc6d8522835be84634da"
+     ]
+    },
+    {
+     "page_id": "69b3f794a107e55a0ee1e1ac",
+     "book_id": "69b3f794a107e55a0ee1e15e",
+     "page_number": 78,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "4486b4afb86f4354",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69b3f794a107e55a0ee1e1ac"
+     ]
+    },
+    {
+     "page_id": "69c1bb538522835be845ef6c",
+     "book_id": "69c1bb538522835be845ee95",
+     "page_number": 215,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "793b79eca6ff4a27",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb538522835be845ef6c"
+     ]
+    },
+    {
+     "page_id": "69c1bb5c8522835be845f453",
+     "book_id": "69c1bb5c8522835be845f2eb",
+     "page_number": 360,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "b71ab027ffdf5a1c",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb5c8522835be845f453"
+     ]
+    },
+    {
+     "page_id": "69c1bb8e8522835be846041c",
+     "book_id": "69c1bb8e8522835be84603f3",
+     "page_number": 41,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "0aa1e2011a467cc3",
+     "script": "manuscript",
+     "script_basis": "book",
+     "block": [
+      "69c1bb8e8522835be846041c"
+     ]
+    },
+    {
+     "page_id": "6a209de889e8715c5947ac84",
+     "book_id": "6a209de889e8715c5947ac76",
+     "page_number": 14,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "0705198dbdc688c5",
+     "script": "manuscript",
+     "script_basis": "page",
+     "block": [
+      "6a209de889e8715c5947ac84"
+     ]
+    }
+   ],
+   "frame": {
+    "books": 256,
+    "books_walked": 256,
+    "held_or_hidden": 0,
+    "no_eligible_page": 22,
+    "excluded_book": 0,
+    "no_page_of_script": 190,
+    "short_book": 0,
+    "rule": "visible Hebrew books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars; script type manuscript (script-type.mjs); the page inside 1 consecutive scan; books of --exclude-sample and of this draw's other cells left out (0 named)"
+   }
+  }
+ }
+}

@@ -11,7 +11,8 @@
 //     quote in English (verified claims before partial ones), not already quoted in the essay's own text, and not
 //     from a page already shown earlier in the essay. Sections about the project itself ("What changed", "Open questions", "Evidence still
 //     missing") get none. A section with no such claim gets none: no filler.
-//   - concept page: three key quotes, the first section quote of the essays after the opening one.
+//   - concept page: three key quotes, the first section quote of the essays after the opening one (a history with one
+//     essay: three of that essay's section quotes, spread across it, not the opening section's).
 // Each quote's /q/ code is decoded to (book, page) and the page's image fields are read from Mongo, so the page can
 // resolve the picture with src/lib/page-image-url.ts. A book that is not public (`visible && pages_count > 0`) or a
 // page with no image drops the quote.
@@ -104,6 +105,15 @@ for (const c of index.concepts) {
     for (const sec of sectionsOf(e.md)) { const f = pickForSection(sec, used, essayText); if (f) { figs[sec.i] = f; refs.push(f); } }
     out.essays[`${c.slug}/${e.slug}`] = figs;
     if (e.slug !== pick.opening.essay && key.length < 3) { const first = Object.values(figs)[0]; if (first) key.push(first); }
+  }
+  // a history with one essay (bath) has no other essay to draw from: take three of its own section quotes, spread
+  // across it, never the one beside the excerpt the concept page already opens with
+  if (essays.length === 1) {
+    const own = Object.entries(out.essays[`${c.slug}/${op.slug}`]);
+    const openAt = sectionsOf(op.md).find((s) => s.heading === pick.opening.section)?.i;
+    const rest = own.filter(([i]) => +i !== openAt).map(([, f]) => f);
+    for (let k = 0; k < 3 && rest.length; k++) key.push(rest[Math.floor((k * rest.length) / 3)]);
+    key.splice(0, key.length, ...[...new Set(key)]);
   }
   out.concepts[c.slug] = { card, key };
 }

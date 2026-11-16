@@ -1,0 +1,117 @@
+[
+  {
+    "book_id": "6a3cf0268642f0445b162e15",
+    "slot": 1,
+    "title": "御製律呂正義後編·卷三~卷四 (vol 4)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Qing court music treatise (Lülü zhengyi houbian), imperial woodblock edition. It belongs in a general collection like universallibrary.",
+    "rights_flag": null,
+    "structure_note": "The structure block says pages_translated 0, but the book field says 124: the two counts disagree. Only 4 of 149 pages carry a printed number, because the folio sits in a block-heart that is cut off at the left edge, as here. With so few numbers, the single backstep and single repeat are most likely misread or misplaced numerals, not a splice. 129 of 149 pages have OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "行宮\n俎",
+            "image": "行 宮伬 (the small fingering sign is 伬 = 尺)",
+            "problem": "The small gongche fingering sign 伬 is read as 俎. The same misread recurs at \"房角\n俎\" (the image has 角仉) and \"惟宮\n俎\" (the image has 宮伬).",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "未羽\n仉",
+            "image": "未 羽亿",
+            "problem": "In the transverse-flute score, the image pairs each pitch name with a fixed sign: 宮伬, 商仜, 角仉, 徵伍, 羽亿. The OCR gets 伍 and 角仉 right. It writes 仉 for 亿, 仜 and 伬 (\"大羽\n仉\", \"恪商\n仉\", \"無宮\n仉\", \"洋宮\n仉\") and 伍 for 仜 (\"牲商\n伍\"). It also drops about 15 signs altogether (\"禮羽\", \"樂商\", \"兮角\", \"普宮\", \"資商\", …). Roughly half of the fingering column is wrong or missing, so the flute notation cannot be recovered from the text.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "宥宮",
+            "image": "肴 宮伬",
+            "problem": "The lyric character 肴 is misread as 宥. The translation corrects it to \"viands\".",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "牲宮",
+            "image": "牷 宮伬",
+            "problem": "The image has 牷; the OCR has 牲. The translation corrects it to \"unblemished\".",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "凡角",
+            "image": "几 角仉",
+            "problem": "The image has 几; the OCR has 凡. The translation corrects it to \"table\".",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<script>handwritten</script>",
+            "image": "printed woodblock in large calligraphic style",
+            "problem": "Wrong script tag.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "洋羽\n俎",
+            "image": "洋 羽 plus a small sign, then circle diagrams",
+            "problem": "The circle diagrams (finger-hole charts) in every column are neither transcribed nor described, so the fingering charts are lost.",
+            "severity": "moderate",
+            "class": "O14"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "仉",
+            "english": "<term>zhang</term>",
+            "problem": "仉 here is the court form of the gongche sign 凡 (fan), written with a person radical like 伍 = 五. \"zhang\" is the modern reading of the surname character. It means nothing in this notation and misleads anyone who tries to reconstruct the score. Most of the \"zhang\" in the English also inherit the OCR's misread signs, where the image has 伬, 仜 or 亿.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "行宮\n俎",
+            "english": "proceed *gong*\n<term>zu</term>",
+            "problem": "The meta says \"The OCR's stray 俎 is kept as the transliterated term zu\". The translator saw that the token was suspect and printed it as a notation term anyway. On the page it is 伬 (chi).",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "printed_marker": "none visible (the block-heart at the left edge is cut: '…律呂正義後編' is legible, but the folio numeral is not)",
+        "layout": "seven vertical columns of large lyric characters, each with a small pitch name and fingering sign beside it and circle finger-hole diagrams below; heading 笛譜 in the second column; ruled frame",
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "original: \"笛譜\", score for the <term>di</term> <gloss>side-bl",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "side-blown bamboo flute",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "*gong* <term>wu</term>",
+              "why": "Nothing on the page tells the reader that wu, zhang and zu are meant as gongche flute fingering signs, as opposed to words. The only hint is in the summary."
+            },
+            {
+              "english": "rites *yu*",
+              "why": "The pitch names gong, shang, jue, zhi and yu are never explained as the five pentatonic degrees attached to each word."
+            },
+            {
+              "english": "great *yu*\n<term>zhang</term>\nplatters",
+              "why": "大房 is a named ritual offering vessel from the Shijing. \"great platters\" hides the allusion."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The hymn's lyrics and pitch names are read and translated well, and the translation fixes three lyric misreads. But the flute fingering signs, which are what this score is for, are about half misread or dropped. The English then prints them as meaningless 'zhang' and 'zu', and an expert would see that on sight."
+  }
+]

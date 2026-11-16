@@ -14,8 +14,16 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/paired-fifths-check.mjs \
  *        --books=<id,id,...> | --books-file=<file, one id a line>  [--apply] [--max-calls=N] [--concurrency=3] [--run-id=…]
+ *        [--evidence-dir=DIR]
  *
- * Dry run by default: judges (Opus on the subscription, behind the lane-judge pace guard: weekly 85%, 5-hour 95%) and
+ * A books file whose lines are JSON objects ({"book_id": …, "stratum": "uniform", "cell": "Latin/print", "round": …})
+ * carries how each BOOK was chosen into its row's frame (stratum, cell, round), so a rate can be read per stratum and
+ * cell (the spare-lane round, scripts/audit/spare-paired-fifths.mjs). frame.selection stays `random`: the PAGES are
+ * the seeded draw inside the book whatever chose the book. --evidence-dir writes the evidence file outside the repo
+ * (a round run from the shared main checkout must leave no file in it).
+ *
+ * Dry run by default: judges (Opus on the subscription, behind the lane-judge pace guard: weekly 85% or
+ * ROUTE_JUDGE_WEEKLY_MAX, 5-hour 95%) and
  * prints the rows it would write. --apply writes them. Evidence: scripts/eval/results/paired-fifths-check/<run_id>.json,
  * written either way; commit it with the run. Re-running a run_id resumes from its evidence file and never doubles a row.
  */
@@ -137,6 +145,9 @@ export function pairVerdicts(pageA, pageB, v) {
   return [pageVerdict(pageA, first, brk.filter((d) => d.page === 'A')), pageVerdict(pageB, second, brk.filter((d) => d.page === 'B'))];
 }
 
+const REPO = path.resolve(HERE, '..', '..');
+/** Repo-relative when the evidence is in the repo (committed with the run), else absolute (a spare round's scratch). */
+export const evidencePath = (f) => { const r = path.relative(REPO, f); return r.startsWith('..') || path.isAbsolute(r) ? path.resolve(f) : r; };
 const textHash = (p) => `${contentHash(p.ocr?.data ?? '')}:${contentHash(p.translation?.data ?? '')}`;
 
 async function judgePair(lang, a, b) {
@@ -150,11 +161,29 @@ async function judgePair(lang, a, b) {
   } finally { fs.rmSync(ws, { recursive: true, force: true }); }
 }
 
+/** How a book was chosen, from a JSON books-file line: only these keys reach the row's frame. */
+export const BOOK_FRAME_KEYS = ['stratum', 'cell', 'round'];
+/** --books / --books-file text → [{ id, frame }]: plain ids (comma, space or newline separated) or JSON lines. */
+export function parseBookList(text) {
+  const out = [];
+  for (const line of String(text ?? '').split('\n')) {
+    const t = line.trim();
+    if (!t) continue;
+    if (t.startsWith('{')) {
+      const o = JSON.parse(t);
+      if (!o.book_id) throw new Error(`books-file line without book_id: ${t.slice(0, 120)}`);
+      out.push({ id: String(o.book_id), frame: Object.fromEntries(BOOK_FRAME_KEYS.filter((k) => o[k] != null).map((k) => [k, o[k]])) });
+    } else for (const id of t.split(/[\s,]+/).filter(Boolean)) out.push({ id, frame: {} });
+  }
+  return out;
+}
+
 async function main() {
-  const ids = (arg('books') ?? (arg('books-file') ? fs.readFileSync(arg('books-file'), 'utf8') : '')).split(/[\s,]+/).filter(Boolean);
+  const list = parseBookList(arg('books') ?? (arg('books-file') ? fs.readFileSync(arg('books-file'), 'utf8') : ''));
+  const ids = list.map((b) => b.id), bookFrame = new Map(list.map((b) => [b.id, b.frame]));
   if (!ids.length) { console.error('usage: --books=<id,...> | --books-file=<file> [--apply]'); process.exit(2); }
   const runId = arg('run-id') ?? `pfc-p5-${new Date().toISOString().slice(0, 10)}-${sha(ids.join(',')).slice(0, 8)}`;
-  const evDir = path.resolve(HERE, '..', 'eval', 'results', 'paired-fifths-check');
+  const evDir = path.resolve(arg('evidence-dir') ?? path.join(HERE, 'results', 'paired-fifths-check'));
   const evFile = path.join(evDir, `${runId}.json`);
   const ev = fs.existsSync(evFile) ? JSON.parse(fs.readFileSync(evFile, 'utf8')) : { run_id: runId, method: METHOD, draw: PAIRED_FIFTHS_VERSION, prompt_version: PROMPT_VERSION, books: {} };
   if (String(ev.method?.version) !== METHOD.version) { console.error(`${evFile} is a v${ev.method?.version} run; v${METHOD.version} cannot resume it — pick another --run-id`); process.exit(2); }
@@ -187,6 +216,8 @@ async function main() {
           if (!p) break;
           const key = `${p.first}/${p.second}`;
           calls++;
+          // Every call made under this run id, failed ones too, across resumes: a daily cap counts these (v3#381).
+          ev.attempts = (ev.attempts ?? 0) + 1;
           try {
             const a = byNum.get(p.first), b = byNum.get(p.second);
             const r = await judgePair(rec.lang, a, b);
@@ -211,9 +242,9 @@ async function main() {
         method_id: METHOD.id, method_version: METHOD.version, run_id: runId, checked_at: new Date(),
         selection: 'random', stages: ['ocr', 'translation'],
         reader: { kind: 'model', model: Object.values(rec.calls)[0]?.model ?? 'claude-opus', image_opened: true },
-        evidence_path: path.relative(path.resolve(HERE, '..', '..'), evFile),
+        evidence_path: evidencePath(evFile),
         reader_warning: true,
-        frame: { draw: PAIRED_FIFTHS_VERSION, pairs: pairs.length, call_shape: 'P5', prompt_version: PROMPT_VERSION },
+        frame: { draw: PAIRED_FIFTHS_VERSION, pairs: pairs.length, call_shape: 'P5', prompt_version: PROMPT_VERSION, ...bookFrame.get(bookId) },
         note: `${verdicts.length} pages (two facing pages from each fifth of the book) and their ${pairs.length} page breaks, one reading per pair, transcription and English read against the page images.`,
         verdicts,
       }, { apply: APPLY });

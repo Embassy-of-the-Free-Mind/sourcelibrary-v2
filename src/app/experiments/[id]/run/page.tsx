@@ -133,7 +133,7 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
           {/* Variant A */}
           <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">A</span>
+              <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">A</span>
               <span className="font-semibold text-blue-900">Variant A</span>
             </div>
             {expConfig?.variant_a ? (
@@ -158,7 +158,7 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
           {/* Variant B */}
           <div className="bg-accent-gold/8 rounded-xl border border-accent-gold/20 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-6 h-6 bg-accent-rust text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
+              <span className="w-6 h-6 bg-accent-rust text-white rounded-full flex items-center justify-center text-sm font-semibold">B</span>
               <span className="font-semibold text-accent-gold-dark">Variant B</span>
             </div>
             {expConfig?.variant_b ? (

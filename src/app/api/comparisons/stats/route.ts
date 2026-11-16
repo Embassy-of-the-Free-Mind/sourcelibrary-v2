@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { withAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 
 // GET /api/comparisons/stats - Get win rates between experiments
-export const GET = withAuth(async (request, session) => {
+export const GET = withInnerCircleAuth(async (request, session) => {
   try {
     const db = await getReadDb();
     const { searchParams } = new URL(request.url);

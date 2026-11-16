@@ -43,21 +43,39 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'sacred-baths',
+    title: 'Sacred Baths',
+    subtitle:
+      'A goddess who spat on an emperor, a grandmother who lives in the Nahua sweat house, Scythians howling in hemp steam, Seneca lodging over a bathhouse, forty seah measured in Amsterdam beer mugs, the sun born from a washed eye, and a dinner table afloat at Baden: what people sought in hot water, in their own words.',
+    summary:
+      'The goddess of Mount Li, a Nahua midwife’s sweat house, Scythian steam, Seneca’s bathhouse, the hammam, the Ganges and Baden, in their own words.',
+    date: '12 November 2026',
+    readTime: '24 min read',
+    kind: 'stories',
+    image: '/articles/sacred-baths/tudela-temazcal.jpg',
+    imageAlt:
+      'Painting from the Codex Tudela (about 1553): a Nahua sweat house with a face over its door, a man stoking its fire, and a healer offering a vessel to two patients.',
+    epub: {
+      colour: { href: 'https://images.sourcelibrary.org/article-epubs/sacred-baths-dabca65a.epub', mb: 10 },
+      eink: { href: 'https://images.sourcelibrary.org/article-epubs/sacred-baths-bw-54d4c396.epub', mb: 4 },
+    },
+  },
+  {
     slug: 'sea-road-china-gulf',
     title: 'The Sea Road from China to the Gulf',
     subtitle:
-      'Guangzhou, Quanzhou, Calicut, Siraf and Hormuz in the books of the people who sailed, taxed or charted the route: Arab geographers, a Song customs inspector, Marco Polo, Ibn Battuta, Zheng He’s star charts, the Portuguese and Dutch, and Wei Yuan in 1844.',
+      'Pepper bought by weight like gold, a king who threw his treasury into the sea, musk the customs men could smell, and four hundred ships on a single tide: the ocean road between China, India and the Persian Gulf, in the words of the people who sailed, taxed and charted it.',
     summary:
-      'Siraf to Canton by sea: Arab geographers, Zhao Rugua at Quanzhou, Marco Polo, Ibn Battuta’s junks, Zheng He’s star chart to Hormuz and Wei Yuan in 1844.',
+      'Pepper, musk, gold thrown into the sea and four hundred ships at Hormuz: Pliny, Arab geographers, Marco Polo, Ibn Battuta, Zheng He’s chart and Wei Yuan.',
     date: '11 November 2026',
-    readTime: '30 min read',
+    readTime: '24 min read',
     kind: 'stories',
     image: '/articles/sea-road-china-gulf/ormus-kaempfer.jpg',
     imageAlt:
       'Engraved view of Hormuz from the sea with European ships and a plan of the island, from Kaempfer’s Amoenitates exoticae (1712).',
     epub: {
-      colour: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-e53f27ee.epub', mb: 5 },
-      eink: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-bw-8595b8f2.epub', mb: 2 },
+      colour: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-d5c0e379.epub', mb: 6 },
+      eink: { href: 'https://images.sourcelibrary.org/article-epubs/sea-road-china-gulf-bw-afcb89e9.epub', mb: 4 },
     },
   },
   {
@@ -346,11 +364,11 @@ export const posts: BlogPost[] = [
     slug: 'hyperborea',
     title: 'Beyond the North Wind: Hyperborea and the Amber Coast',
     subtitle:
-      'The Greeks placed a blessed people beyond the north wind and said amber came from the edge of the world. Herodotus doubted both. Prussian and Lithuanian historians later claimed them for the Baltic, and a nineteenth-century folklorist showed which parts of their pagan past had been invented.',
+      'A parcel in wheat straw reached Delos every year from a people no Greek had met. Herodotus, Pindar, Pausanias and Diodorus in their own Greek, the amber that was the real thing from the north, and the scholars of Sweden, Britain, Prussia and Lithuania who each found Hyperborea at home.',
     summary:
-      'Herodotus doubted the blessed people beyond the north wind and the amber from the world’s edge. Later Prussian historians claimed both for the Baltic.',
+      'A parcel in straw reached Delos yearly from a people no Greek had met. Herodotus, Pindar and Diodorus in Greek, and the Baltic historians who claimed them.',
     date: '16 October 2026',
-    readTime: '33 min read',
+    readTime: '24 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg',
     imageAlt: 'Engraving after Hendrick Goltzius: the sisters of Phaethon turning into poplars by the river Eridanus',

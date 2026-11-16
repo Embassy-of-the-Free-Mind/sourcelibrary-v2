@@ -7,10 +7,20 @@ name: Preview on demand
 # URL appears in the Vercel check on the PR, about 6 minutes after the push.
 #
 # From a local branch without a PR: `npm run preview`.
+#
+# Article-only PRs get the label automatically: when every changed file is under src/app/articles/,
+# src/components/articles/, public/articles/ or src/generated/article-*.json
+# (scripts/maintenance/preview-auto.mjs), the job adds `preview` itself and pushes the branch in the
+# same run. It does that at most once per PR: never when the label is already on, and never again once
+# `preview` has been on the PR before, so taking the label off sticks. A label added with GITHUB_TOKEN
+# triggers no workflow, which is why this job pushes in the same run instead of waiting for `labeled`.
+# Cost: each preview build is ~7 build minutes in Vercel's one-slot queue (it delays a release by as
+# much). Preview URLs are public but unlisted: anyone with the link can open one;
+# Vercel sends X-Robots-Tag: noindex on preview URLs.
 
 on:
   pull_request:
-    types: [labeled, unlabeled, synchronize, closed]
+    types: [opened, reopened, ready_for_review, labeled, unlabeled, synchronize, closed]
 
 permissions:
   contents: write       # push and delete preview/pr-<n>
@@ -24,7 +34,7 @@ jobs:
   preview:
     # Same-repo PRs only: a fork's GITHUB_TOKEN cannot push here.
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     env:
       GH_TOKEN: ${{ github.token }}
       BRANCH: preview/pr-${{ github.event.pull_request.number }}
@@ -36,17 +46,43 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1
 
+      # Article-only PR without the label: add it once, and let the steps below push and comment.
+      - uses: actions/setup-node@v4
+        if: >-
+          env.HAS_LABEL != 'true' && github.event.pull_request.draft == false &&
+          contains(fromJSON('["opened","reopened","ready_for_review","synchronize"]'), github.event.action)
+        with:
+          node-version: 22
+      - name: Label an article-only PR
+        if: >-
+          env.HAS_LABEL != 'true' && github.event.pull_request.draft == false &&
+          contains(fromJSON('["opened","reopened","ready_for_review","synchronize"]'), github.event.action)
+        env:
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          VERDICT=$(gh api "repos/$REPO/pulls/$PR/files" --paginate --jq '.[].filename' | node scripts/maintenance/preview-auto.mjs)
+          if [ "$VERDICT" != yes ]; then echo "Not article-only; no automatic preview."; exit 0; fi
+          SEEN=$(gh api "repos/$REPO/issues/$PR/events" --paginate \
+            --jq '.[] | select((.event == "labeled" or .event == "unlabeled") and .label.name == "preview") | .event' | wc -l)
+          if [ "$SEEN" -gt 0 ]; then echo "\`preview\` was on this PR before; not adding it again."; exit 0; fi
+          # REST, not `gh pr edit`: that also queries classic Projects and fails on a private repo.
+          gh api "repos/$REPO/issues/$PR/labels" -f "labels[]=preview" --silent
+          echo "AUTO_PREVIEW=true" >> "$GITHUB_ENV"
+
       - name: Push the PR head to its preview branch
         if: >-
-          github.event.action != 'closed' && env.HAS_LABEL == 'true' &&
-          (github.event.action != 'labeled' || github.event.label.name == 'preview')
+          github.event.action != 'closed' && (env.AUTO_PREVIEW == 'true' || (env.HAS_LABEL == 'true' &&
+          (github.event.action != 'labeled' || github.event.label.name == 'preview')))
         run: git push --force origin "$HEAD_SHA:refs/heads/$BRANCH"
 
       - name: Say where the link will appear
-        if: github.event.action == 'labeled' && github.event.label.name == 'preview'
+        if: env.AUTO_PREVIEW == 'true' || (github.event.action == 'labeled' && github.event.label.name == 'preview')
         run: |
+          WHY=""
+          [ "$AUTO_PREVIEW" = true ] && WHY="Labelled \`preview\` automatically: every file in this PR is article content. Remove the label to stop the builds (~7 min each); it will not be added again. "
           gh pr comment ${{ github.event.pull_request.number }} --body \
-            "Preview building from \`$BRANCH\` at ${HEAD_SHA:0:7}. The link appears in the Vercel check on this PR in about 6 minutes, and the preview rebuilds on each new commit while the \`preview\` label stays on."
+            "${WHY}Preview building from \`$BRANCH\` at ${HEAD_SHA:0:7}. The link appears in the Vercel check on this PR in about 6 minutes, and the preview rebuilds on each new commit while the \`preview\` label stays on."
 
       - name: Remove the preview branch
         if: github.event.action == 'closed' || (github.event.action == 'unlabeled' && github.event.label.name == 'preview')

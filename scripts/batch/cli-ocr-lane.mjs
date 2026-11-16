@@ -106,9 +106,12 @@
  * byFinishFirst; only their UNTRANSLATED Flash-Lite pages, so the OCR-first gate of the translation lanes clears and no
  * English is marked stale); then the quality steps with `--yield-to-finish` (they keep FINISH_RESERVE while the finishing
  * lanes have work, agy-pools.mjs FINISH FIRST): the Latin re-read of the readers and period tiers; with the time left,
- * the German/French correction; then the rest of Latin. Each step is its own `correct` run with its own folder
+ * the German/French re-read at 4 a call (#7853; it was the correction until 2026-11-13); then the rest of Latin. Each step is its own `correct` run with its own folder
  * and ledger, and stops at the pool's floor, so a step that finds the floor shut costs one /quota call. The reserves
  * (LANE_RESERVES) hold in every step. Every correct run ends with the books that crossed into readable or complete.
+ * `--quality=flagged` (#380, Derek 2026-11-15 "new books first"; the gex45 lines run it) keeps the finish steps whole and
+ * gives every re-read step `--flagged` (FLAGGED): a re-read only of pages a check found an OCR error on. `all` (no flag)
+ * is the blanket re-read as before.
  *
  * QUOTA FLOOR (drain by reset, #7911). Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini
  * weekly remaining fraction is below the weekly RESERVE (scripts/lib/agy-pools.mjs weeklyReserve: the declared needs
@@ -251,7 +254,7 @@ import { translateLaneForBook } from '../lib/translate-core.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
-import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
+import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName, weeklyReserve, pullFinishQueue, finishQueueNote } from '../lib/agy-pools.mjs';
 import { laneRouteCheck, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead } from '../lib/router-binding.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 
@@ -465,11 +468,20 @@ export const LATIN_FIRST_ROOT = '/root/jobs';
 export const rereadOutDir = (root, date) => `${root}/cli-ocr-reread/${date}`;
 /** `--first=ID,ID`: those pages first, the rest in their order (reader-request-lane.mjs puts a reader's pages first). */
 export const firstPagesFirst = (pages, first) => (first?.size ? [...pages.filter((p) => first.has(p.id)), ...pages.filter((p) => !first.has(p.id))] : pages);
-export function latinFirstSteps({ home, root, date, maxPages, latinMaxPages = 8000, concurrency, chunk = 40, apply }) {
+/** latin-first --quality (#380): `all` re-reads every page in the tiers (as before), `flagged` only FLAGGED pages. */
+export const LATIN_FIRST_QUALITY = Object.freeze(['all', 'flagged']);
+export function latinFirstSteps({ home, root, date, maxPages, latinMaxPages = 8000, concurrency, chunk = 40, apply, quality = 'all' }) {
+  if (!LATIN_FIRST_QUALITY.includes(quality)) throw new Error(`--quality: ${LATIN_FIRST_QUALITY.join(' or ')}`);
   const common = [`--concurrency=${concurrency}`, `--book-chunk=${chunk}`, `--agy-home=${home}`, ...(apply ? ['--apply'] : [])];
+  // The quality steps' page rule (#380, Derek 2026-11-15 "new books first"): with `flagged`, a re-read only of pages a check flagged.
+  const q = quality === 'flagged' ? ['--flagged'] : [];
   const latinBase = ['correct', '--reread-per-call=4', '--reread-languages=Latin', `--out=${rereadOutDir(root, date)}`, `--max-pages=${latinMaxPages}`];
-  const latin = (tiers) => [...latinBase, `--reread-tiers=${tiers}`, '--yield-to-finish', ...common];
-  const deFr = ['correct', `--out=${root}/cli-ocr-correct/${date}`, `--max-pages=${maxPages}`];
+  const latin = (tiers) => [...latinBase, `--reread-tiers=${tiers}`, '--yield-to-finish', ...q, ...common];
+  // German/French are RE-READ at 4 a call, not corrected (#7853, Derek 2026-11-01: read@4 accepted 0.82 German / 0.91
+  // French against the correction's 0.72 / 0.78, at 0.34 agy calls a page against 1.0). #8007 carried the plain
+  // correction forward here, and the router flagged french-lite/print MISMATCH (2026-11-13). Without
+  // --reread-languages the re-read takes CORRECT_LANGUAGES; its own day folder and ledger (shared with Latin's).
+  const deFr = ['correct', '--reread-per-call=4', `--out=${rereadOutDir(root, date)}`, `--max-pages=${maxPages}`];
   return [
     // FINISH FIRST (#8482): the untranslated Flash-Lite pages a translation waits on (the OCR-first gate), books
     // closest to done first; same route, ledger and claims as the steps below, so no page is read twice.
@@ -477,7 +489,7 @@ export function latinFirstSteps({ home, root, date, maxPages, latinMaxPages = 80
     { step: 'finish-german-french', args: [...deFr, '--finish-first', ...common] },
     // Quality re-reads of pages that have text: only with what the finishing lanes leave (agy-pools.mjs FINISH FIRST).
     { step: 'latin-priority', args: latin('readers,period') },
-    { step: 'german-french-correct', args: [...deFr, '--yield-to-finish', ...common] },
+    { step: 'german-french-reread', args: [...deFr, '--yield-to-finish', ...q, ...common] },
     { step: 'latin-rest', args: latin('rest') },
   ];
 }
@@ -488,6 +500,35 @@ export function rereadReadArgs({ cli, ids, dir, model = CORRECT_MODEL, job, perC
 /** The re-read's writer: the plain apply over the stored text, this chunk only, stamped and flagged with REREAD_LANE. */
 export function rereadApplyArgs({ cli, ids, dir, reason, apply }) {
   return [cli, 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--lane=${REREAD_LANE}`, '--print-only', `--mark-stale=${REREAD_LANE}`, ...(apply ? ['--apply'] : [])];
+}
+/**
+ * FLAGGED (#380, Derek 2026-11-15: re-reads only of pages a check flags). `correct --flagged` takes only the pages a
+ * book_checks row (scripts/lib/book-checks.mjs) found an OCR-stage error on (page_findings[].errors[].stage 'ocr'), and
+ * only while that check is newer than the page's OCR: a page re-OCRed after its check is no longer flagged, so it is
+ * read once. Map book_id → Map(page_number → latest check ms).
+ */
+export async function flaggedOcrPages(db) {
+  const rows = await db.collection('book_checks').aggregate([
+    { $match: { 'page_findings.errors.stage': 'ocr' } },
+    { $project: { _id: 0, book_id: 1, checked_at: 1, page_findings: 1 } },
+    { $unwind: '$page_findings' },
+    { $match: { 'page_findings.errors.stage': 'ocr' } },
+    { $group: { _id: { b: '$book_id', p: '$page_findings.page_number' }, at: { $max: '$checked_at' } } },
+  ]).toArray();
+  const m = new Map();
+  for (const r of rows) {
+    const at = new Date(r.at).getTime();
+    if (!m.has(r._id.b)) m.set(r._id.b, new Map());
+    m.get(r._id.b).set(r._id.p, Number.isFinite(at) ? at : Infinity);
+  }
+  return m;
+}
+/** Pure: is this page still flagged? A check exists for its number and is not older than the page's OCR (`ocr_at`). */
+export function flaggedLive(flags, bookId, page) {
+  const at = flags?.get(bookId)?.get(page.page_number);
+  if (at == null) return false;
+  const ocr = page.ocr_at == null ? NaN : new Date(page.ocr_at).getTime();   // a Date from Mongo, or an ISO string
+  return !Number.isFinite(ocr) || ocr <= at;
 }
 export const LITE_MODELS = Object.freeze(['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview']);
 export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'failed', 'parked', 'ocr_complete']);
@@ -662,7 +703,7 @@ async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES, printOn
   const rows = await db.collection('pages').aggregate([
     // strlen-safe: correctablePageMatch carries 'ocr.data': { $type: 'string' }, the stage before
     { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES, { untranslatedOnly }) },
-    { $project: { _id: 0, id: 1, page_number: 1, script_type: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: printOnly ? '<script>\\s*(handwrit|manuscript|mixed|none|n/a)' : '<script>\\s*handwritten', options: 'i' } }, printed: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*print', options: 'i' } } } },
+    { $project: { _id: 0, id: 1, page_number: 1, script_type: 1, ocr_at: '$ocr.updated_at', n:{ $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: printOnly ? '<script>\\s*(handwrit|manuscript|mixed|none|n/a)' : '<script>\\s*handwritten', options: 'i' } }, printed: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*print', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
@@ -724,6 +765,9 @@ async function correctMain(mode, arg) {
   // queue is open); --finish-first takes only the books a translation waits on, and only their untranslated pages.
   const YIELD = process.argv.includes('--yield-to-finish'), FINISH = process.argv.includes('--finish-first');
   if (YIELD && FINISH) { console.error('--yield-to-finish and --finish-first together'); process.exit(2); }
+  // The finishing lane may run on another box: read its stamp from Mongo too, before the first floor is judged
+  // (agy-pools.mjs THE STAMP IS IN TWO PLACES, v3#70). The line names the stamp that decided, and the box that wrote it.
+  if (YIELD) { await pullFinishQueue(db); console.log(finishQueueNote()); }
   const want = parseAgyHome(arg('agy-home'));
   let HOME = want.home ?? null;
   if (want.auto) {
@@ -755,11 +799,15 @@ async function correctMain(mode, arg) {
     ? await readerFirstReadsWaiting(db).then(restTierOpen, (e) => ({ open: false, why: `the first-read check failed (${e.message})` }))
     : { open: true };
   if (!REST.open) console.log(`correct: the rest tier yields: ${REST.why}`);
+  // --flagged (header: FLAGGED, #380): only the books and pages a check flagged, whose OCR the check read.
+  const FLAGGED = process.argv.includes('--flagged') ? await flaggedOcrPages(db) : null;
+  if (FLAGGED) console.log(`correct --flagged: ${FLAGGED.size} book(s) carry a book_checks OCR finding; only those pages are read`);
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },
       $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] },
     { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1, ...(LATIN && { year: 1, published: 1, publisher: 1, image_source: 1, human_read_count: 1, pages_translated: 1 }) } },
   ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k)
+      && (!FLAGGED || FLAGGED.has(b.id))
       && (!LATIN || (!latinRereadSkip(b, BY_EYE) && (!TIERS || TIERS.includes(rereadTier(b))) && (REST.open || rereadTier(b) !== 'rest')))
       && (!FINISH || finishFirstBook(b)))
     .sort(FINISH ? byFinishFirst : LATIN ? byRereadPriority : (a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
@@ -768,7 +816,7 @@ async function correctMain(mode, arg) {
   if (mode === 'correct-count') {
     const t = {};
     for (const b of books) {
-      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id));
+      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id) && (!FLAGGED || flaggedLive(FLAGGED, b.id, p)));
       const k = LATIN ? rereadTier(b) : String(b.language).match(M.languages)[1];
       t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
       t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
@@ -805,7 +853,7 @@ async function correctMain(mode, arg) {
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
       ledgerTail(LEDGER, ledger, tailState);
-      const open = firstPagesFirst((await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id)), FIRST);
+      const open = firstPagesFirst((await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id) && (!FLAGGED || flaggedLive(FLAGGED, b.id, p))), FIRST);
       if (open.length) return { book: b, open };
       releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
     }
@@ -815,6 +863,8 @@ async function correctMain(mode, arg) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
+      // A quality run keeps the shared finish-first stamp current (asks Mongo at most every 10 minutes; v3#70).
+      if (YIELD) await pullFinishQueue(db);
       // The mode's own gate, read again before every chunk: a reset or a spent Claude group ends the run.
       const now = gate();
       if (now.mode !== M.mode) { stop ??= now.mode ? `mode changed to ${now.mode}: the next run takes it` : now.why; break; }
@@ -887,7 +937,10 @@ async function latinFirstMain(arg) {
   const home = arg('agy-home'), maxPages = Number(arg('max-pages')), concurrency = Number(arg('concurrency')), minutes = Number(arg('deadline-min'));
   if (!home || !(maxPages > 0) || !(concurrency > 0) || !(minutes > 0)) { console.error('latin-first needs --agy-home --max-pages --concurrency --deadline-min'); process.exit(2); }
   const end = Date.now() + minutes * 60_000;
-  const steps = latinFirstSteps({ home, root: arg('root') || LATIN_FIRST_ROOT, date: new Date().toISOString().slice(0, 10), maxPages, concurrency, apply: process.argv.includes('--apply') });
+  const quality = arg('quality') || 'all';
+  if (!LATIN_FIRST_QUALITY.includes(quality)) { console.error(`latin-first --quality: ${LATIN_FIRST_QUALITY.join(' or ')}`); process.exit(2); }
+  const steps = latinFirstSteps({ home, root: arg('root') || LATIN_FIRST_ROOT, date: new Date().toISOString().slice(0, 10), maxPages, concurrency, apply: process.argv.includes('--apply'), quality });
+  if (quality !== 'all') console.log(`latin-first --quality=${quality}: the re-read steps read only pages a check flagged (#380)`);
   for (const { step, args } of steps) {
     const left = Math.floor((end - Date.now()) / 60_000);
     if (left < 5) { console.log(`latin-first: ${left} min left: stop before ${step}`); break; }

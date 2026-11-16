@@ -1,0 +1,37 @@
+<scan-quality>fair</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>十六</page-num>
+<header>新鍥天機三</header>
+<warning>Strong show-through from the reverse of the leaf in the hexagram columns; Japanese kunten reading marks beside the characters are not transcribed</warning>
+
+離上坤下六親 <gloss>巳火未土配金卯木巳火未土</gloss> 飛<gloss>己酉</gloss>金 春吉
+
+# 火地晉
+
+・ ・ 世 ・ ・ 應 二月卦 <gloss>夏平 秋凶</gloss>
+
+乾金遊魂 <gloss>內卦伏藏</gloss> 官鬼 父母 兄弟 妻財 官鬼 父母 伏<gloss>壬午</gloss>火 冬吉
+
+## 評曰 <gloss>晉者進也</gloss>
+
+此卦昔司馬進策卜得之後果為丞相
+
+---
+
+日出於地<unclear>示</unclear>而
+上行巡運照
+耀昇進其明
+居官益位禍
+滅福生利見
+王侯任意 <gloss>必亨</gloss>
+
+<image-desc size="large" type="emblem" significance="high">Woodcut divination emblem: an official in a cap and robe covering his face stands beside a tree, with a deer carrying a scroll at his side; a rooster holds a steelyard in its beak; a ball lies on the ground, a withered tree stands near a rock, a sun disc floats above wavy lines, and a heap of treasure sits at lower right.</image-desc>
+
+**解曰** 文字破<gloss>不負全也</gloss> 官人掩面<gloss>悲也</gloss> 毬在泥上<gloss>事沉也</gloss> 雞啣秤<gloss>雞早鳴有準也</gloss> 枯木生花<gloss>晚発也</gloss> 鹿啣書<gloss>祿命也</gloss> 一堆金宝<gloss>有才有利</gloss>
+
+龍劍入匣之課
+以臣遇君之象
+
+<vocab>火地晉, 司馬, 六親, 遊魂, 乾金, 丞相, 鹿啣書, 枯木生花, 龍劍入匣</vocab>

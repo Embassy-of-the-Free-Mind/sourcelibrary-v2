@@ -26,8 +26,10 @@ import { HOLD_STATUS, HOLD_EVENT, makeHoldMarker } from '../../lib/pipeline-hold
 import { yearFromPublished } from '../../lib/catalogue-year.mjs';
 import { getCanvases, extractCanvasImage } from './manifest-store.mjs';
 import { languageCode, languageName } from '../../lib/language-normalize.mjs';
+import { catalogueStampsForInsert } from '../../lib/catalogue-fields.mjs';
 
 export const IMPORTER = 'script:iiif-discovery/import-wave';
+const WAVE_SCRIPT = 'scripts/iiif-discovery/lib/wave-import.mjs';
 
 const slugify = (t, max = 70) => (t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, max).replace(/-$/, '');
 const normText = t => (t || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
@@ -93,6 +95,36 @@ export function holdAtInsert(hold, now) {
 }
 
 /**
+ * Title and author stamps for a wave book, written in the insert itself (#8024). The values come from the
+ * import_candidates row, which the discovery harvest took from the provider's catalogue (for `bsb`, its OAI-PMH
+ * feed: `metadata.oai_set`). The stamp names that row and the provider's record URL so the claim can be checked.
+ * A placeholder (no title, or an author of 'Unknown') is not stamped: the record did not say it.
+ * `display_title` is the record's title copied, and its stamp says so.
+ * @param {object} c       the import_candidates row
+ * @param {{title: string|null, author: string|null}} values  the stored values the record gave, or null
+ */
+export function waveCatalogueStamps(c, values, now) {
+  const stamp = {
+    source: 'source_catalogue', script: WAVE_SCRIPT, importer: IMPORTER, method: 'import_candidate_record',
+    provider: c.source, record_kind: 'import_candidate', candidate_id: String(c._id ?? candidateKey(c)),
+    record_url: c.source_url || c.viewer_url || c.manifest_url || null,
+    ...(c.metadata?.oai_set ? { oai_set: c.metadata.oai_set } : {}),
+    ...(c.discovered_at ? { harvested_at: c.discovered_at } : {}),
+    date: now,
+  };
+  // Only the values the record gave; the stamps go into the insert beside them.
+  const fields = Object.fromEntries(Object.entries(values).filter(([, v]) => v));
+  if (!Object.keys(fields).length) return {};
+  const prov = catalogueStampsForInsert(fields, stamp, now);
+  if (values.title) {
+    const copy = catalogueStampsForInsert({ display_title: values.title }, { ...stamp, note: "the record's title, copied as the display title at import" }, now);
+    Object.assign(prov.field_provenance, copy.field_provenance);
+    Object.assign(prov.field_provenance_history, copy.field_provenance_history);
+  }
+  return prov;
+}
+
+/**
  * The book fields for one candidate. Pure.
  * @param {object} c          the import_candidates row
  * @param {object} manifest   the fetched IIIF manifest
@@ -102,13 +134,16 @@ export function buildWaveBook(c, manifest, o) {
   const { language, campaign, hold, slug, now, bookId } = o;
   const canvases = getCanvases(manifest);
   const first = canvases.length ? extractCanvasImage(canvases[0]) : {};
-  const title = (str(c.title) || str(c.display_title) || `${c.source} item`).slice(0, 500);
-  const author = str(c.author) && str(c.author) !== 'Unknown' ? str(c.author) : 'Unknown';
+  const recordTitle = str(c.title) || str(c.display_title);
+  const recordAuthor = str(c.author) && str(c.author) !== 'Unknown' ? str(c.author) : '';
+  const title = (recordTitle || `${c.source} item`).slice(0, 500);
+  const author = recordAuthor || 'Unknown';
   const year = yearFromPublished(c.date_text);
   const fp = candidateKey(c);
   return {
     _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
+    ...waveCatalogueStamps(c, { title: recordTitle ? title : null, author: recordAuthor || null }, now),
     language: canonicalLanguage(language),
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),
     thumbnail: first.thumbnail || first.photo || '',

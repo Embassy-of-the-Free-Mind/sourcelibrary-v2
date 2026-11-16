@@ -20,6 +20,11 @@
  *   - `git worktree remove` leaves the BRANCH intact — commits survive; a removed
  *     worktree is just re-checkout-able. Only the working directory goes.
  *   - Stale locks (lock pid is dead) are unlocked and reaped. Live locks are kept.
+ *     A lock whose reason names NO pid is a deliberate hold (`git worktree lock
+ *     --reason "..."`, e.g. a cron's checkout) and is always kept: it cannot go
+ *     stale, because nothing ties it to a process. /root/ft-code (the FT nightly's
+ *     checkout) was reaped as "stale" in 2026-11 and the cron then failed at `cd`
+ *     for two days without a log line (v3#376).
  *     `git worktree remove --force` REFUSES a locked worktree (git wants -f -f);
  *     unlocking first is deliberate, so a live lock can never be forced away.
  *   - If occupancy can't be determined (no lsof), falls back to the old
@@ -109,8 +114,9 @@ let removable = [];
 
 for (const w of wts) {
   const liveLock = w.locked && w.lockPid && alive(w.lockPid);
-  if (w.path === here || occupiedBy(w.path) || liveLock) {
-    keepInUse.push({ ...w, why: w.path === here ? 'current dir' : liveLock ? `lock held by live pid ${w.lockPid}` : 'live process cwd inside' });
+  const holdLock = w.locked && !w.lockPid;   // pid-less lock = deliberate hold (v3#376)
+  if (w.path === here || occupiedBy(w.path) || liveLock || holdLock) {
+    keepInUse.push({ ...w, why: w.path === here ? 'current dir' : liveLock ? `lock held by live pid ${w.lockPid}` : holdLock ? `locked, no pid: ${w.lockReason || '(no reason)'}` : 'live process cwd inside' });
     continue;
   }
   const st = sh('git status --porcelain', w.path).trim();
@@ -126,7 +132,13 @@ if (MERGED_ONLY) {
     // A detached worktree has no branch to look a PR up by — `gh pr list --head ""`
     // would match every open PR. Never infer "merged" from that; keep it.
     if (!w.branch) { keepOpenPr.push({ ...w, state: 'detached' }); continue; }
-    const state = sh(`gh pr list --head "${w.branch}" --state all --json state --jq '.[0].state // "NONE"'`).trim();
+    // PRs live on the private v3 repo since 2026-11-12; branches opened before the
+    // move have their PR on v2 (the public mirror). Ask v3 first, then v2.
+    let state = 'NONE';
+    for (const repo of ['Embassy-of-the-Free-Mind/sourcelibrary-v3', 'Embassy-of-the-Free-Mind/sourcelibrary-v2']) {
+      state = sh(`gh pr list --repo ${repo} --head "${w.branch}" --state all --json state --jq '.[0].state // "NONE"'`).trim() || 'NONE';
+      if (state !== 'NONE') break;
+    }
     if (state === 'MERGED' || state === 'CLOSED') next.push(w);
     else keepOpenPr.push({ ...w, state });
   }

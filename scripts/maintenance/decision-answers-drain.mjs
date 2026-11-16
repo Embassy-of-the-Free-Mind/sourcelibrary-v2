@@ -36,7 +36,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 
-const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v2';
+const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v3';  // PRs and main moved to the private repo on 2026-11-12 (v3#1)
 const COLLECTION = 'decision_answers';
 const BUILD_GAP_MIN = 8;
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');

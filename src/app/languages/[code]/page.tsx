@@ -201,7 +201,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
         <div className="relative max-w-[1500px] mx-auto px-6 pt-8 pb-12 sm:pb-16">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif">
             {langName}
           </h1>
 
@@ -221,7 +221,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
       {galleryImages.length > 0 && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-6">
-            <h2 className="text-xl sm:text-2xl text-primary mb-4 font-display">Illustrations</h2>
+            <h2 className="text-xl sm:text-2xl text-primary mb-4 font-serif">Illustrations</h2>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {galleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
@@ -265,7 +265,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
         {/* Books Header */}
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl sm:text-3xl text-primary font-display">All Books</h2>
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif">All Books</h2>
             <p className="text-sm text-muted mt-1">
               {total.toLocaleString('en-US')} {langName} texts
             </p>

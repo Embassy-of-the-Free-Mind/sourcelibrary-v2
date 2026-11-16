@@ -229,21 +229,21 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
         {/* Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-lg border border-stone-200 p-4">
-            <div className="text-2xl font-bold text-stone-900">{data?.totalPages}</div>
+            <div className="text-2xl font-semibold text-stone-900">{data?.totalPages}</div>
             <div className="text-sm text-stone-500">Total Pages</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4">
-            <div className="text-2xl font-bold text-stone-900">{data?.translatedPages}</div>
+            <div className="text-2xl font-semibold text-stone-900">{data?.translatedPages}</div>
             <div className="text-sm text-stone-500">Translated</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4">
-            <div className={`text-2xl font-bold ${data?.pagesWithIssues === 0 ? 'text-status-success' : 'text-status-error'}`}>
+            <div className={`text-2xl font-semibold ${data?.pagesWithIssues === 0 ? 'text-status-success' : 'text-status-error'}`}>
               {data?.pagesWithIssues}
             </div>
             <div className="text-sm text-stone-500">Pages with Issues</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4">
-            <div className={`text-2xl font-bold ${data?.totalIssues === 0 ? 'text-status-success' : 'text-accent-rust'}`}>
+            <div className={`text-2xl font-semibold ${data?.totalIssues === 0 ? 'text-status-success' : 'text-accent-rust'}`}>
               {data?.totalIssues}
             </div>
             <div className="text-sm text-stone-500">Total Issues</div>

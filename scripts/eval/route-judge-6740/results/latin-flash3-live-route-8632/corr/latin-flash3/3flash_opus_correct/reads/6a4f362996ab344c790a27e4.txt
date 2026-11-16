@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Show-through from the reverse side of the leaf is visible in the lower half; the primary text remains legible.</warning>
+
+votis et mutuis suspiriis subinde intonemus §. 49. ω.
+> *Tu Domine exsurgens miserearis Zion, quia tempus miserendi ejus, quia venit tempus, quoniam delectantur servi tui lapidibus ejus, et pulveris ejus miserentur: Ut timeant gentes nomen tuum Domine, et omnes Reges terrae gloriam tuam.*
+
+§. 50. Quod superest, **Gottfried Wiesener** *patria Raceburgo Mekelnburgicus*, genere α *Laubanensis*, pro ea, quam *Laubae* debere sese profitetur et inposterum quoque debiturum, pietate atque obsequio, elegantula *oratione Latina*, quam recitaturus est *memoriter*, descripsit istud infortunium, ciebit solatium, Vestrumque praedicabit beneficium: cujus studium quum nullatenus fiet improbandum, ipsi quoque dignum Eum, quem audiveritis, eritis censuri. *Promtè* enim β *favendum est honestè cupientibus, ut probabiles voluntates alieno etiam juventur adnisu, et* γ *paenè injuriam facit benignitati, qui anxiè petit, quod praestantis natura spontè promittit. Valete.*
+
+---
+
+(ω) *ex Psalm. 102, 14-16*; (α) *Vide Scaliger. l. 3. Poët. c. 118. (119) et c. 199. de LL. Cicero lib. 2. de LL. pag. 170. Francisc. Patrit. lib. V. de Instit. Reipubl. tit. 1, Confer l. 190 ff. de V. S.* (β) *Symmach. l. V. epist. 75.* (γ) *lib. VII. epist. 62.*
+
+<image-desc size="medium" type="decorative" significance="low">A diamond-shaped printer's ornament with symmetrical floral and foliate scrollwork around a central quatrefoil motif.</image-desc>
+
+<vocab>Psalm 102, Zion, Gottfried Wiesener, Raceburgum, Mekelnburgicus, Laubanensis, Lauba, Scaliger, Cicero, Franciscus Patritius, Symmachus, oratio Latina</vocab>

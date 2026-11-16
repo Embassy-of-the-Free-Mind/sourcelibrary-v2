@@ -1,0 +1,595 @@
+{
+ "generated_at": "2026-11-12T17:45:42.525Z",
+ "dir": "/root/jobs/error-zoo-v2/union",
+ "n_pages": 13534,
+ "n_labels_fresh": 9728,
+ "negatives": 921,
+ "checks": [
+  {
+   "check": "negation-deficit",
+   "classes": [
+    "T8"
+   ],
+   "threshold": 2,
+   "base_rate_random": 0.0551,
+   "all": {
+    "pos": 592,
+    "pos_scored": 477,
+    "neg": 921,
+    "neg_scored": 845,
+    "recall": 0.128,
+    "recall_ci": [
+     0.101,
+     0.161
+    ],
+    "false_flag": 0.099,
+    "false_flag_ci": [
+     0.081,
+     0.121
+    ],
+    "precision_at_base": 0.07,
+    "auc": 0.502
+   },
+   "A": {
+    "pos": 289,
+    "pos_scored": 233,
+    "neg": 489,
+    "neg_scored": 445,
+    "recall": 0.142,
+    "recall_ci": [
+     0.103,
+     0.192
+    ],
+    "false_flag": 0.101,
+    "false_flag_ci": [
+     0.076,
+     0.133
+    ],
+    "precision_at_base": 0.076,
+    "auc": 0.505
+   },
+   "B": {
+    "pos": 303,
+    "pos_scored": 244,
+    "neg": 432,
+    "neg_scored": 400,
+    "recall": 0.115,
+    "recall_ci": [
+     0.081,
+     0.161
+    ],
+    "false_flag": 0.098,
+    "false_flag_ci": [
+     0.072,
+     0.131
+    ],
+    "precision_at_base": 0.064,
+    "auc": 0.5
+   }
+  },
+  {
+   "check": "untraced-numbers",
+   "classes": [
+    "O7"
+   ],
+   "threshold": 1,
+   "base_rate_random": 0.032,
+   "all": {
+    "pos": 477,
+    "pos_scored": 477,
+    "neg": 921,
+    "neg_scored": 921,
+    "recall": 0.335,
+    "recall_ci": [
+     0.295,
+     0.379
+    ],
+    "false_flag": 0.116,
+    "false_flag_ci": [
+     0.097,
+     0.138
+    ],
+    "precision_at_base": 0.087,
+    "auc": 0.619
+   },
+   "A": {
+    "pos": 194,
+    "pos_scored": 194,
+    "neg": 489,
+    "neg_scored": 489,
+    "recall": 0.289,
+    "recall_ci": [
+     0.229,
+     0.356
+    ],
+    "false_flag": 0.127,
+    "false_flag_ci": [
+     0.1,
+     0.159
+    ],
+    "precision_at_base": 0.07,
+    "auc": 0.589
+   },
+   "B": {
+    "pos": 283,
+    "pos_scored": 283,
+    "neg": 432,
+    "neg_scored": 432,
+    "recall": 0.367,
+    "recall_ci": [
+     0.313,
+     0.425
+    ],
+    "false_flag": 0.104,
+    "false_flag_ci": [
+     0.079,
+     0.137
+    ],
+    "precision_at_base": 0.104,
+    "auc": 0.641
+   }
+  },
+  {
+   "check": "untraced-numbers-any-O7",
+   "classes": [
+    "O7"
+   ],
+   "threshold": 1,
+   "base_rate_random": 0.032,
+   "all": {
+    "pos": 477,
+    "pos_scored": 477,
+    "neg": 921,
+    "neg_scored": 921,
+    "recall": 0.447,
+    "recall_ci": [
+     0.403,
+     0.491
+    ],
+    "false_flag": 0.219,
+    "false_flag_ci": [
+     0.194,
+     0.247
+    ],
+    "precision_at_base": 0.063,
+    "auc": 0.63
+   },
+   "A": {
+    "pos": 194,
+    "pos_scored": 194,
+    "neg": 489,
+    "neg_scored": 489,
+    "recall": 0.402,
+    "recall_ci": [
+     0.336,
+     0.472
+    ],
+    "false_flag": 0.227,
+    "false_flag_ci": [
+     0.192,
+     0.266
+    ],
+    "precision_at_base": 0.055,
+    "auc": 0.601
+   },
+   "B": {
+    "pos": 283,
+    "pos_scored": 283,
+    "neg": 432,
+    "neg_scored": 432,
+    "recall": 0.477,
+    "recall_ci": [
+     0.42,
+     0.535
+    ],
+    "false_flag": 0.211,
+    "false_flag_ci": [
+     0.175,
+     0.252
+    ],
+    "precision_at_base": 0.07,
+    "auc": 0.652
+   }
+  },
+  {
+   "check": "untraced-numbers-in-notes-T10",
+   "classes": [
+    "T10"
+   ],
+   "threshold": 1,
+   "base_rate_random": 0.0447,
+   "all": {
+    "pos": 661,
+    "pos_scored": 661,
+    "neg": 921,
+    "neg_scored": 921,
+    "recall": 0.218,
+    "recall_ci": [
+     0.188,
+     0.251
+    ],
+    "false_flag": 0.123,
+    "false_flag_ci": [
+     0.103,
+     0.145
+    ],
+    "precision_at_base": 0.077,
+    "auc": 0.547
+   },
+   "A": {
+    "pos": 320,
+    "pos_scored": 320,
+    "neg": 489,
+    "neg_scored": 489,
+    "recall": 0.241,
+    "recall_ci": [
+     0.197,
+     0.29
+    ],
+    "false_flag": 0.123,
+    "false_flag_ci": [
+     0.097,
+     0.155
+    ],
+    "precision_at_base": 0.084,
+    "auc": 0.559
+   },
+   "B": {
+    "pos": 341,
+    "pos_scored": 341,
+    "neg": 432,
+    "neg_scored": 432,
+    "recall": 0.196,
+    "recall_ci": [
+     0.158,
+     0.242
+    ],
+    "false_flag": 0.123,
+    "false_flag_ci": [
+     0.095,
+     0.157
+    ],
+    "precision_at_base": 0.07,
+    "auc": 0.537
+   }
+  },
+  {
+   "check": "notes-hedge-or-untraced-number-T10",
+   "classes": [
+    "T10"
+   ],
+   "threshold": 1,
+   "base_rate_random": 0.0447,
+   "all": {
+    "pos": 661,
+    "pos_scored": 661,
+    "neg": 921,
+    "neg_scored": 921,
+    "recall": 0.54,
+    "recall_ci": [
+     0.502,
+     0.578
+    ],
+    "false_flag": 0.174,
+    "false_flag_ci": [
+     0.151,
+     0.2
+    ],
+    "precision_at_base": 0.127,
+    "auc": 0.687
+   },
+   "A": {
+    "pos": 320,
+    "pos_scored": 320,
+    "neg": 489,
+    "neg_scored": 489,
+    "recall": 0.541,
+    "recall_ci": [
+     0.486,
+     0.594
+    ],
+    "false_flag": 0.184,
+    "false_flag_ci": [
+     0.152,
+     0.221
+    ],
+    "precision_at_base": 0.121,
+    "auc": 0.684
+   },
+   "B": {
+    "pos": 341,
+    "pos_scored": 341,
+    "neg": 432,
+    "neg_scored": 432,
+    "recall": 0.54,
+    "recall_ci": [
+     0.487,
+     0.592
+    ],
+    "false_flag": 0.162,
+    "false_flag_ci": [
+     0.13,
+     0.2
+    ],
+    "precision_at_base": 0.135,
+    "auc": 0.69
+   }
+  },
+  {
+   "check": "english-over-unclear",
+   "classes": [
+    "T7"
+   ],
+   "threshold": 1,
+   "base_rate_random": 0.0774,
+   "all": {
+    "pos": 955,
+    "pos_scored": 955,
+    "neg": 921,
+    "neg_scored": 921,
+    "recall": 0.071,
+    "recall_ci": [
+     0.057,
+     0.089
+    ],
+    "false_flag": 0.01,
+    "false_flag_ci": [
+     0.005,
+     0.018
+    ],
+    "precision_at_base": 0.38,
+    "auc": 0.531
+   },
+   "A": {
+    "pos": 467,
+    "pos_scored": 467,
+    "neg": 489,
+    "neg_scored": 489,
+    "recall": 0.077,
+    "recall_ci": [
+     0.056,
+     0.105
+    ],
+    "false_flag": 0.006,
+    "false_flag_ci": [
+     0.002,
+     0.018
+    ],
+    "precision_at_base": 0.513,
+    "auc": 0.536
+   },
+   "B": {
+    "pos": 488,
+    "pos_scored": 488,
+    "neg": 432,
+    "neg_scored": 432,
+    "recall": 0.066,
+    "recall_ci": [
+     0.047,
+     0.091
+    ],
+    "false_flag": 0.014,
+    "false_flag_ci": [
+     0.006,
+     0.03
+    ],
+    "precision_at_base": 0.284,
+    "auc": 0.526
+   }
+  },
+  {
+   "check": "sentence-shortfall",
+   "classes": [
+    "T9"
+   ],
+   "threshold": 1.429,
+   "base_rate_random": 0.0216,
+   "all": {
+    "pos": 321,
+    "pos_scored": 219,
+    "neg": 921,
+    "neg_scored": 640,
+    "recall": 0.288,
+    "recall_ci": [
+     0.232,
+     0.351
+    ],
+    "false_flag": 0.192,
+    "false_flag_ci": [
+     0.164,
+     0.225
+    ],
+    "precision_at_base": 0.032,
+    "auc": 0.549
+   },
+   "A": {
+    "pos": 143,
+    "pos_scored": 109,
+    "neg": 489,
+    "neg_scored": 336,
+    "recall": 0.284,
+    "recall_ci": [
+     0.208,
+     0.375
+    ],
+    "false_flag": 0.199,
+    "false_flag_ci": [
+     0.16,
+     0.245
+    ],
+    "precision_at_base": 0.031,
+    "auc": 0.553
+   },
+   "B": {
+    "pos": 178,
+    "pos_scored": 110,
+    "neg": 432,
+    "neg_scored": 304,
+    "recall": 0.291,
+    "recall_ci": [
+     0.214,
+     0.382
+    ],
+    "false_flag": 0.184,
+    "false_flag_ci": [
+     0.145,
+     0.232
+    ],
+    "precision_at_base": 0.034,
+    "auc": 0.546
+   }
+  },
+  {
+   "check": "sentence-shortfall-O5",
+   "classes": [
+    "O5"
+   ],
+   "threshold": 1.429,
+   "base_rate_random": 0.0402,
+   "all": {
+    "pos": 464,
+    "pos_scored": 269,
+    "neg": 921,
+    "neg_scored": 640,
+    "recall": 0.242,
+    "recall_ci": [
+     0.194,
+     0.296
+    ],
+    "false_flag": 0.192,
+    "false_flag_ci": [
+     0.164,
+     0.225
+    ],
+    "precision_at_base": 0.05,
+    "auc": 0.505
+   },
+   "A": {
+    "pos": 209,
+    "pos_scored": 132,
+    "neg": 489,
+    "neg_scored": 336,
+    "recall": 0.242,
+    "recall_ci": [
+     0.177,
+     0.322
+    ],
+    "false_flag": 0.199,
+    "false_flag_ci": [
+     0.16,
+     0.245
+    ],
+    "precision_at_base": 0.048,
+    "auc": 0.506
+   },
+   "B": {
+    "pos": 255,
+    "pos_scored": 137,
+    "neg": 432,
+    "neg_scored": 304,
+    "recall": 0.241,
+    "recall_ci": [
+     0.177,
+     0.319
+    ],
+    "false_flag": 0.184,
+    "false_flag_ci": [
+     0.145,
+     0.232
+    ],
+    "precision_at_base": 0.052,
+    "auc": 0.504
+   }
+  },
+  {
+   "check": "note-hedges",
+   "classes": [
+    "T10"
+   ],
+   "threshold": 1,
+   "base_rate_random": 0.0447,
+   "all": {
+    "pos": 661,
+    "pos_scored": 661,
+    "neg": 921,
+    "neg_scored": 921,
+    "recall": 0.433,
+    "recall_ci": [
+     0.395,
+     0.471
+    ],
+    "false_flag": 0.071,
+    "false_flag_ci": [
+     0.056,
+     0.089
+    ],
+    "precision_at_base": 0.223,
+    "auc": 0.684
+   },
+   "A": {
+    "pos": 320,
+    "pos_scored": 320,
+    "neg": 489,
+    "neg_scored": 489,
+    "recall": 0.419,
+    "recall_ci": [
+     0.366,
+     0.473
+    ],
+    "false_flag": 0.076,
+    "false_flag_ci": [
+     0.055,
+     0.103
+    ],
+    "precision_at_base": 0.206,
+    "auc": 0.674
+   },
+   "B": {
+    "pos": 341,
+    "pos_scored": 341,
+    "neg": 432,
+    "neg_scored": 432,
+    "recall": 0.446,
+    "recall_ci": [
+     0.394,
+     0.499
+    ],
+    "false_flag": 0.065,
+    "false_flag_ci": [
+     0.045,
+     0.092
+    ],
+    "precision_at_base": 0.243,
+    "auc": 0.694
+   }
+  }
+ ],
+ "t8_span_bound": {
+  "specimens_scored": 170,
+  "english_fewer": 28,
+  "equal_nonzero": 25,
+  "english_more": 25,
+  "no_negation_either_side": 92,
+  "note": "a sentence-level negation check could at best catch english_fewer (dropped) and english_more (added); the rest carry no negation signal"
+ },
+ "span_level": {
+  "O7": {
+   "specimens": 135,
+   "bad_in_note": 15,
+   "hedge_in_bad": 3,
+   "digit_in_bad": 82
+  },
+  "T7": {
+   "specimens": 188,
+   "bad_in_note": 26,
+   "hedge_in_bad": 19,
+   "digit_in_bad": 6
+  },
+  "T10": {
+   "specimens": 118,
+   "bad_in_note": 106,
+   "hedge_in_bad": 16,
+   "digit_in_bad": 15
+  }
+ }
+}

@@ -295,7 +295,7 @@ export default async function LibrariesPage() {
 
         {/* Holding libraries — institutions that own and digitized the books */}
         <section className="mb-16">
-          <h2 className="text-2xl font-display text-primary mb-2">Libraries &amp; Archives</h2>
+          <h2 className="text-2xl font-serif text-primary mb-2">Libraries &amp; Archives</h2>
           <p className="text-sm text-muted mb-6 max-w-3xl">
             These are the collection sources, comprising over {holdingWorksFloor.toLocaleString('en-US')} accumulated
             works, that we have developed so far. More are added regularly.{' '}
@@ -318,7 +318,7 @@ export default async function LibrariesPage() {
         {/* Digital platforms — aggregators; the physical holders are credited below */}
         {platforms.length > 0 && (
           <section className="mb-16">
-            <h2 className="text-2xl font-display text-primary mb-2">Digital Archives &amp; Platforms</h2>
+            <h2 className="text-2xl font-serif text-primary mb-2">Digital Archives &amp; Platforms</h2>
             <p className="text-sm text-muted mb-6 max-w-3xl">
               Portals and aggregators through which we source scans. The books themselves are held by
               the contributing institutions listed below, and each book&apos;s page names its holder.
@@ -342,7 +342,7 @@ export default async function LibrariesPage() {
           <section>
             <div className="flex items-center gap-2.5 mb-2">
               <Library className="w-5 h-5 text-accent-rust" />
-              <h2 className="text-2xl font-display text-primary">Contributing Institutions</h2>
+              <h2 className="text-2xl font-serif text-primary">Contributing Institutions</h2>
             </div>
             <p className="text-sm text-muted mb-6 max-w-3xl">
               The physical libraries, universities, and archives whose collections were digitized and made available through the platforms above.

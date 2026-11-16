@@ -1,0 +1,42 @@
+<warning>Handwritten Sephardic semi-cursive Hebrew. The ink is brown and the hand is dense with many ligatures and abbreviations. Readings are tentative throughout, and uncertain words are marked unclear.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>118</page-num>
+<page-num>115</page-num>
+<meta>The folio number "118" is written in ink at the top left. A later pencil foliation "115" appears at the bottom right. A small mark at the top centre (possibly <unclear>שכע</unclear>) is unclear. A small pencil mark sits in the lower left margin.</meta>
+
+או יתחמם או יתקרר · ירצה וחדוש התנועות והשתנות שבלא אמצעי יהיה נמשך
+להשתנות התמידי אם שיקבל המקריות או יתחמם לפי מה שסברנו שירצה שיה
+שהמקריות והתנועות הסבות ההויה ואם שיתחמם או יתקרר לפי אשר הוא השנוי
+מאמרנו כשנאמר כן לפי <unclear>מחשבתו</unclear> יחויב <unclear>שיכן</unclear> זה המקום מ התנועה והשנוי אבל אין
+דבר יותר משנוי הדבר אל גדול יותר ממנו ולא הקטנו יותר ממה שישוב אל גדול יותר
+גדול · ואולם הקודמים היו מאמינים שהמקריות הוא <unclear>קודמת</unclear> לכל הנפש והתנועה
+הוא התחלה ושניהם עם ההויה כי היתה ההויה אמנם אמנם הוא הדבקות והפ<unclear>רוד</unclear>
+והתפרד וזה כלל <unclear>[illegible — 2 words]</unclear> שלא הנקדם אבל אין המה עם ההויה
+וההפסד כפי מה שהיו חושבים · ויסבול שירצה בזה שהתנועות והמקריות התחלות
+במאמר הראשון <unclear>[illegible — 1 word]</unclear> בחדוש התנועה וזה שהתנועה בעבור שהיו הקדמים אשר
+<unclear>יתנו מתרבות</unclear> אל הקדמים <unclear>[illegible — 2 words]</unclear> שונים מה שלא יהיה עד זה חויב <unclear>[illegible — 1 word]</unclear>
+אשר <unclear>[illegible — 1 word]</unclear> קבלת התנועה אבל <unclear>שיקבל</unclear> המקריות <unclear>[illegible — 1 word]</unclear> ויקבל ההפסד
+<unclear>[illegible — 1 word]</unclear> ולפי זה יהיה חדוש המקריות והתנועות <unclear>מחלק</unclear> · הדבר האחד <unclear>[illegible — 2 words]</unclear>
+להשבת התנועה כן ויהיה סבת הפשטות והמקריות בין <unclear>החם</unclear> והקר · ואחר <unclear>[illegible — 1 word]</unclear>
+הדבר אשר <unclear>[illegible — 1 word]</unclear> יותן אלה אל ההשתנות <unclear>[illegible — 2 words]</unclear> לבאר <unclear>[illegible — 2 words]</unclear>
+ואחר ואולם השתנות אינו כן וזה שהדבר אשר <unclear>ממנו</unclear> יהיה צורת הצלם לא נאמר כן
+שהוא צורה · ירצה ואולם שיהיה חדוש הצורות והתנועות השתנות אי אפשר זה וזה
+שהחומרים אשר יקבלו הצורות לא נאמר בם שהם הצורות אל כן נאמרים בצורות ·
+<unclear>[illegible — 1 word]</unclear> זה שאחרון לא נאמר בנחשת שהוא צלם ולא בעצם שהוא מטה אחר כן אמר
+ולא הדבר אשר ממנו יהיה <unclear>[illegible — 1 word]</unclear> או <unclear>[illegible — 2 words]</unclear> אחר שהוא <unclear>ממנו</unclear> ·
+ירצה ולא הדבר אשר תהיה ממנו <unclear>[illegible — 1 word]</unclear> והוא השנויה לדרך
+משל · ואמר כן שהוא <unclear>[illegible — 1 word]</unclear> התנועה ולא נאמר בעצם שהוא מטה ולא <unclear>[illegible — 2 words]</unclear>
+וזה <unclear>[illegible — 1 word]</unclear> הדבר <unclear>[illegible — 2 words]</unclear> אשר הוא <unclear>[illegible — 2 words]</unclear> ואחר <unclear>[illegible — 2 words]</unclear>
+ושהצלם <unclear>[illegible — 1 word]</unclear> אבל נחשתי ועצי <unclear>[illegible — 2 words]</unclear> אל התנועה שהוא <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 1 word]</unclear> וזה אשר רצה <unclear>[illegible — 2 words]</unclear> לאלה השמות וזה שבלא <unclear>[illegible — 3 words]</unclear>
+הראשון <unclear>[illegible — 1 word]</unclear> שיהיה החומר <unclear>[illegible — 1 word]</unclear> בצורה <unclear>[illegible — 4 words]</unclear>
+<unclear>[illegible — 1 word]</unclear> וזה על <unclear>[illegible — 2 words]</unclear> ונבר <unclear>[illegible — 2 words]</unclear> המפרשים <unclear>[illegible — 4 words]</unclear>
+<unclear>[illegible — 2 words]</unclear> בענין השני להעמיד הראשון בו <unclear>[illegible — 3 words]</unclear> הענין כי <unclear>[illegible — 1 word]</unclear>
+הענין השני מחויב מן הראשון או <unclear>[illegible — 4 words]</unclear> ואחר שהניח שהתנועות
+והתכונות אשר <unclear>[illegible — 4 words]</unclear> לא יאמר בם החומר <unclear>[illegible — 2 words]</unclear>
+ולא <unclear>[illegible — 1 word]</unclear> הם בחומר <unclear>[illegible — 2 words]</unclear> צורת השם <unclear>[illegible — 2 words]</unclear> שהענין <unclear>[illegible — 2 words]</unclear>
+
+<vocab>הויה, הפסד, תנועה, השתנות, מקריות, צורה, חומר, נחשת, צלם, התחלה, חדוש, קודמים, Aristotelian natural philosophy, philosophical commentary</vocab>

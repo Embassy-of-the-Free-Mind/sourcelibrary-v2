@@ -1,3 +1,4 @@
+import type { ExportGrade } from '@/lib/provenance-grade';
 /** Dataset licensing tier definitions */
 
 export type DatasetTier = 'explorer' | 'language' | 'domain' | 'full' | 'enterprise';
@@ -123,4 +124,9 @@ export interface DatasetPageRecord {
   cluster: string | null;
   subcluster: string | null;
   source_url: string;
+  /**
+   * How well we know what wrote each text field (sourcelibrary-v3 #201), graded on read by
+   * src/lib/provenance-grade.ts. A field appears only when the row carries its text.
+   */
+  provenance_grade: { ocr?: ExportGrade; translation?: ExportGrade };
 }

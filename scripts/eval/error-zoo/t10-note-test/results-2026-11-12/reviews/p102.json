@@ -1,0 +1,98 @@
+[
+  {
+    "book_id": "69a5e61ee751f06e74b89835",
+    "slot": 1,
+    "title": "Euripidis Hecuba, Orestes, Phoenissae (Barocci 120)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Byzantine minuscule manuscript of Euripides with interlinear glosses and marginal scholia. That matches a Barocci Euripides of the early 14th century. The page is Orestes 954–981. No collection is recorded, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree with each other: pages_translated is 0 in the structure counts but 217 in the field (E2). This manuscript has no printed pagination, and this leaf has no number on it at all, only a '+' at the head. So the 120 'printed numbers', with 15 backsteps and 15 repeats, are almost certainly model-assigned or misread values, not a real break in page order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single column of verse in a minuscule hand, with dense interlinear glosses and scholia in the left margin. There are two red marginal signs (a χρ monogram and 'ΝΧ'), a '+' at the head, and an edge of the facing leaf at the right (correctly ignored).",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "οὐδέν' με σὺν φήμησιν", "image": "οὐδέν σ' ἐπωφέλησεν", "problem": "Orestes 955 'it did not help you' is misread as a different phrase", "severity": "serious", "class": "O6" },
+          { "ocr": "ἀλλὰ ψάλλεται", "image": "ἀλλ' ἀπώλεσεν", "problem": "'but destroyed (you)' becomes 'but it is sung'", "severity": "serious", "class": "O6" },
+          { "ocr": "ὢ Ζεῦ τίς αἷμα πᾶν ἔρρεψεν ὥς ξυνήρρεψεν", "image": "ὦ δυστάλαινα, ὡς ξυνηρεφὲς", "problem": "An invocation of Zeus is invented in place of the chorus's 'O wretched one, how with veiled face'", "severity": "serious", "class": "O1" },
+          { "ocr": "πτόσον τοῖς εἰς ἡμᾶς βαλόντας ἀφθοράς", "image": "πρόσωπον εἰς γῆν σὸν βαλοῦσ' ἄφθογγος", "problem": "line 958 misread into different sense", "severity": "serious", "class": "O6" },
+          { "ocr": "καὶ τρομὸν τε καὶ μανίαν καὶ ἀηδία", "image": "κατάρχομαι στεναγμὸν ὦ Πελασγία", "problem": "The first line of Electra's strophe (960) is replaced by 'trembling and madness and loathing'. A margin block repeats the same false line.", "severity": "serious", "class": "O1" },
+          { "ocr": "τί θυίει λακωνομανίαν πᾶν κὶ δόμον", "image": "τιθεῖσα λευκὸν ὄνυχα διὰ παρηίδων", "problem": "'setting my white nail across my cheeks' becomes a 'Laconian frenzy' through the house. The same false line is also put into a margin block.", "severity": "serious", "class": "O1" },
+          { "ocr": "<gloss>μερτέρων</gloss> <gloss>τεροσεφα</gloss> <gloss>αὐτὰ</gloss> <gloss>καλλίπαις θεια</gloss>", "image": "κτύπον τε κρατός, ὃν ἔλαχ' ἁ κατὰ χθονὸς / νερτέρων Περσέφασσα καλλίπαις θεά", "problem": "Two lines of main text (lines 963–964) are missing from the body. Fragments of one survive only as <gloss> tags, and the κτύπον line is gone.", "severity": "serious", "class": "O5" },
+          { "ocr": "# Ἀντιστροφή", "image": "a small interlinear line above line 1, not a heading; the strophe begins six lines lower", "problem": "The heading is invented or misread. What the small line actually says is illegible at this resolution.", "severity": "moderate" },
+          { "ocr": "ἴσχει τω οἶ γὰρ κύκλω τια", "image": "ἰαχείτω δὲ γᾶ Κυκλωπία", "problem": "line 965 misread", "severity": "moderate" },
+          { "ocr": "βιβάζει πρὸς βιβάζειν· οἴχεται τέκνων", "image": "βέβακε γὰρ βέβακεν· οἴχεται τέκνων", "problem": "misread (the English silently corrects it)", "severity": "moderate" },
+          { "ocr": "ἀπὸ τὰ γεῖνα πέλοπος", "image": "πρόπασα γέννα Πέλοπος", "problem": "misread", "severity": "moderate" },
+          { "ocr": "φονιταῖς ἐν πολίταις·", "image": "φοινία ψῆφος ἐν πολίταις", "problem": "ψῆφος ('vote') is dropped", "severity": "moderate" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "οὐδέν' με σὺν φήμησιν <gloss>ἐπὶ</gloss> οὐδὲ Πύθιος τρίποδα καθίζων Φοῖβος· ἀλλὰ ψάλλεται", "english": "No one with oracles me <gloss>upon</gloss>, nor the Pythian\nPhoebus sitting on the tripod", "problem": "Fluent English built on the misread. The page says that noble birth did not help Orestes, nor did Phoebus, who instead destroyed him. The English gives 'but a song is sung'.", "severity": "serious", "class": "T7" },
+          { "source": "ὢ Ζεῦ τίς αἷμα πᾶν ἔρρεψεν", "english": "O Zeus, who cast down all the blood, as he cast it down together", "problem": "An invocation that is not on the leaf (the leaf has 'O wretched one, how with veiled face…') is rendered with no uncertainty marker", "severity": "serious", "class": "T7" },
+          { "source": "καὶ τρομὸν τε καὶ μανίαν καὶ ἀηδία", "english": "and trembling and madness and loathing", "problem": "The leaf has 'I begin the lament, O Pelasgia'. The opening of Electra's strophe is lost and false content is put in its place.", "severity": "serious", "class": "T7" },
+          { "source": "τί θυίει λακωνομανίαν πᾶν κὶ δόμον", "english": "Why does a Laconian frenzy rage through the whole house", "problem": "This sentence is invented from the garble. The leaf describes tearing the cheeks with the nails. The English appears twice, in the body and in a margin.", "severity": "serious", "class": "T7" },
+          { "source": "<meta>", "english": "This page carries the antistrophe of the chorus's lament in Euripides' Orestes, roughly lines 960 to 975", "problem": "The meta misidentifies the page. The page runs from line 954 to 981: the end of the messenger speech, the chorus's lines, and Electra's strophe and antistrophe.", "severity": "moderate" },
+          { "source": "<gloss>τεροσεφα</gloss>", "english": "<note>a garbled gloss here, \"τεροσεφα,\" cannot be read as a word</note>", "problem": "The note is false: this is Περσέφασσα (Persephone), from the main text line 964", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "The OCR heading 'Ἀντιστροφή' is promoted to '# Antistrophe' in the reader text. The leaf has no such heading.", "severity": "moderate" },
+          { "note": "There is raw junk in the reader text: '<gloss>ai... a... a</gloss>', 'bloody ...', and LaTeX '$\\text{*}_{\\chi^{\\epsilon}}$' in the OCR <insert>", "severity": "minor", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "Apollo, who speaks his oracles at Delphi from the sacred tri", "verdict": "ok", "helpful": true },
+            { "quote": "a garbled gloss here, \"τεροσεφα,\" cannot be read as a word", "verdict": "wrong", "helpful": false },
+            { "quote": "The standard text reads \"Let the Cyclopean land cry aloud,\"", "verdict": "ok", "helpful": true },
+            { "quote": "The standard text reads \"laying the shearing iron upon the h", "verdict": "ok", "helpful": true },
+            { "quote": "The standard text reads: \"the whole race of Pelops' children", "verdict": "ok", "helpful": true },
+            { "quote": "upon", "verdict": "unsupported", "helpful": false },
+            { "quote": "sullen", "verdict": "ok", "helpful": false },
+            { "quote": "sullen", "verdict": "wrong", "helpful": false },
+            { "quote": "lest he show to whom", "verdict": "wrong", "helpful": false },
+            { "quote": "that is to say", "verdict": "unsupported", "helpful": false },
+            { "quote": "a testimony of him", "verdict": "wrong", "helpful": false },
+            { "quote": "ai... a... a", "verdict": "wrong", "helpful": false },
+            { "quote": "on behalf of", "verdict": "unsupported", "helpful": false },
+            { "quote": "sacrificial offerings", "verdict": "unsupported", "helpful": false },
+            { "quote": "often the", "verdict": "unsupported", "helpful": false },
+            { "quote": "and placing toward ...", "verdict": "unsupported", "helpful": false },
+            { "quote": "in place of \"the children\"; who are also children; wondrous", "verdict": "unsupported", "helpful": false },
+            { "quote": "such things also concerning murder", "verdict": "unsupported", "helpful": false },
+            { "quote": "servant", "verdict": "unsupported", "helpful": false },
+            { "quote": "faithful", "verdict": "unsupported", "helpful": false },
+            { "quote": "from the Cyclopean land, ceased with uproar; house", "verdict": "unsupported", "helpful": false },
+            { "quote": "of those below", "verdict": "wrong", "helpful": false },
+            { "quote": "these things", "verdict": "unsupported", "helpful": false },
+            { "quote": "blessed with fair children, divine", "verdict": "wrong", "helpful": false },
+            { "quote": "a gathering", "verdict": "unsupported", "helpful": false },
+            { "quote": "it is there", "verdict": "unsupported", "helpful": false },
+            { "quote": "is laid upon", "verdict": "unsupported", "helpful": false },
+            { "quote": "of compassion, or of showing, or of the divine being honored", "verdict": "unsupported", "helpful": false },
+            { "quote": "why here too", "verdict": "unsupported", "helpful": false },
+            { "quote": "sets the children free", "verdict": "unsupported", "helpful": false },
+            { "quote": "for the child", "verdict": "unsupported", "helpful": false },
+            { "quote": "they destroyed the uproar", "verdict": "unsupported", "helpful": false },
+            { "quote": "they look upon", "verdict": "unsupported", "helpful": false },
+            { "quote": "the earthborn; or a child will be born", "verdict": "unsupported", "helpful": false },
+            { "quote": "blessed", "verdict": "ok", "helpful": false },
+            { "quote": "they resent", "verdict": "ok", "helpful": false },
+            { "quote": "it happened", "verdict": "unsupported", "helpful": false },
+            { "quote": "to the poor", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "<insert>*χε</insert>", "why": "The red marginal signs (*χε, *χρ) are left as bare symbols. A reader cannot tell that they are a scribe's mark (likely χρ(ηστόν), 'noteworthy') and not part of the text." },
+            { "english": "from the race of Pelops", "why": "Who Pelops is, and that Orestes and Electra are his descendants, explains why the house is 'gone'" },
+            { "english": "to be cutting her hair; therefore\nshe lays the iron upon\nher head.", "why": "The scholion does not say who is cutting her hair (Electra, mourning in the strophe), and the English does not either" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "On this page the OCR misreads most of the main verse (Orestes 954–981) and invents lines: a Zeus invocation, a 'Laconian frenzy'. It also drops two lines into gloss tags, and the translation renders all of it as fluent English. The closing notes quote the standard text correctly. They are the only reliable guide on the page, and most of the interlinear glosses cannot be verified or are wrong."
+  }
+]

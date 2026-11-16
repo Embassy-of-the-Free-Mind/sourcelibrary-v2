@@ -1,0 +1,22 @@
+<warning>Handwritten semi-cursive Sephardic Hebrew. The image shows a full two-page opening, photographed at very low resolution. The letters are only a few pixels high, so almost none of the body text can be read reliably. The text blocks are marked as unclear rather than reconstructed. A higher-resolution scan of each page is needed for a full transcription.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>66</page-num>
+<meta>The image is a two-page spread of a bound manuscript in leather covers. Hebrew reads right to left, so the right-hand page comes first in reading order. Of the two pages, the left-hand page carries the folio/page number "66" in the upper outer corner, apparently in a later hand. The right-hand page is fully written with about 26 lines. The left-hand page has about 9 lines of text, then an enlarged chapter heading, then a short indented passage of about 3 lines, then about 14 more lines of text. The lower part of the left-hand page is blank.</meta>
+
+<unclear>about 26 lines of Hebrew semi-cursive text (right-hand page), illegible at this resolution</unclear>
+
+<column-break/>
+
+<unclear>about 9 lines of Hebrew semi-cursive text (left-hand page, upper block), illegible at this resolution</unclear>
+
+## <unclear>הפרק קשרים</unclear>
+
+<unclear>about 3 short indented lines beside and below the heading, illegible at this resolution</unclear>
+
+<unclear>about 14 lines of Hebrew semi-cursive text (left-hand page, lower block), illegible at this resolution</unclear>
+
+<vocab>Hebrew manuscript, semi-cursive script, chapter heading, פרק</vocab>

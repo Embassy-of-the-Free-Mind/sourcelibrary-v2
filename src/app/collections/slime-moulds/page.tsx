@@ -434,7 +434,7 @@ export default async function SlimeMouldsCollectionPage() {
               </>
             )}
           </nav>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Slime Moulds</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif">Slime Moulds</h1>
           {/* Phones get the first sentence only. The full deck ran six lines and
               205px, 40% of the hero, and the herbal-to-monograph clause is
               repeated in the introduction directly below. */}
@@ -502,7 +502,7 @@ export default async function SlimeMouldsCollectionPage() {
         <section id="translations" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-end justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">First translations</h2>
               <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
             </div>
             <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
@@ -585,7 +585,7 @@ export default async function SlimeMouldsCollectionPage() {
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-start justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">Gallery</h2>
               <CuratorLauncher slug={SLUG} />
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates of the slime moulds themselves, drawn from across the collection. Most of these books are general works on the fungi, so their remaining plates are of other things.</p>
@@ -622,7 +622,7 @@ export default async function SlimeMouldsCollectionPage() {
           {/* Text right, left-aligned. */}
           <div className="max-w-xl">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-3">Ask the librarian</p>
-            <h2 className="text-2xl sm:text-3xl text-primary font-display mb-3">Search inside every book</h2>
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-3">Search inside every book</h2>
             <p className="text-secondary leading-relaxed font-body mb-7">
               The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.
             </p>
@@ -636,7 +636,7 @@ export default async function SlimeMouldsCollectionPage() {
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
-            <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif">Works in this collection</h2>
             <span className="text-sm text-muted whitespace-nowrap">{total} readable now</span>
           </div>
           <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Every work in the collection that can be read now, oldest first. Books still being transcribed and translated appear here as they are finished.</p>
@@ -671,20 +671,20 @@ export default async function SlimeMouldsCollectionPage() {
       {/* ===== Get involved ===== */}
       <section id="involved" className="bg-cream scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
-          <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
+          <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
           <div className="grid gap-4 sm:grid-cols-2">
             {/* Feedback — opens the global feedback modal (same one used across the site). */}
             <div className="border border-border-light bg-white p-6 flex flex-col">
               <div className="text-[11px] uppercase tracking-wider text-muted mb-3">Open to all</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Leave feedback</h3>
+              <h3 className="text-lg font-semibold text-primary mb-2 font-serif">Leave feedback</h3>
               <p className="text-sm text-secondary mb-5 font-body flex-1">Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.</p>
               <FeedbackWidget label="Send feedback" className={`${RUST_LINK} self-start`} />
             </div>
             {/* Patron */}
             <div className="border border-border-light bg-white p-6 flex flex-col">
               <div className="text-[11px] uppercase tracking-wider text-muted mb-3">Support</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Become a patron</h3>
+              <h3 className="text-lg font-semibold text-primary mb-2 font-serif">Become a patron</h3>
               <p className="text-sm text-secondary mb-5 font-body flex-1">Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.</p>
               <Link href="/support" className={`${BTN_DARK} self-start`}>Become a patron <ArrowRight className="w-4 h-4" /></Link>
             </div>

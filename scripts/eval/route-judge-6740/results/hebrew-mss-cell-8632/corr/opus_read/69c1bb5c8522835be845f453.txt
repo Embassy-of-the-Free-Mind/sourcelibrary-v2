@@ -1,0 +1,47 @@
+<warning>Handwritten semi-cursive Hebrew in an Ashkenazi/Hasidic-style hand. The ink is brown on blue-tinted paper. The hand is dense and irregular, so many readings are uncertain. Ink blots near the top centre and lower centre hide a few words. There are small interlinear additions in the lower part.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Small mark at the top centre, possibly "ב"ה" or "בס"ד". Pen strokes in the right margin (horizontal lines and a looped sign) mark passages and carry no text. Ink stains at the top centre and lower centre.</meta>
+
+<unclear>ב"ה</unclear>
+
+ולמטה כך הוא בבחי' <unclear>עלמ'</unclear> הנפש כיון שהוא הרי הוא למעלה מבחי'
+רצון בהחלט ולמעלה גם מבחי' התעוררות רצון ולא <unclear>נרד ונתפשט</unclear> ה
+הנפש מאומה עדיין גם לא בחי' התעוררות רצון שאינו רק <unclear>עונג והארה</unclear>
+בעצמות <unclear>עצמות</unclear> הנפש והוא כמו שהנפש מאירה <unclear>בהשוואה</unclear>
+שהתעורר ויהיות לו רצון לדבר ואח"כ בחי' ההתעוררות שלו
+הנפש ונהיות רצון הוא רק <unclear>עונג</unclear> הנפש המתפשט <unclear>[illegible — 1 word]</unclear>
+ואח"כ אין ערוך כלל לגבי עצמותה ממש כיון שהיא <unclear>נעלה</unclear>
+מאומה <unclear>בשעה</unclear> שבכח בהתעורר ויהיות רצון <unclear>ונתפשטה</unclear>
+ואחר <unclear>שגם</unclear> הנפש הוא <unclear>הכל</unclear> ראשית וראשית הוא בחי' <unclear>עונג</unclear>
+ונהיות <unclear>עונג</unclear> ורצון ועדיין אין <unclear>[illegible — 1 word]</unclear> רצון <unclear>[illegible — 1 word]</unclear> הנפש
+שאינו נמשך הרצון בגילוי ואח"כ <unclear>[illegible — 1 word]</unclear> ג"כ שבחי' רצון בגילוי נמשך
+בגילוי אין ערוך לגבי בחי' ירידתו <unclear>[illegible — 1 word]</unclear> מן העלם
+ונמשך רצון זה שהרי גילוי רצון זה <unclear>[illegible — 2 words]</unclear> הנפש
+ונמשך למטה <unclear>כפתוח</unclear> <unclear>[illegible — 1 word]</unclear> הנפש והוא כמו <unclear>[illegible — 1 word]</unclear> בדבור
+שאינו בחי' העצמות <unclear>מהות</unclear> הנפש שהתעורר <unclear>והיות</unclear> ורצון בדבור
+הנה אינו עדיין <unclear>כמהות</unclear> דבר <unclear>[illegible — 1 word]</unclear> ולא נמשך עדיין ולמטה
+כי אין <unclear>[illegible — 1 word]</unclear> ותפיסה אין ערוך רצון הגלוי לגבי <unclear>[illegible — 1 word]</unclear> ולמעלה ה
+הרצון אין <unclear>[illegible — 1 word]</unclear> הנפש ושאין ערוך אין הנפש לגבי <unclear>[illegible — 1 word]</unclear> ההתעוררות
+מאומה שאינו רק עונג והארה בעלמא ונהיות הנפש לגבי עצמותה
+הארות הרצון ולמעלה <unclear>[illegible — 1 word]</unclear> מבחי' התפשטות <unclear>והארה</unclear> <unclear>[illegible — 1 word]</unclear>
+ולא יתכן <unclear>וחלק</unclear> בין העלם והגילוי <unclear>[illegible — 2 words]</unclear> והוא
+והנה <unclear>[illegible — 2 words]</unclear> זה <unclear>[illegible — 1 word]</unclear> והוא <unclear>וגבוה</unclear> שם
+עוד ומאורו של העלם בחי' ראיה והתגלות הנפש מאחר שאין
+בכל <unclear>[illegible — 1 word]</unclear> שאין התגלות רק לפי העלם <unclear>[illegible — 2 words]</unclear>
+שבעצמות ושורה הגילוי אין <unclear>[illegible — 1 word]</unclear> בתוספת <unclear>[illegible — 1 word]</unclear> בכל התוספות
+אין העלם בבחי' עצמות <unclear>[illegible — 2 words]</unclear> ונמשך <unclear>[illegible — 1 word]</unclear> ולמטה
+ונמשך גם בחי' אין הארה <unclear>[illegible — 2 words]</unclear> <unclear>ופרטים</unclear>
+נראה <unclear>[illegible — 1 word]</unclear> במדות <unclear>[illegible — 2 words]</unclear> בחי' <unclear>[illegible — 1 word]</unclear> שאינו
+<gloss><unclear>[illegible — 2-3 words]</unclear></gloss>
+כי <unclear>[illegible — 1 word]</unclear> ההתגלות בבחי' חו"ב וחג"ת <unclear>[illegible — 1 word]</unclear> כי ההתגלות
+זה בבחי' <unclear>העלמה</unclear> <unclear>[illegible — 1 word]</unclear> ולא בחי' ההתגלות <unclear>[illegible — 1 word]</unclear> שאינו
+ההתגלות בבחי' כו' גם בבחי' גילוי <unclear>[illegible — 1 word]</unclear> אין ופרטי ה
+וירידתו מן העלם שהוא ג"כ עדיין <unclear>[illegible — 1 word]</unclear> ומאור הנפש בראשית
+<unclear>ונתי</unclear> <unclear>[illegible — 1 word]</unclear> ניכר כיון העצמות מאחר שעונג ומאור
+
+->העצמות כו' וכמ"ש<-
+
+<vocab>נפש, עצמות, רצון, התעוררות, עונג, הארה, התפשטות, העלם, גילוי, התגלות, ירידה, דבור, חו"ב, חג"ת, מדות</vocab>

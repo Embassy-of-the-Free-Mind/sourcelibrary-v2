@@ -76,6 +76,7 @@ for ri, r in enumerate(rows):
         errs.append((c, e.get('severity') or 'serious'))
     b = (p or {}).get('book') or {}
     recs.append(dict(src=r['source'], uniform=(r['source'] == 'spare_audit' and r.get('selection') == 'random' and r.get('exposure') == 'served'),
+                     cellfill=(r['source'] == 'spare_audit' and r.get('selection') == 'cell-fill' and r.get('exposure') == 'served'),
                      lang=lang_of(r, p), yb=ybin(year_of(b) or year_of({'published': r.get('published')})), serious=bool(r['serious']), errs=errs,
                      caught=(score.get(r['page_id'], -1) >= thr) if r['page_id'] in score else None,
                      ocr=fam((p or {}).get('ocr_model') or r.get('ocr_model_at_check')), script=((p or {}).get('script_type') or 'unknown'), pid=r['page_id']))
@@ -93,7 +94,10 @@ def heat(sel):
         out.append(dict(lang=L, bin=yb, pages=c['pages'], serious=c['serious'], findings=c['n'], by=c['by'], mean_sev=round(c['sev'] / c['n'], 3) if c['n'] else None))
     return dict(langs=langs, bins=[b[2] for b in BINS], cells=out)
 
-stats = dict(threshold_note='caught = page score in the top 30% of scored pages', heat_all=heat(recs), heat_uniform=heat([x for x in recs if x['uniform']]))
+# heat_uniform also takes the weekly audit's cell-fill pages (#244): random within their cell, so a cell's share stays
+# fair, but not across cells, so they never count in n_uniform / uniform_serious or the predictor's uniform frame.
+cellframe = lambda x: x['uniform'] or x.get('cellfill')
+stats = dict(threshold_note='caught = page score in the top 30% of scored pages', heat_all=heat(recs), heat_uniform=heat([x for x in recs if cellframe(x)]))
 
 # detectability: class x severity, share of pages carrying it whose score is in the top 30%
 det = C.defaultdict(lambda: C.defaultdict(lambda: [0, 0]))

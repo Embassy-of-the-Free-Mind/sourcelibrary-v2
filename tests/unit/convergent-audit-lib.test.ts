@@ -90,11 +90,11 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     stub(join(bin, 'flock'), 'exit 0');
     stub(join(repo, 'scripts/eval/second-reader/run-readers.sh'), `echo "readers $2" >> ${log}; exit ${readersExit}`);
     // python3 = run-cli-arm.py: exit 3 (quota) for the first N calls, then 0.
-    stub(join(bin, 'python3'), `n=$(grep -c '^cli ' ${log} 2>/dev/null); m=$(echo "$*" | sed -n 's/.*--model \\([^ ]*\\).*/\\1/p'); echo "cli $m$(echo "$*" | grep -q -- '--kind review .*--no-tool-gate' || echo ' GATED')" >> ${log}; [ "$n" -lt ${quotaExits} ] && exit 3; exit 0`);
+    stub(join(bin, 'python3'), `n=$(grep -c '^cli ' ${log} 2>/dev/null); m=$(echo "$*" | sed -n 's/.*--model \\([^ ]*\\).*/\\1/p'); echo "cli $m$(echo "$*" | grep -q -- '--kind review .*--no-tool-gate' || echo ' GATED')\${AGY_HOME:+ home=$AGY_HOME}" >> ${log}; [ "$n" -lt ${quotaExits} ] && exit 3; exit 0`);
     let out: string, status = 0;
     try {
       out = execFileSync('bash', [join(repo, 'scripts/audit/convergent-audit-weekly.sh'), '2099-01-05'], {
-        encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', AUDIT_LOOP: '0', ...env },
+        encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', AUDIT_LOOP: '0', AUDIT_READ: '1', ...env },
       });
     } catch (e) { const err = e as { stdout: string; status: number }; out = err.stdout; status = err.status; }
     return { out, status, calls: readFileSync(log, 'utf8').trim().split('\n') };
@@ -136,15 +136,38 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     expect(run(0).calls[0]).toContain('--books 40 --written 0 --risk 40');
     expect(run(0, { AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls[0]).not.toContain('--risk');
   });
-  it('the scheduled round then runs the weekly loop (#8632): ledger, repair queue, digest posted on #8632; a spare round does not', () => {
+  it('a spare round adds 20 cell-fill pages (#244), never --books; AUDIT_FILL=0 turns it off; the scheduled round has none', () => {
+    const spare = run(0, { AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls[0];
+    expect(spare).toContain('--fill 20 --fill-history');
+    expect(spare).not.toContain('--books');
+    expect(run(0, { AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0', AUDIT_FILL: '0' }).calls[0]).toContain('--fill 0');
+    expect(run(0).calls[0]).not.toContain('--fill');
+  });
+  it('the scheduled round then runs the weekly loop (#8632): ledger, queue, second read, digest on #8632, risk pool; a spare round does not', () => {
     const { calls } = run(0, { AUDIT_LOOP: '1' });
     const i = calls.findIndex((c) => c.includes('convergent-audit-weekly.mjs score --run'));
     const after = calls.slice(i + 1);
-    expect(after[0]).toContain('error-zoo/labels.mjs');
-    expect(after[1]).toContain('error-zoo/repair-queue.mjs');
-    expect(after[2]).toContain('error-zoo/loop-week.mjs');
-    expect(after[2]).toContain('--post 8632');
-    expect(run(0, { AUDIT_LOOP: '1', AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls.some((c) => c.includes('loop-week'))).toBe(false);
+    const at = (s: string) => after.findIndex((c) => c.includes(s));
+    const steps = ['error-zoo/labels.mjs', 'error-zoo/repair-queue.mjs', 'second-read.mjs build', 'cli-requests --run', 'cli gemini', 'cli-assemble', 'second-read.mjs confirm', 'error-zoo/loop-week.mjs', 'error-zoo/pool.mjs'];
+    const idx = steps.map(at);
+    expect(idx.every((x) => x >= 0)).toBe(true);
+    expect(idx).toEqual([...idx].sort((a, b) => a - b));
+    // the queue applies earlier second reads; confirm appends to the same ledger
+    expect(after[at('repair-queue.mjs')]).toContain('--second-reads=');
+    expect(after[at('second-read.mjs confirm')]).toContain('--ledger=');
+    // the second read is a review (no OCR tool gate) on the second pool, not the box's default login
+    expect(after[at('cli gemini')]).toBe('cli gemini-3.8-flash-low home=/root/.agy-james');
+    expect(after[at('loop-week.mjs')]).toContain('--post 8632');
+    // reviewed pages are never scored as candidates; confirm names the second reader's family
+    expect(after[at('error-zoo/pool.mjs')]).toContain('--exclude=');
+    expect(after[at('second-read.mjs confirm')]).toContain('--family=gemini');
+    expect(run(0, { AUDIT_LOOP: '1', AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls.some((c) => c.includes('loop-week') || c.includes('second-read'))).toBe(false);
+    expect(run(0, { AUDIT_LOOP: '1', AUDIT_SECOND_READ_MAX: '0', AUDIT_RISK_REBUILD: '0' }).calls.some((c) => c.includes('second-read.mjs') || c.includes('pool.mjs'))).toBe(false);
+  });
+  it('the draw uses the rebuilt risk pool when there is one, else the committed pool', () => {
+    expect(run(0).calls[0]).toContain('--risk-pool scripts/audit/risk-pool/current.json');
+    const pool = join(process.cwd(), 'package.json');   // any regular file stands in for a rebuilt pool
+    expect(run(0, { AUDIT_RISK_POOL: pool }).calls[0]).toContain(`--risk-pool ${pool}`);
   });
   it('a date argument finishes that run instead of starting today', () => {
     expect(run(0).calls.at(-1)).toContain('base/2099-01-05');
@@ -156,6 +179,17 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     expect(calls.filter((c) => c.startsWith('cli ') || c.includes('cli-requests'))).toEqual([]);
     expect(calls.at(-1)).toContain('score --run');
     expect(calls.join('\n')).not.toContain('--post');
+  });
+  it('by default the scheduled run reads no single pages, only the weekly loop over book_checks (v3#381)', () => {
+    const { out, calls } = run(0, { AUDIT_READ: '', AUDIT_LOOP: '1' });
+    expect(out).toContain('no single-page reads (AUDIT_READ=0, v3#381)');
+    expect(calls.some((c) => c.includes('convergent-audit-weekly.mjs') || c.startsWith('readers ') || c.includes('cli-requests --run') && !c.includes('second-read'))).toBe(false);
+    expect(calls[0]).toContain('error-zoo/labels.mjs');
+    const lw = calls.find((c) => c.includes('loop-week.mjs'));
+    expect(lw).toContain('--book-checks');
+    expect(lw).toContain('--env-file=');
+    // a spare round still reads: AUDIT_OPUS_ONLY implies AUDIT_READ
+    expect(run(0, { AUDIT_READ: '', AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0' }).calls.some((c) => c.startsWith('readers opus'))).toBe(true);
   });
   it('the weekly run still posts', () => {
     expect(run(0).calls.at(-1)).toContain('--post');

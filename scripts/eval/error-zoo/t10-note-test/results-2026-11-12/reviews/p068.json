@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "69905d7f2fd6a0399389f99f",
+    "slot": 1,
+    "title": "Fortalitium Fidei",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1487 gothic-type incunable of Alfonso de Espina's anti-heretical treatise. It belongs on a medieval-literature shelf (arlima) and in a patron collection.",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree: pages_translated is 0 but pages_translated_field is 504. That looks like a counting fault, because this page is translated. Only 26 of 506 pages carry a printed number, which is expected for a largely unfoliated incunable. On that small base, 10 backsteps and 13 repeats are most likely misread running heads, signatures or OCR <page-num> tags, not a scan splice. This leaf shows only the running head 'Liber | Secundus' and a 'Digitized by Google' stamp.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 128,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "two columns of gothic type, running head 'Liber | Secundus' split across the columns, a three-line rubric heading and a large woodcut-style initial V in column 1, 'Digitized by Google' stamp at the foot",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Diceret etiā\nquod licet", "image": "Dicim⁹ eti-|am q̄ licet (Dicimus etiam)", "problem": "'We also say' misread as 'Diceret' ('one might say'), so the author's own position reads as a hypothetical. The translation follows it: 'One might also say'", "severity": "moderate", "class": "O6" },
+          { "ocr": "mulierū vita duxit", "image": "mulierū vr̄a duxit (Vestra duxit)", "problem": "the incipit of the decretal 'Vestra duxit' (X 3.2) misread as 'vita duxit', so the canon's name is lost. The translation's note then repeats the misreading", "severity": "moderate", "class": "O6" },
+          { "ocr": "Secundum\ntū q̄ duplex est deuotio", "image": "Sciēdum tū q̄ duplex est deuotio", "problem": "'Sciendum' ('it should be known') read as 'Secundum'. The translation gives 'Secondly, however', an enumeration the source does not have", "severity": "moderate", "class": "O6" },
+          { "ocr": "Verū ē q̄ suis quā ad i-\ntercedendū mittit", "image": "Verū ē q̄ si is q̄ ad intercedendū mittit", "problem": "'si is qui' misread as 'suis quā'. The translation recovers the sense", "severity": "minor" },
+          { "ocr": "Quo-\nniā pōt prodesse alijs", "image": "Quō enī pōt prodesse alijs", "problem": "'Quomodo enim' read as 'Quoniam'. The translation renders the question correctly anyway", "severity": "minor" },
+          { "ocr": "Item .uj. q. vij.", "image": "Item .iij. q. vij.", "problem": "numeral iij misread as 'uj'. The translation correctly gives 'Cause 3, question 7'", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Diceret etiā\nquod licet cōmutari penā corporalē", "english": "One might also say that it is permitted to commute a bodily penalty", "problem": "follows the OCR misreading. The image reads 'Dicimus etiam' ('We also say'), the author's own assertion", "severity": "moderate" },
+          { "source": "Secundum\ntū q̄ duplex est deuotio", "english": "Secondly, however, devotion is twofold.", "problem": "follows the OCR misreading. The image has 'Sciendum tamen' ('It should be known, however')", "severity": "minor" },
+          { "source": "de\ncohabi. cle. et mulierū vita duxit", "english": "the authority in the title *On the Cohabitation of Clerics and Women* <note>original: \"de cohabi. cle. et mulierum\", followed by the words \"vita duxit\"</note>", "problem": "the canon's incipit 'Vestra duxit' is lost. The note presents the misreading 'vita duxit' as the original wording", "severity": "moderate" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "intercessory prayers and pious works offered on behalf of th", "verdict": "ok", "helpful": true },
+            { "quote": "devotion arising from natural piety", "verdict": "ok", "helpful": false },
+            { "quote": "devotion arising from charity", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"de cohabi. cle. et mulierum\", followed by the wor", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Likewise, Cause 3, question 7, in the canon *In gravioribus*, says this:", "why": "a general reader will not know this is a citation of Gratian's Decretum (causa/quaestio) or what 'canon' means here" },
+            { "english": "the authority in the title *On the Cohabitation of Clerics and Women*", "why": "the reader needs to know this is a title of the Decretals of Gregory IX (X 3.2), cited by its chapter 'Vestra duxit'" },
+            { "english": "the ruling according to Alan as cited above", "why": "'Alan' is Alan of Lille. The page names him only as 'Alanus', and the sentence depends on him" },
+            { "english": "Such a man sins \"under God,\" because he grieves that he is in sin.", "why": "the scholastic contrast between sinning 'sub Deo' and 'in Deum' is left unexplained" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This page is the right leaf, and both the transcription and the English are sound for a heavily abbreviated incunable. Three abbreviation misreadings (Dicimus→Diceret, Vestra→vita, Sciendum→Secundum) pass into the English, and one note repeats a misreading as the original wording. None is serious."
+  }
+]

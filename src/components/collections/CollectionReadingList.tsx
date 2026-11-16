@@ -46,7 +46,7 @@ export default function CollectionReadingList({ rows, tenantSlug, heading, intro
   return (
     <section id="reading-list" className="bg-warm border-b border-border-light">
       <div className="max-w-[1500px] mx-auto px-6 py-10">
-        <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">
+        <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-2">
           {heading}
         </h2>
         <p className="text-sm text-secondary leading-relaxed max-w-3xl mb-6">
@@ -60,7 +60,7 @@ export default function CollectionReadingList({ rows, tenantSlug, heading, intro
                 {row.n || i + 1}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-base text-primary font-display leading-snug">
+                <p className="text-base text-primary font-serif leading-snug">
                   {row.work}
                 </p>
                 {row.wanted && (

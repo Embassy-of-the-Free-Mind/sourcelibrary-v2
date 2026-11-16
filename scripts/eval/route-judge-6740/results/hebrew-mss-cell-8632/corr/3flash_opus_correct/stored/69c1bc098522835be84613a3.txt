@@ -1,0 +1,37 @@
+<language>Spanish</language>
+<page-type>text</page-type>
+<warning>The ink is extremely faded and there is significant bleed-through from the reverse side, making much of the text illegible or difficult to distinguish from the verso.</warning>
+
+<unclear>en</unclear> <unclear>esta</unclear> <unclear>manera</unclear> <unclear>que</unclear> <unclear>es</unclear> <unclear>la</unclear> <unclear>que</unclear> <unclear>se</unclear> <unclear>sigue</unclear>
+<unclear>para</unclear> <unclear>que</unclear> <unclear>este</unclear> <unclear>mismo</unclear> <unclear>dia</unclear> <unclear>antes</unclear> <unclear>de</unclear> <unclear>las</unclear> <unclear>doce</unclear>
+<unclear>luego</unclear> <unclear>que</unclear> <unclear>reciba</unclear> <unclear>esta</unclear> <unclear>nuestra</unclear> <unclear>carta</unclear> <unclear>nos</unclear> <unclear>responda</unclear>
+<unclear>y</unclear> <unclear>asi</unclear> <unclear>mismo</unclear> <unclear>para</unclear> <unclear>que</unclear> <unclear>se</unclear> <unclear>haga</unclear> <unclear>saber</unclear>
+
+<unclear>y</unclear> <unclear>por</unclear> <unclear>cuanto</unclear> <unclear>esta</unclear> <unclear>gracia</unclear> <unclear>que</unclear> <unclear>se</unclear> <unclear>le</unclear> <unclear>hace</unclear>
+<unclear>y</unclear> <unclear>que</unclear> <unclear>sepa</unclear> <unclear>vuestra</unclear> <unclear>merced</unclear> <unclear>como</unclear> <unclear>esta</unclear> <unclear>es</unclear> <unclear>la</unclear> <unclear>orden</unclear>
+<unclear>que</unclear> <unclear>se</unclear> <unclear>ha</unclear> <unclear>de</unclear> <unclear>tener</unclear> <unclear>en</unclear> <unclear>esta</unclear> <unclear>junta</unclear> <unclear>y</unclear> <unclear>que</unclear> <unclear>no</unclear> <unclear>se</unclear>
+<unclear>haga</unclear> <unclear>de</unclear> <unclear>otra</unclear> <unclear>manera</unclear> <unclear>sino</unclear> <unclear>como</unclear> <unclear>aqui</unclear> <unclear>se</unclear> <unclear>contiene</unclear>
+<unclear>y</unclear> <unclear>que</unclear> <unclear>se</unclear> <unclear>le</unclear> <unclear>notifique</unclear> <unclear>a</unclear> <unclear>vuestra</unclear> <unclear>merced</unclear> <unclear>para</unclear> <unclear>que</unclear>
+<unclear>lo</unclear> <unclear>cumpla</unclear> <unclear>y</unclear> <unclear>haga</unclear> <unclear>cumplir</unclear> <unclear>en</unclear> <unclear>todo</unclear> <unclear>y</unclear> <unclear>por</unclear> <unclear>todo</unclear>
+
+<unclear>y</unclear> <unclear>porque</unclear> <unclear>vuestra</unclear> <unclear>merced</unclear> <unclear>tenga</unclear> <unclear>noticia</unclear> <unclear>de</unclear> <unclear>ello</unclear>
+<unclear>y</unclear> <unclear>sepa</unclear> <unclear>lo</unclear> <unclear>que</unclear> <unclear>ha</unclear> <unclear>de</unclear> <unclear>hacer</unclear> <unclear>en</unclear> <unclear>este</unclear> <unclear>caso</unclear> <unclear>y</unclear> <unclear>negocio</unclear>
+<unclear>que</unclear> <unclear>tanto</unclear> <unclear>importa</unclear> <unclear>al</unclear> <unclear>servicio</unclear> <unclear>de</unclear> <unclear>su</unclear> <unclear>majestad</unclear>
+<unclear>y</unclear> <unclear>bien</unclear> <unclear>de</unclear> <unclear>esta</unclear> <unclear>republica</unclear> <unclear>y</unclear> <unclear>para</unclear> <unclear>que</unclear> <unclear>vuestra</unclear> <unclear>merced</unclear>
+<unclear>lo</unclear> <unclear>entienda</unclear> <unclear>y</unclear> <unclear>sepa</unclear> <unclear>la</unclear> <unclear>voluntad</unclear> <unclear>que</unclear> <unclear>tenemos</unclear>
+<unclear>de</unclear> <unclear>que</unclear> <unclear>esto</unclear> <unclear>se</unclear> <unclear>haga</unclear> <unclear>con</unclear> <unclear>toda</unclear> <unclear>brevedad</unclear> <unclear>y</unclear> <unclear>diligencia</unclear>
+<unclear>y</unclear> <unclear>que</unclear> <unclear>no</unclear> <unclear>haya</unclear> <unclear>falta</unclear> <unclear>en</unclear> <unclear>ello</unclear> <unclear>por</unclear> <unclear>ninguna</unclear> <unclear>via</unclear>
+
+<unclear>y</unclear> <unclear>asi</unclear> <unclear>mismo</unclear> <unclear>mandamos</unclear> <unclear>que</unclear> <unclear>se</unclear> <unclear>haga</unclear> <unclear>saber</unclear>
+<unclear>a</unclear> <unclear>todos</unclear> <unclear>los</unclear> <unclear>vecinos</unclear> <unclear>y</unclear> <unclear>moradores</unclear> <unclear>de</unclear> <unclear>esta</unclear> <unclear>villa</unclear>
+<unclear>como</unclear> <unclear>se</unclear> <unclear>ha</unclear> <unclear>de</unclear> <unclear>hacer</unclear> <unclear>y</unclear> <unclear>cumplir</unclear> <unclear>lo</unclear> <unclear>contenido</unclear>
+<unclear>en</unclear> <unclear>esta</unclear> <unclear>nuestra</unclear> <unclear>carta</unclear> <unclear>y</unclear> <unclear>provisión</unclear> <unclear>real</unclear>
+<unclear>y</unclear> <unclear>que</unclear> <unclear>nadie</unclear> <unclear>vaya</unclear> <unclear>contra</unclear> <unclear>ello</unclear> <unclear>so</unclear> <unclear>pena</unclear> <unclear>de</unclear> <unclear>la</unclear> <unclear>nuestra</unclear> <unclear>merced</unclear>
+<unclear>y</unclear> <unclear>de</unclear> <unclear>diez</unclear> <unclear>mil</unclear> <unclear>maravedis</unclear> <unclear>para</unclear> <unclear>la</unclear> <unclear>nuestra</unclear> <unclear>camara</unclear>
+<unclear>y</unclear> <unclear>fisco</unclear> <unclear>y</unclear> <unclear>que</unclear> <unclear>vuestra</unclear> <unclear>merced</unclear> <unclear>lo</unclear> <unclear>haga</unclear> <unclear>pregonar</unclear>
+<unclear>publicamente</unclear> <unclear>para</unclear> <unclear>que</unclear> <unclear>venga</unclear> <unclear>a</unclear> <unclear>noticia</unclear> <unclear>de</unclear> <unclear>todos</unclear>
+<unclear>y</unclear> <unclear>ninguno</unclear> <unclear>pueda</unclear> <unclear>pretender</unclear> <unclear>ignorancia</unclear> <unclear>alguna</unclear>
+<unclear>dada</unclear> <unclear>en</unclear> <unclear>la</unclear> <unclear>nuestra</unclear> <unclear>villa</unclear> <unclear>de</unclear> <unclear>Madrid</unclear> <unclear>a</unclear> <unclear>veinte</unclear> <unclear>dias</unclear>
+<unclear>del</unclear> <unclear>mes</unclear> <unclear>de</unclear> <unclear>mayo</unclear> <unclear>de</unclear> <unclear>mil</unclear> <unclear>y</unclear> <unclear>seiscientos</unclear> <unclear>años</unclear>
+
+<vocab>vuestra merced, servicio de su majestad, provisión real, maravedis, Madrid</vocab>

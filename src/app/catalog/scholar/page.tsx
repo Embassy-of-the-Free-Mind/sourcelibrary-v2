@@ -28,7 +28,7 @@ export default async function ScholarCatalogPage() {
     <>
       <SiteHeader variant="light" />
       <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-20">
-        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+        <h1 className="text-3xl md:text-4xl font-serif mb-2" style={{ color: 'var(--text-primary)' }}>
           Catalog
         </h1>
         <p className="text-lg mb-10" style={{ color: 'var(--text-muted)' }}>

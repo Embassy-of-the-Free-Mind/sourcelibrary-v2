@@ -1,0 +1,10 @@
+<warning>Except for a pencil numeral, the only writing on this side is mirror-reversed handwritten Hebrew showing through from the other side of the leaf. It has not been transcribed. A ruled pencil frame and the pencil numeral "12" in the lower left margin are on this side.</warning>
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Pastedown or flyleaf inside a green cloth binding with sprinkled red edges. A ruled pencil frame is on this side. Faint brown spots and stains. A plastic clip or tab is visible at the left edge.</meta>
+
+<margin>12</margin>
+
+<vocab>pencil foliation, show-through, ruled frame</vocab>

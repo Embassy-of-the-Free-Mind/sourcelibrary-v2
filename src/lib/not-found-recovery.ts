@@ -12,7 +12,7 @@
 
 import { PREFIXED_LOCALES } from '@/lib/locale-path';
 
-export type DeadContentKind = 'book' | 'author' | 'artwork' | 'collection';
+export type DeadContentKind = 'book' | 'author' | 'artwork' | 'work' | 'collection';
 
 export interface DeadContentLink {
   kind: DeadContentKind;
@@ -25,7 +25,7 @@ export function isResolvableSlug(slug: string): boolean {
 }
 
 const LOCALE_PREFIX = new RegExp(`^/(?:${PREFIXED_LOCALES.join('|')})(?=/)`);
-const CONTENT_PATH = /^\/(book|author|artwork|collections?)\/([^/?#]+)/;
+const CONTENT_PATH = /^\/(book|author|artwork|work|collections?)\/([^/?#]+)/;
 
 /** Reads the content link out of a 404's pathname; null for any other page. */
 export function parseDeadContentLink(pathname: string): DeadContentLink | null {
@@ -47,4 +47,24 @@ export function searchTermFromSlug(slug: string): string {
     .replace(/-\d+$/, '')
     .split('-')
     .join(' ');
+}
+
+/**
+ * The slug or id at the front of a `/book/<segment>` that has pasted text stuck
+ * to its end, or null. `ghayat-al-hakim-arabic-ms-al-majriti.` (a sentence's
+ * full stop), `oedipus-aegyptiacus-tomus-iii-kircher)의` (a bracket and the next
+ * word of a Korean answer), `…-pseudo-solomon deel 6`, `…-laurembergi=`:
+ * 38 such 404s in the 90 days to 2026-11-12 (#102).
+ *
+ * The pasted part must START with a character no slug or id contains, so the
+ * front is exactly what the writer copied. A trailing hyphen is left alone: that
+ * is a slug cut short, and its front can be another book's whole slug. The
+ * caller redirects only when the front is the exact slug, id or alias of a
+ * live book.
+ */
+export function slugBeforePastedText(segment: string): string | null {
+  let s = segment;
+  try { s = decodeURIComponent(segment); } catch { /* keep raw */ }
+  const m = /^([a-z0-9]+(?:-[a-z0-9]+)*)[^A-Za-z0-9_-]/.exec(s);
+  return m && isResolvableSlug(m[1]) ? m[1] : null;
 }

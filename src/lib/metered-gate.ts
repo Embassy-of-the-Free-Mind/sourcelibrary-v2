@@ -23,6 +23,7 @@ import { hasCronAuth } from '@/lib/book-access';
 import { isTrustedBot } from '@/lib/bot-gate';
 import { meteredReaderEnabled, isPageFree, stripGatedPage, type GateInfo } from '@/lib/free-preview';
 import { clientCountry } from '@/lib/client-ip';
+import { shadowWall } from '@/lib/wall-shadow';
 
 /**
  * One row per walled request in analytics_events (same shape as
@@ -77,7 +78,8 @@ type PageDoc = Record<string, unknown> & {
  * with gated pages replaced by stripped copies.
  *
  * `exempt` short-circuits everything (tenant-scoped routes pass true).
- * With METERED_READER unset this is a no-op costing one env read.
+ * With METERED_READER unset this returns `pages` untouched; the shadow log
+ * (wall-shadow.ts) then records, after the response, what the wall would have done.
  */
 export async function gatePagesForRequest<T extends PageDoc>(
   db: Db,
@@ -85,7 +87,11 @@ export async function gatePagesForRequest<T extends PageDoc>(
   pages: T[],
   { exempt = false }: { exempt?: boolean } = {},
 ): Promise<T[]> {
-  if (!meteredReaderEnabled() || exempt || pages.length === 0) return pages;
+  if (exempt || pages.length === 0) return pages;
+  if (!meteredReaderEnabled()) {
+    shadowWall(db, request, pages);
+    return pages;
+  }
   if (hasCronAuth(request)) return pages;
 
   const session = await auth().catch(() => null);

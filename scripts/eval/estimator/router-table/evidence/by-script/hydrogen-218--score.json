@@ -1,0 +1,306 @@
+{
+ "_about": "#218 job hydrogen-panels-218: judge.mjs score of route-judge results/hydrogen-218 cut by the page script type (script-type.mjs, read 2026-11-14). The stored baselines on the same pages stay in router-tests-2026-10-26 (German) and latin-flash3-live-route-8632 (Latin).",
+ "source": "scripts/eval/route-judge-6740/results/hydrogen-218/score.json",
+ "cells": {
+  "de-lite|print": {
+   "routes": {
+    "lite>hydrogen-low": {
+     "n": 28,
+     "books": 28,
+     "accept": "23/28",
+     "wrong_text_pages": "2/28",
+     "classes_k_of_n": {
+      "O8": "15/28",
+      "T6": "2/28",
+      "O13": "1/28",
+      "O14": "1/28",
+      "O6": "9/28",
+      "O11": "3/28",
+      "E2": "10/28",
+      "O7": "4/28",
+      "O5": "2/28",
+      "O16": "6/28",
+      "O12": "2/28",
+      "T10": "1/28"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/28",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "wrong_text_pages": "1/30",
+     "classes_k_of_n": {
+      "E2": "7/30",
+      "O8": "10/30",
+      "O11": "2/30",
+      "O6": "6/30",
+      "O12": "5/30",
+      "O7": "1/30",
+      "O13": "1/30",
+      "T6": "1/30"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/30",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-medium": {
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "wrong_text_pages": "3/30",
+     "classes_k_of_n": {
+      "E2": "3/30",
+      "O6": "5/30",
+      "O12": "3/30",
+      "O8": "11/30",
+      "O1": "1/30",
+      "O7": "3/30",
+      "O16": "4/30",
+      "O11": "1/30",
+      "T6": "2/30",
+      "T10": "1/30"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/30",
+      "with_name_error": 0
+     }
+    }
+   }
+  },
+  "de-flash3|print": {
+   "routes": {
+    "3flash>hydrogen-low": {
+     "n": 22,
+     "books": 22,
+     "accept": "19/22",
+     "wrong_text_pages": "1/22",
+     "classes_k_of_n": {
+      "O8": "16/22",
+      "O12": "4/22",
+      "O5": "2/22",
+      "E2": "7/22",
+      "T6": "2/22",
+      "O6": "8/22",
+      "O4": "1/22",
+      "O7": "1/22",
+      "D1": "1/22",
+      "O1": "1/22",
+      "O11": "1/22"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/22",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-low": {
+     "n": 22,
+     "books": 22,
+     "accept": "21/22",
+     "wrong_text_pages": "1/22",
+     "classes_k_of_n": {
+      "O8": "13/22",
+      "O16": "3/22",
+      "E2": "2/22",
+      "O7": "1/22",
+      "O6": "1/22",
+      "T10": "1/22",
+      "O12": "3/22",
+      "O5": "1/22"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/22",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-medium": {
+     "n": 22,
+     "books": 22,
+     "accept": "22/22",
+     "wrong_text_pages": "0/22",
+     "classes_k_of_n": {
+      "O8": "9/22",
+      "E2": "6/22",
+      "O12": "2/22",
+      "O16": "1/22",
+      "O11": "1/22",
+      "T6": "1/22",
+      "O6": "3/22",
+      "D1": "2/22",
+      "I3": "1/22"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/22",
+      "with_name_error": 0
+     }
+    }
+   }
+  },
+  "de-flash3|unknown": {
+   "routes": {
+    "3flash>hydrogen-low": {
+     "n": 8,
+     "books": 8,
+     "accept": "8/8",
+     "wrong_text_pages": "0/8",
+     "classes_k_of_n": {
+      "O12": "1/8",
+      "O8": "6/8",
+      "O6": "2/8",
+      "E2": "3/8",
+      "T6": "1/8",
+      "O16": "1/8"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/8",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-low": {
+     "n": 7,
+     "books": 7,
+     "accept": "7/7",
+     "wrong_text_pages": "0/7",
+     "classes_k_of_n": {
+      "O13": "1/7",
+      "E2": "1/7",
+      "O8": "1/7"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/7",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-medium": {
+     "n": 7,
+     "books": 7,
+     "accept": "6/7",
+     "wrong_text_pages": "1/7",
+     "classes_k_of_n": {
+      "O12": "1/7",
+      "O8": "2/7",
+      "E2": "1/7",
+      "O5": "1/7",
+      "O6": "1/7"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/7",
+      "with_name_error": 0
+     }
+    }
+   }
+  },
+  "latin-flash3|print": {
+   "routes": {
+    "3flash>hydrogen-low": {
+     "n": 25,
+     "books": 25,
+     "accept": "20/25",
+     "wrong_text_pages": "1/25",
+     "classes_k_of_n": {
+      "O16": "4/25",
+      "O12": "3/25",
+      "O11": "2/25",
+      "O6": "10/25",
+      "O8": "15/25",
+      "E2": "4/25",
+      "D1": "1/25",
+      "O13": "1/25"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/25",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-low": {
+     "n": 25,
+     "books": 25,
+     "accept": "23/25",
+     "wrong_text_pages": "1/25",
+     "classes_k_of_n": {
+      "O11": "1/25",
+      "O12": "2/25",
+      "O8": "8/25",
+      "E2": "6/25",
+      "O6": "3/25",
+      "O13": "1/25",
+      "O5": "1/25"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/25",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-medium": {
+     "n": 25,
+     "books": 25,
+     "accept": "23/25",
+     "wrong_text_pages": "0/25",
+     "classes_k_of_n": {
+      "O8": "8/25",
+      "O12": "2/25",
+      "O6": "6/25",
+      "E2": "3/25",
+      "O13": "1/25",
+      "O5": "1/25",
+      "T6": "1/25"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/25",
+      "with_name_error": 0
+     }
+    }
+   }
+  },
+  "latin-flash3|unknown": {
+   "routes": {
+    "3flash>hydrogen-low": {
+     "n": 4,
+     "books": 4,
+     "accept": "4/4",
+     "wrong_text_pages": "0/4",
+     "classes_k_of_n": {
+      "O8": "2/4",
+      "D1": "1/4"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/4",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-low": {
+     "n": 4,
+     "books": 4,
+     "accept": "3/4",
+     "wrong_text_pages": "0/4",
+     "classes_k_of_n": {
+      "O6": "2/4",
+      "O8": "1/4"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/4",
+      "with_name_error": 0
+     }
+    },
+    "hydrogen-medium": {
+     "n": 4,
+     "books": 4,
+     "accept": "4/4",
+     "wrong_text_pages": "0/4",
+     "classes_k_of_n": {
+      "O8": "1/4",
+      "O6": "2/4"
+     },
+     "name_check": {
+      "accept_after_name_check": "0/4",
+      "with_name_error": 0
+     }
+    }
+   }
+  }
+ }
+}

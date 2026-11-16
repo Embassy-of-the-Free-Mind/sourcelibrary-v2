@@ -41,6 +41,19 @@ const TRANS_TITLE = /transl|englished|rendered into english|done into english|ma
 const TRANS_AUTHOR = /\btr(ans)?\.?\b|translated by|;\s*tr\b/i;
 const CLASSICAL = /\b(plato|aristotle|plotinus|proclus|iamblichus|porphyry|plutarch|pythagoras|ptolemy|galen|hippocrates|homer|hesiod|sophocles|euripides|aeschylus|epictetus|marcus aurelius|sextus empiricus|philo|origen|cicero|seneca|virgil|ovid|lucretius|apuleius|boethius|aquinas|avicenna|averroes|al-biruni|al-kindi|maimonides|hermes trismegistus|laozi|lao tzu|confucius|zhuangzi|mencius|xunzi|patanjali|shankara|kabir|rumi|hafiz|sa'di|nagarjuna|padmasambhava)\b/i;
 const LOEB = /\b(loeb|sacred books of the east)\b/i;
+// Translator signals in a NON-English record (#3957). The English-only
+// TRANS_TITLE/CLASSICAL tests are not safe there — a Greek Plato is an original,
+// and Latin "translatio" is often not a translation at all — so a non-English
+// scan counts as a translation only on an explicit translator phrase in the
+// author or title (French, German, Italian, Spanish, Portuguese, Dutch, Latin
+// title-page formulas). TRANS_AUTHOR's "tr." test is folded in letter-aware:
+// `\b` is ASCII-only in JS, so with it "Trémaugon" and "Trịnh" read as "tr.",
+// `\bübers` never matches, and `translaté\b` never ends. `original_language`
+// is deliberately NOT used: on non-English rows it mixes ISO codes, names and
+// wrong values.
+const wordRe = (body: string) => new RegExp(`(?<!\\p{L})(?:${body})(?!\\p{L})`, 'iu');
+const TRANS_AUTHOR_INTL = wordRe(String.raw`tr(ans)?\.?|translated by|traduct(eur|rice|or|ora)|übers\.|übersetz\p{L}*|translator|vertaler|interprete`);
+const TRANS_TITLE_INTL = wordRe(String.raw`tradui(t|te|ts|tes)|traduction|translat[ée]e?s?|mise?s? en fran[cç]o?[iy]s|übersetzt|übersetzung|verdeutscht|verteutscht|verdolmetscht|ins deutsche|in das deutsche|tradott[oaie]|traduzione|volgarizzat[oaie]|traducid[oa]s?|traducci[oó]n|traduzid[oa]s?|tradu[cç][aã]o|vertaald|vertaling|interprete|latin[eo] (redditu[sm]|reddit[ai]|versu[sm]|vers[ai]|conversu[sm]|convers[ai]|donatu[sm]|donat[ai])|in latinum (sermonem )?(conversu[sm]|convers[ai]|translatu[sm]|translat[ai]|versu[sm]|vers[ai])|(e|ex) (graec|arabic|hebrai?c)[oa] (in latinum|latine|convers|translat|vers)`);
 
 export type TextRole = 'original' | 'period-translation' | 'modern-translation';
 
@@ -82,8 +95,21 @@ export function classifyTextRole(book: ClassifiableBook): { text_role: TextRole;
     return { text_role: role, original_in_scan: false };
   }
 
-  // Non-English scan → original-language source.
-  if (!enLike(book.language)) return { text_role: 'original', original_in_scan: false };
+  // Non-English scan → original-language source, UNLESS the record names a
+  // translator (#3957: de Slane's French Muqaddimah, "Ibn Khaldun; de Slane
+  // (trans.)", was stamped 'original' because this branch never looked).
+  if (!enLike(book.language)) {
+    const t = book.title || '';
+    const a = book.author || '';
+    const sig = TRANS_AUTHOR_INTL.test(a) || TRANS_TITLE_INTL.test(t);
+    // Loeb/SBE counts as a modern translation whatever `language` says (a
+    // Loeb Homer is often tagged Greek) — same rule as the English branch.
+    if (LOEB.test(t) || LOEB.test(a)) return { text_role: 'modern-translation', original_in_scan: true };
+    if (!sig) return { text_role: 'original', original_in_scan: false };
+    const yr = coerceYear(book.year, book.published, book.original_work_year);
+    const role: TextRole = yr && yr > 0 && yr < 1700 ? 'period-translation' : 'modern-translation';
+    return { text_role: role, original_in_scan: false };
+  }
 
   const t = book.title || '';
   const a = book.author || '';

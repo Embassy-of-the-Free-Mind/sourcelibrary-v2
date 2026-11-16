@@ -1,0 +1,174 @@
+[
+ {
+  "key": "LIVE|6a3c715539b4508b04e53d3a",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "Furthermore, from the lower two classes, I would select those works that approach antiquity and compile each into a separate collection to serve as supporting wings and protective guards, while those that do not accord",
+    "new": "Furthermore, from the lower two classes, I would select those works that approach antiquity and compile each into a separate collection to serve as supporting wings and protective guards, while those that do accord",
+    "how": "\\bdo not\\b → do"
+   }
+  ]
+ },
+ {
+  "key": "LIVE|6a3f027f97e91e1768f675e7",
+  "plants": [
+   {
+    "kind": "number",
+    "old": "**4.** And in order that what I say might become clearer, I will say it again more broadly.",
+    "new": "**7.** And in order that what I say might become clearer, I will say it again more broadly.",
+    "how": "4 → 7"
+   }
+  ]
+ },
+ {
+  "key": "LIVE|69906d5364d44bd0a0ef5348",
+  "plants": [
+   {
+    "kind": "name",
+    "old": "| Planet | Constant Values (Degrees, Minutes, Seconds) |",
+    "new": "| Constant Values | Planet (Degrees, Minutes, Seconds) |",
+    "how": "swap Planet ↔ Constant Values"
+   }
+  ]
+ },
+ {
+  "key": "LIVE|69906d4264d44bd0a0ef52e6",
+  "plants": [
+   {
+    "kind": "clause",
+    "old": "|| 5 || If the lords of the tenth house or other powerful planets are situated in the house of enemies or the house of loss [the 12th], there is no happiness regarding the father, mother, or paternal uncles.",
+    "new": "|| 5 || If the lords of the tenth house or other powerful planets are situated in the house of enemies or the house of loss [the 12th], mother, or paternal uncles.",
+    "how": "clause dropped",
+    "dropped": "there is no happiness regarding the father,"
+   }
+  ]
+ },
+ {
+  "key": "OPUS2|69f32876aeeee0fa38c6475e",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "Most lines are incomplete, and some readings (for example right column line 10 and left column lines 1, 9 and 13) make little sense as transcribed.",
+    "new": "Most lines are not incomplete, and some readings (for example right column line 10 and left column lines 1, 9 and 13) make little sense as transcribed.",
+    "how": "\\bare\\b → are not"
+   }
+  ]
+ },
+ {
+  "key": "OPUS2|69906d2364d44bd0a0ef523d",
+  "plants": [
+   {
+    "kind": "number",
+    "old": "He overcomes the godless wiles of the wicked; he sharpens his two horns to pierce the demon.",
+    "new": "He overcomes the godless wiles of the wicked; he sharpens his three horns to pierce the demon.",
+    "how": "two → three"
+   }
+  ]
+ },
+ {
+  "key": "OPUS2|699066c0249ce014347d1960",
+  "plants": [
+   {
+    "kind": "name",
+    "old": "| Sun | Moon | Mars | Mercury | Jupiter | Venus | Saturn | Rahu | Ketu | **Planets** |",
+    "new": "| Sun | Mars | Moon | Mercury | Jupiter | Venus | Saturn | Rahu | Ketu | **Planets** |",
+    "how": "swap Moon ↔ Mars"
+   }
+  ]
+ },
+ {
+  "key": "OPUS2|69f3286daeeee0fa38c64696",
+  "plants": [
+   {
+    "kind": "clause",
+    "old": "If the victorious armies of the king did not block the way of that people, they would raid that kingdom heavily, carrying off plunder and laying it waste.",
+    "new": "If the victorious armies of the king did not block the way of that people, carrying off plunder and laying it waste.",
+    "how": "clause dropped",
+    "dropped": "they would raid that kingdom heavily,"
+   }
+  ]
+ },
+ {
+  "key": "OPUSX|69906d4264d44bd0a0ef52e6",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "When it is aspected by benefics and joined in auspicious combinations, there is increase of these",
+    "new": "When it is not aspected by benefics and joined in auspicious combinations, there is increase of these",
+    "how": "\\bis\\b → is not"
+   }
+  ]
+ },
+ {
+  "key": "OPUSX|69906d2864d44bd0a0ef5254",
+  "plants": [
+   {
+    "kind": "number",
+    "old": "**26** For a rite of a thousand or of ten thousand offerings, one cubit and two cubits respectively are prescribed.",
+    "new": "**26** For a rite of a hundred or of ten thousand offerings, one cubit and two cubits respectively are prescribed.",
+    "how": "thousand → hundred"
+   }
+  ]
+ },
+ {
+  "key": "OPUSX|69906469ef12272ffdc920df",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "Better than seeing is touching them, that is, curds and the rest, at the time of setting out and on similar occasions.",
+    "new": "Better than seeing is not touching them, that is, curds and the rest, at the time of setting out and on similar occasions.",
+    "how": "\\bis\\b → is not"
+   }
+  ]
+ },
+ {
+  "key": "OPUSX|69f33b46876dd827cbc58a5c",
+  "plants": [
+   {
+    "kind": "clause",
+    "old": "| A mountain in the aspect of mountains, the refuge of Noah; | a sea in the aspect of seas, the drinking-place of the spirit.",
+    "new": "| A mountain in the aspect of mountains, the drinking-place of the spirit.",
+    "how": "clause dropped",
+    "dropped": "the refuge of Noah; | a sea in the aspect of seas,"
+   }
+  ]
+ },
+ {
+  "key": "FABLE|69c1bb258522835be845d3a3",
+  "plants": []
+ },
+ {
+  "key": "FABLE|6ae0c5d74adf2ffb52f75ef7",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "It is formed from the silk element, with 肖 giving the sound.\" It is pronounced xiao.",
+    "new": "It is not formed from the silk element, with 肖 giving the sound.\" It is pronounced xiao.",
+    "how": "\\bis\\b → is not"
+   }
+  ]
+ },
+ {
+  "key": "FABLE|6a51ee19689f6d0dbe2e45b8",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "Their departure is always sweeter than the lot of others:",
+    "new": "Their departure is not always sweeter than the lot of others:",
+    "how": "\\bis\\b → is not"
+   }
+  ]
+ },
+ {
+  "key": "FABLE|69f32c4234076d2bddeb304a",
+  "plants": [
+   {
+    "kind": "negation",
+    "old": "what is told face to face is at all times better than what is past;",
+    "new": "what is not told face to face is at all times better than what is past;",
+    "how": "\\bis\\b → is not"
+   }
+  ]
+ }
+]

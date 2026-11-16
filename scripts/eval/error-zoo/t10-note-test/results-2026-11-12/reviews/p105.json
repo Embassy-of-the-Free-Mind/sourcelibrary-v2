@@ -1,0 +1,39 @@
+[
+  {
+    "book_id": "6984e84e018466b0ebaa3653",
+    "slot": 1,
+    "title": "[Cyrillic:] Of the ancient mysteries",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1785 Russian civil-type octavo on the origin of the ancient mysteries (Eleusis, Egypt), consistent with the Starck attribution and with an esoteric/history-of-religion shelf. No tradition or collection is given to test against. The '[Cyrillic:]' prefix in the title is catalogue cruft.",
+    "rights_flag": null,
+    "structure_note": "Record 21 carries printed p. 13, an offset of 8 that fits front matter. The counts disagree with each other: 226 page records against pages_count 212, and structure pages_translated 0 against the field's 209, even though this page is translated. That points to stale count fields or extra records, not to a broken run. 18 backsteps and 25 repeats are high for a 212-page book. That could be duplicate or extra records (226 vs 212) or misread numerals. One page cannot settle it, so it is worth checking.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "printed_marker": "13; catchword \"ныхъ\"",
+        "layout": "single column of text, a double-rule head ornament at the top with the page number top right, catchword bottom right",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "Eleusis, a town near Athens, was the seat of the most famous",
+              "verdict": "unsupported",
+              "helpful": true,
+              "comment": "Correct as general knowledge. But 'devoted to the goddesses Demeter and Persephone' names deities the page does not carry. Harmless, not serious."
+            }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is clean. The OCR matches the leaf, including the split word at the head of the page and the catchword, and the English is faithful and complete up to the page break. The only addition is one accurate but source-external note on Eleusis. The book's count fields are inconsistent with each other and should be checked."
+  }
+]

@@ -1,0 +1,49 @@
+{
+ "page_id": "6a4a6fd37b720133514b2adf",
+ "book_id": "6a4a6fd37b720133514b2ad2",
+ "page_number": 13,
+ "cli": "agy",
+ "cli_version": "1.5.6",
+ "model": "gemini-3.8-flash-low",
+ "started_at": "2026-11-12T14:06:57.643Z",
+ "finished_at": "2026-11-12T14:07:23.369Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 2525,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "usage": [
+  {
+   "input": 18584,
+   "output": 1012,
+   "thinking": 0,
+   "cache_read": 0,
+   "total": 19596
+  }
+ ],
+ "chatter": null,
+ "write_guard": "ok",
+ "prompt_variant": "sentinels-6523",
+ "agent": "page-reader",
+ "wrapper": null,
+ "tool_calls": [
+  "read_file"
+ ],
+ "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10838598_00013/full/full/0/default.jpg",
+ "image_bytes": 623247,
+ "image_sha256": "c55582b9e0a892effd341f1016d532eec016ac1edf95b8aa6d61863f54a0f5cd",
+ "prompt_sent_chars": 17187,
+ "prompt_sent_hash": "287b6bc23abcc81e",
+ "stderr_tail": "",
+ "mode": "correct",
+ "lane": "route-judge-6740-eval",
+ "prompt_sent_file": "6a4a6fd37b720133514b2adf.prompt.txt",
+ "draft": {
+  "model": "gemini-3-flash-preview",
+  "pipeline": null,
+  "content_hash": "e4a7e54bd8ba5bab",
+  "text_hash": "e4a7e54bd8ba5bab",
+  "updated_at": "2026-07-05T20:03:17.023Z"
+ }
+}

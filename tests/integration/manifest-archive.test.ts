@@ -231,4 +231,25 @@ describe('a miss from a host that has served nothing this run is not kept (#5448
     led = (await db.collection('books').findOne({ id: BOOK }))!.archive_metadata.manifest_ledger;
     expect(openLedger(led).missCount(6)).toBe(1);
   });
+
+  it('a book whose only pending page is dead still records it: an archived page is the positive control (Göttingen, 2026-11-13)', async () => {
+    await cleanDb();
+    const db = getTestDb();
+    await seed(db);
+    const { createHostBreaker } = await import('../../scripts/lib/host-breaker.mjs');
+    const { openLedger } = await import('../../scripts/lib/manifest-ledger.mjs');
+    const missOf6 = async () => openLedger((await db.collection('books').findOne({ id: BOOK }))!.archive_metadata.manifest_ledger).missCount(6);
+    const run = (download: (u: string) => Promise<Buffer>) => archiveFromManifest(db, BOOK, { put: fakeStore().put, breaker: createHostBreaker(), pageConcurrency: 1, fetchManifest: async () => manifest(), download });
+    // Run 1 archives everything but page 6 (the host served, so the miss is kept).
+    await run(fakeImages({ 6: 404 }).download);
+    expect(await missOf6()).toBe(1);
+    // Run 2: page 6 is the only page left. Nothing pending can be served, but archived page 1 can.
+    const img = fakeImages({ 6: 404 });
+    await run(img.download);
+    expect(await missOf6()).toBe(2);
+    expect(img.calls.filter((u) => u.endsWith('/1.jpg'))).toHaveLength(1); // one control fetch
+    // Run 3: an outage. The control fails too, so the 404 is NOT written down as a fact about page 6.
+    await run(async () => { throw new Error('HTTP 404'); });
+    expect(await missOf6()).toBe(2);
+  });
 });

@@ -165,7 +165,10 @@ export default function QualityMethodsPage() {
         agreeing, checked by a referee, with planted errors proving the checks work. Read left to right: each stage
         feeds the next.
       </p>
-      <p style={{ ...C.dim, fontSize: 12, margin: '0 0 22px' }}>Statuses as of 11 October 2026. Each issue is the live record.</p>
+      <p style={{ ...C.dim, fontSize: 12, margin: '0 0 22px' }}>
+        Hand-kept page, last updated 11 October 2026: statuses may be stale. Each issue is the live record. The generated
+        version, built from <code>src/data/quality-methods.json</code>, is at <a href="/quality/methods" style={{ color: '#58a6ff' }}>/quality/methods</a>.
+      </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 14, alignItems: 'start' }}>
         {STAGES.map((stage) => (

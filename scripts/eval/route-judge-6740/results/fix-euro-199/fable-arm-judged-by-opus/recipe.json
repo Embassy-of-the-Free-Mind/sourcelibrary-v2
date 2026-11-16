@@ -1,0 +1,29 @@
+{
+ "question": "model",
+ "issue": 199,
+ "stage": "ocr",
+ "languages": [
+  "German",
+  "English",
+  "Italian",
+  "French",
+  "Dutch",
+  "Spanish"
+ ],
+ "baseline": "stored",
+ "arms": [
+  "stored",
+  "stored-fable"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": "none — a pooled test of untested euro cells (30 pages, 10 cells); no cell reaches the table n",
+ "waive": {}
+}

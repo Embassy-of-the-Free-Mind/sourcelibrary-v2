@@ -105,7 +105,11 @@ await withMongo(async (db) => {
   if (RELEASE) {
     // --ids narrows a release to the listed books; without it every book held for the reason is released.
     const only = IDS ? fs.readFileSync(IDS, 'utf8').split('\n').map((x) => x.trim()).filter(Boolean) : null;
-    const q = { 'pipeline_auto.hold.reason': hold.reason, ...(BOOK ? { id: BOOK } : only ? { id: { $in: only } } : {}) };
+    // `pipeline_auto.status` leads the query because it is indexed and `pipeline_auto.hold.reason` is not: on its own
+    // the reason scanned all ~600K books, returned nothing for 30 s and died on the socket timeout, twice (v3#393).
+    // What it leaves out is a CLOBBERED book (a hold marker under another status): run --reassert first, which puts
+    // it back to `held`, and the release then finds it. pipeline-hold-drift.mjs lists them daily.
+    const q = { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': hold.reason, ...(BOOK ? { id: BOOK } : only ? { id: { $in: only } } : {}) };
     const held = await B.find(q, { projection: { id: 1, title: 1, pipeline_auto: 1 } }).toArray();
     console.log(`${held.length} book(s) held for ${hold.reason}${BOOK ? ` (book ${BOOK})` : only ? ` (of ${only.length} listed in ${IDS})` : ''} (${APPLY ? 'APPLY' : 'dry run'})`);
     const totals = { released: 0, to: {} };

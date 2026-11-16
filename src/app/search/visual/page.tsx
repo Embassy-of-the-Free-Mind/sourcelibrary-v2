@@ -73,7 +73,7 @@ export default function VisualSearchPage() {
       <div className="bg-dark text-white">
         <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <h1 className="text-2xl sm:text-3xl font-display font-semibold">Visual Search</h1>
+          <h1 className="text-2xl sm:text-3xl font-serif font-semibold">Visual Search</h1>
           <p className="text-white/60 mt-1 text-sm">
             Search images by what they look like, not just their descriptions
           </p>

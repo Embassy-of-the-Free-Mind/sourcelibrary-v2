@@ -3,14 +3,22 @@
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
+import { canonicalPageLinks, ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
+import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 
 // Image that degrades to a labelled placeholder instead of vanishing when the
 // source 404s — so the reader knows a figure was meant to appear here (and can
 // still follow the link), rather than silently losing it.
+//
+// A gallery crop arrives as its 300 px `-thumb.jpg` (search_images, v3#250).
+// It is shown at up to 400 px, so the 600 px `-card.jpg` sibling is tried
+// first and the thumb is the fallback (about a third of crops have a card
+// today; the thumb exists for all). A click opens the full-size crop.
 function MarkdownImage({ src, alt }: { src?: string; alt?: string }) {
+  const [cardFailed, setCardFailed] = useState(false);
   const [broken, setBroken] = useState(false);
   if (!src) return null;
+  const card = cardFailed ? null : toGalleryCardUrl(src);
   if (broken) {
     return (
       <a
@@ -25,14 +33,14 @@ function MarkdownImage({ src, alt }: { src?: string; alt?: string }) {
     );
   }
   return (
-    <a href={src} target="_blank" rel="noopener noreferrer">
+    <a href={toGalleryFullUrl(src) ?? src} target="_blank" rel="noopener noreferrer">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={src}
+        src={card ?? src}
         alt={alt || ''}
         className="rounded-lg shadow-md max-h-[400px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-5"
         loading="lazy"
-        onError={() => setBroken(true)}
+        onError={() => (card ? setCardFailed(true) : setBroken(true))}
       />
     </a>
   );
@@ -127,7 +135,7 @@ export default function LibrarianMessageBody({ content, variant = 'thread' }: Li
               <MarkdownImage src={src as string} alt={alt as string} />
             ),
           }}
-        >{ensureParagraphBreaks(linkifySourceUrls(content))}</ReactMarkdown>
+        >{ensureParagraphBreaks(linkifySourceUrls(canonicalPageLinks(content)))}</ReactMarkdown>
       </div>
     </div>
   );

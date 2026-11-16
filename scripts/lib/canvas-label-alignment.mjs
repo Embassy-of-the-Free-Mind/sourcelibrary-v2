@@ -128,3 +128,22 @@ export function bookVerdict(rows, { minScored = 20, min = 0.6 } = {}) {
   if (k !== 0 && share >= min) return { verdict: 'shifted', scored, offset: k, share, histogram: h };
   return { verdict: 'mixed', scored, offset: k, share, histogram: h };
 }
+
+/**
+ * Gate for a segment re-point (repair-text-offset-segments.mjs): does the simulated move earn a
+ * write? The move must leave at least `min` of scored slots at offset 0, and the book must have
+ * needed it (offset-0 share below `min` before). The BEFORE verdict may be `shifted` (the whole
+ * book off by one offset) or `mixed`/`aligned` with a low offset-0 share: a book whose second half
+ * is shifted reads `mixed` (Mylius 1622, v2#5924: 52% aligned before, 98% after), and that is the
+ * case segments exist for. `unscored` never passes here; it goes to the by-eye gate.
+ *
+ * @returns {{ok: boolean, before0: number, after0: number, why: string}}
+ */
+export function segmentGate(beforeV, afterV, min = 0.95) {
+  const share0 = (v) => (v?.histogram?.[0] ?? 0) / (v?.scored || 1);
+  const before0 = share0(beforeV), after0 = share0(afterV);
+  if (beforeV?.verdict === 'unscored') return { ok: false, before0, after0, why: 'labels cannot score the book' };
+  if (before0 >= min) return { ok: false, before0, after0, why: `already aligned before (${before0.toFixed(3)} >= ${min})` };
+  if (after0 < min) return { ok: false, before0, after0, why: `after offset-0 share ${after0.toFixed(3)} < ${min}` };
+  return { ok: true, before0, after0, why: `offset-0 share ${before0.toFixed(3)} -> ${after0.toFixed(3)}` };
+}

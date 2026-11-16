@@ -9,6 +9,8 @@ import type { ResolvedLanes, ResolvedDot } from './histories';
 // Marks on a rule, not areas, on purpose. Area would read as how common a sense was, and this data only records what
 // we read. For the same reason a stretch of GAP_YEARS or more with no claim is dotted: the line must not imply evidence.
 
+// The default axis, drawn for histories whose claims run into the present. A chart whose claims stop earlier (bath:
+// antiquity to 1700) gives its own `axis` in lanes.json: a start, an end, and no break, so its time is drawn evenly.
 const START = -350;
 const BREAK = 1500; // time after this is drawn wider: most of the claims are after it, and the note says so
 const END = 2030;
@@ -32,11 +34,17 @@ const HALO = { paintOrder: 'stroke' as const, stroke: 'var(--background)', strok
 const NAME_LEADING = 14;
 
 function Chart({ data, layout }: { data: ResolvedLanes; layout: Layout }) {
-  const { w, breakAt, pad, title, small, titleChar, nameChar, ticks, gloss } = layout;
+  const { w, pad, title, small, titleChar, nameChar, gloss } = layout;
+  const ax = data.axis;
+  const start = ax?.start ?? START;
+  const end = ax?.end ?? END;
+  const brk = ax ? end : BREAK; // a chart's own axis is even: no compressed stretch
+  const breakAt = ax ? 1 : layout.breakAt;
+  const ticks = ax ? (w === WIDE.w ? ax.ticks : ax.smallTicks) : layout.ticks;
   const scale = (year: number) => {
-    const t = year <= BREAK
-      ? ((year - START) / (BREAK - START)) * breakAt
-      : breakAt + ((year - BREAK) / (END - BREAK)) * (1 - breakAt);
+    const t = year <= brk
+      ? ((year - start) / (brk - start)) * breakAt
+      : breakAt + ((year - brk) / (end - brk)) * (1 - breakAt);
     return pad + t * (w - pad * 2);
   };
 
@@ -82,7 +90,7 @@ function Chart({ data, layout }: { data: ResolvedLanes; layout: Layout }) {
       {ticks.map((t) => (
         <g key={t}>
           <line x1={scale(t)} x2={scale(t)} y1={AXIS - 8} y2={height} strokeWidth={0.75} style={{ stroke: 'var(--border-light)' }} />
-          <text x={t < 0 ? 2 : scale(t)} y={14} textAnchor={t < 0 ? 'start' : 'middle'} fontSize={small + 1.5} className="font-serif" style={{ fill: 'var(--text-muted)', fontVariantNumeric: 'oldstyle-nums' }}>{yearLabel(t)}</text>
+          <text x={scale(t) < 30 ? 2 : scale(t)} y={14} textAnchor={scale(t) < 30 ? 'start' : 'middle'} fontSize={small + 1.5} className="font-serif" style={{ fill: 'var(--text-muted)', fontVariantNumeric: 'oldstyle-nums' }}>{yearLabel(t)}</text>
         </g>
       ))}
       {rows.map(({ lane, marks, firstX, beside, top, lineY }) => (
@@ -188,9 +196,9 @@ export default function SenseLanes({ data }: { data: ResolvedLanes }) {
         <KeyMark mark={<line x1={1} x2={23} y1={8} y2={8} strokeWidth={1} strokeLinecap="round" strokeDasharray="0.5 4.5" style={RULE} />}>Nothing found for {GAP_YEARS} years or more in what we read</KeyMark>
       </ul>
       <p className="text-sm leading-relaxed mt-4" style={{ color: 'var(--text-muted)' }}>
-        Open any mark for the claim and the page it quotes. A line runs from a sense’s earliest claim here to its latest,
-        people arguing against it included. It does not show a sense’s first use, or how common it was. Time before 1500 is
-        compressed.
+        Open any mark for the claim and the page it quotes. A line runs from a lane’s earliest claim here to its latest,
+        people arguing against it included. It does not show when the idea first appeared, or how common it was.
+        {data.axis ? '' : ' Time before 1500 is compressed.'}
       </p>
 
       <details className="mt-4">

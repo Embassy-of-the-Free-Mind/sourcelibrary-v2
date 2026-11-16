@@ -1,0 +1,17 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Ink show-through from the verso leaf visible in lower half of page.</warning>
+
+votis & mutuis suspiriis subinde intonemus §. 49. ω. *Tu Domine exurgens miserearis Zion, quia tempus miserendi ejus, quia venit tempus, quoniam delectantur servi tui lapidibus ejus, & pulveris ejus miserentur: Ut timeant gentes nomen tuum Domine, & omnes Reges terræ gloriam tuam.*
+
+§. 50. Quod superest, Gottfried Wiesener *patriâ Raceburgo Mekelnburgicus, genere α Laubanenſis, pro eâ, quam Laube debere sese profitetur & inposterum quoq; debiturum, pietate atq; obsequio, elegantulâ oratione Latinâ, quam recitaturus est memoriter, descripsit istud infortunium, ciebit solatium, Vestrumq; prædicabit beneficium: cujus studium quum nullatenus fiet improbandum, ipsi quoq; dignum Eum, quem audiveritis, eritis censuri. Promtè enim β favendum est honeste cupientibus, ut probabiles voluntates alieno etiam juventur adnisu, & γ pænè injuriam facit benignitati, qui anxiè petit, quod præstantis natura spontè promittit. Valete.*
+
+(ω) *ex Psalm. 102, 14-16;* (α) *Vide Scaliger. l. 3. Poët. c. 118. (119) & c. 199. de LL. Cicero lib. 2. de Ll. pag. 170. Franciſc. Patrit. lib. V. de Inſtit. Reipubl. tit. 1, Confer l. 190. ff. de V. S.* (β) *Symmach. l. V. epist. 75.* (γ) *lib. VII. epist. 62.*
+
+<image-desc size="medium" type="woodcut" significance="low">Large symmetrical diamond-shaped arabesque printer's ornament with floral and foliate strapwork scrollwork motifs.</image-desc>
+
+<vocab>Zion, Gottfried Wiesener, Raceburgo Mekelnburgicus, Laubanensis, Scaliger, Cicero, Franciscus Patritius, Symmachus</vocab>
+<<<END>>>

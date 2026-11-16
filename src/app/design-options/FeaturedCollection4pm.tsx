@@ -122,7 +122,7 @@ export default function FeaturedCollection4pm({ items }: { items: FourPmFeatured
           {/* Left: text + description */}
           <div className="flex flex-col justify-center min-w-0">
             <Link href={`/collections/${collection.slug}`} className="group">
-              <h2 className="text-3xl md:text-4xl text-white mb-3 leading-tight font-display group-hover:text-accent-gold transition-colors">
+              <h2 className="text-3xl md:text-4xl text-white mb-3 leading-tight font-serif group-hover:text-accent-gold transition-colors">
                 {collection.name}
               </h2>
             </Link>

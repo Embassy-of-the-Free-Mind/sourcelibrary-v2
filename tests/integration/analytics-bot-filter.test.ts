@@ -35,6 +35,12 @@ function makePost(body: object, headers: Record<string, string>): Request {
   }) as never;
 }
 
+// The route races its DB work against a 3 s timeout and answers early when it loses, and the read counters are
+// fire-and-forget. On a loaded CI runner (gex45 at load ~40, PR #299, 2026-11-13) the writes landed after the
+// assertions, and after the next test's cleanDb, so each test saw its neighbour's rows. Every assertion on a
+// write therefore waits for it (vi.waitFor returns as soon as it holds).
+const settle = { timeout: 15_000, interval: 50 };
+
 async function track(ua: string, ip: string, body: object) {
   const res = await trackPost(
     makePost(body, { 'user-agent': ua, 'x-forwarded-for': ip }) as never
@@ -54,15 +60,19 @@ describe('analytics event sink — write-time bot classification', () => {
     const db = getTestDb();
     await track(HUMAN_UA, '203.0.113.10', { event: 'page_read', book_id: 'book-1', page_id: 'page-1' });
 
+    const page = await vi.waitFor(async () => {
+      const p = await db.collection('pages').findOne({ id: 'page-1' });
+      expect(p?.read_count).toBe(1);
+      return p;
+    }, settle);
+    expect(page?.read_count).toBe(1);
+
     const rows = await db.collection('analytics_events').find({ event: 'page_read' }).toArray();
     expect(rows).toHaveLength(1);
     expect(rows[0].traffic_class).toBe('human');
     // Without a stored user-agent, contamination cannot be diagnosed after the
     // fact — that absence is what made #3405 unfixable retroactively.
     expect(rows[0].user_agent).toContain('Chrome');
-
-    const page = await db.collection('pages').findOne({ id: 'page-1' });
-    expect(page?.read_count).toBe(1);
   });
 
   it.each([
@@ -74,9 +84,13 @@ describe('analytics event sink — write-time bot classification', () => {
     const db = getTestDb();
     await track(ua, '198.51.100.7', { event: 'page_read', book_id: 'book-1', page_id: 'page-1' });
 
+    const counter = await vi.waitFor(async () => {
+      const c = await db.collection('analytics_events_class').findOne({});
+      expect(c).toBeTruthy();
+      return c;
+    }, settle);
     expect(await db.collection('analytics_events').countDocuments({})).toBe(0);
 
-    const counter = await db.collection('analytics_events_class').findOne({});
     expect(counter?.class).toBe(expectedClass);
     expect(counter?.event).toBe('page_read');
     expect(counter?.count).toBe(1);
@@ -90,6 +104,9 @@ describe('analytics event sink — write-time bot classification', () => {
         book_id: 'book-1',
       });
     }
+    await vi.waitFor(async () => {
+      expect((await db.collection('analytics_events_class').findOne({}))?.count).toBe(5);
+    }, settle);
 
     const book = await db.collection('books').findOne({ id: 'book-1' });
     expect(book?.read_count).toBe(0);
@@ -109,9 +126,11 @@ describe('analytics event sink — write-time bot classification', () => {
       await track(HUMAN_UA, ip, { event: 'page_edit', book_id: 'book-1' });
     }
 
-    const stored = await db.collection('analytics_events').countDocuments({ event: 'page_edit' });
-    expect(stored).toBe(1000);
-    const counter = await db.collection('analytics_events_class').findOne({});
-    expect(counter?.class).toBe('other_bot');
+    await vi.waitFor(async () => {
+      const stored = await db.collection('analytics_events').countDocuments({ event: 'page_edit' });
+      expect(stored).toBe(1000);
+      const counter = await db.collection('analytics_events_class').findOne({});
+      expect(counter?.class).toBe('other_bot');
+    }, settle);
   });
 });

@@ -1,0 +1,592 @@
+{
+"items": [
+{
+"id": "j173e765db2d0",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fb952066ec36.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>欽定四庫全書</header>\n<page-num>七</page-num>\n<meta>Book title in the centre column: 御定佩文韻府. The mark 丨 stands for a repeated headword character.</meta>\n\n佐私行詐稱州使不肯就作瑀鞭之三十書佐歸\n訴遙光遙光曰沈瑀必丨丨丨汝覆之果有詐\n\n**玲瓏鞭**\n唐書蘇頲傳撿\n校益州大都督長史按察節度劍南諸州詔頲收劍南山澤鹽鐵\n自贍時前司馬皇甫恂使蜀檄取庫錢市錦半臂琵琶捍撥丨丨\n丨頲不肯予因上言遣使銜命先\n取不急非陛下以山澤贍軍費意\n\n**玳瑁鞭**\n宋史吳越世家俶歸國\n太祖宴餞于講武殿賜\n玉鞍勒馬丨丨丨金\n銀錦綵二十餘萬\n\n**不須鞭**\n嫏嬛記西域有獸如犬含水噴馬則\n馬瞑眩欲絶故凡馬畏之名曰馬見\n愁唐宣宗時國人獻其皮帝賜羣臣編為馬鞭一揚即\n走謂之丨丨丨又李白詩廉夫唯重義駿馬不勞鞭\n\n**十廬鞭**\n紫薇\n詩話崇寧初叔祖待制自瀛帥改知潁州過曹南省滎陽公見學\n院諸生作詩因和之騏驥方騰踏蚊蝱敢撲縁明年小期集請看\n丨丨丨\n\n**瑪瑙鞭**\n錢氏私誌賢穆有荆雍大長公主牌印金鑄\n也金鞍勒丨丨丨金撮角紅藤下馬杌子\n\n**信陵鞭**\n庾信謝趙王絲布啓莊周車轍\n實有涸魚丨丨丨前元非窮鳥\n\n**繞朝鞭**\n李白詩莫道詞人無膽\n氣臨行將贈丨丨丨\n\n**海**\n\n<vocab>玲瓏鞭, 玳瑁鞭, 不須鞭, 十廬鞭, 瑪瑙鞭, 信陵鞭, 繞朝鞭, 蘇頲, 沈瑀, 皇甫恂, 吳越世家, 嫏嬛記, 紫薇詩話, 錢氏私誌, 庾信, 李白, 御定佩文韻府</vocab>"
+},
+{
+"id": "j2424c40c8fc1",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "1c75105302cf.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n一夤\n緣\n慘咽\n歐陽修詞尊前擬把歸\n期說未語春容先\n凝咽\n柳永詞執手相看\n淚眼竟無語\n雲咽\n石\n介\n祭孔中丞文大冬\n殘臘風號\n川咽\n周邦彥汴都賦連\n檣結執\n塗寒\n清咽\n范成大賞雪詩碧\n溪不受凍長灘瀉\n悲咽\n陳襄詩我時過之不忍\n顧往往\n填胸委\n嬌咽\n周密詞流鶯\n庭户溶溶月\n吻咽\n袁桷五\n月念六\n大寒詩暖流驚炙\n轂\n訝衞枚\n笙咽\n張翥寄題玉山詩絃鬆\n調寶柱\n炙銀簧\n啼咽\n張翥詞那堪\n綠毛么鳳向\n苔枝數\n聲\n流響咽\n王泰巫山高詩谷深\n隴頭咽\n江總長相思湘水深\n紅羅斗帳裏綠綺清弦絶\n黃河咽\n虞茂入關詩隴雲低\n不散\n復流\n瀚海咽\n盧照鄱結客少年塲行追\n奔\n戰罷隂山空\n迴\n湍咽\n駱賓王至分水戍詩濺\n石\n縈叢曲澗幽\n再三咽\n李白古風泣與親\n友別欲語\n子規咽\n顧\n况\n<header>御定佩文韻府</header>\n<page-num>六十</page-num>"
+},
+{
+"id": "j7d660ae89ed5",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "9e0621a01e6a.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>title-page</page-type>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A book cover with a light yellow background. Eight large nested square spirals (meander or fret motifs) run down the page in two vertical columns. Between the columns at the top are two black squares, one above the other, each holding one large white calligraphic Chinese character. The volume number 1 is printed near the bottom centre.</image-desc>\n\n# 道\n# 藏\n\n---\n\n->1<-\n\n<vocab>道藏, Daozang, Daoist Canon</vocab>"
+},
+{
+"id": "j94cbe6db9834",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "7d1f593a5b76.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>欽定四庫全書 御定駢字類編</header>\n<page-num>五十三</page-num>\n<meta>Woodblock print, entries read in vertical columns from right to left; the fold-margin title 欽定四庫全書 is partly cut off at the left edge.</meta>\n\n崇彊\n史記太史公自序丨丨祿產諸侯謀之\n\n崇妙\n雲笈七籤三十六小洞天第二十七金庭山洞名曰金庭丨丨天在越州剡縣屬趙仙伯治之\n\n崇要\n宋書劉穆之傳神州治本宰輔丨丨\n\n崇劇\n唐書趙宗儒傳宗儒以文學歷將相位任丨丨\n\n崇尺\n周禮旊人為簋實一觳丨丨厚半寸脣寸\n\n崇雉\n謝靈運會吟行層臺指中天高墉積丨丨\n\n崇年\n潘岳閒居賦祗聖敬以明順養更老以丨丨\n\n崇巾\n後漢書輿服志幘者賾也頭首嚴賾也至孝文乃高顔題續之為耳丨其丨為屋合後施收上下羣\n\n<vocab>御定駢字類編, 欽定四庫全書, 崇, 史記, 太史公自序, 雲笈七籤, 金庭山, 剡縣, 趙仙伯, 宋書, 劉穆之, 唐書, 趙宗儒, 周禮, 旊人, 簋, 觳, 謝靈運, 會吟行, 潘岳, 閒居賦, 後漢書, 輿服志, 幘</vocab>"
+},
+{
+"id": "j705b9af4d499",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "3a0f5a6cad6a.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>十六</page-num>\n<header>新鍥天機三</header>\n<warning>Strong show-through from the reverse of the leaf in the hexagram columns; Japanese kunten reading marks beside the characters are not transcribed</warning>\n\n離上坤下六親 <gloss>巳火未土配金卯木巳火未土</gloss> 飛<gloss>己酉</gloss>金 春吉\n\n# 火地晉\n\n・ ・ 世 ・ ・ 應 二月卦 <gloss>夏平 秋凶</gloss>\n\n乾金遊魂 <gloss>內卦伏藏</gloss> 官鬼 父母 兄弟 妻財 官鬼 父母 伏<gloss>壬午</gloss>火 冬吉\n\n## 評曰 <gloss>晉者進也</gloss>\n\n此卦昔司馬進策卜得之後果為丞相\n\n---\n\n日出於地<unclear>示</unclear>而\n上行巡運照\n耀昇進其明\n居官益位禍\n滅福生利見\n王侯任意 <gloss>必亨</gloss>\n\n<image-desc size=\"large\" type=\"emblem\" significance=\"high\">Woodcut divination emblem: an official in a cap and robe covering his face stands beside a tree, with a deer carrying a scroll at his side; a rooster holds a steelyard in its beak; a ball lies on the ground, a withered tree stands near a rock, a sun disc floats above wavy lines, and a heap of treasure sits at lower right.</image-desc>\n\n**解曰** 文字破<gloss>不負全也</gloss> 官人掩面<gloss>悲也</gloss> 毬在泥上<gloss>事沉也</gloss> 雞啣秤<gloss>雞早鳴有準也</gloss> 枯木生花<gloss>晚発也</gloss> 鹿啣書<gloss>祿命也</gloss> 一堆金宝<gloss>有才有利</gloss>\n\n龍劍入匣之課\n以臣遇君之象\n\n<vocab>火地晉, 司馬, 六親, 遊魂, 乾金, 丞相, 鹿啣書, 枯木生花, 龍劍入匣</vocab>"
+},
+{
+"id": "j64b03545e568",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "51433c656258.jpg",
+"text": "<lang>ja</lang>\n\n<margin>\n第二南門火蔵并白色\n</margin>\n\n<margin>\n第三西門空蔵并青色\n</margin>\n\n<margin>\n第四北門水蔵并録色\n</margin>\n\n<margin>\n第一東門香蔵并赤色\n</margin>\n\n---\n\n->**[Ritual Mandala Diagram]**<-\n\n<gloss>黄</gloss>\n<gloss>青</gloss>\n<gloss>赤</gloss>\n<gloss>白</gloss>\n<gloss>録</gloss>\n<gloss>錫</gloss>\n\n---\n\n<vocab>Mandala, 曼荼羅, Shingon, 真言, Buddhist ritual, East Gate (東門), South Gate (南門), West Gate (西門), North Gate (北門), Five Colors (五色), Fire Treasury (火蔵), Water Treasury (水蔵), Space Treasury (空蔵), Incense Treasury (香蔵)</vocab>\n\n<detected-images>\n[{\"description\": \"A complex Japanese Buddhist ritual diagram (Mandala) featuring concentric squares, a central lotus, and symbolic ritual implements such as vajras, bells, and swords located at the four cardinal gates. The diagram includes handwritten labels in Kanji identifying directions, elemental treasuries, and color correspondences.\", \"type\": \"diagram\", \"bbox\": {\"x\": 0.176, \"y\": 0.087, \"width\": 0.729, \"height\": 0.854}, \"gallery_quality\": 0.85, \"museum_rationale\": \"An intricate and well-preserved religious diagram providing significant insight into esoteric Buddhist ritual practices and symbolic cosmology in historical Japan.\"}]\n</detected-images>"
+},
+{
+"id": "jc0fd23f92b06",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "51433c656258.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>149</page-num>\n\n或遭王難苦 臨刑欲壽終 念彼觀音力 刀尋段段壞 或囚禁枷鎖 手足被杻械 念彼觀音力 釋然得解脫 咒詛諸毒藥 所欲害身者 念彼觀音力 或遇惡羅剎 毒龍諸鬼等 念彼觀音力 時悉不敢害 若惡獸圍繞 利牙爪可怖 念彼觀音力 疾走無邊方 蚖蛇及蝮蠍 氣毒煙火然 念彼觀音力 尋聲自迴去 雲雷鼓掣電 降雹澍大雨 念彼觀音力 應時得消散 眾生被困厄 無量苦逼身 觀音妙智力 能救世間苦 具足神通力 廣修智方便 十方諸國土 無剎不現身 種種諸惡趣 地獄鬼畜生 生老病死苦 以漸悉令滅 真觀清淨觀 廣大智慧觀 悲觀及慈觀 常願常瞻仰 無垢清淨光 慧日破諸闇 能伏災風火 普明照世間 悲體戒雷震 慈意妙大雲 澍甘露法雨 滅除煩惱燄 諍訟經官處 怖畏軍陣中 念彼觀音力 眾怨悉退散 妙音觀世音 梵音海潮音 勝彼世間音 是故須常念 念念勿生疑 觀世音淨聖 於苦惱死厄 能為作依怙 具一切功德 慈眼視眾生 福聚海無量 是故應頂禮\n\n爾時持地菩薩。即從座起。前白佛言。世尊。若是菩薩行是觀世音菩薩品自在之業者。普門示現神通力者。當知是人功德不少。佛說是普門品時。眾中八萬四千眾生。皆發無等等阿耨多羅三藐三菩提心。\n\n妙法蓮華經觀世音菩薩普門品第二十六\n\n爾時藥王菩薩。即從座起。偏袒右肩。合掌向佛。而白佛言。世尊。若善男子。善女人。有能受持法華經者。若讀誦通利。若書寫經卷。得幾所福。佛告藥王。若有善男子。善女人。供養八百萬億那由他恆河沙等諸佛。於汝意云何。其所得福寧為多不。甚多。世尊。佛言。若善男子。善女人。能於是經乃至受持一四句偈。讀誦解義。如說修行。功德甚多。爾時藥王菩薩白佛言。世尊。我今當與說法者陀羅尼咒。以守護之。即說咒曰。\n\n安爾。曼爾。麼爾。麼摩隸。摩隸。遮隸。遮\n\n<vocab>觀世音菩薩, 妙法蓮華經, 普門品, 藥王菩薩, 陀羅尼</vocab>"
+},
+{
+"id": "je12c802f0a9e",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "1c75105302cf.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten regular-script (kaishu) Chinese court manuscript hand; the repeat marks 丨 standing for the head word are omitted throughout, except in the first line.</warning>\n\n丨夤\n緣\n慘咽\n歐陽修詞尊前擬把歸\n期說未語春容先\n凝咽\n柳永詞執手相看\n淚眼竟無語\n雲咽\n石\n介\n祭孔中丞文大冬\n殘臘風號\n川咽\n周邦彥汴都賦連\n檣結軌\n塗寒\n清咽\n范成大賞雪詩碧\n溪不受凍長灘瀉\n悲咽\n陳襄詩我時過之不忍\n顧往往\n填胸委\n嬌咽\n周密詞流鶯\n庭户溶溶月\n吻咽\n袁桷五\n月念六\n大寒詩暖流驚炙\n轂\n訝衞枚\n笙咽\n張翥寄題玉山詩絃鬆\n調寶柱\n炙銀簧\n啼咽\n張翥詞那堪\n綠毛么鳳向\n苔枝數\n聲\n流響咽\n王泰巫山高詩谷深\n峽近猿聲悲\n隴頭咽\n江總長相思湘水深\n紅羅斗帳裏綠綺清弦絶\n黃河咽\n虞茂入關詩隴雲低\n不散\n復流\n瀚海咽\n盧照鄰結客少年塲行追\n奔\n戰罷隂山空\n迴\n湍咽\n駱賓王至分水戍詩濺\n石\n縈叢曲澗幽\n再三咽\n李白古風泣與親\n友別欲語\n子規咽\n顧\n况\n<header>御定佩文韻府</header>\n<page-num>六十一</page-num>\n<vocab>佩文韻府, 咽, 慘咽, 凝咽, 雲咽, 川咽, 清咽, 悲咽, 嬌咽, 吻咽, 笙咽, 啼咽, 流響咽, 隴頭咽, 黃河咽, 瀚海咽, 迴湍咽, 再三咽, 子規咽, 歐陽修, 柳永, 石介, 周邦彥, 范成大, 陳襄, 周密, 袁桷, 張翥, 王泰, 江總, 虞茂, 盧照鄰, 駱賓王, 李白, 顧况</vocab>"
+},
+{
+"id": "j230c4db646dc",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "1ead187b9bc3.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n<image-desc size=\"large\" type=\"woodcut\" significance=\"high\">Hand-colored woodblock illustration on the left page. Inside a tiled hall with red pillars, an official in blue robes sits with a standing attendant in green, and a man in purple kneels before them. A pine and bamboo rise behind the hall, with stylized green rocks in the foreground.</image-desc>\n\n# 漁人求度\n\n賢愚經云。尒時世尊。向毘舍離城。到犂越河所。不遠而坐。時捕魚人。網得一魚。五百人挽。不能使出。復喚牧牛人衆。共一千人。挽得一魚。身有百頭。若干種類。驢馬駱駝。虎狼猪狗。猿猴狐狸。如斯之形。世尊往至魚所。而問魚言。汝是迦毘梨不。荅言。實是。阿難白佛。此魚何緣。如是。佛告阿難。昔有婆羅門。生一男兒。名迦毘梨。聰明博達。其母問子。汝本高明。更有勝汝者否。荅言。沙門。母言。何以不往學習其法。奉其母教。即往習學。三藏義理。悉皆通曉。若共比丘談論。理若短屈。即便罵言。汝等愚騃。無所識別。劇於畜生。知曉何法。諸百獸頭。皆用比之。緣是果報。今受百頭魚身。時捕魚人。及牧牛人。同時求佛出家。佛為說法。種種苦切。漏盡結解。即成沙門。尒時阿難。及於衆人。聞佛所說。悵然不樂。悲傷交懷。咸共同聲。而作是言。身口意行。不可不慎也。\n\n<vocab>賢愚經, 世尊, 迦毘梨, 阿難, 婆羅門, 三藏, 沙門, 因果</vocab>"
+},
+{
+"id": "jc8c03ac4b656",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "0075e89e43ea.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<warning>Handwritten East Asian clerical/semi-cursive script; brownish stains, including a reddish-brown stain over the second line, do not obscure the text. Some characters are written as cursive or ligatured forms of numeral plus 斗.</warning>\n<page-type>text</page-type>\n\n實米一百五十七石\n每朔米十三石一斗二升五合式 每日六斗五升四合一勺七利\n柴復米通一年七十二石內\n每朔米六石式 每日三斗\n祿太通一年十石七斗四升五合內\n每朔十三斗一升二合九利式 每日四升三合七勺三利\n\n<vocab>實米, 柴復米, 祿太, 朔, 石, 斗, 升, 合, 勺, 利</vocab>"
+},
+{
+"id": "je4907746558f",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "ecaf383ef558.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>一六, 一七</page-num>\n<header>詩經解題</header>\n\n詩經の内容は上文に述べたるが如く、今より二千數百年乃至三千年以前の作なれば、その言語その文字、往々今日と同じからず、殊に詩は言語文字の外にその意を求めざるべからざることもあれば、古人の解釋に據らざるを得ず。然るに詩經の解釋家に古來二派あり。一は秦漢頃に出でし詩序によりて解釋するもの、即ち毛亨毛萇の傳、及び後漢鄭玄の箋、所謂毛傳鄭箋の流是なり、之を古注派といふ。一は序に拘らずして專ら文に依りてその義を求むるもの、即ち朱子集傳の流是なり、之を新注派といふ。其他古注新注を折中するものあり、齊詩魯詩韓詩を取るものあり、又古注派・新注派の中にも多少異同あれども、之を概言すればまづ古注新注の二派となすことを得べし。今本編の主として新注に據れるは、その明白にして了解し易きを取れるなり。\n\n### 第五　詩の六義\n\n<column-break/>\n\n詩に六義といへることあり、風雅頌賦比興是なり。風雅頌は詩の性質上より分類せしものにて、之を詩の三經といひ、賦比興は詩の作法上より分類せしものにて、之を詩の三緯といふ。三經と三緯とは、その性質同じからずして並び稱すべきものに非ず。されども古人は必ずしも精密なる分類法によらずして、之を概言すること往々之あり、なほ文字の構造法と使用法とは稍その性質を異にすれども、之を合せて六書といへるが如し。風雅頌のことは既に上文に述べたれども、その名稱の意義を略説すれば、風は民俗歌謠の詩にして、その上の化を被ぶりて言ふことありて、その言又人を感ずるに足ること、物の風の動くによりて聲ありて、その聲又物を動かすが如きをいふなり。雅は正なり、格律の嚴正、規模の雄大なるの意なり。頌は容なり、盛德の形容を述ぶるの義なり。\n\n### 第六　詩の形式\n\n<vocab>詩經, 六義, 風雅頌, 賦比興, 三經, 三緯, 毛傳鄭箋, 朱子集傳, 古注派, 新注派</vocab>"
+},
+{
+"id": "jb3c4c5b56102",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6f4667940c40.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n寢食者又有憂彼之所憂者因往曉之曰天積氣耳亡\n處亡氣若屈伸呼吸終日在天中行止奈何憂崩墜乎\n其人曰天果積氣日月星宿不當墜耶曉之者曰日月\n星宿亦積氣中之有先耀者只使墜亦不能有所中傷\n其人曰奈地壞何曉者曰地積塊耳充塞四虛亡處亡\n塊若躇步跐蹈終曰在地上行止奈何憂其壞其人舍\n然大喜曉之者\n亦舍然大喜\n發於餘竅子亦將承之\n列子子輿曰子\n以公孫龍之鳴\n皆條也設令\n竊鉄\n列子人有亡鉄者意其鄰之子\n視其行步\n也顏色竊鉄也\n言語竊鉄也作動態度無為而不竊鉄也俄而相其谷\n而得其鉄他日復見其鄰人之子動作態度無似竊鉄\n者\n不見人徒見金\n列子昔齊人有欲金者清旦衣冠而\n之市適鬻金者之所因攫其金而去\n吏捕得之問曰人皆在焉子攫人之金\n奈何對曰取金之時\n散人惡知散木\n<header>御定子史精華</header>\n<page-num>二</page-num>"
+},
+{
+"id": "j1c77b6b462c0",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "56c9c75445cc.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n乃開最小花楊誠斎暑中北閣望南窓將謂南窓分外涼到\n得南窓還更熱芙蕖和藥落幽香同上南方時雨連梅雨五\n月江城氣鬱蒸避暑聊傾桑落酒永恩敢望玉池氷朱行中\n日永知槐夏雲黃喜麦秋黃魯直\n\n## 秋類\n\n爲矩方萬物\n淮時則訓秋爲矩矩者所以方萬物\n屏箑釋絺\n潘岳秋興賦嗟秋日之可哀兮良無愁兮不尽野有歸燕隰\n有翔隼遊氛朝興槁葉夕隕於時乃屏輕箑釋纖絺藉莞弱\n御挾衣庭樹摵以洒落勁風戾而吹帷蟬嘒々以寒吟鴈飄\n飄而南飛天晃朗以弥髙日悠陽而浸微何微陽之短景竟\n京夜之方永月朣朧以含光兮露妻清以凝冷熠燿粲於階\n\n<vocab>秋類, 楊誠斎, 朱行中, 黃魯直, 時則訓, 潘岳, 秋興賦, 屏箑釋絺, 爲矩方萬物</vocab>"
+},
+{
+"id": "j3202e67fbe59",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "51433c656258.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>handwritten</script>\n<page-type>diagram</page-type>\n<warning>Handwritten Japanese kanji (brush, semi-cursive). Only short colour labels and four gate captions; parts of the neighbouring drawings on the scroll are visible at the left and right edges.</warning>\n\n<margin>第二南門空蔵并青色</margin>\n\n<margin>第一東門香蔵并白色</margin>\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">Ink line drawing of a square ritual mandala platform made of nested squares. At the centre is an eight-petalled lotus inside a square with small radiating vajra-like motifs at its corners. Around it are bands of lotus blossoms on cloud-like bases, flowers, and diagonal vajra or sword-shaped implements. At each of the four gates are ritual implements: vajras, bells, vases, swords, wheels and offering stands. Outside the corners there are small offering tables and crescent/disc motifs. Colour labels are written at various points.</image-desc>\n\n<insert>赤</insert> <insert>録</insert> <insert>青</insert> <insert>録色</insert> <insert>赤</insert> <insert>赤</insert> <insert>白</insert> <insert>青</insert> <insert>青</insert> <insert>赤</insert> <insert>黄</insert> <insert>録色</insert> <insert>青</insert> <insert>録</insert> <insert>白</insert>\n\n<margin>第四北門水蔵并録色</margin>\n\n<margin>第三<unclear>恵</unclear>蔵并赤色</margin>\n\n<vocab>mandala, 曼荼羅, 南門, 東門, 北門, 空蔵, 香蔵, 水蔵, 青色, 白色, 録色, 赤色, 黄, lotus, vajra, ritual implements, colour correspondences</vocab>"
+},
+{
+"id": "j00d1ddc0e225",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "596c624abdbd.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>御定駢字類編</header>\n<page-num>十一</page-num>\n\n萬境閑 姚合題宣義丨丨詩春入丨丨好風光暖更\n鮮 賈島送黃知新歸安南詩丨丨沈飲徧非獨曲江\n花 趙嘏江亭晚望詩秋館丨丨荷葉後野人籬落豆\n花初 方干孫氏林亭詩丨丨纔有二三畝風景勝於\n千萬家 黃滔和陳先輩陪陸舍人春日遊\n曲江詩劉超遊召郄詵陪為憶丨丨舊賞來\n\n## 池閣\n\n儲光羲舟中別武金壇詩月光麗丨丨野氣浮林\n園 韋應物郡齊雨中詩海上風雨至逍遙丨丨\n涼 劉禹錫牛相公林亭詩飛雨過丨丨浮光生草樹\n王建寄汴州令狐相公詩秋日梁王丨丨好新歌散\n入管絃聲 姚合春日同會衛尉崔少卿宅詩詩家會\n詩客丨丨曉初晴 杜荀鶴和友人見題山居水閣詩\n丨丨初成眼豁開\n眼前霽景屬微才\n\n## 池榭\n\n宋史張齊賢傳歸洛得裴度午橋莊有丨丨松竹\n之盛日與親舊詠觴其間意甚曠適 劉禹錫酬\n\n<vocab>池閣, 池榭, 駢字類編, 姚合, 賈島, 趙嘏, 方干, 黃滔, 儲光羲, 韋應物, 劉禹錫, 王建, 杜荀鶴, 張齊賢, 裴度, 午橋莊, 曲江</vocab>"
+},
+{
+"id": "j3fb44f903c24",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "3a0f5a6cad6a.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>31</page-num>\n<warning>Heavy show-through from the other side of the leaf, not transcribed; small Japanese reading marks (kana) beside the characters are omitted.</warning>\n\n離上坤下六親 <gloss>巳火未土配金卯木巳火未土</gloss> 飛<gloss>己酉</gloss>金 春吉\n\n# 火地晉\n\n・ ・ 世 ・ ・ <gloss>應</gloss> 二月卦 <gloss>夏平 秋凶</gloss>\n\n乾金遊魂 <gloss>內卦伏藏</gloss> 官鬼 父母 兄弟 妻財 官鬼 父母 伏<gloss>壬午</gloss>火 冬吉\n\n## 評曰 <gloss>晉者進也</gloss>\n\n此卦昔司馬進策卜得之 <gloss>後果為丞相</gloss>\n\n---\n\n### 日出於地<unclear>亦</unclear>而\n### 上行巡運照\n### 耀昇進其明\n### 居官益位禍\n### 滅福生利見\n### 王侯任意 <gloss>必亨</gloss>\n\n<image-desc size=\"large\" type=\"woodcut\" significance=\"high\">Framed woodcut illustrating the omens of the hexagram: an official in a long robe and cap covering his face with his sleeve, a deer beside him carrying a document in its mouth, a rooster holding a steelyard in its beak, a bare tree in blossom, a ball lying on the ground among scattered ingots, rocks at the left, and a round emblem among horizontal cloud lines.</image-desc>\n\n<insert>\n**解曰** 文字破<gloss>不負全也</gloss> 官人掩面<gloss>悲也</gloss>\n毬在泥上<gloss>事沉也</gloss> 雞啣秤<gloss>雞早鳴有準也</gloss>\n枯木生花<gloss>晚發也</gloss> 鹿啣書<gloss>祿命也</gloss> 一堆金宝<gloss>有牙有利</gloss>\n</insert>\n\n龍劍 <gloss>入匣之課</gloss>\n以臣 <gloss>遇君之象</gloss>\n\n<vocab>火地晉, 司馬, 六親, 遊魂卦, 丞相, 鹿啣書, 枯木生花</vocab>"
+},
+{
+"id": "jeaead48fb5c3",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd406367aa50.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>六藝流別 卷十六 樂藝下</header>\n\n誰別偽真刀鳴鞘中倚床無施父冤不報欲活何為\n猛虎班班遊戲山間虎欲齧人不避豪賢\n\n### 定情篇 <gloss>漢 繁欽</gloss>\n\n我出東門遊邂逅承清塵思君即幽房侍寢執衣巾\n時無桑中契迫此路側人我既媚君姿君亦悅我顏\n何以致拳拳綰臂雙金環何以致慇懃約指一雙銀\n何以致區區耳中雙明珠何以致叩叩香囊繫肘後\n何以致契闊繞腕雙跳脫何以結恩情珮玉綴羅纓\n何以結中心素縷雙連針何以結相投金薄畫搔頭\n何以慰別離耳後玳瑁釵何以荅權悅紈素三條裾\n\n<column-break/>\n\n何以結愁悲白絹雙中衣與我期何所乃期東山隅\n日昐兮不至谷風吹我襦遠望無所見涕泣起踟蹰\n與我期何所乃期南山陽日中兮不來風飄吹我裳\n逍遙莫誰靚望君愁我腸與我期何所乃期西山側\n日夕兮不來躑躅長歎息遠望京風至俯仰正衣服\n與我期何所乃期北山岑日暮兮不來凄風吹我襟\n望君不能坐悲苦愁我心愛身以何為惜我華時色\n中情既欸欸然後尅密期褰衣躡花草謂君不我期\n厠此醜陋質徒倚無所之自傷失所欲淚下如連絲\n\n### 種葛篇 <gloss>曹植</gloss>\n\n<vocab>定情篇, 繁欽, 種葛篇, 曹植, 樂藝, 六藝流別</vocab>"
+},
+{
+"id": "j85427f71760b",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6bfd62698030.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n死力故鮮有負敗北史劉方傳開皇中有馮昱王捌楊武通陳永\n貴房兆俱為丨丨名顯當時唐書天文志貞觀十六年五月太白\n犯畢左股畢為丨丨五代史張希崇傳希崇為將不喜聲色好讀\n書頗知星歷天福三年月掩畢口大星希崇歎曰畢口大星丨丨\n也我其當之乎明年正月卒蘇洵上韓樞密書頃者狄公在樞府\n號為寬厚愛人狎昵士卒得其歡心而太尉適承其後彼狄公者\n知御外之術而不知治內之道此丨丨材也\n元稹詩連城丨丨但髙會每說此曲能不羞\n忠將\n後漢書叚頲傳\n時竇太后臨朝\n詔曰先零東羌歷載為患頻前陳狀必欲\n掃滅洗雪百年之逋負以慰丨丨之亡魂\n貴將\n後漢書齊武王縯\n傳縯字伯升光武\n之長兄也李軼諂事更始丨丨光武深疑之常以戒伯升曰此人\n不可復信五代史趙鳳傳術士周元豹以相法言人事多中莊宗\n尤信重之明宗為內衙指揮使安重誨欲試元豹乃使他人與明\n宗易服而坐明宗于下坐召元豹相之元豹曰內衙丨丨也此不\n足當之乃指明宗\n易將\n後漢書朱嶲傳賊趙弘據宛城嶲圍之不\n拔有司奏欲徵嶲司空張溫上疏曰嶲討\n于下坐曰此是也\n<header>御定佩文韻府</header>\n<page-num>三十六</page-num>"
+},
+{
+"id": "j2045e03326af",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "ecaf383ef558.jpg",
+"text": "<language>Chinese</language>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>一</page-num>\n\n## 吽唎唎唏娑訶\n\n<column-break/>\n\n## 心神咒宜黙誦\n<gloss>沈莊士口授</gloss>\n\n<vocab>心神咒, 黙誦, 沈莊士, 口授, 吽唎唎唏娑訶</vocab>"
+},
+{
+"id": "j8d40c8a75405",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "e78484cf7243.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Chinese regular script (kaishu), vertical columns read right to left; a further column at the left edge is cut off and not transcribed.</warning>\n<meta>The text is written in vertical columns from right to left in a Kaishu-style script. The ink is generally clear, though some characters show slight fading. An institutional seal is visible in the lower center.</meta>\n\n樂離五欲。樂觀五陰如怨賊。樂觀四大如毒蛇。樂觀內入如空聚。樂隨護道意。樂饒益眾生。樂敬養師。樂廣行施。樂堅持戒。樂忍辱柔和。樂勤集善根。樂禪定不亂。樂離垢明慧。樂廣菩提心。樂降伏眾魔。樂斷諸煩惱。樂淨佛國土。樂成就相好故。脩諸功德。樂莊嚴道場。樂聞深法不畏。樂三脫門。不樂非時。樂近同學。樂於非同學中心無恚礙。樂將護惡知識。樂近善知識。樂心喜清淨。樂脩無量道品之法。是為菩薩法樂。於是波旬告諸女言。我欲與汝俱還天宮。諸女言。以我等與此居士。有法樂。我等甚樂。不復樂於五欲樂也。魔言。居士可捨此女。一切所有施於彼者。是為菩薩。維摩詰言。我已捨矣。汝便將去。令一切眾生得法願具足。於是諸女問維摩詰。我等云何止於魔宮。維摩詰言。諸姊。有法門。名無盡燈。汝等當學。無盡燈者。譬如一燈。然百千燈。冥者皆明。明終不盡。如是諸姊。夫一菩薩開導百千眾生。令發阿耨多羅三藐三菩提心。於其道意。亦不滅盡。隨所說法。而自增益。一切善法。是名無盡燈也。汝等雖住魔宮。以是無盡燈。令無數天子天女。發阿耨多羅三藐三菩提心者。為報佛恩。亦大饒益一切眾生。爾時。天女頭面禮維摩詰足。隨魔還宮。忽然不現。世尊。維摩詰有如是神力智慧辯才。故我不任詣彼問疾。\n\n---\n\n佛告長者子善得。汝行詣維摩詰問疾。善德白佛言。世尊。我不堪任詣彼問疾。所以者何。憶念我昔。自於父舍。設大施會。供養一切沙門婆羅門及諸外道。貧窮下賤。孤獨乞人。期滿七日。時維摩詰。來入會中。謂我言。長者子。夫大施會。不當如汝所設。當為法施之會。何用是財施會為。我言。居士。何為法施之會。法施會者。無前無後。一時供養一切眾生。是名法施之會。曰。何謂也。謂以菩提起於慈心。以救眾生起大悲心。以持正法起於喜心。以攝智慧行於捨心。以攝慳貪起檀波羅蜜。以化犯戒起尸波羅蜜。以無我法起羼提波羅蜜。以離身心相起毗梨耶波羅蜜。以菩提相起禪波羅蜜。以一切智起般若波羅蜜。教化眾生而起於空。不捨有為法而起無相。示現受生而起無作。護持正法起方便力。以度眾生起四攝法。以敬事一切起除慢法。於身命財起三堅法。於六念中起思念法。於六和敬起質直心正行。善法起於淨命。心淨歡喜起近賢聖。不憎惡人起調伏心。以出家法起於深心。以如說行起於多聞。以無諍法起空閑處。趣向佛慧起於宴坐。解眾生縛起修行地。以具相好及淨佛土起福德業。知一切眾生心念如應說法起\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">A circular institutional library stamp, impressed upside-down in the lower centre of the sheet between two columns of text, with a legend around the rim and an accession note in the middle.</image-desc>\n<insert><unclear>Bibliothèque Nationale · Manuscrits · Don 4502</unclear></insert>\n\n<vocab>維摩詰, 波旬, 無盡燈, 阿耨多羅三藐三菩提, 長者子善得, 檀波羅蜜, 尸波羅蜜, 羼提波羅蜜, 毗梨耶波羅蜜, 禪波羅蜜, 般若波羅蜜, 法施之會, 法樂, 四攝法</vocab>"
+},
+{
+"id": "j05ab7cc79c46",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "51433c656258.jpg",
+"text": "<warning>The small printed folio number between the sheets is faint and its last character is an uncertain reading.</warning>\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>百十八</page-num>\n\n或遭王難苦　臨刑欲壽終　念彼觀音力\n刀尋段段壞　或囚禁枷鎖　手足被杻械\n念彼觀音力　釋然得解脫　呪詛諸毒藥\n所欲害身者　念彼觀音力　還著於本人\n或遇惡羅剎　毒龍諸鬼等　念彼觀音力\n時悉不敢害　若惡獸圍繞　利牙爪可怖\n念彼觀音力　疾走無邊方　蚖蛇及蝮蠍\n氣毒煙火然　念彼觀音力　尋聲自迴去\n雲雷鼓掣電　降雹澍大雨　念彼觀音力\n應時得消散　眾生被困厄　無量苦逼身\n觀音妙智力　能救世間苦　具足神通力\n廣脩智方便　十方諸國土　無剎不現身\n種種諸惡趣　地獄鬼畜生　生老病死苦\n以漸悉令滅　真觀清淨觀　廣大智慧觀\n悲觀及慈觀　常願常瞻仰　無垢清淨光\n慧日破諸闇　能伏災風火　普明照世間\n悲體戒雷震　慈意妙大雲　澍甘露法雨\n滅除煩惱燄　諍訟經官處　怖畏軍陣中\n念彼觀音力　眾怨悉退散　妙音觀世音\n梵音海潮音　勝彼世間音　是故須常念\n念念勿生疑　觀世音淨聖　於苦惱死厄\n能為作依怙　具一切功德　慈眼視眾生\n福聚海無量　是故應頂禮\n\n爾時持地菩薩。即從座起。前白佛言。世尊。若有眾生。聞是觀世音菩薩品。自在之業。普門示現神通力者。當知是人功德不少。佛說是普門品時。眾中八萬四千眾生。皆發無等等阿耨多羅三藐三菩提心。\n\n妙法蓮華經陀羅尼品第二十六\n\n爾時藥王菩薩。即從座起。偏袒右肩。合掌向佛。而白佛言。世尊。若善男子善女人。有能受持法華經者。若讀誦通利。若書寫經卷。得幾所福。佛告藥王。若有善男子善女人。供養八百萬億那由他恒河沙等諸佛。於汝意云何。其所得福。寧為多不。甚多世尊。佛言。若善男子善女人。能於是經。乃至受持一四句偈。讀誦解義。如說脩行。功德甚多。尒時藥王菩薩白佛言。世尊。我今當與說法者陀羅尼呪。以守護之。即說呪曰\n\n安爾一　曼爾二　摩禰三　摩摩禰四　旨隷五　遮\n\n<vocab>觀世音菩薩, 持地菩薩, 普門品, 妙法蓮華經, 陀羅尼品, 藥王菩薩, 陀羅尼, 法華經</vocab>"
+},
+{
+"id": "j51522cb09491",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5fdd1b245fc9.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<warning>The centre-fold strip at the left edge (book title and leaf number) is cut off and only partly legible; it is not transcribed.</warning>\n<meta>Vertical text, transcribed in the original reading order, right to left.</meta>\n\n者以求復其性者也故自誠明不曰聖而曰性見人之\n即天也自明誠不曰學而曰教見賢之可聖也吾人豈\n可以自諉哉\n\n誠則明二句見誠明一理而聖凡同歸之意在言外\n註明則可以至於誠矣可以至字不用\n\n### 惟天下至誠 章\n\n天下之道一誠而已矣化育流行而人物得之以為性\n一人之性皆具乎天地人物之理而有偽以襍之於是\n\n<vocab>中庸, 誠, 明, 性, 聖, 教, 化育, 至誠</vocab>"
+},
+{
+"id": "j643a6a6edd63",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "e78484cf7243.jpg",
+"text": "<lang>lzh</lang>\n<meta>The text is written in vertical columns from right to left in a Kaishu-style script. The ink is generally clear, though some characters show slight fading. A red institutional seal is visible in the lower center.</meta>\n<vocab>維摩詰, 波旬, 無盡燈, 阿耨多羅三藐三菩提, 檀波羅蜜, 尸波羅蜜, 羼提波羅蜜, 毗梨耶波羅蜜, 禪波羅蜜, 般若波羅蜜, 法施之會</vocab>\n\n樂離五欲。樂觀五陰如怨賊。樂觀四大如毒蛇。樂觀內入如空。樂隨道意。樂饒益眾生。樂敬養師。樂廣行施。樂堅持戒。樂忍辱柔和。樂勤集善根。樂禪定不亂。樂離垢明慧。樂廣菩提心。樂降伏眾魔。樂斷諸煩惱。樂淨佛國土。樂成就相好故。脩諸功德。樂莊嚴道場。樂聞深法不畏。樂三脫門。不樂非時。樂近同學。樂於非同學中心無恚。樂將護惡知識。樂近善知識。樂心喜清淨。樂脩無量道品之法。是為菩薩法樂。於是波旬告諸女言。我欲與汝俱還天宮。諸女言。以此尊與此居士。有法樂。我等甚樂。不復樂於五欲樂也。魔言。居士可捨此女。一切所有施於彼者。是為菩薩。維摩詰言。我已捨矣。汝便將去。令一切眾生得法願具。於是諸女問維摩詰言。我等云何止於魔宮。維摩詰言。諸姊。有法門。名無盡燈。汝等當學。無盡燈者。譬如一燈。然百千燈。冥者皆明。明終不盡。如是諸姊。夫一菩薩開導百千眾生。令發阿耨多羅三藐三菩提心。於其道意。亦不滅盡。隨所說法。而自增益。一切善法。是名無盡燈也。汝等雖住魔宮。以是無盡燈。令無數天子天女。發阿耨多羅三藐三菩提心者。為報佛恩。亦大饒益一切眾生。爾時。天女頭面禮維摩詰足。隨魔還宮。忽然不現。世尊。維摩詰有如是神力智慧辯才。故我不任詣彼問疾。\n\n---\n\n佛告長者子善得。汝行詣維摩詰問疾。善得白佛言。世尊。我不堪任詣彼問疾。所以者何。憶念我昔。自於父舍。設大施會。供養一切沙門婆羅門及諸外道。貧窮下賤。孤獨乞人。期滿七日。時維摩詰。來入會中。謂我言。長者子。夫大施會。不當如汝所設。當為法施之會。何用是財施會為。我言。居士。何為法施之會。法施之會者。無前無後。一時供養一切眾生。是名法施之會。曰。何謂也。謂以菩提起於慈心。以救眾生起大悲心。以持正法起於喜心。以攝智慧行於捨心。以攝慳貪起檀波羅蜜。以化犯戒起尸波羅蜜。以無我法起羼提波羅蜜。以離身心相起毗梨耶波羅蜜。以菩提相起禪波羅蜜。以一切智起般若波羅蜜。教化眾生而起於空。不捨有為法而起無相。示現受生而起無作。讚持正法起方便力。以度眾生起四攝法。以敬事一切起除憍慢法。於身命財起三堅法。於六念中起思念法。於六和敬起質直正行。善法起於淨命。心淨歡喜起近賢聖。不憎惡人起調伏心。以出家法起於深心。以如說行起於多聞。以無諍法起空閑處。趣向佛慧起於宴坐。解眾生縛起修行地。以具相好及淨佛土起福德業。知一切眾生心念如應說法起\n\n<detected-images>\n[{\"description\": \"A red institutional circular seal or stamp located at the bottom center of the manuscript page, likely indicating ownership or provenance from a library or archive.\", \"type\": \"emblem\", \"bbox\": {\"x\": 482, \"y\": 701, \"width\": 55, \"height\": 65}, \"gallery_quality\": 0.3, \"museum_rationale\": \"This is a modern institutional seal and not part of the original historical artwork or calligraphy, though important for provenance.\"}]\n</detected-images>"
+},
+{
+"id": "j061785bad46f",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "3a0f5a6cad6a.jpg",
+"text": "<lang>zh</lang>\n<page-num>31</page-num>\n\n離上坤下六親 <gloss>巳火未土配金卯木巳火未土</gloss> 飛<gloss>己酉</gloss>金 春吉\n\n# 火地晉\n\n<gloss>甲申水</gloss> ・ ・ 世 ・ ・ <gloss>應</gloss> 二月卦 <gloss>夏平 秋凶</gloss>\n\n乾金遊魂 <gloss>內卦伏藏</gloss> 官鬼 父母 兄弟 妻財 官鬼 父母 伏<gloss>壬午</gloss>火 冬吉\n\n## 評曰 <gloss>晉者進也</gloss>\n\n此卦昔司馬進策卜得之 <gloss>後果為丞相</gloss>\n\n---\n\n### 日出於地 <gloss>亦而</gloss>\n### 上行巡運照\n### 耀昇進其明\n### 君官益位禍 <gloss>必</gloss>\n### 滅福生利見\n### 王侯任意 <gloss>必亨</gloss>\n\n<insert>\n**解曰** 文字破<gloss>不負全也</gloss> 官人掩面<gloss>悲</gloss>\n毬在泥上<gloss>事沉也</gloss> 雞啣秤<gloss>雞早鳴有準也</gloss>\n枯木生花<gloss>晚發也</gloss> 鹿啣書<gloss>祿命也</gloss> 一堆金宝<gloss>有牙有利</gloss>\n</insert>\n\n龍劍 <gloss>入匣之課</gloss>\n以臣 <gloss>遇君之象</gloss>\n\n<vocab>火地晉, 司馬, 六親, 遊魂卦, 丞相, 鹿啣書, 枯木生花</vocab>\n\n<detected-images>\n[{\"description\": \"A symbolic divination illustration (emblem) depicting several metaphors described in the text: a rising sun, a scholar covering his face, a deer with a scroll, a bird with a scale, a ball in water/mud, and a withered tree. This serves as a mnemonic and visual aid for interpreting the Jin hexagram.\", \"type\": \"emblem\", \"bbox\": {\"x\": 0.05, \"y\": 0.34, \"width\": 0.52, \"height\": 0.23}, \"gallery_quality\": 0.8, \"museum_rationale\": \"Classic example of Chinese woodcut 'emblematic' illustration found in divination and mantic texts, synthesizing cryptic imagery with philosophical interpretation.\"}]\n</detected-images>"
+},
+{
+"id": "j9d2ff4e05735",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6f4667940c40.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten regular-script (kaishu) Chinese; the left edge of the leaf is cropped, cutting off part of the centre-column title.</warning>\n<header>御定子史精華</header>\n<page-num>二</page-num>\n\n寢食者又有憂彼之所憂者因往曉之曰天積氣耳亡\n處亡氣若屈伸呼吸終日在天中行止奈何憂崩墜乎\n其人曰天果積氣日月星宿不當墜耶曉之者曰日月\n星宿亦積氣中之有光耀者只使墜亦不能有所中傷\n其人曰奈地壞何曉者曰地積塊耳充塞四虛亡處亡\n塊若躇步跐蹈終日在地上行止奈何憂其壞其人舍\n然大喜曉之者\n亦舍然大喜\n發於餘竅子亦將承之\n列子子輿曰子\n以公孫龍之鳴\n皆條也設令\n竊鉄\n列子人有亡鉄者意其鄰之子\n視其行步\n也顏色竊鉄也\n言語竊鉄也作動態度無為而不竊鉄也俄而抇其谷\n而得其鉄他日復見其鄰人之子動作態度無似竊鉄\n者\n不見人徒見金\n列子昔齊人有欲金者清旦衣冠而\n之市適鬻金者之所因攫其金而去\n吏捕得之問曰人皆在焉子攫人之金\n奈何對曰取金之時\n散人惡知散木\n\n<vocab>列子, 天積氣, 日月星宿, 地積塊, 發於餘竅子亦將承之, 公孫龍, 竊鉄, 不見人徒見金, 齊人, 散人惡知散木, 御定子史精華</vocab>"
+},
+{
+"id": "j2a68374b6676",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6bfd62698030.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>御定佩文韻府</header>\n<page-num>三十六</page-num>\n\n死力故鮮有負敗北史劉方傳開皇中有馮昱王捌楊武通陳永\n貴房兆俱為丨丨名顯當時唐書天文志貞觀十六年五月太白\n犯畢左股畢為丨丨五代史張希崇傳希崇為將不喜聲色好讀\n書頗知星歷天福三年月掩畢口大星希崇歎曰畢口大星丨丨\n也我其當之乎明年正月卒蘇洵上韓樞密書頃者狄公在樞府\n號為寬厚愛人狎昵士卒得其歡心而太尉適承其後彼狄公者\n知御外之術而不知治內之道此丨丨材也\n元稹詩連城丨丨但髙會每說此曲能不羞\n忠將\n後漢書叚頲傳\n時竇太后臨朝\n詔曰先零東羌歷載為患頻前陳狀必欲\n掃滅洗雪百年之逋負以慰丨丨之亡魂\n貴將\n後漢書齊武王縯\n傳縯字伯升光武\n之長兄也李軼諂事更始丨丨光武深疑之常以戒伯升曰此人\n不可復信五代史趙鳳傳術士周元豹以相法言人事多中莊宗\n尤信重之明宗為內衙指揮使安重誨欲試元豹乃使他人與明\n宗易服而坐明宗于下坐名元豹相之元豹曰內衙丨丨也此不\n足當之乃指明宗\n于下坐曰此是也\n易將\n後漢書朱嶲傳賊趙弘據宛城嶲圍之不\n拔有司奏欲徵嶲司空張溫上疏曰嶲討\n\n<vocab>忠將, 貴將, 易將, 北史, 劉方傳, 唐書天文志, 五代史, 張希崇, 蘇洵, 元稹, 後漢書, 齊武王縯, 趙鳳傳, 周元豹, 朱嶲傳, 佩文韻府</vocab>"
+},
+{
+"id": "jd2e167df2e67",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "a743d636dd60.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>一六, 一七</page-num>\n<header>詩經解題</header>\n\n詩經の内容は上文に述べたるが如く、今より二千數百年乃至三千年以前の作なれば、その言語その文字、往々今日と同じからず、殊に詩は言語文字の外にその意を求めざるべからざることもあれば、古人の解釋に據らざるを得ず。然るに詩經の解釋家に古來二派あり。一は秦漢頃に出でし詩序によりて解釋するもの、即ち毛亨毛萇の傳、及び後漢鄭玄の箋、所謂毛傳鄭箋の流是なり、之を古注派といふ。一は序に拘らずして專ら文に依りてその義を求むるもの、即ち朱子集傳の流是なり、之を新注派といふ。其他古注新注を折中するものあり、齊詩魯詩韓詩を取るものあり、又古注派・新注派の中にも多少異同あれども、之を概言すればまづ古注新注の二派となすことを得べし。今本編の主として新注に據れるは、その明白にして了解し易きを取れるなり。\n\n### 第五　詩の六義\n\n<column-break/>\n\n詩に六義といへることあり、風雅頌賦比興是なり。風雅頌は詩の性質上より分類せしものにて、之を詩の三經といひ、賦比興は詩の作法上より分類せしものにて、之を詩の三緯といふ。三經と三緯とは、その性質同じからずして並び稱すべきものに非ず。されども古人は必ずしも精密なる分類法によらずして、之を概言すること往々之あり、なほ文字の構造法と使用法とは稍その性質を異にすれども、之を合せて六書といへるが如し。風雅頌のことは既に上文に述べたれども、その名稱の意義を略説すれば、風は民俗歌謠の詩にして、その上の化を被ぶりて言ふことありて、その言又人を感ずるに足ること、物の風の動くによりて聲ありて、その聲又物を動かすが如きをいふなり。雅は正なり、格律の嚴正、規模の雄大なるの意なり。頌は容なり、盛德の形容を述ぶるの義なり。\n\n### 第六　詩の形式\n\n<vocab>詩經, 六義, 風雅頌, 賦比興, 三經, 三緯, 毛傳鄭箋, 朱子集傳, 古注派, 新注派</vocab>"
+},
+{
+"id": "j9710663d6534",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6f4667940c40.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n寢食者又有憂彼之所憂者因往曉之曰天積氣耳亡\n處亡氣若屈伸呼吸終日在天中行止奈何憂崩墜乎\n其人曰天果積氣日月星宿不當墜耶曉之者曰日月\n星宿亦積氣中之有先耀者只使墜亦不能有所中傷\n其人曰奈地壞何曉者曰地積塊耳充塞四虛亡處亡\n塊若躇步跐蹈終曰在地上行止奈何憂其壞其人舍\n然大喜曉之者\n亦舍然大喜\n發於餘竅子亦將承之\n列子子輿曰子\n以公孫龍之鳴\n皆條也設令\n竊鉄\n列子人有亡鉄者意其鄰之子\n視其行步\n也顏色竊鉄也\n言語竊鉄也作動態度無為而不竊鉄也俄而相其谷\n而得其鉄他日復見其鄰人之子動作態度無似竊鉄\n者\n不見人徒見金\n列子昔齊人有欲金者清旦衣冠而\n之市適鬻金者之所因攫其金而去\n吏捕得之問曰人皆在焉子攫人之金\n奈何對曰取金之時\n散人惡知散木\n<header>御定子史精華</header>\n<page-num>二</page-num>"
+},
+{
+"id": "j045d156988f5",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "56c9c75445cc.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n乃開最小花楊誠斎暑中北閣望南窓將謂南窓分外涼到\n得南窓還更熱芙蕖和藥落幽香同上南方時雨連梅雨五\n月江城氣鬱蒸避暑聊傾桑落酒永恩敢望玉池氷朱行中\n日永知槐夏雲黃喜炎秋黃魯直\n爲矩方萬物\n準時則訓秋爲矩矩者所以方萬物\n屏箋釋絺\n潘岳秋興賦嗟秋日之可哀兮良無愁兮不尽野有歸燕隰\n有朔隼遊氛朝興槁葉夕隕於時乃屏輕箑釋織絺藉莞弱\n御挾衣庭樹城以洒落勁風戾而吹帷蟬嘒又以寒吟鴈飄\n飄而南飛天晃朗以弥髙日悠陽而浸微何微陽之短景竟\n京夜之方永月朣朧以含光兮露妻清以凝冷熠燿粲於階"
+},
+{
+"id": "jdd38c4cd086c",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "170660dec052.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二十二</page-num>\n<meta>Woodblock print; commentary is set in double-line small characters under large entry headings. The vertical stroke ｜ is the page's ditto mark standing for the characters of the entry heading. Partly cut-off text of the block's centre column is visible at the left edge and is not transcribed.</meta>\n\n烏觜得之號賊學士\n\n## 鳴鼓兒暗箭子\n\n邵博聞見後錄客問劉貢父曰某人有隱過否中司將鳴鼓而攻之貢父曰中司自可｜｜｜老夫難為｜｜｜客笑而去滑稽之為厚者也\n\n## 崖州為大\n\n王偁東都事畧丁謂性憸巧而善談笑在崖州嘗問客天下州郡孰為大客曰京師也謂曰不然朝廷宰相作崖州司户參軍則｜｜｜｜也聞者絶倒\n\n## 能言鴨\n\n胡仔苕溪漁隱叢話陸龜蒙詩云千首文章二頃田囊中未有一錢看却因養得｜｜｜驚破王孫金彈丸談苑云陸龜蒙居笠澤有內養自長安使杭州舟出舍下彈其一緑頭鴨龜蒙遽從舍出大呼曰此緑頭有異善人言吾將獻天子今持此死鴨以詣官內養少長宮禁信然後以金帛遺之因徐問龜蒙曰此鴨何言龜蒙曰常自呼其名\n\n## 昌家非類雄名艾氣\n\n魏泰東軒筆錄王汾口吃劉攽嘗嘲之曰恐是｜｜又疑｜｜不見｜｜唯聞｜｜葢以周昌韓非楊雄鄧艾\n\n<vocab>鳴鼓兒, 暗箭子, 邵博, 聞見後錄, 劉貢父, 崖州, 王偁, 東都事畧, 丁謂, 能言鴨, 胡仔, 苕溪漁隱叢話, 陸龜蒙, 談苑, 魏泰, 東軒筆錄, 王汾, 劉攽, 周昌, 韓非, 楊雄, 鄧艾</vocab>"
+},
+{
+"id": "j69228ea04cf2",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6bfd62698030.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>御定佩文韻府</header>\n<page-num>三十六</page-num>\n<warning>Photocopy-quality woodblock print with heavy, blotchy ink; some strokes are thickened or broken.</warning>\n\n死力故鮮有負敗北史劉方傳開皇中有馮昱王<unclear>撊</unclear>楊武通陳永\n貴房兆俱為丨丨名顯當時唐書天文志貞觀十六年五月太白\n犯畢左股畢為丨丨五代史張希崇傳希崇為將不喜聲色好讀\n書頗知星歷天福三年月掩畢口大星希崇歎曰畢口大星丨丨\n也我其當之乎明年正月卒蘇洵上韓樞密書頃者狄公在樞府\n號為寬厚愛人狎昵士卒得其歡心而太尉適承其後彼狄公者\n知御外之術而不知治內之道此丨丨材也\n元稹詩連城丨丨但髙會每說此曲能不羞\n\n**忠將**\n後漢書段熲傳\n時竇太后臨朝\n詔曰先零東羌歷載為患頻前陳狀必欲\n掃滅洗雪百年之逋負以慰丨丨之亡魂\n\n**貴將**\n後漢書齊武王縯\n傳縯字伯升光武\n之長兄也李軼諂事更始丨丨光武深疑之常以戒伯升曰此人\n不可復信五代史趙鳳傳術士周元豹以相法言人事多中莊宗\n尤信重之明宗為內衙指揮使安重誨欲試元豹乃使他人與明\n宗易服而坐明宗于下坐召元豹相之元豹曰內衙丨丨也此不\n足當之乃指明宗\n于下坐曰此是也\n\n**易將**\n後漢書朱嶲傳賊趙弘據宛城嶲圍之不\n拔有司奏欲徵嶲司空張溫上疏曰嶲討\n\n<vocab>佩文韻府, 劉方, 張希崇, 畢口大星, 蘇洵, 狄公, 元稹, 忠將, 段熲, 竇太后, 先零東羌, 貴將, 齊武王縯, 伯升, 光武, 李軼, 更始, 趙鳳, 周元豹, 明宗, 莊宗, 安重誨, 易將, 朱嶲, 趙弘, 宛城, 張溫</vocab>"
+},
+{
+"id": "j0e8218787f21",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd4788def0d6.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n只\n已\n不\n<header>卷七十四之一</header>\n卿曲水聯句絳水時丨丨花觴轉更周孔德紹\n王澤嶺遭洪水詩驚濤遙起鷺丨丨不分牛\n險岸\n劉逖秋朝野\n望詩駐車憑\n丨丨飛葢\n歷平湖\n叠岸\n唐太宗臨層臺賦重基數仞異細柳之初營丨丨\n盃丈開上林而翫兵孟郊石深詩疾流脫鱗甲丨\n丨衝\n風霆\n照岸\n唐太宗詩丨丨花分彩迷雲雁斷行駱賓王秋日送尹\n天赴京詩序劍水澄波碎楚蘭于秋水金暉丨丨秀陶\n菊于寒隄白居易沉小艙詩亞竹\n亂藤多丨丨如從鳳口向湖州\n雲岸\n閻伯璵彈碁局賦粲若星\n離偃如丨丨杜甫詩晨鐘\n丨丨濕勝地石堂烟元稹送東川馬逢\n侍御使回詩丨丨猶封草春江欲滿槽\n別岸\n駱賓王詩離亭分鶴\n葢丨丨指龍川高適\n詩丨丨迴無垠海鶴鳴不息羅隱詩丨丨客帆和雁落晚程霜葉\n向人飛梅堯臣詩丨丨無端縈細柳廻舟不忍過新橋顧瑛詩幾\n對好花開丨丨一\n雙飛鳥趁輕舠\n橫岸\n武三思出水槎詩擁溜根丨丨沈波影照\n懸陸游詩清溪橋斷舟丨丨小塢梅殘雨\n漬\n香\n沿岸\n沈佺期詩淇上風\n日好紛紛丨丨多\n接岸\n蘇環興慶池侍宴應制詩帷齊綠\n樹當筵密蓋轉緗荷丨丨浮歐陽"
+},
+{
+"id": "j71feb0b4e4d5",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "9e0621a01e6a.jpg",
+"text": "<lang>zh</lang>\n<page-num>1</page-num>\n\n<image-desc>A book cover with a light yellow background. It features a repetitive geometric pattern of eight large nested square spirals (meander or fret motifs) arranged in two vertical columns. In the top-center is a dark square containing two large, white, calligraphic Chinese characters. Near the bottom center is the number 1.</image-desc>\n\n# 道\n# 蔵\n\n---\n\n->1<-\n\n<vocab>道蔵, Daozang, Daoist Canon</vocab>"
+},
+{
+"id": "jdc3e8bc56f01",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5ef93fc06339.jpg",
+"text": "<language>Chinese</language>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>氣直立於日傍占</header>\n\n<image-desc>A traditional Chinese landscape painting showing jagged mountain peaks and coniferous trees under a pale sky. Above the landscape is a red sun flanked by two vertical red lines, with a third vertical red line passing directly through the center of the sun.</image-desc>\n\n朱文公曰\n\n氣直立於日旁宮中爭鬬\n\n宋志曰\n\n日旁有氣直立或貫日者宮中爭鬬也\n\n<column-break/>\n\n<header>日出入黑雲橫貫占</header>\n\n<image-desc>A traditional Chinese landscape painting with green mountain peaks and dark trees. Above the mountains, a red sun is depicted with three thick, horizontal black lines representing clouds crossing over its face.</image-desc>\n\n朱文公曰\n\n日出入黑雲橫貫湏雨頃周\n\n宋志曰\n\n日出或入黑雲橫貫之不出三日有暴雨日始出而隔之其下有兵有雨解之\n\n<vocab>朱文公, 宋志, 占, 氣, 橫貫, 直立, 暴雨</vocab>"
+},
+{
+"id": "j0b28c2df4b3f",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "ecaf383ef558.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Chinese regular script (kaishu), written vertically and read from right to left. The image shows a two-page spread: the text is on the left-hand page; the right-hand page has only two short brush strokes near the centre.</warning>\n\n心神咒宜黙誦\n\n吤味唎唏娑訶\n\n<gloss>沈莊士口授</gloss>\n\n<unclear>two short horizontal brush strokes on the right-hand leaf, possibly 一一 or a mark</unclear>\n\n<meta>Water stains on both leaves. A faint short stroke appears below the second column on the left-hand page.</meta>\n\n<vocab>心神咒, 黙誦, 沈莊士, 口授, 娑訶, dharani, mantra</vocab>"
+},
+{
+"id": "j677bddc80ca6",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5fdd1b245fc9.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>Vertical text read top to bottom, right to left. The fold edge of the block-printed leaf at the far left is cut off; only fragments are visible (possibly 學庸正說 and a leaf number), too partial to read with confidence.</meta>\n\n者以求復其性者也故自誠明不曰聖而曰性見人之即天也自明誠不曰學而曰教見賢之可聖也吾人豈可以自諉哉\n\n誠則明二句見誠明一理而聖凡同歸之意在言外註明則可以至於誠矣可以至字不用\n\n### 惟天下至誠　章\n\n天下之道一誠而已矣化育流行而人物得之以為性一人之性皆具乎天地人物之理而有偽以襍之於是\n\n<vocab>中庸, 誠, 明, 性, 教, 聖, 賢, 化育, 至誠, 註</vocab>"
+},
+{
+"id": "je6bbde010d2f",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "b5c6324d236f.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>55</page-num>\n<header>大宗師</header>\n<meta>Fore-edge strip of the block, partly lost in the fold: 莊子 … 卷一, 五十五.</meta>\n\n<margin>讓國自沉</margin>\n<margin>扣馬餓死</margin>\n<margin>被髮請囚</margin>\n也。若狐不偕。務光。伯夷。叔齊。箕子。胥餘。紀他。\n<margin>陀</margin>\n<margin>此皆遭<unclear>讒訕</unclear>以爲人役而失其自得者</margin>\n<margin>句法</margin>\n申徒狄。是役人之役。適人之適。而不自適\n<margin>第四又總論全體大用</margin>\n<margin>中立不倚</margin>\n<margin>自視<unclear>歉然</unclear>栗</margin>\n其適者也。古之真人。其狀義而不朋。若不足\n<margin>以卑承人</margin>\n<margin>自然之貌</margin>\n<margin>有德隅而無圭角</margin>\n<margin>大也</margin>\n<margin>實若虛</margin>\n而不承。與乎其觚。而不堅也。張乎其虛而不\n<margin>喜貌</margin>\n<margin>似喜而不喜</margin>\n<margin>下也</margin>\n<margin><unclear>悶</unclear>然而後應意</margin>\n華也。邴邴。<gloss>丙</gloss>乎其似喜乎。崔乎其不得已乎\n<margin>聚也</margin>\n<margin>即粹然見於面也</margin>\n<margin>容受</margin>\n<margin>即虛室吉祥止止也</margin>\n<margin>與人同世而不可犯也</margin>\n滀<gloss>蓄</gloss>乎。進我色也。與乎止我德也。厲乎其似\n\n<vocab>莊子, 大宗師, 讓國, 狐不偕, 務光, 伯夷, 叔齊, 箕子, 胥餘, 紀他, 申徒狄, 真人</vocab>"
+},
+{
+"id": "j07bd2b42b80d",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "9e0621a01e6a.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>title-page</page-type>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A book cover with a light yellow background. It features a repetitive geometric pattern of eight large nested square spirals (meander or fret motifs) arranged in two vertical columns. At the top centre are two dark squares, one above the other, each containing one large, white, calligraphic Chinese character. Near the bottom centre is the number 1.</image-desc>\n\n# 道\n# 藏\n\n---\n\n->1<-\n\n<vocab>道藏, Daozang, Daoist Canon</vocab>"
+},
+{
+"id": "j24991632f33f",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fb952066ec36.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<header>欽定四庫全書</header>\n<page-num>七</page-num>\n<warning>Handwritten regular script (kaishu) of the Siku Quanshu copy; high-contrast scan with some broken strokes</warning>\n\n佐私行詐稱州使不肯就作瑀鞭之三十書佐歸\n訴遙光遙光曰沈瑀必丨丨丨汝覆之果有詐\n玲瓏鞭\n唐書蘇\n頲傳撿\n校益州大都督長史按察節度劍南諸州詔頲收劍南山澤鹽鐵\n自贍時前司馬皇甫恂使蜀檄取庫錢市錦半臂琵琶捍撥丨丨\n丨頲不肯予因上言遣使銜命先\n取不急非陛下以山澤贍軍費意\n玳瑁鞭\n宋史吳越世家俶歸國\n太祖宴餞于講武殿賜\n玉鞍勒馬丨丨丨金\n銀錦綵二十餘萬\n不須鞭\n嫏嬛記西域有獸如犬含水噴馬則\n馬瞑眩欲絶故凡馬畏之名曰馬見\n愁唐宣宗時國人獻其皮帝賜羣臣編為馬鞭一揚即\n走謂之丨丨丨\n又李白詩廉夫唯重義駿馬不勞鞭\n十廬鞭\n紫\n薇\n詩話崇寧初叔祖待制自瀛帥改知潁州過曹南省滎陽公見學\n院諸生作詩因和之騏驥方騰踏蚊蚩敢撲縁明年小期集請看\n丨丨\n丨\n瑪瑙鞭\n錢氏私誌賢穆有荆雍大長公主牌印金鑄\n也金鞍勒丨丨丨金撮角紅藤下馬杌子\n信陵鞭\n庾信謝趙王絲布啓莊周車轍\n實有涸魚丨丨丨前元非窮鳥\n繞朝鞭\n李白詩莫道詞人無膽\n氣臨行將贈丨丨丨\n海\n\n<insert>御定佩文韻府</insert>\n\n<vocab>佩文韻府, 鞭, 玲瓏鞭, 玳瑁鞭, 不須鞭, 十廬鞭, 瑪瑙鞭, 信陵鞭, 繞朝鞭, 沈瑀, 蘇頲, 皇甫恂, 吳越世家, 俶, 嫏嬛記, 唐宣宗, 李白, 紫薇詩話, 錢氏私誌, 荆雍大長公主, 庾信, 莊周</vocab>"
+},
+{
+"id": "ja6ebaddc084b",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "51433c656258.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>149</page-num>\n\n或遭王難苦 臨刑欲壽終 念彼觀音力 刀尋段段壞 或囚禁枷鎖 手足被杻械 念彼觀音力 釋然得解脫 咒詛諸毒藥 所欲害身者 念彼觀音力 還著於本人 或遇惡羅剎 毒龍諸鬼等 念彼觀音力 時悉不敢害 若惡獸圍繞 利牙爪可怖 念彼觀音力 疾走無邊方 蚖蛇及蝮蠍 氣毒煙火然 念彼觀音力 尋聲自迴去 雲雷鼓掣電 降雹澍大雨 念彼觀音力 應時得消散 眾生被困厄 無量苦逼身 觀音妙智力 能救世間苦 具足神通力 廣修智方便 十方諸國土 無剎不現身 種種諸惡趣 地獄鬼畜生 生老病死苦 以漸悉令滅 真觀清淨觀 廣大智慧觀 悲觀及慈觀 常願常瞻仰 無垢清淨光 慧日破諸闇 能伏災風火 普明照世間 悲體戒雷震 慈意妙大雲 澍甘露法雨 滅除煩惱燄 諍訟經官處 怖畏軍陣中 念彼觀音力 眾怨悉退散 妙音觀世音 梵音海潮音 勝彼世間音 是故須常念 念念勿生疑 觀世音淨聖 於苦惱死厄 能為作依怙 具一切功德 慈眼視眾生 福聚海無量 是故應頂禮\n\n爾時持地菩薩。即從座起。前白佛言。世尊。若有眾生聞是觀世音菩薩品自在之業。普門示現神通力者。當知是人。功德不少。佛說是普門品時。眾中八萬四千眾生。皆發無等等阿耨多羅三藐三菩提心\n\n妙法蓮華經陁羅尼品第二十六\n\n爾時藥王菩薩。即從座起。偏袒右肩。合掌向佛。而白佛言。世尊。若善男子。善女人。有能受持法華經者。若讀誦通利。若書寫經卷。得幾所福。佛告藥王。若有善男子。善女人。供養八百萬億那由他恒河沙等諸佛。於汝意云何。其所得福寧為多不。甚多。世尊。佛言。若善男子。善女人。能於是經乃至受持一四句偈。讀誦解義。如說修行。功德甚多。爾時藥王菩薩白佛言。世尊。我今當與說法者陀羅尼咒。以守護之。即說咒曰 <unclear>[illegible — small interlinear gloss, several characters]</unclear>\n\n安爾一 曼爾二 摩禰三 摩摩禰四 旨隷五 遮\n\n<warning>Paper darkened and stained; some characters in the middle panels are faint, and the small gloss after 即說咒曰 is not legible. Partial columns at the far right and left edges belong to adjoining panels and are not transcribed.</warning>\n<vocab>觀世音菩薩, 妙法蓮華經, 普門品, 陁羅尼品, 持地菩薩, 藥王菩薩, 陀羅尼</vocab>"
+},
+{
+"id": "ja024e040f94d",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "7a11c06fae44.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>五, 六</page-num>\n<header>墨子 十五卷</header>\n<meta>Two-page spread from a woodblock printed book, right page transcribed first. Red ink characters in the top margin of both pages.</meta>\n\n<margin>伍 伍</margin>\n車裂五人不得斬得之除救火者無敢謹譁及離守絕巷\n救火者斬其往及父老有守此巷中部吏皆得救之吏部\n函令人謁之大將大將使信人將左右救之部吏失不言\n者斬諸女子有死罪及坐失火皆無有所失逮其以火為\n亂事者如法圍城之重禁敵人卒而至嚴令吏民無敢謹\n囂三最並行相視坐泣流涕若視舉手相探相指相呼相\n<unclear>麾</unclear>相踵相投相擊相靡以身及衣訟駁言語及非令也而\n視敵動移者斬伍人不得斬得之除五人踰城歸敵伍人\n不得斬與伯歸敵隊吏斬與吏歸敵隊將斬歸敵者父母\n妻子同產皆車裂先覺之除當術需敵離地斬五人不得\n斬得之除其疾鬪却敵於術敵下終不能復上疾鬪者隊\n\n<column-break/>\n\n<margin>五 伍 待</margin>\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Red ink block mark in the top margin of the left page, below the red character 待.</image-desc>\n二人賜上奉而勝圍城周里以上封城將三十里地為關\n內侯輔將如今賜上卿丞及吏比於丞者賜爵五大夫官\n吏豪傑與計堅守者十人及城上吏地五官者皆賜公乘\n男子有守者爵人二級女子賜錢伍千男女老小先分守\n者人賜錢千復之三歲無有所與不租稅此所以勸吏民\n堅守勝圍也吏卒侍大門中者曹無過二人勇敢為前行\n止坐令各知其左右前後擅離署戮門尉畫三閱之莫鼓\n擊門閉一閱守時令人參之上道者名鋪食皆於署不得\n外食守必謹微察視謁者執盾中涓及婦人侍前者志意\n顏色使令言語之請及上飲食必令人嘗皆非請也擊而\n請故守有所不悅謁者執盾中涓及婦人侍前者守日斷\n\n<vocab>車裂, 救火, 守城, 爵位, 封賞, 法律, 墨子, 號令</vocab>"
+},
+{
+"id": "j5e727419f638",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd4788def0d6.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten regular-script (kaishu) copyist hand; vertical text read right to left. The running header at the left edge is partly cut off.</warning>\n<header>欽定四庫全書 卷七十四之一</header>\n卿曲水聯句絳水時丨丨花觴轉更周孔德紹\n王澤嶺遭洪水詩驚濤遙起鷺丨丨不分牛\n\n## 險岸\n\n劉逖秋朝野\n望詩駐車憑\n丨丨飛葢\n歷平湖\n\n## 叠岸\n\n唐太宗臨層臺賦重基數仞異細柳之初營丨丨\n盈丈開上林而翫兵孟郊石淙詩疾流脫鱗甲丨\n丨衝\n風霆\n\n## 照岸\n\n唐太宗詩丨丨花分彩迷雲雁斷行駱賓王秋日送尹\n大赴京詩序劍水澄波碎楚蘭于秋水金暉丨丨秀陶\n菊于寒隄白居易汎小<unclear>艑</unclear>詩亞竹\n亂藤多丨丨如從鳳口向湖州\n\n## 雲岸\n\n閻伯璵彈碁局賦粲若星\n離偃如丨丨杜甫詩晨鐘\n丨丨濕勝地石堂烟元稹送東川馬逢\n侍御使回詩丨丨猶封草春江欲滿槽\n\n## 別岸\n\n駱賓王詩離亭分鶴\n葢丨丨指龍川高適\n詩丨丨迴無垠海鶴鳴不息羅隱詩丨丨客帆和雁落晚程霜葉\n向人飛梅堯臣詩丨丨無端縈細柳廻舟不忍過新橋顧瑛詩幾\n對好花開丨丨一\n雙飛鳥趁輕舠\n\n## 橫岸\n\n武三思出水槎詩擁溜根丨丨沈波影照\n懸陸游詩清溪橋斷舟丨丨小塢梅殘雨\n漬\n香\n\n## 沿岸\n\n沈佺期詩淇上風\n日好紛紛丨丨多\n\n## 接岸\n\n蘇瓌興慶池侍宴應制詩帷齊綠\n樹當筵密葢轉緗荷丨丨浮歐陽\n\n<vocab>險岸, 叠岸, 照岸, 雲岸, 別岸, 橫岸, 沿岸, 接岸, 孔德紹, 劉逖, 唐太宗, 孟郊, 駱賓王, 白居易, 閻伯璵, 杜甫, 元稹, 高適, 羅隱, 梅堯臣, 顧瑛, 武三思, 陸游, 沈佺期, 蘇瓌, 歐陽</vocab>"
+},
+{
+"id": "jd298a65f54f6",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6f4667940c40.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>御定子史精華</header>\n<page-num>二</page-num>\n<meta>Woodblock print in vertical columns, read right to left. A partial fore-edge label is at the top left. Vertical strokes (｜) are ditto marks that repeat the heading phrase.</meta>\n\n寢食者又有憂彼之所憂者因往曉之曰天積氣耳亡\n處亡氣若屈伸呼吸終日在天中行止奈何憂崩墜乎\n其人曰天果積氣日月星宿不當墜耶曉之者曰日月\n星宿亦積氣中之有先耀者只使墜亦不能有所中傷\n其人曰奈地壞何曉者曰地積塊耳充塞四虛亡處亡\n塊若躇步跐蹈終日在地上行止奈何憂其壞其人舍\n然大喜曉之者\n亦舍然大喜\n發於餘竅子亦將承之\n列子子輿曰子\n以公孫龍之鳴\n皆條也設令｜｜\n｜｜｜｜｜｜\n竊鉄\n列子人有亡鉄者意其鄰之子\n視其行步｜｜也顏色竊鉄也\n言語竊鉄也作動態度無為而不竊鉄也俄而相其谷\n而得其鉄他日復見其鄰人之子動作態度無似竊鉄\n者\n不見人徒見金\n列子昔齊人有欲金者清旦衣冠而\n之市適鬻金者之所因攫其金而去\n吏捕得之問曰人皆在焉子攫人之金\n奈何對曰取金之時｜｜｜｜｜｜\n散人惡知散木\n\n<vocab>列子, 杞人憂天, 積氣, 積塊, 子輿, 公孫龍, 竊鉄, 亡鉄者, 齊人攫金, 散人, 散木, 御定子史精華</vocab>"
+},
+{
+"id": "je0aae41a9eae",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "0075e89e43ea.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<warning>Handwritten East Asian clerical/semi-cursive script</warning>\n<page-type>text</page-type>\n\n實米一百五十七石\n每朔米十三石一斗二升五合式 每日奔五升四合一勺七利\n柴復米通一年七十二石內\n每朔米六石式 每日三升\n祿太通一年十石半四升五合內\n每朔三斗三升二合九利式 每日四升三合七勺三利\n\n<vocab>實米, 柴復米, 祿太, 朔, 石, 斗, 升, 合, 勺, 利</vocab>"
+},
+{
+"id": "jf47a30dc79a1",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "ecaf383ef558.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>16, 17</page-num>\n<header>詩經解題</header>\n\n詩經の内容は上文に述べたるが如く、今より二千數百年乃至三千年以前の作なれば、その言語その文字、往々今日と同じからず、殊に詩は言語文字の外にその意を求めざるべからざることもあれば、古人の解釋に據らざるを得ず。然るに詩經の解釋家に古來二派あり。一は秦漢頃に出でし詩序によりて解釋するもの、即ち毛亨毛萇の傳、及び後漢鄭玄の箋、所謂毛傳鄭箋の流是なり、之を古注派といふ。一は序に拘らずして專ら文に依りてその義を求むるもの、即ち朱子集傳の流是なり、之を新注派といふ。其他古注新注を折中するものあり、齊詩魯詩韓詩を取るものあり、又古注派・新注派の中にも多少異同あれども、之を概言すればまづ古注新注の二派となすことを得べし。今本編の主として新注に據れるは、その明白にして了解し易きを取れるなり。\n\n## 第五　詩の六義\n\n<column-break/>\n\n詩に六義といへることあり、風雅頌賦比興是なり。風雅頌は詩の性質上より分類せしものにて、之を詩の三經といひ、賦比興は詩の作法上より分類せしものにて、之を詩の三緯といふ。三經と三緯とは、その性質同じからずして並び稱すべきものに非ず。されども古人は必ずしも精密なる分類法によらずして、之を概言すること往々之あり、なほ文字の構造法と使用法とは稍その性質を異にすれども、之を合せて六書といへるが如し。風雅頌のことは既に上文に述べたれども、その名稱の意義を略説すれば、風は民俗歌謠の詩にして、その上の化を被ぶりて言ふことありて、その言又人を感ずるに足ること、物の風の動くによりて聲ありて、その聲又物を動かすが如きをいふなり。雅は正なり、格律の嚴正、規模の雄大なるの意なり、頌は容なり、盛德の形容を述ぶるの義なり。\n\n## 第六　詩の形式\n\n<vocab>詩經, 六義, 風雅頌, 賦比興, 三經, 三緯, 毛傳鄭箋, 朱子集傳, 古注派, 新注派</vocab>"
+},
+{
+"id": "j9203dd5202f6",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5da106ff46b1.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>149</page-num>\n\n或遭王難苦 臨刑欲壽終 念彼觀音力 刀尋段段壞 或囚禁枷鎖 手足被杻械 念彼觀音力 釋然得解脫 咒詛諸毒藥 所欲害身者 念彼觀音力 還著於本人 或遇惡羅剎 毒龍諸鬼等 念彼觀音力 時悉不敢害 若惡獸圍繞 利牙爪可怖 念彼觀音力 疾走無邊方 蚖蛇及蝮蠍 氣毒煙火然 念彼觀音力 尋聲自迴去 雲雷鼓掣電 降雹澍大雨 念彼觀音力 應時得消散 眾生被困厄 無量苦逼身 觀音妙智力 能救世間苦 具足神通力 廣修智方便 十方諸國土 無剎不現身 種種諸惡趣 地獄鬼畜生 生老病死苦 以漸悉令滅 真觀清淨觀 廣大智慧觀 悲觀及慈觀 常願常瞻仰 無垢清淨光 慧日破諸闇 能伏災風火 普明照世間 悲體戒雷震 慈意妙大雲 澍甘露法雨 滅除煩惱燄 諍訟經官處 怖畏軍陣中 念彼觀音力 眾怨悉退散 妙音觀世音 梵音海潮音 勝彼世間音 是故須常念 念念勿生疑 觀世音淨聖 於苦惱死厄 能為作依怙 具一切功德 慈眼視眾生 福聚海無量 是故應頂禮\n\n爾時持地菩薩。即從座起。前白佛言。世尊。若有眾生聞是觀世音菩薩品自在之業。普門示現神通力者。當知是人。功德不少。佛說是普門品時。眾中八萬四千眾生。皆發無等等阿耨多羅三藐三菩提心\n\n妙法蓮華經陁羅尼品第二十六\n\n爾時藥王菩薩。即從座起。偏袒右肩。合掌向佛。而白佛言。世尊。若善男子。善女人。有能受持法華經者。若讀誦通利。若書寫經卷。得幾所福。佛告藥王。若有善男子。善女人。供養八百萬億那由他恒河沙等諸佛。於汝意云何。其所得福寧為多不。甚多。世尊。佛言。若善男子。善女人。能於是經乃至受持一四句偈。讀誦解義。如說修行。功德甚多。爾時藥王菩薩白佛言。世尊。我今當與說法者陀羅尼咒。以守護之。即說咒曰 <unclear>[illegible — small interlinear gloss, several characters]</unclear>\n\n安爾一 曼爾二 摩禰三 摩摩禰四 旨隷五 遮\n\n<warning>Paper darkened and stained; some characters in the middle panels are faint, and the small gloss after 即說咒曰 is not legible. Partial columns at the far right and left edges belong to adjoining panels and are not transcribed.</warning>\n<vocab>觀世音菩薩, 妙法蓮華經, 普門品, 陁羅尼品, 持地菩薩, 藥王菩薩, 陀羅尼</vocab>"
+},
+{
+"id": "j882e4679bef4",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "b5c6324d236f.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>55</page-num>\n\n<margin>讓國自況</margin>\n<margin>孤馬餓死</margin>\n<margin>被髮請囚</margin>\n也。若狐不偕。務光。伯夷。叔齊。箕子。胥餘。紀他。\n<margin>此皆遭讒諂以為役而失其自得者</margin>\n<margin>局法</margin>\n<margin>申徒狄</margin>\n是役人之役。適人之適。而不自適\n<margin>第四又總論全體大用</margin>\n<margin>中立不倚</margin>\n<margin>自顧歡然栗</margin>\n其適者也。古之真人。其狀義而不朋。若不足\n<margin>以卑承人</margin>\n<margin>自然之貌</margin>\n<margin>有德而無圭角</margin>\n<margin>大也</margin>\n<margin>實若虛</margin>\n而不承。與乎其觚。而不堅也。張乎其虛而不\n<margin>古貌</margin>\n<margin>似喜而不喜</margin>\n<margin>下也</margin>\n<margin>悶然而後應意</margin>\n華也。邴邴。丙乎其似喜乎。崔乎其不得已乎\n<margin>聚也</margin>\n<margin>即粹然見於面也</margin>\n<margin>容受</margin>\n<margin>即虛室吉止止也</margin>\n<margin>與人同世而不可也</margin>\n滀蓄乎。進我色也。與乎止我德也。厲乎其似\n<margin>大宗師</margin>\n<margin>莊子</margin>\n\n<vocab>莊子, 大宗師, 讓國, 伯夷, 叔齊, 箕子, 胥餘, 紀他, 申徒狄, 真人</vocab>"
+},
+{
+"id": "j1b9257fee1ea",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd406367aa50.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>六藝流別 卷十六 樂藝下</header>\n<page-num>三十二</page-num>\n\n誰別偽真刀鳴鞘中倚床無施父冤不報欲活何為\n猛虎班班遊戲山間虎欲齧人不避豪賢\n\n### 定情篇 <gloss>漢 繁欽</gloss>\n\n我出東門遊邂逅承清塵思君即幽房侍寢執衣巾\n時無桑中契迫此路側人我既媚君姿君亦悅我顏\n何以致拳拳綰臂雙金環何以致慇懃約指一雙銀\n何以致區區耳中雙明珠何以致叩叩香囊繫肘後\n何以致契闊繞腕雙跳脫何以結恩情珮玉綴羅纓\n何以結中心素縷雙連針何以結相投金薄畫搔頭\n何以慰別離耳後玳瑁釵何以荅懽悅紈素三條裾\n\n<column-break/>\n\n何以結愁悲白絹雙中衣與我期何所乃期東山隅\n日昐兮不至谷風吹我襦遠望無所見涕泣起踟蹰\n與我期何所乃期南山陽日中兮不來風飄吹我裳\n逍遙莫誰靚望君愁我腸與我期何所乃期西山側\n日夕兮不來躑躅長歎息遠望凉風至俯仰正衣服\n與我期何所乃期北山岑日暮兮不來凄風吹我襟\n望君不能坐悲苦愁我心愛身以何為惜我華時色\n中情既欸欸然後尅密期褰衣躡花草謂君不我期\n厠此醜陋質徒倚無所之自傷失所欲淚下如連絲\n\n### 種葛篇 <gloss>曹植</gloss>\n\n<vocab>定情篇, 繁欽, 種葛篇, 曹植, 樂藝, 六藝流別</vocab>"
+},
+{
+"id": "j8929aeab3d45",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "51433c656258.jpg",
+"text": "<warning>Handwritten Japanese Buddhist iconographic drawing (ink on paper, kanji labels in a cursive hand); partial drawings from adjoining sections of the scroll are visible at the left and right edges and are not transcribed.</warning>\n<scan-quality>fair</scan-quality>\n<language>Japanese</language>\n<script>handwritten</script>\n<page-type>diagram</page-type>\n\n<margin>\n第四北門水蔵并録色\n</margin>\n\n<margin>\n第三<unclear>恵</unclear>蔵并赤色\n</margin>\n\n<margin>\n第二南門空蔵并青色\n</margin>\n\n<margin>\n第一東門香蔵并白色\n</margin>\n\n---\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">Ink line drawing of a square ritual mandala made of concentric squares with a gate on each of the four sides. At the centre is an eight-petalled lotus inside a square with small star-like flowers at its corners. The surrounding bands hold cloud-like lotus clusters, small flowers, crossed vajra-like staffs and star-shaped ornaments. Each gate contains ritual implements such as vases, bells, a wheel and swords, and small offering stands sit outside the corners and gates. Small kanji colour notes are written inside the diagram.</image-desc>\n\n<insert>録</insert>\n<insert>青</insert>\n<insert><unclear>録</unclear></insert>\n<insert>赤</insert>\n<insert>赤</insert>\n<insert>赤</insert>\n<insert>白</insert>\n<insert>青</insert>\n<insert>青</insert>\n<insert>赤</insert>\n<insert>黄</insert>\n<insert>録<unclear>色</unclear></insert>\n<insert>青</insert>\n<insert>録</insert>\n<insert>白</insert>\n\n---\n\n<vocab>Mandala, 曼荼羅, Buddhist ritual, East Gate (東門), South Gate (南門), North Gate (北門), 水蔵, 空蔵, 香蔵, colour notes (青, 赤, 白, 黄, 録)</vocab>"
+},
+{
+"id": "j7e00e5bedd57",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "ecaf383ef558.jpg",
+"text": "<language>Japanese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>16, 17</page-num>\n<header>詩經解題</header>\n\n詩經の内容は上文に述べたるが如く今より二千數百年乃至三千年以前の作なれば、その言語その文字往々今日と同じからず、殊に言語文字の外にその意を求めざるべからざることもあれば古人の解釋に據らざるを得ず。然るに詩經の解釋家に古來二派あり。一は秦漢頃に出で詩序によりて解釋するもの即ち毛亨毛萇の傳、及び後漢鄭玄の箋、所謂毛傳鄭箋の流是なり之を古注派といふ。一は序に拘らずして專ら文に依りてその義を求むるもの、即ち朱子集傳の流是なり之を新注派といふ。其他古注新注を折中するものもあり、齊詩魯詩韓詩を取るものあり、又古注派・新注派の中にも多少異同あれども之を概言すればまづ古注新注の二派となすことを得べし。今本編の主として新注に據れるは、その明白にして了解し易きを取れるなり。\n\n<column-break/>\n\n第五　詩の六義\n\n詩に六義といへることあり、風雅頌賦比興是なり。風雅頌は詩の性質上より分類せしものにて、之を詩の三緯といふ。三經と三緯とは、その性質同じからずして並び稱すべきものに非ず。されども古人は必ずしも精密なる分類法によらずして之を概言すること往々之あり、なほ文字の構造法と使用法とは稍その性質を異にすれども之を合せて六書といへるが如し。風雅頌のことは既に上文に述べたれども、その名稱の意義を略説すれば、風は民俗歌謠の詩にして、その上の化を被ぶりて言ふことありて、その言又人を感するに足ること、物の風の動くによりて聲ありて、その聲又物を動かすが如きをいふなり。雅は正なり、格律の嚴正規模の雄大なるの意なり、頌は容なり、盛德の形容を述ぶるの義なり。\n\n第六　詩の形式\n\n<vocab>詩經, 六義, 風雅頌, 賦比興, 毛傳鄭箋, 朱子集傳, 古注派, 新注派</vocab>"
+},
+{
+"id": "j2d44ed4726e5",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "cead04325a76.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<header>欽定四庫全書 卷一百七十四</header>\n<warning>Handwritten regular-script (kaishu) Chinese manuscript; the outer frame text at the right edge is partly cut off.</warning>\n\n羅木\n明一統志丨丨山\n在永平縣北八里\n\n羅武\n明一統志丨丨山在永平縣東北一百\n一十里山半有泉入勝備江發源于此\n\n羅岷\n明一統志丨丨山在永昌軍民府城東北八十里\n瀾滄江西岸髙千餘仞延袤四十餘里頂嘗有石\n飛下過\n者必趨\n\n羅巖\n水經注營水出營陽冷道縣南流山西流逕九疑\n山下磐碁蒼梧之野峯秀數郡之間丨丨九舉各\n導一溪岫壑負岨異嶺同\n勢遊者疑焉故曰九疑山\n\n羅叢\n明一統志丨丨巖在潯州府城西南六十里其巖\n明爽可容二三百人內有三教殿東西有碧虛靈\n源二洞實潯之勝槩每\n歲重九郡人登髙于此\n\n<vocab>明一統志, 水經注, 羅木, 羅武, 羅岷, 羅巖, 羅叢, 永平縣, 永昌軍民府, 瀾滄江, 勝備江, 九疑山, 營水, 冷道縣, 蒼梧, 潯州府, 三教殿, 碧虛, 靈源, 重九</vocab>"
+},
+{
+"id": "jcdbcc85f916c",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "a743d636dd60.jpg",
+"text": "<language>Japanese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>16, 17</page-num>\n<header>詩經解題</header>\n\n詩經の内容は上文に述べたるが如く今より二千數百年乃至三千年以前の作なれば、その言語その文字往々今日と同じからず、殊に言語文字の外にその意を求めざるべからざることもあれば古人の解釋に據らざるを得ず。然るに詩經の解釋家に古來二派あり。一は秦漢頃に出で詩序によりて解釋するもの即ち毛亨毛萇の傳、及び後漢鄭玄の箋、所謂毛傳鄭箋の流是なり之を古注派といふ。一は序に拘らずして專ら文に依りてその義を求むるもの、即ち朱子集傳の流是なり之を新注派といふ。其他古注新注を折中するものもあり、齊詩魯詩韓詩を取るものあり、又古注派・新注派の中にも多少異同あれども之を概言すればまづ古注新注の二派となすことを得べし。今本編の主として新注に據れるは、その明白にして了解し易きを取れるなり。\n\n<column-break/>\n\n第五　詩の六義\n\n詩に六義といへることあり、風雅頌賦比興是なり。風雅頌は詩の性質上より分類せしものにて、之を詩の三緯といふ。三經と三緯とは、その性質同じからずして並び稱すべきものに非ず。されども古人は必ずしも精密なる分類法によらずして之を概言すること往々之あり、なほ文字の構造法と使用法とは稍その性質を異にすれども之を合せて六書といへるが如し。風雅頌のことは既に上文に述べたれども、その名稱の意義を略説すれば、風は民俗歌謠の詩にして、その上の化を被ぶりて言ふことありて、その言又人を感するに足ること、物の風の動くによりて聲ありて、その聲又物を動かすが如きをいふなり。雅は正なり、格律の嚴正規模の雄大なるの意なり、頌は容なり、盛德の形容を述ぶるの義なり。\n\n第六　詩の形式\n\n<vocab>詩經, 六義, 風雅頌, 賦比興, 毛傳鄭箋, 朱子集傳, 古注派, 新注派</vocab>"
+},
+{
+"id": "j14a6d99c22f2",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5da106ff46b1.jpg",
+"text": "<warning>The small printed folio number between the sheets is faint and its last character is an uncertain reading.</warning>\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>百十八</page-num>\n\n或遭王難苦　臨刑欲壽終　念彼觀音力\n刀尋段段壞　或囚禁枷鎖　手足被杻械\n念彼觀音力　釋然得解脫　呪詛諸毒藥\n所欲害身者　念彼觀音力　還著於本人\n或遇惡羅剎　毒龍諸鬼等　念彼觀音力\n時悉不敢害　若惡獸圍繞　利牙爪可怖\n念彼觀音力　疾走無邊方　蚖蛇及蝮蠍\n氣毒煙火然　念彼觀音力　尋聲自迴去\n雲雷鼓掣電　降雹澍大雨　念彼觀音力\n應時得消散　眾生被困厄　無量苦逼身\n觀音妙智力　能救世間苦　具足神通力\n廣脩智方便　十方諸國土　無剎不現身\n種種諸惡趣　地獄鬼畜生　生老病死苦\n以漸悉令滅　真觀清淨觀　廣大智慧觀\n悲觀及慈觀　常願常瞻仰　無垢清淨光\n慧日破諸闇　能伏災風火　普明照世間\n悲體戒雷震　慈意妙大雲　澍甘露法雨\n滅除煩惱燄　諍訟經官處　怖畏軍陣中\n念彼觀音力　眾怨悉退散　妙音觀世音\n梵音海潮音　勝彼世間音　是故須常念\n念念勿生疑　觀世音淨聖　於苦惱死厄\n能為作依怙　具一切功德　慈眼視眾生\n福聚海無量　是故應頂禮\n\n爾時持地菩薩。即從座起。前白佛言。世尊。若有眾生。聞是觀世音菩薩品。自在之業。普門示現神通力者。當知是人功德不少。佛說是普門品時。眾中八萬四千眾生。皆發無等等阿耨多羅三藐三菩提心。\n\n妙法蓮華經陀羅尼品第二十六\n\n爾時藥王菩薩。即從座起。偏袒右肩。合掌向佛。而白佛言。世尊。若善男子善女人。有能受持法華經者。若讀誦通利。若書寫經卷。得幾所福。佛告藥王。若有善男子善女人。供養八百萬億那由他恒河沙等諸佛。於汝意云何。其所得福。寧為多不。甚多世尊。佛言。若善男子善女人。能於是經。乃至受持一四句偈。讀誦解義。如說脩行。功德甚多。尒時藥王菩薩白佛言。世尊。我今當與說法者陀羅尼呪。以守護之。即說呪曰\n\n安爾一　曼爾二　摩禰三　摩摩禰四　旨隷五　遮\n\n<vocab>觀世音菩薩, 持地菩薩, 普門品, 妙法蓮華經, 陀羅尼品, 藥王菩薩, 陀羅尼, 法華經</vocab>"
+},
+{
+"id": "j1da32d9df8ec",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "cead04325a76.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n羅木\n明一統志丨丨山\n在永平縣北八里\n<header>卷一百七十四</header>\n羅\n武\n一明\n一統\n十里\n志\n半\n一山\n有泉\n入在\n勝永\n備平\n江縣\n發東\n源北\n源一\n此百\n羅岷\n明一統志丨丨山在永昌軍民府城東北八十里\n瀾滄江西岸髙千餘仞延袤四十餘里頂嘗有石\n飛下過\n者必趨\n羅巖\n水經注營水出營陽冷道縣南流山西流逕九疑\n山下磐碁蒼梧之野峯秀數郡之間丨丨九舉各\n導一溪岫壑負岨異嶺同\n勢遊者疑焉故曰九疑山\n羅叢\n明一統志一一嵗在潯州府城西南六十里其巖\n明爽可容二三百人內有三教殿東西有碧虛靈\n源二洞實潯之勝槩每\n歲重九郡人登髙于此"
+},
+{
+"id": "j6bbb5b4e2f60",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "7d1f593a5b76.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n崇彊\n史記太史公自序\n一\n一\n豫產諸侯謀之\n崇\n妙\n雲笈七籤三十六小洞天第二十七金庭山洞\n名曰金庭丨丨天在越州剡縣屬趙仙伯治之\n崇要宋書劉穆之傳神\n崇要州治本宰輔1\n崇\n則\n唐\n書\n趙\n宗\n儒\n傳\n宗\n儒\n以\n寺\n處\n文\n學\n歷\n將\n相\n位\n任\n崇之周禮旒人為簋實一\n崇尺\n觳\n一\n厚\n半\n寸\n脣\n寸\n崇佳謝靈運會吟行層臺\n矢指中天高墉積\n崇平潘岳閒居賦祗聖敬以\n完全\n明\n順\n養\n更\n老\n以\n崇巾\n後漢書輿服志幘者賾也頭首嚴賾也至孝文乃\n髙顔題續之為耳丨其丨為屋合後施收上下羣\n<header>御定駢字類編</header>\n<page-num>五十三</page-num>"
+},
+{
+"id": "j859528d8c68b",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "2239c0f76dd5.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>六</page-num>\n<header>孫子敘錄一卷</header>\n<meta>The text is a Japanese woodblock-style print of a Kanbun (Classical Chinese) text, featuring kundoku diacritics (kaeriten and okurigana) to facilitate reading in Japanese.</meta>\n\n與野戰。則必因勢依險。設伏無險。則隱於天氣陰晦昏霧。出其不意。襲其懈怠。可以有功。\n\n吳王問孫武曰。吾至輕地。始入敵境。士卒思還。難進易退。未背險阻。三軍恐懼。大將欲進。士卒欲退。上下異心。敵守其城壘。整其車騎。或當吾前。或擊吾後。則如之何。武曰。軍至輕地。士卒未專。以入爲務。無以戰爲。故無近其名城。無由其通路。設疑佯惑。示若將去。乃選騎銜枚。先入掠其牛馬六畜。三軍見得。進乃不懼。分吾良卒。密有所伏。敵人若來。擊之勿疑。若其不至。捨之而去。\n\n吳王問孫武曰。爭地。敵先至。據要保利。簡兵練卒。或出或守。以備我奇。則如之何。武曰。爭地之法。讓之者得。爭之者失。敵得其處。慎勿攻之。引而佯走。建旗鳴鼓。趣其所愛。曳柴揚塵。惑其耳目。分吾良卒。密有所伏。敵必出救。人欲我與。人棄吾取。此爭先之道。若我先至。而敵用此術。則選吾銳卒。固守其所。輕兵追之。分伏險阻。敵人還闕。伏兵旁起。此全勝之道也。\n\n吳王問孫武曰。交地。吾將絕敵。令不得來。必全吾邊城。修其所備。深絕通道。固其阨塞。若不先圖。敵人已備。彼可得來。而吾不可往。衆寡又均。則如之何。武曰。既我不可以往。彼可以來。吾分卒匿之。守而易怠。示其不能。敵人且至。設伏隱廬。出其不意。可以有功也。\n\n吳王問孫武曰。衢地必先。吾道遠發後。雖馳車驟馬。至不能先。則如之何。武曰。諸侯參屬。其道四通。我與敵相當。而傍有國。所謂先者。必重幣輕使。約和傍國。交親結恩。兵雖後\n\n<vocab>孫武 Sun Wu, 吳王 King of Wu, 爭地 contentious terrain, 輕地 light terrain, 交地 open terrain, 衢地 intersecting terrain, 伏兵 ambush</vocab>"
+},
+{
+"id": "j8702af39badc",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "596c624abdbd.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n萬境閑\n姚合題宣義\n詩春入\n好風光暖更\n鮮\n賈島送黃知新歸安南詩\n沈飲徧非獨曲江\n花\n趙嘏江亭晚望詩秋館\n荷葉後野人籬落豆\n花初\n方干孫氏林亭詩\n纔有二三畝風景勝於\n千萬家\n黃滔和陳先輩陪陸舍人春日遊\n曲江詩劉超遊召郄詵陪為憶——舊賞來\n池閣\n儲光羲舟中別武金壇詩月光麗丨丨野氣浮林\n園 韋應物郡齊雨中詩海上風雨至逍遙丨丨\n涼\n劉禹錫牛相公林亭詩飛雨過丨丨浮光生草樹\n王建寄汴州令狐相公詩秋日梁王丨丨好新歌散\n入管絃聲 姚合春日同會衛尉崔少卿宅詩詩家會\n詩客丨丨曉初晴 杜荀鶴和友人見題山居水閣詩\n丨丨初成眼豁開\n眼前霽景屬微才\n池\n榭\n宋史張齊賢傳歸洛得裴度午橋莊有\n松竹\n之盛日與親舊詠觴其間意甚曠適\n劉烏錫剛\n<header>御定駢字類編</header>\n<page-num>十</page-num>"
+},
+{
+"id": "j4247f45808de",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "1c75105302cf.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>御定佩文韻府</header>\n<page-num>六十</page-num>\n<warning>Woodblock print in vertical columns, read from right to left; high-contrast scan with some blurred strokes. The vertical strokes ｜ are repetition marks that stand for the headword.</warning>\n\n｜夤緣\n\n慘咽 歐陽修詞尊前擬把歸期說未語春容先｜｜\n\n凝咽 柳永詞執手相看淚眼竟無語｜｜\n\n雲咽 石介祭孔中丞文大冬殘臘風號｜｜\n\n川咽 周邦彥汴都賦連檣結<unclear>軌</unclear>｜｜塗寒\n\n清咽 范成大賞雪詩碧溪不受凍長灘瀉｜｜\n\n悲咽 陳襄詩我時過之不忍顧往往｜｜填胸委\n\n嬌咽 周密詞流鶯｜｜庭户溶溶月\n\n吻咽 袁桷五月念六大寒詩暖流驚炙轂｜｜訝<unclear>銜</unclear>枚\n\n笙咽 張翥寄題玉山詩絃鬆調寶柱｜｜炙銀簧\n\n啼咽 張翥詞那堪綠毛么鳳向苔枝數聲｜｜\n\n流響咽 王泰巫山高詩谷深峽近猿聲悲｜｜｜\n\n隴頭咽 江總長相思湘水深｜｜｜紅羅斗帳裏綠綺清弦絶｜｜｜\n\n黃河咽 虞茂入關詩隴雲低不散｜｜｜復流\n\n瀚海咽 盧照<unclear>鄰</unclear>結客少年塲行追奔｜｜｜戰罷隂山空\n\n迴湍咽 駱賓王至分水戍詩濺石｜｜｜縈叢曲澗幽\n\n再三咽 李白古風泣與親友別欲語｜｜｜\n\n子規咽 顧况\n\n<vocab>咽, 佩文韻府, 歐陽修, 柳永, 石介, 周邦彥, 范成大, 陳襄, 周密, 袁桷, 張翥, 王泰, 江總, 虞茂, 盧照鄰, 駱賓王, 李白, 顧况</vocab>"
+},
+{
+"id": "j648e3d892cdb",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "2239c0f76dd5.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>六</page-num>\n<header>孫子敘錄 一卷</header>\n<meta>The text is a Japanese woodblock-style print of a Kanbun (Classical Chinese) text, featuring kundoku diacritics (kaeriten and okurigana) to facilitate reading in Japanese.</meta>\n\n與野戰。則必因勢依險。設伏無險。則隱於天氣晦晦昏霧。出其不意。襲其懈怠。可以有功。\n吳王問孫武曰。吾至輕地。始入敵境。士卒思還。難進易退。未背險阻。三軍恐懼。大將欲進。士卒欲退。上下異心。敵守其城壘。整其車騎。或當吾前。或擊吾後。則如之何。武曰。軍至輕地。士卒未專。以入為務。無以戰為。無近其名城。無由其通路。設疑伴惑。示若將去。乃選騎銜枚。先入掠其牛馬六畜。三軍見得。進乃不懼。分吾良卒。密有所伏。敵人若來。擊之勿疑。若其不至。捨之而去。\n\n---\n\n吳王問孫武曰。爭地。敵先至。據要保利。簡兵練卒。或出或守。以備我奇。則如之何。武曰。爭地之法。讓之者得。爭之者失。敵得其處。慎勿攻之。引而伴走。建旗鳴鼓。趣其所愛。曳柴揚塵。惑其耳目。分吾良卒。密有所伏。敵必出救。人欲我與。人棄吾取。此爭先之道。若我先至。而敵用此術。則選吾銳卒。固守其所。輕兵追之。分伏險阻。敵人還闕。伏兵旁起。此全勝之道也。\n吳王問孫武曰。交地。吾將絕敵。令不得來。必全吾邊城。修其所備。深絕通道。固其阨塞。若不先圖。敵人已備。彼可得來。而吾不可往。衆寡又均。則如之何。武曰。既我不可以往。彼可以來。吾分卒匿之。守而易怠。示其不能。敵人且至。設伏隱廬。出其不意。可以有功也。\n吳王問孫武曰。衢地。必先。吾道遠發後。雖馳車驟馬。至不能先。則如之何。武曰。諸侯參屬。其道四通。我與敵相當。而傍有國。所謂先者。必重幣輕使。約和傍國。交親結恩。兵雖後\n\n<vocab>孫武 Sun Wu, 吳王 King of Wu, 爭地 contentious terrain, 輕地 light terrain, 衢地 intersecting terrain, 伏兵 ambush</vocab>"
+},
+{
+"id": "j7664801d777c",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "56c9c75445cc.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<warning>Woodblock print with high-contrast, broken strokes; a few characters are uncertain.</warning>\n\n乃開最小花楊誠斎暑中北閣望南窓將謂南窓分外涼到\n得南窓還更熱芙蕖和藥落幽香同上南方時雨連梅雨五\n月江城氣鬱蒸避暑聊傾桑落酒<unclear>永恩</unclear>敢望玉池氷朱行中\n日永知槐夏雲黃喜炎秋黃魯直\n\n### ○秋類\n\n爲矩方萬物\n\n<unclear>淮</unclear>時則訓秋爲矩矩者所以方萬物\n\n屏箋釋絺\n\n潘岳秋興賦嗟秋日之可哀兮良無愁兮不尽野有歸燕隰\n有翔隼遊氛朝興槁葉夕隕於時乃屏輕箑釋織絺藉莞弱\n御挾衣庭樹槭以洒落勁風戾而吹帷蟬嘒又以寒吟鴈飄\n飄而南飛天晃朗以弥髙日悠陽而浸微何微陽之短景竟\n京夜之方永月朣朧以含光兮露淒清以凝冷熠燿粲於階\n\n<vocab>秋類, 楊誠斎, 黃魯直, 朱行中, 時則訓, 潘岳, 秋興賦, 屏箑釋絺</vocab>"
+},
+{
+"id": "j86513d80e508",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "b5c6324d236f.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>五十五</page-num>\n<header>大宗師 莊子旁注卷一</header>\n<meta>Foot of the block-centre strip: 思訓堂</meta>\n\n<margin>讓國自沉</margin>\n<margin>扣馬餓死</margin>\n<margin>被髮請囚</margin>\n也。若狐不偕。務光。伯夷。叔齊。箕子。胥餘。紀他。\n<margin>此皆遭讒諂以為人役而失其自得者</margin>\n<margin>句法</margin>\n<gloss>陀</gloss>申徒狄。是役人之役。適人之適。而不自適\n<margin>第四又總論全體大用</margin>\n<margin>中立不倚</margin>\n<margin>自視歉然<unclear>果</unclear></margin>\n其適者也。古之真人。其狀義而不朋。若不足\n<margin>以卑承人</margin>\n<margin>自然之貌</margin>\n<margin>有德<unclear>胸</unclear>而無圭角</margin>\n<margin>大也</margin>\n<margin>實若虛</margin>\n而不承。與乎其觚。而不堅也。張乎其虛而不\n<margin>喜貌</margin>\n<margin>似喜而不喜</margin>\n<margin>下也</margin>\n<margin>悶然而後應意</margin>\n華也。邴邴<gloss>丙</gloss>乎其似喜乎。崔乎其不得已乎\n<margin>聚也</margin>\n<margin>即粹然見於面也</margin>\n<margin>容受</margin>\n<margin>即虛室吉祥止止也</margin>\n<margin>與人同世而不可犯也</margin>\n滀<gloss>蓄</gloss>乎。進我色也。與乎止我德也。厲乎其似\n\n<vocab>莊子, 大宗師, 讓國, 伯夷, 叔齊, 箕子, 胥餘, 紀他, 申徒狄, 真人</vocab>"
+},
+{
+"id": "jeadf86663320",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5fdd1b245fc9.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>4</columns>\n<meta>The text is transcribed from left to right as per instructions for multi-column pages, although the original reading order of the document is right to left.</meta>\n<vocab>中庸, 誠, 性, 聖, 教, 化育, 至誠</vocab>\n\n<margin>\n中庸\n五十九\n</margin>\n天下之道一誠而已矣化育流行而人物得之以為性\n一人之性皆具乎天地人物之理而有偽以雜之於是\n\n<column-break/>\n\n### 惟天下至誠 章\n\n<column-break/>\n\n誠則明二句見誠明一理而聖凡同歸之意在言外\n註明則可以至於誠矣可以至字不用\n\n<column-break/>\n\n者以求復其性者也故自誠明不曰聖而曰性見人之\n即天也自明誠不曰學而曰教見賢之可聖也吾人豈\n可以自諉哉"
+},
+{
+"id": "j8a998404b17e",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "e78484cf7243.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Chinese regular script (kaishu), in vertical columns reading right to left on a ruled scroll</warning>\n<meta>A half-cut column at the far left edge of the image is not transcribed. The black-and-white image shows a circular library stamp in the lower centre, set sideways to the text.</meta>\n\n樂離五欲。樂觀五陰如<unclear>怨</unclear>賊。樂觀四大如毒蛇。樂觀內入如空聚。樂隨護道意。樂饒益眾生。樂敬養師。樂廣行施。樂堅持戒。樂忍辱柔和。樂勤集善根。樂禪定不亂。樂離垢明慧。樂廣菩提心。樂降伏眾魔。樂斷諸煩惱。樂淨佛國土。樂成就相好故。脩諸功德。樂莊嚴道場。樂聞深法不畏。樂三脫門。不樂非時。樂近同學。樂於非同學中心無恚<unclear>㝵</unclear>。樂將護惡知識。樂近善知識。樂心喜清淨。樂脩無量道品之法。是為菩薩法樂。於是波旬告諸女言。我欲與汝俱還天宮。諸女言。以我等與此居士。有法樂。我等甚樂。不復樂於五欲樂也。魔言。居士可捨此女。一切所有施於彼者。是為菩薩。維摩詰言。我已捨矣。汝便將去。令一切眾生得法願具足。於是諸女問維摩詰言。我等云何止於魔宮。維摩詰言。諸姊。有法門。名無盡燈。汝等當學。無盡燈者。譬如一燈。然百千燈。冥者皆明。明終不盡。如是諸姊。夫一菩薩開導百千眾生。令發阿耨多羅三藐三菩提心。於其道意。亦不滅盡。隨所說法。而自增益。一切善法。是名無盡燈也。汝等雖住魔宮。以是無盡燈。令無數天子天女。發阿耨多羅三藐三菩提心者。為報佛恩。亦大饒益一切眾生。爾時。天女頭面禮維摩詰足。隨魔還宮。忽然不現。世尊。維摩詰有如是神力智慧辯才。故我不任詣彼問疾。\n\n佛告長者子善得。汝行詣維摩詰問疾。善德白佛言。世尊。我不堪任詣彼問疾。所以者何。憶念我昔。自於父舍。設大施會。供養一切沙門婆羅門及諸外道。貧窮下賤。孤獨乞人。期滿七日。時維摩詰。來入會中。謂我言。長者子。夫大施會。不當如汝所設。當為法施之會。何用是財施會為。我言。居士。何為法施之會。法施會者。無前無後。一時供養一切眾生。是名法施之會。曰。何謂也。謂以菩提起於慈心。以救眾生起大悲心。以持正法起於喜心。以攝智慧行於捨心。以攝慳貪起檀波羅蜜。以化犯戒起尸波羅蜜。以無我法起羼提波羅蜜。以離身心相起毗梨耶波羅蜜。以菩提相起禪波羅蜜。以一切智起般若波羅蜜。教化眾生而起於空。不捨有為法而起無相。示現受生而起無作。護持正法起方便力。以度眾生起四攝法。以敬事一切起除慢法。於身命財起三堅法。於六念中起思念法。於六和敬起質直心。正行善法起於淨命。心淨歡喜起近賢聖。不憎惡人起調伏心。以出家法起於深心。以如說行起於多聞。以無諍法起空閑處。趣向佛慧起於宴坐。解眾生縛起脩行地。以具相好及淨佛土起福德業。知一切眾生心念如應說法起\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Circular library stamp in the lower centre of the sheet, set sideways to the text, with a legend around the rim and an accession number in the centre.</image-desc>\n<insert><unclear>BIBLIOTHEQUE NATIONALE</unclear> <unclear>Don</unclear> 4502</insert>\n\n<vocab>維摩詰, 波旬, 無盡燈, 阿耨多羅三藐三菩提, 善德, 檀波羅蜜, 尸波羅蜜, 羼提波羅蜜, 毗梨耶波羅蜜, 禪波羅蜜, 般若波羅蜜, 法施之會</vocab>"
+},
+{
+"id": "j9d39ac785ae3",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "7a11c06fae44.jpg",
+"text": "<language>Classical Chinese</language>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>伍</page-num>\n<meta>The image shows a two-page spread from a woodblock printed book. Red ink annotations (伍, 五) appear at the top of the columns.</meta>\n\n車裂五人不得斬得之除救火者無敢謹諱及離守絕巷\n救火者斬其往及父老有守此巷中部署吏皆得救之吏部\n函令人謁之大將大將使信人將左右救之部署吏失不言\n者斬諸女子有死罪及坐失火皆無有所失逮其以火為\n亂事者如法圖城之重禁敵人卒而至嚴令吏民無敢謹\n置三最並行相視坐泣流涕若視舉手相探相指相呼相\n厝相踵相投相擊相靡以身及衣訟駁言語及非令也而\n視敵動移者斬伍人不得斬得之除五人踰城歸敵伍人\n不得斬與伯歸敵隊吏斬與吏歸敵隊將斬歸敵者父母\n妻子同產皆車裂先覺之除當術需敵離地斬五人不得\n斬得之除其疾鬪却敵於術敵下終不能復上疾鬪者隊\n\n<column-break/>\n\n二人賜上奉而勝圖城周里以上封城將三十里地為關\n內侯輔將如今賜上卿丞及吏比於丞者賜爵五大夫官\n吏豪傑與計堅守十人及城上吏地五官者皆賜公乘\n男子有守者爵人二級女子賜錢伍千男女老小先分守\n者人賜錢千復之三歲無有所與不租稅此所以勸吏民\n堅守勝圖也吏卒侍大門中者曹無過二人勇敢為前行\n止坐令各知其左右前後擅離署戮門尉畫三閱之莫鼓\n孥門閉一閱守時令人參之上道者名鋪食皆於署不得\n外食守必謹微察視謁者執盾中涓及婦人侍前者志意\n顏色使令言語之請及上飲食必令人嘗皆非請也擊而\n請故守有所不悅謁者執盾中涓及婦人侍前者守日斷\n待\n\n<vocab>車裂, 救火, 守城, 爵位, 封賞, 法律, 墨子, 號令</vocab>"
+},
+{
+"id": "jd08299379026",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "170660dec052.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>三十二</page-num>\n<meta>Woodblock print in vertical columns, read right to left. Large-character entry headings are followed by notes in double lines of small characters. Each ｜ is a repeat mark standing for the characters of the heading. Partial text from the block's centre column at the left edge is cut off.</meta>\n\n烏觜得之\n號賊學士\n鳴鼓兒暗箭子\n邵博聞見後錄客問劉貢父\n曰某人有隱過否中司將鳴\n鼓而攻之貢父曰中司自可｜｜｜老夫\n難為｜｜｜｜客笑而去滑稽之為厚者也\n崖州為大\n王\n偁\n東都事畧丁謂性憸巧而善談笑在崖州嘗問客天下\n州郡孰為大客曰京師也謂曰不然朝廷宰相作崖州\n司户參軍則｜｜\n｜｜也聞者絶倒\n能言鴨\n胡仔苕溪漁隱叢話陸龜蒙\n詩云千首文章二頃田囊中\n未有一錢看却因養得｜｜｜驚破王孫金彈丸談苑\n云陸龜蒙居笠澤有內養自長安使杭州舟出舍下彈\n其一緑頭鴨龜蒙遽從舍出大呼曰此緑頭有異善人\n言吾將獻天子今持此死鴨以詣官內養少長宮禁信\n然後以金帛遺之因徐問龜蒙曰\n此鴨何言龜蒙曰常自呼其名\n昌家非類雄名艾氣\n魏泰東軒筆錄王汾口吃劉攽嘗嘲之曰恐是｜｜又\n疑｜｜不見｜｜唯聞｜｜葢以周昌韓非楊雄鄧艾\n\n<vocab>鳴鼓, 暗箭子, 邵博, 聞見後錄, 劉貢父, 王偁, 東都事畧, 丁謂, 崖州, 胡仔, 苕溪漁隱叢話, 陸龜蒙, 談苑, 笠澤, 緑頭鴨, 魏泰, 東軒筆錄, 王汾, 劉攽, 周昌, 韓非, 楊雄, 鄧艾</vocab>"
+},
+{
+"id": "ja9c0c7f934d8",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "170660dec052.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n烏觜得之\n號賊學士\n鳴鼓兒暗箭子\n邵博聞見後錄客問劉貢父\n曰某人有隱過否中司將鳴\n鼓而攻之貢父曰中司自可\n雞為\n客笑而去滑稽之為厚者也\n老夫\n崖州為大\n王\n偁\n東都事客丁謂性憸巧而善談笑在崖州嘗問客天下\n州郡孰為大客曰京師也謂曰不然朝廷宰相作崖州\n司户參軍則\n也聞者絶倒\n能言鴨\n胡仔苕溪漁隱叢話陸龜蒙\n詩云千首文章二頃田囊中\n未有一錢看却因養得\n驚破王孫金彈丸談苑\n云陸龜蒙居笠澤有內養自長安使杭州舟出舍下彈\n其一緑頭鴨龜蒙遽從舍出大呼曰此緑頭有異善人\n言吾將獻天子今持此死鴨以詣官內養少長宮禁信\n然後以金帛遺之因徐問龜蒙曰\n此鴨何言龜蒙曰常自呼其名\n昌家非類雄名艾氣\n魏泰東軒筆錄王汾口吃劉攽嘗嘲之曰恐是\n又\n疑才斗不見\n唯聞\n葢以周昌韓非楊雄鄧艾"
+},
+{
+"id": "j57b212d856a0",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5ef93fc06339.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>illustration</page-type>\n<columns>2</columns>\n<warning>Handwritten Chinese regular script (kaishu) with painted illustrations. This is a two-page spread read right to left, so the right-hand page is transcribed first.</warning>\n\n## 日出入黑雲橫貫占\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A coloured ink-and-wash landscape of tall green and grey rock pinnacles with conifers, under a pale blue sky. A red sun is crossed by four long, horizontal dark grey bands of cloud.</image-desc>\n\n朱文公曰\n\n日出入黑雲橫貫望雨湏周\n\n宋志曰\n\n日出或入黑雲橫貫之不出三日有暴雨日始出而隔之其下有兵有雨解之\n\n<column-break/>\n\n## 氣直立於日傍占\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A coloured ink-and-wash landscape of rocky crags and blue-green peaks with conifers, under a pale blue sky. A red sun has a long vertical red line of vapour running straight through it, with a shorter vertical red line standing on each side.</image-desc>\n\n朱文公曰\n\n氣直立於日旁宮中爭鬬\n\n宋志曰\n\n日旁有氣直立或貫日者宮中爭鬬也\n\n<vocab>朱文公, 宋志, 占, 氣, 日旁, 黑雲, 橫貫, 直立, 暴雨, 宮中爭鬬</vocab>"
+},
+{
+"id": "j4fc492ac1f6d",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "2239c0f76dd5.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>六</page-num>\n<header>孫子敘錄 一卷</header>\n<meta>The text is a Japanese woodblock-style print of a Kanbun (Classical Chinese) text, featuring kundoku diacritics (kaeriten and okurigana) to facilitate reading in Japanese.</meta>\n\n與野戰。則必因勢依險。設伏無險。則隱於天氣陰晦昏霧。出其不意。襲其懈怠。可以有功。\n吳王問孫武曰。吾至輕地。始入敵境。士卒思還。難進易退。未背險阻。三軍恐懼。大將欲進。士卒欲退。上下異心。敵守其城壘。整其車騎。或當吾前。或擊吾後。則如之何。武曰。軍至輕地。士卒未專。以入為務。無以戰為。故無近其名城。無由其通路。設疑伴惑。示若將去。乃選騎銜枚。先入掠其牛馬六畜。三軍見得。進乃不懼。分吾良卒。密有所伏。敵人若來。擊之勿疑。若其不至。捨之而去。\n\n---\n\n吳王問孫武曰。爭地。敵先至。據要保利。簡兵練卒。或出或守。以備我奇。則如之何。武曰。爭地之法。讓之者得。爭之者失。敵得其處。慎勿攻之。引而伴走。建旗鳴鼓。趣其所愛。曳柴揚塵。惑其耳目。分吾良卒。密有所伏。敵必出救。人欲我與。人棄吾取。此爭先之道。若我先至。而敵用此術。則選吾銳卒。固守其所。輕兵追之。分伏險阻。敵人還鬭。伏兵旁起。此全勝之道也。\n吳王問孫武曰。交地。吾將絕敵。令不得來。必全吾邊城。修其所備。深絕通道。固其阨塞。若不先圖。敵人已備。彼可得來。而吾不可往。衆寡又均。則如之何。武曰。既我不可以往。彼可以來。吾分卒匿之。守而易怠。示其不能。敵人且至。設伏隱廬。出其不意。可以有功也。\n吳王問孫武曰。衢地。必先。吾道遠發後。雖馳車驟馬。至不能先。則如之何。武曰。諸侯參屬。其道四通。我與敵相當。而傍有國。所謂先者。必重幣輕使。約和傍國。交親結恩。兵雖後\n\n<vocab>孫武 Sun Wu, 吳王 King of Wu, 爭地 contentious terrain, 輕地 light terrain, 衢地 intersecting terrain, 伏兵 ambush</vocab>"
+},
+{
+"id": "j9f05e0b70a27",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5fdd1b245fc9.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>4</columns>\n<meta>The text is transcribed from left to right as per instructions for multi-column pages, although the original reading order of the document is right to left.</meta>\n<vocab>中庸, 誠, 性, 聖, 教, 化育, 至誠</vocab>\n\n<margin>\n中庸\n五十九\n</margin>\n天下之道一誠而已矣化育流行而人物得之以為性\n一人之性皆具乎天地人物之理而有偽以雜之於是\n\n<column-break/>\n\n### 惟天下至誠 章\n\n<column-break/>\n\n誠則明二句見誠明一理而聖凡同歸之意在言外\n註明則可以至於誠矣可以至字不用\n\n<column-break/>\n\n者以求復其性者也故自誠明不曰聖而曰性見人之\n即天也自明誠不曰學而曰教見賢之可聖也吾人豈\n可以自諉哉"
+},
+{
+"id": "j11d4243bdf27",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "170660dec052.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n烏觜得之\n號賊學士\n鳴鼓兒暗箭子\n邵博聞見後錄客問劉貢父\n曰某人有隱過否中司將鳴\n鼓而攻之貢父曰中司自可\n雞為\n客笑而去滑稽之為厚者也\n老夫\n崖州為大\n王\n偁\n東都事客丁謂性憸巧而善談笑在崖州嘗問客天下\n州郡孰為大客曰京師也謂曰不然朝廷宰相作崖州\n司户參軍則\n也聞者絶倒\n能言鴨\n胡仔苕溪漁隱叢話陸龜蒙\n詩云千首文章二頃田囊中\n未有一錢看却因養得\n驚破王孫金彈丸談苑\n云陸龜蒙居笠澤有內養自長安使杭州舟出舍下彈\n其一緑頭鴨龜蒙遽從舍出大呼曰此緑頭有異善人\n言吾將獻天子今持此死鴨以詣官內養少長宮禁信\n然後以金帛遺之因徐問龜蒙曰\n此鴨何言龜蒙曰常自呼其名\n昌家非類雄名艾氣\n魏泰東軒筆錄王汾口吃劉攽嘗嘲之曰恐是\n又\n疑才斗不見\n唯聞\n葢以周昌韓非楊雄鄧艾"
+},
+{
+"id": "j3aa97f8a7d7a",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "7a11c06fae44.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<meta>The image shows a two-page spread from a woodblock printed book. Red ink annotations (伍, 伍, 五, 伍, 待) are written by hand in the upper margin above the columns, with small red dots beside the characters they correct.</meta>\n\n<margin>伍</margin>\n<margin>伍</margin>\n\n車裂五人不得斬得之除救火者無敢讙譁及離守絕巷\n救火者斬其正及父老有守此巷中部吏皆得救之吏部\n函令人謁之大將大將使信人將左右救之部吏失不言\n者斬諸女子有死罪及坐失火皆無有所失逮其以火為\n亂事者如法圍城之重禁敵人卒而至嚴令吏民無敢讙\n囂三最並行相視坐泣流涕若視舉手相探相指相呼相\n厝相踵相投相擊相靡以身及衣訟駁言語及非令也而\n視敵動移者斬伍人不得斬得之除五人踰城歸敵伍人\n不得斬與伯歸敵隊吏斬與吏歸敵隊將斬歸敵者父母\n妻子同產皆車裂先覺之除當術需敵離地斬五人不得\n斬得之除其疾鬪却敵於術敵下終不能復上疾鬪者隊\n\n<column-break/>\n\n<margin>五</margin>\n<margin>伍</margin>\n<margin>待</margin>\n\n二人賜上奉而勝圍城周里以上封城將三十里地為關\n內侯輔將如今賜上卿丞及吏比於丞者賜爵五大夫官\n吏豪傑與計堅者守十人及城上吏地五官者皆賜公乘\n男子有守者爵人二級女子賜錢伍千男女老小先分守\n者人賜錢千復之三歲無有所與不租稅此所以勸吏民\n堅守勝圍也吏卒侍大門中者曹無過二人勇敢為前行\n伍坐令各知其左右前後擅離署戮門尉晝三閱之莫鼓\n擊門閉一閱守時令人參之上逋者名鋪食皆於署不得\n外食守必謹微察視謁者執盾中涓及婦人侍前者志意\n顏色使令言語之請及上飲食必令人嘗皆非請也擊而\n請故守有所不悅謁者執盾中涓及婦人侍前者守日斷\n\n<vocab>車裂, 救火, 守城, 圍城, 爵位, 封賞, 法律, 墨子, 號令</vocab>"
+},
+{
+"id": "j7b8d92797a21",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5ef93fc06339.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<warning>Handwritten Chinese regular script (kaishu) with painted illustrations; the image is a two-page spread, transcribed left page first, then right page.</warning>\n<header>氣直立於日傍占</header>\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A traditional Chinese landscape painting showing jagged mountain peaks and coniferous trees under a pale sky. Above the landscape is a red sun flanked by two vertical red lines, with a third vertical red line passing directly through the center of the sun.</image-desc>\n\n朱文公曰\n\n氣直立於日旁宮中爭鬬\n\n宋志曰\n\n日旁有氣直立或貫日者宮中爭鬬也\n\n<column-break/>\n\n<header>日出入黑雲橫貫占</header>\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">A traditional Chinese landscape painting with green mountain peaks and dark trees. Above the mountains, a red sun is depicted with several thick, horizontal dark bands representing clouds, some crossing over its face.</image-desc>\n\n朱文公曰\n\n日出入黑雲橫貫望雨湏周\n\n宋志曰\n\n日出或入黑雲橫貫之不出三日有暴雨日始出而<unclear>隔</unclear>之其下有兵有雨解之\n\n<vocab>朱文公, 宋志, 占, 氣, 橫貫, 直立, 暴雨</vocab>"
+},
+{
+"id": "j959611cbf31e",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "ecaf383ef558.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>一</page-num>\n<warning>Handwritten Chinese regular script (kaishu), vertical lines read right to left; the first two characters of the mantra are uncertain variant forms.</warning>\n\n## 心神咒宜默誦\n<gloss>沈莊士口授</gloss>\n\n## <unclear>吤味</unclear>唎唏娑訶\n\n<vocab>心神咒, 默誦, 沈莊士, 口授, 唎唏娑訶</vocab>"
+},
+{
+"id": "j002e71d2e926",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "a743d636dd60.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>16, 17</page-num>\n<header>詩經解題</header>\n\n詩經の内容は上文に述べたるが如く、今より二千數百年乃至三千年以前の作なれば、その言語その文字、往々今日と同じからず、殊に詩は言語文字の外にその意を求めざるべからざることもあれば、古人の解釋に據らざるを得ず。然るに詩經の解釋家に古來二派あり。一は秦漢頃に出でし詩序によりて解釋するもの、即ち毛亨毛萇の傳、及び後漢鄭玄の箋、所謂毛傳鄭箋の流是なり、之を古注派といふ。一は序に拘らずして專ら文に依りてその義を求むるもの、即ち朱子集傳の流是なり、之を新注派といふ。其他古注新注を折中するものあり、齊詩魯詩韓詩を取るものあり、又古注派・新注派の中にも多少異同あれども、之を概言すればまづ古注新注の二派となすことを得べし。今本編の主として新注に據れるは、その明白にして了解し易きを取れるなり。\n\n## 第五　詩の六義\n\n<column-break/>\n\n詩に六義といへることあり、風雅頌賦比興是なり。風雅頌は詩の性質上より分類せしものにて、之を詩の三經といひ、賦比興は詩の作法上より分類せしものにて、之を詩の三緯といふ。三經と三緯とは、その性質同じからずして並び稱すべきものに非ず。されども古人は必ずしも精密なる分類法によらずして、之を概言すること往々之あり、なほ文字の構造法と使用法とは稍その性質を異にすれども、之を合せて六書といへるが如し。風雅頌のことは既に上文に述べたれども、その名稱の意義を略説すれば、風は民俗歌謠の詩にして、その上の化を被ぶりて言ふことありて、その言又人を感ずるに足ること、物の風の動くによりて聲ありて、その聲又物を動かすが如きをいふなり。雅は正なり、格律の嚴正、規模の雄大なるの意なり、頌は容なり、盛德の形容を述ぶるの義なり。\n\n## 第六　詩の形式\n\n<vocab>詩經, 六義, 風雅頌, 賦比興, 三經, 三緯, 毛傳鄭箋, 朱子集傳, 古注派, 新注派</vocab>"
+},
+{
+"id": "jf8bcb2070ae2",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "6bfd62698030.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n死力故鮮有負敗北史劉方傳開皇中有馮昱王捌楊武通陳永\n貴房兆俱為丨丨名顯當時唐書天文志貞觀十六年五月太白\n犯畢左股畢為丨丨五代史張希崇傳希崇為將不喜聲色好讀\n書頗知星歷天福三年月掩畢口大星希崇歎曰畢口大星丨丨\n也我其當之乎明年正月卒蘇洵上韓樞密書頃者狄公在樞府\n號為寬厚愛人狎昵士卒得其歡心而太尉適承其後彼狄公者\n知御外之術而不知治內之道此丨丨材也\n元稹詩連城丨丨但髙會每說此曲能不羞\n忠將\n後漢書叚頲傳\n時竇太后臨朝\n詔曰先零東羌歷載為患頻前陳狀必欲\n掃滅洗雪百年之逋負以慰丨丨之亡魂\n貴將\n後漢書齊武王縯\n傳縯字伯升光武\n之長兄也李軼諂事更始丨丨光武深疑之常以戒伯升曰此人\n不可復信五代史趙鳳傳術士周元豹以相法言人事多中莊宗\n尤信重之明宗為內衙指揮使安重誨欲試元豹乃使他人與明\n宗易服而坐明宗于下坐召元豹相之元豹曰內衙丨丨也此不\n足當之乃指明宗\n易將\n後漢書朱嶲傳賊趙弘據宛城嶲圍之不\n拔有司奏欲徵嶲司空張溫上疏曰嶲討\n于下坐曰此是也\n<header>御定佩文韻府</header>\n<page-num>三十六</page-num>"
+},
+{
+"id": "j4ae2d3e7e194",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "596c624abdbd.jpg",
+"text": "<scan-quality>fair</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>御定駢字類編</header>\n<page-num>十一</page-num>\n\n萬境閑 姚合題宣義丨丨詩春入丨丨好風光暖更\n鮮 賈島送黃知新歸安南詩丨丨沈飲徧非獨曲江\n花 趙嘏江亭晚望詩秋館丨丨荷葉後野人籬落豆\n花初 方干孫氏林亭詩丨丨纔有二三畝風景勝於\n千萬家 黃滔和陳先輩陪陸舍人春日遊\n曲江詩劉超遊召郄詵陪為憶丨丨舊賞來\n\n池閣 儲光羲舟中別武金壇詩月光麗丨丨野氣浮林\n園 韋應物郡齊雨中詩海上風雨至逍遙丨丨\n涼 劉禹錫牛相公林亭詩飛雨過丨丨浮光生草樹\n王建寄汴州令狐相公詩秋日梁王丨丨好新歌散\n入管絃聲 姚合春日同會衛尉崔少卿宅詩詩家會\n詩客丨丨曉初晴 杜荀鶴和友人見題山居水閣詩\n丨丨初成眼豁開\n眼前霽景屬微才\n\n池榭 宋史張齊賢傳歸洛得裴度午橋莊有丨丨松竹\n之盛日與親舊詠觴其間意甚曠適 劉禹錫酬\n\n<vocab>池閣, 池榭, 姚合, 賈島, 趙嘏, 方干, 黃滔, 儲光羲, 韋應物, 劉禹錫, 王建, 杜荀鶴, 張齊賢, 裴度, 午橋莊, 曲江</vocab>"
+},
+{
+"id": "j5f7fcfb8c794",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "cead04325a76.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<header>卷一百七十四</header>\n<warning>Handwritten Chinese regular script (kaishu) in ruled columns; the title column at the right edge is cut off by the scan.</warning>\n\n羅木\n明一統志丨丨山\n在永平縣北八里\n羅武\n明一統志丨丨山在永平縣東北一百\n一十里山半有泉入勝備江發源于此\n羅岷\n明一統志丨丨山在永昌軍民府城東北八十里\n瀾滄江西岸髙千餘仞延袤四十餘里頂嘗有石\n飛下過\n者必趨\n羅巖\n水經注營水出營陽冷道縣南流山西流逕九疑\n山下磐碁蒼梧之野峯秀數郡之間丨丨九舉各\n導一溪岫壑負岨異嶺同\n勢遊者疑焉故曰九疑山\n羅叢\n明一統志丨丨巖在潯州府城西南六十里其巖\n明爽可容二三百人内有三教殿東西有碧虛靈\n源二洞實潯之勝槩每\n歲重九郡人登髙于此\n\n<vocab>羅木山, 羅武山, 羅岷山, 羅巖, 羅叢巖, 明一統志, 水經注, 永平縣, 永昌軍民府, 瀾滄江, 勝備江, 九疑山, 營水, 潯州府, 三教殿, 碧虛, 靈源</vocab>"
+},
+{
+"id": "j6df1078e101c",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "7d1f593a5b76.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<header>御定駢字類編</header>\n<page-num>五十三</page-num>\n<warning>Handwritten regular script (kaishu) of a Siku Quanshu manuscript copy; the centre-fold title at the left edge is cut off and only partly visible.</warning>\n\n崇彊\n史記太史公自序丨\n丨祿產諸侯謀之\n\n崇妙\n雲笈七籤三十六小洞天第二十七金庭山洞\n名曰金庭丨丨天在越州剡縣屬趙仙伯治之\n\n崇要\n宋書劉穆之傳神\n州治本宰輔丨丨\n\n崇劇\n唐書趙宗儒傳宗儒以\n文學歷將相位任丨丨\n\n崇尺\n周禮旊人為簋實一\n觳丨丨厚半寸脣寸\n\n崇雉\n謝靈運會吟行層臺\n指中天高墉積丨丨\n\n崇年\n潘岳閒居賦祗聖敬以\n明順養更老以丨丨\n\n崇巾\n後漢書輿服志幘者賾也頭首嚴賾也至孝文乃\n髙顔題續之為耳丨其丨為屋合後施收上下羣\n\n<vocab>崇彊, 崇妙, 崇要, 崇劇, 崇尺, 崇雉, 崇年, 崇巾, 史記, 雲笈七籤, 宋書, 唐書, 周禮, 謝靈運, 潘岳, 後漢書輿服志, 御定駢字類編</vocab>"
+},
+{
+"id": "j8d187bf9b3ef",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "0075e89e43ea.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<warning>Handwritten East Asian clerical/semi-cursive script</warning>\n<page-type>text</page-type>\n\n實米一百五十七石\n每朔米十三石一斗二升五合式 每日六斗五升四合一勺七利\n柴復米通一年七十二石內\n每朔米六石式 每日三斗\n祿太通一年十石七斗四升五合內\n每朔十三斗一升二合九利式 每日四升三合七勺三利\n\n<vocab>實米, 柴復米, 祿太, 朔, 石, 斗, 升, 合, 勺, 利</vocab>"
+},
+{
+"id": "jc465990e8e1e",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd4788def0d6.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>卷七十四之一</header>\n<meta>The book title in the centre fold at the right edge is cut off by the image and is not transcribed. Entry headwords are printed large, with their citations in double-line small characters.</meta>\n\n卿曲水聯句絳水時丨丨花觴轉更周孔德紹\n王澤嶺遭洪水詩驚濤遙起鷺丨丨不分牛\n險岸\n劉逖秋朝野\n望詩駐車憑\n丨丨飛葢\n歷平湖\n叠岸\n唐太宗臨層臺賦重基數仞異細柳之初營丨丨\n<unclear>盃丈</unclear>開上林而翫兵孟郊石淙詩疾流脫鱗甲丨\n丨衝\n風霆\n照岸\n唐太宗詩丨丨花分彩迷雲雁斷行駱賓王秋日送尹\n大赴京詩序劍水澄波碎楚蘭于秋水金暉丨丨秀陶\n菊于寒隄白居易汎小䑳詩亞竹\n亂藤多丨丨如從鳳口向湖州\n雲岸\n閻伯璵彈碁局賦粲若星\n離偃如丨丨杜甫詩晨鐘\n丨丨濕勝地石堂烟元稹送東川馬逢\n侍御使回詩丨丨猶封草春江欲滿槽\n別岸\n駱賓王詩離亭分鶴\n葢丨丨指龍川高適\n詩丨丨迴無垠海鶴鳴不息羅隱詩丨丨客帆和雁落晚程霜葉\n向人飛梅堯臣詩丨丨無端縈細柳廻舟不忍過新橋顧瑛詩幾\n對好花開丨丨一\n雙飛鳥趁輕舠\n橫岸\n武三思出水槎詩擁溜根丨丨沈波影照\n懸陸游詩清溪橋斷舟丨丨小塢梅殘雨\n漬\n香\n沿岸\n沈佺期詩淇上風\n日好紛紛丨丨多\n接岸\n蘇瓌興慶池侍宴應制詩帷齊綠\n樹當筵密蓋轉緗荷丨丨浮歐陽\n\n<vocab>險岸, 叠岸, 照岸, 雲岸, 別岸, 橫岸, 沿岸, 接岸, 唐太宗, 駱賓王, 孟郊, 白居易, 杜甫, 元稹, 高適, 羅隱, 梅堯臣, 顧瑛, 武三思, 陸游, 沈佺期, 蘇瓌, 劉逖, 孔德紹, 閻伯璵</vocab>"
+},
+{
+"id": "j009329e44ad9",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "5da106ff46b1.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>149</page-num>\n\n或遭王難苦 臨刑欲壽終 念彼觀音力 刀尋段段壞 或囚禁枷鎖 手足被杻械 念彼觀音力 釋然得解脫 咒詛諸毒藥 所欲害身者 念彼觀音力 或遇惡羅剎 毒龍諸鬼等 念彼觀音力 時悉不敢害 若惡獸圍繞 利牙爪可怖 念彼觀音力 疾走無邊方 蚖蛇及蝮蠍 氣毒煙火然 念彼觀音力 尋聲自迴去 雲雷鼓掣電 降雹澍大雨 念彼觀音力 應時得消散 眾生被困厄 無量苦逼身 觀音妙智力 能救世間苦 具足神通力 廣修智方便 十方諸國土 無剎不現身 種種諸惡趣 地獄鬼畜生 生老病死苦 以漸悉令滅 真觀清淨觀 廣大智慧觀 悲觀及慈觀 常願常瞻仰 無垢清淨光 慧日破諸闇 能伏災風火 普明照世間 悲體戒雷震 慈意妙大雲 澍甘露法雨 滅除煩惱燄 諍訟經官處 怖畏軍陣中 念彼觀音力 眾怨悉退散 妙音觀世音 梵音海潮音 勝彼世間音 是故須常念 念念勿生疑 觀世音淨聖 於苦惱死厄 能為作依怙 具一切功德 慈眼視眾生 福聚海無量 是故應頂禮\n\n爾時持地菩薩。即從座起。前白佛言。世尊。若是菩薩行是觀世音菩薩品自在之業者。普門示現神通力者。當知是人功德不少。佛說是普門品時。眾中八萬四千眾生。皆發無等等阿耨多羅三藐三菩提心。\n\n妙法蓮華經觀世音菩薩普門品第二十六\n\n爾時藥王菩薩。即從座起。偏袒右肩。合掌向佛。而白佛言。世尊。若善男子。善女人。有能受持法華經者。若讀誦通利。若書寫經卷。得幾所福。佛告藥王。若有善男子。善女人。供養八百萬億那由他恆河沙等諸佛。於汝意云何。其所得福寧為多不。甚多。世尊。佛言。若善男子。善女人。能於是經乃至受持一四句偈。讀誦解義。如說修行。功德甚多。爾時藥王菩薩白佛言。世尊。我今當與說法者陀羅尼咒。以守護之。即說咒曰。\n\n安爾。曼爾。麼爾。麼摩隸。摩隸。遮隸。遮\n\n<vocab>觀世音菩薩, 妙法蓮華經, 普門品, 藥王菩薩, 陀羅尼</vocab>"
+},
+{
+"id": "j5a9374446510",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd4788def0d6.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n只\n已\n不\n<header>卷七十四之一</header>\n卿曲水聯句絳水時丨丨花觴轉更周孔德紹\n王澤嶺遭洪水詩驚濤遙起鷺丨丨不分牛\n險岸\n劉逖秋朝野\n望詩駐車憑\n丨丨飛葢\n歷平湖\n叠岸\n唐太宗臨層臺賦重基數仞異細柳之初營丨丨\n盃丈開上林而翫兵孟郊石深詩疾流脫鱗甲丨\n丨衝\n風霆\n照岸\n唐太宗詩丨丨花分彩迷雲雁斷行駱賓王秋日送尹\n天赴京詩序劍水澄波碎楚蘭于秋水金暉丨丨秀陶\n菊于寒隄白居易沉小艙詩亞竹\n亂藤多丨丨如從鳳口向湖州\n雲岸\n閻伯璵彈碁局賦粲若星\n離偃如丨丨杜甫詩晨鐘\n丨丨濕勝地石堂烟元稹送東川馬逢\n侍御使回詩丨丨猶封草春江欲滿槽\n別岸\n駱賓王詩離亭分鶴\n葢丨丨指龍川高適\n詩丨丨迴無垠海鶴鳴不息羅隱詩丨丨客帆和雁落晚程霜葉\n向人飛梅堯臣詩丨丨無端縈細柳廻舟不忍過新橋顧瑛詩幾\n對好花開丨丨一\n雙飛鳥趁輕舠\n橫岸\n武三思出水槎詩擁溜根丨丨沈波影照\n懸陸游詩清溪橋斷舟丨丨小塢梅殘雨\n漬\n香\n沿岸\n沈佺期詩淇上風\n日好紛紛丨丨多\n接岸\n蘇環興慶池侍宴應制詩帷齊綠\n樹當筵密蓋轉緗荷丨丨浮歐陽"
+},
+{
+"id": "jb99335261bc5",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fd406367aa50.jpg",
+"text": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>六藝流別 卷十六 樂藝下</header>\n\n誰別偽真刀鳴鞘中倚床無施父冤不報欲活何為\n猛虎班班遊戲山間虎欲齧人不避豪賢\n\n### 定情篇 <gloss>漢 繁欽</gloss>\n\n我出東門遊邂逅承清塵思君即幽房侍寢執衣巾\n時無桑中契迫此路側人我既媚君姿君亦悅我顏\n何以致拳拳綰臂雙金環何以致慇懃約指一雙銀\n何以致區區耳中雙明珠何以致叩叩香囊繫肘後\n何以致契闊繞腕雙跳脫何以結恩情珮玉綴羅纓\n何以結中心素縷雙連針何以結相投金薄畫搔頭\n何以慰別離耳後玳瑁釵何以荅懽悅紈素三條裾\n\n<column-break/>\n\n何以結愁悲白絹雙中衣與我期何所乃期東山隅\n日盼兮不至谷風吹我襦遠望無所見涕泣起踟蹰\n與我期何所乃期南山陽日中兮不來風飄吹我裳\n逍遙莫誰覩望君愁我腸與我期何所乃期西山側\n日夕兮不來躑躅長歎息遠望凉風至俯仰正衣服\n與我期何所乃期北山岑日暮兮不來凄風吹我襟\n望君不能坐悲苦愁我心愛身以何為惜我華時色\n中情既欵欵然後尅密期褰衣躡花草謂君不我期\n厠此醜陋質徒倚無所之自傷失所欲淚下如連絲\n\n### 種葛篇 <gloss>曹植</gloss>\n\n<vocab>定情篇, 繁欽, 種葛篇, 曹植, 樂藝, 六藝流別</vocab>"
+},
+{
+"id": "j8d9442d40c72",
+"task": "ocr",
+"lang": "Chinese",
+"image_file": "fb952066ec36.jpg",
+"text": "<language>Chinese</language>\n<script>handwritten</script>\n\n佐私行詐稱州使不肯就作瑀鞭之三十書佐歸\n訴遙光遙光曰沈瑀必\n汝覆之果有詐\n玲瓏鞭\n唐書蘇\n頗傳撿\n校益州大都督長史按察節度劍南諸州詔頗收劍南山澤鹽鐵\n自贍時前司馬皇甫恂使蜀檄取庫錢市錦半臂琵琶捍撥\n一頗不肯予因上言遣使銜命先\n取不急非陛下以山澤贍軍費意\n玳瑁鞭\n宋史吳越世家俶歸國\n太祖宴餞于講武殿賜\n玉鞍勒馬\n金\n銀錦綵二十餘萬\n不須鞭\n嫏嬛記西域有獸如犬含水噴馬則\n馬瞑眩欲絶故凡馬畏之名曰馬見\n愁唐宣宗時國人獻其皮帝賜羣臣編為馬鞭一揚即\n走謂之\n丨丨丨\n又李白詩廉夫唯重義駿馬不勞鞭\n十廬鞭\n紫\n薇\n詩話崇寧初叔祖待制自瀛帥改知潁州過曹南省滎陽公見學\n院諸生作詩因和之騏驥方騰踏蚊蚩敢撲縁明年小期集請看\n丨丨\n丨\n瑪瑙鞭\n錢氏私誌賢穆有荆雍大長公主牌印金鑄\n也金鞍勒\n丨丨丨\n金撮角紅藤下馬杌子\n信陵鞭\n庾信謝趙王絲布啓莊周車轍\n實有涸魚\n丨丨丨\n前元非窮鳥\n統朝鞭\n李白詩莫道詞人無膽\n氣臨行將贈\n海\n御定佩文謂府\n七"
+}
+]
+}

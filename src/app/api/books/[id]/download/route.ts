@@ -21,7 +21,7 @@ import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
-import { markForExport } from '@/lib/provenance';
+import { markForEpub, markForExport } from '@/lib/provenance';
 import { runWithTraceRef, traceRefFor, tracedCopiesEnabled } from '@/lib/trace-ref';
 import { exportableTranslation } from '../../../../../../scripts/lib/model-only-translation.mjs';
 import { getTranslation } from '@/lib/page-translations';
@@ -354,7 +354,7 @@ async function generateEpubDownload(
   // One text, not one chapter per page (#7118): pages run on where the sentence does, with the book's
   // illustrations in place. "Both" stays page by page — two texts interleave per page, not per sentence.
   const flow = format === 'epub-both' ? null : await buildFlowEpub(flowOpts.db, book as never, pages as never, {
-    text: format === 'epub-ocr' ? 'ocr' : 'translation', baseUrl: BASE_URL, includeImages: flowOpts.includeImages,
+    text: format === 'epub-ocr' ? 'ocr' : 'translation', baseUrl: BASE_URL, includeImages: flowOpts.includeImages, epub: true,
   });
 
   // Build description
@@ -413,7 +413,7 @@ async function generateEpubDownload(
         content += '<h2>Translation</h2>';
       }
       if(page.translation && page.translation.data) {
-        content += markdownToHtml(markForExport(page.translation.data, book.id));
+        content += markdownToHtml(markForEpub(page.translation.data, book.id));
       }
     }
 
@@ -534,7 +534,7 @@ async function generateParallelFlowEpubDownload(
     if (hasTranslation && page.translation) {
       content += `<div class="translation-block">
         <p class="lang-label">English</p>
-        ${markdownToHtml(markForExport(page.translation.data, book.id))}
+        ${markdownToHtml(markForEpub(page.translation.data, book.id))}
       </div>`;
     }
 
@@ -848,7 +848,7 @@ p:first-of-type {
       if(!page) continue;
 
       const ocrText = page.ocr ? page.ocr.data : "";
-      const translationText = page.translation ? markForExport(page.translation.data, book.id) : "";
+      const translationText = page.translation ? markForEpub(page.translation.data, book.id) : "";
 
       const ocrHtml = markdownToHtml(ocrText);
       const translationHtml = markdownToHtml(translationText);
@@ -1116,7 +1116,7 @@ p:first-of-type { text-indent: 0; }
     for (const { page, imageBuffer } of pageImages) {
       if(!page) continue;
       
-      const translatedText = page.translation ? markForExport(page.translation.data, book.id) : "";
+      const translatedText = page.translation ? markForEpub(page.translation.data, book.id) : "";
       const translationHtml = markdownToHtml(translatedText);
       const transSizeClass = getTextSizeClass(translatedText);
 
@@ -2256,7 +2256,7 @@ async function generateScholarlyEpubDownload(
             ? markdownToHtml(page.ocr.data, { stripNotes: false })
             : `<p class="no-ocr"><em>[Original text not available]</em></p>`;
           const translationHtml = page.translation?.data
-            ? markdownToHtml(markForExport(page.translation.data, book.id), { stripNotes: true })
+            ? markdownToHtml(markForEpub(page.translation.data, book.id), { stripNotes: true })
             : `<p class="no-translation"><em>[Translation not available]</em></p>`;
 
           chapterBody += `<div class="bilingual-page" id="p${page.page_number}">
@@ -2274,7 +2274,7 @@ async function generateScholarlyEpubDownload(
           chapterBody += `<span class="page-marker" id="p${page.page_number}">[p.${page.page_number}]</span>\n`;
 
           const translationHtml = markdownToHtml(
-            page.translation ? markForExport(page.translation.data, book.id) : '',
+            page.translation ? markForEpub(page.translation.data, book.id) : '',
             { stripNotes: true }
           );
           if (translationHtml.trim()) {

@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "69e96123390d3ed634590b97",
+    "slot": 1,
+    "title": "رحلة ابن بطوطة (Riḥlat Ibn Baṭṭūṭa)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Arabic printed text of Ibn Battuta's Rihla (India section, executions under the Sultan); belongs in booksbylanguage_arabic. 'published: 1355' is the date of composition, not of this printing.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 232 of 532 numbered pages with printed '(٧٠)' on record 378 suggests the scan holds more than one volume/part, each paginated from 1, so repeats and most of the 13 backsteps are pagination restarts rather than defects (a few backsteps may be misread numerals). structure.pages_translated is 0 while the book field says 568 and this page carries a translation: the counter is wrong (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 378,
+        "right_page": "yes",
+        "printed_marker": "(٧٠)",
+        "layout": "single column of printed naskh, centred page number in parentheses over a rule, two centred section headings between ornaments",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "فلما خاف القاضي جلال", "image": "فلما خالف القاضي جلال", "problem": "'rebelled' misread as 'feared'; changes the sense (translation follows the image)", "severity": "moderate", "class": "O6" },
+          { "ocr": "وظنوا أنه يغني عنه", "image": "وظنوا انه يعفى عنه", "problem": "'would be pardoned' misread as 'would suffice/enrich'; meaning lost in the OCR", "severity": "moderate", "class": "O6" },
+          { "ocr": "فقال قلت هذا قبل موته", "image": "فقال هلا قلت هذا قبل موته", "problem": "'هلا' (why not) dropped, so the Sultan's rebuke reads as a statement", "severity": "moderate", "class": "O5" },
+          { "ocr": "فإنه وقع خلاف عين الملك", "image": "فلما وقع خلاف عين الملك", "problem": "'when' misread as 'for it'", "severity": "minor" },
+          { "ocr": "قد لبس ثيابه جيل قلنسوة على رأسه", "image": "قد لبس ثيابه وجعل قلنسوته على رأسه", "problem": "'وجعل قلنسوته' garbled to 'جيل قلنسوة'", "severity": "minor" },
+          { "ocr": "وحاولا الفرار في بهما أحد أصحابهما", "image": "وحاولا الفرار فوشى بهما أحد أصحابهما", "problem": "'فوشى' (informed) garbled to 'في'", "severity": "minor" },
+          { "ocr": "أمير بخنت", "image": "أمير بخت", "problem": "name Bakht misread", "severity": "minor" },
+          { "ocr": "بكتباية", "image": "بكنباية", "problem": "place name Kanbaya (Cambay) misread", "severity": "minor" },
+          { "ocr": "فكموا بقتله", "image": "فحكموا بقتله", "problem": "letter dropped", "severity": "minor" },
+          { "ocr": "فملقا من أيديهما", "image": "فعلقا من أيديهما", "problem": "'they were hung' misread", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "Section headings carry raw centring markup in the English: \"-> ❖ Account of his execution of Tughan and his brother ❖ <-\"", "severity": "minor" },
+          { "note": "The translation reads the image where the OCR is wrong ('rose against', 'pardoned', 'Why did you not say this', 'Kanbaya', 'Bakht'), so the two panes disagree; the English is the correct one", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "cap", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"al-qa'im\", the one who rose up", "verdict": "ok", "helpful": false },
+            { "quote": "King of the Merchants", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "word reached the Sultan that Sheikh al-Haydari had prayed for Judge Jalal", "why": "'the Sultan' throughout is never identified (Muhammad ibn Tughluq of Delhi); a general reader opening this page does not know whose executions are listed" },
+            { "english": "The Sultan then left behind at Kanbaya Sharaf al-Mulk Amir Bakht", "why": "Kanbaya is Cambay (Khambhat) in Gujarat; the name is unrecognisable without a gloss" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The English is a faithful, careful translation that silently corrects several meaning-changing OCR misreads (خاف for خالف, يغني for يعفى, dropped هلا), so the Arabic panel is weaker than the English. Notes are sparse and correct; the only visible blemish is raw '-> ❖ … ❖ <-' markup on the headings."
+  }
+]

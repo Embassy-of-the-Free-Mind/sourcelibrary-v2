@@ -1,0 +1,26 @@
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>101</page-num>
+<warning>Handwritten Ashkenazi/square-leaning Hebrew book hand. The manuscript leaf is severely damaged with a rectangular cutout in the center through multiple leaves, revealing fragments from lower pages/layers, along with heavy staining, cockling, and fading.</warning>
+
+השמים כי אם פחדו ורעדו <unclear>לפניו המה</unclear>
+וכשהם נסוגים לאחוריהם לפניו יפחדו
+ועמדו <unclear>מרעדה וחיל ורעדה</unclear>
+<unclear>כי</unclear> <unclear>[illegible]</unclear>
+
+<image-desc size="medium" type="decorative" significance="low">A rectangular cutout in the parchment folio reveals fragmentary strips of parchment or manuscript waste underneath, containing Hebrew text remnants.</image-desc>
+
+<insert>
+<unclear>[...]</unclear>
+<unclear>הדין</unclear> ועיניו תחזינה ותעפעפנה
+<unclear>לפניו</unclear> וכל גבוריו ועם עשק לפניו <unclear>[...]</unclear>
+</insert>
+
+<unclear>יחילו וכל צבא השמים יזועו</unclear>
+ועמדו <unclear>מרעדה וחלו כשמועתם</unclear>
+וגבוריו <unclear>יחילו וכל כלילים לפניו יעמדו</unclear>
+עשק <unclear>ינחרו</unclear> [...]
+
+<vocab>השמים, פחדו, רעדו, נסוגים, לאחוריהם, וחיל, ורעדה, גבוריו</vocab>

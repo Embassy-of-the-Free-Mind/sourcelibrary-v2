@@ -80,7 +80,7 @@ export default async function VolumeSetStrip({ bookId, workId, locale = 'en' }: 
 
   return (
     <nav aria-label={t.volumesInSet} className="card p-4 md:p-6 reveal-in">
-      <h3 className="font-display font-medium text-[17px] md:text-[22px] mb-1" style={{ color: INK }}>{t.volumesInSet}</h3>
+      <h3 className="font-serif font-medium text-[17px] md:text-[22px] mb-1" style={{ color: INK }}>{t.volumesInSet}</h3>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-3 text-sm">
         <span style={{ color: MUTED }}>
           {set.complete ? t.volumeOfSet(set.current, set.highest) : t.volumeHeld(set.current, total)}

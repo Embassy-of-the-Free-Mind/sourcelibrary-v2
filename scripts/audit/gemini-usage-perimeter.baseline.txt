@@ -74,7 +74,6 @@ scripts/eval/suda-sol/census.mjs
 scripts/eval/suda-sol/validate-lite.mjs
 scripts/eval/translation-prompt-ab.mjs
 scripts/eval/tuned-vs-base-eval.mjs
-scripts/experiments/batch-size-experiment.mjs
 scripts/experiments/check-implicit-caching.mjs
 scripts/fix-untitled-slugs.mjs
 scripts/import/oraec-paginate-translate.mjs
@@ -99,7 +98,6 @@ scripts/maintenance/reground-captions.mjs
 scripts/maintenance/resynthesize-summaries.mjs
 scripts/maintenance/split-audit-visual.mjs
 scripts/match-bph-orphans-gemini.mjs
-scripts/migration/backfill-ocr-near-complete.mjs
 scripts/music/transcribe-notation.mjs
 scripts/reextract-broken-chapters.mjs
 scripts/rework-subcollections.mjs

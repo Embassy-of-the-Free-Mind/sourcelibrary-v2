@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Run a Claude Code brief HEADLESSLY on this box, in its own git worktree, inside tmux,
 # so it survives Derek closing his laptop.
-#   claude-job.sh start <name> <brief-file> | resume <name> | status [days] | log <name> | stop <name> | sweep
+#   claude-job.sh start [--force-claim] <name> <brief-file> | resume <name> | status [days] | log <name> | stop <name> | sweep
 #                 where (this box's load, memory, disk, live jobs: one line) | backtest (old vs new landing verdicts)
+#                 move <name> [box] (stop here, checkpoint, continue as <name>-mv on another box; #70)
 # Each job: worktree $WT/job-<name> on branch job-<name> (main box: on the volume since #6223; older
 # jobs keep /root/sourcelibrary/.claude/worktrees/job-<name>), output dir $JOB_SCRATCH = $DATA/<name>,
 # from origin/main (never the live checkout, which the hourly pull rewrites); the brief
 # must use node --env-file=/root/sourcelibrary/.env.production.local for secrets.
-# Log: /var/log/sourcelibrary/claude-jobs/<name>.log. Model: opus (Fable is scarce).
+# Log: /var/log/sourcelibrary/claude-jobs/<name>.log. Model: opus; `Model: sonnet|fable` in the brief overrides.
 # ONE script for every job host. Source of truth: scripts/workers/claude-job.sh in the repo (#6358).
 # Never edit /root/bin/claude-job.sh on a box: scripts/workers/install-claude-job.sh copies this file
 # there after each pull (new file, then mv; live jobs are executing the old one). Twice the hand-copied
@@ -109,15 +110,20 @@ $HOST_RULES
   is worth keeping, move scratch to \$JOB_SCRATCH, delete the rest. Anything left uncommitted or unpushed pages
   Derek at high priority as work at risk (#6358).
 - DECIDE, don't ask, unless it is a one-way door. Raise a DECISION only for: paid spend above the \$10
-  floor, public copy Derek has not seen, deleting or migrating data, auth/security, money, or anything
+  floor or a new recurring cost, deleting or migrating data, auth/security, contacting outside people, or anything
   irreversible. Everything else (a \$0.15 arm, copying a fix to another box, resuming after a reset,
-  rejecting a model, which of two equivalent methods) you decide: take the default, do it, and log it in
+  rejecting a model, which of two equivalent methods, public copy and wording: Derek delegated it 2026-10-15,
+  no AI flourish) you decide: take the default, do it, and log it in
   your FINAL message as \`TAKEN: <what you decided> — why: <one line> (#issue)\`. (#6360: 176 DECISION
   lines in six days, half of them this kind.)
 - A real decision: end your FINAL message with one line each:
   \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
   $JD/decisions.txt for the morning digest and posts each on the issue it names; they do not page. Ask each
   question once, end the line with the issue it belongs to, and read that issue first: it may already be answered (#8551).
+- SITUATION: \`/root/bin/situation\` prints every box's running and stopped jobs, red cron lanes, standing stops,
+  Gemini pools, Claude accounts, recent alarms and the open decisions in ~7 s (\`--box=<name>\`, \`--hours=N\`).
+  Run it before you start, stop, move or blame anything shared (a lane, a pool, a box, another job), and believe
+  it over a doc or a brief that says what is running.
 - A STEP THAT MUST RUN ON ANOTHER BOX (restart a process there, read its files): you cannot ssh there, but you
   can start a job there. Write a short brief (Lands:/PR: header lines, the exact commands, how to verify) and run
   \`/root/bin/box.sh <main|cloudlayer|l7a|gex45> start <job-name> < brief.txt\`; name that job in your report.
@@ -179,7 +185,7 @@ reap_if_clean() {
   if [ -z "$why" ] && [ -n "$(git -C "$d" log --oneline origin/main..HEAD 2>/dev/null)" ]; then
     if [ "$br" = "HEAD" ]; then why="detached HEAD with commits"
     elif git -C "$d" fetch -q origin "$br" 2>/dev/null && git -C "$d" merge-base --is-ancestor HEAD FETCH_HEAD; then :
-    elif [ "$(gh pr list --repo Embassy-of-the-Free-Mind/sourcelibrary-v2 --head "$br" --state merged --json number --jq length 2>/dev/null)" = "1" ]; then :  # squash-merged, branch deleted
+    elif for r in sourcelibrary-v3 sourcelibrary-v2; do [ "$(gh pr list --repo "Embassy-of-the-Free-Mind/$r" --head "$br" --state merged --json number --jq length 2>/dev/null)" = "1" ] && break; done; then :  # squash-merged, branch deleted
     else why="branch $br not pushed"; fi
   fi
   [ -z "$why" ] && lsof +D "$d" >/dev/null 2>&1 && why="a live process has files open inside"
@@ -207,20 +213,34 @@ reap_if_clean() {
 #   REPORT   the comment or the PR was not found. Usually a wrong guess. Low, plus the morning digest.
 # Prints "ok <pr-url> [contract]", "AT-RISK: <what> [contract]" or "REPORT: <what> [contract]".
 # Never fails the job. Test one: `claude-job.sh _land <name>`; all of them: `claude-job.sh backtest`.
-REPO=Embassy-of-the-Free-Mind/sourcelibrary-v2
+# Code, PRs and new issues live in the private repo; issues opened before the 2026-11-12 move stay on
+# the public one (written v2#N). issue_repo picks the repo an issue number belongs to.
+REPO=Embassy-of-the-Free-Mind/sourcelibrary-v3
+REPO_V2=Embassy-of-the-Free-Mind/sourcelibrary-v2
+issue_repo() {  # $1 issue number, $2 optional "v2" -> the repo holding it (v3 when it exists there, else v2)
+  [ "$2" = v2 ] && { echo "$REPO_V2"; return; }
+  gh issue view "$1" --repo "$REPO" --json number >/dev/null 2>&1 && echo "$REPO" || echo "$REPO_V2"
+}
 brief_header() {  # $1 key, $2 brief file -> the value of the first "Key: value" header line
   head -15 "$2" 2>/dev/null | grep -m1 -iE "^[[:space:]]*$1:[[:space:]]" | sed -E 's/^[^:]*:[[:space:]]*//; s/[[:space:]]+$//'
 }
 landing_contract() {  # $1 name, $2 brief file -> sets LC_ISSUE (number | none | ""), LC_ISSUE_SRC, LC_PR (yes | no | auto)
-  local v; LC_ISSUE=""; LC_ISSUE_SRC=""; LC_PR=auto
+  local v; LC_ISSUE=""; LC_ISSUE_SRC=""; LC_ISSUE_REPO=""; LC_PR=auto
   v=$(brief_header Lands "$2")
   if echo "$v" | grep -qiE '^(none|no|n/a|-)([^a-z]|$)'; then LC_ISSUE=none; LC_ISSUE_SRC="Lands header"
-  elif echo "$v" | grep -qE '[0-9]{3,5}'; then LC_ISSUE=$(echo "$v" | grep -oE '[0-9]{3,5}' | head -1); LC_ISSUE_SRC="Lands header"
+  # A Lands header names its issue outright, so one digit is enough: v3 began at #1 on 2026-11-12 (#90).
+  # Prefer the number after '#' (so the 2 in "v2#7860" is not read as the issue), else the first bare
+  # number; leading zeros are dropped ("#090" is 90). The job-name and first-number guesses keep 4-5 digits.
+  elif echo "$v" | grep -qE '(^|[^A-Za-z0-9])[0-9]{1,5}([^0-9]|$)'; then
+    LC_ISSUE=$(echo "$v" | grep -oE '#[0-9]{1,5}' | head -1 | tr -d '#')
+    [ -n "$LC_ISSUE" ] || LC_ISSUE=$(echo "$v" | grep -oE '(^|[^A-Za-z0-9])[0-9]{1,5}([^0-9]|$)' | head -1 | tr -dc '0-9')
+    LC_ISSUE=$(echo "$LC_ISSUE" | sed -E 's/^0+([0-9])/\1/'); LC_ISSUE_SRC="Lands header"
   else
     LC_ISSUE=$(echo "$1" | grep -oE '(^|-)[0-9]{4,5}[a-z]?(-|$)' | tail -1 | tr -dc '0-9')
     if [ -n "$LC_ISSUE" ]; then LC_ISSUE_SRC="job name"
     else LC_ISSUE=$(grep -oE '#[0-9]{4,5}' "$2" 2>/dev/null | head -1 | tr -d '#'); [ -n "$LC_ISSUE" ] && LC_ISSUE_SRC="first number in brief"; fi
   fi
+  case "$LC_ISSUE" in ""|none) ;; *) LC_ISSUE_REPO=$(issue_repo "$LC_ISSUE" "$(echo "$v" | grep -qiE 'v2#' && echo v2)") ;; esac
   v=$(brief_header PR "$2" | tr 'A-Z' 'a-z')
   case "$v" in yes*) LC_PR=yes ;; no*) LC_PR=no ;; esac
 }
@@ -283,7 +303,7 @@ landing_check() {
   # 1. The report: a comment on the contract's issue, made after the job started.
   if [ "$LC_ISSUE" = none ]; then :
   elif [ -n "$LC_ISSUE" ]; then
-    if nc=$(gh issue view "$LC_ISSUE" --repo "$REPO" --json comments --jq "[.comments[] | select(.createdAt >= \"$since\")] | length" 2>/dev/null); then
+    if nc=$(gh issue view "$LC_ISSUE" --repo "$LC_ISSUE_REPO" --json comments --jq "[.comments[] | select(.createdAt >= \"$since\")] | length" 2>/dev/null); then
       [ "${nc:-0}" -gt 0 ] || rep="$rep no comment on #$LC_ISSUE since start;"
     else rep="$rep could not read #$LC_ISSUE (gh failed);"; fi
   else rep="$rep brief names no issue (add a 'Lands: #NNNN' line);"; fi
@@ -357,6 +377,36 @@ ok = any(a in ("Bash", "Bash(*)") for a in p.get("allow") or []) or p.get("defau
 sys.exit(0 if ok else 1)' "${1:-/root/.claude/settings.json}" 2>/dev/null
 }
 
+# The login a job is about to run on must carry the job permission profile (v3#176). On 2026-11-12 four
+# jobs were started with JOB_CLAUDE_HOME=/root/.claude-derek, whose settings.json held a hook and no
+# permissions block: `start` accepted it, every job was refused almost every command, two gave up within
+# minutes and about 14 DECISION lines asked for a re-dispatch. `where` only ever checked the box's own login.
+# Prints why and returns 1 when the login has no settings.json, cannot run Bash, or lacks an allow rule the
+# box's own login has. Skip: JOB_IGNORE_PROFILE=1. JOB_PROFILE_REF names the reference file (tests).
+login_profile_gap() {  # [$1 config dir, default the login in use]
+  local s="${1:-${CLAUDE_CONFIG_DIR:-/root/.claude}}/settings.json" ref="${JOB_PROFILE_REF:-/root/.claude/settings.json}" missing
+  [ -f "$s" ] || { echo "$s does not exist"; return 1; }
+  python3 -c 'import json, sys; json.load(open(sys.argv[1]))' "$s" 2>/dev/null || { echo "$s is not valid JSON"; return 1; }
+  can_run_bash "$s" || { echo "$s has no Bash rule in permissions.allow"; return 1; }
+  if [ ! -f "$ref" ] || [ "$s" -ef "$ref" ]; then return 0; fi
+  missing=$(python3 -c '
+import json, sys
+def perms(f): return json.load(open(f)).get("permissions") or {}
+mine, ref = perms(sys.argv[1]), perms(sys.argv[2])
+if mine.get("defaultMode") != "bypassPermissions":
+    print(" ".join(r for r in ref.get("allow") or [] if r not in (mine.get("allow") or [])))' "$s" "$ref" 2>/dev/null)
+  [ -z "$missing" ] && return 0
+  echo "$s lacks allow rules the box's own login has: $missing"; return 1
+}
+refuse_login_without_profile() {  # exits 9 when the login in use cannot run a job
+  [ -n "${JOB_IGNORE_PROFILE:-}" ] && return 0
+  local why; why=$(login_profile_gap) && return 0
+  echo "REFUSED: the Claude login this job would run on lacks the job permissions ($why)."
+  echo "  Jobs run with --permission-mode acceptEdits, so a tool that is not in the allow list is refused and the job loops."
+  echo "  Start it on the box's own login or one that carries the same permissions block (JOB-HOSTS.md), or JOB_IGNORE_PROFILE=1."
+  exit 9
+}
+
 # Fix 2 (placement half): the box's own account, from the climits meter (#6359). The meter runs on the
 # main box and box.sh push-limits copies it to the others every 5 min, so the account is looked up by this
 # box's own Claude login, not by the meter's. Prints the weekly all-models percent, or nothing when the
@@ -377,6 +427,78 @@ for a in d.get("accounts", []):
 }
 MAX_WEEKLY_PCT=${MAX_WEEKLY_PCT:-90}
 
+# May a job start on this box now? ONE answer (#70). Before this, `where` and `start` each decided for themselves.
+# On 2026-11-12 gex45's `where` said ready=yes with 13% of its root disk free and a load of 110 on 20 threads,
+# while `start` refused under 15% free and paged high: the spare lane asked `start` every 30 minutes, and each
+# refusal was a page on Derek's phone.
+# ready_state prints `yes`, or `no:<reason>[,<reason>]`. `where` prints it as ready=, and job-where.sh, box.sh pick
+# and spare-lane.py read it there before they start anything. `start` takes its refusals from the same answer
+# (start_refusal), so it cannot refuse for a reason `where` did not give. The reasons, in the order printed:
+#   no-claude, claude-not-logged-in, gh-not-logged-in, no-env-file, no-node_modules, no-bash-permission
+#                       the box's setup (existence checks only; nothing is read or printed)
+#   root-NNpct-free     under MIN_ROOT_FREE_PCT (15) percent of the root disk is free (#6223). Off: JOB_IGNORE_DISK=1
+#   load-N.NN-per-core  the 5-minute load is over MAX_LOAD_PER_CORE (1.5) per core. The 5-minute figure, because
+#                       l7a's archive tick swings the 1-minute load from 1 to 60 every ten minutes. Off: JOB_IGNORE_LOAD=1
+#   weekly-NNpct        this box's Claude account is at MAX_WEEKLY_PCT (90) or more of its week. Off: JOB_IGNORE_LIMIT=1
+# The three switches act on `where` and `start` alike: a caller who sets one gets the same answer from both.
+MAX_LOAD_PER_CORE=${MAX_LOAD_PER_CORE:-1.5}  # job-where.sh skips a box over the same line
+load5_per_core() { awk -v c="$(nproc 2>/dev/null)" '{printf "%.2f", $2 / (c > 0 ? c : 1)}' /proc/loadavg 2>/dev/null; }
+setup_gaps() {  # what this box lacks to run any job, comma-separated, or nothing
+  local why=""
+  [ -x /root/.local/bin/claude ] || command -v claude >/dev/null 2>&1 || why="$why,no-claude"
+  [ -s /root/.claude/.credentials.json ] || why="$why,claude-not-logged-in"
+  gh auth status >/dev/null 2>&1 || why="$why,gh-not-logged-in"
+  [ -s /root/sourcelibrary/.env.production.local ] || why="$why,no-env-file"
+  [ -d "$SL/node_modules" ] || why="$why,no-node_modules"
+  can_run_bash || why="$why,no-bash-permission"
+  echo "${why#,}"
+}
+ready_state() {
+  local why fpct per wk
+  why=$(setup_gaps)
+  fpct=$(root_free_pct)  # empty when df fails: counted as 0% free, as `start` always has
+  [ -z "${JOB_IGNORE_DISK:-}" ] && [ "${fpct:-0}" -lt "$MIN_ROOT_FREE_PCT" ] && why="$why,root-${fpct:-0}pct-free"
+  per=$(load5_per_core)
+  [ -z "${JOB_IGNORE_LOAD:-}" ] && [ -n "$per" ] && awk -v p="$per" -v m="$MAX_LOAD_PER_CORE" 'BEGIN { exit !(p > m) }' && why="$why,load-${per}-per-core"
+  wk=$(weekly_pct)
+  [ -z "${JOB_IGNORE_LIMIT:-}" ] && [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && why="$why,weekly-${wk}pct"
+  why=${why#,}
+  if [ -n "$why" ]; then echo "no:$why"; else echo yes; fi
+}
+# What `start` does with that answer. It refuses where the job would die or could not run at all: a full root
+# disk (exit 5, and a high page: the disk steward has failed) and a spent account (exit 6). Every other reason is
+# about PLACEMENT: `where` says ready=no, so nothing that places jobs picks this box, but a start that names the
+# box goes ahead with a `warn:` line. Why load does not refuse: some jobs can run on one box only (the GPU rescue
+# job that ocr-filler.sh starts on gex45), cron callers that name their box page or stop their lane when a start
+# fails (gex45-idle-alert.sh, page-frame-sweep-waves.sh), and a start that arrives through the mesh cannot pass
+# JOB_IGNORE_LOAD. On 2026-11-13 gex45 stood at 4.8 per core and cloudlayer at 1.6.
+start_refusal() {  # $1 job name, $2 ready_state's answer -> prints why; returns 0 (start), 5 (root disk) or 6 (weekly limit)
+  local name="$1" rs="$2" r fpct="" wk="" jw
+  [ "$rs" = yes ] && return 0
+  for r in $(echo "${rs#no:}" | tr ',' ' '); do
+    case "$r" in
+      root-*pct-free) fpct=${r#root-}; fpct=${fpct%pct-free} ;;
+      weekly-*pct) wk=${r#weekly-}; wk=${wk%pct} ;;
+    esac
+  done
+  # 15% free, not a GB count (#6223): the steward keeps every disk at or under 75% (2026-10-29), so under 15% free
+  # means it could not, and a new job's output would only push the box toward the 95% where jobs die without a word.
+  if [ -n "$fpct" ]; then
+    echo "REFUSED: root disk has ${fpct}% free ($(root_free_gb)G; the floor is ${MIN_ROOT_FREE_PCT}%). Place the job on another box, or JOB_IGNORE_DISK=1."
+    echo "  /root/bin/disk-steward.sh (dry run) says what it is keeping on this box and why."
+    jw="$SL/scripts/workers/job-where.sh"
+    [ -x "$jw" ] && { echo "  job-where.sh:"; timeout 120 "$jw" 2>/dev/null | sed -n '/^use:/,$p; /^no box/p' | sed 's/^/    /'; }
+    ntfy_job high warning "Job refused, root disk ${fpct}% free: $name ($HOST)" "The disk steward could not keep this box under 85%; see its log (#6223). \`claude-job.sh where\` reports it as ready=$rs: ask that before a start and nothing is refused."
+    return 5
+  fi
+  if [ -n "$wk" ]; then
+    echo "REFUSED: this box's Claude account is at ${wk}% of its weekly limit (>= ${MAX_WEEKLY_PCT}%). Place it elsewhere (scripts/workers/job-where.sh), or JOB_IGNORE_LIMIT=1."
+    return 6
+  fi
+  echo "warn: \`where\` reports this box as ready=$rs, so job-where.sh, box.sh pick and the spare lane place nothing here. This start names the box, so it goes ahead."
+  return 0
+}
+
 # A second Claude login on one box (2026-10-26): an account with no box of its own (milolomas200921@,
 # added 2026-10-26) gets a config dir beside the box's own login, e.g. /root/.claude-milo, logged in once
 # with `CLAUDE_CONFIG_DIR=/root/.claude-milo claude`. `JOB_CLAUDE_HOME=<dir> claude-job.sh start ...`
@@ -385,27 +507,95 @@ MAX_WEEKLY_PCT=${MAX_WEEKLY_PCT:-90}
 claude_json() { if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then echo "$CLAUDE_CONFIG_DIR/.claude.json"; else echo /root/.claude.json; fi; }
 job_claude_home() { [ -s "$JD/$1.claude-home" ] && export CLAUDE_CONFIG_DIR="$(cat "$JD/$1.claude-home")"; return 0; }
 
+# The job session's transcript lives on the job disk (#367). Claude Code keeps every session's transcript in
+# <home>/projects/<working directory, each non-alphanumeric character a dash>, and on 2026-11-15 those folders held
+# 17 GB of main's 150 GB root disk, 15.5 GB of it written in two days: a job that reads page images keeps them in its
+# transcript (one job 3.4 GB). So before the session starts, the job's folder is made on the job disk and linked
+# from projects/; Claude Code writes through the link and `--continue` finds it there. A folder that already exists
+# (a job started before this, or resumed) is left alone: disk-steward.sh step 1g moves it once it is idle 12 h, to the
+# same place (<dest>/<home without its dot>/<folder>). No second disk (gex45): nothing to do.
+TRANSCRIPT_DEST=${JOB_TRANSCRIPT_DEST:-$(case "$HOST" in hetzner) echo "${VOL:-}/claude-projects" ;; cloudlayer|l7a) echo /data/scratch/sl/claude-projects ;; esac)}
+link_transcripts() {  # $1 name; prints what it did. Never fails the job.
+  local d home p h dst
+  [ -n "$TRANSCRIPT_DEST" ] && [ "$TRANSCRIPT_DEST" != /claude-projects ] || return 0
+  [ -d "$(dirname "$TRANSCRIPT_DEST")" ] || return 0
+  [ "$(df --output=target "$(dirname "$TRANSCRIPT_DEST")" 2>/dev/null | tail -1)" != "$(df --output=target "${CLAUDE_CONFIG_DIR:-/root/.claude}" 2>/dev/null | tail -1)" ] || return 0
+  d=$(wt_dir "$1"); home=${CLAUDE_CONFIG_DIR:-/root/.claude}
+  p="$home/projects/$(printf %s "$d" | sed 's/[^A-Za-z0-9]/-/g')"
+  if [ -L "$p" ] || [ -e "$p" ]; then return 0; fi
+  h=$(basename "$home"); dst="$TRANSCRIPT_DEST/${h#.}/$(basename "$p")"
+  if mkdir -p "$home/projects" "$dst" && ln -sn "$dst" "$p" 2>/dev/null; then echo "transcript folder on the job disk: $p -> $dst"
+  else echo "note: could not link $p to $dst; the transcript stays on the root disk"; fi
+  return 0
+}
+
 # A job capped on this box's account continues on the emptiest other box (#6360 fix 2), through the box
 # mesh (box.sh / box-rpc.sh). The new job is <name>-mv, starts from origin/main like any job, and its brief
 # tells it to pick up the checkpoint branch. One move per job: a -mv job that is capped again pages.
 # Prints the box it moved to, or nothing.
-move_job() {  # $1 name, $2 checkpoint branch
-  local name="$1" br="${2:-job-$1}" to new b
+BOX_SH=${BOX_SH:-/root/bin/box.sh}
+move_job() {  # $1 name, $2 checkpoint branch, [$3 box: default the emptiest ready other box], [$4 why: default the weekly cap]
+  local name="$1" br="${2:-job-$1}" to="${3:-}" why="${4:-}" new b
   case "$name" in *-mv) return 0 ;; esac
-  [ -x /root/bin/box.sh ] || return 0
-  to=$(/root/bin/box.sh pick --exclude "$(/root/bin/box.sh self)" 2>/dev/null); [ -n "$to" ] || return 0
+  [ -x "$BOX_SH" ] || return 0
+  [ -n "$to" ] || to=$("$BOX_SH" pick --exclude "$("$BOX_SH" self)" 2>/dev/null); [ -n "$to" ] || return 0
   new="$name-mv"; b=$(mktemp)
-  { cat "$JD/$name.brief.txt"; printf '\n\n## Moved from %s on its weekly usage cap (claude-job.sh, %s)\n' "$HOST" "$(date -u +%FT%TZ)"
-    printf 'An earlier run of this brief stopped on the weekly cap. Its work is on branch %s: start with\n' "$br"
+  { cat "$JD/$name.brief.txt"; printf '\n\n## Moved from %s %s (claude-job.sh, %s)\n' "$HOST" "${why:-on its weekly usage cap}" "$(date -u +%FT%TZ)"
+    printf 'An earlier run of this brief stopped %s. Its work is on branch %s: start with\n' "${why:-on the weekly cap}" "$br"
     printf '`git fetch origin %s && git merge --no-edit FETCH_HEAD`, read what it already did (the issue thread too), and continue to done. Do not redo finished steps.\n' "$br"
     [ -s "$JD/$name.state.md" ] && { printf '\nIts last state file (#7869; paths on %s may not exist here):\n\n' "$HOST"; cat "$JD/$name.state.md"; }
   } > "$b"
-  if /root/bin/box.sh "$to" start "$new" < "$b" >> "$LOGD/$name.log" 2>&1; then
+  if "$BOX_SH" "$to" start "$new" < "$b" >> "$LOGD/$name.log" 2>&1; then
     echo "[claude-job] moved to $to as $new $(date -u +%FT%TZ)" >> "$LOGD/$name.log"; echo "$to"
   else echo "[claude-job] move to $to FAILED $(date -u +%FT%TZ)" >> "$LOGD/$name.log"; fi
   rm -f "$b"; return 0
 }
 
+# `move <name> [box]` (#70 step 4): the weekly-cap move, by hand. Stop the job here, checkpoint its worktree to a
+# branch, start <name>-mv on the named box (or the emptiest ready other box) through the mesh's `start` verb.
+# Nothing is copied box to box: the state travels as the git branch, the brief and the state file inside the new
+# brief. Every refusal comes BEFORE the job is stopped, so a refused move leaves the job running.
+# Exit: 1 no such job, 3 refused (already moved, finished, no mesh, target not ready), 4 stopped but not moved
+# (checkpoint push or the far start failed: the line printed says how to resume here).
+move_by_hand() {  # $1 name, [$2 box]
+  local name="${1:-}" to="${2:-}" me line d cp br
+  [ -n "$name" ] || { echo "usage: claude-job.sh move <name> [main|cloudlayer|l7a|gex45]"; return 2; }
+  [ -f "$JD/$name.brief.txt" ] || { echo "REFUSED: no job named $name on $HOST"; return 1; }
+  case "$name" in *-mv) echo "REFUSED: $name has already moved once (one move per job). Stop it and start a new job from its branch instead."; return 3 ;; esac
+  [ -f "$JD/$name.done" ] && { echo "REFUSED: $name has finished (done file present); there is nothing to move."; return 3; }
+  [ -x "$BOX_SH" ] || { echo "REFUSED: no box mesh on $HOST ($BOX_SH missing), so nothing can be started on another box."; return 3; }
+  me=$("$BOX_SH" self 2>/dev/null)
+  if [ -n "$to" ]; then
+    [ "$to" = "$me" ] && { echo "REFUSED: $name is already on $to."; return 3; }
+    line=$("$BOX_SH" "$to" where </dev/null 2>/dev/null)
+    case " $line " in
+      *" ready=yes "*) ;;
+      *) echo "REFUSED: $to is not ready for a job ($(echo "$line" | grep -oE 'ready=[^ ]+' || echo 'no answer from its where')). $name was left running."; return 3 ;;
+    esac
+  else
+    to=$("$BOX_SH" pick --exclude "$me" 2>/dev/null)
+    [ -n "$to" ] || { echo "REFUSED: no other box is ready for a job (box.sh pick). $name was left running."; return 3; }
+  fi
+  touch "$JD/$name.stopped"; tmux kill-session -t "=job-$name" 2>/dev/null && echo "stopped job-$name"
+  cp=$(checkpoint "$name" "moved by hand to $to")
+  d=$(wt_dir "$name"); br="$cp"
+  if [ -z "$br" ] && [ -d "$d" ]; then
+    # Nothing new to push. That is a move only when the work is already on origin; unpushed commits mean the push failed.
+    if [ -n "$(git -C "$d" rev-list HEAD --not --remotes=origin 2>/dev/null | head -1)" ]; then
+      echo "NOT MOVED: $name is stopped, but its work could not be pushed (see $LOGD/$name.log). Nothing was started on $to. Continue here: claude-job.sh resume $name"
+      return 4
+    fi
+    br=$(git -C "$d" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    git -C "$d" ls-remote --exit-code --heads origin "$br" >/dev/null 2>&1 || br=main  # no commits of its own yet
+  fi
+  if [ -n "$(move_job "$name" "${br:-main}" "$to" "when it was moved by hand")" ]; then
+    ledger record moved "$name" "$JD/$name.brief.txt"
+    echo "moved $name to $to as $name-mv; it continues from branch ${br:-main}"
+  else
+    echo "NOT MOVED: $name is stopped and its work is on branch ${br:-main}, but the start on $to failed (see $LOGD/$name.log). Continue here: claude-job.sh resume $name"
+    return 4
+  fi
+}
 # ntfy page for job outcomes (Derek 2026-10-04: "not getting notifications any more").
 # Same topic as the box alerts. Never fails the job: a dead ntfy is not a dead job.
 NTFY_TOPIC="${NTFY_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}"
@@ -439,7 +629,7 @@ auth_fail_report() {  # $1 name, $2 brief file, $3 what happened
   ntfy_job high warning "Job NOT LOGGED IN: $1 ($HOST)" "$3 — log in on $HOST (claude, then /login), then \`claude-job.sh resume $1\` or start it again (#5627)."
   landing_contract "$1" "$2"
   case "$LC_ISSUE" in ""|none) return 0 ;; esac
-  gh issue comment "$LC_ISSUE" --repo "$REPO" --body "claude-job: job \`$1\` on **$HOST** did not run: Claude is not logged in there ($3). Nothing was done on this issue. Fix: log in on $HOST, then \`claude-job.sh resume $1\` (or start it again). (#5627)" >/dev/null 2>&1 || true
+  gh issue comment "$LC_ISSUE" --repo "$LC_ISSUE_REPO" --body "claude-job: job \`$1\` on **$HOST** did not run: Claude is not logged in there ($3). Nothing was done on this issue. Fix: log in on $HOST, then \`claude-job.sh resume $1\` (or start it again). (#5627)" >/dev/null 2>&1 || true
 }
 
 # A job owns its PR until the checks are green (Derek 2026-10-08). PR #5832 sat red for four days and
@@ -550,8 +740,9 @@ subagent_model() { case "$(brief_header Subagents "$1" | tr 'A-Z' 'a-z')" in opu
 compact_pct() { case "$(brief_header Compact "$1" | tr 'A-Z' 'a-z')" in off*) ;; *) echo "${JOB_COMPACT_PCT:-30}" ;; esac; }
 # The main session's model (#7869): Opus unless the brief says `Model: sonnet — <why>` in its first 15 lines, for a
 # job whose own turns are mechanical (babysitting a runner, waiting on CI, merging). Judging still goes to Opus
-# subagents named in the brief. Nothing else changes.
-main_model() { case "$(brief_header Model "$1" | tr 'A-Z' 'a-z')" in sonnet*) echo sonnet ;; *) echo opus ;; esac; }
+# subagents named in the brief. Nothing else changes. `Model: fable — <why>` runs the main session on Fable, for
+# spending an account's weekly Fable bucket before it resets (it is a separate bar from the all-models week).
+main_model() { case "$(brief_header Model "$1" | tr 'A-Z' 'a-z')" in sonnet*) echo sonnet ;; fable*) echo claude-fable-5-2 ;; *) echo opus ;; esac; }
 # A main session takes a slot from the pace guard's main pool, not its child pool (claude-pace-guard.sh, #7869), so an
 # over-pace account waits at a stage start instead of running every job at full width. Only through the guard: the
 # real CLI would pass the flag on to the session's own children, which would then be paced as main sessions.
@@ -564,6 +755,7 @@ claude_main() {
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
   job_claude_home "$name"
+  link_transcripts "$name" >> "$log"  # a resumed or moved job whose folder is not there yet (#367)
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
   # The job's name and Lands issue, for the subscription readers' book list (scripts/lib/lane-book-list.mjs, #7301).
   landing_contract "$name" "$JD/$name.brief.txt"; export JOB_NAME="$name" JOB_LANDS="$LC_ISSUE"
@@ -670,7 +862,8 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
 collect_decisions() {
   local name="$1" log="$LOGD/$1.log" new
   new=$(grep -oE 'DECISION: .*' "$log" 2>/dev/null | sed 's/\\n.*//; s/[`"]*$//' | sort -u | while read -r l; do
-    grep -qF "$name | $l" "$JD/decisions.txt" 2>/dev/null || { echo "$(date -u +%F) | $name | $l" >> "$JD/decisions.txt"; echo "$l"; }
+    # The lock is shared with box-rpc.sh decisions-mark, which rewrites the file (#90 item 6).
+    grep -qF "$name | $l" "$JD/decisions.txt" 2>/dev/null || { ( flock -w 30 9; echo "$(date -u +%F) | $name | $l" >> "$JD/decisions.txt" ) 9>"$JD/decisions.txt.lock"; echo "$l"; }
   done)
   [ -n "$new" ] && post_decisions "$name" "$new"
   # Decisions reach Derek through the morning digest, which reads decisions.txt, never one page each
@@ -698,7 +891,7 @@ post_decisions() {  # $1 name, $2 the new DECISION lines, one per line
 $(printf '%s\n' "$tagged" | awk -F'\t' -v n="$n" '$1 == n { print "- " substr($0, index($0, "\t") + 1) }')
 
 Answer it here. The line is also in \`$JD/decisions.txt\`; the morning digest counts the lines nobody has marked (#8551)."
-    gh issue comment "$n" --repo "$REPO" --body "$body" >/dev/null 2>&1 || true
+    gh issue comment "$n" --repo "$(issue_repo "$n")" --body "$body" >/dev/null 2>&1 || true
   done
   return 0
 }
@@ -728,34 +921,78 @@ ledger() {
   [ -f "$jl" ] && bash "$jl" "$@" >/dev/null 2>&1; return 0
 }
 
+# `where`: one line a dispatcher can compare across boxes (job-where.sh, box.sh pick and spare-lane.py ask for it).
+where_line() {
+  local cores load load5 mem cap cur room disk live ready wk acct pf pace
+  cores=$(nproc); load=$(cut -d' ' -f1 /proc/loadavg); load5=$(cut -d' ' -f2 /proc/loadavg)
+  mem=$(awk '/MemAvailable/{printf "%d", $2/1024}' /proc/meminfo)
+  if [ "$HOST" != hetzner ]; then  # guest hosts and gex45: what the slice still allows, if that is less
+    cap=$(systemctl show sourcelibrary.slice -p MemoryMax --value 2>/dev/null); cur=$(systemctl show sourcelibrary.slice -p MemoryCurrent --value 2>/dev/null)
+    case "$cap$cur" in *[!0-9]*|"") ;; *) room=$(( (cap - cur) / 1048576 )); [ "$room" -lt "$mem" ] && mem=$room ;; esac
+  fi
+  disk=$(df -BG --output=avail "$DATA" | tail -1 | tr -dc '0-9')
+  live=$(tmux ls -F '#{session_name}' 2>/dev/null | grep -c '^job-')
+  # May a job start here now? The one answer `start` also acts on (ready_state, #70).
+  ready=$(ready_state); wk=$(weekly_pct)
+  # account= lets job-where.sh look up this box's 5-hour and weekly headroom (#6751); logins change.
+  acct=$(python3 -c 'import json;print(json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"])' 2>/dev/null)
+  # pace= is the pace guard's last decision for that login: slots/why/age in min. Anything but burn= is fail-open
+  # (meter-error:..., burn-unknown:..., no-account), shown here so a blind guard is visible from the mesh (#7869).
+  pf=/root/claude-pace/${acct:-?}.slots; pace="-"
+  [ -s "$pf" ] && pace="$(tr ' ' '/' < "$pf" | tr -d '\n')/$(( ($(date +%s) - $(stat -c %Y "$pf")) / 60 ))m"
+  echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) root_free_pct=$(root_free_pct) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready pace=$pace"
+}
+
+# Claim guard (#239). On 2026-11-13 job error-zoo-site-244 commented "taking this" on #244 at 13:22Z, and a second job
+# was started on #244 at ~14:10Z by a session that had not read the thread; both worked the same issue. `start`
+# now reads the Lands issue's comments from the last CLAIM_HOURS (12) and refuses (exit 10) when a line starting
+# "taking" or "claiming" ("taking this (job X)", "Taking step 2 (job X)", "spare-lane: taking this") names someone else:
+# any such line that does not contain this job's name (or, for a moved
+# <name>-mv job, the name it was moved from). It prints who claimed it and when. `--force-claim`, JOB_FORCE_CLAIM=1, or a
+# `Force-claim: <why>` header in the brief (the only way through box.sh, which passes no flags) starts it anyway.
+# GitHub unreadable: a note, and the start goes ahead (fail open: an outage must not stop every lane).
+CLAIM_HOURS=${CLAIM_HOURS:-12}
+issue_claim_lines() {  # $1 issue, $2 repo, $3 since (ISO) -> "<created_at>\t<first claim line>" per comment
+  gh api --paginate "repos/$2/issues/$1/comments?since=$3&per_page=100" --jq '.[] | select(.created_at >= "'"$3"'") | . as $c
+    | [.body | split("\n")[] | select(test("^[\\s*_`]*([\\w-]+:\\s*)?(taking|claiming)\\b"; "i"))][0] // empty | [$c.created_at, .[0:200]] | @tsv'
+}
+claim_guard() {  # $1 job name, $2 brief; landing_contract must have run. Prints and returns 10 when someone else holds the claim.
+  local name="$1" since out others own
+  [ "${JOB_FORCE_CLAIM:-0}" = 1 ] && { echo "claim guard: skipped (--force-claim)"; return 0; }
+  [ -n "$(brief_header Force-claim "$2")" ] && { echo "claim guard: skipped (Force-claim header: $(brief_header Force-claim "$2"))"; return 0; }
+  [ "$LC_ISSUE_SRC" = "Lands header" ] || return 0
+  case "$LC_ISSUE" in ""|none) return 0 ;; esac
+  since=$(date -u -d "$CLAIM_HOURS hours ago" +%FT%TZ)
+  if ! out=$(issue_claim_lines "$LC_ISSUE" "${LC_ISSUE_REPO:-$REPO}" "$since" 2>/dev/null); then
+    echo "note: could not read the comments on #$LC_ISSUE; claim not checked"; return 0
+  fi
+  own="${name%-mv}"; own=$(printf '%s' "$own" | sed 's/[.[\*^$/]/\\&/g')
+  others=$(printf '%s\n' "$out" | grep . | grep -viE "(^|[^a-z0-9_-])(job-)?$own(-mv)?([^a-z0-9_-]|$)")
+  [ -z "$others" ] && return 0
+  echo "REFUSED: #$LC_ISSUE was claimed in the last ${CLAIM_HOURS} h by another job or session:"
+  printf '%s\n' "$others" | while IFS=$'\t' read -r at line; do echo "  $at  $line"; done
+  echo "  Ask that job or session first (claude-job.sh status, /root/bin/situation). To start anyway: claude-job.sh start --force-claim $name <brief>, or a 'Force-claim: <why>' header line through box.sh."
+  return 10
+}
+
 [ -n "${CLAUDE_JOB_LIB:-}" ] && return 0 2>/dev/null
 case "${1:-status}" in
   start)
-    name="$2"; brief="$3"; [ -f "$brief" ] || { echo "no brief file $brief"; exit 2; }
+    shift; pos=()
+    for a in "$@"; do [ "$a" = --force-claim ] && JOB_FORCE_CLAIM=1 || pos+=("$a"); done  # not exported: the job must not inherit it
+    name="${pos[0]:-}"; brief="${pos[1]:-}"; [ -f "$brief" ] || { echo "no brief file $brief"; exit 2; }
     [ -n "${JOB_CLAUDE_HOME:-}" ] && export CLAUDE_CONFIG_DIR="$JOB_CLAUDE_HOME"
     # An empty brief launched harmony-authors-a and -b on 2026-10-21: each ran with only the HEADLESS RULES.
     grep -q '[^[:space:]]' "$brief" || { echo "REFUSED: brief file $brief is empty"; exit 2; }
+    refuse_login_without_profile
     # An OCR/translation brief names its router cell and k/n, or says it is untested (#7701, brief-route-check.sh).
     rc_script="$SL/scripts/workers/brief-route-check.sh"
     if [ -f "$rc_script" ]; then rc_out=$(bash "$rc_script" "$brief") || { echo "$rc_out"; exit 8; }; echo "route check: $rc_out"
     else echo "note: $rc_script not on this box yet; route header not checked"; fi
-    # Preflight (#6223): a job started on a full root disk dies silently with an empty log. 15% free, not a GB
-    # count: the steward keeps every disk at or under 75% (2026-10-29), so under 15% free means it could not,
-    # and a new job's output would only push the box toward the 95% where jobs die. Place it elsewhere.
-    fpct=$(root_free_pct)
-    if [ "${fpct:-0}" -lt "$MIN_ROOT_FREE_PCT" ] && [ -z "${JOB_IGNORE_DISK:-}" ]; then
-      echo "REFUSED: root disk has ${fpct}% free ($(root_free_gb)G; the floor is ${MIN_ROOT_FREE_PCT}%). Place the job on another box, or JOB_IGNORE_DISK=1."
-      echo "  /root/bin/disk-steward.sh (dry run) says what it is keeping on this box and why."
-      jw="$SL/scripts/workers/job-where.sh"
-      [ -x "$jw" ] && { echo "  job-where.sh:"; timeout 120 "$jw" 2>/dev/null | sed -n '/^use:/,$p; /^no box/p' | sed 's/^/    /'; }
-      ntfy_job high warning "Job refused, root disk ${fpct}% free: $name ($HOST)" "The disk steward could not keep this box under 85%; see its log (#6223)."
-      exit 5
-    fi
-    wk=$(weekly_pct)
-    if [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && [ -z "${JOB_IGNORE_LIMIT:-}" ]; then
-      echo "REFUSED: this box's Claude account is at ${wk}% of its weekly limit (>= ${MAX_WEEKLY_PCT}%). Place it elsewhere (scripts/workers/job-where.sh), or JOB_IGNORE_LIMIT=1."
-      exit 6
-    fi
+    # Preflight (#6223, #70): a job started on a full root disk dies silently with an empty log, and one on a spent
+    # account cannot run. Both refusals come from ready_state, the answer `where` prints, so the two cannot differ.
+    start_refusal "$name" "$(ready_state)" || exit $?
+    landing_contract "$name" "$brief"; claim_guard "$name" "$brief" || exit $?
     if ! why=$(preflight_auth); then
       echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
       auth_fail_report "$name" "$brief" "refused at start: $why"
@@ -767,6 +1004,7 @@ case "${1:-status}" in
       ln -s "$SL/node_modules" "$d/node_modules"
     fi
     mkdir -p "$d/src/lib/vendor"; cp "$SL/src/lib/vendor/lamejs-bundle.js" "$d/src/lib/vendor/" 2>/dev/null || true
+    link_transcripts "$name"
     [ "$(realpath "$brief")" = "$JD/$name.brief.txt" ] || cp "$brief" "$JD/$name.brief.txt"
     landing_contract "$name" "$JD/$name.brief.txt"
     for sk in $(brief_skills "$JD/$name.brief.txt"); do
@@ -784,6 +1022,7 @@ case "${1:-status}" in
   resume)
     name="$2"
     job_claude_home "$name"
+    refuse_login_without_profile
     if ! why=$(preflight_auth); then
       echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
       exit 7
@@ -839,6 +1078,7 @@ case "${1:-status}" in
   stop) touch "$JD/$2.stopped"; tmux kill-session -t "=job-$2" && echo "stopped job-$2"
     ledger record stopped "$2" "$JD/$2.brief.txt"
     cp=$(checkpoint "$2" stopped); [ -n "$cp" ] && echo "work checkpointed to $cp" ;;
+  move) move_by_hand "${2:-}" "${3:-}"; exit $? ;;  # stop here, checkpoint, continue as <name>-mv on another box (#70)
   _reap) reap_if_clean "$2"; tail -1 "$LOGD/$2.log" ;;  # test/one-off: apply the reap rule to one job
   _land) landing_check "$2" ;;  # test/one-off: would this job count as landed?
   ctx)  # fresh session per stage (#7869): the job asks at each stage boundary whether to hand over to a fresh session
@@ -851,30 +1091,5 @@ case "${1:-status}" in
       [ -n "$old" ] || continue  # finished before there was a landing check
       printf '%s\t%s\t%s\n' "$n" "$old" "$(landing_check "$n")"
     done ;;
-  where)  # one line a dispatcher can compare across boxes (scripts/workers/job-where.sh asks each box)
-    cores=$(nproc); load=$(cut -d' ' -f1 /proc/loadavg); load5=$(cut -d' ' -f2 /proc/loadavg)
-    mem=$(awk '/MemAvailable/{printf "%d", $2/1024}' /proc/meminfo)
-    if [ "$HOST" != hetzner ]; then  # guest hosts and gex45: what the slice still allows, if that is less
-      cap=$(systemctl show sourcelibrary.slice -p MemoryMax --value 2>/dev/null); cur=$(systemctl show sourcelibrary.slice -p MemoryCurrent --value 2>/dev/null)
-      case "$cap$cur" in *[!0-9]*|"") ;; *) room=$(( (cap - cur) / 1048576 )); [ "$room" -lt "$mem" ] && mem=$room ;; esac
-    fi
-    disk=$(df -BG --output=avail "$DATA" | tail -1 | tr -dc '0-9')
-    live=$(tmux ls -F '#{session_name}' 2>/dev/null | grep -c '^job-')
-    # Can a job start here at all? Existence checks only; nothing is read or printed.
-    why=""
-    [ -x /root/.local/bin/claude ] || command -v claude >/dev/null 2>&1 || why="$why,no-claude"
-    [ -s /root/.claude/.credentials.json ] || why="$why,claude-not-logged-in"
-    gh auth status >/dev/null 2>&1 || why="$why,gh-not-logged-in"
-    [ -s /root/sourcelibrary/.env.production.local ] || why="$why,no-env-file"
-    [ -d "$SL/node_modules" ] || why="$why,no-node_modules"
-    can_run_bash || why="$why,no-bash-permission"
-    ready=yes; [ -n "$why" ] && ready="no:${why#,}"
-    wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
-    # account= lets job-where.sh look up this box's 5-hour and weekly headroom (#6751); logins change.
-    acct=$(python3 -c 'import json;print(json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"])' 2>/dev/null)
-    # pace= is the pace guard's last decision for that login: slots/why/age in min. Anything but burn= is fail-open
-    # (meter-error:..., burn-unknown:..., no-account), shown here so a blind guard is visible from the mesh (#7869).
-    pf=/root/claude-pace/${acct:-?}.slots; pace="-"
-    [ -s "$pf" ] && pace="$(tr ' ' '/' < "$pf" | tr -d '\n')/$(( ($(date +%s) - $(stat -c %Y "$pf")) / 60 ))m"
-    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) root_free_pct=$(root_free_pct) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready pace=$pace" ;;
+  where) where_line ;;
 esac

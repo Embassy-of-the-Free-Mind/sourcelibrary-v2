@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "695258d1ab34727b1f045aed",
+    "slot": 1,
+    "title": "Magia naturalis sive de miraculis rerum naturalium",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 16th-century italic-printed Latin edition of della Porta's Magia naturalis (running head LIBER SECVNDVS); belongs on the Latin language shelf.",
+    "rights_flag": null,
+    "structure_note": "The leaf is foliated, not paginated: printed '35' with signature 'E 3' (the 35th leaf of a gathering of 8) sits at record 90, so only rectos carry a number. That fits with_printed_number 152 of 321. The 10 backsteps and 19 repeats are probably misread folio numerals or rectos and versos tagged alike, not a splice. The structure count pages_translated 0 does not match the book field 320, which looks like a counting fault rather than missing translations: this page is translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 90,
+        "right_page": "yes",
+        "printed_marker": "35",
+        "layout": "single column of italic text; two roman section headings; running head; signature 'E 3' and catchword 'ramen' at the foot; 'Digitized by Google' stamp",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ex equo", "image": "ex æquo", "problem": "ligature æ silently normalised to e", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The italic lead-in 'Vt si voles sit, vt Democritus docet,' is tagged as a ### heading in both panes, but on the leaf it is italic text above the roman heading 'Vua vinaceis vacua:'", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"sarmentum, vel flagellum\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"insitio,\" grafting", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "you sink a squill bulb inside it", "why": "'Squill' (sea onion, Drimia maritima) is a technical plant name that a general reader will not know." },
+            { "english": "as Democritus teaches", "why": "The attribution rests on the pseudo-Democritean agricultural tradition handed down through the Geoponica, not on the atomist's surviving works. A reader may misread whose authority this is." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is accurate: the OCR matches the leaf except for one normalised ligature, and the English is faithful and complete down to the catchword. The two notes are harmless but add little. The only oddity is the pages_translated count in the structure data."
+  }
+]

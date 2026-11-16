@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getPageAtVersion, getPagesAtVersion } from '@/lib/edition-reader';
 import { markForExport } from '@/lib/provenance';
 import { getDb } from '@/lib/mongodb';
+import { isBookIdReadable } from '@/lib/book-access';
 import { gatePagesForRequest, meteredSignInResponse } from '@/lib/metered-gate';
 import { meteredReaderEnabled, type GateInfo } from '@/lib/free-preview';
 
@@ -37,6 +38,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
     }
     if (allPageIds.length === 0) {
       return NextResponse.json({ error: 'Missing ?page_id= parameter' }, { status: 400 });
+    }
+
+    // An edition's text follows the book's reader gate, as /text and /quote do (ops #17).
+    if (!(await isBookIdReadable(await getDb(), bookId, request))) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
     const gated = await gatedPageIds(request, allPageIds);

@@ -24,7 +24,7 @@
  *
  * RED LINES (#8283): each live line is judged against the cron-row registry (scripts/lib/lanes.mjs CRON_ROWS,
  * judgeCronLine): UNREGISTERED, RETIRED BUT LIVE, PAST REVIEW, IDLE 7 DAYS (from the corpus document's pages per
- * stamp), MATCHES A RETIRED PATTERN. The verdicts ride on the line as `red`; the page shows them at the top.
+ * stamp), MATCHES A RETIRED PATTERN, LOG SILENT (#379: the line's log unwritten for 2 of its own intervals). The verdicts ride on the line as `red`; the page shows them at the top.
  *
  * The boxes cannot ssh to each other, so each writes its own section and main's page assembles them. Claude account
  * headroom is not collected here: the page reads ops_reports `claude-limits:latest`, which main already pushes.
@@ -180,9 +180,17 @@ export function isOneShot(schedule) {
  * its registry row id (`registry`, null when unregistered) and its red verdicts (`red`, judgeCronLine, #8283); the
  * raw command is judged here and never stored.
  */
-export function pipelineLines(text, { box = null, now = new Date(), laneTotals = null } = {}) {
+export function pipelineLines(text, { box = null, now = new Date(), laneTotals = null, logAtOf = () => null } = {}) {
   const rows = [];
-  for (const { schedule, cmd, comment, disabled, tag } of parseCrontab(text)) {
+  const parsed = parseCrontab(text);
+  // Every live line appending to one log sets when that log is due (LOG SILENT, #379), stage or no stage.
+  const logSchedules = new Map();
+  for (const p of parsed) {
+    const lp = logPathOf(p.cmd);
+    if (!lp || p.disabled || isOneShot(p.schedule)) continue;
+    logSchedules.set(lp, [...(logSchedules.get(lp) ?? []), p.schedule]);
+  }
+  for (const { schedule, cmd, comment, disabled, tag } of parsed) {
     const stage = stageOf(cmd);
     if (!stage) continue;
     const scripts = scriptsOf(cmd);
@@ -192,11 +200,11 @@ export function pipelineLines(text, { box = null, now = new Date(), laneTotals =
       ...flagsOf(cmd), log: logPathOf(cmd), comment: redact(comment, 200),
     };
     if (box) {
-      const line = { cmd, stage, script: row.script, mode: row.mode, disabled, one_shot: row.one_shot };
+      const line = { cmd, schedule, stage, script: row.script, mode: row.mode, disabled, one_shot: row.one_shot };
       const reg = cronRowFor(box, line);
       Object.assign(row, {
         registry: reg ? { id: reg.id, status: reg.status, issue: reg.issue ?? null, route: reg.route ?? null, review_by: reg.review_by ?? null, open: reg.open ?? null } : null,
-        red: judgeCronLine(box, line, { now, laneTotals }),
+        red: judgeCronLine(box, line, { now, laneTotals, logAt: row.log ? logAtOf(row.log) : null, logSchedules: logSchedules.get(row.log) ?? null }),
       });
     }
     rows.push(row);
@@ -314,7 +322,7 @@ export function redSummary(docs) {
 }
 
 export async function collectBox({ box, now = new Date(), laneTotals = null }) {
-  const lines = pipelineLines(liveCrontab(), { box, now, laneTotals }).map(r => ({
+  const lines = pipelineLines(liveCrontab(), { box, now, laneTotals, logAtOf: mtimeIso }).map(r => ({
     ...r,
     log_at: r.log ? mtimeIso(r.log) : null,
     log_last: r.log ? redact(lastLine(tailOf(r.log)), 200) : null,
@@ -357,10 +365,18 @@ export function expandGlob(pattern, fsApi = fs) {
   return paths.filter((p) => { try { return fsApi.statSync(p).isFile(); } catch { return false; } });
 }
 
+/**
+ * A STOP renamed to keep the record of its removal (`STOP.removed-2026-11-15-v3-376`, `STOP.released-…`) no longer
+ * stops anything: the lane reads `STOP` (or its exact name), and the `STOP*` glob would otherwise report the record
+ * as an UNREGISTERED stop forever (v3#384).
+ */
+export const isRetiredStopName = (p) => /\.(removed|released|retired)(?:[-.]|$)/.test(path.basename(p));
+
 /** The STOP files that exist under STOP_GLOBS, deduplicated by real path (a symlinked job dir is one stop). */
 export function discoverStopFiles(box, { globs = STOP_GLOBS, fsApi = fs } = {}) {
   const seen = new Map();
   for (const g of globs) for (const p of expandGlob(g, fsApi)) {
+    if (isRetiredStopName(p)) continue;
     let real = p;
     try { real = fsApi.realpathSync(p); } catch { /* keep the given path */ }
     if (seen.has(real)) continue;
@@ -386,10 +402,21 @@ export function parseRoutesOff(text, box) {
   return out;
 }
 
-/** The directory a stop-file row lives in (up to the first `*`), to tell "stop gone" from "volume not mounted". */
-const rowRoot = (r) => (r.match.path ? r.match.path.split('*')[0].replace(/\/[^/]*$/, '') : null);
+/**
+ * The directory whose existence lets this box judge a stop-file row, to tell "stop gone" from "volume not mounted".
+ * On a mounted volume (`/mnt/…`) that is the row's own directory (up to the first `*`): an unmounted volume leaves an
+ * empty mountpoint, so the volume root alone would call every row on it gone. Elsewhere (`/root/…`) it is the top
+ * directory: a job dir deleted with its STOP is a stop that is gone, and judging by that dir left the row silent
+ * forever (/root/gpu-backlog-5660/zh, v3#384).
+ */
+const rowRoot = (r) => {
+  if (!r.match.path) return null;
+  if (r.match.path.startsWith('/mnt/')) return r.match.path.split('*')[0].replace(/\/[^/]*$/, '');
+  const top = r.match.path.split('/').filter(Boolean)[0];
+  return top ? `/${top}` : null;
+};
 
-/** Rows this box can judge STALE: stop-file rows whose directory is readable, route-off rows when the tsv was read. */
+/** Rows this box can judge STALE: stop-file rows whose mount is readable, route-off rows when the tsv was read. */
 export function readableRows(rows, { fsApi = fs, routesRead = false } = {}) {
   return rows.filter((r) => (r.kind === 'stop-file' ? !!rowRoot(r) && fsApi.existsSync(rowRoot(r)) : r.kind === 'route-off' && routesRead));
 }

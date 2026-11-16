@@ -47,6 +47,8 @@ on:
 permissions:
   contents: write
   actions: read
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 concurrency:
   group: eval-ledgers-regenerate
@@ -54,7 +56,7 @@ concurrency:
 
 jobs:
   regenerate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 5
     steps:
       - name: Test the page path

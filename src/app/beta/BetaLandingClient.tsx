@@ -200,7 +200,7 @@ export default function BetaLandingClient({ stats }: { stats: BetaStats }) {
                 <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
                 <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
               </svg>
-              <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
+              <span className="font-logo text-xl md:text-2xl uppercase tracking-wider text-white">
                 <span className="font-semibold">Source</span>
                 <span className="font-light">Library</span>
               </span>
@@ -230,7 +230,7 @@ export default function BetaLandingClient({ stats }: { stats: BetaStats }) {
               into any modern language.
             </p>
             <h1
-              className="text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-[1.05] font-display"
+              className="text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-[1.05] font-serif"
             >
               We&apos;re bringing them<br />
               <span className="italic font-normal">back to life.</span>

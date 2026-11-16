@@ -1,0 +1,18 @@
+helpful t10 B>A 4  B<A 27  tie 9  p=0.0000
+helpful clean-with-notes B>A 0  B<A 11  tie 1  p=0.0010
+helpful all B>A 4  B<A 38  tie 10  p=0.0000
+missing t10 B>A 22  B<A 6  tie 12  p=0.0037
+missing clean-with-notes B>A 10  B<A 0  tie 2  p=0.0020
+missing all B>A 32  B<A 6  tie 14  p=0.0000
+unsupported t10 B>A 1  B<A 23  tie 16  p=0.0000
+unsupported clean-with-notes B>A 0  B<A 6  tie 6  p=0.0313
+unsupported all B>A 1  B<A 29  tie 22  p=0.0000
+wrong t10 B>A 4  B<A 8  tie 28  p=0.3877
+wrong clean-with-notes B>A 2  B<A 1  tie 9  p=1.0000
+wrong all B>A 6  B<A 9  tie 37  p=0.6072
+repeat 13b0f1 helpful 2 2 missing 4 5 unsupported 0 0
+repeat f6e42b helpful 18 18 missing 1 2 unsupported 0 0
+repeat 032ad5 helpful 4 7 missing 2 1 unsupported 0 0
+repeat cf432d helpful 0 0 missing 0 1 unsupported 0 0
+repeat c6b0e1 helpful 12 10 missing 4 4 unsupported 0 0
+repeat e23859 helpful 4 3 missing 3 3 unsupported 3 4

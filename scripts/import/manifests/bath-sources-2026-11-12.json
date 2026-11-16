@@ -1,0 +1,16 @@
+{
+  "note": "Sources for the article 'Hot Water and Its Gods' and the conceptual history of the bath (JDerekLomas/conceptual-histories, concept bath, PR #12). Derek: 'Import'. Holdings checked 2026-11-12 (check-holdings.ts + MCP check_duplicate): Schwenckfeld Hirschberg 1607, Aristides (Dindorf 1829), Montaigne Journal 1774, Bacci De thermis (1711) and De balneis 1553 (same Wellcome scan) are already held; only the PSRL vol. 1 below was new on IA. Oczko's Cieplice (1578) comes from Polona via iiif-direct-import (bath-sources-2026-11-12-polona.json).",
+  "campaign": "bath-sources-2026-11-12",
+  "collections": [],
+  "BOOKS": [
+    {
+      "id": "polnoesobranierusskihletopisejizdannoep10",
+      "title": "Полное собрание русских летописей. Т. 1: Лаврентиевская и Троицкая летописи",
+      "author": "Археографическая комиссия",
+      "year": 1846,
+      "lang": "Church Slavonic",
+      "languages": ["Church Slavonic", "Russian"],
+      "note": "St Petersburg: Eduard Prats, 1846. Laurentian text of the Povest' vremennykh let (Primary Chronicle) incl. the apostle Andrew and the Novgorod bathhouses; Russian preface and variant apparatus. Imprint read from the djvu text."
+    }
+  ]
+}

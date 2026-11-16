@@ -1,0 +1,44 @@
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Ashkenazi cursive Hebrew. The hand is rapid and heavily abbreviated. Ink stains on the upper left and lower centre obscure some words, and a cross-out marks the lower centre. Several readings are uncertain.</warning>
+<meta>A small mark at the top centre reads <unclear>ב"ה</unclear>. The right margin has a horizontal rule and a looped line mark with no words.</meta>
+
+למטה כך הוא בבחי' עצם הנפש כמו שהוא הרי הוא למעלה מבחי'
+רצון בהחלט ולמעלה גם מבחי' התעוררות רצון ולא נכר ונתפס
+הנפש ממנה עדיין גם לא בחי' התעוררות רצון שאינו רק גילוי והארה
+בעלמא מעצמות הנפש והוא כמו שהנפש מאירה <unclear>בהשערות</unclear>
+שהתעורר ולהיות לו רצון לבד וא"כ בחי' ההתעוררות <unclear>שלו</unclear>
+הנפש ולהיות רצון הוא רק גילוי הנפש המתפשט ממנה
+ואין לו ערוך כלל לגבי עצמותה ממש כמו שהיא <unclear>ונעלם</unclear>
+ממנה ומאוד נעלה שתהיה בה התעורר להיות רצון <unclear>ונעלם עצם</unclear>
+ומעצם הנפש הוא <unclear>הכן</unclear> רצונות ורגשות <unclear>מחמת</unclear> הוא בחי' זיו
+ולהיות גילוי רצון ומכ"ש מן מציאות רצון <unclear>מחמת</unclear> הנפש
+שעצם נמשך הרצון בגילוי ואח"כ <unclear>נ"כ</unclear> שבחי' רצון בגילוי גמור רק
+בגילוי זיו לא ערוך לגבי בחי' ידיעת האור מן העצם הנפש
+גמור גילוי רצון זה שהרי גילוי רצון זה בא <unclear>בהמשכות</unclear> מן העצם הנפש
+ונמשך למטה ברחוק מבחי' הנפש והוא כמו באמצעות <unclear>מדות</unclear> כו'
+שאינם בחי' העצם ומהות הנפש להתעורר ולהיות בבחי' רצון
+הנה מצד עדיין <unclear>במציאות רבה</unclear> ולא נמשך עדיין <unclear>מהות</unclear> הרצון
+כי אם <unclear>[illegible — 1 word]</unclear> ותפשטות ערך ורצון הגילוי לגבי גמור ומגלה
+הרצון שזה זיו הנפש ושאין ערוך זיו הנפש לגבי עצמות ההתעוררות
+מהותה שאינו רק זיו והארה בעלמא ומהות הנפש לגבי עצמות
+הגילוים היא למעלה ונעלה מבחי' ההתפשטות ומהות הנפש ונודע ה'
+ולא יתכן חילוק בין העצם והגילוי זיו והארה כנ"ל
+ומהות <unclear>דבכה</unclear> <unclear>בפס'</unclear> זיו זה הוא <unclear>[illegible — 1 word]</unclear> ומהות זיו
+זיו ואורו של המלך בחי' ראייתו והתנשאותו ומהות הנפש מאחר שגם
+בכל ענין שאין ההתגלות רק לפי המלך דהיינו ומבואר הנה בכל
+שבעצמותו ושתהיה הגילוי זיו אותו בתוספת כשהגילוי
+חוץ לעצם בבחי' מציאות <unclear>דבכה</unclear> הנראה ונתפס <unclear>ומבול</unclear> ופרטים
+ונמצא גם בחי' זיו האמת <unclear>ותגלה בתמורה</unclear> <unclear>[illegible — 1 word]</unclear> שאינו ל
+נראה ונתפס במציאות כלל ויש <unclear>[illegible — 2 words]</unclear>
+<gloss><unclear>[illegible — small interlinear note, 2-3 words]</unclear></gloss>
+זיו לפרטי ההתגלות מבחי' חו"ב וחג"ת <unclear>[cancelled word]</unclear> שהם <unclear>[illegible — 1 word]</unclear> כמו ההתגלות
+זה בבחי' העצם כמו שהוא בבחי' ההתגלות זיו ופרטי
+ההתגלות בבחי' כי גם בבחי' גילוי זיו ואור הנפש <unclear>ברגשות</unclear>
+נבדלת מן העצם שהוא ג"כ עדיין בלי שינוי התגלות
+וכל מציאות נבדל כמו העצמות <unclear>ומחר</unclear> שנגלה ואור
+העצמות כו' וכמ"ש
+
+<vocab>עצם הנפש, עצמות, רצון, התעוררות, גילוי, זיו, הארה, התפשטות, מהות, התגלות, חו"ב, חג"ת, מלך</vocab>

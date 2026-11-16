@@ -1,0 +1,139 @@
+[
+  {
+    "book_id": "69942f35b2f6748db4abfc31",
+    "slot": 1,
+    "title": "Pseudo-Dionysius and Maximus Confessor Scholia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Greek minuscule manuscript of the Celestial Hierarchy (ch. 15, the angels' garments and instruments) with scholia in the margin in majuscule. That matches the title. There is no tradition or collection to check it against.",
+    "rights_flag": "The Vatican Library's copyright banner is burned into the scan, \"Copyright © Biblioteca Apostolica Vaticana / powered by AMLAD·NTT DATA\", and a diagonal watermark \"Biblioteca Apostolica Vaticana ... ALL RIGHTS RESERVED\" runs across the text block. The work itself is medieval. This flag is about the licence on the digitisation.",
+    "structure_note": "The book has 390 records, and all 390 have OCR. But structure.pages_translated is 0 while the book field says 378. One of those two counters is wrong. In a manuscript with no printed pagination, 47 backsteps and 38 repeats among 183 'printed' numbers probably come from the OCR taking marginal chapter numerals (e.g. ις') or folio marks as page numbers. That is a counting artefact, not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single column of minuscule text with enlarged initials in the left margin; majuscule scholia in the left margin, keyed by † and ※ signs, and below the text block; a strip of the facing leaf at the right edge (correctly ignored by the OCR)",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Ἡ μὲν ἀληθινὴ καὶ ἁπλῆ καὶ μονοειδὴς σοφία.\nἐν τοῖς θεοῖς ἵδρυται· ἀμφιέννυσι δὲ καὶ τὴν τιμὰς\nδιδῶσαν περιφέρειαν αὐτοῖς. φέρει δὲ τὰ τῶν θεῶν\nχαρίσματα ἐν τοῖς οὐρανίοις σχήμασι καὶ ὀργάνοις.",
+            "image": "The paragraph opens with an enlarged Ἀ: \"Ἀλλ' ἐπειδὴ αὖθις ἡ … σοφία · καὶ τοὺς … ἀμφιέννυσι … δίδωσι περιφέρειν αὐτοῖς · φέρε καὶ τὰ τῶν οὐρανίων νόων ἱερὰ … καὶ ὄργανα\". The image has 'since … wisdom clothes them and gives them [things] to carry; come, let us unfold the sacred [garments] and instruments of the heavenly minds'. It does not have 'established in the gods' or 'the gifts of the gods'.",
+            "problem": "The sentence is rebuilt into one that is not on the leaf. The heavenly 'minds' (νόων) become 'gods', and the exhortation φέρε … ἀναπτύξωμεν becomes a statement",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "ἡμᾶς\nδὲ ἐκλαμπόμενον",
+            "image": "ἢ νοε|ρῶς ἐλλαμπόμενον (\"or intellectually illuminated\"; a small οτο sign stands above, keying the ※ scholion)",
+            "problem": "Misread. It removes the νοητῶς/νοερῶς pair that the marginal scholion exists to explain, and puts 'us' in its place",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "διὰ τὸ ἀεὶ ἐμοῦ μερίζεσθαι",
+            "image": "διὰ τὸ ἐν οὐρανῷ μένειν (abbreviated οὐ(ρα)ν(ῷ))",
+            "problem": "Misread. 'Because it remains in heaven, where the light is' becomes 'because it is always being shared out'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "τὸ κα-\n…\nσμητικὸν καὶ ἡγεμονικὸν",
+            "image": "τὸ βα-|σιλικὸν καὶ ἡγεμονικὸν",
+            "problem": "The rods' meaning 'royal' (βασιλικόν) is read as 'adorning'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "τὰ δὲ ὄργανα. καὶ τοὺς πέλεκεις.",
+            "image": "τὰ δὲ δόρατα καὶ τοὺς πελέκεις",
+            "problem": "'Spears' read as 'instruments'. One of the symbols in the list is lost",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "καὶ βλαστικόν",
+            "image": "καὶ τελεσιουργὸν (or τελεσιωτικόν)",
+            "problem": "'Perfecting' read as 'sprouting/generating'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ἐν δ'\nτῷ κεφαλαίῳ πε-\nρὶ φωτὸς ἐλάλησεν.\nἔλεγεν· τί νοητὸ-\nν καὶ τί νοερὸν·",
+            "image": "ΛΟ|ΓΩ · ΚΕΦΑΛΑΙΩ ΤΕ|ΤΑΡΤΩ · ΕCΑΦΗΝΙ|CΑ ΜΕΝ · ΤΙ ΝΟΗΤΟΝ | ΚΑΙ ΤΙ ΝΟΕΡΟΝ (\"in the treatise, chapter four, I clarified what is intelligible and what intellectual\")",
+            "problem": "The scholiast's first-person 'I clarified' becomes an invented 'he spoke about light. He said'. This loses the contrast with 'now he himself makes it clear'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "καὶ ἄϋπνον καὶ ἀσχετον καὶ ἀκαθάρσυνον",
+            "image": "καὶ ἄμι(κ)τον(?) · καὶ ἄσχετον · καὶ …",
+            "problem": "The first line is hard to read at this resolution. 'ἄϋπνον' does not match the visible letter shapes, and 'ἀκαθάρσυνον' is not a Greek word",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Ἡ μὲν ἀληθινὴ καὶ ἁπλῆ καὶ μονοειδὴς σοφία.\nἐν τοῖς θεοῖς ἵδρυται",
+            "english": "The true, simple and uniform **wisdom** <note>original: σοφία (sophia)</note> is established in the gods; and it clothes them with the encircling garment that bestows honours upon them. It bears the gifts of the gods in heavenly forms and instruments.",
+            "problem": "This faithfully renders an OCR sentence that is not on the leaf (see the O1 error above). The reader gets a doctrine about 'the gods' where the manuscript is about the heavenly minds, plus the exhortation 'let us unfold'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "source": "καὶ τὸ καθόλου νοητῶς ἐκλάμπον. ἡμᾶς\nδὲ ἐκλαμπόμενον",
+            "english": "and that which shines forth wholly in an **intelligible** manner, yet is itself illuminated toward us",
+            "problem": "The image reads 'or is intellectually (νοερῶς) illuminated'. The English loses the intelligible/intellectual pair that the scholion beside it explains, so the scholion no longer connects to the text",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "τὰ δὲ ὄργανα. καὶ τοὺς πέλεκεις.",
+            "english": "The **instruments** <note>original: ὄργανα</note> and the **axes**",
+            "problem": "The manuscript reads δόρατα, 'spears'. The note certifies the misread as the original word",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "ἐν δ'\nτῷ κεφαλαίῳ πε-\nρὶ φωτὸς ἐλάλησεν.\nἔλεγεν·",
+            "english": "In the work On the Divine Names, in chapter 4, he also spoke about light. He said what the intelligible",
+            "problem": "Inherited from the OCR. The image has 'I clarified what is intelligible and what intellectual'. Nothing about light is said there",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented markdown bold (**wisdom**, **garment**, **rods** …) runs through the reader text",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: σοφία (sophia)", "verdict": "ok", "helpful": false },
+            { "quote": "original: τὸ ἱερατικὸν ἔνδυμα", "verdict": "ok", "helpful": false },
+            { "quote": "original: ἱερατικὴν", "verdict": "ok", "helpful": false },
+            { "quote": "original: ζώνας", "verdict": "ok", "helpful": false },
+            { "quote": "original: δυνάμεων", "verdict": "ok", "helpful": false },
+            { "quote": "original: ῥάβδους", "verdict": "ok", "helpful": false },
+            { "quote": "original: νοητὸν", "verdict": "ok", "helpful": true },
+            { "quote": "original: νοερὸν", "verdict": "ok", "helpful": true },
+            { "quote": "original: ὄργανα", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            {
+              "english": "Where it is, in the 16th reading, in the seventh chapter.",
+              "why": "An opaque cross-reference. The reader is not told which work or which 'reading' the scholiast means"
+            },
+            {
+              "english": "spoken of in <unclear>chapter</unclear> 16",
+              "why": "The Celestial Hierarchy has 15 chapters, so the reference must point to another work. The reader needs to be told which"
+            },
+            {
+              "english": "In the work On the Divine Names, in chapter 4, he also spoke about light.",
+              "why": "The reader needs to know that On the Divine Names is another treatise by the same Pseudo-Dionysius, and that this marginal text is a scholion (attributed to Maximus) on the main text"
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is the correct leaf, and its OCR follows the general argument. But at several points it rebuilds the minuscule into plausible Greek that is not on the leaf ('established in the gods', 'instruments' for spears, 'us' for νοερῶς), and the English and its notes pass those readings on as fact. A Vatican copyright banner and watermark are burned into the scan."
+  }
+]

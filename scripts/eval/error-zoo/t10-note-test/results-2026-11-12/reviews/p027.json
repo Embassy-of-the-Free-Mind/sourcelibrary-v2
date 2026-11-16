@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6a3ced8e4701a906f10e15a3",
+    "slot": 1,
+    "title": "幾何論約·卷一~卷二 (vol 1)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Du Zhigeng's Jihe lunyue, a Qing abridgement of the Chinese Euclid, here in a Siku Quanshu manuscript copy (block-heart reads 欽定四庫全書). It belongs in a general 'universallibrary' collection; the page is Elements II.5–6.",
+    "rights_flag": null,
+    "structure_note": "Of 112 records, 107 have OCR. The book field says 107 pages are translated, but the structure count says pages_translated 0, so one of the two counters is wrong (this page is translated). Only 6 pages have a printed number, and on this leaf the block-heart shows only 卷二 with no leaf number visible. The 2 backsteps and 2 repeats are therefore most likely misread or juan-level markers, not a scan splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 94,
+        "right_page": "yes",
+        "printed_marker": "卷二",
+        "layout": "Siku Quanshu manuscript half-leaf: nine vertical columns in a ruled frame, block-heart edge at right with 欽定四庫全書 and 卷二, no diagram",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "并與半兀", "image": "并與半元", "problem": "元 misread as 兀 at the foot of the column. The same phrase two characters earlier is read correctly as 半元, so meaning is recoverable", "severity": "minor" },
+          { "ocr": "引増", "image": "引增", "problem": "variant form 増 used for 增 (twice); no change of meaning", "severity": "minor" },
+          { "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n上方形", "image": "欽定四庫全書 … 卷二 on the block-heart", "problem": "block-heart furniture (collection title and juan number) not recorded", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "又任引増一直線", "english": "and another straight line is extended from it", "problem": "任 ('arbitrarily, any length') dropped; the proposition's generality is weakened, though the sense survives", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "Letters: 辛 H, 巳 F, 壬 I, 卯 O, 寅 N, 丑 M. The <term>qingzhe ", "verdict": "ok", "helpful": true },
+            { "quote": "\"chime-stone shape,\" the gnomon", "verdict": "ok", "helpful": true }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page: the OCR follows the manuscript closely, with only minor slips. The translation renders the end of II.5 and the enunciation of II.6 faithfully, and its letter-mapping note and the gloss of 磬折形 as 'gnomon' are accurate and useful. Nothing an expert would flag on sight, apart from the translated-pages counter mismatch in the metadata."
+  }
+]

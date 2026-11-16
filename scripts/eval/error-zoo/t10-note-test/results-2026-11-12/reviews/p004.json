@@ -1,0 +1,46 @@
+[
+  {
+    "book_id": "69b525bf29577f283b57bb89",
+    "slot": 1,
+    "title": "Cæsar Frederiks agtien-jarige reys, na en door Indien, anno 1563 en vervolgens, seer naauwkeurig door hem selfs beschreven. ; Nu aldereerst uyt het Engelsch vertaald. Met nodige konstprinten, en een volkomen register verrĳkt",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1706 Dutch translation of Federici's account of travel in India. No tradition or collection is assigned, so there is nothing to conflict with. The page is plainly this work: the running head reads 'DOOR CÆSAR FREDERIKS.'",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree with themselves: pages_translated is 0 but pages_translated_field is 80. Either the count or the field is stale. There are 4 printed backsteps and 5 repeats across 63 printed numbers. In an illustrated book ('Met nodige konstprinten') these are more likely misread numerals or unnumbered plates than a scan splice, but one page cannot settle it. On this leaf, page-num 19 and signature B 2 match the image.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "printed_marker": "19 (signature \"B 2\", catchword \"aan\")",
+        "layout": "single column of Dutch blackletter with roman for names; two marginal notes in the outer margin; running head with page number",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "zijn 'er drie of vier gewapende Kusten", "image": "gewapende Fusten", "problem": "'Fusten' (fustas, light galleys) misread as 'Kusten' (coasts), which makes no sense here. The translation silently corrects it to 'fustas'.", "severity": "moderate", "class": "O6" },
+          { "ocr": "Ik kwam in mijn reyse by getal ter plaats", "image": "Jk quam in mijn reys by geval ter plaats", "problem": "'by geval' (by chance) misread as 'by getal' (by number). 'quam' is normalised to 'kwam' and 'reys' to 'reyse'. The translation follows the image ('by chance').", "severity": "moderate", "class": "O6" },
+          { "ocr": "van St. Paulus orde", "image": "van St. Paulus ordre", "problem": "Spelling normalised", "severity": "minor" },
+          { "ocr": "word daar genoemd / de paarl-vissery", "image": "word daar genoemt / de paarl-vis-sery", "problem": "Spelling normalised (genoemt → genoemd)", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The running head 'BY CÆSAR FREDERIKS.' is translated as the first line of the reader text", "severity": "minor", "class": "O11" },
+          { "note": "The translation reads 'fustas' and 'by chance' where the served OCR has 'Kusten' and 'by getal'. The two panes disagree, although the English matches the image.", "severity": "minor", "class": "T14" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "market", "verdict": "ok", "helpful": false },
+            { "quote": "light galleys", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "from Cape Comori to the low land of Chilao", "why": "'Cape Comori' is Cape Comorin, the southern tip of India, and Chilao is Chilaw on the west coast of Ceylon. A general reader cannot place the pearl-fishery sea without this." },
+            { "english": "being like the boats of our pilots", "why": "'Our' refers to the author's home waters (Venetian, carried over via the English). The comparison means little without a short note on what pilot boats were." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page. The OCR has two moderate misreadings ('Kusten' for 'Fusten', 'getal' for 'geval') and some spelling normalisation; the translation is faithful to the image, and both glosses are correct. Nothing an expert would flag on sight, apart from the inconsistent translated-page counts in the record."
+  }
+]

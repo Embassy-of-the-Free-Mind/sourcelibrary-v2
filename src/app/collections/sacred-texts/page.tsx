@@ -167,7 +167,7 @@ export default async function SacredTextsPortal() {
       <div className="bg-dark">
         <SiteHeader variant="dark" />
         <div className="max-w-[1500px] mx-auto px-6 pt-8 pb-14 sm:pb-16">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-4 font-display">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-4 font-serif">
             Sacred Texts
           </h1>
 

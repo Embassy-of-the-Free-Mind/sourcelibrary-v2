@@ -13,6 +13,7 @@
  *   confirm  node --env-file=… second-read.mjs confirm --queue=queue.json --run=DIR --reader=NAME
  *            reads DIR/readers/NAME/reviews and rewrites the queue's rows: confirmed (the second reader also finds a
  *            serious OCR error or a wrong leaf) → status `queued`; not confirmed → `not-confirmed`. Unread rows stay.
+ *            [--ledger=FILE] also appends each verdict and its text hash to FILE (repair-queue.mjs --second-reads).
  * Read-only against Mongo. Writes files only.
  */
 import fs from 'node:fs';
@@ -55,6 +56,9 @@ if (cmd === 'build') {
   console.log(`built ${key.length} packets of ${pick.length} picked (queue rows needing a Gemini second read: ${Q.rows.filter((r) => r.status === 'needs-second-read' && r.families[0] === 'claude' && r.families.length === 1).length})`);
 } else if (cmd === 'confirm') {
   const NAME = arg('reader');
+  // The second reader's model family, recorded with each verdict (repair-queue.mjs counts it as the second family).
+  const FAMILY = arg('family') || (/gemini/i.test(NAME) || /^gem-/.test(NAME) ? 'gemini' : /claude|opus|sonnet/i.test(NAME) ? 'claude' : null);
+  if (!['gemini', 'claude'].includes(FAMILY)) { console.error(`--family=gemini|claude: cannot tell the family of reader ${NAME}`); process.exit(2); }
   const key = fs.readFileSync(path.join(RUN, 'key.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
   // A verdict counts only if the page still holds the text the second reader read (hash frozen at build).
   const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
@@ -69,11 +73,18 @@ if (cmd === 'build') {
     verdict.set(k.page_id, ocrSerious);
   }
   if (changed) console.log(`${changed} page(s) changed since the second read was built: their verdicts are not used`);
+  // --ledger=FILE: every verdict, with the text hash it was given on, appended to a file that outlives the week's queue.
+  // repair-queue.mjs --second-reads=FILE applies it on the next rebuild, so a page is second-read once per text.
+  if (arg('ledger')) {
+    const at = new Date().toISOString(), sha = new Map(key.map((k) => [k.page_id, k.ocr_sha256]));
+    fs.appendFileSync(arg('ledger'), [...verdict].map(([page_id, serious_ocr]) => JSON.stringify({ page_id, ocr_sha256: sha.get(page_id), family: FAMILY, reader: NAME, serious_ocr, run: path.basename(RUN), at })).join('\n') + (verdict.size ? '\n' : ''));
+    console.log(`appended ${verdict.size} verdict(s) to ${arg('ledger')}`);
+  }
   let c = 0, nc = 0;
   for (const r of Q.rows) {
     if (!verdict.has(r.page_id)) continue;
-    r.second_read = { reader: NAME, family: 'gemini', serious_ocr: verdict.get(r.page_id), run: path.basename(RUN) };
-    if (verdict.get(r.page_id)) { r.status = 'queued'; r.families = [...new Set([...r.families, 'gemini'])]; c++; } else { r.status = 'not-confirmed'; nc++; }
+    r.second_read = { reader: NAME, family: FAMILY, serious_ocr: verdict.get(r.page_id), run: path.basename(RUN) };
+    if (verdict.get(r.page_id)) { r.status = 'queued'; r.families = [...new Set([...r.families, FAMILY])]; c++; } else { r.status = 'not-confirmed'; nc++; }
   }
   Q.by_status = Q.rows.reduce((m, r) => ((m[r.status] = (m[r.status] || 0) + 1), m), {});
   for (const c of Object.values(Q.by_cell || {})) c.statuses = {};

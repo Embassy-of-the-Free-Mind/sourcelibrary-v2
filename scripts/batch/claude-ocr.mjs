@@ -207,9 +207,18 @@ async function main() {
     if (imgCache.has(p.id)) return imgCache.get(p.id);
     const src = getPageSource(p);
     if (!src) return { error: 'no usable image' };
-    const res = await fetch(src);
-    if (!res.ok) return { error: `image HTTP ${res.status}` };
-    const buf = Buffer.from(await res.arrayBuffer());
+    // A dropped connection used to throw out of here and end the whole run, before any page was read, because the
+    // reuse lookup fetches every page's image first (2026-11-13: 357 SBE 49 pages, ECONNRESET / HTTP2 stream errors
+    // from the laptop). Retry with backoff, then fail only this page, as an HTTP error does.
+    let res, buf, lastErr;
+    for (let i = 0; i < 5 && !buf; i++) {
+      try {
+        res = await fetch(src);
+        if (!res.ok) return { error: `image HTTP ${res.status}` };
+        buf = Buffer.from(await res.arrayBuffer());
+      } catch (e) { lastErr = e; await new Promise((r) => setTimeout(r, 2000 * (i + 1))); }
+    }
+    if (!buf) return { error: `image fetch failed: ${String(lastErr?.cause?.code || lastErr?.message || lastErr).slice(0, 80)}` };
     const v = { src, buf, sha: createHash('sha256').update(buf).digest('hex') };
     imgCache.set(p.id, v);
     return v;

@@ -90,7 +90,7 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error previewing migration:', error);
     return NextResponse.json({ error: 'Failed to preview migration' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 export const POST = withAuth(async (request, session) => {
   try {
@@ -149,4 +149,4 @@ export const POST = withAuth(async (request, session) => {
     console.error('Error running migration:', error);
     return NextResponse.json({ error: 'Failed to run migration' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

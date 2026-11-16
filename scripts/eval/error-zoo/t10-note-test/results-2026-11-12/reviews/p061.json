@@ -1,0 +1,47 @@
+[
+  {
+    "book_id": "699ef9fd0600353e655fe517",
+    "slot": 1,
+    "title": "[Cyrillisch:] Sleutel tot de geheimen van de natuur",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Russian pre-reform (ѣ, ъ, і) early-19th-century printing of Eckartshausen; the page is moral-philosophical/esoteric prose consistent with the author. The catalogue title is an odd Dutch cataloguer's form ('[Cyrillisch:] Sleutel tot…') but describes the work.",
+    "rights_flag": null,
+    "structure_note": "15 duplicate records (433 records vs 418 distinct page numbers) and 25 printed repeats suggest duplicated records or re-scanned leaves rather than misread numerals alone. structure.pages_translated is 0 while the book field says 401 translated, and this page does carry a translation, so the count looks wrong (E2). The record number 376 against printed 338 is a plausible front-matter offset.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 376,
+        "right_page": "yes",
+        "printed_marker": "338",
+        "layout": "single column, page number centred at head, section heading in spaced capitals, handwritten 'P' in left margin; fore-edge of the book block fills the left third and the scan cuts off the right edge of the text block",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "шерніе. на мѣсто", "image": "терніе на мѣсто (the typeface's т looks like ш; the OCR resolves it as т everywhere else on the page; the mark after the word looks like a speck, not a stop)", "problem": "first word left as шерніе instead of терніе, with a spurious full stop that breaks the sentence carried over from the previous page", "severity": "minor" },
+          { "ocr": "<margin>P</margin>", "image": "a large handwritten ink 'P' in the left margin, a later reader's mark, not printed text", "problem": "a later hand transcribed as page content (O13) and carried into the English", "severity": "minor" },
+          { "ocr": "Всякъ\nстремится къ пріятнымъ чувствова-", "image": "the line ends are cut off by the right edge of the scan ('Всяк…', 'чувствов…', 'правил…', 'удовол…')", "problem": "on every line the OCR supplies the last 1–3 letters, which the image does not show. The supplied letters are plausible, but they cannot be checked against this scan", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<vocab>чувствованіе, сладострастіе, Божество, умѣренность, разсудокъ, религія, теорія</vocab>", "english": "<note>Vocabulary appearing at the bottom of the original page: feeling, voluptuousness, the Deity, moderation, reason, religion, theory.</note>", "problem": "there is no vocabulary list on the printed page. The <vocab> tag is the OCR model's own keyword list, and the note presents it to the reader as part of the source", "severity": "moderate", "class": "T10" }
+        ],
+        "other": [
+          { "note": "the scan cuts off the right edge of the text block, so the reader cannot see the ends of the lines", "severity": "moderate", "class": "other:cropped scan" },
+          { "note": "a <meta> line asserts what the previous page says: \"continues from previous page: \\\"man himself destroys the earthly paradise and sows\\\" thorns\". This page cannot confirm it", "severity": "minor", "class": "T15" },
+          { "note": "a lone 'P' from a reader's ink mark appears in the English as <margin>P</margin> with no explanation", "severity": "minor", "class": "O13" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"сладострастія\", meaning sensual indulgence or lus", "verdict": "ok", "helpful": false },
+            { "quote": "Vocabulary appearing at the bottom of the original page: fee", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            { "english": "<margin>P</margin>", "why": "a reader sees a bare 'P' beside the paragraph and cannot tell that it is a later reader's handwritten mark, not part of the printed text" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The text and translation on this page are sound and faithful. The page's problems are a scan that cuts off the line ends, a reader's ink 'P' carried in as text, and a note that wrongly claims a vocabulary list is printed on the page. The structure counts point to duplicate records and a wrong translated-page count."
+  }
+]

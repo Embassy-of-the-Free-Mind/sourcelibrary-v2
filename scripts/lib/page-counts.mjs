@@ -184,7 +184,8 @@ export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'd
  * exact count. A sample frame chosen for one question is rarely valid for the next.
  *
  * A page qualifies unless it is a never-translated type or the model has permanently
- * refused it.
+ * refused it, or the pipeline has recorded that it will not translate it
+ * (`translation.health_blocked`, #378 below).
  *
  * CRUCIALLY, a page with no OCR yet still counts. "Not yet OCR'd" is PENDING work, not
  * IMPOSSIBLE work, and excluding it is how a book gets badged finished while half of it
@@ -202,7 +203,48 @@ export function isTranslatablePageForCount(page) {
   if (page?.translation?.safety_blocked === true) return false;
   if (page?.ocr?.recitation_blocked === true) return false;
   if (page?.ocr?.fail_blocked === true) return false;
+  if (isHealthBlocked(page)) return false;
   return true;
+}
+
+/**
+ * True iff the pipeline has RECORDED that it will not translate this page:
+ * `translation.health_blocked` carries a reason (#378).
+ *
+ * Every translation selector already excludes these pages, so while they stayed in
+ * the denominator no lane would ever pay them and their book could never reach
+ * `complete`. Measured 2026-11-15 over the 5,717 books the finish lane serves
+ * (>= 80% translated): 33,423 pages owed, 90 of them ordinary text; 2,870 were
+ * health-blocked and 7,928 were refused by the translator's own pre-flight
+ * (isTranslatablePage: looped OCR, no body, illegible), which the finish lane now
+ * stamps here too (translate-gate-stamp.mjs).
+ *
+ * THE RULE: a page with nothing on it (`no-body`, `blank-ocr`) owes nothing; a page
+ * whose OCR loops or cannot be read, or whose English was refused, is a REPAIR item,
+ * not a block on the book. Both leave the denominator; the reason stays on the page,
+ * so the repair list is a query (`translation.health_blocked` by reason), and the
+ * stamp is undone by unsetting it (a re-read OCR lane does, and the stamping gate
+ * re-judges its own stamps on the next visit). Pages awaiting OCR are NOT this: they
+ * stay owed (above).
+ */
+export function isHealthBlocked(page) {
+  const hb = page?.translation?.health_blocked;
+  if (hb == null || hb === '' || hb === false) return false;
+  // A translate-gate stamp (translate-gate-stamp.mjs) judged one OCR text: once the OCR
+  // changes, the verdict is stale and the page is owed again until the gate re-judges it.
+  if (hb === TRANSLATE_GATE_BLOCK) return codePointLength(page?.ocr?.data) === (page?.translation?.refusal?.ocr_chars ?? -1);
+  return true;
+}
+
+/** `translation.health_blocked` value of the translate-gate stamp (translate-gate-stamp.mjs re-exports it). */
+export const TRANSLATE_GATE_BLOCK = 'translate_gate';
+
+/** Code points in a string (0 for a non-string): what Mongo's `$strLenCP` counts, so the two twins agree. */
+export function codePointLength(s) {
+  if (typeof s !== 'string') return 0;
+  let n = 0;
+  for (const _ of s) n++;
+  return n;
 }
 
 /**
@@ -218,6 +260,23 @@ export function isTranslatablePageForCount(page) {
  * since this shipped) reads as `false` here and stays IN the denominator — the same
  * "pending, not proven-empty" default every other unclassified page already gets.
  */
+/**
+ * Mongo twin of `!isHealthBlocked(page)`: no recorded block, or a translate-gate stamp
+ * whose OCR has changed since (its `ocr_chars` no longer match). `$or` stops at the first
+ * true branch, so `$strLenCP` runs only on translate-gate pages.
+ */
+const HEALTH_NOT_BLOCKED_COND = {
+  $or: [
+    { $in: [{ $ifNull: ['$translation.health_blocked', null] }, [null, '', false]] },
+    {
+      $and: [
+        { $eq: ['$translation.health_blocked', 'translate_gate'] },
+        { $ne: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, { $ifNull: ['$translation.refusal.ocr_chars', -1] }] },
+      ],
+    },
+  ],
+};
+
 const TRANSLATABLE_COND = {
   $and: [
     // No `ocr.data` requirement — see isTranslatablePageForCount. A page awaiting OCR
@@ -237,6 +296,8 @@ const TRANSLATABLE_COND = {
     { $ne: ['$translation.safety_blocked', true] },
     { $ne: ['$ocr.recitation_blocked', true] },
     { $ne: ['$ocr.fail_blocked', true] },
+    // isHealthBlocked (#378): a recorded will-not-translate is a repair item, not owed.
+    HEALTH_NOT_BLOCKED_COND,
   ],
 };
 

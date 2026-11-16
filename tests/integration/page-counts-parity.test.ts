@@ -58,6 +58,12 @@ function edgePages(): Record<string, unknown>[] {
     { page_number: 13, archived_photo: '' },
     // OCR stored as a non-string: not servable text
     { page_number: 14, ocr: { data: { text: 'x' } } },
+    // a recorded will-not-translate (#378): a repair item, out of the denominator
+    { page_number: 16, ocr: { data: 'q' }, translation: { health_blocked: 'collapsed' } },
+    // a translate-gate stamp on the OCR it judged (3 code points, one astral): out
+    { page_number: 17, ocr: { data: 'a𝔄b' }, translation: { health_blocked: 'translate_gate', refusal: { ocr_chars: 3 } } },
+    // a translate-gate stamp whose OCR was re-read since: owed again, IN
+    { page_number: 18, ocr: { data: 'abcd' }, translation: { health_blocked: 'translate_gate', refusal: { ocr_chars: 3 } } },
   ].map(p => ({ book_id: BOOK, ...p }));
 }
 
@@ -94,12 +100,12 @@ async function allFive(db: Db): Promise<Record<string, Stats>> {
 
 /** The expected counts once page 7 is stamped, worked out page by page above. */
 const EXPECTED: Stats = {
-  total: 14, // pages 1–14
-  with_ocr: 8, // 1, 3, 5, 6, 7, 8, 11, 12 (a refusal keeps its OCR; 2 and 4 are unreadable)
+  total: 17, // pages 1–14 and 16–18
+  with_ocr: 11, // 1, 3, 5, 6, 7, 8, 11, 12, 16, 17, 18 (a refusal keeps its OCR; 2 and 4 are unreadable)
   with_translation: 2, // 1, 5 (3 is a blank placeholder)
-  // IN: 1, 2, 10, 11, 12, 13, 14. OUT: 3 and 4 blank, 5 exlibris, 6 and 7 text-free
-  // (7 once stamped), 8 refused, 9 fail-blocked.
-  translatable: 7,
+  // IN: 1, 2, 10, 11, 12, 13, 14, 18. OUT: 3 and 4 blank, 5 exlibris, 6 and 7 text-free
+  // (7 once stamped), 8 refused, 9 fail-blocked, 16 health-blocked, 17 translate-gate stamp.
+  translatable: 8,
   translated_translatable: 1, // 1
   blank: 1, // 3
   archived: 2, // 11 (failed:*), 12
@@ -170,7 +176,7 @@ describe('recountBook(): the one writer (#5325)', () => {
       // Stale in every way a private writer has left a book: a subset written, a
       // hidden page counted, pages_translatable missing, pages_blank wide.
       await db.collection('books').insertOne({
-        id: BOOK, slug: 'parity', pages_count: 16, pages_ocr: 8, pages_translated: 2, pages_blank: 2,
+        id: BOOK, slug: 'parity', pages_count: 16, pages_ocr: 11, pages_translated: 2, pages_blank: 2,
         updated_at: staleAt,
       });
 
@@ -178,8 +184,8 @@ describe('recountBook(): the one writer (#5325)', () => {
       const res = await twin.recountBook(db, BOOK, { reason: 'test', now });
       expect(res.matched).toBe(true);
       expect(res.after).toEqual({
-        pages_count: 14, pages_ocr: 8, pages_translated: 2,
-        pages_translatable: 8, // page 7 unstamped: the pipeline's documented gap
+        pages_count: 17, pages_ocr: 11, pages_translated: 2,
+        pages_translatable: 9, // page 7 unstamped: the pipeline's documented gap
         pages_blank: 1, pages_archived: 2,
       });
       expect(res.changed.sort()).toEqual(['pages_archived', 'pages_blank', 'pages_count', 'pages_translatable']);

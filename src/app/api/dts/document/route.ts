@@ -18,6 +18,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { logBotRead } from '@/lib/bot-reads';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
+import { isBookReadable } from '@/lib/book-access';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { dtsPageText } from '@/lib/dts-text';
 
@@ -69,12 +70,13 @@ export async function GET(request: NextRequest) {
         projection: {
           id: 1, title: 1, display_title: 1, slug: 1,
           author: 1, published: 1, language: 1,
-          pages_count: 1, chapters: 1, license: 1,
+          pages_count: 1, chapters: 1, license: 1, visible: 1,
         },
       }
     );
 
-    if (!book) {
+    // The document is the book's text, so it follows the book's reader gate (ops #17).
+    if (!book || !(await isBookReadable(book, request))) {
       return NextResponse.json(
         { error: `Resource "${resourceId}" not found` },
         { status: 404 }

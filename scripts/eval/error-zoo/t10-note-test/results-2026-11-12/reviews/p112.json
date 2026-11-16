@@ -1,0 +1,126 @@
+[
+  {
+    "book_id": "6a3cf0268642f0445b162e15",
+    "slot": 1,
+    "title": "御製律呂正義後編·卷三~卷四 (vol 4)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Qing imperial treatise on court ritual music. The leaf is a woodblock-printed flute score of a sacrificial hymn. It sits plausibly in the general universallibrary collection.",
+    "rights_flag": null,
+    "structure_note": "Only 4 of 149 records carry a printed number, so the 1 backstep and 1 repeat tell us almost nothing. They are most likely misread block-heart leaf numbers, not a splice. The structure count says pages_translated is 0 while the field says 124, so one of the two counters is wrong (E2). 129 of 149 pages have OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "printed_marker": "律呂正義後編 (block-heart at the left edge, cut off by the frame; leaf number illegible)",
+        "layout": "woodblock score in eight vertical columns ruled apart, right to left; each large text character has a small scale-degree name and a small gongche fingering character beside it; rows of open circles in the lower half of each column; the heading 笛譜 has its own column",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "仉",
+            "image": "several different small notation characters on the leaf (they look like 亿, 伬 and 仜, i.e. 乙/尺/工 with the person radical), e.g. 未羽亿, 歆角伬, 兮商仜",
+            "problem": "The OCR reads the gongche fingering characters as one glyph, 仉, and drops many of them (e.g. 禮羽亿 becomes \"禮羽\", 肴宮伬 becomes \"宥宮\"). For a flute score these characters are the notes, and that information is lost.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "俎",
+            "image": "a small notation character (looks like 伬 or 亿), e.g. after 洋羽 at the foot of the first column and in 行宮伬",
+            "problem": "Notation character misread as the word 俎 'sacrificial stand'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "宥宮",
+            "image": "肴宮",
+            "problem": "肴 'viands' misread as 宥",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "牲宮",
+            "image": "牷宮",
+            "problem": "牷 'unblemished victim' misread as 牲 (so 牲 appears twice in a row)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "凡角",
+            "image": "几角",
+            "problem": "几 'offering table' misread as 凡",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "rows of open circles under the text in every column",
+            "problem": "The circle marks in the score are neither transcribed nor described",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<script>handwritten</script>",
+            "image": "woodblock print in a calligraphic style",
+            "problem": "Wrong script tag",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "仉 / 俎 / 伍 (fingering characters)",
+            "english": "<term>kang</term> ... <term>zu</term> ... <term>wu</term>",
+            "problem": "The OCR's conflated notation is carried over as romanised terms. 'kang' is not a reading of 仉 (zhǎng) nor of any of the notation characters on the leaf (yi, che, gong). The reader is given a fingering sequence the print does not have. The meta hedges this only as 'some pairings are uncertain'.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "<script>handwritten</script>",
+            "english": "In the handwritten layout the fingering characters (伍, 仉, 俎) often stand on separate lines.",
+            "problem": "The meta repeats the wrong 'handwritten' claim about a printed leaf",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The meta and summary name the hymn \"Han Ping\" and its occasion (presenting the sacrificial stands, sacrifice to Earth). Neither appears on this leaf, and I cannot confirm them from it.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "The OCR reads 俎 \"sacrificial stand\" here and at several poin",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"笛譜\", score for the <term>di</term> <gloss>side-bl",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "side-blown bamboo flute",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "The OCR reads 宥 here. The hymn text on the previous page has",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "As on the previous page, the OCR reads 凡 \"all\" where the hym",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "*gong* <term>wu</term>",
+              "why": "Nothing in the reading text tells the reader that gong/shang/jue/zhi/yu are the five pentatonic scale degrees (only the summary says so), or that wu/kang/zu stand for flute fingering signs."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The hymn text and the scale-degree names are mostly read right, and the notes correctly flag three misread words. But the flute fingering characters, which are the substance of a score, are merged into one wrong glyph and romanised as an invented 'kang', so a reader cannot use this score."
+  }
+]

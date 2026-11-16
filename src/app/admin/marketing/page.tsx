@@ -331,19 +331,19 @@ export default function MarketingPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-status-success">48,546</p>
+              <p className="text-2xl font-semibold text-status-success">48,546</p>
               <p className="text-sm text-stone-400">URLs in Sitemap</p>
             </div>
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-accent-gold">~2</p>
+              <p className="text-2xl font-semibold text-accent-gold">~2</p>
               <p className="text-sm text-stone-400">Google Indexed</p>
             </div>
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-status-success">47,284</p>
+              <p className="text-2xl font-semibold text-status-success">47,284</p>
               <p className="text-sm text-stone-400">Bing Submitted</p>
             </div>
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-status-success">Active</p>
+              <p className="text-2xl font-semibold text-status-success">Active</p>
               <p className="text-sm text-stone-400">IndexNow</p>
             </div>
           </div>

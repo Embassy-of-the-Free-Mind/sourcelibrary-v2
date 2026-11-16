@@ -1,0 +1,65 @@
+[
+  {
+    "book_id": "69b525ce6be6046083032ac7",
+    "slot": 1,
+    "title": "Architecture, peinture et sculpture de la maison de ville d'Amsterdam, représentée en CIX figures en taille-douce ...",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1719 French description of the Amsterdam Town Hall's sculpture, plate by plate. The leaf matches the title and the language. No tradition or collection is assigned, so there is nothing for it to contradict.",
+    "rights_flag": null,
+    "structure_note": "The image is an unsplit opening showing printed pp. 18 and 19. The OCR transcribes both pages in order as two blocks, with `<page-num>18` and `<page-num>19`, which is the deliberate-opening handling and not a lost half. If the whole book is scanned as openings, one record holds two printed numbers, so with_printed_number at 16/169 and the 4 backsteps and 2 repeats more likely come from that two-numbers-per-record pattern or numeral misreads than from a misordered scan. Neither can be confirmed from one page. structure.pages_translated is 0 while the book field says 127 (and this page carries a translation), so one of the counters is wrong (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "printed_marker": "\"18\" (left page) and \"19\" (right page); signature \"E 2\" and catchword \"Chien;\" at the foot of p. 19; catchword \"che\" at the foot of p. 18",
+        "layout": "an open spread of two printed pages, each in two columns, with a running head across the opening and centred \"PLANCHE\" headings; no illustrations",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "il ne\ns'enfuit pas qu'elles ne puiſſent auſſi en reſ-",
+            "image": "il ne s'enſuit pas (long s)",
+            "problem": "the long s is read as f, giving 'flees' for 'follows'. The translation still renders it correctly as 'it does not follow'.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Raw `<column-break/>` appears twice in the English payload, and `<header>`/`<sig>E 2</sig>` sit mid-text between the two printed pages. Unless the renderer strips them, a reader sees markup in the text.",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "The continuity meta '<meta>continues from previous page: description of the ornaments of the Pedestal of Mercury</meta>' names a 'Pedestal of Mercury' that this leaf does not mention. The leaf names only 'ce Dieu' with caduceus, winged hat and purse, so Mercury is a fair inference but 'Pedestal' is not shown here.",
+            "severity": "minor",
+            "class": "T15"
+          },
+          {
+            "note": "An unsplit opening (pp. 18–19 in one image). It is handled correctly, with both pages transcribed and translated in order, but one record holds two printed pages.",
+            "severity": "minor",
+            "class": "I3"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "here meaning symbolic emblems", "verdict": "ok", "helpful": true },
+            { "quote": "A joke on the cuckold, traditionally pictured with horns like", "verdict": "ok", "helpful": true },
+            { "quote": "Latin \"serere,\" past participle \"satum\"", "verdict": "ok", "helpful": true },
+            { "quote": "the Fates", "verdict": "ok", "helpful": true },
+            { "quote": "the source writes \"Diane\"; classical tradition names her mo", "verdict": "ok", "helpful": true },
+            { "quote": "the prize awarded by Paris as the fairest of the goddesses", "verdict": "ok", "helpful": true },
+            { "quote": "to carry off Europa", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "the Chamber of the Extraordinary Aldermen", "why": "Amsterdam's civic offices (Echevins Extraordinaires, the 'extraordinary' schepenen) are not obvious to a general reader. A short gloss would place the statue." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription and translation of this 1719 opening are faithful and the notes are accurate and helpful. The note on 'Diane' versus Dione flags a real slip in the source instead of hiding it. The only on-sight blemish is raw layout markup (`<column-break/>`, `<sig>`) left in the English, plus a counter mismatch in the book's structure fields."
+  }
+]

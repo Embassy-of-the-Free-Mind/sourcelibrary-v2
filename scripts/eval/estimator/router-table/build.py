@@ -289,10 +289,17 @@ def menu_default(cell, fdec, M, rs, P, failed=()):
 
 def agy_default(cell, M, rs, P, failed=()):
     """The plainest agy route the cell may take: measured first, then fewest stages, then posterior mean. On the menu, clear
-    of the hard floor, not a route the rule just failed; a measured one passes the k/n floor against the best measured route."""
+    of the hard floor, not a route the rule just failed; a measured one passes the k/n floor against the best measured route.
+    Where a measured agy route fails the hard floor in this cell, an unmeasured one is not a default (#360): it would start
+    agy writes on pages where agy was measured inventing text (latin-flash3/unknown, 549K pages, v3 #307). A route tried here
+    on too few pages to rate that passed none of them (k == 0) is not untested either, and is never the default (#360:
+    arabic-flash3/manuscript, 14K pages, bound 3flash>agy at 0/2 over a Flash-3 draft with wrong text on 15 of 25 pages)."""
     A, best = P['decision_rule']['accept_floor'], max(M, key=lambda r: r['mean'], default=None)
     near = lambda r: r not in M or r is best or within_p(r, best, A['within']) >= A['p']
-    cand = [r for r in rs if r.get('channel') == 'agy' and on_menu(r, P) and floor_ok(r, P) and near(r) and r['id'] not in failed]
+    agy_failed = any(r.get('channel') == 'agy' and r.get('tested') and not floor_ok(r, P) for r in rs)
+    none_passed = lambda r: r.get('tested') and r not in M and r.get('k') == 0
+    cand = [r for r in rs if r.get('channel') == 'agy' and on_menu(r, P) and floor_ok(r, P) and near(r) and r['id'] not in failed
+            and not (agy_failed and r not in M) and not none_passed(r)]
     return min(cand, key=lambda r: (r not in M, r['id'].count('>') + r['id'].count('+'), -r['mean'])) if cand else None
 
 
@@ -300,12 +307,13 @@ def bind(cell, fdec, fpk, live_id, M, rs, P, failed=()):
     """What the cell runs (#8283; Derek took the default, 2026-11-07): (bound route, why). A keep or switch binds its route. A HOLD
     or UNTESTED cell keeps its live route only if that route is on the menu and clears the hard floor; otherwise it takes
     agy_default. menu.keep_live names a cell that keeps its live route whatever the rule says. A held cell or a plain `planned`
-    binds nothing: a person owns it, and None makes the routers fall to their default."""
+    binds nothing: a person owns it, and None makes the routers fall to their default. An Opus live route is kept only where
+    Opus was measured in the cell (#360: "Opus only with evidence"; an untested cell gets agy, never the incumbent)."""
     if cell.get('held') or (cell.get('planned') and not cell['planned'].get('decision')): return None, 'held or planned: a person owns it'
     if cell['id'] in P.get('menu', {}).get('keep_live', {}): return live_id, 'menu.keep_live'
     if fdec.startswith(('keep', 'switch')) and 'UNTESTED' not in fdec: return fpk['id'], 'decided'
     live = next((r for r in rs if r['id'] == live_id), None)
-    if live and on_menu(live, P) and floor_ok(live, P): return live_id, 'undecided: the live route is on the menu and clears the floor'
+    if live and on_menu(live, P) and floor_ok(live, P) and (live.get('channel') != 'claude' or live in M): return live_id, 'undecided: the live route is on the menu and clears the floor'
     d = agy_default(cell, M, rs, P, failed)
     return (d['id'], 'undecided: the live route is off the menu or blocked, the plainest agy route') if d else (None, 'undecided: no live route or agy route may run')
 

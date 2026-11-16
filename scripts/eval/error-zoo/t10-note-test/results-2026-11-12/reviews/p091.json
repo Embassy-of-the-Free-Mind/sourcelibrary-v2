@@ -1,0 +1,124 @@
+[
+  {
+    "book_id": "69907e19b91bcb2db3f6e40d",
+    "slot": 1,
+    "title": "ParsiPrakashVinodVedangRai563GhaAlm3Shlf4DevanagariJyotish",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Devanagari manuscript leaf of a Sanskrit-medium guide to Persian verbs (Vedāṅgarāya's Pārasī-prakāśa tradition, 1643). It belongs in the Dharmartha Trust / eGangotri manuscript collection it is filed under.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree. There are 110 page records with OCR, but pages_count is 42. Structure says 0 pages translated, but the field says 42, and this page does have a translation. Probably a re-import or a stale count (E2), not missing pages. Only 19 pages have printed numbers, with 4 backsteps and 3 repeats. That is most likely the margin's two numerals (Devanagari folio '२४' and a later Western '14') being picked up in turn, or misread Devanagari folio numbers, not a real disorder.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "printed_marker": "२४ (with a later hand's \"14\" below it)",
+        "layout": "oblong pothi leaf, single block of 11 lines, folio numeral in the left margin, CC-0 eGangotri watermark at the foot",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "भवा भो भवानीत्यर्थे",
+            "image": "भवामो भवामीत्यर्थे",
+            "problem": "bhavāmi ('I become') read as bhavāni ('let me become'). The translation inherits the wrong mood.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "रूनने",
+            "image": "हनने (the scribe's ह)",
+            "problem": "The scribe's ह is read as रू/रु/द throughout: 'रुनिष्यामीति', 'अरुनिष्यन्मे', 'दरुनिष्यं', 'दंत्यर्थे' for हनिष्यामि / अहनिष्यन् / हंत्यर्थे. The translator silently corrects these to han-.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "श्वा ह शृ",
+            "image": "ख्वा ह शु / ख्वाह शुद (low confidence: the scribe's ख looks like रव)",
+            "problem": "The Persian future auxiliary khvāh- seems to be read as 'श्वा' every time it occurs, and 'शुद' as 'शृ'. The translation carries 'śvāhad'.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "प्रोक्त्यर्थे मे खर्द्",
+            "image": "भुक्त्यर्थे मे खर्द (low confidence)",
+            "problem": "'in the sense of eating' read as 'in the sense of speaking'. The translator guesses 'eating' inside <unclear>.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<meta>... The text appears to be a grammatical commentary or a treatise on verbal roots (dhatupatha) and their meanings.</meta>",
+            "image": "a Sanskrit-glossed list of Persian verb forms",
+            "problem": "The OCR's page description misidentifies the genre. It is metadata, not reader text.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "मे शवे म भवा भो भवानीत्यर्थे मे शवे",
+            "english": "**me-śave** is in the sense of <term>bhavāni</term> <gloss>let me become</gloss>",
+            "problem": "The image reads bhavāmi, 'I become' (Persian mī-shavam). The English gives an imperative 'let me become', so the gloss teaches the wrong form.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "श्वा ह शृ दय",
+            "english": "**śvāham śud**",
+            "problem": "The Persian khvāham shud ('I will become') is given as 'śvāham śud', carrying the OCR misreading of ख्वा. A reader who knows Persian cannot recognise the auxiliary.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "भुत्ते खर्दे कीर्तनं",
+            "english": "**kharde** for the past <term>kīrtana</term> <gloss>telling of what was done</gloss>",
+            "problem": "'for the past' and the gloss 'telling of what was done' are an interpretation the line does not carry. kīrtana means mention or declaration.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "श्वा ह शृ दय",
+            "english": "<note>original: \"śvā ha śṛ dama\"</note>",
+            "problem": "The note claims to quote the original but misquotes it ('dama' for 'दय').",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Several <unclear> spans contain the translator's own English guesses ('<unclear>should be</unclear>', '<unclear>eating</unclear>', '<unclear>\"he will eat\"</unclear>'). Others are untranslated romanised garble strings ('<unclear>\"mā dhi vijñeya tatra darśake nija kṛtvanu ti dro\"</unclear>') inside the reading text.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"me śave ma\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"śru da mu\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"śṛdvā hī\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"śvā ha śṛ dama\"", "verdict": "wrong", "helpful": false },
+            { "quote": "original: \"śṛ i\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"jadanaṃ\"; to strike", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"rūnane\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"proktyarthe\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"me paca i\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"śvā ru ma mukta\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"me vī na i\"", "verdict": "ok", "helpful": false },
+            { "quote": "let me become", "verdict": "wrong", "helpful": false },
+            { "quote": "let him become", "verdict": "ok", "helpful": true },
+            { "quote": "I become", "verdict": "ok", "helpful": true },
+            { "quote": "he becomes", "verdict": "ok", "helpful": true },
+            { "quote": "telling of what was done", "verdict": "unsupported", "helpful": false },
+            { "quote": "let me cook", "verdict": "ok", "helpful": true },
+            { "quote": "cook!", "verdict": "ok", "helpful": true },
+            { "quote": "let me see", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "**Me-śavem** <note>original: \"me śave ma\"</note> is in the sense of \"we become\"", "why": "The body never says that the bold forms are Persian verbs (mī-shavam, zadan, khurdan, pukhtan, dīdan) written in Devanagari and matched to Sanskrit equivalents. Only the summary says it. Without that, the page reads as nonsense syllables." },
+            { "english": "For \"he will become\" <term>bhaviṣyati</term> and the like, it is **śvāhī śud**", "why": "The reader needs to be told that śvāh- stands for the Persian future auxiliary khvāh- ('will'), or the future forms cannot be followed." },
+            { "english": "**me-khard**", "why": "The prefix me-/mī- is the Persian continuous/present marker. A reader cannot tell why it recurs on almost every form." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is the right leaf, and the English recovers the gist: a Sanskrit key to Persian verb forms. The OCR has systematic misreadings of this scribe's ह and ख, and some carry into the English ('bhavāni' for bhavāmi, 'śvāhad' for khvāhad). There is also one interpretive gloss. Nothing a general reader would catch on sight, apart from the inconsistent page counts."
+  }
+]

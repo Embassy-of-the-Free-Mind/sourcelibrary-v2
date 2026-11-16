@@ -131,21 +131,69 @@ export async function decodeJp2(jp2Path) {
 // half-downloaded zip or unzipped JP2s stay in tmp: on gex45 on 2026-10-28, eleven of these held
 // 9.7 GB and the root disk reached 95% (#6223). Each open sweeps leftovers older than STALE_MS, which
 // is far past one book (download cap 60 min, unzip 10 min, pages minutes), so a live book is never hit.
+// The age rule alone was not enough (#90 item 5): on gex45 on 2026-11-12 the lane died on one item
+// about every 50 minutes, the revive cron restarted it, and the age rule let ~7 attempts (9.5 GB)
+// accumulate inside the 6 h window. So each dir records its owner pid (OWNER_FILE), and a dir whose
+// owner is no longer alive is removed at once, at any age. A dir without the file (older code) keeps the age rule.
 const STALE_MS = 6 * 3600_000;
-export function sweepStaleZipDirs(tmpRoot, { now = Date.now(), log = () => {} } = {}) {
+const OWNER_FILE = '.owner-pid';
+const pidAlive = (pid) => {
+  try { process.kill(pid, 0); return true; } catch (e) { return e?.code === 'EPERM'; }
+};
+const ownerDead = (d, isAlive) => {
+  let pid;
+  try { pid = Number(fs.readFileSync(path.join(d, OWNER_FILE), 'utf8').trim()); } catch { return false; }
+  return Number.isInteger(pid) && pid > 0 && pid !== process.pid && !isAlive(pid);
+};
+export function sweepStaleZipDirs(tmpRoot, { now = Date.now(), log = () => {}, isAlive = pidAlive } = {}) {
   let names = [];
-  try { names = fs.readdirSync(tmpRoot).filter(n => n.startsWith('sl-iazip-')); } catch { return 0; }
+  try { names = fs.readdirSync(tmpRoot).filter(n => n.startsWith('sl-iazip-') && n !== ATTEMPTS_FILE); } catch { return 0; }
   let removed = 0;
   for (const n of names) {
     const d = path.join(tmpRoot, n);
     try {
-      if (now - fs.statSync(d).mtimeMs < STALE_MS) continue;
+      if (!fs.statSync(d).isDirectory()) continue;
+      if (!ownerDead(d, isAlive) && now - fs.statSync(d).mtimeMs < STALE_MS) continue;
       fs.rmSync(d, { recursive: true, force: true });
       removed++;
       log(`IA zip: removed stale scratch dir ${d}`);
     } catch { /* gone already, or not ours to stat: leave it */ }
   }
   return removed;
+}
+
+// An item whose zip attempt never finishes (the process dies before close(): OOM, a kill) is retried
+// by every revived run, each one a multi-GB download. Count the unfinished attempts per item in a small
+// file beside the dirs; close() clears the item. After MAX_UNFINISHED within ATTEMPT_WINDOW_MS the zip is
+// refused for that item, so it goes page by page over IIIF instead.
+const ATTEMPTS_FILE = 'sl-iazip-attempts.json';
+const MAX_UNFINISHED = 3;
+const ATTEMPT_WINDOW_MS = 24 * 3600_000;
+const readAttempts = (tmpRoot) => {
+  try { const j = JSON.parse(fs.readFileSync(path.join(tmpRoot, ATTEMPTS_FILE), 'utf8')); return j && typeof j === 'object' ? j : {}; } catch { return {}; }
+};
+const writeAttempts = (tmpRoot, j) => {
+  try {
+    const f = path.join(tmpRoot, ATTEMPTS_FILE);
+    fs.writeFileSync(`${f}.${process.pid}`, JSON.stringify(j));
+    fs.renameSync(`${f}.${process.pid}`, f);
+  } catch { /* a scratch hint, never a reason to fail a book */ }
+};
+export function unfinishedZipAttempts(tmpRoot, iaId, { now = Date.now() } = {}) {
+  const a = readAttempts(tmpRoot)[iaId];
+  return a && now - Number(a.last || 0) < ATTEMPT_WINDOW_MS ? Number(a.n || 0) : 0;
+}
+export function noteZipAttempt(tmpRoot, iaId, { now = Date.now() } = {}) {
+  const j = readAttempts(tmpRoot);
+  for (const [k, v] of Object.entries(j)) if (now - Number(v?.last || 0) >= ATTEMPT_WINDOW_MS) delete j[k];
+  j[iaId] = { n: Number(j[iaId]?.n || 0) + 1, last: now };
+  writeAttempts(tmpRoot, j);
+}
+export function clearZipAttempt(tmpRoot, iaId) {
+  const j = readAttempts(tmpRoot);
+  if (!(iaId in j)) return;
+  delete j[iaId];
+  writeAttempts(tmpRoot, j);
 }
 
 export async function openIaZip({ manifestUrl, photos, onRefuse = () => {}, log = () => {}, fetchImpl = fetch,
@@ -155,6 +203,8 @@ export async function openIaZip({ manifestUrl, photos, onRefuse = () => {}, log 
   if (!zipToolsAvailable()) return refuse('opj_decompress/unzip not on this box');
   const iaId = iaIdFromManifest(manifestUrl);
   if (!iaId) return refuse('manifest URL names no IA identifier');
+  const unfinished = unfinishedZipAttempts(tmpRoot, iaId);
+  if (unfinished >= MAX_UNFINISHED) return refuse(`${unfinished} zip attempts on this item in 24 h never finished (the run died mid-book)`);
 
   let plan = planZipMapping(photos, null);
   if (!plan.route && /no member names/.test(plan.reason || '')) {
@@ -175,7 +225,9 @@ export async function openIaZip({ manifestUrl, photos, onRefuse = () => {}, log 
   } catch { /* statfs unavailable: let the download fail if it must */ }
 
   const dir = fs.mkdtempSync(path.join(tmpRoot, `sl-iazip-${iaId.slice(0, 40).replace(/[^\w.-]/g, '_')}-`));
-  const close = async () => { fs.rmSync(dir, { recursive: true, force: true }); };
+  try { fs.writeFileSync(path.join(dir, OWNER_FILE), String(process.pid)); } catch { /* the age rule still applies */ }
+  noteZipAttempt(tmpRoot, iaId);
+  const close = async () => { fs.rmSync(dir, { recursive: true, force: true }); clearZipAttempt(tmpRoot, iaId); };
   try {
     const zipPath = path.join(dir, 'item.zip');
     const { res, bytes } = await fetchToFileWithStallTimeout(`https://archive.org/download/${encodeURIComponent(iaId)}/${encodeURIComponent(zip.name)}`, zipPath, {

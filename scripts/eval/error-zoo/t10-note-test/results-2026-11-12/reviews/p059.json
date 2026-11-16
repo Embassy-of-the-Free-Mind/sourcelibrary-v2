@@ -1,0 +1,108 @@
+[
+  {
+    "book_id": "6991c5483074a1745a410b8b",
+    "slot": 1,
+    "title": "Schürstab Codex: Astrological-Medical Treatises (ZB Zurich, C 54)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century German manuscript leaf of computus tables (moveable feasts keyed to Sunday letters) belongs with an astrological-medical codex. No tradition or collection is set to check against.",
+    "rights_flag": null,
+    "structure_note": "All 136 pages have OCR. pages_translated_field says 119 but the structure count of translated pages is 0, so the two counts disagree. 14 backsteps and 8 repeats among 54 printed numbers. In a manuscript with sparse, faint folio numbers in the corner (this leaf has '58'), misread or mixed foliation is the likely cause, not a splice. One page cannot settle it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "printed_marker": "58",
+        "layout": "ruled calendar table in red and black ink: three blocks headed 'viii octo', 'novem', 'decem', rows A–g with red Sunday letters, column labels written vertically under the blocks, mirror-image show-through from the verso in both margins",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "| | Herrleichnā | pfingstag | aufftag | Creutz woch | der ostertag | reussensunntag | vasnacht | das alla hille = |",
+            "image": "the vertical labels stand in the columns left to right as 'das allā hinlegt', 'vasnacht', '…sensuntag', 'der ostertag', 'Creutz woch', 'aufftag', 'pfingstag', 'herrleichnā'. The first data column (Ag, dor, se…) sits under 'das allā hinlegt', not under Herrleichnam",
+            "problem": "The column heads are reversed against the data columns, so every syllable is assigned to the wrong feast (Corpus Christi gets Septuagesima's column, and so on). The closing <margin> list is in the same reversed order",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "ocr": "<margin>\nJob\nTobias\nJudit\n</margin>",
+            "image": "no names in ink on this side of the leaf. The margins hold only faint mirror-image show-through from the verso",
+            "problem": "Marginal labels (Job/Tobias/Judit, Esther/Machab, Ezechiel) are not legible on this side of the leaf. They were invented or read from the show-through",
+            "severity": "moderate",
+            "class": "other:show-through read as marginalia"
+          },
+          {
+            "ocr": "reussensunntag",
+            "image": "the vertical label seems to begin with 'w' ('weyssensuntag' / 'weissensuntag')",
+            "problem": "Probable misreading of the feast name ('White Sunday'). Low confidence on the first letter",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "| **c** | se | tū |",
+            "image": "trū",
+            "problem": "Cisiojanus syllable lost a letter",
+            "severity": "minor"
+          },
+          {
+            "ocr": "| **f** | sto | am | us | n |",
+            "image": "ti",
+            "problem": "Syllable misread. A syllable in a Cisiojanus table points to a day, so the slip shifts a date",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "| **A** | un | de | dry |",
+            "image": "ti",
+            "problem": "Syllable misread (novem block, row A)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "| **d** | lent | vs | the | ler | not |",
+            "image": "net",
+            "problem": "Syllable misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "| **f** | li | dri | ra | ti | ban | cis |",
+            "image": "cris",
+            "problem": "Syllable misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "| | Herrleichnā | pfingstag | aufftag | Creutz woch | der ostertag | reussensunntag | vasnacht | das alla hille = |",
+            "english": "<note>The columns here run in the reverse order of the previous page, from Corpus Christi back to the laying aside of the Alleluia.",
+            "problem": "The note asserts a reversal that is not on the leaf. On the image the columns run chronologically, from Septuagesima to Corpus Christi. It builds on the OCR's reversed header and makes a claim about the previous page that this page cannot support. The <summary> repeats it ('from Corpus Christi back to Septuagesima')",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "<margin>\nJob\nTobias\nJudit\n</margin>",
+            "english": "<note>The marginal names are books of the Old Testament. They seem to label each block of the table, perhaps as a memory aid tied to the sequence of years.</note>",
+            "problem": "Interprets marginal names that are not legible on this side of the leaf",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "The marginal names are books of the Old Testament. They seem", "verdict": "unsupported", "helpful": false },
+            { "quote": "The columns here run in the reverse order of the previous pa", "verdict": "wrong", "helpful": true },
+            { "quote": "a mnemonic verse calendar in which each syllable stands for", "verdict": "ok", "helpful": true },
+            { "quote": "\"Reussensunntag\" falls between Shrove Tuesday and Easter in", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "the laying aside of the Alleluia", "why": "A general reader will not know that this is Septuagesima Sunday, when the Alleluia was dropped before Lent" },
+            { "english": "Cross Week", "why": "Needs a gloss as Rogation Week, the days of processions before Ascension" },
+            { "english": "Sunday\nletter", "why": "The rows A–g only make sense once the dominical letter (the letter of the year's Sundays) is explained" },
+            { "english": "<header>eight</header>", "why": "The reader is not told what the numbered blocks eight, nine and ten count" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clear computus table, but the OCR reverses the column heads against the data, so each syllable is tied to the wrong feast. The translation's note turns that error into a false claim about the table's order. Marginal biblical names that are not legible on this side of the leaf are also transcribed and interpreted."
+  }
+]

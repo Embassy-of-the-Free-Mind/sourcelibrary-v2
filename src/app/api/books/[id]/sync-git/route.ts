@@ -18,4 +18,4 @@ export const POST = withAuth(async (_request, _session, context) => {
   }
 
   return NextResponse.json(result);
-});
+}, { minRole: 'editor' });

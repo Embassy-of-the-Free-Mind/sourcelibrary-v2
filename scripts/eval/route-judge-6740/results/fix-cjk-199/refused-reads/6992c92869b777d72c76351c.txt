@@ -1,0 +1,36 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>41</page-num>
+<header>斷易天機三</header>
+<warning>Printed Chinese woodblock text with handwritten Japanese kana reading marks (kunten) between the lines; heavy show-through from the other side of the leaf. The kana marks are not transcribed in full.</warning>
+<meta>Handwritten Japanese marks in the top left margin, above the frame.</meta>
+
+<margin>迍 スマス ユキカ<unclear>ム</unclear></margin>
+
+坎上坎下　六親　○子<gloss>戊</gloss>水　戌<gloss>戊</gloss>土　申<gloss>戊</gloss>金　午<gloss>戊</gloss>火　辰<gloss>戊</gloss>土　寅<gloss>戊</gloss>木　飛子<gloss>戊</gloss>水
+
+<insert>春吉　夏凶　秋凶　冬吉</insert>
+
+坎爲水　世‥‥應‥‥十月卦
+
+坎水八純<gloss>內外皆見</gloss>○兄弟　官鬼　父母　妻財　官鬼　子孫　伏巳<gloss>巳</gloss>火
+
+評曰<gloss>坎者陷也</gloss>
+
+此卦唐玄宗避祿山卜得之
+
+後果身出九重也
+
+<insert>逢流則注　遇坎則止　出入艱險　墮坎不已　陰愁伏慝　共相謀計　千里辭家　始免<gloss>迍</gloss>否</insert>
+
+<image-desc size="large" type="woodcut" significance="high">Woodcut showing a figure in a well with a lattice rim, a robed man at left lowering a rope into the well, a man in a tiger-head mask in the centre holding an ox, a rat on the ground, a flaming object in the sky, and mountains at the upper left.</image-desc>
+
+**解曰**　人在井中<gloss>身陷也</gloss>　人用繩引出<gloss>有汲引也</gloss>　一牛一鼠<gloss>子丑時可也</gloss>　<unclear>進用</unclear>　人身虎頭<gloss>有威望也</gloss>　占者得之　謀事遇大人貴人方能獲吉
+
+○船涉重灘之象　外虛中實之象
+
+<margin>灘</margin>
+
+<vocab>坎, 坎爲水, 六親, 世, 應, 十月卦, 八純, 兄弟, 官鬼, 父母, 妻財, 子孫, 伏巳火, 飛子水, 唐玄宗, 祿山, 九重, 解曰, 子丑, 虎頭, 重灘, 外虛中實, 斷易天機</vocab>

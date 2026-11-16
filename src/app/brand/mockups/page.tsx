@@ -315,7 +315,7 @@ function HeroBefore() {
             <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
             <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
           </svg>
-          <span className="text-xl uppercase tracking-wider">
+          <span className="font-logo text-xl uppercase tracking-wider">
             <span className="font-semibold">Source</span><span className="font-light">Library</span>
           </span>
         </div>
@@ -341,7 +341,7 @@ function HeroAfter() {
             <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
             <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
           </svg>
-          <span className="text-xl uppercase tracking-wider">
+          <span className="font-logo text-xl uppercase tracking-wider">
             <span className="font-semibold">Source</span><span className="font-light">Library</span>
           </span>
         </div>

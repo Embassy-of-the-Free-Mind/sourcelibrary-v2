@@ -1,0 +1,15 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>3</page-num>
+<sig>A 2</sig>
+<meta>catchword: longè</meta>
+
+*varium et multiplex volumen, nullo ordine, nulla rationis constantia, multum in his referendis quæ inutilia quæque falsa sunt, in utilibus verò explicandis breve atque concisum, speciosum prudentum virorum ubique prælato nomine, ineptijs, quæ ijsdem prudentibus viris adscribuntur, delirum: denique adeo multa absurda complexum, ita confusum, ita obscurum, suppressis definitionibus, divisionibus et ipsismet legum verbis, ut facile appareat, compilatores illos, quo intelligentiores viderentur, et plura scire, multa correxisse, multa commentos esse, multa quæ à posterioribus Imperatoribus constituta erant, et ab id ætatis professoribus tractata antiquioribus et Principibus et Jurisperitis tribuisse: sed et cavisse ne prudentiores eis postea existerent, qui fraudem et inscitiam eorum detegerent. Quin illi ipsi nos palam derident; cùm enim omnia oppositis scateant, scribunt nihil contrarium esse in jure: callidi tamen qui vetent, in volumina sua Commentarios scribi, ne longe aliter rem se habere patefieret; et ut intenderetur ignorantia, quæ insulsa pro falsis, et incondita pro conditis, ut contingit, admitteret: quique præ se ferant, se habere libros peritorum juris, quo scilicet licentius autoritate eorum abuterentur; Et certe si peritorum juris scripta pura et incorrupta mansissent, præ illis viluissent Impostorum Principis Constitutiones, multa eaque insulsa nec non inter se pugnantia effutire cupientis.*
+
+Ex antiquorum Commentariis maximè placuerunt compilatoribus Caij opuscula §. 6. *in proœm. Instit.* vel quòd hic iam anteà summa capita iuris civilis in Institutionum libros redegerat, vel quòd nemo ferè ad captum iuventutis magis perspicuè scripserat. Vixit autem Caius Hadriani temporibus
+
+<vocab>compilatores, Jurisperitis, Commentarios, Caij opuscula, Institutionum libros, Hadriani</vocab>
+<<<END>>>

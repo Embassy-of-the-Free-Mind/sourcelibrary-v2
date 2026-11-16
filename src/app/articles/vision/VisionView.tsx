@@ -433,6 +433,7 @@ export default function VisionView({
               alt={content.signature.name}
               width={72}
               height={72}
+              loading="lazy"
               className="w-[72px] h-[72px] rounded-full object-cover border border-primary/15 shadow-sm shrink-0"
             />
             <div>

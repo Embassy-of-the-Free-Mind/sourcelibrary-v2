@@ -1,12 +1,33 @@
 /**
+ * One form for a link to a printed page: `/book/<slug>/page-number/N` (v3#250).
+ *
+ * Answers carried two forms side by side, `/page-number/N` and `?page=N`. Both
+ * land on the reader at `/book/<slug>/page/<id>`, but `?page=N` is the weaker
+ * one: its redirect (src/proxy.ts → /api/redirect/book-page) matches only
+ * `/book/…`, so `/es/book/<slug>?page=N` opens the book, not the page, and it
+ * has no nearest-page fallback. `/page-number/N` keeps the locale prefix
+ * (src/lib/page-number-redirect.ts) and is what grounding.ts and the citation
+ * passes write. The server now writes only that form; this rewrites answers
+ * stored before, so a reopened thread reads the same.
+ */
+export function canonicalPageLinks(text: string): string {
+  return text.replace(
+    /(https:\/\/sourcelibrary\.org(?:\/es)?\/book\/[a-z0-9-]+)\?page=(\d+)(&[^\s)\]"'<>]*)?(?![\w=])/g,
+    (_m, book: string, page: string, rest?: string) =>
+      `${book}/page-number/${page}${rest ? `?${rest.slice(1)}` : ''}`,
+  );
+}
+
+/**
  * Post-process Gemini output: convert bare sourcelibrary URLs to markdown links.
- * Gemini often outputs `https://sourcelibrary.org/book/slug?page=5` as plain text
+ * Gemini often outputs `https://sourcelibrary.org/book/slug/page-number/5` as plain text
  * instead of wrapping it in `[text](url)`. This catches those and linkifies them.
  */
 export function linkifySourceUrls(text: string): string {
   let result = text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
+    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+)|\/page-number\/(\d+))?/g,
+    (match, _slug, qPage, pathPage) => {
+      const page = qPage || pathPage;
       const label = page ? `View source (p. ${page})` : 'View in collection';
       return `[${label}](${match})`;
     },

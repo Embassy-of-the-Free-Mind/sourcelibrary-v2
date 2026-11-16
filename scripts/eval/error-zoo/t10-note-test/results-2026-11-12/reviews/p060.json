@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "6a4a5a2e3f0b4659d1bc05f1",
+    "slot": 1,
+    "title": "De Imperio Sequioris Sexus, Oratiuncula Historico-Politica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned; the leaf is a 1639 Nuremberg Latin academic oration on female rule (Tacitus, Ptolemaic queens), consistent with the title and date.",
+    "rights_flag": null,
+    "structure_note": "structure.pages_translated is 0 while pages_translated_field is 24 and this page carries a translation: a count mismatch in the instruments, not a reader-visible defect. Only 1 of 24 pages has a printed number, which fits this leaf (catchword only, no page number): a short unpaginated quarto oration.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "printed_marker": "viris,",
+        "layout": "single text column, italic quotations, catchword at foot, no running head or page number",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "theta feminis sceptris", "image": "theta femininis ſceptris", "problem": "femininis shortened to feminis; meaning unchanged", "severity": "minor" },
+          { "ocr": "à ser-\nvitude degenerare", "image": "à ſer-vitute degenerare", "problem": "servitute misread as servitude", "severity": "minor" },
+          { "ocr": "modò pana & cruces", "image": "modò pœnæ & cruces (italic; ligature reads as 'pana' at this resolution)", "problem": "probable pœnæ given as pana; translation 'torments' is right anyway", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "quâ nihil officioſius", "english": "than which nothing is more busy", "problem": "officiosius is 'more officious/obliging'; 'busy' is weak but close", "severity": "minor" },
+          { "source": "quodque velint, nulla propo-\nnunt", "english": "what they want, they set before themselves no plans", "problem": "awkward, garbled English for 'they put forward nothing they want'; sense still recoverable", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"strigiles\", the curved metal tools used in Roman", "verdict": "ok", "helpful": true },
+            { "quote": "Aesop's fable tells of a creature turned into a woman who, a", "verdict": "ok", "helpful": true },
+            { "quote": "the \"Roman Sage\" probably refers to Seneca", "verdict": "unsupported", "helpful": false },
+            { "quote": "original: \"culeos\"; under Roman law a parricide was sewn in", "verdict": "ok", "helpful": true },
+            { "quote": "the author refers to queens of the Ptolemaic dynasty of Egyp", "verdict": "ok", "helpful": true },
+            { "quote": "Messalina, wife of the emperor Claudius, and Faustina, wife ", "verdict": "ok", "helpful": true },
+            { "quote": "Joanna I and Joanna II, queens of Naples in the fourteenth a", "verdict": "ok", "helpful": true },
+            { "quote": "the Greek letter theta, initial of \"thanatos\" (death), was u", "verdict": "ok", "helpful": true },
+            { "quote": "Tacitus, Germania 45", "verdict": "unsupported", "helpful": false },
+            { "quote": "self-governing, living under their own laws", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "as Porcius Latro says", "why": "a general reader will not know Porcius Latro was an Augustan rhetorician, a teacher of declamation" },
+            { "english": "the Sitones, a Suebian people", "why": "an obscure Germanic people; a short gloss would place them (in the far north, as Tacitus describes them)" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is faithful apart from a few one-word slips, and the translation is accurate. Most notes are correct and useful. The Seneca attribution is a hedged guess, and the Germania 45 citation is correct but not given on the page. Nothing here would be flagged on sight."
+  }
+]

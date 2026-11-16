@@ -21,7 +21,7 @@
  *   - which run: run_id, the run's own id (a results dir, a hide reason). Required, because {book_id, method_id, run_id}
  *     is the write-once key: with an optional run_id every later run-less check would collide with the first.
  *   - who could see it: exposure, one { page_number, exposure } per page read, exposure = served | withheld |
- *     no_english | hidden at check time (scripts/lib/review-vocabulary.mjs; pageExposure() reads it live). A rate
+ *     no_english | hidden | rewrite_not_served at check time (scripts/lib/review-vocabulary.mjs; pageExposure() reads it live). A rate
  *     quoted from rows that mix hidden books with served ones is the #6203 "invented" problem; 'unrecorded' is for a
  *     backfill of a run that kept no record. Rows written before 2026-10-12 have no exposure field.
  * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq, reader_warning (#8069: false = shown on
@@ -41,7 +41,7 @@
  *
  *   import { recordBookCheck, pageProvenance, pageExposure, ensureBookCheckIndexes } from '../lib/book-checks.mjs';
  *   const text_provenance = await pageProvenance(db, bookId, [12, 13, 14]);   // live read, at check time
- *   const exposure = await pageExposure(db, bookId, [12, 13, 14]);            // served | withheld | no_english | hidden
+ *   const exposure = await pageExposure(db, bookId, [12, 13, 14]);            // served | withheld | no_english | hidden | rewrite_not_served
  *   await recordBookCheck(db, { book_id, checked_at, method_id: 'shelf-overview', method_version: '1', ... });
  *
  * A lane or job that read pages against their images and holds verdicts per page: recordPageVerdicts() (#8069).

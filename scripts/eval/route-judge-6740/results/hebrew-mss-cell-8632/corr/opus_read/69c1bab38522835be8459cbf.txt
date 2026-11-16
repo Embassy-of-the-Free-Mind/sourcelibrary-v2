@@ -1,0 +1,41 @@
+<warning>Handwritten Sephardic semi-cursive Hebrew. The hand is cramped and full of abbreviations, and it is hard to read at this image resolution. Much of the text is marked unclear. Readings outside the unclear tags are tentative too and should be checked against the original or a higher-resolution scan. The top and bottom margins have water stains. The partial text at the right edge belongs to the facing page and is not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>199</page-num>
+<meta>The folio number "199" is written in pencil in a later hand at the bottom centre. There are 37 lines of text in one column. There is no catchword.</meta>
+
+<unclear>שהיה נוטה יותר שיותנו חיים עשרים ולזה הזכיר</unclear> <unclear>[illegible — 2-3 words]</unclear> טרם <unclear>[illegible — 2 words]</unclear>
+ולא <unclear>[illegible — 2 words]</unclear> א״כ יורה להיות אדם למעלה ולכל <unclear>[illegible — 2 words]</unclear> ולעולם <unclear>[illegible — 1-2 words]</unclear>
+<unclear>[illegible — 3-4 words]</unclear> הדור <unclear>[illegible — 2 words]</unclear> מועלת עליהם ולזה
+אחרון <unclear>[illegible — 4-5 words]</unclear> על אחרון <unclear>[illegible — 3-4 words]</unclear> יותר
+<unclear>[illegible — 5-6 words]</unclear> בני אדם ולא יקבלו <unclear>[illegible — 1 word]</unclear>
+ולא <unclear>[illegible — 6-7 words]</unclear> להיות אדם למעלה וזקן.
+<unclear>[illegible — 6-7 words]</unclear> כל <unclear>[illegible — 3-4 words]</unclear> רבנן בן
+<unclear>[illegible — 4-5 words]</unclear> הקיר <unclear>[illegible — 3 words]</unclear> שאמרו וזה
+<unclear>[illegible — 6-7 words]</unclear> יהיה <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — 5-6 words]</unclear> אדם למעלה <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — 6-7 words]</unclear> בני אדם <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 3 words]</unclear> ד׳ <unclear>היתרון</unclear> אדם למעלה עם חיים היה למחזיק<unclear>[illegible — 2-3 words]</unclear>
+<unclear>[illegible — 4-5 words]</unclear> כל <unclear>[illegible — 4 words]</unclear>
+<unclear>[illegible — 5-6 words]</unclear> ז״ל <unclear>[illegible — 4-5 words]</unclear>
+<unclear>[illegible — 6-7 words]</unclear> ר׳ <unclear>[illegible — 2-3 words]</unclear>
+<unclear>[illegible — 4-5 words]</unclear> בל <unclear>[illegible — 3-4 words]</unclear>
+<unclear>[illegible — 6-7 words]</unclear> וזקנה <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 2 words]</unclear> למעלה אורך ימים <unclear>[illegible — 6 words]</unclear>
+<unclear>[illegible — 6-7 words]</unclear> שיבה וזקנה <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 5 words]</unclear> ז״ל <unclear>[illegible — 3-4 words]</unclear> ר׳ <unclear>[illegible — 1 word]</unclear>
+בן <unclear>[illegible — 6-7 words]</unclear> ולזה <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 6-7 words]</unclear> האחרות <unclear>[illegible — 1-2 words]</unclear>
+<unclear>[illegible — 5-6 words]</unclear> בני אדם <unclear>[illegible — 3-4 words]</unclear>
+<unclear>[illegible — 3 words]</unclear> בן דוד <unclear>[illegible — 5-6 words]</unclear>
+<unclear>[illegible — 7-8 words]</unclear>
+למעלה <unclear>[illegible — 7-8 words]</unclear>
+<unclear>[illegible — 7-8 words]</unclear>
+אדם למעלה <unclear>[illegible — 6-7 words]</unclear>
+<unclear>[illegible — 7-8 words]</unclear>
+<unclear>[illegible — 7-8 words]</unclear>
+<unclear>[illegible — 7-8 words]</unclear> חיים..
+
+<vocab>אדם למעלה, אורך ימים, שיבה וזקנה, ירושה, הדור, חיים, ז״ל</vocab>

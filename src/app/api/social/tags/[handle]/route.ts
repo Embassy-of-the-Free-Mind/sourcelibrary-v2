@@ -33,7 +33,7 @@ export const GET = withAuth(async (
     console.error('Error fetching tag:', error);
     return NextResponse.json({ error: 'Failed to fetch tag' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * PATCH /api/social/tags/[handle]
@@ -92,7 +92,7 @@ export const PATCH = withAuth(async (
     console.error('Error updating tag:', error);
     return NextResponse.json({ error: 'Failed to update tag' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * DELETE /api/social/tags/[handle]
@@ -117,4 +117,4 @@ export const DELETE = withAuth(async (
     console.error('Error deleting tag:', error);
     return NextResponse.json({ error: 'Failed to delete tag' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

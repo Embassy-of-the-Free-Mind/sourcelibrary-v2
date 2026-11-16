@@ -243,7 +243,7 @@ export default function ResearchProgrammePage() {
             Everything is reproducible on purpose: AGPL code, raw model outputs shipped with the
             dataset, dated snapshots, a <Link href="/developers" className="text-amber-800 hover:underline">public API</Link> and{' '}
             <Link href="/articles/mcp-server" className="text-amber-800 hover:underline">MCP server</Link>. A project of{' '}
-            <a href="https://wisdomfrontiers.org" className="text-amber-800 hover:underline">Wisdom Frontiers</a>;
+            <a href="https://wisdom-frontiers.com" className="text-amber-800 hover:underline">Wisdom Frontiers</a>;
             collaboration and data access:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-amber-800 hover:underline">team@sourcelibrary.org</a>.
           </p>

@@ -34,3 +34,9 @@
 # Display-mark backfill watchdog (#4406), moved from gex45 2026-11-07 (gex45 was swapping during OCR). Idle without OUT/go.
 */10 * * * * export BACKFILL_BUDGET_USD=35 PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/workers/backfill-marks-watchdog.sh; [ -x $f ] && flock -n -o /tmp/sl-backfill-marks-watchdog.lock nice -n 19 $f /data/scratch/sl/jobs/trithemian-images-4406/backfill 14 2 >> /var/log/sourcelibrary/backfill-marks-watchdog.log 2>&1
 */10 * * * * f=/root/sourcelibrary/scripts/workers/backfill-marks-relay.sh; [ -x $f ] && $f publish >> /var/log/sourcelibrary/backfill-marks-relay.log 2>&1
+
+# Daily paired-fifths lane (v3#381, Derek 2026-11-15): 40 served books a day (24 uniform by language x form, 16 from
+# book-check-priority), Opus via claude -p on this box's login (derek@playpowerlabs), at most 200 calls a day, stops at
+# the 85% weekly / 95% 5-hour pace guard. 17:20 resumes a round the 5-hour guard stopped. Monday: one pooled comment on v3#381.
+20 5,17 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/audit/paired-fifths-daily.sh; [ -f $f ] && systemd-run --quiet --scope --slice=sourcelibrary.slice -- nice -n 10 bash $f day >> /data/scratch/sl/logs/paired-fifths-daily.log 2>&1  # v3#381
+50 6 * * 1 export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/audit/paired-fifths-daily.sh; [ -f $f ] && bash $f week >> /data/scratch/sl/logs/paired-fifths-daily.log 2>&1  # v3#381

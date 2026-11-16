@@ -1,0 +1,40 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>DE BELLO PVNICO.</header>
+
+Et deforme malum, ac sceleri procliuis egestas,
+Errorq; insido gressu, & discordia gaudens
+Permiscere fretum cælo, sed & hostia ditis
+Centenis suetus briareus recludere palmis,
+Et spinx uirgineos rictus infecta cruore,
+Scyllaq;, centauriq; truces, umbræq; gigantum.
+Cerberus hic ruptis peragrat cum tartara uinclis:
+Non ipsa allecto nec fœta furore megæra
+Audet adire ferum: dum fractis mille cathenis
+Viperea latrans circūligat ilia cauda.
+Dextera uasta comas nemorosaq; brachia fundit
+Taxus cocyti rigua frondosior unda.
+Hic diræ uolucres, pastusq; cadauere uultur,
+Et multus bubo, ac sparsis strix sanguine pennis,
+Harpyiæq; fouent nidos: atq; omnibus hærent
+Condensæ folijs: sæuit stridoribus arbor.
+Has inter formas coniunx iunonis auernæ
+Suggestu residens cognoscit crimina regum.
+Stant uincti: seroq; piget sub iudice culpæ.
+Circūerrant furiæ, pœnarumq; omnis imago.
+Quam uellent nunq̃ sceptris fulsisse superbis.
+Insultant duro imperio, non digna nec æqua
+Ad superos passi manes. quæq; ante profari
+Non licitum uiuis: tandem permissa queruntur.
+Tunc alius sæuis religatur rupe cathenis.
+Ast alius subijcit saxum, contra ardua montis,
+Viperco domat hunc æterna megæra flagello:
+Talia lætiferis restant patienda tyrannis.
+Sæd te maternos tempus cognoscere uultus,
+Cuius prima uenit non tardis passibus umbra.
+Astabat fœcunda iouis pomponia furto:
+Nanq; ubi cognouit latio surgentia bella,
+
+<vocab>De Bello Punico, Silius Italicus, Tartarus, Cerberus, Allecto, Megaera, Cocytus, Harpyiae, Iuno Auerna, Pomponia</vocab>

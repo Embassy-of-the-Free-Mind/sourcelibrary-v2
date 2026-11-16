@@ -22,7 +22,7 @@
  * the queue silently, where a false split only costs a human ten seconds.
  */
 import { describe, it, expect } from 'vitest';
-import { sameNameForm, withinOneEdit, nameStems, foldOrtho } from '../../scripts/lib/name-equivalence.mjs';
+import { sameNameForm, withinOneEdit, nameStems, foldOrtho, bylineVsNameForms, isPlaceholderByline } from '../../scripts/lib/name-equivalence.mjs';
 
 describe('sameNameForm — one person, many name-forms', () => {
   const SAME: Array<[string, string, string]> = [
@@ -135,5 +135,35 @@ describe('particles cannot carry a match on their own', () => {
   // corpus would be one person.
   it('two unrelated names sharing only "de" stay split', () => {
     expect(sameNameForm('Jean de Meung', 'Pierre de Ronsard')).toBe(false);
+  });
+});
+
+// #3894 item 4: the entity-id phase of backfill-author-canonical-links.mjs
+// refuses a link whose owner the byline contradicts. Rows are real, from the
+// 2026-11-12 measurement (31 of 14,150 judgeable entity-id links).
+describe('bylineVsNameForms — does the byline name the entity owner?', () => {
+  it('refuses a printer link after the byline was corrected', () => {
+    expect(bylineVsNameForms('Richard Streinnius', ['Henri Estienne', 'Henricus Stephanus'])).toBe('different');
+    expect(bylineVsNameForms('Kupferstecher Matthäus Merian', ['Michael Maier'])).toBe('different');
+    expect(bylineVsNameForms('Giambattista della Porta', ['Kenelm Digby'])).toBe('different');
+  });
+  it('keeps a link whose byline is another form of the same name', () => {
+    expect(bylineVsNameForms('Manuzio, Paolo', ['Paulus Manutius', 'Paolo Manuzio'])).toBe('same');
+    expect(bylineVsNameForms('Bodinus, Joannes', ['Jean Bodin'])).toBe('same');
+    expect(bylineVsNameForms('Grosseteste, Robert 1175?-1253 creator', ['Robert Grosseteste'])).toBe('same');
+  });
+  it('does not judge a placeholder byline: the entity may be what supplies the author', () => {
+    for (const p of ['Unknown', 'Unknown artist', 'Anonymous', '[Anonymus]', 'Unbekannt', 'Various', 's.n.', ''])
+      expect(bylineVsNameForms(p, ['Plutarch'])).toBe('unjudgeable');
+  });
+  it('does not judge a script it cannot read, on either side', () => {
+    expect(bylineVsNameForms('王圻', ['Wang Qi'])).toBe('unjudgeable');
+    expect(bylineVsNameForms('Wang Qi', ['王圻'])).toBe('unjudgeable');
+    expect(bylineVsNameForms('Иван Сергеевич Тургенев', ['Ivan Turgenev'])).toBe('unjudgeable');
+  });
+  it('a real name is not a placeholder just because it contains a placeholder word', () => {
+    expect(isPlaceholderByline('Unknown artist')).toBe(true);
+    expect(isPlaceholderByline('Lucas Cranach the Elder')).toBe(false);
+    expect(isPlaceholderByline('Anonymous of Bologna')).toBe(false);
   });
 });

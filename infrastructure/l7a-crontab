@@ -86,3 +86,6 @@
 1 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f sample
 # Token use for /admin/tokens (#8201): reads local transcripts, calls no model.
 48 * * * * flock -n /tmp/sl-token-usage.lock nice -n 19 bash -c 'cd /data/scratch/sl/sourcelibrary && node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/token-usage-push.mjs --box l7a' >> /data/scratch/sl/logs/token-usage-push.log 2>&1
+# CI-queue alarm (#239, 2026-11-13): ntfy sourcelibrary-uptime HIGH when the oldest queued Actions run or job is over 60 min old,
+# repeat at most every 3 h while it stays so. Here because gh is logged in on this box. Calls no model.
+*/15 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/ci-queue-alarm.sh; [ -x $f ] && $f >> /data/scratch/sl/logs/ci-queue-alarm.log 2>&1

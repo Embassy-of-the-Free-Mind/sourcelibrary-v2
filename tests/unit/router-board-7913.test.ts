@@ -4,7 +4,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { routerBoard, cronLanes, routeEvidence } from '../../scripts/maintenance/router-board-push.mjs';
+import { routerBoard, cronLanes, routeEvidence, routeRows } from '../../scripts/maintenance/router-board-push.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { driftReport } from '../../scripts/maintenance/router-board-push.mjs';
@@ -51,6 +51,38 @@ describe('router-board-push', () => {
     expect(c.judge).toEqual({ stratum: 'ocr/print', valid: true });
     expect(c.waivers.map((w: { live: boolean }) => w.live)).toEqual([true, false]);
     expect(routeEvidence(row('a', 'keep', 'r'), 'other')).toBeNull();
+  });
+});
+
+describe('every route of a cell (#240)', () => {
+  const r = {
+    id: 'german-lite/print', current: 'lite', live: 'lite>opus', route: 'lite>opus',
+    routes: [
+      { id: 'lite', tested: true, k: 340, n: 497, mean: 0.6234, ci90: [0.5731, 0.6721], wrong: 126, channel: null, cost: null },
+      { id: 'lite>opus', tested: true, k: 299, n: 307, mean: 0.959, ci90: [0.916, 0.988], wrong: 7, channel: 'claude', cost: [0.0041, 0.0043, 0.0045], inv: '0/307' },
+      { id: 'lite>agy-flash-low+diffqa', tested: false, k: null, n: null, mean: 0.875, ci90: [0.593, 0.998], channel: 'agy', cost: [1.2, 2.873, 6], hard_floor_block: true,
+        defects: { books: 39, words: 21222, misleads_per_1k_posterior: [3.94, 4.976, 6.13], wrong_text_per_1k_posterior: [1.79, 3.973, 6.96] } },
+    ],
+  };
+
+  it('carries each route with k/n, the interval, cost per accepted page and its unit; an untested rate is flagged as a prior', () => {
+    const rows = routeRows(r, { production: [], decided: 'lite>opus' });
+    expect(rows.map((x: { id: string }) => x.id)).toEqual(['lite', 'lite>opus', 'lite>agy-flash-low+diffqa']);
+    expect(rows[0]).toMatchObject({ tested: true, k: 340, n: 497, rate: 0.6234, ci90: [0.5731, 0.6721], wrong_text: 126, cost: null, in_use: false, decided: false });
+    expect(rows[1]).toMatchObject({ cost: { unit: 'pts', low: 0.0041, mid: 0.0043, high: 0.0045 }, in_use: true, decided: true, invented_or_wrong_leaf: '0/307' });   // no lane: the live route is in use
+    expect(rows[2]).toMatchObject({ tested: false, rate: 0.875, wrong_text: null, hard_floor_block: true, cost: { unit: 'agy calls', low: 1.2, mid: 2.87, high: 6 },
+      defects: { books: 39, misleads_per_1k: [3.94, 4.976, 6.13], wrong_text_per_1k: [1.79, 3.973, 6.96] } });
+  });
+
+  it('a cron lane marks the route production runs, not the live one', () => {
+    const rows = routeRows(r, { production: ['lite>agy-flash-low+diffqa'], decided: 'lite>opus' });
+    expect(rows.filter((x: { in_use: boolean }) => x.in_use).map((x: { id: string }) => x.id)).toEqual(['lite>agy-flash-low+diffqa']);
+  });
+
+  it('the board puts them on each cell', () => {
+    const c = board(table([row('german-lite/print', 'keep', 'lite>opus', 9)]), {}).cells[0];
+    expect(c.routes).toHaveLength(1);
+    expect(c.routes[0]).toMatchObject({ id: 'lite>opus', k: 9, n: 10, decided: true });
   });
 });
 

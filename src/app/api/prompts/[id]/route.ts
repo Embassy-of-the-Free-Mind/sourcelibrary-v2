@@ -36,7 +36,7 @@ export const GET = withAuth(async (
     console.error('Error fetching prompt:', error);
     return NextResponse.json({ error: 'Failed to fetch prompt' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // PATCH /api/prompts/[id] - Create a new version of a prompt
 // Instead of updating in place, creates a new version for audit trail
@@ -105,7 +105,7 @@ export const PATCH = withAuth(async (
     console.error('Error updating prompt:', error);
     return NextResponse.json({ error: 'Failed to update prompt' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // POST /api/prompts/[id]/set-default - Set this prompt as the default for its type
 export const POST = withAuth(async (
@@ -143,7 +143,7 @@ export const POST = withAuth(async (
     console.error('Error setting default prompt:', error);
     return NextResponse.json({ error: 'Failed to set default prompt' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // DELETE is intentionally not supported - prompts are immutable for audit trail
 // Old versions can be marked as deprecated but not deleted

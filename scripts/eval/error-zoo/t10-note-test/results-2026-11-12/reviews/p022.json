@@ -1,0 +1,67 @@
+[
+  {
+    "book_id": "69b4c057978ca9526eda396d",
+    "slot": 1,
+    "title": "Iulii Firmici Iunioris Mathesis",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century humanist-cursive manuscript of Firmicus Maternus' Mathesis. This page is the model nativities of Demosthenes, Homer and Plato (Book VI). No tradition or collection is set, so there is nothing for it to contradict. The display title says 'second copy', so a check for a duplicate record of the work is worth doing.",
+    "rights_flag": null,
+    "structure_note": "The 'VI' at the head of the leaf is the book's running head (Mathesis Book VI), not a folio. The OCR tags it <page-num>VI</page-num>. A running head repeating across a book's leaves explains most of the 46 printed_repeats and 49 backsteps among the 169 'printed numbers', so this is mis-tagged page furniture, not a broken sequence. The structure counts give pages_translated 0, but pages_translated_field gives 302 and this page has a translation, so one of the two counters is wrong.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 218,
+        "right_page": "yes",
+        "printed_marker": "VI",
+        "layout": "single column of humanist cursive; rubricated (red) marginal notes in the outer left margin naming the nativities; paragraph brackets in the left margin; faint later marginalia and show-through",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "An animo mesto cupiditatis ardore prorepserit", "image": "ista coniunctio incesto cupiditatis ardore sorores suas", "problem": "The clause on the image is about incest ('this conjunction, by incestuous heat of desire, makes them take their sisters as wives'). It is misread as unrelated words, and the subject of the prediction is lost.", "severity": "serious", "class": "O6" },
+          { "ocr": "pignu iouis teneat", "image": "signu tauri teneat", "problem": "Taurus is misread as 'Jupiter's sign'. This is a planetary placement in Demosthenes' model nativity.", "severity": "serious", "class": "O6" },
+          { "ocr": "Sol uero in equo", "image": "Sol uõ in dext° capcorni sig°", "problem": "Capricorn, the Sun's sign in Homer's nativity, is misread as 'equo'. The zodiac sign is lost.", "severity": "serious", "class": "O6" },
+          { "ocr": "faciet heredes", "image": "faciet hoies (homines)", "problem": "'men' misread as 'heirs'", "severity": "moderate", "class": "O6" },
+          { "ocr": "fuerit in eodem signo", "image": "fuit ĩuetus signo (fuerit inventus)", "problem": "'is found in a feminine sign' becomes 'is in the same sign'", "severity": "moderate", "class": "O6" },
+          { "ocr": "ut in manu fulminis dictorum eius potestate proferant", "image": "ut ĩ modũ fulminũ dictorz eius sententie proferant", "problem": "'in the manner of thunderbolts the sentences of his speech' misread as 'in the hand of a thunderbolt … power'", "severity": "moderate", "class": "O6" },
+          { "ocr": "et Saturnus ab", "image": "τ Satur .viij. ab hōscop", "problem": "Saturn's house number (.viij.) is dropped", "severity": "moderate", "class": "O7" },
+          { "ocr": "ex antegeminante", "image": "ĩ qnto geniture (in quinto geniturae)", "problem": "the Moon's place ('the fifth place of the nativity') misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "amabili rerum societate coniuncto", "image": "equali ptiu societate coniuctus", "problem": "'equal fellowship of degrees' misread as 'lovable fellowship of things'", "severity": "minor" },
+          { "ocr": "opprimat", "image": "pgrauati (praegravati)", "problem": "verb misread; sense roughly kept", "severity": "minor" },
+          { "ocr": "honore defatigati", "image": "onere defatigat'", "problem": "'onere' (burden) misread as 'honore' (honour)", "severity": "minor" },
+          { "ocr": "sua sempiterno diligunt affatu", "image": "fido semp diligunt affectu", "problem": "'with faithful affection always' misread", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "An animo mesto cupiditatis ardore prorepserit\niungit uxores facit.", "english": "she brings them forth with a sad mind and the heat of desire, and makes them take wives.", "problem": "Carried from the OCR misread. The image predicts incestuous marriage with sisters; the reader gets an ordinary marriage.", "severity": "serious", "class": "O6" },
+          { "source": "pignu iouis teneat", "english": "holds the sign of Jupiter", "problem": "The image says Taurus. A placement in a model nativity is wrong.", "severity": "serious", "class": "O6" },
+          { "source": "Sol uero in equo", "english": "the Sun is placed in the horse sign", "problem": "The image says Capricorn. The translator renders the garbled reading with confidence as a nonexistent 'horse sign' and gives no uncertainty marker.", "severity": "serious", "class": "T7" },
+          { "source": "faciet heredes", "english": "she will make heirs", "problem": "should be 'men' (homines)", "severity": "moderate", "class": "O6" },
+          { "source": "Horoscopus feminini generis fuerit in eodem signo", "english": "of feminine gender is in the same sign", "problem": "the image says the ascendant 'is found in a sign of feminine gender'", "severity": "moderate", "class": "O6" },
+          { "source": "ut in manu fulminis dictorum eius potestate proferant", "english": "the power of his words is carried forth as if in the hand of a thunderbolt", "problem": "the image says his sentences go forth 'in the manner of thunderbolts'", "severity": "moderate", "class": "O6" },
+          { "source": "talia\net ecce dixit: ut hec ad augustum et uelut in tuum ingenium possederint ceterosa\nconstantia perducant.", "english": "Such things he spoke that he brought them, with steadfastness, to the august, as if by his own genius.", "problem": "fluent English built on garbled OCR; the image reads differently (low confidence on the exact reading)", "severity": "moderate", "class": "T7" },
+          { "source": "et Saturnus ab\nhoroscopo tenens", "english": "Saturn, holding from the ascendant", "problem": "the house number (eighth on the image) is missing, so the clause means nothing", "severity": "moderate", "class": "O7" }
+        ],
+        "other": [
+          { "note": "The OCR tags the running head 'VI' (book number) as <page-num>, which corrupts the printed-number counts", "severity": "moderate", "class": "O11" },
+          { "note": "<meta> asserts what the previous page contained ('the Sun does not see the ascendant'); this cannot be checked from this leaf", "severity": "minor", "class": "T15" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "ascendant", "verdict": "ok", "helpful": true },
+            { "quote": "the place rising next after the ascendant", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"imo celi\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "with trine radiation", "why": "the 'trine' aspect (planets 120° apart) is not explained, and the configurations depend on it" },
+            { "english": "in the terms of Venus", "why": "'terms' (fines) is a technical division of each sign assigned to a planet, unknown to a general reader" },
+            { "english": "Jupiter, placed in the eighth", "why": "'the eighth' means the eighth house/place from the ascendant; the house system is never glossed" },
+            { "english": "beholds them from the diameter", "why": "'diameter' means opposition (180°), which a reader will not guess" },
+            { "english": "joined to the ascendant by exact radiation", "why": "'exact' (partilis) aspect, to the degree, is a technical term" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real Firmicus manuscript on the right shelf. The cursive is misread at several hinge points, though: an incest prediction becomes ordinary marriage, and two zodiac placements in the model nativities of Demosthenes and Homer are wrong. The fluent English carries all of these errors. The running head 'VI' is mis-tagged as a page number."
+  }
+]

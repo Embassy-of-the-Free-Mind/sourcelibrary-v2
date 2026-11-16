@@ -1,0 +1,102 @@
+[
+  {
+    "book_id": "69520516ab34727b1f04245b",
+    "slot": 1,
+    "title": "Musurgia universalis Tomus II",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Kircher's Musurgia universalis (Rome, 1650), Lib. VIII 'Musurgia Mirifica'. The leaf is a 17th-century print, as catalogued. No tradition or collection is given to test against.",
+    "rights_flag": null,
+    "structure_note": "In the structure counts pages_translated is 0, but the pages_translated field says 519, so one of the two counters is wrong (E2). Record 27 has printed page 15, which fits about 12 leaves of front matter. 4 printed_backsteps and 17 printed_repeats in a book with many plates and tables probably come from misread folios or unnumbered plate leaves, not a splice. This one page cannot confirm that.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "printed_marker": "15",
+        "layout": "running head with page number; one column of prose above a large table (three vertical music staves, an Arabic index column 22 to 1, a Roman column I to XXII, and a column of large numbers); two lines of prose below; catchword 'intra'; faint marginal note at the top right; show-through from the verso",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Next to it are several columns of indices: Roman numerals I-XXII and Arabic numerals 1-22, labeled at the bottom as \"Notæ tris-diapason\" and \"Notæ assumptæ\". To the right of these is a column of multipliers (labeled \"præſ\") starting at 22 and descending to 1",
+            "image": "Only one Arabic column is printed (22 at the top down to 1, labelled 'Notæ triſ-diapaſon'). It sits left of the Roman column (I to XXII, labelled 'Notæ aſſumptæ'). No column is labelled 'præſ'.",
+            "problem": "The image description counts the one Arabic column twice, puts the multipliers to the right of the Roman numerals, and invents the label 'præſ'.",
+            "severity": "moderate",
+            "class": "O14"
+          },
+          {
+            "ocr": "| Notes (n) | Multiplier | Calculation Result |",
+            "image": "the printed table has no column headings",
+            "problem": "Invented table headers. The cell contents match the print.",
+            "severity": "minor",
+            "class": "O17"
+          },
+          {
+            "ocr": "<vocab>trisdiapason, mutatio, combinatio, Musurgia, mutationum, Guidonis, trisdiapason</vocab>",
+            "image": "'Guidonis' does not appear on the leaf",
+            "problem": "The vocab lists a word that is not on the page, and lists 'trisdiapason' twice.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "ita diſdiapaſon\nintra\n\n<meta>catchword: intra</meta>",
+            "image": "'intra' stands alone, right-aligned below the last line, as the catchword",
+            "problem": "The catchword is transcribed as body text as well as tagged as a catchword.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "paulo ante",
+            "image": "paulò ante",
+            "problem": "accent dropped (likewise 'vſque' for 'vſquè' and 'hæc' for 'hęc')",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(not transcribed)",
+            "image": "a small two-line note in the right margin beside the first lines (illegible at this resolution)",
+            "problem": "marginal note not recorded",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Next to it are several columns of indices: Roman numerals I-XXII and Arabic numerals 1-22",
+            "english": "Beside it are several columns of indices: Roman numerals I to XXII and Arabic numerals 1 to 22, labeled at the bottom \"Notes of the triple octave\" and \"Assumed notes\". To the right of these is a column of multipliers, starting at 22 and descending to 1",
+            "problem": "The OCR's wrong description of the table goes into a reader-facing <note>, so the English describes a column layout the leaf does not have.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "(none on this page)",
+            "english": "<meta>continues from previous page: \"if you desire to know how many times three notes within the interval...\"</meta>of a triple octave",
+            "problem": "The continuity meta quotes the previous page, which cannot be checked here. It is also joined to the first word with no space.",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "The Wonderful Art of Musical Composition",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "A vertical diagram and table for calculating musical combina",
+              "verdict": "wrong",
+              "helpful": false
+            }
+          ],
+          "missing": [
+            {
+              "english": "and so you will proceed in order up to 22, which will be the ordinary combination of the number 22",
+              "why": "'Ordinary combination' is Kircher's term for the full product 22×21×…×1 (what we call a factorial). Without a gloss a general reader cannot tell what the phrase means."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A good page. The prose and all 22 printed figures in the table are transcribed and translated faithfully. The faults are in the apparatus: an image description, shown to the reader as a note, gets the table's columns wrong, and the table has invented headers. Nothing a reader would flag on sight."
+  }
+]

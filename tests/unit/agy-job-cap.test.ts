@@ -18,6 +18,8 @@ describe('agy per-job ledger and heavy-model cap', () => {
   it('classes the heavy tiers', () => {
     expect(HEAVY_MODEL.test('gemini-4-argon-high')).toBe(true);
     expect(HEAVY_MODEL.test('gemini-4-argon-low')).toBe(true);
+    // allowlist (v3 #47): models agy adds later are heavy from their first call
+    for (const m of ['gemini-4-hydrogen-low', 'gemini-4-hydrogen-xhigh', 'gemini-4-carbon-low', 'gemini-3.8-flash-high', 'gemini-pro-orchestrator', 'gemini-5-anything']) expect(HEAVY_MODEL.test(m)).toBe(true);
     expect(HEAVY_MODEL.test('gemini-3.8-flash-medium')).toBe(false);
     expect(HEAVY_MODEL.test('gemini-3.8-flash-low')).toBe(false);
   });

@@ -1,0 +1,105 @@
+[
+  {
+    "book_id": "69b3f78da107e55a0ee1dd03",
+    "slot": 1,
+    "title": "Canon medicinae / Avicenna, trans. Gerard of Cremona (BPL 7)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 13th-century two-column Latin manuscript in Gothic book hand with red marginal rubrics. It matches the catalogue (Latin Canon, MS, c.1260). The page is on skull fractures from the surgical part of the Canon. No collection is given to test against.",
+    "rights_flag": null,
+    "structure_note": "The structure counts give pages_translated 0, but the book field gives 901 and this page carries a translation, so one of the instruments is wrong (E2). The counts also show 255 printed backsteps and 268 repeats over 673 'printed' numbers. On an unfoliated-looking manuscript leaf like this one, where the only head mark is a red rubricated letter, these are most likely misread or invented page numbers (furniture read as page numbers), not a scan splice. 70 pages have no OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 965,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "two columns of Gothic book hand, red-underlined rubric notes in the left margin, a red flourished letter at the head; a strip of the facing leaf with a red marginal rubric at the right edge",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "in fustera aut puluis in fudo fy ulino",
+            "image": "the line 'in [fugera] cū puluillo in fundo [?] uino' appears once on the leaf",
+            "problem": "Dittography. Three lines are repeated in the OCR: 'datum.', 'in fustera aut puluis in fudo fy ulino' and 'et est via q iam dea. Et melz z aure'. The leaf has each line only once.",
+            "severity": "moderate",
+            "class": "O4"
+          },
+          {
+            "ocr": "fietdum incide d discopere\ndatum. Et accidat fluxus sanguinis iplea",
+            "image": "'…incide ꝯ discoope(ri)re / donec appareat os dubi/tatum. ꝯ si accidat fluxus sanguinis iplea/tur illud cū discoopertum est puluis sicc(us)'",
+            "problem": "The clause 'donec appareat os dubitatum' (until the doubtful bone appears) is dropped. Next to it, the instruction to fill the wound with dry powder is reduced to garble, so the translator guessed 'it must be stopped'.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "aut fimus menilz greci possibilis est",
+            "image": "a line reading roughly 'eadē dy[…] cū signis; ibi est de fractura' (low confidence)",
+            "problem": "Garble runs through every line of both columns. Hardly any line is right, and the reading of the surgical instructions is lost.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>fay extrema</margin>",
+            "image": "red-underlined rubric reading 'f'ar' experienta' (the body beside it has 'experientia')",
+            "problem": "The marginal rubric is misread, and the translation renders it 'extremity'",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "datum. Et accidat fluxus sanguinis iplea",
+            "english": "And if a flow of blood occurs, <unclear>it must be stopped</unclear>.",
+            "problem": "The image reads 'impleatur illud … puluis siccus' (it is to be filled with dry powder). The guess is marked unclear, but the treatment it gives is not the one on the leaf.",
+            "severity": "moderate"
+          },
+          {
+            "source": "<margin>fay extrema</margin>",
+            "english": "<margin><unclear>extremity</unclear></margin>",
+            "problem": "The rubric says 'experientia', so the marginal heading is mistranslated",
+            "severity": "minor"
+          },
+          {
+            "source": "nocumtum estiuue z fegmag ap\nparent z et euent apart minor z faliu",
+            "english": "<unclear>And harm follows, and signs appear</unclear>; <unclear>first smaller ones, and then larger ones appear and grow quickly</unclear>.",
+            "problem": "Long stretches are conjectural reconstructions of garbled OCR. They are marked unclear and the page carries a warning, but much of the English has no anchor in the transcription.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "An orphan '</unclear>' closing tag comes straight after the opening <warning>, so broken markup sits at the top of the reader text",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "A raw '<column-break/>' sits in the middle of the English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "possibly the meninges, the membranes covering the brain", "verdict": "unsupported", "helpful": false },
+            { "quote": "an Arabic word kept by the Latin translator; its meaning her", "verdict": "ok", "helpful": true },
+            { "quote": "remedies for wounds of the head", "verdict": "ok", "helpful": true },
+            { "quote": "bitter vetch", "verdict": "ok", "helpful": true },
+            { "quote": "birthwort", "verdict": "ok", "helpful": true },
+            { "quote": "a gum resin", "verdict": "ok", "helpful": true },
+            { "quote": "a gum used to close wounds", "verdict": "ok", "helpful": true },
+            { "quote": "a red resin", "verdict": "ok", "helpful": true },
+            { "quote": "that is, without stinging or corroding", "verdict": "ok", "helpful": false },
+            { "quote": "the sense seems to be that broken skull bones do not knit as", "verdict": "ok", "helpful": true },
+            { "quote": "possibly the brain, which medieval writers sometimes called ", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "the noble <unclear>parts</unclear>", "why": "'Noble members' is a technical term in Galenic and Avicennan medicine for the principal organs (brain, heart, liver). A general reader takes it as vague praise." },
+            { "english": "a fistula which <unclear>forms</unclear>", "why": "'Fistula' in the medieval surgical sense (a chronic, suppurating channel) is not the modern reader's default meaning" }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "The right leaf of a genuine 13th-century Latin Canon manuscript, but the OCR of this page is largely garble: lines are repeated, a clause is dropped, and nearly every line is misread. The translation rightly carries a warning and wraps most of the text in unclear tags, but much of it is conjecture, and two broken tags show in the reader text. The notes are mostly sound glosses."
+  }
+]

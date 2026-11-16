@@ -1,0 +1,89 @@
+<warning>Handwritten Ashkenazi square/semi-cursive Hebrew script. The leaf is heavily darkened, stained and abraded, worst in the centre and lower half of every column. Many readings are uncertain. In the left column, the last lines are mostly illegible.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>3</columns>
+<meta>A small faint mark in the top right corner, possibly a foliation mark, is unreadable. A strip at the bottom of the page, likely a binding or tab fragment, carries the word פרות (reading uncertain).</meta>
+
+בנה גבב להם עת <unclear>עזר</unclear>
+יחד המבצר <unclear>ובו חוסו</unclear>
+<unclear>ותעשועו עמו וגושו</unclear>
+<unclear>מהרו ויענו ונגושו</unclear>
+<unclear>זמרו ויענו כי נגושו</unclear>
+העם <unclear>והעיר</unclear> לכל <unclear>פנה</unclear>
+ועברו בה והעם <unclear>ענה</unclear>
+<unclear>והקרית שמוע ענה</unclear>
+<unclear>ולקול פח ופחד ענה</unclear>
+<unclear>יענו עני ופחד ענה</unclear>
+<unclear>יענו המוניו מענה</unclear>
+<unclear>במצוקה חיל ורעדה</unclear>
+<unclear>עמדו כי לא יפשעו</unclear>
+<unclear>לו לוקח מענה שבו</unclear>
+<unclear>כי רחוקים מענה</unclear>
+<unclear>שבו וזמנו מענה</unclear>
+<unclear>יענו אמונים מענה</unclear>
+<unclear>[illegible — about 8 lines, heavily darkened]</unclear>
+<unclear>[illegible — 2-3 words]</unclear> ך
+יענו <unclear>[illegible — 2 words]</unclear>
+
+<column-break/>
+
+<unclear>מעוזו</unclear> ומשלו <unclear>מושע</unclear>
+שמרו <unclear>אתה</unclear> ישועה
+תעודו <unclear>וגאוה</unclear> <unclear>עלי</unclear>
+חופש <unclear>גאוה</unclear> קרב וחק
+חופש <unclear>אולי</unclear> נתן נשק
+על טעמו <unclear>חולי</unclear> <unclear>נשק</unclear>
+ועתי ישת <unclear>ל</unclear> מעל
+החזיק ומננו פעליו
+<unclear>יעבור זמנו וחק פעליו</unclear>
+פיהו קבץ פניו נעשו
+טורי נס על פניו
+<unclear>שכר חוקו חזה ועמד</unclear>
+עד שער נס מעמד
+התעורר כופר <unclear>וחננה</unclear>
+ויעזבו דבר נסיה <unclear>דע</unclear>
+דרך המדבר <unclear>הדיעה</unclear>
+זב זיוו <unclear>וזיוו נגדע</unclear>
+יפרעו כל שומעו קולו
+ובונו חרש <unclear>וינחמו</unclear>
+היהון <unclear>והמרו</unclear> <unclear>חזות</unclear>
+וכדון בפעם חזות
+לחזות היסוד <unclear>בחזות</unclear>
+<unclear>אזלו אזור חגורה</unclear>
+חסון ועוז <unclear>עורה</unclear>
+הפסק וכסא <unclear>חקר</unclear>
+המדבר <unclear>כי פוק</unclear>
+
+<column-break/>
+
+<unclear>נום עשותן</unclear> והגידה
+<unclear>התעו ויסורו בם</unclear> ול
+העם ההולכים בחשך
+<unclear>לין</unclear> וחוסו <unclear>כל</unclear> יושבי
+<unclear>דין עונות יחד נה</unclear>
+עוולה <unclear>ח</unclear> חננה
+<unclear>נא נא פדה את חולו</unclear>
+הגע <unclear>וקול המון שאון</unclear>
+<unclear>פורעו וזמנו שאון</unclear>
+חיות עולם <unclear>חוקו</unclear> ח
+השתחוו לו ויענו
+<unclear>וחלו וזמנו ויענו</unclear>
+<unclear>ובחכמה</unclear> וספר <unclear>חזון</unclear>
+לו <unclear>פתח</unclear> שער <unclear>וחזון</unclear>
+<unclear>[illegible — 1 line]</unclear>
+
+### שומרה <unclear>חסנו</unclear>
+<unclear>[illegible — 1-2 words]</unclear> עיר
+<unclear>ומספר חג שמיא</unclear>
+<unclear>יעלו נס על אגש</unclear>
+<unclear>וחסדו ביום רע</unclear>
+<unclear>וקין שש וטובו</unclear>
+וחסדו <unclear>לכל</unclear> <unclear>חזיה</unclear>
+### תקות <unclear>ישראל</unclear>
+שעשועי
+<unclear>תחזיתו</unclear> נהיה ועוז לו
+<unclear>ומשיעו</unclear> טובו <unclear>מ</unclear>
+
+<vocab>ישועה, חסדו, תקות ישראל, שעשועי, חזון, המדבר, piyyut</vocab>

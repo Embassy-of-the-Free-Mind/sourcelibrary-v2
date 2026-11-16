@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>Arabic</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>١٢٢٩</page-num>
+<warning>Handwritten astronomical / astrological ephemeris table in Arabic cursive script with Abjad numerals</warning>
+
+<image-desc size="large" type="diagram" significance="high">An astronomical/calendrical table with columns ruled in ink, containing astronomical parameters, dates of conjunctions (ijtima'), Abjad calculations, and annotations.</image-desc>
+
+| <margin>يوم ٢</margin> اجتماع جمادي الاولى ٢٥ حـ ٢٠ م ليلة ٢<br/>٢٣ كـ ٢٠ د ٢٠ ثـ ٤٠ ر ١٠ خـ<br/>١٢ : ٢٠ : ٥<br/>الاول | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| اجتماع جمادي الاخر ٢٥ حـ ٣٠ م يوم ٢<br/>٢٣ كـ ٠٩ د ٣٢ ثـ ٤٠ ر ٠٩ خـ<br/>الثاني | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| اجتماع رجب ٢٥ حـ ٢٠ م ليلة ٢<br/>٢٣ كـ ٠٩ د ٤٠ ثـ ٤٠ ر ١٢ خـ<br/><margin>سلم نقي</margin> الرابع الثالث | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| <margin>تبارك اسمك عظيم ملكك لا توجد بين الالهة حكم من قدام وجهك اسكنته في كل عصر</margin> اجتماع شعبان ٢٥ حـ ٤٠ م ليلة ٢<br/>٢٣ كـ ٠٩ د ٣٢ ثـ ٤٠ ر ٢٠ خـ<br/><margin>درجابعة كوز الخامس الرابع سلام علوي</margin> الخامس | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| اجتماع رمضان ٢٥ حـ ٤٠ م يوم ٢<br/>٢٣ كـ ٠٩ د ٤٠ ثـ ٤٠ ر ١٢ خـ<br/>الخامس | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| <margin>مخرج ٨٣١ عبرانية تنسبه في دجديد</margin> | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| اجتماع شوال ٢٥ حـ ٤٠ م ليلة ٢<br/>٢٣ كـ ٠٩ د ٣٢ ثـ ٤٠ ر ٢٠ خـ<br/>السابع | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| اجتماع ذي القعدة ٢٥ حـ ٢٠ م يوم ٢<br/>٢٣ كـ ٠٩ د ٤٠ ثـ ٤٠ ر ١٢ خـ<br/>الثامن | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+| اجتماع ذي الحجة ٢٥ حـ ٢٠ م ليلة ٢<br/>٢٣ كـ ٠٩ د ٣٢ ثـ ٤٠ ر ٢٠ خـ<br/>التاسع الثاني | د ج | ب ك | كح | يط | د ح | ه ه | ك | لو كح |
+
+<vocab>اجتماع, جمادي الاولى, جمادي الاخر, رجب, شعبان, رمضان, شوال, ذي القعدة, ذي الحجة, حساب الجمل, ابجد</vocab>

@@ -47,11 +47,11 @@ function escapeRegex(s: string): string {
  * (`images.sourcelibrary.org/artwork/foo.jpg`) as a link to the `/artwork/foo`
  * page and reports it dead.
  *
- * The optional `/es` is the locale prefix: a Spanish conversation cites
+ * The optional `/es` or `/zh` is the locale prefix: a Spanish conversation cites
  * `sourcelibrary.org/es/book/<slug>`, which is the same book and must be
  * verified (and repaired) exactly like the English link.
  */
-export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org(?:\\/es)?';
+export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org(?:\\/(?:es|zh))?';
 
 /** Book links in a response: `/book/<slug>` plus any page suffix. */
 export function findCitedBookLinks(text: string): Array<{ slug: string; page?: number }> {

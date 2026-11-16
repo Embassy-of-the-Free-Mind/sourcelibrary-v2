@@ -1,0 +1,41 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<header>斷易天機三</header>
+<warning>Japanese kunten reading marks (kaeriten and okurigana) were added by hand beside the main text. They are not transcribed. Small paired stem-branch characters beside the line elements are given in parentheses.</warning>
+
+坤上坎下六親〇(癸酉)金 (癸亥)水 (癸丑)土 (戊午)火 (戊辰)土 (戊寅)木 飛(戊午)火
+
+地水師 應 ∴ ∴ ∴ 世 ∴ ∴ 七月卦
+
+坎水歸魂<gloss>內卦出現</gloss>〇父母 兄弟 官鬼 妻財 官鬼 子孫 伏(<unclear>己亥</unclear>)水
+
+<insert>春平 夏凶 秋凶 冬吉</insert>
+
+---
+
+此卦周亞夫将欲排陣卜得之果獲勝也
+
+評曰<gloss>師者眾也</gloss>
+
+獨行越師最不
+宜動君子有
+命小人勿用
+共相尅伐敗
+道成訟
+
+<image-desc size="large" type="woodcut" significance="high">A framed woodcut shows a horse standing above a crouching tiger, with a goat or sheep behind them. On a tiled platform with a brick edge, a figure kneels before two standing officials, one of whom holds a seal. A tree stands at the right and a crescent moon at the upper left.</image-desc>
+
+**解曰**虎馬羊者<gloss>乃寅午未之位也</gloss>将
+軍臺上立<gloss>掌兵權也</gloss>執印者<gloss>待信也</gloss>
+人膝跪於臺上<gloss>乃受功賞也凡</gloss>
+
+百遇此得人
+提携之兆占者吉
+
+〇天馬出群之課
+以寡服眾之象
+
+<vocab>地水師, 坤上坎下, 坎水歸魂, 六親, 飛伏, 世應, 周亞夫, 虎馬羊, 寅午未, 天馬出群, 以寡服眾, 斷易天機</vocab>

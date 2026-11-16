@@ -37,16 +37,9 @@ const db = client.db('bookstore'); const books=db.collection('books'); const col
 // fix Sharngadhara language Marathi->Sanskrit
 await books.updateOne({_id:new ObjectId('6a3579b882bf3ff3f867b0a1')},{$set:{language:'Sanskrit',updated_at:new Date()}});
 
-// batch OCR: all new books + the Hemp Commission that missed
-const ocrTargets = [...newIds, '6a356ec887fae58c35bbcfe8'];
-console.log('\n== batch OCR submit ==');
-for(const id of ocrTargets){
-  // skip if already has an ocr batch job
-  const has = await db.collection('batch_jobs').countDocuments({book_id:id, type:/ocr/i});
-  if(has){ console.log(`  ${id} already has ${has} ocr jobs, skip`); continue; }
-  const d = await post(`/api/books/${id}/batch-ocr-async`,{});
-  console.log(`  ${id} -> ${d.success?('pages='+d.pagesSubmitted+' batches='+d.batchCount):JSON.stringify(d).slice(0,120)}`);
-}
+// OCR: this script used to POST each new book to the batch OCR route. That route was retired (v2#8590): a book is
+// read by the lane its router cell names (.claude/docs/routing.md), so nothing is submitted here.
+console.log('\n== OCR ==\n  not submitted here: the router lanes read new books (.claude/docs/routing.md)');
 
 // tag all new books + Rumphius vol 4 into collection
 const tag = [...newIds, '6958eacd538549809db83318'];

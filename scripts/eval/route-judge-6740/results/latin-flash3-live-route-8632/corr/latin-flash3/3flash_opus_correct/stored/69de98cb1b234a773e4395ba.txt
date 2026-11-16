@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>6</page-num>
+
+<image-desc size="large" type="engraving" significance="high">
+A masterful architectural perspective engraving framed within a circular border. The scene depicts a view looking through a series of grand, classical porticos and vaulted arches. In the foreground, robust pillars with rectangular bases support arched openings that lead the eye into a central, coffered vaulted passageway. Through this passage, a large courtyard is visible, featuring a multi-story Renaissance-style palace with a central arched entryway and a complex roofline adorned with finials. The circular image is contained within a rectangular frame, with the corners filled with intricate strapwork and decorative scrollwork ornaments. The print is a study in linear perspective.
+</image-desc>
+
+->VRIE<-
+->SE<-
+->INV<-
+->ENT<-
+
+<vocab>Hans Vredeman de Vries, perspective, architecture, engraving, strapwork, Renaissance</vocab>

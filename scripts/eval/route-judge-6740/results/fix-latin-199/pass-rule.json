@@ -1,0 +1,1166 @@
+{
+ "arms": {
+  "opus": {
+   "judge": "fable",
+   "better": 26,
+   "same": 4,
+   "worse": 0,
+   "accept_gained": 19,
+   "accept_lost": 0,
+   "unchanged": 0,
+   "pass": true
+  },
+  "fable": {
+   "judge": "opus",
+   "better": 27,
+   "same": 3,
+   "worse": 0,
+   "accept_gained": 22,
+   "accept_lost": 0,
+   "unchanged": 2,
+   "pass": true
+  }
+ },
+ "pages": [
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6990689d249ce014347d6f66",
+   "book_id": "6990689d249ce014347d6f65",
+   "page_number": 1,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 17
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 12
+   },
+   "rel": "same",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69b43d4406b196d69f66fed5",
+   "book_id": "69b43d4406b196d69f66fecb",
+   "page_number": 10,
+   "stored": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "same",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "699255f693bcf58df3a7641e",
+   "book_id": "69520f03ab34727b1f044317",
+   "page_number": 6,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 6
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6953ab9577f38f6761bd7882",
+   "book_id": "6953ab9577f38f6761bd786e",
+   "page_number": 20,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 8
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "699065a2726f64800c10c00f",
+   "book_id": "699065a1726f64800c10bff7",
+   "page_number": 24,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 6
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69b43d2706b196d69f66f163",
+   "book_id": "69b43d2706b196d69f66f14f",
+   "page_number": 20,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 3
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "699065ab3dc2ed39a49f231a",
+   "book_id": "699065ab3dc2ed39a49f2311",
+   "page_number": 9,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 8
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 5
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6950051bf426a210d109dfc7",
+   "book_id": "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
+   "page_number": 33,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 3
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69527377ab34727b1f049492",
+   "book_id": "69527376ab34727b1f04948a",
+   "page_number": 8,
+   "stored": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "same",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69906f5b4b3bd4d1fffd0750",
+   "book_id": "69906f5b4b3bd4d1fffd0739",
+   "page_number": 23,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 5
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69593410b282844d7b277a5d",
+   "book_id": "69593410b282844d7b277966",
+   "page_number": 247,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69527367ab34727b1f0490da",
+   "book_id": "69527367ab34727b1f048f38",
+   "page_number": 418,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 3
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69745ca406ff0c4020192ca0",
+   "book_id": "6970e3619b09d309d780a26a",
+   "page_number": 377,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "698276a749c01c6e38484e35",
+   "book_id": "698255f37fdcaf06a9760acc",
+   "page_number": 157,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "695258d1ab34727b1f045b23",
+   "book_id": "695258d1ab34727b1f045aed",
+   "page_number": 54,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "697a6bcd442cdc439e387332",
+   "book_id": "697a6b9bb981745f5fac1d7a",
+   "page_number": 1,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6990615cef12272ffdc8d566",
+   "book_id": "6990615bef12272ffdc8d528",
+   "page_number": 62,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "699067d0249ce014347d41fe",
+   "book_id": "699067d0249ce014347d41f8",
+   "page_number": 5,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 4
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 1
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69520572ab34727b1f042ca5",
+   "book_id": "69520571ab34727b1f042c78",
+   "page_number": 45,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 3
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69b3f71ca107e55a0ee1b444",
+   "book_id": "69b3f71ca107e55a0ee1b43a",
+   "page_number": 10,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 9
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69905e292fd6a039938a15e2",
+   "book_id": "69905e292fd6a039938a15c6",
+   "page_number": 28,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 10
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69500509f426a210d109c5da",
+   "book_id": "a5d0c381-d4ea-42cd-8864-44457e7fda33",
+   "page_number": 34,
+   "stored": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "same",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "695591c87bd6d2cd1d619794",
+   "book_id": "695591c87bd6d2cd1d61978b",
+   "page_number": 9,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "695592827bd6d2cd1d61ae87",
+   "book_id": "695592827bd6d2cd1d61ab34",
+   "page_number": 851,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6950050cf426a210d109ca60",
+   "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+   "page_number": 114,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "695592c17bd6d2cd1d61b045",
+   "book_id": "695592c17bd6d2cd1d61afec",
+   "page_number": 89,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 4
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6981d4bdcf459c4ade3f7917",
+   "book_id": "69819203084978306e4933f4",
+   "page_number": 214,
+   "stored": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6985d316a3640136e27937e5",
+   "book_id": "6985ca7130d79dd170ec623f",
+   "page_number": 39,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6953cc6d77f38f6761be2102",
+   "book_id": "6953cc6d77f38f6761be20a9",
+   "page_number": 89,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 10
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 7
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "699067f9249ce014347d5318",
+   "book_id": "699067f8249ce014347d530c",
+   "page_number": 11,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 18
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 5
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6990689d249ce014347d6f66",
+   "book_id": "6990689d249ce014347d6f65",
+   "page_number": 1,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 9
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69b43d4406b196d69f66fed5",
+   "book_id": "69b43d4406b196d69f66fecb",
+   "page_number": 10,
+   "stored": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "699255f693bcf58df3a7641e",
+   "book_id": "69520f03ab34727b1f044317",
+   "page_number": 6,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 3
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6953ab9577f38f6761bd7882",
+   "book_id": "6953ab9577f38f6761bd786e",
+   "page_number": 20,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 4
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "699065a2726f64800c10c00f",
+   "book_id": "699065a1726f64800c10bff7",
+   "page_number": 24,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69b43d2706b196d69f66f163",
+   "book_id": "69b43d2706b196d69f66f14f",
+   "page_number": 20,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "699065ab3dc2ed39a49f231a",
+   "book_id": "699065ab3dc2ed39a49f2311",
+   "page_number": 9,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6950051bf426a210d109dfc7",
+   "book_id": "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
+   "page_number": 33,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69527377ab34727b1f049492",
+   "book_id": "69527376ab34727b1f04948a",
+   "page_number": 8,
+   "stored": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "same",
+   "unchanged": true
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69906f5b4b3bd4d1fffd0750",
+   "book_id": "69906f5b4b3bd4d1fffd0739",
+   "page_number": 23,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 4,
+    "wt": 1
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69593410b282844d7b277a5d",
+   "book_id": "69593410b282844d7b277966",
+   "page_number": 247,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69527367ab34727b1f0490da",
+   "book_id": "69527367ab34727b1f048f38",
+   "page_number": 418,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 0
+   },
+   "rel": "same",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69745ca406ff0c4020192ca0",
+   "book_id": "6970e3619b09d309d780a26a",
+   "page_number": 377,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "698276a749c01c6e38484e35",
+   "book_id": "698255f37fdcaf06a9760acc",
+   "page_number": 157,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "695258d1ab34727b1f045b23",
+   "book_id": "695258d1ab34727b1f045aed",
+   "page_number": 54,
+   "stored": {
+    "accept": false,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "697a6bcd442cdc439e387332",
+   "book_id": "697a6b9bb981745f5fac1d7a",
+   "page_number": 1,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6990615cef12272ffdc8d566",
+   "book_id": "6990615bef12272ffdc8d528",
+   "page_number": 62,
+   "stored": {
+    "accept": false,
+    "fidelity": 4,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "699067d0249ce014347d41fe",
+   "book_id": "699067d0249ce014347d41f8",
+   "page_number": 5,
+   "stored": {
+    "accept": false,
+    "fidelity": 4,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69520572ab34727b1f042ca5",
+   "book_id": "69520571ab34727b1f042c78",
+   "page_number": 45,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69b3f71ca107e55a0ee1b444",
+   "book_id": "69b3f71ca107e55a0ee1b43a",
+   "page_number": 10,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 4
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69905e292fd6a039938a15e2",
+   "book_id": "69905e292fd6a039938a15c6",
+   "page_number": 28,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69500509f426a210d109c5da",
+   "book_id": "a5d0c381-d4ea-42cd-8864-44457e7fda33",
+   "page_number": 34,
+   "stored": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "same",
+   "unchanged": true
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "695591c87bd6d2cd1d619794",
+   "book_id": "695591c87bd6d2cd1d61978b",
+   "page_number": 9,
+   "stored": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "695592827bd6d2cd1d61ae87",
+   "book_id": "695592827bd6d2cd1d61ab34",
+   "page_number": 851,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6950050cf426a210d109ca60",
+   "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+   "page_number": 114,
+   "stored": {
+    "accept": false,
+    "fidelity": 4,
+    "wt": 1
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "695592c17bd6d2cd1d61b045",
+   "book_id": "695592c17bd6d2cd1d61afec",
+   "page_number": 89,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6981d4bdcf459c4ade3f7917",
+   "book_id": "69819203084978306e4933f4",
+   "page_number": 214,
+   "stored": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6985d316a3640136e27937e5",
+   "book_id": "6985ca7130d79dd170ec623f",
+   "page_number": 39,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 2
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 5,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6953cc6d77f38f6761be2102",
+   "book_id": "6953cc6d77f38f6761be20a9",
+   "page_number": 89,
+   "stored": {
+    "accept": false,
+    "fidelity": 2,
+    "wt": 11
+   },
+   "corr": {
+    "accept": true,
+    "fidelity": 4,
+    "wt": 0
+   },
+   "rel": "better",
+   "unchanged": false
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "699067f9249ce014347d5318",
+   "book_id": "699067f8249ce014347d530c",
+   "page_number": 11,
+   "stored": {
+    "accept": false,
+    "fidelity": 3,
+    "wt": 3
+   },
+   "corr": {
+    "accept": false,
+    "fidelity": 4,
+    "wt": 1
+   },
+   "rel": "better",
+   "unchanged": false
+  }
+ ]
+}

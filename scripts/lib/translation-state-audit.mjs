@@ -119,6 +119,7 @@ export function headlinePositiveControl(expected, now = Date.now()) {
  * in English`), so the pattern steps over tags and React comment markers between
  * them rather than stripping the page first. A page whose copy no longer carries
  * the phrase returns [] — the caller reports it unreadable rather than passing it.
+ * A 0 beside a non-zero figure is a count-up counter's server render and is dropped.
  */
 export function parseReadableFigures(html) {
   const out = [];
@@ -126,7 +127,10 @@ export function parseReadableFigures(html) {
     const n = Number(m[1].replace(/,/g, ''));
     if (Number.isFinite(n) && !out.includes(n)) out.push(n);
   }
-  return out;
+  // A count-up counter (/about since 2026-11) renders 0 on the server and animates to the
+  // figure in the browser; the real figure is in the same block's aria-label. Drop a 0 when
+  // the page carries a non-zero figure too. A page whose only figure is 0 keeps it and fails.
+  return out.some((n) => n > 0) ? out.filter((n) => n > 0) : out;
 }
 
 /**

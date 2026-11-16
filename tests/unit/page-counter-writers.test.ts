@@ -47,7 +47,7 @@ const BASELINE: string[] = JSON.parse(
 ).files;
 
 /** Current size of the baseline. Lower it when a file leaves; never raise it. */
-const BASELINE_CEILING = 55;
+const BASELINE_CEILING = 52; // 55 until the two batch-translate-async routes were retired (v2#8590); 52 after import-batch (v3#212)
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const e of readdirSync(dir)) {

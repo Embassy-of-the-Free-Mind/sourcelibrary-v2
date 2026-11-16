@@ -1,0 +1,1173 @@
+{
+ "generated_by": "scripts/eval/image-translate-106/score.mjs",
+ "verdicts": 511,
+ "cells": {
+  "Latin": {
+   "arms": {
+    "T": {
+     "n": 40,
+     "accept": "26/40",
+     "accept_wilson": [
+      0.495,
+      0.779
+     ],
+     "words": 18750,
+     "serious": 66,
+     "serious_per_1k": 3.52,
+     "misleads_per_1k": 2.77,
+     "wrong_text_per_1k": 0.75,
+     "wrong_text_pages": "7/40",
+     "false_leaf_pages": 9,
+     "fidelity_mean": 3.98
+    },
+    "T2": {
+     "n": 40,
+     "accept": "29/40",
+     "accept_wilson": [
+      0.572,
+      0.839
+     ],
+     "words": 18432,
+     "serious": 58,
+     "serious_per_1k": 3.15,
+     "misleads_per_1k": 2.77,
+     "wrong_text_per_1k": 0.38,
+     "wrong_text_pages": "3/40",
+     "false_leaf_pages": 8,
+     "fidelity_mean": 4.13
+    },
+    "I": {
+     "n": 40,
+     "accept": "29/40",
+     "accept_wilson": [
+      0.572,
+      0.839
+     ],
+     "words": 18393,
+     "serious": 50,
+     "serious_per_1k": 2.72,
+     "misleads_per_1k": 2.12,
+     "wrong_text_per_1k": 0.6,
+     "wrong_text_pages": "5/40",
+     "false_leaf_pages": 10,
+     "fidelity_mean": 4.03
+    },
+    "S": {
+     "n": 27,
+     "accept": "15/27",
+     "accept_wilson": [
+      0.373,
+      0.724
+     ],
+     "words": 11527,
+     "serious": 64,
+     "serious_per_1k": 5.55,
+     "misleads_per_1k": 4.42,
+     "wrong_text_per_1k": 1.13,
+     "wrong_text_pages": "5/27",
+     "false_leaf_pages": 5,
+     "fidelity_mean": 3.56
+    }
+   },
+   "paired": {
+    "T-I": {
+     "pages": 40,
+     "diff_per_1k": 0.8,
+     "ci95": [
+      -0.09,
+      1.66
+     ],
+     "pages_a_more": 16,
+     "pages_b_more": 9,
+     "mean_diff_per_page": 0.4,
+     "sd_diff_per_page": 1.37
+    },
+    "T-T2": {
+     "pages": 40,
+     "diff_per_1k": 0.37,
+     "ci95": [
+      -0.34,
+      1.02
+     ],
+     "pages_a_more": 12,
+     "pages_b_more": 9,
+     "mean_diff_per_page": 0.2,
+     "sd_diff_per_page": 1.1
+    },
+    "T-S": {
+     "pages": 27,
+     "diff_per_1k": -1.66,
+     "ci95": [
+      -3.26,
+      -0.51
+     ],
+     "pages_a_more": 4,
+     "pages_b_more": 11,
+     "mean_diff_per_page": -0.56,
+     "sd_diff_per_page": 1.31
+    }
+   },
+   "spots": {
+    "T->I": {
+     "spots": 60,
+     "agy-text": {
+      "repaired": 22,
+      "carried": 35,
+      "dropped": 2,
+      "other": 1
+     },
+     "agy-image": {
+      "repaired": 30,
+      "other": 4,
+      "carried": 25,
+      "dropped": 1
+     },
+     "carried_by_agy-text": 35,
+     "of_those_repaired_by_agy-image": 9,
+     "of_those_still_carried_by_agy-image": 24
+    },
+    "T->T2": {
+     "spots": 60,
+     "agy-text": {
+      "repaired": 22,
+      "carried": 35,
+      "dropped": 2,
+      "other": 1
+     },
+     "agy-text-again": {
+      "repaired": 21,
+      "carried": 33,
+      "other": 3,
+      "dropped": 3
+     },
+     "carried_by_agy-text": 35,
+     "of_those_repaired_by_agy-text-again": 2,
+     "of_those_still_carried_by_agy-text-again": 30
+    }
+   }
+  },
+  "German": {
+   "arms": {
+    "T": {
+     "n": 40,
+     "accept": "27/40",
+     "accept_wilson": [
+      0.52,
+      0.799
+     ],
+     "words": 14024,
+     "serious": 50,
+     "serious_per_1k": 3.57,
+     "misleads_per_1k": 3.07,
+     "wrong_text_per_1k": 0.5,
+     "wrong_text_pages": "5/40",
+     "false_leaf_pages": 6,
+     "fidelity_mean": 3.92
+    },
+    "T2": {
+     "n": 40,
+     "accept": "26/40",
+     "accept_wilson": [
+      0.495,
+      0.779
+     ],
+     "words": 13568,
+     "serious": 52,
+     "serious_per_1k": 3.83,
+     "misleads_per_1k": 3.39,
+     "wrong_text_per_1k": 0.44,
+     "wrong_text_pages": "3/40",
+     "false_leaf_pages": 9,
+     "fidelity_mean": 3.92
+    },
+    "I": {
+     "n": 40,
+     "accept": "30/40",
+     "accept_wilson": [
+      0.598,
+      0.858
+     ],
+     "words": 13735,
+     "serious": 38,
+     "serious_per_1k": 2.77,
+     "misleads_per_1k": 2.4,
+     "wrong_text_per_1k": 0.36,
+     "wrong_text_pages": "3/40",
+     "false_leaf_pages": 5,
+     "fidelity_mean": 4.08
+    },
+    "S": {
+     "n": 30,
+     "accept": "9/30",
+     "accept_wilson": [
+      0.167,
+      0.479
+     ],
+     "words": 9239,
+     "serious": 59,
+     "serious_per_1k": 6.39,
+     "misleads_per_1k": 5.09,
+     "wrong_text_per_1k": 1.3,
+     "wrong_text_pages": "9/30",
+     "false_leaf_pages": 3,
+     "fidelity_mean": 3.43
+    }
+   },
+   "paired": {
+    "T-I": {
+     "pages": 40,
+     "diff_per_1k": 0.8,
+     "ci95": [
+      -0.17,
+      1.91
+     ],
+     "pages_a_more": 14,
+     "pages_b_more": 8,
+     "mean_diff_per_page": 0.3,
+     "sd_diff_per_page": 1.25
+    },
+    "T-T2": {
+     "pages": 40,
+     "diff_per_1k": -0.27,
+     "ci95": [
+      -0.91,
+      0.37
+     ],
+     "pages_a_more": 9,
+     "pages_b_more": 9,
+     "mean_diff_per_page": -0.05,
+     "sd_diff_per_page": 0.77
+    },
+    "T-S": {
+     "pages": 30,
+     "diff_per_1k": -2.62,
+     "ci95": [
+      -4.17,
+      -1.3
+     ],
+     "pages_a_more": 6,
+     "pages_b_more": 18,
+     "mean_diff_per_page": -0.6,
+     "sd_diff_per_page": 1.11
+    }
+   },
+   "spots": {
+    "T->I": {
+     "spots": 50,
+     "agy-text": {
+      "repaired": 28,
+      "carried": 19,
+      "dropped": 1,
+      "other": 2
+     },
+     "agy-image": {
+      "repaired": 39,
+      "carried": 8,
+      "other": 3
+     },
+     "carried_by_agy-text": 19,
+     "of_those_repaired_by_agy-image": 10,
+     "of_those_still_carried_by_agy-image": 7
+    },
+    "T->T2": {
+     "spots": 50,
+     "agy-text": {
+      "repaired": 28,
+      "carried": 19,
+      "dropped": 1,
+      "other": 2
+     },
+     "agy-text-again": {
+      "repaired": 24,
+      "carried": 22,
+      "other": 4
+     },
+     "carried_by_agy-text": 19,
+     "of_those_repaired_by_agy-text-again": 0,
+     "of_those_still_carried_by_agy-text-again": 19
+    }
+   }
+  },
+  "French": {
+   "arms": {
+    "T": {
+     "n": 40,
+     "accept": "24/40",
+     "accept_wilson": [
+      0.446,
+      0.737
+     ],
+     "words": 14068,
+     "serious": 76,
+     "serious_per_1k": 5.4,
+     "misleads_per_1k": 3.06,
+     "wrong_text_per_1k": 2.35,
+     "wrong_text_pages": "8/40",
+     "false_leaf_pages": 9,
+     "fidelity_mean": 4
+    },
+    "T2": {
+     "n": 40,
+     "accept": "26/40",
+     "accept_wilson": [
+      0.495,
+      0.779
+     ],
+     "words": 14414,
+     "serious": 69,
+     "serious_per_1k": 4.79,
+     "misleads_per_1k": 2.57,
+     "wrong_text_per_1k": 2.22,
+     "wrong_text_pages": "7/40",
+     "false_leaf_pages": 11,
+     "fidelity_mean": 4.05
+    },
+    "I": {
+     "n": 40,
+     "accept": "29/40",
+     "accept_wilson": [
+      0.572,
+      0.839
+     ],
+     "words": 14143,
+     "serious": 64,
+     "serious_per_1k": 4.53,
+     "misleads_per_1k": 2.83,
+     "wrong_text_per_1k": 1.7,
+     "wrong_text_pages": "5/40",
+     "false_leaf_pages": 9,
+     "fidelity_mean": 4.2
+    },
+    "S": {
+     "n": 39,
+     "accept": "21/39",
+     "accept_wilson": [
+      0.386,
+      0.684
+     ],
+     "words": 13142,
+     "serious": 87,
+     "serious_per_1k": 6.62,
+     "misleads_per_1k": 3.8,
+     "wrong_text_per_1k": 2.82,
+     "wrong_text_pages": "11/39",
+     "false_leaf_pages": 9,
+     "fidelity_mean": 3.72
+    }
+   },
+   "paired": {
+    "T-I": {
+     "pages": 40,
+     "diff_per_1k": 0.88,
+     "ci95": [
+      0.06,
+      1.77
+     ],
+     "pages_a_more": 14,
+     "pages_b_more": 5,
+     "mean_diff_per_page": 0.3,
+     "sd_diff_per_page": 0.93
+    },
+    "T-T2": {
+     "pages": 40,
+     "diff_per_1k": 0.62,
+     "ci95": [
+      -0.06,
+      1.37
+     ],
+     "pages_a_more": 7,
+     "pages_b_more": 4,
+     "mean_diff_per_page": 0.17,
+     "sd_diff_per_page": 0.77
+    },
+    "T-S": {
+     "pages": 39,
+     "diff_per_1k": -1.23,
+     "ci95": [
+      -2.41,
+      -0.23
+     ],
+     "pages_a_more": 7,
+     "pages_b_more": 15,
+     "mean_diff_per_page": -0.36,
+     "sd_diff_per_page": 1.12
+    }
+   },
+   "spots": {
+    "T->I": {
+     "spots": 78,
+     "agy-text": {
+      "carried": 65,
+      "repaired": 8,
+      "dropped": 2,
+      "other": 3
+     },
+     "agy-image": {
+      "repaired": 20,
+      "other": 14,
+      "carried": 43,
+      "dropped": 1
+     },
+     "carried_by_agy-text": 65,
+     "of_those_repaired_by_agy-image": 12,
+     "of_those_still_carried_by_agy-image": 43
+    },
+    "T->T2": {
+     "spots": 78,
+     "agy-text": {
+      "carried": 65,
+      "repaired": 8,
+      "dropped": 2,
+      "other": 3
+     },
+     "agy-text-again": {
+      "carried": 63,
+      "repaired": 9,
+      "dropped": 3,
+      "other": 3
+     },
+     "carried_by_agy-text": 65,
+     "of_those_repaired_by_agy-text-again": 1,
+     "of_those_still_carried_by_agy-text-again": 62
+    }
+   }
+  },
+  "all": {
+   "arms": {
+    "T": {
+     "n": 120,
+     "accept": "77/120",
+     "accept_wilson": [
+      0.553,
+      0.722
+     ],
+     "words": 46842,
+     "serious": 192,
+     "serious_per_1k": 4.1,
+     "misleads_per_1k": 2.95,
+     "wrong_text_per_1k": 1.15,
+     "wrong_text_pages": "20/120",
+     "false_leaf_pages": 24,
+     "fidelity_mean": 3.97
+    },
+    "T2": {
+     "n": 120,
+     "accept": "81/120",
+     "accept_wilson": [
+      0.587,
+      0.752
+     ],
+     "words": 46414,
+     "serious": 179,
+     "serious_per_1k": 3.86,
+     "misleads_per_1k": 2.89,
+     "wrong_text_per_1k": 0.97,
+     "wrong_text_pages": "13/120",
+     "false_leaf_pages": 28,
+     "fidelity_mean": 4.03
+    },
+    "I": {
+     "n": 120,
+     "accept": "88/120",
+     "accept_wilson": [
+      0.648,
+      0.804
+     ],
+     "words": 46271,
+     "serious": 152,
+     "serious_per_1k": 3.28,
+     "misleads_per_1k": 2.42,
+     "wrong_text_per_1k": 0.86,
+     "wrong_text_pages": "13/120",
+     "false_leaf_pages": 24,
+     "fidelity_mean": 4.1
+    },
+    "S": {
+     "n": 96,
+     "accept": "45/96",
+     "accept_wilson": [
+      0.372,
+      0.568
+     ],
+     "words": 33908,
+     "serious": 210,
+     "serious_per_1k": 6.19,
+     "misleads_per_1k": 4.36,
+     "wrong_text_per_1k": 1.83,
+     "wrong_text_pages": "25/96",
+     "false_leaf_pages": 17,
+     "fidelity_mean": 3.58
+    }
+   },
+   "paired": {
+    "T-I": {
+     "pages": 120,
+     "diff_per_1k": 0.81,
+     "ci95": [
+      0.28,
+      1.34
+     ],
+     "pages_a_more": 44,
+     "pages_b_more": 22,
+     "mean_diff_per_page": 0.33,
+     "sd_diff_per_page": 1.2
+    },
+    "T-T2": {
+     "pages": 120,
+     "diff_per_1k": 0.24,
+     "ci95": [
+      -0.16,
+      0.65
+     ],
+     "pages_a_more": 28,
+     "pages_b_more": 22,
+     "mean_diff_per_page": 0.11,
+     "sd_diff_per_page": 0.9
+    },
+    "T-S": {
+     "pages": 96,
+     "diff_per_1k": -1.79,
+     "ci95": [
+      -2.59,
+      -1.11
+     ],
+     "pages_a_more": 17,
+     "pages_b_more": 44,
+     "mean_diff_per_page": -0.49,
+     "sd_diff_per_page": 1.18
+    }
+   },
+   "spots": {
+    "T->I": {
+     "spots": 188,
+     "agy-text": {
+      "repaired": 58,
+      "carried": 119,
+      "dropped": 5,
+      "other": 6
+     },
+     "agy-image": {
+      "repaired": 89,
+      "other": 21,
+      "carried": 76,
+      "dropped": 2
+     },
+     "carried_by_agy-text": 119,
+     "of_those_repaired_by_agy-image": 31,
+     "of_those_still_carried_by_agy-image": 74
+    },
+    "T->T2": {
+     "spots": 188,
+     "agy-text": {
+      "repaired": 58,
+      "carried": 119,
+      "dropped": 5,
+      "other": 6
+     },
+     "agy-text-again": {
+      "repaired": 54,
+      "carried": 118,
+      "other": 10,
+      "dropped": 6
+     },
+     "carried_by_agy-text": 119,
+     "of_those_repaired_by_agy-text-again": 3,
+     "of_those_still_carried_by_agy-text-again": 111
+    }
+   }
+  }
+ },
+ "rule": {
+  "Latin": {
+   "a_gap_T_minus_I": 0.8,
+   "a_noise_T_vs_T2": 0.37,
+   "a": true,
+   "b_ci95_T_minus_I": [
+    -0.09,
+    1.66
+   ],
+   "b": false,
+   "c_false_leaf_pages": "I 10 vs T 9 (allowed 10)",
+   "c": true,
+   "I_better": false
+  },
+  "German": {
+   "a_gap_T_minus_I": 0.8,
+   "a_noise_T_vs_T2": 0.26,
+   "a": true,
+   "b_ci95_T_minus_I": [
+    -0.17,
+    1.91
+   ],
+   "b": false,
+   "c_false_leaf_pages": "I 5 vs T 6 (allowed 9)",
+   "c": true,
+   "I_better": false
+  },
+  "French": {
+   "a_gap_T_minus_I": 0.87,
+   "a_noise_T_vs_T2": 0.61,
+   "a": true,
+   "b_ci95_T_minus_I": [
+    0.06,
+    1.77
+   ],
+   "b": true,
+   "c_false_leaf_pages": "I 9 vs T 9 (allowed 11)",
+   "c": true,
+   "I_better": true
+  },
+  "all": {
+   "a_gap_T_minus_I": 0.82,
+   "a_noise_T_vs_T2": 0.24,
+   "a": true,
+   "b_ci95_T_minus_I": [
+    0.28,
+    1.34
+   ],
+   "b": true,
+   "c_false_leaf_pages": "I 24 vs T 24 (allowed 28)",
+   "c": true,
+   "I_better": true
+  }
+ },
+ "planted_ocr": {
+  "T": {
+   "n": 12,
+   "carried": 10,
+   "repaired": 1,
+   "other": 1,
+   "rows": [
+    {
+     "page": "6a42a96fdec0f9e2eccabf9e",
+     "lang": "Latin",
+     "plant": "ita et Nobiles virtutum gloria -> ita et Nobiles divitiarum gloria",
+     "outcome": "carried",
+     "quote": "so too nobles far surpass the other ranks of men in the glory of their wealth"
+    },
+    {
+     "page": "6a4a69d87b720133514b0db8",
+     "lang": "Latin",
+     "plant": "natus 1610. die 20. Junii -> natus 1619. die 20. Junii",
+     "outcome": "carried",
+     "quote": "born on June 20, 1619"
+    },
+    {
+     "page": "6a4b846e998fdd30218fce76",
+     "lang": "Latin",
+     "plant": "defensio major -> defensio minor",
+     "outcome": "carried",
+     "quote": "the defense of the angelic choir is constantly lesser? No, the order of the Holy Spirit is greater"
+    },
+    {
+     "page": "6a42566e2c7e112824a635ed",
+     "lang": "Latin",
+     "plant": "in tauris hanc talem -> in equis hanc talem",
+     "outcome": "carried",
+     "quote": "it is found in this form in horses, but truly not in humans"
+    },
+    {
+     "page": "69b51eddc35d928cea4f1131",
+     "lang": "German",
+     "plant": "Apotheker in Augsburg -> Apotheker in Nürnberg",
+     "outcome": "carried",
+     "quote": "Georg Melich, an apothecary in Nuremberg, was one of the first who dared to do this."
+    },
+    {
+     "page": "6a26bd0ed6b178e5aad87e33",
+     "lang": "German",
+     "plant": "zwo grosse und erschreckliche -> drey grosse und erschreckliche",
+     "outcome": "carried",
+     "quote": "we shall have three great and terrifying eclipses of the moon"
+    },
+    {
+     "page": "6991eb0d2f801130a473f536",
+     "lang": "German",
+     "plant": "die Gipfel der Berge -> die Täler der Berge",
+     "outcome": "carried",
+     "quote": "and the opposite thereof, the valleys of the mountains"
+    },
+    {
+     "page": "6a4265c5dfbbb4d07aa6c00c",
+     "lang": "German",
+     "plant": "mit einer Holtz-Axt abgehauen -> mit einer Holtz-Säge abgehauen",
+     "outcome": "carried",
+     "quote": "to saw off his master's thigh with a wood saw"
+    },
+    {
+     "page": "6991bd4770254d38471e3ac4",
+     "lang": "French",
+     "plant": "volonté mal intentionnée -> volonté bien intentionnée",
+     "outcome": "repaired",
+     "quote": "influence of a ill-intentioned will"
+    },
+    {
+     "page": "69aea5a757ed98c21d25a8e7",
+     "lang": "French",
+     "plant": "Dans les pays démocratiques, il arrive souvent -> Dans les pays aristocratiques, il arrive souvent",
+     "outcome": "carried",
+     "quote": "In aristocratic countries, it often happens that a great number of citizens move toward the same goal"
+    },
+    {
+     "page": "6a8ee24090f5a0e4155eb08f",
+     "lang": "French",
+     "plant": "depuis le quinzième siècle -> depuis le douzième siècle",
+     "outcome": "carried",
+     "quote": "Since the twelfth century, the Christian religion has lost its unity of action."
+    },
+    {
+     "page": "6a426f79e0c18453d93887fd",
+     "lang": "French",
+     "plant": "Zodiaque en 12. signes -> Zodiaque en 10. signes",
+     "outcome": "other",
+     "quote": "the division of the Zodiac into twelve signs <note>the original reads \"10. signes\", evidently a typographical error for 12"
+    }
+   ]
+  },
+  "I": {
+   "n": 12,
+   "repaired": 12,
+   "rows": [
+    {
+     "page": "6a42a96fdec0f9e2eccabf9e",
+     "lang": "Latin",
+     "plant": "ita et Nobiles virtutum gloria -> ita et Nobiles divitiarum gloria",
+     "outcome": "repaired",
+     "quote": "so too nobles far excel the other ranks of men in the glory of virtues"
+    },
+    {
+     "page": "6a4a69d87b720133514b0db8",
+     "lang": "Latin",
+     "plant": "natus 1610. die 20. Junii -> natus 1619. die 20. Junii",
+     "outcome": "repaired",
+     "quote": "posthumous son of Lord ALBERT OTTO, born on June 20, 1610."
+    },
+    {
+     "page": "6a4b846e998fdd30218fce76",
+     "lang": "Latin",
+     "plant": "defensio major -> defensio minor",
+     "outcome": "repaired",
+     "quote": "When the fury of Satan is immense, the defense of the angelic host is ever greater."
+    },
+    {
+     "page": "6a42566e2c7e112824a635ed",
+     "lang": "Latin",
+     "plant": "in tauris hanc talem -> in equis hanc talem",
+     "outcome": "repaired",
+     "quote": "this kind is found in bulls <note>Latin: \"in tauris\"</note>, but not in humans"
+    },
+    {
+     "page": "69b51eddc35d928cea4f1131",
+     "lang": "German",
+     "plant": "Apotheker in Augsburg -> Apotheker in Nürnberg",
+     "outcome": "repaired",
+     "quote": "George Melich, apothecary in Augsburg, was one of the first who ventured this."
+    },
+    {
+     "page": "6a26bd0ed6b178e5aad87e33",
+     "lang": "German",
+     "plant": "zwo grosse und erschreckliche -> drey grosse und erschreckliche",
+     "outcome": "repaired",
+     "quote": "In this year we will have two <note>OCR reads \"three\", but the print clearly states \"zwo\" (two)</note> great and terrible eclipses"
+    },
+    {
+     "page": "6991eb0d2f801130a473f536",
+     "lang": "German",
+     "plant": "die Gipfel der Berge -> die Täler der Berge",
+     "outcome": "repaired",
+     "quote": "the opposite thereof, the peaks of the mountains"
+    },
+    {
+     "page": "6a4265c5dfbbb4d07aa6c00c",
+     "lang": "German",
+     "plant": "mit einer Holtz-Axt abgehauen -> mit einer Holtz-Säge abgehauen",
+     "outcome": "repaired",
+     "quote": "to chop off his master's leg with a wood-ax"
+    },
+    {
+     "page": "6991bd4770254d38471e3ac4",
+     "lang": "French",
+     "plant": "volonté mal intentionnée -> volonté bien intentionnée",
+     "outcome": "repaired",
+     "quote": "a single example of an empire obtained by the influence of an ill-intentioned will"
+    },
+    {
+     "page": "69aea5a757ed98c21d25a8e7",
+     "lang": "French",
+     "plant": "Dans les pays démocratiques, il arrive souvent -> Dans les pays aristocratiques, il arrive souvent",
+     "outcome": "repaired",
+     "quote": "In democratic countries, it often happens that a great number of citizens head toward the same objective"
+    },
+    {
+     "page": "6a8ee24090f5a0e4155eb08f",
+     "lang": "French",
+     "plant": "depuis le quinzième siècle -> depuis le douzième siècle",
+     "outcome": "repaired",
+     "quote": "The Christian religion has lost, since the fifteenth century, its unity of action."
+    },
+    {
+     "page": "6a426f79e0c18453d93887fd",
+     "lang": "French",
+     "plant": "Zodiaque en 12. signes -> Zodiaque en 10. signes",
+     "outcome": "repaired",
+     "quote": "the division of the Zodiac into 12 signs"
+    }
+   ]
+  }
+ },
+ "wrong_page": {
+  "n": 12,
+  "judged": 12,
+  "rejected": 12,
+  "fidelity": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "passed": true
+ },
+ "judge_plants": {
+  "n": 9,
+  "caught": 8,
+  "caught_heuristic": 6,
+  "by_hand": true,
+  "rows": [
+   {
+    "page": "69906161ef12272ffdc8d70f",
+    "lang": "Latin",
+    "kind": "number",
+    "plant": "1 -> 8",
+    "span": "kissed him. <note>1 Samuel 10:8",
+    "caught": true,
+    "severity": null,
+    "quote": null,
+    "judged": true,
+    "all_quotes": [
+     "misleads: 1 Samuel 10:8, describing Samuel anointing Saul as king"
+    ],
+    "caught_heuristic": false,
+    "by_hand": "misleads on the planted span itself: '1 Samuel 10:8 ... is 10:1, not 10:8' (the matcher's tail test missed it)"
+   },
+   {
+    "page": "69dbc93d1040d1d5e20a1736",
+    "lang": "Latin",
+    "kind": "negation",
+    "plant": "will -> will not",
+    "span": "will not add tomorrow’s times\nTo t",
+    "caught": false,
+    "severity": null,
+    "quote": null,
+    "judged": true,
+    "all_quotes": [
+     "cosmetic: Who knows whether the gods above will not add tomorrow’s times"
+    ],
+    "caught_heuristic": false,
+    "by_hand": "the planted 'will not' was quoted but graded cosmetic ('the rhetorical sense survives'): not a serious catch"
+   },
+   {
+    "page": "6a4a59173a479d44b0033f00",
+    "lang": "Latin",
+    "kind": "number",
+    "plant": "5 -> 12",
+    "span": "term>Clement V</term> in book 12",
+    "caught": true,
+    "severity": "wrong_text",
+    "quote": "in book 12 of the <term>Clementines</term>",
+    "judged": true,
+    "all_quotes": [
+     "wrong_text: in book 12 of the <term>Clementines</term>",
+     "misleads: Felwinger cites Guicciardini, de Thou, and Pope Clement V",
+     "misleads: Martin Luther, simony",
+     "cosmetic: <meta>continues from previous page</meta>, by which he promised",
+     "cosmetic: a fertile snaring of money"
+    ]
+   },
+   {
+    "page": "69b4ccc4d5b6c3815e1a2379",
+    "lang": "German",
+    "kind": "number",
+    "plant": "7 -> 14",
+    "span": " Australia is its home.\n\nFig. 14",
+    "caught": true,
+    "severity": null,
+    "quote": null,
+    "judged": true,
+    "all_quotes": [
+     "wrong_text: Fig. 14. **Swift Parrot (*Nanodes discolor* Shaw.)**",
+     "cosmetic: Fig. 8. **<unclear>Buntsittich</unclear>",
+     "cosmetic: ->*Mulga Parrot.*<-"
+    ],
+    "caught_heuristic": false,
+    "by_hand": "wrong_text on 'Fig. 14 ... The page says Fig. 7, not Fig. 14' (the matcher's tail test missed it)"
+   },
+   {
+    "page": "6a243f300f0e4f405e6350d8",
+    "lang": "German",
+    "kind": "negation",
+    "plant": "are -> are not",
+    "span": "are not also invisible to us in t",
+    "caught": true,
+    "severity": "wrong_text",
+    "quote": "they are not also invisible to us in their virtue",
+    "judged": true,
+    "all_quotes": [
+     "wrong_text: they are not also invisible to us in their virtue",
+     "misleads: an early modern typographic form or variant for astris",
+     "misleads: how they generate themselves",
+     "cosmetic: of the cure and expulsion of accidental diseases",
+     "misleads: Archidoxis"
+    ]
+   },
+   {
+    "page": "6a4913b6ae20621d947e3a2a",
+    "lang": "German",
+    "kind": "negation",
+    "plant": "is -> is not",
+    "span": "is not pure deception and substi",
+    "caught": true,
+    "severity": "wrong_text",
+    "quote": "whereas it is not pure deception and substitution",
+    "judged": true,
+    "all_quotes": [
+     "wrong_text: whereas it is not pure deception and substitution",
+     "misleads: with unskillful additions",
+     "cosmetic: But testing it is dangerous"
+    ]
+   },
+   {
+    "page": "69e41a3d8a8dae1074c5371e",
+    "lang": "French",
+    "kind": "number",
+    "plant": "17 -> 24",
+    "span": " . . . . this 18th of October 24",
+    "caught": true,
+    "severity": "wrong_text",
+    "quote": "this 18th of October 24 . . .",
+    "judged": true,
+    "all_quotes": [
+     "wrong_text: this 18th of October 24 . . .",
+     "misleads: men do not even love their wives anymore",
+     "cosmetic: A printer's ornament appears at the bottom of the page."
+    ]
+   },
+   {
+    "page": "699068a8249ce014347d7370",
+    "lang": "French",
+    "kind": "number",
+    "plant": "2 -> 9",
+    "span": "uld then omit the term $\\frac{9",
+    "caught": true,
+    "severity": "wrong_text",
+    "quote": "One would then omit the term $\\frac{9\\ H}{K\\ g} x^{2}$",
+    "judged": true,
+    "all_quotes": [
+     "wrong_text: One would then omit the term $\\frac{9\\ H}{K\\ g} x^{2}$",
+     "misleads: V = $\\frac{f}{2 \\sqrt{v} \\cdot \\sqrt{\\pi} \\ x^{\\frac{1}{2}}}$"
+    ]
+   },
+   {
+    "page": "69b525b229577f283b57b1d9",
+    "lang": "French",
+    "kind": "number",
+    "plant": "15 -> 22",
+    "span": "ion of it when he says, ch. 4:22",
+    "caught": true,
+    "severity": "misleads",
+    "quote": "ch. 4:22",
+    "judged": true,
+    "all_quotes": [
+     "misleads: ch. 4:22",
+     "misleads: they shall revive as the corn, and grow as the vine: the scent thereof shall be as the wine of Lebanon",
+     "cosmetic: A fountain of gardens, a well of living waters, and streams from Lebanon"
+    ]
+   }
+  ],
+  "passed": true
+ },
+ "void": false,
+ "repeats": {
+  "pairs": 10,
+  "accept_flips": 0,
+  "serious_abs_diff": [
+   0,
+   0,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "serious": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    7,
+    6
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    3
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ]
+  ]
+ },
+ "cost": {
+  "Latin": {
+   "T": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 542634,
+    "tokens_per_page": 13566,
+    "usable": 26,
+    "calls_per_usable": 1.54,
+    "tokens_per_usable": 20871
+   },
+   "T2": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 542515,
+    "tokens_per_page": 13563,
+    "usable": 29,
+    "calls_per_usable": 1.38,
+    "tokens_per_usable": 18707
+   },
+   "I": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 669312,
+    "tokens_per_page": 16733,
+    "usable": 29,
+    "calls_per_usable": 1.38,
+    "tokens_per_usable": 23080
+   }
+  },
+  "German": {
+   "T": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 531216,
+    "tokens_per_page": 13280,
+    "usable": 27,
+    "calls_per_usable": 1.48,
+    "tokens_per_usable": 19675
+   },
+   "T2": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 531314,
+    "tokens_per_page": 13283,
+    "usable": 26,
+    "calls_per_usable": 1.54,
+    "tokens_per_usable": 20435
+   },
+   "I": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 602962,
+    "tokens_per_page": 15074,
+    "usable": 30,
+    "calls_per_usable": 1.33,
+    "tokens_per_usable": 20099
+   }
+  },
+  "French": {
+   "T": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 528143,
+    "tokens_per_page": 13204,
+    "usable": 24,
+    "calls_per_usable": 1.67,
+    "tokens_per_usable": 22006
+   },
+   "T2": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 537914,
+    "tokens_per_page": 13448,
+    "usable": 26,
+    "calls_per_usable": 1.54,
+    "tokens_per_usable": 20689
+   },
+   "I": {
+    "pages": 40,
+    "calls": 40,
+    "tokens": 606753,
+    "tokens_per_page": 15169,
+    "usable": 29,
+    "calls_per_usable": 1.38,
+    "tokens_per_usable": 20923
+   }
+  },
+  "all": {
+   "T": {
+    "pages": 120,
+    "calls": 120,
+    "tokens": 1601993,
+    "tokens_per_page": 13350,
+    "usable": 77,
+    "calls_per_usable": 1.56,
+    "tokens_per_usable": 20805
+   },
+   "T2": {
+    "pages": 120,
+    "calls": 120,
+    "tokens": 1611743,
+    "tokens_per_page": 13431,
+    "usable": 81,
+    "calls_per_usable": 1.48,
+    "tokens_per_usable": 19898
+   },
+   "I": {
+    "pages": 120,
+    "calls": 120,
+    "tokens": 1879027,
+    "tokens_per_page": 15659,
+    "usable": 88,
+    "calls_per_usable": 1.36,
+    "tokens_per_usable": 21353
+   }
+  }
+ }
+}

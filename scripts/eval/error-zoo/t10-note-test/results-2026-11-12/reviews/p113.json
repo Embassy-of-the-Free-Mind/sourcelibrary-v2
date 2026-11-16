@@ -1,0 +1,48 @@
+[
+  {
+    "book_id": "6a4a5a2e3f0b4659d1bc05f1",
+    "slot": 1,
+    "title": "De Imperio Sequioris Sexus, Oratiuncula Historico-Politica , Scripta [et] dicta in incluto Noricorum Athenaeo, A Joanne Hieronymo Wurfbain, Leonhardi Icti Fil. Noriberg. XVI Kal. Decemb. ...",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1639 Nuremberg academic oration in Latin on female rule. The leaf is 17th-century roman and italic type and matches the record. No tradition or collection is assigned, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "structure.pages_translated is 0, but pages_translated_field is 24 and this page carries a full translation, so the structure counter looks wrong (E2), not the book. with_printed_number 1 of 24 fits a short pamphlet whose pages carry catchwords but no printed page numbers: this leaf has a catchword and no number.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "printed_marker": "viris,",
+        "layout": "single column of roman type with italic quotations, catchword at the foot, no marginalia",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "theta feminis sceptris", "image": "theta femininis ſceptris", "problem": "the word 'femininis' is misread as 'feminis'; the meaning is unchanged", "severity": "minor" },
+          { "ocr": "à ser-\nvitude degenerare", "image": "à ſer-\nvitute degenerare", "problem": "'servitute' misread as 'servitude'", "severity": "minor" },
+          { "ocr": "quodque velint, nulla propo-\nnunt, neque si proposuerint, perseverant in eo:", "image": "quodq; velint, nulla propo-\nnunt, neque ſi propoſuerint, perſeverant in eo :", "problem": "the quotation is printed in italic, and the transcription loses the italic (it keeps it for the line before). The abbreviations 'quaq;', 'ferentemq;' and 'quodq;' are expanded without a mark, and long s is kept only in 'officioſius'", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "exempla toties parricidarum", "english": "the examples of so many parricides", "problem": "'toties' (so often) is flattened to 'so many'. A slight loss of force", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "bronze scrapers used to scrape the skin in the bath", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"culeos\"; the leather sack in which parricides wer", "verdict": "ok", "helpful": true },
+            { "quote": "the Greek letter Θ, mark of condemnation to death", "verdict": "ok", "helpful": true },
+            { "quote": "self-governing", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "just like the bride in Aesop's fable, who was a little mouse", "why": "The allusion is to the fable of the animal Venus turned into a bride, who forgot herself when a mouse ran by. As printed (a bride 'who was a little mouse') a general reader cannot reconstruct the point" },
+            { "english": "the Joannas of Naples", "why": "Readers need to know these are Queens Joanna I and Joanna II of Naples to follow the list of notorious female rulers" },
+            { "english": "as Porcius Latro says", "why": "Porcius Latro was an Augustan rhetorician, not a familiar name; a short identification helps" },
+            { "english": "as the saying of the Roman Sage has it", "why": "The 'Roman Sage' is not identified, so the reader cannot tell whose authority is being cited" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page. The transcription has only minor slips (feminis for femininis, servitude for servitute, italics lost in one place), and the translation is faithful. All four notes and glosses are correct and useful. The only thing that stands out is the structure counter reporting 0 translated pages."
+  }
+]

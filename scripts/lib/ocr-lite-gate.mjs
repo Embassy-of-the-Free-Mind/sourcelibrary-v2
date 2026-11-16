@@ -38,9 +38,14 @@ export function liteReadAllowed(book, table) {
   for (const script of scripts) {
     const row = table.router_cells?.find((r) => r.cell === `${base}/${script}`);
     if (!row) continue;
-    return row.route === 'lite'
+    // A HOLD cell binds its stored live route too (2026-11-07 binding default); a stored `lite` kept that way is not a decision
+    // for new Flash-Lite reads (#360: arabic-lite/print, lite 67/173, would have opened the paid lane to Arabic).
+    const decided = /^(keep|switch)$/.test(String(row.decision));
+    return row.route === 'lite' && decided
       ? { ok: true, cell: row.cell, route: row.route, why: `router cell ${row.cell} binds lite (${row.decision})` }
-      : { ok: false, cell: row.cell, route: row.route, why: `router cell ${row.cell} binds ${row.route}, not Flash-Lite: the book waits for that lane (#8519)` };
+      : { ok: false, cell: row.cell, route: row.route, why: row.route === 'lite'
+        ? `router cell ${row.cell} binds lite only as an undecided cell's stored text (${row.decision}): no new Flash-Lite reads (#360)`
+        : `router cell ${row.cell} binds ${row.route}, not Flash-Lite: the book waits for that lane (#8519)` };
   }
   return { ok: false, cell: null, route: null, why: `no router cell ${base}/${scripts.join('|')}: an untested cell gets agy (#8519)` };
 }
@@ -54,6 +59,7 @@ export function liteReadAllowed(book, table) {
 export const BATCH_OCR_LANE = 'gemini-batch-api';
 const BATCH_SUBMITTERS = Object.freeze({
   'scripts/workers/pipeline-orchestrator.mjs': 'orchestrator-ocr',
+  // The two routes below were retired (v2#8590). Their rows stay: batch-collector still collects jobs they submitted.
   'src/app/api/books/[id]/batch-ocr-async/route.ts': 'api-batch-ocr-async',
   'src/app/api/[tenant]/books/[id]/batch-ocr-async/route.ts': 'api-tenant-batch-ocr-async',
 });
@@ -65,27 +71,6 @@ export function batchOcrStamps(job) {
 }
 
 
-/**
- * For scripts that POST to the batch routes (src/app/api/books/[id]/batch-{ocr,translate}-async). The routes
- * refuse every model but LITE_MODEL (#8525, #8548), but a script that sends no model, or a hardcoded Flash, used to
- * get the route's own default: on 2026-11-06 that put 1,879 pages on gemini-3-flash-preview on the paid API. A
- * submitter names its model and fails here first, before any request.
- */
-export function assertBatchRouteModel(model, callSite = 'unknown') {
-  if (model !== LITE_MODEL) {
-    throw new Error(`${callSite}: refusing to submit ${model ?? '(no model)'} to a paid batch route. Only ${LITE_MODEL} runs on the paid Gemini API; `
-      + 'every other model goes through the agy CLI lane.');
-  }
-  return model;
-}
-
-/**
- * Who is calling, for the route to record on the batch job (`requested_by.caller`): script, the claude-job name
- * when there is one, and the OS user. (No node:os here: this module must stay bundleable by the Next routes.) Without it a job reads only "submitted by the route" (2026-11-11).
- */
-export function batchRouteCallerHeaders(callSite) {
-  return { 'x-caller': [callSite, process.env.JOB_NAME || '', process.env.USER || ''].join(' ').trim().slice(0, 200) };
-}
 /**
  * THE PAID-API MODEL GATE for TRANSLATION (#7075, Derek 2026-10-08): the only Gemini model that may run on the paid
  * Gemini API is `gemini-3.1-flash-lite`; every other model reads through the agy CLI on the subscriptions. OCR enforces

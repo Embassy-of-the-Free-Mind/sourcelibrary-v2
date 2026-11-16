@@ -1,23 +1,23 @@
 {
-  "generated_on": "2026-10-06",
+  "generated_on": "2026-11-13",
   "script": "scripts/analytics/quality-feedback-themes.mjs",
   "source": "Mongo bookstore.feedback, rows sent from the feedback button on the site",
   "method": "Each report gets the first theme whose rule matches: the widget’s own label at the start of the message (a translation request, translation feedback, a reading-guide request) or a keyword rule. No model reads the messages. Reports that match no theme (thanks, site bugs, book suggestions) are not counted.",
   "window": {
     "first": "2026-03-08",
-    "last": "2026-10-05"
+    "last": "2026-11-13"
   },
-  "reader_reports": 432,
-  "themed_reports": 190,
-  "agent_reports_not_themed": 100,
+  "reader_reports": 576,
+  "themed_reports": 254,
+  "agent_reports_not_themed": 132,
   "issue_base": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/",
   "themes": [
     {
       "id": "no-english",
       "label": "No English on the page",
-      "reports": 138,
-      "books": 91,
-      "marked_done": 116,
+      "reports": 185,
+      "books": 127,
+      "marked_done": 179,
       "paraphrase": "A reader reached a page with a transcription but no English, or English for only part of it, and asked for it.",
       "status": "in progress",
       "did": "Each request names one page. It is read in the feedback queue and the page is sent for translation.",
@@ -26,8 +26,8 @@
     {
       "id": "reading-help",
       "label": "Asked for a guide or a summary",
-      "reports": 11,
-      "books": 11,
+      "reports": 22,
+      "books": 22,
       "marked_done": 9,
       "paraphrase": "A reader asked for a reading guide or a summary of the book they were reading.",
       "status": "in progress",
@@ -35,25 +35,14 @@
       "issues": []
     },
     {
-      "id": "catalogue",
-      "label": "Wrong edition, author or date",
-      "reports": 9,
-      "books": 5,
-      "marked_done": 7,
-      "paraphrase": "The catalogue named the wrong edition, author or year, or a reader asked whether a book is still in copyright.",
-      "status": "in progress",
-      "did": "Each report is checked against the title page and the record corrected when it holds up.",
-      "issues": []
-    },
-    {
       "id": "garbled",
       "label": "Garbled or invented transcription",
-      "reports": 8,
-      "books": 6,
+      "reports": 10,
+      "books": 8,
       "marked_done": 5,
       "paraphrase": "A transcription ran into a loop, used the wrong alphabet, wrote formulas instead of letters, or held far more text than the page.",
       "status": "in progress",
-      "did": "Reported pages are re-read one at a time. A check that finds garbled pages across the whole library is planned.",
+      "did": "Reported pages are re-read one at a time. A check for garbled pages across the whole library was measured in October and did not pick them out reliably enough to use, so it does not run.",
       "issues": [
         5313,
         4850,
@@ -61,10 +50,21 @@
       ]
     },
     {
+      "id": "catalogue",
+      "label": "Wrong edition, author or date",
+      "reports": 10,
+      "books": 5,
+      "marked_done": 8,
+      "paraphrase": "The catalogue named the wrong edition, author or year, or a reader asked whether a book is still in copyright.",
+      "status": "in progress",
+      "did": "Each report is checked against the title page and the record corrected when it holds up.",
+      "issues": []
+    },
+    {
       "id": "scans",
       "label": "Scan problems",
-      "reports": 7,
-      "books": 7,
+      "reports": 8,
+      "books": 8,
       "marked_done": 4,
       "paraphrase": "A two-page spread was not split, a scan was badly cropped or upside down, or the image was too small to read.",
       "status": "in progress",
@@ -72,6 +72,19 @@
       "issues": [
         5876,
         2454
+      ]
+    },
+    {
+      "id": "mistranslation",
+      "label": "The English says something the original does not",
+      "reports": 8,
+      "books": 7,
+      "marked_done": 3,
+      "paraphrase": "A reader of the original language pointed to a sentence whose English changed or lost the meaning.",
+      "status": "in progress",
+      "did": "Single reports are corrected on the page. The library-wide picture is measured against published translations, and the fixes it points to are in progress.",
+      "issues": [
+        5700
       ]
     },
     {
@@ -88,19 +101,6 @@
         5698,
         4385,
         4069
-      ]
-    },
-    {
-      "id": "mistranslation",
-      "label": "The English says something the original does not",
-      "reports": 6,
-      "books": 6,
-      "marked_done": 3,
-      "paraphrase": "A reader of the original language pointed to a sentence whose English changed or lost the meaning.",
-      "status": "in progress",
-      "did": "Single reports are corrected on the page. The library-wide picture is measured against published translations, and the fixes it points to are in progress.",
-      "issues": [
-        5700
       ]
     },
     {

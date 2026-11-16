@@ -1,0 +1,752 @@
+{
+ "generated_by": "scripts/eval/image-translate-106/score.mjs + route-judge-6740/paired-arm.mjs score (job image-translate-106, v3 #106)",
+ "judge": "claude -p --model opus, sealed, image opened on every call, blind (opaque ids), one output a call; 12 wrong-page controls all rejected; 10 repeat pairs, 0 accept flips; judge plants 8/9 caught (by hand)",
+ "arms": "agy gemini-3.8-flash-low, production translation prompt, ONE page a call (the live lane is 4 a call): agy-text = text only; agy-text-again = the same call again (arm noise); agy-image = the same call with the page image attached; stored = the English the page already served",
+ "cells": {
+  "Latin": {
+   "task": "translation",
+   "lang": "Latin",
+   "routes": {
+    "agy-text": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "26/40",
+     "accept_wilson": [
+      0.495,
+      0.779
+     ],
+     "accept_by_book": [
+      0.5,
+      0.8
+     ],
+     "wrong_text_pages": "7/40",
+     "wrong_text_wilson": [
+      0.087,
+      0.319
+     ],
+     "fidelity_mean": 3.98,
+     "counts": true,
+     "words": 18871,
+     "misleads_per_1k": 2.76,
+     "wrong_text_per_1k": 0.74,
+     "serious": 66,
+     "serious_per_1k": 3.52,
+     "false_leaf_pages": 9,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 542634,
+      "tokens_per_page": 13566,
+      "usable": 26,
+      "calls_per_usable": 1.54,
+      "tokens_per_usable": 20871
+     },
+     "classes_k_of_n": {
+      "E2": "23/40",
+      "O6": "19/40",
+      "T10": "12/40",
+      "T6": "8/40",
+      "T9": "6/40",
+      "T8": "6/40",
+      "T7": "3/40",
+      "O7": "3/40",
+      "T3": "2/40",
+      "O10": "2/40",
+      "O12": "2/40",
+      "O11": "2/40",
+      "T5": "2/40",
+      "O14": "1/40",
+      "O8": "1/40",
+      "D1": "1/40",
+      "O5": "1/40",
+      "O4": "1/40",
+      "O17": "1/40",
+      "O3": "1/40"
+     }
+    },
+    "agy-text-again": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "29/40",
+     "accept_wilson": [
+      0.572,
+      0.839
+     ],
+     "accept_by_book": [
+      0.575,
+      0.85
+     ],
+     "wrong_text_pages": "3/40",
+     "wrong_text_wilson": [
+      0.026,
+      0.199
+     ],
+     "fidelity_mean": 4.13,
+     "counts": true,
+     "words": 18688,
+     "misleads_per_1k": 2.73,
+     "wrong_text_per_1k": 0.37,
+     "serious": 58,
+     "serious_per_1k": 3.15,
+     "false_leaf_pages": 8,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 542515,
+      "tokens_per_page": 13563,
+      "usable": 29,
+      "calls_per_usable": 1.38,
+      "tokens_per_usable": 18707
+     },
+     "classes_k_of_n": {
+      "E2": "23/40",
+      "O6": "16/40",
+      "T10": "10/40",
+      "T9": "10/40",
+      "T6": "6/40",
+      "T8": "4/40",
+      "O8": "3/40",
+      "O10": "3/40",
+      "O11": "3/40",
+      "T7": "2/40",
+      "O12": "2/40",
+      "O5": "2/40",
+      "O7": "2/40",
+      "O16": "1/40",
+      "T3": "1/40",
+      "O4": "1/40",
+      "O17": "1/40",
+      "D1": "1/40",
+      "T13": "1/40"
+     }
+    },
+    "agy-image": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "29/40",
+     "accept_wilson": [
+      0.572,
+      0.839
+     ],
+     "accept_by_book": [
+      0.6,
+      0.85
+     ],
+     "wrong_text_pages": "5/40",
+     "wrong_text_wilson": [
+      0.055,
+      0.261
+     ],
+     "fidelity_mean": 4.03,
+     "counts": true,
+     "words": 18663,
+     "misleads_per_1k": 2.09,
+     "wrong_text_per_1k": 0.59,
+     "serious": 50,
+     "serious_per_1k": 2.72,
+     "false_leaf_pages": 10,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 669312,
+      "tokens_per_page": 16733,
+      "usable": 29,
+      "calls_per_usable": 1.38,
+      "tokens_per_usable": 23080
+     },
+     "classes_k_of_n": {
+      "E2": "16/40",
+      "O6": "13/40",
+      "T10": "13/40",
+      "T9": "6/40",
+      "T6": "6/40",
+      "T8": "5/40",
+      "T7": "3/40",
+      "O7": "3/40",
+      "O11": "2/40",
+      "O12": "2/40",
+      "O8": "2/40",
+      "T3": "1/40",
+      "O10": "1/40",
+      "T5": "1/40",
+      "D1": "1/40",
+      "O16": "1/40",
+      "T2": "1/40",
+      "O4": "1/40",
+      "O17": "1/40"
+     }
+    },
+    "stored": {
+     "n": 27,
+     "books": 27,
+     "unjudged": 0,
+     "accept": "15/27",
+     "accept_wilson": [
+      0.373,
+      0.724
+     ],
+     "accept_by_book": [
+      0.37,
+      0.741
+     ],
+     "wrong_text_pages": "5/27",
+     "wrong_text_wilson": [
+      0.082,
+      0.367
+     ],
+     "fidelity_mean": 3.56,
+     "counts": true,
+     "words": 11683,
+     "misleads_per_1k": 4.37,
+     "wrong_text_per_1k": 1.11,
+     "serious": 64,
+     "serious_per_1k": 5.55,
+     "false_leaf_pages": 5,
+     "classes_k_of_n": {
+      "E2": "18/27",
+      "O6": "13/27",
+      "T8": "8/27",
+      "T9": "8/27",
+      "T10": "7/27",
+      "T6": "5/27",
+      "T7": "3/27",
+      "T15": "1/27",
+      "O10": "1/27",
+      "O16": "1/27",
+      "O11": "1/27",
+      "O5": "1/27",
+      "O4": "1/27",
+      "O17": "1/27",
+      "O7": "1/27",
+      "T3": "1/27",
+      "T5": "1/27"
+     }
+    }
+   },
+   "paired": {
+    "agy-image|agy-text": {
+     "a_gap_T_minus_I": 0.8,
+     "a_noise_T_vs_T2": 0.37,
+     "a": true,
+     "b_ci95_T_minus_I": [
+      -0.09,
+      1.66
+     ],
+     "b": false,
+     "c_false_leaf_pages": "I 10 vs T 9 (allowed 10)",
+     "c": true,
+     "I_better": false
+    }
+   },
+   "rule_note": "#106 rule: I_better needs (a) serious/1k gap T-I above the T-T2 arm noise, (b) paired by-page 95% CI of T-I above 0, (c) no more false-leaf pages"
+  },
+  "German": {
+   "task": "translation",
+   "lang": "German",
+   "routes": {
+    "agy-text": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "27/40",
+     "accept_wilson": [
+      0.52,
+      0.799
+     ],
+     "accept_by_book": [
+      0.525,
+      0.825
+     ],
+     "wrong_text_pages": "5/40",
+     "wrong_text_wilson": [
+      0.055,
+      0.261
+     ],
+     "fidelity_mean": 3.92,
+     "counts": true,
+     "words": 14132,
+     "misleads_per_1k": 3.04,
+     "wrong_text_per_1k": 0.5,
+     "serious": 50,
+     "serious_per_1k": 3.57,
+     "false_leaf_pages": 6,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 531216,
+      "tokens_per_page": 13280,
+      "usable": 27,
+      "calls_per_usable": 1.48,
+      "tokens_per_usable": 19675
+     },
+     "classes_k_of_n": {
+      "E2": "21/40",
+      "T10": "14/40",
+      "O6": "10/40",
+      "T6": "7/40",
+      "T9": "5/40",
+      "T5": "4/40",
+      "O8": "4/40",
+      "T8": "3/40",
+      "O12": "3/40",
+      "O11": "2/40",
+      "O7": "2/40",
+      "T16": "2/40",
+      "I4": "1/40",
+      "T3": "1/40",
+      "O5": "1/40",
+      "O10": "1/40",
+      "T13": "1/40",
+      "T7": "1/40",
+      "T2": "1/40",
+      "O1": "1/40",
+      "O3": "1/40"
+     }
+    },
+    "agy-text-again": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "26/40",
+     "accept_wilson": [
+      0.495,
+      0.779
+     ],
+     "accept_by_book": [
+      0.5,
+      0.8
+     ],
+     "wrong_text_pages": "3/40",
+     "wrong_text_wilson": [
+      0.026,
+      0.199
+     ],
+     "fidelity_mean": 3.92,
+     "counts": true,
+     "words": 13887,
+     "misleads_per_1k": 3.31,
+     "wrong_text_per_1k": 0.43,
+     "serious": 52,
+     "serious_per_1k": 3.83,
+     "false_leaf_pages": 9,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 531314,
+      "tokens_per_page": 13283,
+      "usable": 26,
+      "calls_per_usable": 1.54,
+      "tokens_per_usable": 20435
+     },
+     "classes_k_of_n": {
+      "E2": "23/40",
+      "T10": "18/40",
+      "O6": "12/40",
+      "T6": "8/40",
+      "T9": "7/40",
+      "O11": "3/40",
+      "O7": "3/40",
+      "T8": "3/40",
+      "O5": "2/40",
+      "T13": "2/40",
+      "T5": "2/40",
+      "T16": "2/40",
+      "O8": "2/40",
+      "I4": "1/40",
+      "T15": "1/40",
+      "O10": "1/40",
+      "O12": "1/40",
+      "O13": "1/40",
+      "O1": "1/40",
+      "T7": "1/40",
+      "O3": "1/40"
+     }
+    },
+    "agy-image": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "30/40",
+     "accept_wilson": [
+      0.598,
+      0.858
+     ],
+     "accept_by_book": [
+      0.6,
+      0.875
+     ],
+     "wrong_text_pages": "3/40",
+     "wrong_text_wilson": [
+      0.026,
+      0.199
+     ],
+     "fidelity_mean": 4.08,
+     "counts": true,
+     "words": 13883,
+     "misleads_per_1k": 2.38,
+     "wrong_text_per_1k": 0.36,
+     "serious": 38,
+     "serious_per_1k": 2.77,
+     "false_leaf_pages": 5,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 602962,
+      "tokens_per_page": 15074,
+      "usable": 30,
+      "calls_per_usable": 1.33,
+      "tokens_per_usable": 20099
+     },
+     "classes_k_of_n": {
+      "T10": "20/40",
+      "E2": "17/40",
+      "T6": "13/40",
+      "O6": "10/40",
+      "T5": "3/40",
+      "T9": "3/40",
+      "I4": "2/40",
+      "O7": "2/40",
+      "O10": "1/40",
+      "T13": "1/40",
+      "O12": "1/40",
+      "T8": "1/40",
+      "D1": "1/40",
+      "O1": "1/40",
+      "O3": "1/40",
+      "O8": "1/40"
+     }
+    },
+    "stored": {
+     "n": 30,
+     "books": 30,
+     "unjudged": 0,
+     "accept": "9/30",
+     "accept_wilson": [
+      0.167,
+      0.479
+     ],
+     "accept_by_book": [
+      0.133,
+      0.467
+     ],
+     "wrong_text_pages": "9/30",
+     "wrong_text_wilson": [
+      0.167,
+      0.479
+     ],
+     "fidelity_mean": 3.43,
+     "counts": true,
+     "words": 9325,
+     "misleads_per_1k": 5.04,
+     "wrong_text_per_1k": 1.29,
+     "serious": 59,
+     "serious_per_1k": 6.39,
+     "false_leaf_pages": 3,
+     "classes_k_of_n": {
+      "E2": "15/30",
+      "O6": "14/30",
+      "T9": "10/30",
+      "T6": "7/30",
+      "T8": "7/30",
+      "T10": "4/30",
+      "T13": "3/30",
+      "O7": "3/30",
+      "O12": "3/30",
+      "T7": "3/30",
+      "T5": "1/30",
+      "I4": "1/30",
+      "O16": "1/30",
+      "T15": "1/30",
+      "T1": "1/30",
+      "O5": "1/30",
+      "O4": "1/30",
+      "O1": "1/30",
+      "O13": "1/30",
+      "O3": "1/30"
+     }
+    }
+   },
+   "paired": {
+    "agy-image|agy-text": {
+     "a_gap_T_minus_I": 0.8,
+     "a_noise_T_vs_T2": 0.26,
+     "a": true,
+     "b_ci95_T_minus_I": [
+      -0.17,
+      1.91
+     ],
+     "b": false,
+     "c_false_leaf_pages": "I 5 vs T 6 (allowed 9)",
+     "c": true,
+     "I_better": false
+    }
+   },
+   "rule_note": "#106 rule: I_better needs (a) serious/1k gap T-I above the T-T2 arm noise, (b) paired by-page 95% CI of T-I above 0, (c) no more false-leaf pages"
+  },
+  "French": {
+   "task": "translation",
+   "lang": "French",
+   "routes": {
+    "agy-text": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "24/40",
+     "accept_wilson": [
+      0.446,
+      0.737
+     ],
+     "accept_by_book": [
+      0.45,
+      0.75
+     ],
+     "wrong_text_pages": "8/40",
+     "wrong_text_wilson": [
+      0.105,
+      0.348
+     ],
+     "fidelity_mean": 4,
+     "counts": true,
+     "words": 14386,
+     "misleads_per_1k": 2.99,
+     "wrong_text_per_1k": 2.29,
+     "serious": 76,
+     "serious_per_1k": 5.4,
+     "false_leaf_pages": 9,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 528143,
+      "tokens_per_page": 13204,
+      "usable": 24,
+      "calls_per_usable": 1.67,
+      "tokens_per_usable": 22006
+     },
+     "classes_k_of_n": {
+      "E2": "18/40",
+      "O6": "12/40",
+      "T10": "10/40",
+      "T7": "7/40",
+      "O7": "5/40",
+      "T9": "4/40",
+      "O8": "4/40",
+      "T8": "4/40",
+      "O12": "3/40",
+      "T6": "3/40",
+      "T5": "2/40",
+      "T15": "2/40",
+      "O1": "2/40",
+      "O10": "1/40",
+      "O3": "1/40",
+      "O5": "1/40",
+      "T16": "1/40"
+     }
+    },
+    "agy-text-again": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "26/40",
+     "accept_wilson": [
+      0.495,
+      0.779
+     ],
+     "accept_by_book": [
+      0.5,
+      0.8
+     ],
+     "wrong_text_pages": "7/40",
+     "wrong_text_wilson": [
+      0.087,
+      0.319
+     ],
+     "fidelity_mean": 4.05,
+     "counts": true,
+     "words": 14687,
+     "misleads_per_1k": 2.52,
+     "wrong_text_per_1k": 2.18,
+     "serious": 69,
+     "serious_per_1k": 4.79,
+     "false_leaf_pages": 11,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 537914,
+      "tokens_per_page": 13448,
+      "usable": 26,
+      "calls_per_usable": 1.54,
+      "tokens_per_usable": 20689
+     },
+     "classes_k_of_n": {
+      "E2": "21/40",
+      "T10": "10/40",
+      "O6": "9/40",
+      "O12": "4/40",
+      "O7": "4/40",
+      "T7": "4/40",
+      "O8": "4/40",
+      "T9": "3/40",
+      "T8": "2/40",
+      "T6": "2/40",
+      "O1": "2/40",
+      "O5": "1/40",
+      "T13": "1/40",
+      "O10": "1/40",
+      "O3": "1/40",
+      "T2": "1/40"
+     }
+    },
+    "agy-image": {
+     "n": 40,
+     "books": 40,
+     "unjudged": 0,
+     "accept": "29/40",
+     "accept_wilson": [
+      0.572,
+      0.839
+     ],
+     "accept_by_book": [
+      0.575,
+      0.85
+     ],
+     "wrong_text_pages": "5/40",
+     "wrong_text_wilson": [
+      0.055,
+      0.261
+     ],
+     "fidelity_mean": 4.2,
+     "counts": true,
+     "words": 14574,
+     "misleads_per_1k": 2.74,
+     "wrong_text_per_1k": 1.65,
+     "serious": 64,
+     "serious_per_1k": 4.53,
+     "false_leaf_pages": 9,
+     "cost": {
+      "pages": 40,
+      "calls": 40,
+      "tokens": 606753,
+      "tokens_per_page": 15169,
+      "usable": 29,
+      "calls_per_usable": 1.38,
+      "tokens_per_usable": 20923
+     },
+     "classes_k_of_n": {
+      "E2": "16/40",
+      "T10": "15/40",
+      "O6": "9/40",
+      "T7": "5/40",
+      "T6": "4/40",
+      "O8": "4/40",
+      "O1": "3/40",
+      "O7": "3/40",
+      "T9": "3/40",
+      "T8": "3/40",
+      "O12": "2/40",
+      "O10": "1/40",
+      "T3": "1/40",
+      "T13": "1/40"
+     }
+    },
+    "stored": {
+     "n": 39,
+     "books": 39,
+     "unjudged": 0,
+     "accept": "21/39",
+     "accept_wilson": [
+      0.386,
+      0.684
+     ],
+     "accept_by_book": [
+      0.385,
+      0.692
+     ],
+     "wrong_text_pages": "11/39",
+     "wrong_text_wilson": [
+      0.165,
+      0.438
+     ],
+     "fidelity_mean": 3.72,
+     "counts": true,
+     "words": 13550,
+     "misleads_per_1k": 3.69,
+     "wrong_text_per_1k": 2.73,
+     "serious": 87,
+     "serious_per_1k": 6.62,
+     "false_leaf_pages": 9,
+     "classes_k_of_n": {
+      "E2": "17/39",
+      "O6": "13/39",
+      "T10": "11/39",
+      "T9": "9/39",
+      "T8": "5/39",
+      "O12": "4/39",
+      "T7": "4/39",
+      "T5": "4/39",
+      "O7": "4/39",
+      "T3": "3/39",
+      "T13": "2/39",
+      "O1": "2/39",
+      "O8": "2/39",
+      "T15": "2/39",
+      "T6": "2/39",
+      "T1": "1/39",
+      "O10": "1/39",
+      "D1": "1/39",
+      "O11": "1/39"
+     }
+    }
+   },
+   "paired": {
+    "agy-image|agy-text": {
+     "a_gap_T_minus_I": 0.87,
+     "a_noise_T_vs_T2": 0.61,
+     "a": true,
+     "b_ci95_T_minus_I": [
+      0.06,
+      1.77
+     ],
+     "b": true,
+     "c_false_leaf_pages": "I 9 vs T 9 (allowed 11)",
+     "c": true,
+     "I_better": true
+    }
+   },
+   "rule_note": "#106 rule: I_better needs (a) serious/1k gap T-I above the T-T2 arm noise, (b) paired by-page 95% CI of T-I above 0, (c) no more false-leaf pages"
+  }
+ },
+ "pooled": {
+  "paired": {
+   "agy-image|agy-text": {
+    "a_gap_T_minus_I": 0.82,
+    "a_noise_T_vs_T2": 0.24,
+    "a": true,
+    "b_ci95_T_minus_I": [
+     0.28,
+     1.34
+    ],
+    "b": true,
+    "c_false_leaf_pages": "I 24 vs T 24 (allowed 28)",
+    "c": true,
+    "I_better": true
+   }
+  },
+  "planted_ocr": {
+   "T": {
+    "n": 12,
+    "carried": 10,
+    "repaired": 1,
+    "other": 1
+   },
+   "I": {
+    "n": 12,
+    "carried": 0,
+    "repaired": 12,
+    "other": 0
+   }
+  }
+ }
+}

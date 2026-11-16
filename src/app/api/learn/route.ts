@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { publicationFilter } from '@/lib/publication';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const maxDuration = 15;
@@ -285,10 +286,19 @@ export async function GET(request: NextRequest) {
         }
       }
 
+      // Terms come from published books only (ops #17).
+      const vocabBooks = await db.collection('books')
+        .find({ id: { $in: [...new Set(pages.map(p => p.book_id))] }, ...publicationFilter('live') })
+        .project({ id: 1, title: 1, author: 1, published: 1, year: 1, language: 1, slug: 1 })
+        .toArray();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const bookMap = new Map(vocabBooks.map((b: any) => [b.id, b]));
+
       // Extract and deduplicate
       const seen = new Set<string>();
       let allTerms: Array<{ term: string; definition: string; context: string; bookId: string; pageNumber: number }> = [];
       for (const page of pages) {
+        if (!bookMap.has(page.book_id)) continue;
         for (const t of extractTerms(page.translation?.data || '')) {
           const key = t.term.toLowerCase();
           if (!seen.has(key)) {
@@ -301,15 +311,6 @@ export async function GET(request: NextRequest) {
 
       // Collect all definitions for distractor pool
       const allDefs = allTerms.map(t => t.definition);
-
-      // Enrich with book metadata
-      const bookIds = [...new Set(allTerms.map(t => t.bookId))];
-      const books = await db.collection('books')
-        .find({ id: { $in: bookIds } })
-        .project({ id: 1, title: 1, author: 1, published: 1, year: 1, language: 1, slug: 1 })
-        .toArray();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const bookMap = new Map(books.map((b: any) => [b.id, b]));
 
       for (const t of allTerms) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

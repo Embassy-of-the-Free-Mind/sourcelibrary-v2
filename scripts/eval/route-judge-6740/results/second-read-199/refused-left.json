@@ -1,0 +1,2460 @@
+[
+ {
+  "page_id": "6990689d249ce014347d6f67",
+  "book_id": "6990689d249ce014347d6f65",
+  "page_number": 2,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6990689d249ce014347d6f6b",
+  "book_id": "6990689d249ce014347d6f65",
+  "page_number": 6,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6990689d249ce014347d6f6d",
+  "book_id": "6990689d249ce014347d6f65",
+  "page_number": 8,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6990689d249ce014347d6f6e",
+  "book_id": "6990689d249ce014347d6f65",
+  "page_number": 9,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "699067f9249ce014347d5319",
+  "book_id": "699067f8249ce014347d530c",
+  "page_number": 12,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699067d0249ce014347d4208",
+  "book_id": "699067d0249ce014347d41f8",
+  "page_number": 15,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   1
+  ]
+ },
+ {
+  "page_id": "69906ed78a353648e1ed086f",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 16,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b3f71ca107e55a0ee1b44c",
+  "book_id": "69b3f71ca107e55a0ee1b43a",
+  "page_number": 18,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699067d0249ce014347d420d",
+  "book_id": "699067d0249ce014347d41f8",
+  "page_number": 20,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   true,
+   4
+  ]
+ },
+ {
+  "page_id": "699065a2726f64800c10c010",
+  "book_id": "699065a1726f64800c10bff7",
+  "page_number": 25,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   true,
+   4
+  ]
+ },
+ {
+  "page_id": "69b3f71ca107e55a0ee1b454",
+  "book_id": "69b3f71ca107e55a0ee1b43a",
+  "page_number": 26,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   true,
+   4
+  ]
+ },
+ {
+  "page_id": "69b3f71ca107e55a0ee1b455",
+  "book_id": "69b3f71ca107e55a0ee1b43a",
+  "page_number": 27,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   true,
+   4
+  ]
+ },
+ {
+  "page_id": "699067d0249ce014347d4219",
+  "book_id": "699067d0249ce014347d41f8",
+  "page_number": 32,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906ed78a353648e1ed0886",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 39,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69e7517810ee9075bcdcd980",
+  "book_id": "69e7517810ee9075bcdcd959",
+  "page_number": 39,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906ed78a353648e1ed0887",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 40,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699065ab3dc2ed39a49f2341",
+  "book_id": "699065ab3dc2ed39a49f2311",
+  "page_number": 48,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699067f9249ce014347d533d",
+  "book_id": "699067f8249ce014347d530c",
+  "page_number": 48,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699065ab3dc2ed39a49f2342",
+  "book_id": "699065ab3dc2ed39a49f2311",
+  "page_number": 49,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69906ed78a353648e1ed0895",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 54,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69906ed78a353648e1ed0896",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 55,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69905e292fd6a039938a1614",
+  "book_id": "69905e292fd6a039938a15c6",
+  "page_number": 78,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699065a2726f64800c10c04b",
+  "book_id": "699065a1726f64800c10bff7",
+  "page_number": 84,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699067f9249ce014347d5361",
+  "book_id": "699067f8249ce014347d530c",
+  "page_number": 84,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be2103",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 90,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "699065ab3dc2ed39a49f2371",
+  "book_id": "699065ab3dc2ed39a49f2311",
+  "page_number": 96,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69906ecb7d027b8182c0aa42",
+  "book_id": "69906eca7d027b8182c0a9dc",
+  "page_number": 102,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69906ecb7d027b8182c0aa43",
+  "book_id": "69906eca7d027b8182c0a9dc",
+  "page_number": 103,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699067f9249ce014347d5385",
+  "book_id": "699067f8249ce014347d530c",
+  "page_number": 120,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be216e",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 197,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be216f",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 198,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69e7517810ee9075bcdcda3e",
+  "book_id": "69e7517810ee9075bcdcd959",
+  "page_number": 229,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69905e292fd6a039938a16dd",
+  "book_id": "69905e292fd6a039938a15c6",
+  "page_number": 279,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be21d1",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 296,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be21d2",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 297,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be2221",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 376,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953cc6d77f38f6761be2222",
+  "book_id": "6953cc6d77f38f6761be20a9",
+  "page_number": 377,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69e7517810ee9075bcdcdadf",
+  "book_id": "69e7517810ee9075bcdcd959",
+  "page_number": 390,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6991bf5f734f402cad489a3a",
+  "book_id": "6991bf5f734f402cad489a10",
+  "page_number": 42,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69590717736e8b2e7a262b1b",
+  "book_id": "dfb9c1de-d300-4e1b-a9c1-941cdb809764",
+  "page_number": 44,
+  "job": "fix-latin",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69a5e3e7006a409842216b0c",
+  "book_id": "69a5e3e7006a409842216ac8",
+  "page_number": 68,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e4a8",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 142,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e4a9",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 143,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906602ef12272ffdc94cee",
+  "book_id": "69906602ef12272ffdc94c3e",
+  "page_number": 175,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906602ef12272ffdc94cef",
+  "book_id": "69906602ef12272ffdc94c3e",
+  "page_number": 176,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e503",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 233,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e504",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 234,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6991bf73734f402cad48a1a7",
+  "book_id": "6991bf73734f402cad48a0ae",
+  "page_number": 249,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6991bf73734f402cad48a1d0",
+  "book_id": "6991bf73734f402cad48a0ae",
+  "page_number": 290,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69906602ef12272ffdc94db6",
+  "book_id": "69906602ef12272ffdc94c3e",
+  "page_number": 375,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906602ef12272ffdc94db7",
+  "book_id": "69906602ef12272ffdc94c3e",
+  "page_number": 376,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b3f78da107e55a0ee1dee0",
+  "book_id": "69b3f78da107e55a0ee1dd03",
+  "page_number": 477,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e602",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 488,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e603",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 489,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e626",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 524,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b3f78da107e55a0ee1dfbe",
+  "book_id": "69b3f78da107e55a0ee1dd03",
+  "page_number": 699,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e710",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 758,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52c2b3dd6d9423027e711",
+  "book_id": "69b52c2b3dd6d9423027e41a",
+  "page_number": 759,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b3f78da107e55a0ee1e0c8",
+  "book_id": "69b3f78da107e55a0ee1dd03",
+  "page_number": 965,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b3f78da107e55a0ee1e0c9",
+  "book_id": "69b3f78da107e55a0ee1dd03",
+  "page_number": 966,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "book held",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b300de5545150b61b4e081",
+  "book_id": "69b300de5545150b61b4e073",
+  "page_number": 14,
+  "job": "fix-latin",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69529012b184004c526a1499",
+  "book_id": "69529012b184004c526a1455",
+  "page_number": 68,
+  "job": "fix-latin",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b52c453dd6d9423027f1a7",
+  "book_id": "69b52c453dd6d9423027f160",
+  "page_number": 71,
+  "job": "fix-latin",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b4cd24d5b6c3815e1a43da",
+  "book_id": "69b4cd24d5b6c3815e1a42ab",
+  "page_number": 303,
+  "job": "fix-latin",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69dbca3a1040d1d5e20aa39a",
+  "book_id": "69dbca3a1040d1d5e20aa385",
+  "page_number": 21,
+  "job": "fix-latin",
+  "ms": false,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   true,
+   4
+  ]
+ },
+ {
+  "page_id": "69dbc98e1040d1d5e20a4415",
+  "book_id": "69dbc98e1040d1d5e20a437f",
+  "page_number": 150,
+  "job": "fix-latin",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb20",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 4,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6992c92869b777d72c76351a",
+  "book_id": "6992c92869b777d72c763513",
+  "page_number": 7,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb21",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 5,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   1
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb23",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 7,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   true,
+   5
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb24",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 8,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6992c92869b777d72c76351c",
+  "book_id": "6992c92869b777d72c763513",
+  "page_number": 9,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb27",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 11,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6992c92869b777d72c76351f",
+  "book_id": "6992c92869b777d72c763513",
+  "page_number": 12,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb28",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 12,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb2d",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 17,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb2e",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "page_number": 18,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6992c92869b777d72c763529",
+  "book_id": "6992c92869b777d72c763513",
+  "page_number": 22,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699df0873430a1d77dc7929b",
+  "book_id": "699df0863430a1d77dc7922c",
+  "page_number": 111,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "699df0873430a1d77dc792de",
+  "book_id": "699df0863430a1d77dc7922c",
+  "page_number": 178,
+  "job": "fix-cjk",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953b59b77f38f6761bd994e",
+  "book_id": "6953b59b77f38f6761bd990c",
+  "page_number": 66,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "695931ccb91a6184ea94337f",
+  "book_id": "695931cbb91a6184ea94337c",
+  "page_number": 3,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6985d112b3ca84e0db8b2383",
+  "book_id": "6985ca7194b042cd03912166",
+  "page_number": 21,
+  "job": "fix-scripts",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   1
+  ]
+ },
+ {
+  "page_id": "6993831384cf5845c644ccce",
+  "book_id": "6993831384cf5845c644cb68",
+  "page_number": 358,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "6993831384cf5845c644cccf",
+  "book_id": "6993831384cf5845c644cb68",
+  "page_number": 359,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6993831384cf5845c644cd35",
+  "book_id": "6993831384cf5845c644cb68",
+  "page_number": 461,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6993831384cf5845c644cd36",
+  "book_id": "6993831384cf5845c644cb68",
+  "page_number": 462,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6993831384cf5845c644cd74",
+  "book_id": "6993831384cf5845c644cb68",
+  "page_number": 524,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6993831384cf5845c644cd75",
+  "book_id": "6993831384cf5845c644cb68",
+  "page_number": 525,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69b3e67c304c1c6b3950b7d7",
+  "book_id": "69b3e67c304c1c6b3950b7c3",
+  "page_number": 20,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b3e67c304c1c6b3950b92d",
+  "book_id": "69b3e67c304c1c6b3950b7c3",
+  "page_number": 362,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69c1bb8e8522835be8460408",
+  "book_id": "69c1bb8e8522835be84603f3",
+  "page_number": 21,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69c1bb8e8522835be846041e",
+  "book_id": "69c1bb8e8522835be84603f3",
+  "page_number": 43,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69c1bb948522835be84604ff",
+  "book_id": "69c1bb948522835be84604fa",
+  "page_number": 5,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69c1bb948522835be8460504",
+  "book_id": "69c1bb948522835be84604fa",
+  "page_number": 10,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d5ad0c4dc55b8478ddf621",
+  "book_id": "69d5ad0c4dc55b8478ddf60b",
+  "page_number": 22,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d5ad0c4dc55b8478ddf75e",
+  "book_id": "69d5ad0c4dc55b8478ddf60b",
+  "page_number": 339,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6a358874d8c4016326cdce74",
+  "book_id": "6a358874d8c4016326cdcb7f",
+  "page_number": 757,
+  "job": "fix-scripts",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6a358874d8c4016326cdce75",
+  "book_id": "6a358874d8c4016326cdcb7f",
+  "page_number": 758,
+  "job": "fix-scripts",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953a82c77f38f6761bd0c43",
+  "book_id": "6953a82c77f38f6761bd0bc5",
+  "page_number": 126,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953a82c77f38f6761bd0c44",
+  "book_id": "6953a82c77f38f6761bd0bc5",
+  "page_number": 127,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "6953a82c77f38f6761bd0c52",
+  "book_id": "6953a82c77f38f6761bd0bc5",
+  "page_number": 141,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906607ef12272ffdc94deb",
+  "book_id": "69906606ef12272ffdc94dd0",
+  "page_number": 27,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   2
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69906607ef12272ffdc94dec",
+  "book_id": "69906606ef12272ffdc94dd0",
+  "page_number": 28,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69908ad8285673ff8cb80bb0",
+  "book_id": "69908ad8285673ff8cb80bac",
+  "page_number": 4,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69942f45b2f6748db4ac0265",
+  "book_id": "69942f45b2f6748db4ac0121",
+  "page_number": 324,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69942f45b2f6748db4ac0330",
+  "book_id": "69942f45b2f6748db4ac0121",
+  "page_number": 527,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69942f45b2f6748db4ac0331",
+  "book_id": "69942f45b2f6748db4ac0121",
+  "page_number": 528,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69c1bd578522835be846969b",
+  "book_id": "69c1bd578522835be8469631",
+  "page_number": 106,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69c1bd578522835be84696b6",
+  "book_id": "69c1bd578522835be8469631",
+  "page_number": 133,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f1727",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 60,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   1
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f175f",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 116,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f1760",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 117,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f17ce",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 227,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f17cf",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 228,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f1838",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 333,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "book held",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   true,
+   5
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f1888",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 413,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   1
+  ]
+ },
+ {
+  "page_id": "69d66bb14da4f8dce52f1889",
+  "book_id": "69d66bb14da4f8dce52f16eb",
+  "page_number": 414,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "695311a477f38f6761bcce76",
+  "book_id": "695311a477f38f6761bcc8b8",
+  "page_number": 1470,
+  "job": "fix-scripts",
+  "ms": false,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   true,
+   5
+  ]
+ },
+ {
+  "page_id": "69942f6fb2f6748db4ac0e37",
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 130,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69942f6fb2f6748db4ac0e5a",
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 165,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69942f6fb2f6748db4ac0e64",
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 175,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69942f6fb2f6748db4ac0e95",
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 224,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69942f6fb2f6748db4ac0ebf",
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 266,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   1
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52be43dd6d9423027ca15",
+  "book_id": "69b52be43dd6d9423027ca00",
+  "page_number": 21,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   true,
+   4
+  ]
+ },
+ {
+  "page_id": "69b52be43dd6d9423027ca39",
+  "book_id": "69b52be43dd6d9423027ca00",
+  "page_number": 57,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52be43dd6d9423027ca3a",
+  "book_id": "69b52be43dd6d9423027ca00",
+  "page_number": 58,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52be43dd6d9423027ca53",
+  "book_id": "69b52be43dd6d9423027ca00",
+  "page_number": 83,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b52be43dd6d9423027ca54",
+  "book_id": "69b52be43dd6d9423027ca00",
+  "page_number": 84,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   true,
+   5
+  ]
+ },
+ {
+  "page_id": "69b52be43dd6d9423027ca77",
+  "book_id": "69b52be43dd6d9423027ca00",
+  "page_number": 119,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "rated worse than the stored text",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   true,
+   4
+  ],
+  "stored": [
+   true,
+   5
+  ]
+ },
+ {
+  "page_id": "69b52c5c3dd6d9423027fa57",
+  "book_id": "69b52c5c3dd6d9423027f9f2",
+  "page_number": 101,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69b630611c1c21a37380119a",
+  "book_id": "69b630611c1c21a37380114a",
+  "page_number": 80,
+  "job": "fix-scripts",
+  "ms": false,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69f325c852a77bb28fdb5d65",
+  "book_id": "69f325c852a77bb28fdb5cd7",
+  "page_number": 142,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69938a8ee07f979c72ac6701",
+  "book_id": "69938a8ee07f979c72ac6590",
+  "page_number": 29,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "699439ce6879ff0184cb9284",
+  "book_id": "699439cd6879ff0184cb9235",
+  "page_number": 79,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "699f7256ce8dbd2d550bd950",
+  "book_id": "699ef9fd15618a982bb1ebd9",
+  "page_number": 537,
+  "job": "fix-scripts",
+  "ms": false,
+  "why": "not judged",
+  "corr": null,
+  "confirm": null,
+  "stored": null
+ },
+ {
+  "page_id": "69bfcde68ab50eb88e8c83b5",
+  "book_id": "69bfcde68ab50eb88e8c83b3",
+  "page_number": 2,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   5
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   1
+  ]
+ },
+ {
+  "page_id": "69bfcf293047130b1c3bef3e",
+  "book_id": "69bfcf293047130b1c3beced",
+  "page_number": 593,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   3
+  ]
+ },
+ {
+  "page_id": "69c1bb638522835be845f5ef",
+  "book_id": "69c1bb638522835be845f5c7",
+  "page_number": 40,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "round 1 does not accept the correction",
+  "corr": [
+   false,
+   3
+  ],
+  "confirm": null,
+  "stored": [
+   false,
+   2
+  ]
+ },
+ {
+  "page_id": "69c1bb638522835be845f61d",
+  "book_id": "69c1bb638522835be845f5c7",
+  "page_number": 86,
+  "job": "fix-scripts",
+  "ms": true,
+  "why": "confirm call does not accept the correction",
+  "corr": [
+   true,
+   4
+  ],
+  "confirm": [
+   false,
+   3
+  ],
+  "stored": [
+   false,
+   3
+  ]
+ }
+]

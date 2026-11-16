@@ -1,0 +1,91 @@
+[
+  {
+    "book_id": "69b4c057978ca9526eda396d",
+    "slot": 1,
+    "title": "Iulii Firmici Iunioris Mathesis",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century humanist-cursive manuscript of Firmicus Maternus' Mathesis (Latin astrology), as catalogued. There is no tradition and no collection to test it against.",
+    "rights_flag": null,
+    "structure_note": "The image is one leaf AFTER the text it carries (see page 218). That may be a book-wide offset, which one page cannot settle. printed_backsteps 49 and printed_repeats 46 against 169 printed numbers look like misread furniture, not a real disorder: this page's <page-num>VI comes from the running book number 'VI' at the head of the leaf, which repeats on every leaf of Book VI. The real foliation is the pencil '107' at the foot. pages_translated is 0 in the structure counts but the field says 302, so one of the two instruments is wrong.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 218,
+        "right_page": "no",
+        "printed_marker": "\"VI\" (faint, head of leaf, book number); \"107\" (pencil, foot right)",
+        "layout": "single column of humanist cursive; red rubric line and red marginal headings in the outer margin (\"Natale pyndari et Archilochi poete lyrici\", \"pro imperiis\"); two-line initial S's; show-through from the verso",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "sibi aspiciat: nec sint alia partium societate coniuncti … hec genitura diuinam et celestem",
+            "image": "The leaf opens \"[con]stitutionum reddit interpretem q[ui] doct[is] sermone et diuini ingenii potestate compositus celesti quodammodo institutione formatus … Hec genitura platonis fuisse suggeritur\", then the nativities of Pindar and Archilochus and of Archimedes, the rubric \"Quid faciant stelle in diversis locis vel finibus collocate. Et primo de Saturno in Libra\", and Saturn in Libra",
+            "problem": "The transcription is the text of the PRECEDING leaf (the poverty and blindness configurations, Demosthenes, Homer, and the opening of Plato). Its last words, \"diuinam et celestem\", run on into this image's first line. None of the OCR text is on this image.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "<page-num>VI</page-num>",
+            "image": "\"VI\" at the head of the leaf is the running book number; the leaf's folio is the pencil \"107\"",
+            "problem": "The book number was taken as the page number",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "An animo mesto cupiditatis ardore prorepserit iungit uxores facit.",
+            "english": "with a sorrowful mind it creeps forth in the ardour of desire and brings about marriages",
+            "problem": "Garbled OCR is rendered as fluent English with no uncertainty marker",
+            "severity": "moderate"
+          },
+          {
+            "source": "Talis orator apud Macedonie phillippu more .vij. vocum licentia prosequebantur",
+            "english": "Such an orator was pursued at the court of Philip of Macedon with the freedom of his voice",
+            "problem": "A corrupt line is smoothed into a confident sentence. \"more .vij.\" is dropped and the sense is guessed.",
+            "severity": "moderate"
+          },
+          {
+            "source": "talia et ecce dixit: ut hec ad augustum et uelut in tuum ingenium possederint ceterosa constantia perducant",
+            "english": "He will speak in such a way that whatever he takes up he carries through with steady constancy, as if to the height of his own genius.",
+            "problem": "A loose paraphrase of a garbled line; \"ceterosa\" is passed over",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The image beside the text is the next leaf (Plato, Pindar, Archimedes, Saturn in Libra), so a reader cannot follow the text on the scan",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "The opening <meta> invents the content of the previous page: \"continues from previous page: the sentence begins \\\"If the Sun and the Moon and the ascendant are so placed... that neither the Sun nor the ascendant...\\\"\"",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "ascendant", "verdict": "ok", "helpful": true },
+            { "quote": "the place rising next after the ascendant", "verdict": "ok", "helpful": true },
+            { "quote": "the <term>imum caeli</term>, the point opposite the midheave", "verdict": "ok", "helpful": true },
+            { "quote": "an exact aspect, degree to degree", "verdict": "ok", "helpful": true },
+            { "quote": "the phrase is obscure in the manuscript; the ninth place fro", "verdict": "ok", "helpful": false },
+            { "quote": "Demosthenes was famous for his speeches against Philip II of", "verdict": "ok", "helpful": true },
+            { "quote": "the \"terms\" are unequal subdivisions of each sign assigned t", "verdict": "ok", "helpful": true },
+            { "quote": "probably Sagittarius, pictured as a horse-bodied archer", "verdict": "unsupported", "helpful": false },
+            { "quote": "Homer was traditionally said to be blind", "verdict": "ok", "helpful": true },
+            { "quote": "the manuscript reading here is corrupt; \"Arepiteris\" may stan", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "the right-hand square of the Moon", "why": "The dexter square aspect is a technical term; a general reader cannot tell what \"right-hand square\" means" },
+            { "english": "Saturn is joined to Mars by some radiation of testimony", "why": "\"Radiation of testimony\" means an astrological aspect; it is left unexplained" },
+            { "english": "Jupiter regards one of the two with trine radiation", "why": "Trine (120°) aspect is not explained; it is needed for every nativity on the page" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The scan is one leaf ahead of its text. A reader sees Plato, Pindar and Archimedes on the image while the text and English give Demosthenes and Homer from the leaf before. The translation of that text is reasonably faithful, but it smooths corrupt lines, and two notes explain misreads by guessing."
+  }
+]

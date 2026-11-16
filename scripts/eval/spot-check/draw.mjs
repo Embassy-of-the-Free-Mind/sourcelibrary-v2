@@ -12,6 +12,9 @@
  *   node --env-file=.env.production.local scripts/eval/spot-check/draw.mjs \
  *     --date 2026-10-19 --out scripts/eval/results/spot-check/2026-10-19 [--n 10] [--frame public|canon] [--no-check-images]
  *
+ * The packet holds the text the reader is served: on an English leaf of an English edition that is the
+ * transcription, so a stored translation there is left out (v3#154; exposure `rewrite_not_served` in draw-log.json).
+ *
  * Writes: sample.json (books, structure counts, pages with OCR + translation + engines + image URL),
  *         packets/packet-1.json, packets/packet-2.json (5 books each, what a reviewer reads), draw-log.json.
  */
@@ -19,8 +22,8 @@ import { MongoClient } from 'mongodb';
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { join } from 'node:path';
-import { drawSample, seedFromDate, structureCounts, pageImageUrl, RUN_LENGTH } from './lib.mjs';
-import { exposureOf } from '../../lib/review-vocabulary.mjs';
+import { drawSample, seedFromDate, structureCounts, pageImageUrl, packetTranslation, RUN_LENGTH } from './lib.mjs';
+import { exposureOf, EXPOSURE_BOOK_PROJECTION } from '../../lib/review-vocabulary.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -91,7 +94,7 @@ const sample = [];
 const exposure = {};
 for (const [i, pk] of picks.entries()) {
   const b = await books.findOne({ id: pk.id }, {
-    projection: { _id: 0, id: 1, visible: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1, published: 1, place_published: 1,
+    projection: { _id: 0, ...EXPOSURE_BOOK_PROJECTION, id: 1, visible: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1, published: 1, place_published: 1,
       pages_count: 1, pages_ocr: 1, pages_translated: 1, page_progression: 1, 'catalog_metadata.collections': 1, 'image_source.provider': 1, ia_identifier: 1 },
   });
   const all = await pages.find({ book_id: pk.id }, { projection: { _id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
@@ -110,9 +113,7 @@ for (const [i, pk] of picks.entries()) {
       ocr: p.ocr?.data ?? '',
       ocr_engine: p.ocr?.source ?? null,
       ocr_model: p.ocr?.model ?? null,
-      translation: p.translation?.data ?? '',
-      translation_model: p.translation?.model ?? null,
-      translation_source: p.translation?.source ?? null,
+      ...packetTranslation(p, exposure[pk.id][p.page_number]),
     });
   }
   sample.push({

@@ -1,0 +1,34 @@
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>66</page-num>
+<warning>Handwritten Ashkenazic semi-cursive Hebrew script. The ink is faded in places. Mirror-reversed show-through from the other side of the leaf is visible below the main text block and has not been transcribed. Several abbreviated and ligatured readings are uncertain.</warning>
+
+מספרים · מספר וחשבון שהם י"ב י"ב · כנגד <unclear>שם בן</unclear> י"ב
+חותמות שהן כוללות סוד זמן במספרם יהוה <unclear>יהוה</unclear> · והיה
+<unclear>וה"ו</unclear> · כך <unclear>הו"י</unclear> · מ"ה · זה שמי לעולם וזה זכרי לדר דר ·
+הנה גלה סוד הזמן בסוד עו"ם וסוד <unclear>ד"ר ד"ר</unclear> · שסודם <unclear>ד"ס</unclear> של
+ר"ת ר"ת ש"ר"ס · <unclear>ושנה למה רצה</unclear> ה"ה השם כמאמר דור הולך
+ודור בא והארץ לעולם עומדת · זה שמי לעולם וזה זכרי לדור
+ודור · זה הוא חותם של הקדש · ומה בו והכירו יחיה · <unclear>ולמה</unclear>
+ומה בו ולא הכירו ימות · חול על קדש · קדש על חול · יש
+שם קדש · ויש שם חול · יש שם קדש ושם חול · חשמל <unclear>שמן</unclear> ק
+<margin><unclear>בסוד השמות</unclear></margin>
+קדש · שם קדש חול <unclear>שמן</unclear> · שם חול קדש <unclear>שמן</unclear> · <unclear>לנקח שרה</unclear>
+<unclear>שדי</unclear> <unclear>שמן</unclear> · חלק <unclear>שמן</unclear>
+
+->שדי שלו · <unclear>מחנכם</unclear> שלו<-
+->שלש חי · שדי שלו ·<-
+->שלשדי · שלו שדי<-
+->דין · שלש<-
+
+->חלק <unclear>שמן</unclear> · <unclear>קו של מה</unclear> ·<-
+->שוקל מה<-
+->שוקל <unclear>מחן</unclear><-
+-><unclear>מחנכם</unclear> · שלו<-
+-><unclear>מחנכם</unclear> שלו · <unclear>נחל שמיר</unclear><-
+
+->חש מל · <unclear>מי בן</unclear> ·<-
+
+<vocab>שמות, חותמות, חשמל, קדש, חול, סוד הזמן, זה שמי לעולם, שדי, שוקל</vocab>

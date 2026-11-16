@@ -69,6 +69,7 @@ import { NodeHttpHandler } from '@smithy/node-http-handler';
 import { detectWatermark } from '../lib/provenance-mark.mjs';
 import { computeDHash } from '../lib/dhash.mjs';
 import { assertBookScopedKey, validateR2Key } from '../lib/r2-key.mjs';
+import { checkR2Ceiling, CEILING_EXIT } from '../lib/r2-storage-ceiling.mjs';
 import { READER_DISPLAY_FIELDS, readerServesDisplay } from '../lib/reader-display.mjs';
 import { generateDisplayVariants, markDisplay } from '../workers/lib/display-image.mjs';
 
@@ -93,6 +94,10 @@ const ASPECT_TOLERANCE = 0.03;
 const SOURCE_MIN_RATIO = 0.9;   // a "master" narrower than this share of its target would cost the reader sharpness
 const LEDGER_ROWS = 100000;
 const COST = { get: 0.36 / 1e6, put: 4.5 / 1e6, gbMonth: 0.015 };
+// The standing R2 storage budget (scripts/lib/r2-storage-ceiling.mjs). --budget-usd prices operations, not
+// the bytes a sibling adds forever; this is the stop for those (v3#94: ~0.95 TB of siblings, 359 GB/day at
+// peak, none of it asked). A shard runs for days, so it asks again between books, not only at start.
+const CEILING_RECHECK_MS = 30 * 60e3;
 
 const KEY = process.env.PROVENANCE_SECRET_KEY;
 const BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
@@ -472,6 +477,7 @@ async function run(db) {
 
   let lastSave = Date.now();
   let budgetStop = false;
+  let lastCeiling = Date.now();
   const rows = BOOKS ? [] : null;
   const ctx = { pages, ledger, bytes, rows, tally: (k) => { tallyO[k] = (tallyO[k] || 0) + 1; } };
   for (const id of order) {
@@ -481,6 +487,17 @@ async function run(db) {
       fs.writeFileSync(path.join(OUT, `stopped-${tag}.txt`), `budget ${new Date().toISOString()}\n`);
       budgetStop = true;
       break;
+    }
+    if (APPLY && !BOOKS && Date.now() - lastCeiling > CEILING_RECHECK_MS) {
+      lastCeiling = Date.now();
+      const ceiling = await checkR2Ceiling(db);
+      if (!ceiling.ok) {
+        console.log(`[${tag}] ${ceiling.reason}`);
+        fs.writeFileSync(path.join(OUT, `stopped-${tag}.txt`), `ceiling ${new Date().toISOString()} ${ceiling.reason}\n`);
+        budgetStop = true;
+        process.exitCode = CEILING_EXIT;
+        break;
+      }
     }
     const docs = await pages.find({ book_id: id }, { projection: PAGE_PROJECTION }).toArray();
     await pool(docs, CONCURRENCY, async (p) => {
@@ -514,7 +531,17 @@ async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 30000, maxPoolSize: Math.max(4, WORKERS) });
   await client.connect();
   const db = client.db(process.env.MONGODB_DB || 'bookstore');
-  try { if (has('plan')) await plan(db); else await run(db); } finally { await client.close(); }
+  try {
+    if (has('plan')) return await plan(db);
+    // A sweep asks the ceiling before its first write. A --book pilot is a human's call on named books, and a
+    // run without --apply writes nothing to the bucket, so only the sweep asks (as rearchive-iiif-fullres does).
+    if (APPLY && !BOOKS) {
+      const ceiling = await checkR2Ceiling(db);
+      console.log(ceiling.reason);
+      if (!ceiling.ok) { process.exitCode = CEILING_EXIT; return; }
+    }
+    await run(db);
+  } finally { await client.close(); }
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

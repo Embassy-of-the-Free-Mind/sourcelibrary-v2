@@ -1,0 +1,17 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<warning>Handwritten [manicule and marginal note in brown ink]</warning>
+<meta>catchword: quia</meta>
+
+<image-desc size="small" type="decorative" significance="low">hand-drawn manicule pointing to margin note</image-desc>
+<margin>+ ∂ Hobbes stringitur</margin>
+sententiam *Thomas Hobbes* in libello alias pestilentissimo *de cive c. 14. n. 4.* defendit sequentibus : *Lex naturalis dividi pot-est in naturalem hominum, quae sola obtinuit dici lex naturae, et naturalem civitatum, quae dici potest lex gentium, vulgo autem jus gentium appellatur. Praecepta utriusque eadem sunt : Sed quia civitates semel institutae induunt proprietates hominum per-sonales, lex quam loquentes de hominum singulorum officio natu-ralem dicimus, applicata totis civitatibus nationibus sive gentibus, vocatur jus gentium.* Haec *Hobbes p. m. 234.* ubi pluribus videa-tur.
+
+<margin>Jus positivum datur civili latius.</margin>
+Verum melius sentit, qui pro eo apologiam epistolica dissertatione edidit, auctor anonymus de principiis justi et decori, quando præmissa distinctione inter jus naturæ præcipiens et permissivum p. 16. et sequens scribit : *Ex hoc jure permissivo na-turali oriuntur leges humanae tam particulares cujusque civitatis, quam leges gentium, quae mediate ex jure naturali non fluunt. Est enim jus gentium duplicis naturæ : unum, quod proprie loquendo est juris naturalis, sed denominationem illam mutuatum est, quia est jus, quod genti cum gente, nationi cum natione intercedit; licet in suo formali non differat a jure naturali. Aliud est, quod in suo for-mali non convenit cum lege naturali, sed cum lege humana, et jure permissivo naturali introductum est; vocaturque jus gentium, quia inter gentem et gentem locum habet, vel quia plurium gentium con-suetudine et usu legis vigorem accepit : quale est illud, quod tela et in-strumenta bellica, nec fontes veneno interficere liceat, aut hostem per subornatum sicarium interficere. Mihi enim licet jure natu-rali omnibus modis nocere inimico, et ea media adhibere, quibus confido hostem in ordinem posse redigi, si citra perfidiam fiat, obtinet tamen inter gentes moratiores, talia non amplius ex æquo in hostem intentari, ne nimium intendantur pericula ab utraque parte.* Et sane quantum inter se differunt naturale et voluntarium, actus intrinsece moralis, hoc est, debitus aut illicitus per se ac suapte natura, et actus indifferens, hoc est, per se neque debitus neque illicitus, ipsa natura actus et libera voluntas, tantum discrimen videtur intercedere inter jus naturale et jus gentium, si utriusque naturam, objectum, formam at-tendamus, nihil tamen obstat, quo minus jus naturale,
+
+<vocab>Thomas Hobbes, De Cive, lex naturalis, jus gentium, jus permissivum, bellum, sicarium, jus positivum</vocab>
+<<<END>>>

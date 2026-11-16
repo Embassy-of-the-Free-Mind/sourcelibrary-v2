@@ -1,0 +1,2764 @@
+{
+ "generated_at": "2026-11-13T13:36:47.576Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 638,
+  "unparsed": 0,
+  "list_usd_equiv": 56.37
+ },
+ "meter": null,
+ "cells": {
+  "latin-flash3-unknown": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15121,
+    "books_walked": 563,
+    "held_or_hidden": 0,
+    "no_eligible_page": 154,
+    "excluded_book": 1,
+    "no_page_of_script": 357,
+    "short_book": 2,
+    "rule": "visible Latin books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten; script type unknown (script-type.mjs); the page inside 4 consecutive scans; books of --exclude-sample and of this draw's other cells left out (30 named)"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 50,
+     "books": 50,
+     "accept": "33/50",
+     "accept_rate": 0.66,
+     "accept_ci": {
+      "ci95": [
+       0.52,
+       0.78
+      ],
+      "unit": "book",
+      "units": 50
+     },
+     "wrong_text_pages": "15/50",
+     "wrong_text_ci": {
+      "ci95": [
+       0.18,
+       0.42
+      ],
+      "unit": "book",
+      "units": 50
+     },
+     "wrong_text_classes": {
+      "O6": "7/50",
+      "O1": "5/50",
+      "O5": "3/50",
+      "O7": "3/50",
+      "O8": "1/50",
+      "O12": "1/50",
+      "O4": "1/50",
+      "T7": "1/50",
+      "I3": "1/50"
+     },
+     "classes_k_of_n": {
+      "O6": "27/50",
+      "O8": "18/50",
+      "E2": "18/50",
+      "O12": "9/50",
+      "O11": "7/50",
+      "O5": "7/50",
+      "O7": "7/50",
+      "O16": "5/50",
+      "O1": "5/50",
+      "D1": "5/50",
+      "T6": "4/50",
+      "O10": "4/50",
+      "O14": "2/50",
+      "O13": "2/50",
+      "I4": "1/50",
+      "O15": "1/50",
+      "O17": "1/50",
+      "O4": "1/50",
+      "T7": "1/50",
+      "I3": "1/50"
+     },
+     "fidelity_mean": 3.88,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b51eb69a81ef7feb3d983f:157",
+       "quote": "resisteret aut deisteret a\nsuo caritatis",
+       "severity": "wrong_text",
+       "what": "page has 'desisteret ac-/tus caritatis'; 'a suo' is a misread of the hyphenated 'actus'"
+      },
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "ge qualitate est: quil omit eia tua cunsistat m in <unclear>nrō</unclear> formam",
+       "severity": "wrong_text",
+       "what": "first line misread: the page reads roughly 'diuisum est. quia omnis creatura constituta est in numero et formam', not 'qualitate ... cunsistat'"
+      },
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "**Musica** autem quæq; musicam scdm modum sentiendi sumit",
+       "severity": "wrong_text",
+       "what": "the paragraph opening is 'Ficta autem quedam musicam ... eandem ...', and the bold 'Musica' is a misread"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00518
+     },
+     "counts": true,
+     "contain_answers": "0/50",
+     "contain_reasons": [],
+     "unchanged": "0/50",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 50,
+     "books": 50,
+     "accept": "37/50",
+     "accept_rate": 0.74,
+     "accept_ci": {
+      "ci95": [
+       0.62,
+       0.86
+      ],
+      "unit": "book",
+      "units": 50
+     },
+     "wrong_text_pages": "12/50",
+     "wrong_text_ci": {
+      "ci95": [
+       0.12,
+       0.36
+      ],
+      "unit": "book",
+      "units": 50
+     },
+     "wrong_text_classes": {
+      "O6": "8/50",
+      "O7": "4/50",
+      "O1": "3/50",
+      "O3": "1/50",
+      "O10": "1/50",
+      "O5": "1/50"
+     },
+     "classes_k_of_n": {
+      "O8": "25/50",
+      "O6": "22/50",
+      "E2": "10/50",
+      "O12": "10/50",
+      "O16": "6/50",
+      "O7": "6/50",
+      "O1": "4/50",
+      "O5": "4/50",
+      "O10": "4/50",
+      "T6": "2/50",
+      "O14": "2/50",
+      "O11": "2/50",
+      "O3": "1/50",
+      "O13": "1/50",
+      "D1": "1/50",
+      "I3": "1/50"
+     },
+     "fidelity_mean": 4.16,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "deinde melos effectus separator",
+       "severity": "wrong_text",
+       "what": "Garbled; the page reads roughly 'deinde mel... diffus(as) scripsit'"
+      },
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "deinde trecentis instituit",
+       "severity": "wrong_text",
+       "what": "'trecentis' is not on the page; the word looks like 'tercius'"
+      },
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "secundum modum sentiendi sumit",
+       "severity": "wrong_text",
+       "what": "Misreads the abbreviated 'secundum eadem in...' phrase"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00462,
+      "agy_share": 0.00000304
+     },
+     "counts": true,
+     "contain_answers": "0/50",
+     "contain_reasons": [],
+     "unchanged": "3/50",
+     "skipped": 0
+    },
+    "agy-flash-low@4": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 50,
+     "books": 50,
+     "accept": "34/50",
+     "accept_rate": 0.68,
+     "accept_ci": {
+      "ci95": [
+       0.54,
+       0.8
+      ],
+      "unit": "book",
+      "units": 50
+     },
+     "wrong_text_pages": "12/50",
+     "wrong_text_ci": {
+      "ci95": [
+       0.12,
+       0.36
+      ],
+      "unit": "book",
+      "units": 50
+     },
+     "wrong_text_classes": {
+      "O6": "6/50",
+      "O1": "3/50",
+      "E2": "2/50",
+      "O18": "1/50",
+      "O12": "1/50",
+      "O14": "1/50",
+      "O5": "1/50",
+      "O10": "1/50",
+      "I1": "1/50",
+      "I3": "1/50",
+      "O4": "1/50"
+     },
+     "classes_k_of_n": {
+      "O6": "21/50",
+      "O8": "16/50",
+      "E2": "12/50",
+      "O16": "9/50",
+      "O12": "8/50",
+      "O11": "8/50",
+      "O7": "4/50",
+      "O1": "3/50",
+      "D1": "3/50",
+      "O10": "3/50",
+      "O5": "2/50",
+      "T6": "2/50",
+      "O18": "1/50",
+      "O3": "1/50",
+      "O14": "1/50",
+      "I1": "1/50",
+      "I3": "1/50",
+      "O4": "1/50"
+     },
+     "fidelity_mean": 3.96,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b51eb69a81ef7feb3d983f:157",
+       "quote": "sed ad hoc gordius prima",
+       "severity": "wrong_text",
+       "what": "page reads 'et ad hoc concordat prima'; 'gordius' is not a word here"
+      },
+      {
+       "page": "69b51eb69a81ef7feb3d983f:157",
+       "quote": "Quia si in re tantum esset bonitas in deo",
+       "severity": "wrong_text",
+       "what": "rubricated question reads 'Queritur utrum bonitas in deo'; most of the line is made up"
+      },
+      {
+       "page": "69b51eb69a81ef7feb3d983f:157",
+       "quote": "A prima\nmateria .b. e .g.",
+       "severity": "wrong_text",
+       "what": "page reads 'Et primo ca-/mera b e g' (the camera, or compartment, BEG), not 'materia'"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000331
+     },
+     "counts": true,
+     "contain_answers": "0/50",
+     "contain_reasons": [],
+     "unchanged": "0/50",
+     "skipped": 0
+    },
+    "3flash>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 30,
+     "books": 30,
+     "accept": "28/30",
+     "accept_rate": 0.93,
+     "accept_ci": {
+      "ci95": [
+       0.833,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "1/30",
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "6/30",
+      "E2": "6/30",
+      "O6": "5/30",
+      "O5": "4/30",
+      "T6": "3/30",
+      "O12": "3/30",
+      "O7": "2/30",
+      "O16": "1/30",
+      "O13": "1/30",
+      "O11": "1/30"
+     },
+     "fidelity_mean": 4.67,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "Perita autem quoque musicam",
+       "severity": "wrong_text",
+       "what": "the initial was never painted in; the guide letter 'c' in the margin and 'irca' on the page give 'Circa autem', not 'Perita'"
+      },
+      {
+       "page": "6990659e3dc2ed39a49f1fa7:199",
+       "quote": "Partes uero <unclear>animal</unclear> <unclear>habet tres</unclear> <unclear>animal</unclear>",
+       "severity": "wrong_text",
+       "what": "the page reads roughly 'alias habet theorice alias practice'; the candidate invents 'tres' and garbles the theory/practice split"
+      },
+      {
+       "page": "69b51eb69a81ef7feb3d983f:157",
+       "quote": "quomodo quelibet columna huius\ncolumne",
+       "severity": "misleads",
+       "what": "the abbreviation reads as camera ('each camera of this column'), not 'columna'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00366
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "8/30",
+     "skipped": 20
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 50,
+     "identical_text": 3,
+     "fidelity_diff": 0.28,
+     "fidelity_diff_ci": [
+      0.12,
+      0.46
+     ],
+     "worse": "6/50",
+     "better": "14/50",
+     "accept_lost": "3/50",
+     "accept_gained": "7/50",
+     "wrong_text_added": "3/50",
+     "worse_pages": [
+      {
+       "page": "69b4cd18d5b6c3815e1a3ec3:87",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text matches the leaf apart from the clipped left edge, but the addressee's name Naevolus is given as 'Devolæ', and the faint handwritten margin notes are only tentatively read."
+      },
+      {
+       "page": "69b4ccf6d5b6c3815e1a2f52:274",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The three columns of the index are complete and the page numbers match the page. But the transcription adds a signature 'Kk' that isn't on the page, leaves out the '101.' at the foot, and garbles two Greek headwords."
+      },
+      {
+       "page": "697e23cbf0067adc5e2f28e7:1082",
+       "draft": 4,
+       "after": 4,
+       "accept": "false->false",
+       "note": "The text is complete and in the right order, but Paul III's death year is given as M.D.XLVIII where the page has M.D.XLVIIII (1549), and a few of the page's odd spellings have been quietly corrected."
+      },
+      {
+       "page": "6985ca6c9d0a51f65288235d:119",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "All 26 lines are present, in order and read correctly, with abbreviations such as 'pductū' and 'hominib.' silently expanded; the only slip is that the line-end 'diju-' is labelled as a catchword."
+      },
+      {
+       "page": "698255f145774ed8d6329888:107",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The body text, header, chapter heading and margin references match the page closely; the only visible slips are that the chapter's first word lacks its decorated initial ('Vræ' for 'Duræ') and 'Pfal.' should be 'Psal.'"
+      },
+      {
+       "page": "6952e50377f38f6761bc933f:270",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Overall a close transcription, but a reader would meet a few wrong words. The Latin column adds 'is' where footnote markers 6 and 7 stand ('is ducet'). The Greek has ἐρωτᾷν where the page has ἐρωτῆσαι. Note 1 has 'alicuius' for 'alienus'. The Greek in note 5 is garbled, and most footnote markers after 4 are missing."
+      }
+     ]
+    },
+    "3flash -> agy-flash-low@4": {
+     "pairs": 50,
+     "identical_text": 0,
+     "fidelity_diff": 0.08,
+     "fidelity_diff_ci": [
+      -0.12,
+      0.26
+     ],
+     "worse": "8/50",
+     "better": "10/50",
+     "accept_lost": "5/50",
+     "accept_gained": "6/50",
+     "wrong_text_added": "1/50",
+     "worse_pages": [
+      {
+       "page": "69af0ab86ff9e48a393c20bc:364",
+       "draft": 2,
+       "after": 1,
+       "accept": "false->false",
+       "note": "Under the faded botanical plate impressions, a reader sees a list of Latin book titles (Ray, Flamsteed, Crabtree, Horrocks) that reads normally, yet the transcription calls the page blank and its text mirror-reversed."
+      },
+      {
+       "page": "697722eb7e1d5a07ae945894:145",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text matches the page closely, but the Dutch Paraphrases date is printed as 1558 on the page and shown as 1658 in the transcription, with no note of the change."
+      },
+      {
+       "page": "69b52590ea48bdf05847e3a2:23",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The title, scale, compass points and neighbouring-county labels are read correctly, but none of the many legible Herefordshire place names on the map are transcribed."
+      },
+      {
+       "page": "69b1cb02a282e3475aab417f:190",
+       "draft": 5,
+       "after": 3,
+       "accept": "true->false",
+       "note": "Every word and line is present and in order, with the right header, page number, article number, signature F 3 and catchword, but long s is printed as f all through, so the text reads as misspelled Latin (fatis, fpirituum, effet) instead of the satis, spirituum, esset on the page."
+      },
+      {
+       "page": "696925854fa3b04c6de8712e:175",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The first two verses of the argumentum are swapped, and 'Efficit' is misread as 'Edicit'. The rest of the page, including the dedication to Iuliano Verathio, is transcribed faithfully."
+      },
+      {
+       "page": "698255f145774ed8d6329888:107",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "A faithful and complete transcription of the page, with the header, chapter heading and marginal references correct, except that 'ambularent' is misread as 'ambulaset' in the quotation 'Si ambularent semitas bonas'."
+      },
+      {
+       "page": "6952e50377f38f6761bc933f:270",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Both main columns (the Greek and the Latin of John 16:1–28) are faithful line by line. The errors are in the footnotes: a Greek phrase in note 5 that isn't on the page, 'alicui' instead of 'alienos' in note 1, and a signature mark 'Cc 2' that the page doesn't have."
+      },
+      {
+       "page": "69b3f76aa107e55a0ee1d45c:50",
+       "draft": 2,
+       "after": 1,
+       "accept": "false->false",
+       "note": "The transcription has nothing to do with the image. It describes a labelled diagram and garbled letter-keyed text, but the scan shows two full pages of continuous prose with no diagram."
+      }
+     ]
+    },
+    "3flash -> 3flash>opus-correct": {
+     "pairs": 30,
+     "identical_text": 8,
+     "fidelity_diff": 0.77,
+     "fidelity_diff_ci": [
+      0.533,
+      1
+     ],
+     "worse": "0/30",
+     "better": "20/30",
+     "accept_lost": "0/30",
+     "accept_gained": "6/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    }
+   }
+  },
+  "latin-flash3-print": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15121,
+    "books_walked": 62,
+    "held_or_hidden": 0,
+    "no_eligible_page": 18,
+    "excluded_book": 2,
+    "no_page_of_script": 4,
+    "short_book": 0,
+    "rule": "visible Latin books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten; script type print (script-type.mjs); the page inside 4 consecutive scans; books of --exclude-sample and of this draw's other cells left out (30 named)"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 40,
+     "books": 40,
+     "accept": "30/40",
+     "accept_rate": 0.75,
+     "accept_ci": {
+      "ci95": [
+       0.6,
+       0.875
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "6/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.05,
+       0.275
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "2/40",
+      "O17": "1/40",
+      "O5": "1/40",
+      "O7": "1/40",
+      "I4": "1/40",
+      "O12": "1/40",
+      "I1": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "23/40",
+      "O6": "19/40",
+      "E2": "8/40",
+      "O16": "4/40",
+      "T6": "4/40",
+      "O11": "4/40",
+      "O12": "3/40",
+      "O7": "3/40",
+      "O15": "2/40",
+      "O5": "2/40",
+      "O14": "2/40",
+      "D1": "2/40",
+      "O17": "1/40",
+      "I4": "1/40",
+      "O10": "1/40",
+      "I1": "1/40"
+     },
+     "fidelity_mean": 4.05,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a42726c28e9db2e39c13d02:16",
+       "quote": "ex Inde illo Mauritano",
+       "severity": "wrong_text",
+       "what": "page reads 'ex Iudæo illo Mauritano' (from that Moorish Jew); 'Inde' is a misread that loses the referent"
+      },
+      {
+       "page": "6a4a5294a5a3467966759bc9:23",
+       "quote": "5 k o s k o o",
+       "severity": "wrong_text",
+       "what": "The page reads '5ko5ko o'; the second 5 has been read as 's'."
+      },
+      {
+       "page": "6a4a5294a5a3467966759bc9:23",
+       "quote": "k o 5 k o 5 k 5 k p 5 9 p k s",
+       "severity": "wrong_text",
+       "what": "The group ends in 'pk5' on the page; the final 5 has been read as 's'."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00456
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "0/40",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 38,
+     "books": 38,
+     "accept": "33/38",
+     "accept_rate": 0.87,
+     "accept_ci": {
+      "ci95": [
+       0.763,
+       0.974
+      ],
+      "unit": "book",
+      "units": 38
+     },
+     "wrong_text_pages": "1/38",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.079
+      ],
+      "unit": "book",
+      "units": 38
+     },
+     "wrong_text_classes": {
+      "I4": "1/38"
+     },
+     "classes_k_of_n": {
+      "O8": "23/38",
+      "E2": "11/38",
+      "O6": "8/38",
+      "O12": "5/38",
+      "O11": "5/38",
+      "D1": "4/38",
+      "O7": "3/38",
+      "O16": "3/38",
+      "I4": "1/38",
+      "O10": "1/38",
+      "T6": "1/38",
+      "O5": "1/38"
+     },
+     "fidelity_mean": 4.39,
+     "commonest": "I4",
+     "examples": [
+      {
+       "page": "6a42a85b831988adcb7760e7:5",
+       "quote": "<margin>\n<unclear>sive ull</unclear>\n<unclear>De Na</unclear>",
+       "severity": "wrong_text",
+       "what": "Line-ends from the facing page's edge are transcribed as this page's marginalia: 34 fragments that are not this leaf's content."
+      },
+      {
+       "page": "6a42a85b831988adcb7760e7:5",
+       "quote": "<margin>\n<unclear>sive ull</unclear>\n<unclear>De Na</unclear>",
+       "severity": "wrong_text",
+       "what": "Line-ends from the facing page's edge are transcribed as this page's marginalia: 34 fragments that are not this leaf's content."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00394,
+      "agy_share": 0.00000259
+     },
+     "counts": true,
+     "contain_answers": "2/40",
+     "contain_reasons": [
+      "CONTAIN: The draft attempts to transcribe Italian cittern tablature as plain text and pipe tables, but lute/cittern tablature cannot be faithfully represented in standard Markdown tables without corru",
+      "CONTAIN: The draft transcribes page 11 (\"S I G N O R V M. 11\"), whereas the image shows page 10 (\"10 D O C T R I N A\")."
+     ],
+     "unchanged": "3/38",
+     "skipped": 0
+    },
+    "agy-flash-low@4": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 40,
+     "books": 40,
+     "accept": "30/40",
+     "accept_rate": 0.75,
+     "accept_ci": {
+      "ci95": [
+       0.6,
+       0.875
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "5/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.025,
+       0.25
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "2/40",
+      "O2": "1/40",
+      "O14": "1/40",
+      "O10": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "16/40",
+      "O6": "14/40",
+      "E2": "12/40",
+      "O12": "4/40",
+      "O11": "4/40",
+      "D1": "3/40",
+      "O10": "3/40",
+      "O7": "3/40",
+      "O2": "1/40",
+      "O14": "1/40",
+      "O16": "1/40",
+      "T6": "1/40"
+     },
+     "fidelity_mean": 4.33,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a42726c28e9db2e39c13d02:16",
+       "quote": "Malim per diem unam quàm locustas viginti.",
+       "severity": "wrong_text",
+       "what": "page reads 'Malim perdicem unam' (I'd rather one partridge); 'per diem' (per day) changes Clenardus's quip"
+      },
+      {
+       "page": "6a09fb0ebd8d6455220a0f3e:544",
+       "quote": "pro honesta arte habent summa cum proteruitate medicare",
+       "severity": "wrong_text",
+       "what": "page reads 'mẽdicare' (mendicare, to beg); the dropped nasal tilde turns begging into healing"
+      },
+      {
+       "page": "6a4c181c0af972fc7bae7b65:17",
+       "quote": "ut rem nullo recusô pretiô restituat",
+       "severity": "misleads",
+       "what": "The page reads 'refusô' (with no price refunded), not 'recusô' (refused), which changes the legal sense."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.000003
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "0/40",
+     "skipped": 0
+    },
+    "3flash>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O14": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "15/30",
+      "E2": "6/30",
+      "O12": "4/30",
+      "O11": "2/30",
+      "T6": "2/30",
+      "O14": "1/30",
+      "O16": "1/30",
+      "O6": "1/30"
+     },
+     "fidelity_mean": 4.53,
+     "commonest": "O14",
+     "examples": [
+      {
+       "page": "6a4a5294a5a3467966759bc9:23",
+       "quote": "<unclear>9 systems of German lute tablature (rhythm flags above letter and numeral tablature signs, divided by bar lines), not transcribed</unclear>",
+       "severity": "wrong_text",
+       "what": "The nine systems of tablature are clearly printed and legible, but they are only described. Almost all of the page's content is missing."
+      },
+      {
+       "page": "6a4a5294a5a3467966759bc9:23",
+       "quote": "<unclear>9 systems of German lute tablature (rhythm flags above letter and numeral tablature signs, divided by bar lines), not transcribed</unclear>",
+       "severity": "wrong_text",
+       "what": "The nine systems of tablature are clearly printed and legible, but they are only described. Almost all of the page's content is missing."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00354
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "3/30",
+     "skipped": 10
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 38,
+     "identical_text": 3,
+     "fidelity_diff": 0.21,
+     "fidelity_diff_ci": [
+      0.026,
+      0.395
+     ],
+     "worse": "4/38",
+     "better": "11/38",
+     "accept_lost": "2/38",
+     "accept_gained": "5/38",
+     "wrong_text_added": "0/38",
+     "worse_pages": [
+      {
+       "page": "69b51e9e47b06ecd581943bf:268",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The body text, verses, sidenote 'Conſilium.' and catchword all match the page. But the section heading misspells 'cauſis' as 'cawſis', and an added keyword list that is not on the leaf would show up as page text."
+      },
+      {
+       "page": "6a517e747b27c8e8d57f2a10:10",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The page is complete and in the right order, but a few words are misread, most visibly 'insanio: Oreste' for 'insanior Oreste' and 'nostris' for 'nostri eis'."
+      },
+      {
+       "page": "6a084ed615c643eb1af42d57:112",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful, complete transcription of p. 55, including the lemmata 58–61, the Paulinus verses and the marginal citations. The only slip is in the running head, which the page abbreviates as 'COMMENT.' and the transcription gives as 'COMMENTAR.'"
+      },
+      {
+       "page": "6a4fa800b5772a3dacaabb42:25",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful, complete transcription of p. 17 (sig. B4). It has the running head, both headings, the text body with its Greek ῥῆμα, and the catchword 'obti-'. The only slip is that the abbreviation 'q̃' is expanded as 'que' when it should be 'quae'."
+      }
+     ]
+    },
+    "3flash -> agy-flash-low@4": {
+     "pairs": 40,
+     "identical_text": 0,
+     "fidelity_diff": 0.28,
+     "fidelity_diff_ci": [
+      0.025,
+      0.575
+     ],
+     "worse": "9/40",
+     "better": "14/40",
+     "accept_lost": "5/40",
+     "accept_gained": "5/40",
+     "wrong_text_added": "3/40",
+     "worse_pages": [
+      {
+       "page": "6a4a59103a479d44b0033ebb:9",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The transcription matches the page line for line, including the header, page number, Greek word, all six italic verse lines, signature B and the catchword. The only slips are two dropped diacritics: 'gratiã' is given as 'gratia' and 'utrâque' as 'utraque'."
+      },
+      {
+       "page": "6a4eedeb1a64e53b6a0a0ece:9",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "A faithful transcription of the page, except that the Greek phrase describing the eternal beginning is garbled into a non-word."
+      },
+      {
+       "page": "6a4a55f70deff67032eb0402:9",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "Mostly accurate, but 'Morem' appears as 'M次にrem' with stray Japanese characters, and the page's odd 'iſu' has been quietly changed to 'qui'."
+      },
+      {
+       "page": "6a4a6cb37b720133514b1df0:22",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "All the verse and prose lines, and the marginal note 'Tertia suspicio vana', match the page in order. The only problem is that the catchword CAPVT is repeated in the body as if a chapter began here."
+      },
+      {
+       "page": "6a084ed615c643eb1af42d57:112",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "A faithful transcription of p. 55 (notes 58–61), with the marginal references kept; the only slips are 'ecclesiæ' for the printed 'ecclesia' and the closing 'bus' tagged as a catchword."
+      },
+      {
+       "page": "6a425767860bea81c9453092:23",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful transcription of p. 13 (sig. B4): all 22 text lines, the header, the ℥x dose and the catchword 'omnia' match the page, except that the candidate adds an accent to 'fere'."
+      },
+      {
+       "page": "6a44a61b19cfd610ab61f4b4:9",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The Latin is accurate throughout, but in 'subitò ac … detrudit' the Greek word ἀθρόως ('all at once') has been replaced with ἀσφυξίᾳ ('asphyxia'), a word that isn't on the page."
+      },
+      {
+       "page": "6a4affe919bd0084b1bf2f25:20",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text is complete and in the right order. The one real slip is 'Gratuler' where the page prints 'Gratulor'. There are also some small spelling and accent normalisations, and the italics are marked in the wrong places."
+      },
+      {
+       "page": "6a09fb0ebd8d6455220a0f3e:544",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text is complete and in order, but in one place it says the Cæretani make an honest trade of 'medicare' (healing). The page says 'mendicare' (begging), which reverses the point of the passage."
+      }
+     ]
+    },
+    "3flash -> 3flash>opus-correct": {
+     "pairs": 30,
+     "identical_text": 3,
+     "fidelity_diff": 0.43,
+     "fidelity_diff_ci": [
+      0.233,
+      0.633
+     ],
+     "worse": "0/30",
+     "better": "12/30",
+     "accept_lost": "0/30",
+     "accept_gained": "6/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    }
+   }
+  },
+  "greek-flash3-print": {
+   "task": "ocr",
+   "lang": "Greek",
+   "frame": {
+    "books": 1021,
+    "books_walked": 72,
+    "held_or_hidden": 0,
+    "no_eligible_page": 5,
+    "excluded_book": 0,
+    "no_page_of_script": 27,
+    "short_book": 0,
+    "rule": "visible Greek books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten; script type print (script-type.mjs); the page inside 4 consecutive scans; books of --exclude-sample and of this draw's other cells left out (30 named)"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 40,
+     "books": 40,
+     "accept": "19/40",
+     "accept_rate": 0.47,
+     "accept_ci": {
+      "ci95": [
+       0.325,
+       0.625
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "17/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.275,
+       0.575
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "13/40",
+      "O8": "3/40",
+      "O5": "2/40",
+      "O12": "2/40",
+      "O7": "1/40",
+      "O1": "1/40",
+      "O10": "1/40",
+      "I4": "1/40"
+     },
+     "classes_k_of_n": {
+      "O6": "21/40",
+      "O8": "20/40",
+      "O12": "12/40",
+      "E2": "9/40",
+      "O11": "6/40",
+      "O7": "4/40",
+      "O5": "3/40",
+      "O16": "3/40",
+      "O10": "2/40",
+      "I4": "2/40",
+      "O4": "1/40",
+      "I3": "1/40",
+      "O1": "1/40",
+      "O13": "1/40",
+      "O15": "1/40",
+      "D1": "1/40"
+     },
+     "fidelity_mean": 3.77,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "θεραπεύει δὲ καὶ ἰκτέρους.",
+       "severity": "wrong_text",
+       "what": "the page reads ἐπιληπτικούς (epileptics), not ἰκτέρους (jaundice)"
+      },
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "καὶ μελαγχολικοὺς μεθ' ὕδατος",
+       "severity": "wrong_text",
+       "what": "the page reads μαινομένους (the frenzied), not μελαγχολικούς"
+      },
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "φύονται ἐν τῇ πείσει. καυλὸν δὲ ἀνίησιν",
+       "severity": "wrong_text",
+       "what": "the page reads στύφοντα ἐν τῇ γεύσει (astringent to the taste)"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0072
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "0/40",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 40,
+     "books": 40,
+     "accept": "24/40",
+     "accept_rate": 0.6,
+     "accept_ci": {
+      "ci95": [
+       0.45,
+       0.75
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "14/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.2,
+       0.5
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "13/40",
+      "O8": "2/40",
+      "O12": "2/40",
+      "O3": "2/40",
+      "O7": "1/40",
+      "I4": "1/40",
+      "O1": "1/40",
+      "T8": "1/40"
+     },
+     "classes_k_of_n": {
+      "O6": "20/40",
+      "O8": "19/40",
+      "E2": "10/40",
+      "O12": "9/40",
+      "O11": "6/40",
+      "O16": "4/40",
+      "O7": "3/40",
+      "O3": "2/40",
+      "O5": "2/40",
+      "O10": "2/40",
+      "I4": "2/40",
+      "D1": "1/40",
+      "O13": "1/40",
+      "I3": "1/40",
+      "O15": "1/40",
+      "O1": "1/40",
+      "T8": "1/40",
+      "T6": "1/40"
+     },
+     "fidelity_mean": 3.95,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "θεραπεύει δὲ καὶ ἰκτέρους.",
+       "severity": "wrong_text",
+       "what": "the page reads ἐπιληπτικούς (epileptics), not jaundice"
+      },
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "καὶ μελαγχολικοὺς μεθ' ὕδατος",
+       "severity": "wrong_text",
+       "what": "the page reads μαινομένους (the frenzied)"
+      },
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "φύονται ἐν τῇ πείσει",
+       "severity": "wrong_text",
+       "what": "the page reads στύφοντα ἐν τῇ γεύσει (astringent to the taste)"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0057,
+      "agy_share": 0.00000375
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "2/40",
+     "skipped": 0
+    },
+    "agy-flash-low@4": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 40,
+     "books": 40,
+     "accept": "24/40",
+     "accept_rate": 0.6,
+     "accept_ci": {
+      "ci95": [
+       0.45,
+       0.75
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "12/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.15,
+       0.45
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "12/40",
+      "O1": "2/40",
+      "O7": "1/40",
+      "I3": "1/40",
+      "O12": "1/40",
+      "O10": "1/40"
+     },
+     "classes_k_of_n": {
+      "O6": "20/40",
+      "O8": "12/40",
+      "E2": "10/40",
+      "O12": "8/40",
+      "O16": "5/40",
+      "O7": "4/40",
+      "O5": "3/40",
+      "O11": "2/40",
+      "D1": "2/40",
+      "O1": "2/40",
+      "O10": "2/40",
+      "I3": "1/40",
+      "O13": "1/40",
+      "O15": "1/40"
+     },
+     "fidelity_mean": 3.95,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "θεραπεύει δὲ καὶ ἰκτέρους",
+       "severity": "wrong_text",
+       "what": "The page says ἐπιληπτικούς (epileptics), not ἰκτέρους (jaundice)."
+      },
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "νυκτερινάς τε ὀδυνίσιας καὶ ὅπους ἐπιβλαβής",
+       "severity": "wrong_text",
+       "what": "The page reads ὁδοιπορείας καὶ τόπους ἐπιβλαβεῖς (night journeys and harmful places)."
+      },
+      {
+       "page": "69e80631fdad300064d9e531:163",
+       "quote": "ὡς πᾶσʼ ἄνευσιν ἐστὶν",
+       "severity": "wrong_text",
+       "what": "The page reads εἰς πᾶσαν ἴασιν (for every cure)."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000375
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "0/40",
+     "skipped": 0
+    },
+    "3flash>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "9/30",
+      "E2": "7/30",
+      "O6": "5/30",
+      "O12": "4/30",
+      "O16": "3/30",
+      "I3": "1/30",
+      "O5": "1/30",
+      "O15": "1/30",
+      "O7": "1/30",
+      "O3": "1/30",
+      "O11": "1/30",
+      "D1": "1/30"
+     },
+     "fidelity_mean": 4.53,
+     "commonest": "O8",
+     "examples": [
+      {
+       "page": "6a084e4315c643eb1af41246:724",
+       "quote": "καὶ λίαν γὰρ ἐχθρὸν ὄντα ὁ τοῦ πηλέως ἀχιλλεὺς",
+       "severity": "misleads",
+       "what": "'ὄντα' is not printed on the page, which reads 'ἐχθρὸν ὁ τοῦ πηλέως'; the word was added to smooth the syntax"
+      },
+      {
+       "page": "6a0efcb391042301b33812ae:358",
+       "quote": "<margin>Psalm. 24.</margin>",
+       "severity": "misleads",
+       "what": "The printed marginal reference reads 'Psalm. 14.' The candidate gives 'Psalm. 24.', apparently corrected to the right Vulgate psalm (24:9) rather than copied from the leaf."
+      },
+      {
+       "page": "6a44faea15e37303ba5b4492:30",
+       "quote": "Syrupus rosarum solutivus compositus",
+       "severity": "cosmetic",
+       "what": "The candidate silently expands the page's abbreviations and apothecary signs (Syrupus ros. s. compos., C. C., phil ppt., Dn. D., ʒ/℥/℈, ℞, sc.) into full words. The reading is plausible, but the abbreviated form on the page is lost."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00354
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "5/30",
+     "skipped": 10
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 40,
+     "identical_text": 3,
+     "fidelity_diff": 0.17,
+     "fidelity_diff_ci": [
+      0.025,
+      0.325
+     ],
+     "worse": "3/40",
+     "better": "9/40",
+     "accept_lost": "1/40",
+     "accept_gained": "6/40",
+     "wrong_text_added": "0/40",
+     "worse_pages": [
+      {
+       "page": "6a0859db49638a50931c872c:192",
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "Every line of the page is present and in order, but there are several word misreads, mostly in the Nicarchus epigram: ἔσμων for ἕρμων, βῆμα for τρῆμα and ὅτ’ for ὑπ’. Εὐμήκιον is also read as Εὐμύκιον."
+      },
+      {
+       "page": "69cf7c17878f40c5945f2700:131",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The English commentary is complete and in order, but several Greek forms have been normalised or put in Latin letters (Ἀμμόνιος, λινοϋφικόν, the lemma ἐπικεφαλίων, διπλᾶ, ἀνθ' οὗ), so the readings of the papyrus are quietly changed."
+      },
+      {
+       "page": "69c7978d6a0f3d112fafa0cf:291",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The page and its line breaks are all there, but dozens of words are misread throughout, and many of them change the sense (a lost negation, 'goddess' for 'god', 'plants', 'ecstasy'), so the text is not reliable without the image."
+      }
+     ]
+    },
+    "3flash -> agy-flash-low@4": {
+     "pairs": 40,
+     "identical_text": 0,
+     "fidelity_diff": 0.17,
+     "fidelity_diff_ci": [
+      -0.025,
+      0.375
+     ],
+     "worse": "6/40",
+     "better": "12/40",
+     "accept_lost": "3/40",
+     "accept_gained": "8/40",
+     "wrong_text_added": "1/40",
+     "worse_pages": [
+      {
+       "page": "69b2fedda1a4246ddb45a8df:183",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "Only the left half of the spread (p. 318) is transcribed, and p. 319 is missing. The section numbers are wrong, the Book II preface is invented, the passages on chance and the Empedocles quotation are garbled, and a handwritten marginal note is tagged as the signature and catchword."
+      },
+      {
+       "page": "6a44faea15e37303ba5b4492:30",
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "The text follows the page closely, word for word and line for line, but in three doses it turns the ounce sign (℥) into the drachm sign (ʒ), which changes the recipe quantities about eightfold."
+      },
+      {
+       "page": "69937767b0a84a57639639fe:269",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text runs complete and in order and matches the page closely, but the c 9 heading changes the printed σαυτοῦ to ἑαυτοῦ, so the quotation of the Plato passage is wrong."
+      },
+      {
+       "page": "6a08553915c643eb1af5555a:181",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "All 30 lines are present and in order, but the first word is wrong (πίτνει instead of πένθει), and the Ionians (Ἰαόνων) and ἀμπεδιήρεις come out as garbled forms, along with a few small misreadings of the interjections."
+      },
+      {
+       "page": "69937706b0a84a57639627bb:295",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The Greek text, header, page number and side notes match the page word for word, but the candidate adds a vocabulary list that is not printed on the page, puts the B and C section letters in slightly the wrong places, and leaves out the line numbers."
+      },
+      {
+       "page": "69c7978d6a0f3d112fafa0cf:291",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The lines and order follow the page, but dozens of words throughout are misread into Greek that is ungrammatical or changes the meaning (for example τύρβωνιν for τοῖς τρισὶν, ἐκ συλαμῶν for ἀπολλυμένων), so the text can't be trusted next to the image."
+      }
+     ]
+    },
+    "3flash -> 3flash>opus-correct": {
+     "pairs": 30,
+     "identical_text": 5,
+     "fidelity_diff": 0.73,
+     "fidelity_diff_ci": [
+      0.5,
+      0.967
+     ],
+     "worse": "0/30",
+     "better": "18/30",
+     "accept_lost": "0/30",
+     "accept_gained": "15/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    }
+   }
+  },
+  "greek-flash3-unknown": {
+   "task": "ocr",
+   "lang": "Greek",
+   "frame": {
+    "books": 1021,
+    "books_walked": 106,
+    "held_or_hidden": 0,
+    "no_eligible_page": 15,
+    "excluded_book": 4,
+    "no_page_of_script": 48,
+    "short_book": 3,
+    "rule": "visible Greek books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten; script type unknown (script-type.mjs); the page inside 4 consecutive scans; books of --exclude-sample and of this draw's other cells left out (30 named)"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 40,
+     "books": 40,
+     "accept": "16/40",
+     "accept_rate": 0.4,
+     "accept_ci": {
+      "ci95": [
+       0.25,
+       0.55
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "20/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.35,
+       0.65
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "15/40",
+      "O1": "7/40",
+      "O3": "3/40",
+      "O5": "2/40",
+      "O12": "2/40",
+      "O4": "1/40",
+      "O7": "1/40",
+      "T8": "1/40"
+     },
+     "classes_k_of_n": {
+      "O6": "22/40",
+      "O8": "12/40",
+      "O12": "12/40",
+      "O5": "9/40",
+      "E2": "8/40",
+      "O1": "8/40",
+      "O16": "6/40",
+      "O11": "5/40",
+      "O7": "5/40",
+      "O3": "3/40",
+      "T6": "1/40",
+      "O15": "1/40",
+      "O4": "1/40",
+      "O14": "1/40",
+      "T8": "1/40",
+      "D1": "1/40",
+      "O17": "1/40",
+      "T10": "1/40",
+      "I3": "1/40"
+     },
+     "fidelity_mean": 3.5,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6953a54f77f38f6761bcf8a6:622",
+       "quote": "Pag. 238. lin. 34. Ἔμψυχα]",
+       "severity": "wrong_text",
+       "what": "the headword on the page is Εὐχὰς (prayers), not Ἔμψυχα"
+      },
+      {
+       "page": "6953a54f77f38f6761bcf8a6:622",
+       "quote": "Οἶδεν δὲ καὶ τὴν ἐκ τῆς βαρβάρου",
+       "severity": "wrong_text",
+       "what": "the page reads Οἶδεν γὰρ καὶ οὗτος, ἐκ τῆς βαρβάρου"
+      },
+      {
+       "page": "6953a54f77f38f6761bcf8a6:622",
+       "quote": "τῷ τοιούτῳ ἀεὶ ὁδὸν ἐξ αἰδίου γινομένην ἀκαταπαύστως",
+       "severity": "wrong_text",
+       "what": "the page reads τῶν τοιούτων περιόδων ἐξ ἀϊδίου γινομένων ἀκαταπαύστως"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00855
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "0/40",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 40,
+     "books": 40,
+     "accept": "13/40",
+     "accept_rate": 0.33,
+     "accept_ci": {
+      "ci95": [
+       0.175,
+       0.475
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "21/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.375,
+       0.675
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "16/40",
+      "O1": "7/40",
+      "O3": "3/40",
+      "O5": "2/40",
+      "O7": "2/40",
+      "O4": "1/40",
+      "I4": "1/40",
+      "O8": "1/40",
+      "O12": "1/40"
+     },
+     "classes_k_of_n": {
+      "O6": "23/40",
+      "O8": "13/40",
+      "O12": "11/40",
+      "O5": "9/40",
+      "O16": "8/40",
+      "E2": "8/40",
+      "O1": "7/40",
+      "O7": "5/40",
+      "T6": "3/40",
+      "O3": "3/40",
+      "O17": "2/40",
+      "O11": "2/40",
+      "D1": "1/40",
+      "O10": "1/40",
+      "O14": "1/40",
+      "O4": "1/40",
+      "I4": "1/40"
+     },
+     "fidelity_mean": 3.6,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6953a54f77f38f6761bcf8a6:622",
+       "quote": "Pag. 238. lin. 34. Ἔμψυχα]",
+       "severity": "wrong_text",
+       "what": "The page's headword reads Εὐχὰς ('prayers'), which fits the note about praying to the stars. The candidate puts a different word in its place."
+      },
+      {
+       "page": "6953a54f77f38f6761bcf8a6:622",
+       "quote": "τῷ τοιούτῳ ἀεὶ ὁδὸν ἐξ αἰδίου γινομένην ἀκαταπαύστως",
+       "severity": "wrong_text",
+       "what": "The page reads τῶν τοιούτων περιόδων ἐξ ἀϊδίου γινομένων ἀκαταπαύστως; the end of the Numenius quote is garbled."
+      },
+      {
+       "page": "69b2f43cf9f1ad2b3b151d0e:229",
+       "quote": "καὶ μετελθόντι αὐτοῖς παραυτίκα",
+       "severity": "wrong_text",
+       "what": "the page reads μετελθόντα αὐτοὺς"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0105,
+      "agy_share": 0.00000692
+     },
+     "counts": true,
+     "contain_answers": "0/40",
+     "contain_reasons": [],
+     "unchanged": "1/40",
+     "skipped": 0
+    },
+    "agy-flash-low@4": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 39,
+     "books": 39,
+     "accept": "19/39",
+     "accept_rate": 0.49,
+     "accept_ci": {
+      "ci95": [
+       0.333,
+       0.641
+      ],
+      "unit": "book",
+      "units": 39
+     },
+     "wrong_text_pages": "16/39",
+     "wrong_text_ci": {
+      "ci95": [
+       0.256,
+       0.564
+      ],
+      "unit": "book",
+      "units": 39
+     },
+     "wrong_text_classes": {
+      "O6": "14/39",
+      "O1": "5/39",
+      "O12": "2/39",
+      "O4": "2/39",
+      "O5": "2/39",
+      "O10": "1/39",
+      "O18": "1/39",
+      "O7": "1/39",
+      "O3": "1/39",
+      "D1": "1/39",
+      "O8": "1/39",
+      "I3": "1/39"
+     },
+     "classes_k_of_n": {
+      "O6": "22/39",
+      "O12": "15/39",
+      "E2": "12/39",
+      "O5": "7/39",
+      "O1": "7/39",
+      "O8": "6/39",
+      "O16": "6/39",
+      "O7": "5/39",
+      "O10": "2/39",
+      "I3": "2/39",
+      "O4": "2/39",
+      "O18": "1/39",
+      "O14": "1/39",
+      "O15": "1/39",
+      "T6": "1/39",
+      "O3": "1/39",
+      "D1": "1/39"
+     },
+     "fidelity_mean": 3.77,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6953a54f77f38f6761bcf8a6:622",
+       "quote": "τὴν ἀνάστασιν, ἀπειπόντες",
+       "severity": "wrong_text",
+       "what": "page reads περιέποντες ('embracing'), so 'renouncing' reverses the meaning"
+      },
+      {
+       "page": "69b2f43cf9f1ad2b3b151d0e:229",
+       "quote": "βροντῆς, δίκην θεὸς εἰς πάντας ἀνθρώπους",
+       "severity": "wrong_text",
+       "what": "'θεὸς' is not on the page; the print reads 'δίκην τὸ εἰς πάντας'"
+      },
+      {
+       "page": "69b2f43cf9f1ad2b3b151d0e:229",
+       "quote": "τῶν ἐκ περιτομῆς, τὴν ὀμίχλην",
+       "severity": "wrong_text",
+       "what": "the page has a different word here, most likely 'τοὐναντίον'; 'τὴν ὀμίχλην' looks like an echo of the line above"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000462
+     },
+     "counts": true,
+     "contain_answers": "0/39",
+     "contain_reasons": [],
+     "unchanged": "0/39",
+     "skipped": 1
+    },
+    "3flash>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 28,
+     "books": 28,
+     "accept": "25/28",
+     "accept_rate": 0.89,
+     "accept_ci": {
+      "ci95": [
+       0.75,
+       1
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_pages": "1/28",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.107
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_classes": {
+      "O5": "1/28"
+     },
+     "classes_k_of_n": {
+      "E2": "5/28",
+      "O16": "5/28",
+      "O6": "5/28",
+      "O5": "4/28",
+      "O8": "4/28",
+      "T6": "2/28",
+      "D1": "1/28",
+      "O1": "1/28",
+      "O11": "1/28",
+      "O12": "1/28",
+      "O7": "1/28"
+     },
+     "fidelity_mean": 4.46,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69b3e5ca304c1c6b3950a3a9:52",
+       "quote": "<unclear>ἐξ οὗ</unclear> <unclear>[illegible — 10-12 words]</unclear>",
+       "severity": "wrong_text",
+       "what": "Lines 12–16 are clearly inked in the image, but the candidate gives almost nothing for them and marks them illegible."
+      },
+      {
+       "page": "69b3e5ca304c1c6b3950a3a9:52",
+       "quote": "<unclear>[illegible — 12 words]</unclear>",
+       "severity": "wrong_text",
+       "what": "Two whole legible lines are left out as 'illegible'."
+      },
+      {
+       "page": "69b3e5ca304c1c6b3950a3a9:52",
+       "quote": "κλίνη <unclear>[illegible — 3 words]</unclear> <unclear>[illegible — 8-10 words]</unclear>",
+       "severity": "wrong_text",
+       "what": "Most of a readable line is dropped. The same thing happens throughout the lower half, where many gaps are marked illegible."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00383
+     },
+     "counts": true,
+     "contain_answers": "2/30",
+     "contain_reasons": [
+      "CONTAIN: The image is a two-page spread of a heavily abbreviated cursive Greek mathematical manuscript, and only a few phrases are legible at this resolution (e.g. \"τομεὺς κύκλου\", \"αἱ κοιναὶ αὐτῶν το",
+      "CONTAIN: The draft is invented text: it gives a theological passage on the Incarnation (Christ, the Logos, grace), but the page is a heavily abbreviated Greek cursive text about medicine, with recurri"
+     ],
+     "unchanged": "5/28",
+     "skipped": 10
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 40,
+     "identical_text": 1,
+     "fidelity_diff": 0.1,
+     "fidelity_diff_ci": [
+      -0.075,
+      0.275
+     ],
+     "worse": "5/40",
+     "better": "8/40",
+     "accept_lost": "4/40",
+     "accept_gained": "1/40",
+     "wrong_text_added": "2/40",
+     "worse_pages": [
+      {
+       "page": "69bfce048ab50eb88e8c8595:8",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The four lines above the ruined miniature are mostly right, but two word endings are misread: αλεξανδρου where the page has αλεξανδρος, and -πραχθειης where it has -πραξειης. The word split πο|λεμον is also moved across the line break."
+      },
+      {
+       "page": "69938da7d5a98fd66f42dfd5:268",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The Greek and Latin text is complete and accurate, apart from the double-π spelling of Josephus being normalised. The critical apparatus, however, is broken into two invented columns, so its notes are out of order and split mid-word, and one variant (κοσύμβρων) is misread."
+      },
+      {
+       "page": "69bfcda28ab50eb88e8c836b:7",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "Everything after the headpiece is a different, well-known homily opening ('Πάλιν ὁ ἐμὸς Ἰησοῦς…'). The page itself reads 'Χθὲς τῇ λαμπρᾷ τῶν φώτων ἡμέρᾳ πανηγυρίσαντες…', and the rubric title is cut short."
+      },
+      {
+       "page": "6955742bf63a757109172ca1:382",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Nearly faithful. The Greek of the last entry (Nete synemmenon) is wrong: the page names pi ('πι'), not 'ταῦ'. Some musical sign glyphs are only approximated."
+      },
+      {
+       "page": "69b21f0b4522d8c1db3bd843:67",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Matches the page line by line except one wrong word in chapter VI: the page has κατὰ πύλας ἔρχεσθαι, the candidate ἔξω."
+      }
+     ]
+    },
+    "3flash -> agy-flash-low@4": {
+     "pairs": 39,
+     "identical_text": 0,
+     "fidelity_diff": 0.23,
+     "fidelity_diff_ci": [
+      0.077,
+      0.385
+     ],
+     "worse": "3/39",
+     "better": "11/39",
+     "accept_lost": "1/39",
+     "accept_gained": "4/39",
+     "wrong_text_added": "1/39",
+     "worse_pages": [
+      {
+       "page": "699388ea0f04c37dcfa60427:218",
+       "draft": 2,
+       "after": 1,
+       "accept": "false->false",
+       "note": "No Greek text from either page is transcribed: there are only placeholders, descriptions and a guessed keyword list, and the image shows two pages, not just page 201."
+      },
+      {
+       "page": "69942a68045dfc482ad76ec8:558",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The Latin and Greek columns and the notes are complete and in order, but one Latin word is misread ('conciliabiliorem' should be 'conducibiliorem') and a Greek word in note 15 is missing a letter."
+      },
+      {
+       "page": "699389760f04c37dcfa61180:469",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The opening lines are right, but from mid-page there are many misread words. Several reverse the theology: 'θεός' where the page has 'ἄνθρωπος', 'μὴ' where it has 'καὶ', and a dropped 'οὐκ'."
+      }
+     ]
+    },
+    "3flash -> 3flash>opus-correct": {
+     "pairs": 28,
+     "identical_text": 5,
+     "fidelity_diff": 0.89,
+     "fidelity_diff_ci": [
+      0.607,
+      1.179
+     ],
+     "worse": "0/28",
+     "better": "19/28",
+     "accept_lost": "0/28",
+     "accept_gained": "13/28",
+     "wrong_text_added": "0/28",
+     "worse_pages": []
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "latin-flash3-unknown",
+   "route": "3flash",
+   "page_id": "6990659e3dc2ed39a49f21b4",
+   "book_id": "6990659e3dc2ed39a49f1fa7",
+   "page_number": 199,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "ge qualitate est: quil omit eia tua cunsistat m in <unclear>nrō</unclear> formam",
+     "severity": "wrong_text",
+     "what": "first line misread: the page reads roughly 'diuisum est. quia omnis creatura constituta est in numero et formam', not 'qualitate ... cunsistat'"
+    },
+    {
+     "class": "O6",
+     "quote": "**Musica** autem quæq; musicam scdm modum sentiendi sumit",
+     "severity": "wrong_text",
+     "what": "the paragraph opening is 'Ficta autem quedam musicam ... eandem ...', and the bold 'Musica' is a misread"
+    },
+    {
+     "class": "O1",
+     "quote": "qui consistit in uoluptate au-\ndiu",
+     "severity": "wrong_text",
+     "what": "'in uoluptate audiu' is not on the page, which reads roughly 'cantu que consistens modulatio est'"
+    },
+    {
+     "class": "O8",
+     "quote": "ex quibz i boethus notissimū et accuratissimū est",
+     "severity": "wrong_text",
+     "what": "'boethus' supplied from expectation; the abbreviated name on the page does not read Boethius"
+    },
+    {
+     "class": "O1",
+     "quote": "lyra et musica videntur esse",
+     "severity": "wrong_text",
+     "what": "invented reading of the line that begins 'preter musici fuerunt ex quibus'"
+    },
+    {
+     "class": "O6",
+     "quote": "quoz auē s de clara pdueret quæz s ad aliar",
+     "severity": "wrong_text",
+     "what": "last line garbled into meaningless strings, presented as text without uncertainty"
+    },
+    {
+     "class": "O6",
+     "quote": "t p mr quin æ te no ad militam m acceptione el q est m ly c i ā",
+     "severity": "wrong_text",
+     "what": "nonsense strings presented as transcription with no unclear markup"
+    }
+   ],
+   "note": "The line count and some key terms (Pythagoras, Apuleius, mundana/humana) match the page, but much of the text is garbled or invented, including a Boethius reference that isn't there. A reader cannot rely on it."
+  },
+  {
+   "cell": "latin-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69b525d12f891867c1ae5ca8",
+   "book_id": "69b525d12f891867c1ae5c99",
+   "page_number": 14,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Milliaria Gallica sive Horae Itineris.",
+     "severity": "wrong_text",
+     "what": "The cartouche reads 'Hora itineris: Een Ure gaens'. There is no 'Milliaria Gallica' line."
+    },
+    {
+     "class": "O1",
+     "quote": "Een Fransche Mijl ofte Ure gaens.",
+     "severity": "wrong_text",
+     "what": "This line is invented. The page has only 'Een Ure gaens' as part of the Hora itineris line."
+    },
+    {
+     "class": "O1",
+     "quote": "->Amstelodami, ex officina Nicolai Visscher.<-",
+     "severity": "wrong_text",
+     "what": "No imprint like this is on the page. The cartouche has only a small engraver line ('... fecit')."
+    }
+   ],
+   "note": "The title and privilege lines are correct, but the scale-cartouche text is largely invented (a French-mile line and an Amsterdam imprint that aren't on the page), and the page number isn't on the leaf."
+  },
+  {
+   "cell": "latin-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69526137ab34727b1f046708",
+   "book_id": "69526137ab34727b1f046674",
+   "page_number": 148,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<margin>compositio</margin>",
+     "severity": "wrong_text",
+     "what": "There is no marginal note on this page. This word may come from the facing page's strip at the left edge."
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>solutio</margin>",
+     "severity": "wrong_text",
+     "what": "Made-up marginal heading; the page has no marginalia."
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>Melior solutio</margin>",
+     "severity": "wrong_text",
+     "what": "Made-up marginal heading; the page has no marginalia."
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>cautela</margin>",
+     "severity": "wrong_text",
+     "what": "Made-up marginal heading; the page has no marginalia."
+    },
+    {
+     "class": "O1",
+     "quote": "suffocetur. <margin>Lunam per Solem</margin> Ad-",
+     "severity": "wrong_text",
+     "what": "Made-up marginal note inserted in the middle of a sentence, splitting the hyphenated word 'Ad-iuua'."
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>digestio</margin>",
+     "severity": "wrong_text",
+     "what": "Made-up marginal heading; the page has no marginalia."
+    }
+   ],
+   "note": "The main text matches the page line for line. But the six marginal headings ('compositio', 'solutio', 'Lunam per Solem', etc.) are not on the page; it has no marginalia at all."
+  },
+  {
+   "cell": "latin-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69b52be0d6bd9f58edb2517c",
+   "book_id": "69b52be0d6bd9f58edb2515c",
+   "page_number": 32,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "regimina universi thesauri: et stellarum",
+     "severity": "wrong_text",
+     "what": "the page has 'regimina universa in floribus et fructibus'; 'thesauri' and 'stellarum' are invented"
+    },
+    {
+     "class": "O6",
+     "quote": "in urbe saepe calum domini totum hoc universat",
+     "severity": "wrong_text",
+     "what": "garbled reading of the line that opens 'in tebe tempore…'; the words do not match the page"
+    },
+    {
+     "class": "O6",
+     "quote": "sicut planetarum id est purior",
+     "severity": "wrong_text",
+     "what": "the page reads 'loco uno sperarum et planetarum'"
+    },
+    {
+     "class": "O7",
+     "quote": "et in terra celum. unum stella aliud",
+     "severity": "wrong_text",
+     "what": "the page reads 'et sunt ix. celi, unum infra aliud'; the numeral is dropped and the words are misread"
+    },
+    {
+     "class": "O7",
+     "quote": "usque ad opulentum. m. annorum",
+     "severity": "wrong_text",
+     "what": "the page has 'iiii. annorum'; 'm.' is wrong, and 'opulentum' stands for 'complementum'"
+    },
+    {
+     "class": "O7",
+     "quote": "usque ad opulentum xxx.",
+     "severity": "wrong_text",
+     "what": "no numeral 'xxx.' appears at this point on the page; the line reads 'usque ad complementum annorum'"
+    },
+    {
+     "class": "O6",
+     "quote": "tunc recipit eam regnum. accipit sine spe placendi",
+     "severity": "wrong_text",
+     "what": "the page reads 'deinde recipit eam regnum a capite sine spe placendi'"
+    },
+    {
+     "class": "O5",
+     "quote": "ostendit ei suum civitate quendam et est illis regis et ipsi et caput",
+     "severity": "wrong_text",
+     "what": "the lines about being 'constituted king' and 'collocated in a nobler place' near the foot of column b are garbled and partly dropped"
+    },
+    {
+     "class": "T7",
+     "quote": "ex vaporibus et foetentibus et ex humiditatibus agelatis et foetentibus carinam",
+     "severity": "wrong_text",
+     "what": "fluent-looking Latin laid over misread abbreviations throughout, with no sign of uncertainty"
+    }
+   ],
+   "note": "A reader would find that the header is wrong, that the numerals in the 'ages of life' passage are wrong or invented ('m.', 'xxx.'), and that many lines read as plausible-looking Latin that does not match the abbreviated text on the leaf."
+  },
+  {
+   "cell": "latin-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69b3f76aa107e55a0ee1d48e",
+   "book_id": "69b3f76aa107e55a0ee1d45c",
+   "page_number": 50,
+   "defects": [
+    {
+     "class": "I3",
+     "quote": "<page-num>45.</page-num>",
+     "severity": "wrong_text",
+     "what": "The image shows a two-page spread that was not split. Only the right page (fol. 45) is transcribed, so the whole left page of text is missing beside the image."
+    },
+    {
+     "class": "O1",
+     "quote": "calet mutasse particulas",
+     "severity": "wrong_text",
+     "what": "These words don't match the abbreviated script and look like guesses that read as fluent Latin."
+    },
+    {
+     "class": "O1",
+     "quote": "Ever inge-",
+     "severity": "wrong_text",
+     "what": "The reading is not supported by the leaf and gives no sense."
+    },
+    {
+     "class": "O1",
+     "quote": "Ab oceanum a duos sui refundit.",
+     "severity": "wrong_text",
+     "what": "The abbreviations are expanded into ungrammatical guesses."
+    }
+   ],
+   "note": "Only the right-hand page of the photographed spread is given, and its Latin is often an ungrammatical guess at the abbreviated hand rather than a close reading."
+  },
+  {
+   "cell": "latin-flash3-print",
+   "route": "3flash",
+   "page_id": "69b62fde1c1c21a3737fb85b",
+   "book_id": "69b62fde1c1c21a3737fb844",
+   "page_number": 23,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "<header>S I G N O R V M. 11</header>",
+     "severity": "wrong_text",
+     "what": "The image shows page 10 (header 'DOCTRINA'), which runs from 'Quinetiam si ex abscessu rupto hepatis' to the catchword 'sed'. The candidate is page 11, the next page, which starts at that 'sed'."
+    }
+   ],
+   "note": "None of this text appears on the image. The image shows page 10 (DOCTRINA, on pus, ichor and semen), but the transcription is the next page, 11 (SIGNORVM, on urine and sweat), so the image and text are one page apart."
+  },
+  {
+   "cell": "greek-flash3-print",
+   "route": "3flash",
+   "page_id": "69b2fedda1a4246ddb45a996",
+   "book_id": "69b2fedda1a4246ddb45a8df",
+   "page_number": 183,
+   "defects": [
+    {
+     "class": "O5",
+     "quote": "Πλάτων αἰτίαν συμπτωματικὴν ἐν τοῖς κατὰ προαίρεσιν ἕνεκά τινος γινομένοις",
+     "severity": "wrong_text",
+     "what": "The page has Plato's definition (ἐν προαιρετικοῖς κατὰ συμβεβηκὸς καὶ παρακολούθημα) and then a separate sentence starting Ἀριστοτέλης αἰτίαν κατὰ συμβεβηκὸς ἐν τοῖς καθ' ὁρμήν. The two are merged, and the Aristotle entry is dropped."
+    },
+    {
+     "class": "O6",
+     "quote": "τὸ δ' αὐτόματον καὶ ἀπὸ τύχης, οὐ γὰρ τοῖς ἔξω πράξεως",
+     "severity": "wrong_text",
+     "what": "The page says οὐκ ἀπὸ τύχης, ἐν γὰρ τοῖς ἔξω πράξεως. The candidate reverses the meaning."
+    },
+    {
+     "class": "O1",
+     "quote": "Στελέχους εἶναι ἐν πᾶσι ἀρχῶν καὶ στοιχείων καὶ τῶν συνεπομένων αὐτοῖς λόγον, ἑξῆς μοι πρὸς τὴν",
+     "severity": "wrong_text",
+     "what": "The Book 2 preface is garbled. The page reads Τετελεκὼς τὸν περὶ ἀρχῶν … συνεδρευόντων αὐτοῖς λόγον, τρέψομαι πρὸς τὸν … ἐνστησάμενος."
+    },
+    {
+     "class": "O6",
+     "quote": "εἰ ἄφϑαρτος ὁ κόσμος καὶ φϑαρτός ἐστι, ἀλλὰ μὴν οὐδεμιᾶς τινος ἐπιδέεται τροφῆς δι' ὅλου",
+     "severity": "wrong_text",
+     "what": "The page reads εἰ τρέφεται ὁ κόσμος, καὶ φθαρήσεται … τροφῆς· διὸ καὶ ἀΐδιος."
+    },
+    {
+     "class": "O6",
+     "quote": "Πλάτων ψυχορὰν κόσμον γεγονέναι",
+     "severity": "wrong_text",
+     "what": "The page reads τὸν ὁρατὸν κόσμον."
+    }
+   ],
+   "note": "Most of the text is close to the page, but some passages are wrong. The Book 2 preface is garbled. The Aristotle sentence on chance is missing and the αὐτόματον clause says the opposite of the page. The Aristotle entry on how the cosmos is nourished is miswritten, as is the Plato entry on the visible cosmos. The handwritten margin note is mislabelled as a catchword."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69bfcdfd8ab50eb88e8c853d",
+   "book_id": "69bfcdfd8ab50eb88e8c83c8",
+   "page_number": 373,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "τοὶ οὐκ εἰσῆλθον \nεἰς τὸ πραιτώριον· \nἵνα μὴ μιανθῶσιν·",
+     "severity": "wrong_text",
+     "what": "Adds a line the page lacks. The leaf goes straight from 'τοὶ οὐκ εἰσῆλθον·' to 'ἵνα μὴ μιανθῶσιν'; 'εἰς τὸ πραιτώριον' was supplied from the standard text of John 18:28."
+    }
+   ],
+   "note": "The right column has one more line than the leaf: 'εἰς τὸ πραιτώριον' is added after 'εἰσῆλθον'. In the left column, 'τὸν' before 'ἄνθρωπον' (Matt 26:72) is missing."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "699388ea0f04c37dcfa60501",
+   "book_id": "699388ea0f04c37dcfa60427",
+   "page_number": 218,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<unclear>παραλληλόγραμμον</unclear> <unclear>τὸ</unclear> <unclear>πᾶν</unclear> <unclear>ὑπὸ</unclear> <unclear>τὰ</unclear> <unclear>αὐτὰ</unclear> <unclear>κέντρα</unclear> <unclear>ποιήσει</unclear>",
+     "severity": "wrong_text",
+     "what": "Most of the body after line 6 is plausible-sounding geometry guessed around a few visible words (παραλληλ-, κοιναὶ τομαί), not what the hand actually says"
+    },
+    {
+     "class": "O4",
+     "quote": "<unclear>αἱ</unclear> <unclear>κοιναὶ</unclear> <unclear>αὐτῶν</unclear> <unclear>τομαὶ</unclear> <unclear>παράλληλοι</unclear>. <unclear>παραλληλόγραμμά</unclear> <unclear>τε</unclear> <unclear>καὶ</unclear>",
+     "severity": "wrong_text",
+     "what": "The phrase 'κοιναὶ τομαὶ παράλληλοι. παραλληλόγραμμά τε καὶ' appears twice, and the closing lines repeat 'καὶ τὰ λοιπὰ τῶν ἀπὸ τῆς τομῆς ... ἀλλήλοις' formulaically"
+    },
+    {
+     "class": "O5",
+     "quote": "<unclear>λοιπὰ</unclear> <unclear>τῶν</unclear> <unclear>ἀπὸ</unclear> <unclear>τῆς</unclear> <unclear>τομῆς</unclear> <unclear>παραλληλόγραμμα</unclear> <unclear>ἀλλήλοις</unclear>.",
+     "severity": "wrong_text",
+     "what": "The short closing line under the text block (apparently ὅπερ ἔδει…) is left out, and the line count does not match the page"
+    }
+   ],
+   "note": "Beside the image of fol. 201, a reader would find that only the first few lines match the hand loosely. The rest is repetitive, guessed geometry wrapped in <unclear> tags, the closing line is missing, and the right page's two diagrams are not mentioned."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69b3e5ca304c1c6b3950a3dd",
+   "book_id": "69b3e5ca304c1c6b3950a3a9",
+   "page_number": 52,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "συνάδων ἔλεγον· μὴ τυχεῖν αἰσθήσεως, ἐπὶ νοῦ δὲ",
+     "severity": "wrong_text",
+     "what": "line 2 starts 'δυνάμει ζῶον' on the leaf; 'συνάδων ἔλεγον' is invented"
+    },
+    {
+     "class": "O1",
+     "quote": "ὅθεν οἱ ἵπποι καταβαίνουσι λοιπόν",
+     "severity": "wrong_text",
+     "what": "invented phrase that does not match the abbreviated text of line 6"
+    },
+    {
+     "class": "O1",
+     "quote": "θεοὺς πειθακούειν τῷ δυνάμει",
+     "severity": "wrong_text",
+     "what": "nonsense reconstruction with an invented word; not what line 8 says"
+    },
+    {
+     "class": "O6",
+     "quote": "τῶν δὲ ἐκ πνεύματος ἔχει ἡ μετάσχεσις γίνεται ἐν τῇ ἀλλοιώσει",
+     "severity": "wrong_text",
+     "what": "the leaf reads roughly '…μετάσχ… γίνεται ἐνεργείᾳ λογικόν'; the candidate's wording replaces it"
+    },
+    {
+     "class": "O1",
+     "quote": "ἐξ αὐτοῦ δὲ τοῦ πνεύματος ἡ ἀφηγίασις",
+     "severity": "wrong_text",
+     "what": "invented word and phrase where the abbreviated script is not resolved"
+    }
+   ],
+   "note": "The line count and some keywords (δυνάμει, ἐνεργείᾳ, χαλκός, ἀνδριάς, κλίνη) match this heavily abbreviated cursive leaf, but much of the running text is invented or misread (e.g. 'οἱ ἵπποι καταβαίνουσι', 'πειθακούειν'), so it can't stand as a faithful transcription."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69b52c743dd6d94230280826",
+   "book_id": "69b52c743dd6d94230280704",
+   "page_number": 290,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "καὶ ταῦτα μηδὲ ἡμᾶς ξένα ποιεῖν. ὁ γὰρ ἐπὶ τῆς γῆς οἰκῶν ἄνθρωπος",
+     "severity": "wrong_text",
+     "what": "Smooth generic Christological prose in place of what the heavily abbreviated hand says. A few words match the page (e.g. τυγχάνουσι, σοφὸς λόγος, φαινόμενον, δρᾶμα, εὑρίσκομεν παροῦσαν), but most of each line does not; line 7 on the page reads roughly 'μὴ εἶναι … φιλοτιμ… θεοῦ'."
+    },
+    {
+     "class": "O1",
+     "quote": "καὶ γὰρ οὐκ ἀληθῶς, παρὰ τὸ δίκαιον ἐκεῖνο, ὃ ἔδοξεν",
+     "severity": "wrong_text",
+     "what": "The middle and lower lines of the main block do not follow the page's abbreviated words; the text reads as made up."
+    },
+    {
+     "class": "O1",
+     "quote": "ἵνα ἡμᾶς θεοὺς ἀπεργάσηται, καὶ πρὸς τὴν αἰώνιον ζωὴν ἀγάγῃ.",
+     "severity": "wrong_text",
+     "what": "The final lines are invented as a neat doxological close. The page's last line runs on (…ποι-) and does not end the sentence."
+    }
+   ],
+   "note": "Apart from a few anchor words, the Greek shown next to the image does not match the manuscript's abbreviated lines. It is fluent filler with an invented ending, a wrong marginal note and a made-up catchword."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "6953a89177f38f6761bd226e",
+   "book_id": "6953a89077f38f6761bd2214",
+   "page_number": 90,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "ἐναντίον Ἰσαὰκ τοῦ πατρὸς αὐτοῦ·",
+     "severity": "wrong_text",
+     "what": "main text on the page ends at 'Ἰσαὰκ'; 'τοῦ πατρὸς αὐτοῦ' is supplied from the known text"
+    },
+    {
+     "class": "O6",
+     "quote": "υπαγε $\\mathfrak{ABL}$",
+     "severity": "wrong_text",
+     "what": "page has Latin 'uade 𝔄𝔅𝔏'; candidate turns it into Greek"
+    },
+    {
+     "class": "O6",
+     "quote": "ησαακ $E^*(ησαακ \\ E^{a?})$",
+     "severity": "wrong_text",
+     "what": "page reads 'ησαυ E*(ησαακ Ea?)'"
+    }
+   ],
+   "note": "The main Greek text is mostly accurate, but the candidate adds 'τοῦ πατρὸς αὐτοῦ' after the page's last word and normalises ἴδεν to εἶδεν. The critical apparatus has many wrong sigla, fractions and readings, for example Greek υπαγε where the page has Latin 'uade', and 'om' where the page has 'ο m'."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "699379e3b0a84a57639668e9",
+   "book_id": "699379e3b0a84a57639666b4",
+   "page_number": 565,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "◡ ◡ — ◡ ◡ — ◡ ◡ — ◡ ◡",
+     "severity": "wrong_text",
+     "what": "The metrical scheme for fr. 239 is invented. The page prints a different scheme of 11 positions that includes anceps marks and long syllables at the end."
+    },
+    {
+     "class": "O1",
+     "quote": ". . . . — ◡ —",
+     "severity": "wrong_text",
+     "what": "The metrical scheme for fr. 240 does not match the page, which has five dots followed by — — ⏓ ⏑ — —."
+    },
+    {
+     "class": "O1",
+     "quote": "◡ ◡ ◡ — ◡ ◡ — ◡ ◡ — ◡ ◡",
+     "severity": "wrong_text",
+     "what": "The metrical scheme for fr. 241 is invented. The page alternates ⏑ and — positions with anceps marks and ends in a long syllable."
+    }
+   ],
+   "note": "The Greek text and the apparatus are mostly accurate, but the metrical schemes for fragments 239–241 do not match what the page prints, and the Athenaeus citation is wrong (248 instead of 218)."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69bfcf293047130b1c3beed4",
+   "book_id": "69bfcf293047130b1c3beced",
+   "page_number": 487,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "οὐ γὰρ καὶ παρὰ τοῖς ἔξωθεν παραδίδοται",
+     "severity": "wrong_text",
+     "what": "page reads οὐρανοῦ γὰρ καὶ γῆς ποίησις παραδίδοσθαι (μέλλει)"
+    },
+    {
+     "class": "O1",
+     "quote": "μόνον· ὅτι καὶ τὸ μᾶλλον συνενεχθῆναι οὕτως τὸ ἐφάντασαν οὕτως",
+     "severity": "wrong_text",
+     "what": "garbled; page has μέλλει· οὐκ αὐτομάτως συνενεχθεῖσα ὥς τινες ἐφαντάσθησαν"
+    },
+    {
+     "class": "O6",
+     "quote": "τινὰς περιλαβοῦσα· ποίαν εἰκόνα τοῦ μεγέθους τῶν λεγομένων ἀξίαν",
+     "severity": "wrong_text",
+     "what": "page has τὴν αἰτίαν λαβοῦσα· ποία ἀκοὴ ... ἀξία"
+    },
+    {
+     "class": "O6",
+     "quote": "τὴν ἐσκοτισμένην ψυχὴν πρὸς τὴν τῶν τηλικούτων θεωρίαν",
+     "severity": "wrong_text",
+     "what": "page has παρεσκευασμένην ... ἀκρόασιν; 'darkened soul' turns the sense around"
+    },
+    {
+     "class": "O6",
+     "quote": "ἀνεπιπρόσθητον μείνασαν / βίου πικαῖς φιλοπόνων",
+     "severity": "wrong_text",
+     "what": "page has ἀνεπισκότητον μερίμναις βιωτικαῖς, φιλόπονον"
+    },
+    {
+     "class": "O6",
+     "quote": "πρὶν ἢ ἐξαλῶσαι πᾶν ἐν τοῖς ῥήμασι καὶ / βίαν",
+     "severity": "wrong_text",
+     "what": "page has πρὶν ἐξετάσαι τὴν ἐν τοῖς ῥήμασιν ἀκρί-βειαν"
+    },
+    {
+     "class": "O6",
+     "quote": "ἐσομεθα πρὸς τὴν τῶν εἰρημένων ἀκολουθίαν",
+     "severity": "wrong_text",
+     "what": "page has (συγ)κατάθεσιν τῶν εἰρημένων συναχθησόμεθα"
+    },
+    {
+     "class": "O6",
+     "quote": "ὃν ὕστερον ἐποιήσατο μὲν θυγάτηρ",
+     "severity": "wrong_text",
+     "what": "page has εἰσεποιήσατο (adopted), so the sense is lost"
+    }
+   ],
+   "note": "The title and the passage about Moses are mostly right, but lines 3–9 and line 15 are garbled or swapped for invented wording, and several key words are misread (ἐσκοτισμένην, ὕστερον, ἄξιος), so the opening of the homily does not match the leaf."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69b220bb56715b0e32473598",
+   "book_id": "69b220bb56715b0e32473584",
+   "page_number": 20,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Εἰ ἅμα δὲ λυθῆναι καὶ τὰς ἀπὸ",
+     "severity": "wrong_text",
+     "what": "page reads 'ἅμα διεληλυθῆναι καὶ τὴν'; 'τὰς ἀπὸ' is invented"
+    },
+    {
+     "class": "O6",
+     "quote": "θῶ ὁμοίως ἡμῖν τὸ παραπληρωθὲν",
+     "severity": "wrong_text",
+     "what": "page reads 'θω· ὅμοιον γίνεται τὸ παραπληρωθὲν'"
+    },
+    {
+     "class": "O6",
+     "quote": "ἡ δὲ πλευρὰ ἡ αβ ἢ γ ἐλάττων",
+     "severity": "wrong_text",
+     "what": "page reads 'ἡ δὲ πλευρὰ τῆς βγ ἐλάττων'"
+    },
+    {
+     "class": "O6",
+     "quote": "τῷ γὰρ αὐτὸ φέρεσθαι, καὶ ὑπὸ",
+     "severity": "wrong_text",
+     "what": "page reads 'ἥν τε αὐτὸ φέρεται καὶ ἣν ὑπὸ'"
+    },
+    {
+     "class": "O6",
+     "quote": "ἐναντιώτεραι ἥττονται",
+     "severity": "wrong_text",
+     "what": "page reads 'ἐναντιώτεραι γίνονται'"
+    },
+    {
+     "class": "O6",
+     "quote": "τὸ μὲν γὰρ β χρόνον ἐπὶ τὰ αὐτὰ φέρεται",
+     "severity": "wrong_text",
+     "what": "page reads 'β σχεδὸν ἐπὶ τὸ αὐτὸ φέρεται'"
+    }
+   ],
+   "note": "Every line of the page is present and in order, but there are many misreads, especially in the geometry (wrong words and point letters). Read beside the image, a reader would hit several statements the page does not make."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "69a5e3e5006a4098422169fc",
+   "book_id": "69a5e3e5006a40984221691d",
+   "page_number": 223,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<unclear>μηδὲ</unclear> <unclear>καὶ</unclear> <unclear>ταύτην</unclear> <unclear>φασὶν</unclear> <unclear>αὐτῶν</unclear>· <unclear>ἀλλ'</unclear> <unclear>ἡμεῖς</unclear> <unclear>τάχα</unclear>",
+     "severity": "wrong_text",
+     "what": "Most of the left page is guessed text wrapped in unclear tags. The leaf is fairly legible, and this line ends with 'ἀθηναῖοι', not 'ἀλλ' ἡμεῖς τάχα'."
+    },
+    {
+     "class": "O1",
+     "quote": "αἱ γὰρ τὰ ὄντα ἀΐδια θαλπόμενα οὐκ ἂν φύσει ποτὲ αἱ τοιαῦται",
+     "severity": "wrong_text",
+     "what": "Many lines in the lower half of the right page are fluent invented Greek that does not match the hand."
+    },
+    {
+     "class": "O1",
+     "quote": "τοῖς γονεῦσιν αὖθις, σκοπόν ποιῶν. ἀλλ’ οὐκ ἂν",
+     "severity": "wrong_text",
+     "what": "The final lines, in the stained area, are confabulated."
+    }
+   ],
+   "note": "This is a two-page spread presented as one two-column page. Only the first few lines of the right page are close to the manuscript; the left page and much of the rest of the right page are invented Greek."
+  },
+  {
+   "cell": "greek-flash3-unknown",
+   "route": "3flash",
+   "page_id": "699389760f04c37dcfa61355",
+   "book_id": "699389760f04c37dcfa61180",
+   "page_number": 469,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "αὐτὸς δὲ ὁ λόγος ἤδη θεὸς ἐστὶ",
+     "severity": "wrong_text",
+     "what": "the page reads ᾗ λόγος ἐστί ('insofar as he is Word'), not 'is already God'"
+    },
+    {
+     "class": "O6",
+     "quote": "καὶ θεὸς ὢν ἐν αὐτῇ ἐσταυρώνετο",
+     "severity": "wrong_text",
+     "what": "the page has ἐπυνθάνετο ('he inquired'); 'was crucified' is invented"
+    },
+    {
+     "class": "O3",
+     "quote": "κεῖται καὶ ἀνέστησε θανόντα· αὐτὸς δὲ καὶ τοῦτο ὁ παναγιος",
+     "severity": "wrong_text",
+     "what": "the page has 'ἀλλ' ἐπηρώτα … ἐποίει' (he asked); the raising of the dead man is supplied from elsewhere"
+    },
+    {
+     "class": "O6",
+     "quote": "ὁ παιδεύων ἡμᾶς ὑπομένει",
+     "severity": "wrong_text",
+     "what": "the page reads ὁ πάντα δι' ἡμᾶς ὑπομείνας"
+    },
+    {
+     "class": "O6",
+     "quote": "οἷαν εἰληφέναι ὡς θεὸς",
+     "severity": "wrong_text",
+     "what": "the page has '(ἐξου)σίαν εἰληφέναι ὡς ἄνθρωπος'; the sense flips to the opposite"
+    }
+   ],
+   "note": "A reader comparing against the image would find several key theological phrases changed: 'already God' for 'as Word', 'was crucified' for 'inquired', 'as God' for 'as man', and an invented raising of Lazarus."
+  }
+ ]
+}

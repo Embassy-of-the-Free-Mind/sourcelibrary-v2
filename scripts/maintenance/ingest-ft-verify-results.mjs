@@ -133,7 +133,7 @@ for (const r of rows) {
         book_id: r.book_id,
         date: new Date().toISOString(),
         method: 'claude_subagent_verify',
-        model: 'claude-sonnet',
+        model: r.model ?? 'claude-sonnet', // the round's verifier model; older rounds were all Sonnet
         match_key: 'author_title',
         queries: r.queries_run,
         sources_checked: (r.sources_consulted ?? []).map((s) => s.url),

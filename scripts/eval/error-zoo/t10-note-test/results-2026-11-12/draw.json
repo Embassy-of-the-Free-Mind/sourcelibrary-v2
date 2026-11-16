@@ -1,0 +1,1029 @@
+{
+ "seed": 8632,
+ "drawn_at": "2026-11-12T19:58:03.151Z",
+ "zoo": "/root/jobs/error-zoo-v2/union",
+ "note_rule": "**Notes (this replaces the note instructions above):** a <note> may gloss a word or phrase, give the original wording, or mark an interpolated clarification. It never explains a reading, and never adds a date, name or reference that this page lacks.",
+ "frame": {
+  "t10_fresh_half_b_pages": 336,
+  "t10_books": 151,
+  "clean_with_notes_half_b_pages": 255
+ },
+ "pages": [
+  {
+   "page_id": "699f4c6bd01ba79cb0cf432d",
+   "book_id": "699ef9fd0600353e655fe517",
+   "page_number": 376,
+   "stratum": "t10",
+   "language": "Russian",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T23:52:13.876Z",
+    "t10": [
+     {
+      "problem": "calls a transcription misread a typo in the printed book",
+      "bad": null
+     },
+     {
+      "problem": "speculative gloss on what is a later handwritten letter in the margin",
+      "bad": null
+     },
+     {
+      "problem": "invented: no such list is printed on the page",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6953cc6d77f38f6761be228c",
+   "book_id": "6953cc6d77f38f6761be20a9",
+   "page_number": 483,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T20:08:28.340Z",
+    "t10": [
+     {
+      "problem": "Isaac is not named at this point. The note invents an attribution.",
+      "bad": null
+     },
+     {
+      "problem": "'ylaoch' is Ysaach (Isaac Israeli), the authority cited. The gloss is invented.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69906ed78a353648e1ed0870",
+   "book_id": "69906ed78a353648e1ed085f",
+   "page_number": 17,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T20:02:41.735Z",
+    "t10": [
+     {
+      "problem": "'Hour' is invented. The rubric means the first prologue of the sixth prayer.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69d5ad0c4dc55b8478ddf620",
+   "book_id": "69d5ad0c4dc55b8478ddf60b",
+   "page_number": 21,
+   "stratum": "t10",
+   "language": "Ge'ez",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T19:26:47.056Z",
+    "t10": [
+     {
+      "problem": "Not supported by the transcription (እምአርአያተ፡ መላእክት).",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "6a45298cc6d95bc278fbca2b",
+   "book_id": "6a45298cc6d95bc278fbc8c3",
+   "page_number": 360,
+   "stratum": "t10",
+   "language": "Greek",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T19:13:45.514Z",
+    "t10": [
+     {
+      "problem": "the line break θερ-|μοῦ is on the page; this is not a scribal error",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69b3e596c94a4ff7cce22da5",
+   "book_id": "69b3e596c94a4ff7cce22d4f",
+   "page_number": 86,
+   "stratum": "t10",
+   "language": "Arabic",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T21:09:29.113Z",
+    "t10": [
+     {
+      "problem": "invented stone name and gloss built on the misread; the page says a red stone",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "6991c53c3074a1745a410873",
+   "book_id": "6991c53c3074a1745a4107ab",
+   "page_number": 200,
+   "stratum": "t10",
+   "language": "German",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T19:45:20.363Z",
+    "t10": [
+     {
+      "problem": "speculative gloss presented as scholarship",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69a5e9fd787d6e9b8d42ea63",
+   "book_id": "69a5e9fd787d6e9b8d42ea49",
+   "page_number": 26,
+   "stratum": "t10",
+   "language": "Spanish",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T22:28:18.473Z",
+    "t10": [
+     {
+      "problem": "speculative note built on a misread numeral",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b7d8",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "page_number": 21,
+   "stratum": "t10",
+   "language": "Hebrew",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T20:22:44.068Z",
+    "t10": [
+     {
+      "problem": "a speculative gloss; דיג is the letter-numeral 'three' (ג)",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "69e96123390d3ed634590d11",
+   "book_id": "69e96123390d3ed634590b97",
+   "page_number": 378,
+   "stratum": "t10",
+   "language": "Arabic",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T19:11:24.014Z",
+    "t10": [
+     {
+      "problem": "an invented gloss that is not on the page",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "6a3cf0268642f0445b162e42",
+   "book_id": "6a3cf0268642f0445b162e15",
+   "page_number": 45,
+   "stratum": "t10",
+   "language": "Chinese",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-7",
+    "judged_at": "2026-11-11T06:43:14.351Z",
+    "t10": [
+     {
+      "problem": "The note blames the printed copy for an error the OCR made: the leaf clearly reads 肴. This is invented scholarship that tells the reader a false fact about the source.",
+      "bad": "viands *gong* <note>The copy writes 宥 \"pardon\" here, a graphic slip for 肴 \"viands\".</note>"
+     },
+     {
+      "problem": "The note again invents an error in the source. The leaf prints 牷 correctly; the repetition exists only in the OCR.",
+      "bad": "unblemished *gong* <note>The copy repeats 牲 \"victims\" here in place of 牷 \"unblemished\".</note>"
+     },
+     {
+      "problem": "Two <note>s state as fact that the printed copy has scribal slips ('The copy writes 宥…', 'The copy repeats 牲…'). This is invented manuscript/edition apparatus that a reader would take as a textual fact; the image shows no such slips.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "claude-opus-5-5"
+  },
+  {
+   "page_id": "69d5ac04d0bd3547a5654d98",
+   "book_id": "69d5ac04d0bd3547a5654b83",
+   "page_number": 533,
+   "stratum": "t10",
+   "language": "Armenian",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T21:41:28.624Z",
+    "t10": [
+     {
+      "problem": "Made-up glosses for 'Osil' and 'Bagum', which are themselves probably misreadings.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "69b525ce6be6046083032ad5",
+   "book_id": "69b525ce6be6046083032ac7",
+   "page_number": 14,
+   "stratum": "t10",
+   "language": "French",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-6",
+    "judged_at": "2026-11-11T05:12:09.229Z",
+    "t10": [
+     {
+      "problem": "'### PLATE LXXIX. [sic]': invented apparatus. The [sic] says the 1719 print repeats a plate number. It does not (the image reads PLANCHE LXXVIII, then LXXIX); the repeat comes from the translator's own invented heading.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "6953ab4577f38f6761bd6cea",
+   "book_id": "6953ab4577f38f6761bd6c6f",
+   "page_number": 123,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T21:03:07.395Z",
+    "t10": [
+     {
+      "problem": "a speculative gloss on a misread line",
+      "bad": null
+     },
+     {
+      "problem": "invents the concept 'Word-baptism' and a doctrinal note from a misread",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a358874d8c4016326cdce75",
+   "book_id": "6a358874d8c4016326cdcb7f",
+   "page_number": 758,
+   "stratum": "t10",
+   "language": "Persian",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T20:04:54.512Z",
+    "t10": [
+     {
+      "problem": "Adds a gloss on top of invented, repeated text.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69af43aeff29693470c6b0e1",
+   "book_id": "69af43aeff29693470c6b04d",
+   "page_number": 148,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-22",
+    "judged_at": "2026-11-11T20:13:37.480Z",
+    "t10": [
+     {
+      "problem": "Invented illustration: \"A woodcut depicts Damoetas and Aegon, characters from Virgil’s Eclogues, representing the pastoral tradition often cited in metrical examples.\" The page has no woodcut or picture of any kind.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "69a5e61ee751f06e74b898a5",
+   "book_id": "69a5e61ee751f06e74b89835",
+   "page_number": 112,
+   "stratum": "t10",
+   "language": "Greek",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261110-2",
+    "judged_at": "2026-11-10T23:12:20.073Z",
+    "t10": [
+     {
+      "problem": "confident scholarship explaining a word the OCR invented; nothing about Menelaus or Sparta is on the leaf",
+      "bad": "Why does this Spartan-madness <note>original: \"λακωνομανίαν\" (lakonomania). In the context of Euripides' *Orestes*, this refers to the harsh or frantic influence associated with Menelaus and the Spartan faction.</note> rage throughout the house"
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69a5ef38bfd8cafd91e43e6a",
+   "book_id": "69a5ef38bfd8cafd91e43e69",
+   "page_number": 1,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-15",
+    "judged_at": "2026-11-11T16:42:04.578Z",
+    "t10": [
+     {
+      "problem": "The label is a library shelfmark (\"Res. 4º / Gymn. / 3\", i.e. Res/4 Gymn. 3). In this shelfmark style 'Gymn.' is the subject class Gymnastica (games and sports), which fits a book of playing cards. It is not a school. The translation turns the shelfmark into an invented provenance ('School Library', 'an academic institution's collection'), and the summary repeats it: 'identifying the book as part of a classical school's reserved collection.' My reading of the class rests on library convention, not on anything else printed on the leaf.",
+      "bad": "-><term>School Library</term> <note>original: \"Gymn.\"; an abbreviation for *Gymnasium*, a classical secondary school or college. This indicates the book was part of an academic institution's collection.</note><-"
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69b4c057978ca9526eda3a47",
+   "book_id": "69b4c057978ca9526eda396d",
+   "page_number": 218,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T22:11:48.952Z",
+    "t10": [
+     {
+      "problem": "invented gloss; the leaf names Capricorn",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "69dfdfaefc46416d01ddf347",
+   "book_id": "69dfdea38e5ccd1c891f0c17",
+   "page_number": 32,
+   "stratum": "t10",
+   "language": "Nahuatl",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T19:15:47.396Z",
+    "t10": [
+     {
+      "problem": "The tepetl reading is invented scholarship. The glyphs are temples.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "699259353d2d40d1b058b420",
+   "book_id": "694f8d99efce46492e19fdad",
+   "page_number": 17,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T21:31:15.870Z",
+    "t10": [
+     {
+      "problem": "Abumaron (Abu Marwan) is Avenzoar, Ibn Zuhr, not Avempace",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6955739df63a7571091720db",
+   "book_id": "6955739df63a7571091720cf",
+   "page_number": 12,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T19:21:28.076Z",
+    "t10": [
+     {
+      "problem": "Confident identification of Albinus, which is not supported.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69dfd992220eedf04e13b0f1",
+   "book_id": "69dfd990220eedf04e13b0cf",
+   "page_number": 34,
+   "stratum": "t10",
+   "language": "Maya Hieroglyphic Script",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-2026-11-10-8478-w0",
+    "judged_at": "2026-11-10T01:20:25.097Z",
+    "t10": [
+     {
+      "problem": "Unverifiable claims about Förstemann's apparatus, added as commentary.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "claude-opus-5-5"
+  },
+  {
+   "page_id": "69905d802fd6a0399389fa1f",
+   "book_id": "69905d7f2fd6a0399389f99f",
+   "page_number": 128,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T22:19:54.725Z",
+    "t10": [
+     {
+      "problem": "an invented citation that is not supported by the page",
+      "bad": null
+     },
+     {
+      "problem": "a conjectured reading; the scan reads 'in orantis perniciem'",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69907e19b91bcb2db3f6e42b",
+   "book_id": "69907e19b91bcb2db3f6e40d",
+   "page_number": 30,
+   "stratum": "t10",
+   "language": "Sanskrit",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-13",
+    "judged_at": "2026-11-11T11:12:29.896Z",
+    "t10": [
+     {
+      "problem": "the translation builds a confident claim about a 'marker of the divinity' on garbled text, and the note presents that guess as the author's own doctrine",
+      "bad": "Where the word **Du** or **Mu** is heard, it acts as a marker of the divinity <note>original: \"devamivi nivācakam\"; this is an interpretive grammatical note by the author regarding Persian suffixes</note>."
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69520517ab34727b1f042476",
+   "book_id": "69520516ab34727b1f04245b",
+   "page_number": 27,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T23:06:31.286Z",
+    "t10": [
+     {
+      "problem": "This label is made up. The diagram note also misdescribes the columns.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6992cad0d4d545ae73feeb51",
+   "book_id": "6992cad0d4d545ae73feeb43",
+   "page_number": 14,
+   "stratum": "t10",
+   "language": "Chinese",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T21:09:28.661Z",
+    "t10": [
+     {
+      "problem": "the Vietnamese attribution is invented; nothing on the leaf supports it, and the preceding page names the 贊普 (Tibetan emperor)",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6985e77e5fc8b0f017c611c9",
+   "book_id": "6985ca72c9d0c217260e737b",
+   "page_number": 159,
+   "stratum": "t10",
+   "language": "French",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T23:10:22.521Z",
+    "t10": [
+     {
+      "problem": "Invented gloss: 'Star-Buzai' is not on the page and has no clear meaning.",
+      "bad": null
+     },
+     {
+      "problem": "In Nehemiah 4 the builders are rebuilding Jerusalem's walls, not the Second Temple.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6991c5493074a1745a410c04",
+   "book_id": "6991c5483074a1745a410b8b",
+   "page_number": 121,
+   "stratum": "t10",
+   "language": "German",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T22:07:11.613Z",
+    "t10": [
+     {
+      "problem": "a gloss built on a misread word; 'reussen' does not mean white (the page has 'weysen')",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6991d8978c1030b12444c052",
+   "book_id": "6991d8978c1030b12444c035",
+   "page_number": 29,
+   "stratum": "t10",
+   "language": "Sanskrit",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T21:27:21.886Z",
+    "t10": [
+     {
+      "problem": "Invented glosses and a term list with no basis on the page.",
+      "bad": null
+     },
+     {
+      "problem": "Added commentary that is not on the page.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69b3f78da107e55a0ee1e0c8",
+   "book_id": "69b3f78da107e55a0ee1dd03",
+   "page_number": 965,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T23:39:23.688Z",
+    "t10": [
+     {
+      "problem": "Many glosses on misread non-words are invented, e.g. 'cydiscorum' as quince seeds and 'filina' as linseed.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "69e7517810ee9075bcdcda3e",
+   "book_id": "69e7517810ee9075bcdcd959",
+   "page_number": 229,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T21:10:15.920Z",
+    "t10": [
+     {
+      "problem": "'pape' here is most likely an interjection or a misread, not 'Popes'.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "6976ee027de96ef0c9002373",
+   "book_id": "6976d747097b3607ee4be2f7",
+   "page_number": 162,
+   "stratum": "t10",
+   "language": "French",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T20:41:32.073Z",
+    "t10": [
+     {
+      "problem": "a guessed gloss: this page frames the two points as giving oneself to God and giving up vengeance",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a3c640439b4508b04e23859",
+   "book_id": "6a3c640439b4508b04e237f1",
+   "page_number": 104,
+   "stratum": "t10",
+   "language": "Chinese",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-17",
+    "judged_at": "2026-11-11T17:43:21.369Z",
+    "t10": [
+     {
+      "problem": "The ditto marks 丨丨 repeat the entry's headword, 綢繆 (chóumóu, 'entwined, intimately bound'), and in the last two quotations the new headword 相繆. The translator renders every one as an invented term 'jie' and gives it a different made-up gloss each time ('embroidered', 'steadfast', 'intent', 'close', 'wrapped'). A reader is misled about which word this dictionary page defines.",
+      "bad": "<term>jie</term> <gloss>bond</gloss> … <term>jie</term> <gloss>steadfast</gloss> … <term>jie</term> <gloss>intent</gloss>"
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6984ec74514317ffcf6d7b0d",
+   "book_id": "6984e84e018466b0ebaa3653",
+   "page_number": 21,
+   "stratum": "t10",
+   "language": "Russian",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T20:33:29.044Z",
+    "t10": [
+     {
+      "problem": "Invented gloss. The fragment 'шенія' cannot complete 'преобразованія', and the English renders this guess as text ('...transformations').",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69d5abf3d0bd3547a5654976",
+   "book_id": "69d5abf3d0bd3547a5654427",
+   "page_number": 766,
+   "stratum": "t10",
+   "language": "Arabic",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-9",
+    "judged_at": "2026-11-11T09:13:17.310Z",
+    "t10": [
+     {
+      "problem": "the OCR misread becomes an invented drug with a made-up gloss. The image says the treatment is that of the sea-dragon and the spider",
+      "bad": "its treatment with the marine <term>tanabbī</term> <gloss>a medicinal plant</gloss>"
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "695004f4f426a210d109b082",
+   "book_id": "31f820f4-d3d8-4a68-a025-40b69230d35f",
+   "page_number": 352,
+   "stratum": "t10",
+   "language": "French",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w0",
+    "judged_at": "2026-11-10T21:27:20.583Z",
+    "t10": [
+     {
+      "problem": "guessed etymology notes for arbitrary code words (Piraeus, Antaeus, Athamas, Abaddon, etc.)",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a08514b15c643eb1af4a382",
+   "book_id": "6a08514b15c643eb1af4a379",
+   "page_number": 9,
+   "stratum": "t10",
+   "language": "Greek",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-18",
+    "judged_at": "2026-11-11T18:12:38.494Z",
+    "t10": [
+     {
+      "problem": "invented passage. The source says it is not yet settled which things should be called parts, and that this raises a difficulty. The note cites a word ('epimeleian') that is not in the OCR or on the leaf",
+      "bad": "For the parts of the plant do not grow in a simple manner. There are primary parts, and other parts that are not just distinct but have a specific relation to the whole <note>original: \"epimeleian\"</note>."
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69942f35b2f6748db4abfc7f",
+   "book_id": "69942f35b2f6748db4abfc31",
+   "page_number": 78,
+   "stratum": "t10",
+   "language": "Greek",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w2",
+    "judged_at": "2026-11-10T19:41:34.958Z",
+    "t10": [
+     {
+      "problem": "This annotates a misread margin. The margin cites Ezekiel and Daniel.",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "695258d1ab34727b1f045b47",
+   "book_id": "695258d1ab34727b1f045aed",
+   "page_number": 90,
+   "stratum": "t10",
+   "language": "Latin",
+   "label": {
+    "source": "book_checks",
+    "method": "paired-fifths-check",
+    "run_id": "pfc-p5-2026-11-10-8518-w1",
+    "judged_at": "2026-11-10T19:20:30.499Z",
+    "t10": [
+     {
+      "problem": "an explanation the text does not give is presented as fact",
+      "bad": null
+     }
+    ]
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "6a3c6ba639b4508b04e44d51",
+   "book_id": "6a3c6ba639b4508b04e44d09",
+   "page_number": 72,
+   "stratum": "clean-with-notes",
+   "language": "Chinese",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261110-2",
+    "judged_at": "2026-11-10T23:12:20.073Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.8-flash-low"
+  },
+  {
+   "page_id": "6992cdfe00f13b15f3ca3b63",
+   "book_id": "6992cdfe00f13b15f3ca3b1f",
+   "page_number": 67,
+   "stratum": "clean-with-notes",
+   "language": "Chinese",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-9",
+    "judged_at": "2026-11-11T09:13:17.310Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.8-flash-low"
+  },
+  {
+   "page_id": "6a3ced8e4701a906f10e1601",
+   "book_id": "6a3ced8e4701a906f10e15a3",
+   "page_number": 94,
+   "stratum": "clean-with-notes",
+   "language": "Chinese",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-14",
+    "judged_at": "2026-11-11T16:14:17.507Z",
+    "t10": []
+   },
+   "stored_tr_model": "claude-opus-5-5"
+  },
+  {
+   "page_id": "6ae0bfe04adf2ffb52f73766",
+   "book_id": "6ae0bfe04adf2ffb52f73751",
+   "page_number": 19,
+   "stratum": "clean-with-notes",
+   "language": "Chinese",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-13",
+    "judged_at": "2026-11-11T11:12:29.896Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.8-flash-low"
+  },
+  {
+   "page_id": "6a4a5a2e3f0b4659d1bc060e",
+   "book_id": "6a4a5a2e3f0b4659d1bc05f1",
+   "page_number": 16,
+   "stratum": "clean-with-notes",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261110-1",
+    "judged_at": "2026-11-10T22:43:29.869Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "6a4a8968393655740c43b2f1",
+   "book_id": "6a4a8968393655740c43b2df",
+   "page_number": 18,
+   "stratum": "clean-with-notes",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-20",
+    "judged_at": "2026-11-11T19:12:14.661Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "69942aa9045dfc482ad7803a",
+   "book_id": "69942aa9045dfc482ad77d13",
+   "page_number": 807,
+   "stratum": "clean-with-notes",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-6",
+    "judged_at": "2026-11-11T05:12:09.229Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "69c8347b6c6f3cc53c84e573",
+   "book_id": "69c834666c6f3cc53c84e53b",
+   "page_number": 39,
+   "stratum": "clean-with-notes",
+   "language": "German",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-15",
+    "judged_at": "2026-11-11T16:42:04.578Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3-flash-preview"
+  },
+  {
+   "page_id": "69b525bf29577f283b57bbae",
+   "book_id": "69b525bf29577f283b57bb89",
+   "page_number": 37,
+   "stratum": "clean-with-notes",
+   "language": "Dutch",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-14",
+    "judged_at": "2026-11-11T16:14:17.507Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "page_id": "6a4c16fe0af972fc7bae760a",
+   "book_id": "6a4c16fe0af972fc7bae75ff",
+   "page_number": 10,
+   "stratum": "clean-with-notes",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-2",
+    "judged_at": "2026-11-11T01:12:21.437Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "69b51e67cf111105c429c0a6",
+   "book_id": "69b51e67cf111105c429c037",
+   "page_number": 111,
+   "stratum": "clean-with-notes",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-9",
+    "judged_at": "2026-11-11T09:13:17.310Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "page_id": "6a26c120aad44c98627bf916",
+   "book_id": "6a26c11faad44c98627bf8cb",
+   "page_number": 75,
+   "stratum": "clean-with-notes",
+   "language": "Latin",
+   "label": {
+    "source": "spare_audit",
+    "method": "convergent-audit-weekly",
+    "run_id": "spare-audit-20261111-20",
+    "judged_at": "2026-11-11T19:12:14.661Z",
+    "t10": []
+   },
+   "stored_tr_model": "gemini-3.1-flash-lite"
+  }
+ ]
+}

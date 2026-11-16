@@ -33,6 +33,7 @@
 import { assertBookScopedKey } from './r2-key.mjs';
 import { contentHash } from './write-provenance.mjs';
 import { ocrReadProblem, cliChatterReason } from './cli-chatter.mjs';
+import { imageNeverOpened, imageReadDenied } from './agy-cli.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -96,6 +97,17 @@ export function translationReuseKey(m) {
 }
 
 /**
+ * True when a kept OCR read's own tool log says the model did not read the page image it was given: no allowed image
+ * read at all, or (outside correct mode) a denied one. `cli-ocr.mjs apply` refuses exactly these (#5274, #5309), so
+ * handing one back as a finished read only stops the page from ever being read again (v3#149: ten reverted Kant pages
+ * were "re-read" with no call, 10 of 10 reused and 10 of 10 refused at apply). The two predicates are apply's own. Pure.
+ */
+export function unseenImageRead(field, meta) {
+  if (field !== 'ocr' || !meta) return false;
+  return imageNeverOpened(meta) || (meta.mode !== 'correct' && imageReadDenied(meta));
+}
+
+/**
  * True when a kept body answers this request: same reuse key and model, and still a usable text. `derive(meta)` gives
  * the key for a body the sweep kept (no `reuse` block). Pure.
  */
@@ -105,6 +117,7 @@ export function matchesRead(body, { field, model, prompt_hash, derive }) {
   // A read its own reader marked failed (a quota cut, a reply outside the markers) is not handed back as done.
   const m = body.meta || {};
   if ((m.exit !== undefined && m.exit !== 0) || m.error_class || m.wrapper) return false;
+  if (unseenImageRead(field, m)) return false;
   if (body.reuse?.hash) return body.reuse.hash === prompt_hash && body.reuse.model === model;
   if (typeof derive !== 'function' || (m.model_requested ?? m.model ?? body.model) !== model) return false;
   try { return derive(m) === prompt_hash; } catch { return false; }
@@ -235,7 +248,7 @@ export async function listKeptReads(bookId, field, pageIds = null) {
         const r = await send(c, new sdk.GetObjectCommand({ Bucket: BUCKET, Key: key }));
         const body = JSON.parse(await r.Body.transformToString());
         const m = body.meta || {};
-        if (textProblem(body.text, field) || (m.exit !== undefined && m.exit !== 0) || m.error_class || m.wrapper) continue;
+        if (textProblem(body.text, field) || (m.exit !== undefined && m.exit !== 0) || m.error_class || m.wrapper || unseenImageRead(field, m)) continue;
         out.push({ page_id: body.page_id, model: body.reuse?.model ?? m.model_requested ?? body.model ?? null });
       } catch { /* one unreadable object is one read not offered */ }
     }

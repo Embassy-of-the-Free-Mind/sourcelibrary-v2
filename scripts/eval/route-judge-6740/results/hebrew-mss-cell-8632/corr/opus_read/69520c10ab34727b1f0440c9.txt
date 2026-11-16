@@ -1,0 +1,32 @@
+<warning>Handwritten Italian/Sephardic semi-cursive Hebrew (Aramaic text). The hand is hard to read and many readings are tentative. One word in line 3 is written larger than the rest, possibly as a section title. A faint pencil number in the upper-right corner may be a folio number.</warning>
+<scan-quality>good</scan-quality>
+<language>Aramaic</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>301</page-num>
+
+חי ונוקבא הכי נמי בעולמים ומאן דאתקרב לגביהו איהו חי
+דכתיב ואתם הדבקים בה' אלהיכם חיים וכו' <unclear>ומשה</unclear> וכנגדו בן יהוידע
+בן איש חי וכו' **<unclear>מתק המוח ידאי</unclear>** <unclear>ואורייתא</unclear> ואכלת ושבעת
+וברכת את ה' אלהיך. וכן לא <unclear>תברכו</unclear>
+לקב"ה עד לא תיכלו והא אית לן בקדושה בצפרא ובמנחה <unclear>שכיחא</unclear>
+ברכת יחוד ולברכה <unclear>בטעמיה</unclear> וכתיב לא תאכלו על הדם אסיר לן
+למיכל עד לא נברך למאריה. והשתא כתיב ואכלת ושבעת וברכת
+לאו הא ברכתא דצלותא היחודא והא ברכתא <unclear>דמזונא</unclear> למחזי
+<unclear>גו דינא דאיהי מנוקתא</unclear> <unclear>מוכחא</unclear> ברכת יחוד וכהן כנגד לברכה <unclear>לון</unclear>
+ברכת יחוד <unclear>דאיהו</unclear> דינא <unclear>דאיהי מנוקתא</unclear> <unclear>דיליה</unclear> ויתברך <unclear>ויתמלי</unclear>
+<unclear>חידו</unclear> <unclear>מחיין</unclear> לעלמא כמה דאצטריך בגין <unclear>למיהב</unclear> לון מזונא.
+<unclear>דהא</unclear> <unclear>קשיין</unclear> מזונא <unclear>דבר</unclear> נש <unclear>קמיה</unclear> <unclear>כקריעת ים סוף</unclear>. מאי בגין
+<unclear>דמזונא</unclear> <unclear>דעלמא</unclear> <unclear>דעלמא</unclear> <unclear>דאיהו</unclear> <unclear>דינין</unclear> <unclear>בני חיי ומזוני</unclear> וכו'
+ובגין כך <unclear>קשיין</unclear> <unclear>קמיה</unclear> <unclear>מזוני</unclear> <unclear>דעלמא</unclear> <unclear>דהא</unclear> לאו <unclear>ברעותיה</unclear> <unclear>קיימי</unclear>.
+עד <unclear>דיתברך</unclear> איהו <unclear>בזווגא</unclear> הא <unclear>זווגא</unclear> <unclear>דעלמא</unclear> <unclear>דקשיין</unclear> <unclear>קמיה</unclear>
+<unclear>וכלא</unclear> בגין <unclear>דהכי</unclear> <unclear>ואילין</unclear> לא <unclear>משתמשי</unclear> כלום. <unclear>וכן</unclear> <unclear>אלין</unclear> <unclear>מאן</unclear> <unclear>דקיימי</unclear>
+<unclear>לעילא</unclear> <unclear>בסטרא</unclear> <unclear>אחרא</unclear> <unclear>ועל</unclear> הא <unclear>אצטריך</unclear> <unclear>לאתברכא</unclear>. <unclear>קח</unclear> כל <unclear>זווגין</unclear>
+<unclear>דעלמא</unclear> <unclear>קשיין</unclear> <unclear>קמיה</unclear> <unclear>דאי</unclear> <unclear>דינא</unclear> <unclear>בגין</unclear> <unclear>דכד</unclear> <unclear>זווגא</unclear> <unclear>דהאי</unclear> <unclear>אשתכח</unclear>
+כל <unclear>שמהתין</unclear> <unclear>נפקי</unclear> <unclear>מגו</unclear> <unclear>האי</unclear> <unclear>מזונא</unclear> <unclear>לעלמא</unclear> <unclear>דאיהו</unclear> <unclear>אתר</unclear> <unclear>דעייל</unclear>
+<unclear>ונפקין</unclear> <unclear>וכד</unclear> <unclear>מתחברן</unclear> <unclear>אשתכח</unclear> <unclear>מלרע</unclear> <unclear>לעילא</unclear> <unclear>בכמה</unclear> <unclear>סטרין</unclear> <unclear>שמהן</unclear>
+<unclear>ואורייתא</unclear> <unclear>כלהו</unclear> <unclear>כלילן</unclear> <unclear>דכר</unclear> <unclear>ונוקבא</unclear> <unclear>כגוונא</unclear> <unclear>דקא</unclear> <unclear>ולבתר</unclear> <unclear>איהו</unclear>
+<unclear>תרווייהו</unclear> <unclear>לון</unclear> <unclear>כל</unclear> <unclear>חד</unclear> <unclear>וחד</unclear> <unclear>באתריה</unclear> <unclear>כדקא</unclear> <unclear>חזי</unclear> <unclear>ליה</unclear> <unclear>ולבתר</unclear> <unclear>זווגין</unclear> <unclear>קמיה</unclear>
+
+<meta>Brown ink, single column, 24 lines. The pencil number in the upper-right corner reads the right way round, so it is on this side of the leaf and is not show-through. Faint mirror-reversed text from the other side of the leaf shows through and was not transcribed.</meta>
+<vocab>ברכת המזון, ואכלת ושבעת וברכת, יחוד, זווגא, מזונא, קשיין קמיה כקריעת ים סוף, דכר ונוקבא, בן יהוידע בן איש חי, ואתם הדבקים בה' אלהיכם</vocab>

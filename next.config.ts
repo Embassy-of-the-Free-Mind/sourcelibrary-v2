@@ -498,6 +498,10 @@ const nextConfig: NextConfig = {
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
       { source: '/partners', destination: '/ai-partners', permanent: true },
+      // The plural is not a route, and people and AI answers write it. Same
+      // tail under /book, where an unknown slug still 404s on arrival.
+      // Path-relative, so a partner subdomain stays on its host (#102).
+      { source: '/books/:path+', destination: '/book/:path+', permanent: true },
       // The in-site Rithmomachia game departed from the 1563 rules it cites; the
       // corrected game is a standalone app (#7821). Apex and www only: a tenant
       // host serves global routes directly and must never redirect off its

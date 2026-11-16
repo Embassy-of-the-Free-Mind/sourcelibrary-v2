@@ -1,0 +1,56 @@
+[
+  {
+    "book_id": "6ae0bfe04adf2ffb52f73751",
+    "slot": 1,
+    "title": "前漢書·卷四十一~卷四十三 (Hanshu, Siku Quanshu, vol. 27 of 57)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu manuscript copy of the Hanshu (biographies of Li Shang and Xiahou Ying, juan 41), which belongs in a general 'universallibrary' collection.",
+    "rights_flag": null,
+    "structure_note": "printed_backsteps 19 and printed_repeats 43 look like the normal layout of a Siku fascicle: the folio numbers start again with each juan (41–43), and both halves of a folio carry one block-heart number (this leaf shows '九' in the fold). Neither looks like a defect. The structure count gives pages_translated 0, but the field gives 121, and this page is translated, so the counter is the thing that is wrong (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "printed_marker": "九 (block heart, with title 前漢書)",
+        "layout": "vertical columns in a ruled frame, 8 columns of large characters; two-line small-character interlinear commentary; block heart at the left edge, with a strip of the facing leaf's '欽定四庫全書' visible",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "嗣天下稱酈況賣友",
+            "english": "The world said that Li Kuang had sold out his friend.",
+            "problem": "況 is Li Ji's courtesy name, but the English presents 'Li Kuang' as if it were a different person, and the keywords list 'Li Ji, Li Kuang' as two people. A reader cannot tell that the subject is still Ji.",
+            "severity": "minor"
+          },
+          {
+            "source": "坐巫蠱誅",
+            "english": "He was implicated in the witchcraft affair <note>the <term>wugu</term> <gloss>sorcery</gloss> scandal",
+            "problem": "a gloss is nested inside a note inside the running text, which makes the sentence heavy. The content is correct.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "148 BCE", "verdict": "ok", "helpful": true },
+            { "quote": "Su Lin says: She was Zang Er, the mother of Empress Wang, co", "verdict": "ok", "helpful": true },
+            { "quote": "Yan Shigu says: Miao is the name of the enfeoffed estate.", "verdict": "ok", "helpful": true },
+            { "quote": "the <term>wugu</term> <gloss>sorcery</gloss> scandal of Emperor", "verdict": "ok", "helpful": true },
+            { "quote": "sorcery", "verdict": "ok", "helpful": false },
+            { "quote": "1 to 5 CE, under Emperor Ping", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "The world said that Li Kuang had sold out his friend.", "why": "the reader needs to know that Kuang is Li Ji's courtesy name, and that the 'friend' is Lü Lu, whom Ji lured away in 180 BCE so the Lü clan could be destroyed. Without this the sentence names an unknown person and an unexplained betrayal." },
+            { "english": "Marquis Within the Passes", "why": "a Han honorary rank with no fief of its own, below a full marquis. A general reader cannot tell that this is a lesser grant than the original marquisates." },
+            { "english": "Wu, Chu, Qi and Zhao rebelled", "why": "this is the Rebellion of the Seven States (154 BCE). The sentence depends on that allusion, but only the keywords name it." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches this Siku Quanshu leaf exactly, interlinear commentary included, and the translation is faithful. Its date notes are correct. The one weakness is that 'Li Kuang' is left without a gloss, so a reader may take Li Ji's courtesy name for a second person."
+  }
+]

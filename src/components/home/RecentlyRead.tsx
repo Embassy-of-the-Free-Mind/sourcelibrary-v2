@@ -81,7 +81,7 @@ export function RecentlyReadSlider({ books, lang = 'en' }: { books: MiniBook[]; 
       <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
         <div className="flex items-baseline justify-between mb-6">
           <div>
-            <h2 className="text-2xl md:text-3xl text-primary font-display">{t.heading}</h2>
+            <h2 className="text-2xl md:text-3xl text-primary font-serif">{t.heading}</h2>
             <p className="text-muted mt-1 text-sm">{t.subtitle}</p>
           </div>
           <Link

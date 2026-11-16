@@ -173,7 +173,7 @@ const TRANSLATED_COUNTER: Partial<Record<Exclude<Locale, 'en'>, string>> = {
  * `source: 'source-column'` (`scripts/lib/source-column.mjs`,
  * `scripts/maintenance/extract-source-columns.mjs`), which makes it a book with
  * a real counter and leaves THIS pattern to mean exactly what it says. See
- * `.claude/handoffs/2026-08-25-bilingual-source-columns.md`.
+ * `.claude/handoffs/archive/2026-08-25-bilingual-source-columns.md`.
  *
  * ONE pattern, exported, because the same set has to be selected in Mongo
  * (`{ language: NATIVE_EDITION_LANGUAGE.es }`) and tested in JS. Two copies of

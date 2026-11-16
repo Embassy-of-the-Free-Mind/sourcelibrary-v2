@@ -1,0 +1,78 @@
+[
+  {
+    "book_id": "69b3e67c304c1c6b3950b7c3",
+    "slot": 1,
+    "title": "Collection of Kabbalah and Hekhalot texts (MS. Michael 9)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A medieval Hebrew manuscript leaf of Sefer Yetzirah (the twelve simple letters assigned to signs, months and organs), consistent with a Kabbalah/Hekhalot miscellany. No tradition or collection is set, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "pages_translated is 0 in the structure counts but 359 in the book field, so the two disagree. 165 pages have a printed number, with 21 backsteps and 14 repeats. In a manuscript whose only numbering is a later ink foliation in Hebrew letters, that most likely comes from misread folio marks, not a broken sequence. However, the sampled page's transcription is not the text on its image (see page 21), so the image and text may be one leaf apart across a run.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "no",
+        "printed_marker": "none visible (a small later ink mark in the inner margin beside line 2, possibly a Hebrew-letter foliation, illegible at this resolution)",
+        "layout": "single column of 17 lines in an Ashkenazi semi-cursive hand; a marginal correction 'בו' in the outer margin at line 13; edge of the facing leaf visible at left; ruler at right",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "ב עינים ב אזנים וב עיינים וב טורפין וב\nידין ב רגלים הטחול ב זועפים המרה",
+            "image": "ומנהיגין בנפש יד ימין יד שמאל רגל ימין רגל / שמאל כבד ומרה טחול המסס קורקבן קיבה / המליך אות ה וקשר לו כתר וצרפן זה בזה / ויצר בו טלה בעולם וניסן בשנה וכבד בנפש ...",
+            "problem": "The image holds the letter-by-letter assignments of the simple letters: He to Aries, Nisan and the liver; Vav to Taurus, Iyyar and the gall; Zayin to Gemini and Sivan; Het to Cancer and Tammuz; Tet to Leo, Av and the right kidney; Yod to Virgo and Elul; Lamed to Libra. None of the transcription's text (paired organs 'like a battle', the list of twelve zodiac names, five months) is on this leaf. The transcription ends 'ואלו יב', and the image opens 'ומנהיגין בנפש', which fits the transcription being the preceding leaf's text. If it is not, it is a confabulation.",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "מרחשון כסליו טבת שבט ואדר \" ואלו יב",
+            "english": "<note>Only five of the twelve Hebrew months are listed here, beginning with Marheshvan, the eighth month counted from Nisan. The scribe appears to have dropped the rest of the list.</note>",
+            "problem": "Invents a fact about the manuscript, namely that the scribe dropped months. The leaf in the image does the opposite: it names the months one by one (וניסן, ואייר, וסיון, ותמוז, ואב, ואלול). The apparent gap comes from the wrong-leaf or garbled OCR, not from the scribe.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "ח על גבי יה",
+            "english": "eight upon <term>Yah</term> <gloss>a short form of the divine name</gloss>",
+            "problem": "In a run of letter-numerals ('ח על גבי ח וג על גבי ו') יה is most naturally 15. Glossing it as the divine name gives a garbled numeric line a theological reading.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "זהר ובדו שניהם דיג חולקין על ג וזו היא הכרע",
+            "english": "They shone and set apart, both of them; they divide over three, and this is the decider",
+            "problem": "Fluent English built on transcription the note itself calls corrupt, with no uncertainty marker. In any case it is not text on this leaf.",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "The whole English page, with its summary and keywords, translates text that is not on the image shown beside it. A reader comparing the two sees an unrelated passage, and the summary ('the list of months is incomplete') describes the wrong leaf.",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The Hebrew here is badly corrupted. The passage seems to ech", "verdict": "unsupported", "helpful": false },
+            { "quote": "The Hebrew of this passage is also corrupt and partly unint", "verdict": "ok", "helpful": true },
+            { "quote": "\"He set the boundaries of the peoples\" echoes Deuteronomy 32", "verdict": "ok", "helpful": true },
+            { "quote": "These are the twelve signs of the zodiac, Aries through Pisc", "verdict": "ok", "helpful": true },
+            { "quote": "Only five of the twelve Hebrew months are listed here, begin", "verdict": "wrong", "helpful": false },
+            { "quote": "a short form of the divine name", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            { "english": "the spleen with two raging ones", "why": "'raging ones' (זועפים) is opaque, and nothing tells the reader what organ or faculty is meant." },
+            { "english": "The twelve simple letters are half", "why": "The 'simple letters' are a Sefer Yetzirah category (the twelve letters that are neither mothers nor doubles), and a general reader needs that to follow the page." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The sampled page's transcription and English are not the text on its image: the leaf shows the simple-letter assignments (He to Aries, Nisan and the liver, and so on), while the text pane gives paired organs and lists of signs and months, most likely the previous leaf. A note then blames the scribe for a gap the manuscript does not have. An expert would flag the wrong pairing at sight."
+  }
+]

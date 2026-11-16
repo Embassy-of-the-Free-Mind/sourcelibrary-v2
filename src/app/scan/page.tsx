@@ -892,7 +892,7 @@ export default function ScanPage() {
                       )}
                       {uploadStatus[page.id] === 'failed' && (
                         <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-status-error rounded-full flex items-center justify-center">
-                          <span className="text-white text-[8px] font-bold">!</span>
+                          <span className="text-white text-[8px] font-semibold">!</span>
                         </div>
                       )}
                       {/* Quality badge */}

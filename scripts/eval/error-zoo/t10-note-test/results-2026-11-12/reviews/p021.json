@@ -1,0 +1,78 @@
+[
+  {
+    "book_id": "69dfd990220eedf04e13b0cf",
+    "slot": 1,
+    "title": "Dresden Codex (Codex Dresdensis)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A facsimile of the Maya Dresden Codex. It fits the general open-source/community collections, and the date '1200' is the usual conventional dating.",
+    "rights_flag": null,
+    "structure_note": "The structure counts give pages_translated 0, but the record's pages_translated_field is 74. The instruments disagree (E2), probably because the 'translations' are English copies of English 'OCR' and are not counted as translations. with_printed_number 0 and no backsteps are expected for a screenfold codex with no pagination.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 34,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "tall screenfold leaf in two registers divided by a red rule; upper: glyph block and a framed head figure at left, bar-and-dot numerals and three rows of day signs in columns (fifth column cut off at right edge); lower: two glyph rows, four-place numerals with red zero shells, three rows of day signs with red coefficients, distance numbers at foot",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "- **Head:** a large profile head, black outline on the plain ground.",
+            "english": "<note>- **Head:** a large profile head, black outline on the plain ground.",
+            "problem": "Three body bullets describing the figure (Head, Frame, Panel) are wrapped in <note>, so the reader sees part of the page's own description styled as editorial apparatus. The neighbouring Identification and Colour bullets are not wrapped.",
+            "severity": "moderate",
+            "class": "T3"
+          }
+        ],
+        "other": [
+          {
+            "note": "The 'transcription' is not a transcription. It is an English, first-person analytic reading signed 'A structured reading by Claude Opus', with reasoning in the reader text ('I cannot confirm a Kin sign on the forehead', 'I treat these as glyph affixes, not numerals', arithmetic PASS/FAIL checks). The 'translation' panel then repeats the same English. The reading is accurate and openly attributed, but an expert expecting a transcription sees model reasoning on sight.",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Förstemann's 1906 readings, group numbers and error asterisks are editorial apparatus that is not on the leaf. They are clearly labelled as Förstemann's and kept apart from the leaf readings, so this is not invented apparatus.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "- **Head:** a large profile head, black outline on the plain",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "sun, day",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "| A (grp 14) | II Muluc | III Oc | IV Chuen |",
+              "why": "The day names (Muluc, Oc, Chuen, Cimi, Manik …) and their red coefficients are never explained as dates in the 260-day ritual count (tzolkin). Without that, the day-sign tables and the 'mod 13 / mod 20' checks mean nothing to a general reader."
+            },
+            {
+              "english": "*Distance numbers (two places: red 20s over black units), below the three rows of day signs*",
+              "why": "'Distance number' and 'series total' are technical terms of Maya calendrics. A reader needs a note that a distance number is the interval in days between successive totals (here 177 or 148, the lunar half-year intervals of the eclipse table)."
+            },
+            {
+              "english": "*Series totals (black, with red shells for zero; four places: 7200s / 360s / 20s / 1s)*",
+              "why": "The positional bar-and-dot system (bar = 5, dot = 1, shell = 0, places of 20 with 18×20 at the third level) is assumed but never glossed."
+            },
+            {
+              "english": "- 53b: his \"Bacab\" sign.",
+              "why": "Bacab, the Maya sky-bearer deities, is unexplained. So are Förstemann's planet labels 'Saturn' and 'Mercury', which a reader may take for established readings."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf is Dresden Codex p. 55, and where I could check its numerals, red zero shells, day-sign layout and figure description against the image, they match. Its arithmetic is internally correct. The page serves an AI's first-person English analysis as both 'OCR' and 'translation', with part of the figure description mis-wrapped as a <note>, and that is visible on sight."
+  }
+]

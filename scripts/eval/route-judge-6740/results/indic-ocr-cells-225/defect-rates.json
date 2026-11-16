@@ -1,0 +1,49 @@
+{
+ "about": "Defect rates per 1,000 words by arm, Opus route judge, from paired-score.json (#225). words = the judged text's words (Tamil: whitespace tokens; quote CER-like counts per word with care, non-latin-text-operations.md).",
+ "cells": {
+  "tamil": {
+   "agy": {
+    "n": 40,
+    "words": 5127,
+    "misleads_per_1k": 18.72,
+    "wrong_text_per_1k": 10.14,
+    "fidelity_mean": 3.48,
+    "accept": "15/40"
+   },
+   "ia>agy": {
+    "n": 39,
+    "words": 5073,
+    "misleads_per_1k": 15.38,
+    "wrong_text_per_1k": 6.9,
+    "fidelity_mean": 3.62,
+    "accept": "15/39"
+   },
+   "surya>agy": {
+    "n": 40,
+    "words": 5003,
+    "misleads_per_1k": 15.19,
+    "wrong_text_per_1k": 6.4,
+    "fidelity_mean": 3.73,
+    "accept": "13/40"
+   }
+  },
+  "series": {
+   "gpu2>agy": {
+    "n": 24,
+    "words": 6504,
+    "misleads_per_1k": 14.15,
+    "wrong_text_per_1k": 0.15,
+    "fidelity_mean": 3.75,
+    "accept": "11/24"
+   },
+   "agy": {
+    "n": 24,
+    "words": 6485,
+    "misleads_per_1k": 21.13,
+    "wrong_text_per_1k": 0.15,
+    "fidelity_mean": 3.58,
+    "accept": "5/24"
+   }
+  }
+ }
+}

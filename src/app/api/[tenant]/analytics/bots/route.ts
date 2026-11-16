@@ -180,7 +180,7 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // --- Helpers ---
 

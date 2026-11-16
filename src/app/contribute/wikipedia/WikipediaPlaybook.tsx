@@ -355,7 +355,7 @@ function GlobalTotals({ totals }: { totals: Record<string, number> }) {
 function Step({ n, text }: { n: number; text: string }) {
   return (
     <div className="bg-white rounded-lg p-4 text-center">
-      <div className="text-2xl mb-2 text-primary font-display">{n}</div>
+      <div className="text-2xl mb-2 text-primary font-serif">{n}</div>
       <div className="text-sm text-secondary">{text}</div>
     </div>
   );
@@ -490,7 +490,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <section>
         <div className="mb-4">
-          <h2 className="text-2xl text-primary font-display">Tier 1: Highest-Traffic Articles</h2>
+          <h2 className="text-2xl text-primary font-serif">Tier 1: Highest-Traffic Articles</h2>
           <p className="text-muted text-sm mt-1">Start here. These Wikipedia articles get the most readers.</p>
         </div>
         <div className="space-y-3">{tier1.map((p, i) => renderCard(p, i))}</div>
@@ -498,7 +498,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <section>
         <div className="mb-4">
-          <h2 className="text-2xl text-primary font-display">Tier 2: Strong Candidates</h2>
+          <h2 className="text-2xl text-primary font-serif">Tier 2: Strong Candidates</h2>
           <p className="text-muted text-sm mt-1">Post these after Tier 1, once you see some responses.</p>
         </div>
         <div className="space-y-3">{tier2.map((p, i) => renderCard(p, tier1.length + i))}</div>
@@ -506,7 +506,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <section>
         <div className="mb-4">
-          <h2 className="text-2xl text-primary font-display">Tier 3: Major Author Articles</h2>
+          <h2 className="text-2xl text-primary font-serif">Tier 3: Major Author Articles</h2>
           <p className="text-muted text-sm mt-1">
             These link to the author&rsquo;s Wikipedia article rather than a specific work article.
           </p>

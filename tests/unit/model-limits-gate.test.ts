@@ -95,3 +95,54 @@ describe('model-limits gate', () => {
     expect(ok).toBe(false);
   });
 });
+
+/**
+ * A stop from last week does not bind this week (v3#343). 2026-11-14: Google restarted the main pool's week 38 h
+ * before the reset its 429 had quoted. The pool read full, every lane on gex45 picked it, and the stored stop refused
+ * each call for 8 hours.
+ */
+describe('agy stops written before the pool\'s current week', () => {
+  const stops = path.join(dir, 'stops');
+  const H = 3600e3;
+  const iso = (ms: number) => new Date(Date.now() + ms).toISOString();
+  const stop = (file: string, atH: number, untilH: number) => fs.writeFileSync(path.join(stops, file), JSON.stringify({ at: iso(atH * H), until: iso(untilH * H), reason: 'Resets in 64h57m13s' }));
+  // The week restarted 8 hours ago and the pool reads full.
+  const fresh = { weekly: 0.99998, weeklyReset: iso(7 * 24 * H - 8 * H), fiveHour: 1 };
+  const quiet = { log: () => {} };
+  const main = 'agy-gemini-3.8-flash-low.json';
+
+  it('sets aside the main account\'s stop, and the model is open again', () => {
+    fs.mkdirSync(stops, { recursive: true });
+    fs.writeFileSync(agyMeter, '{}');   // no meter lock left by the tests above: only the stored stop is under test
+    stop(main, -34, 30);
+    expect(lim.agyBlocked('gemini-3.8-flash-low')).not.toBeNull();
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, fresh, quiet)).toEqual([main]);
+    expect(lim.agyBlocked('gemini-3.8-flash-low')).toBeNull();
+    expect(fs.readdirSync(stops).some((f) => f.startsWith(`${main}.stale-`))).toBe(true);
+  });
+
+  it('keeps a stop written inside this week', () => {
+    stop(main, -1, 4);
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, fresh, quiet)).toEqual([]);
+    expect(lim.agyBlocked('gemini-3.8-flash-low')).toMatchObject({ source: 'local-stop' });
+  });
+
+  it('keeps an old stop while either bucket still reads spent, or the reading has no reset', () => {
+    stop(main, -34, 30);
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, { ...fresh, weekly: 0.001 }, quiet)).toEqual([]);
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, { ...fresh, fiveHour: 0 }, quiet)).toEqual([]);
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, { ...fresh, weeklyReset: null }, quiet)).toEqual([]);
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, null, quiet)).toEqual([]);
+    expect(fs.existsSync(path.join(stops, main))).toBe(true);
+  });
+
+  it('touches only the account the reading is for, and never a Claude stop', () => {
+    const james = 'agy_.agy-james-gemini-3.8-flash-low.json';
+    const opus = 'agy-claude-opus-5-5-low.json';
+    stop(main, -34, 30); stop(james, -34, 30); stop(opus, -34, 30);
+    expect(lim.dropAgyStopsFromBeforeThisWeek('.agy-james', fresh, quiet)).toEqual([james]);
+    expect(lim.dropAgyStopsFromBeforeThisWeek(null, fresh, quiet)).toEqual([main]);
+    expect(fs.existsSync(path.join(stops, opus))).toBe(true);
+    fs.rmSync(path.join(stops, opus));
+  });
+});

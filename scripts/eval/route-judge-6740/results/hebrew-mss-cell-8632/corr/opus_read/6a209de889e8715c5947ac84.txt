@@ -1,0 +1,26 @@
+<warning>Handwritten Hebrew cursive, probably Italian or Sephardic semi-cursive, in a small, dense, heavily abbreviated hand. Light staining at the top edge, and the inner left margin is worn and repaired. At this resolution most words could not be read with confidence. Rather than give a reconstructed text, most of the body is marked unclear, line by line. The page needs a higher-resolution scan or a specialist in Hebrew palaeography.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Single column of about 44 lines of continuous text, apparently a responsum or legal discussion. The main text has two paragraph breaks: one at about line 18, and a new section beginning near line 19. At the bottom right there is a closing formula with a signature, followed by two short lines that may be the signature's continuation or a date. A small faded mark or number appears in the lower left corner of the leaf.</meta>
+
+<unclear>[illegible — lines 1–5, dense cursive, roughly 70 words]</unclear>
+
+<unclear>[illegible — lines 6–12, roughly 95 words]</unclear>
+
+<unclear>[illegible — lines 13–17, roughly 70 words]</unclear>
+
+<unclear>[illegible — line 18, ending the first section, roughly 10 words]</unclear>
+
+<unclear>עוד</unclear> <unclear>[illegible — remainder of line 19 and line 20, roughly 25 words]</unclear>
+
+<unclear>[illegible — lines 21–29, roughly 125 words]</unclear>
+
+<unclear>[illegible — lines 30–37, roughly 110 words]</unclear>
+
+<unclear>[illegible — lines 38–43, roughly 85 words]</unclear>
+
+<unclear>[illegible — closing formula and signature, about 3 short lines at the lower right]</unclear>
+
+<vocab>responsum, halakhic discussion, Hebrew cursive manuscript</vocab>

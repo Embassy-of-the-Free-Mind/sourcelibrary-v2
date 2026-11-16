@@ -57,11 +57,11 @@ const pct = (s: StageMeasurement) =>
 
 const C = {
   card: { background: '#161b22', border: '1px solid #30363d', borderRadius: 8, padding: '16px 18px' } as const,
-  big: { fontSize: 26, fontWeight: 700, color: '#e6edf3', lineHeight: 1.1 } as const,
+  big: { fontSize: 26, fontWeight: 600, color: '#e6edf3', lineHeight: 1.1 } as const,
   label: { fontSize: 12, color: '#8b949e', marginTop: 4, textTransform: 'uppercase', letterSpacing: 0.4 } as const,
   th: { textAlign: 'left' as const, fontSize: 11, color: '#8b949e', textTransform: 'uppercase' as const, letterSpacing: 0.4, padding: '8px 10px', borderBottom: '1px solid #30363d' },
   td: { fontSize: 13, color: '#c9d1d9', padding: '8px 10px', borderBottom: '1px solid #21262d', verticalAlign: 'top' as const },
-  badge: { display: 'inline-block', fontSize: 11, fontWeight: 700, borderRadius: 4, padding: '2px 7px', marginLeft: 8, letterSpacing: 0.4 } as const,
+  badge: { display: 'inline-block', fontSize: 11, fontWeight: 600, borderRadius: 4, padding: '2px 7px', marginLeft: 8, letterSpacing: 0.4 } as const,
 };
 
 function DeltaArrow({ delta }: { delta: number | null | undefined }) {
@@ -94,7 +94,7 @@ export default async function LinePage() {
   if (!latest) {
     return (
       <div style={{ maxWidth: 980 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700 }}>The Line</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 600 }}>The Line</h1>
         <p style={{ color: '#8b949e', marginTop: 12 }}>
           No stage-coverage snapshot yet. Run{' '}
           <code style={{ color: '#c9d1d9' }}>node scripts/workers/stage-coverage-snapshot.mjs</code>{' '}
@@ -120,7 +120,7 @@ export default async function LinePage() {
 
   return (
     <div style={{ maxWidth: 980 }}>
-      <h1 style={{ fontSize: 22, fontWeight: 700 }}>The Line</h1>
+      <h1 style={{ fontSize: 22, fontWeight: 600 }}>The Line</h1>
       <p style={{ fontSize: 13, color: '#8b949e', margin: '4px 0 20px' }}>
         Per-stage coverage measured from data (rows and fields), never job counters. Snapshot: {generatedAt}
         {weekAgo ? ` · 7-day deltas vs ${new Date(weekAgo.timestamp).toISOString().slice(0, 10)}` : ' · no 7-day baseline yet'}
@@ -190,7 +190,7 @@ export default async function LinePage() {
                       </div>
                     )}
                   </td>
-                  <td style={{ ...C.td, textAlign: 'right', fontWeight: 700, color: broken ? '#f85149' : '#e6edf3' }}>
+                  <td style={{ ...C.td, textAlign: 'right', fontWeight: 600, color: broken ? '#f85149' : '#e6edf3' }}>
                     {broken ? '?' : pct(s)}
                   </td>
                   <td style={{ ...C.td, textAlign: 'right' }}>{num(s.covered)} / {num(s.total)}</td>

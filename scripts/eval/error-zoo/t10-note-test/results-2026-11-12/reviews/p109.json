@@ -1,0 +1,115 @@
+[
+  {
+    "book_id": "6a3c640439b4508b04e237f1",
+    "slot": 1,
+    "title": "御定佩文韻府·卷二十六之九 (vol 435)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu copy of the Peiwen yunfu rhyme thesaurus (block-heart reads 欽定四庫全書 / 御定佩文韻府). It belongs in a general 'universallibrary' collection.",
+    "rights_flag": null,
+    "structure_note": "The image and the text on page 104 come from different leaves. The image shows the end of the 繆 entries (增繆, 繩樞繆) and then the start of the 諏 rhyme (韻藻 咨諏, 先諏, 鬼諏, 真諏, 嗟諏, 裴諏), block-heart folio 五十. The OCR is from another leaf: the 綢繆 citations and the start of 相繆. That leaf is probably earlier in the 繆 section. This points to an image/text offset (I1), and that fits the 3 printed backsteps and 2 repeats. One page cannot show how far the offset runs. Other problems: only 8 of 131 pages carry a printed number. The structure count gives 0 pages translated, but the field says 126. The OCR tags this Siku manuscript copy as <script>printed</script>.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 104,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "疏以喻先王先公亦世修其德積其勤勞乃得成其王業致此大",
+            "image": "增繆 王安石詩強隨傳呼出屋去鼻息凍合鬚丨丨 … 繩樞繆 揚載詩藜杖常他適丨丨每自丨 … 諏 將侯切韻會咨事為丨又虞韻 … 韻藻 咨諏 後漢書章帝紀前代聖君博思丨丨",
+            "problem": "None of the transcription is on this image. The OCR is the 綢繆/相繆 text from another leaf, and the image's entries (增繆, 繩樞繆, the 諏 rhyme heading and its compounds 咨諏, 先諏, 鬼諏, 真諏, 嗟諏, 裴諏) are missing from it.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "<script>printed</script>",
+            "image": "Siku Quanshu copyist's regular-script hand on ruled paper",
+            "problem": "The script tag says printed, but this is a manuscript copy",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "相繆",
+            "english": "**Entangled Together** <note>Original: 相繆 (xiangmou), \"mutually entwined\".</note>",
+            "problem": "In Su Shi's 山川相繆 the 繆 is normally read liáo (繚繞, 'winding'), so the romanisation 'xiangmou' is doubtful. The dictionary does file the compound under the móu rhyme, though.",
+            "severity": "minor"
+          },
+          {
+            "source": "(whole page)",
+            "english": "The Subcommentary explains: this is used as a metaphor for the former kings …",
+            "problem": "The English faithfully translates the transcription, but the transcription is another leaf, so the reader gets a translation that is not of the page shown. Against the OCR alone the translation is careful and would score 5 apart from minor points.",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "other": [
+          {
+            "note": "The scan beside the text is a different leaf. A reader can see that the large headwords on the image (增繆, 繩樞繆, 諏, 咨諏, 鬼諏) are nowhere in the text or the English.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "The meta says the page 'Continues from the previous page: the subcommentary on the Classic of Poetry line about binding closely the window and door with mulberry bark'. That describes the OCR's leaf, not the leaf in the image, and the claim about the previous page cannot be checked here.",
+            "severity": "minor"
+          }
+        ],
+        "printed_marker": "五十",
+        "layout": "Vertical text in ruled columns with large double-size headwords and smaller citation text. The rhyme head 諏 sits in a raised tab breaking the upper border. The block-heart strip at the left edge reads 欽定四庫全書 / 御定佩文韻府 / 五十.",
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "Zhaoyao and Sheti are star names. The \"two cycles\" are those",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "The \"canons and proclamations\" are sections of the Classic ",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Zu Ti and Liu Kun were Western Jin generals, remembered for ",
+              "verdict": "unsupported",
+              "helpful": false
+            },
+            {
+              "quote": "A rhapsody by Cao Zhi.",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Master Zhu is Zhu Xi, the Song dynasty Neo-Confucian philos",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "An allusion to the Classic of Poetry, where gifts of jade ar",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "Original: 相繆 (xiangmou), \"mutually entwined\".",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "Sharing hardship within the Chenghua palace, we were **intimately bound** for more than a year.",
+              "why": "A general reader will not know that Chenghua (承華) is the crown prince's palace, and the line depends on it."
+            },
+            {
+              "english": "The Subcommentary explains: this is used as a metaphor for the former kings and former dukes",
+              "why": "The English never says which text the Subcommentary (疏) is on or what the metaphor is. The page opens in mid-entry, and only the meta, which is shown apart from the text, hints at it."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is the wrong leaf (I1). The image shows the end of the 繆 entries and the start of the 諏 rhyme (folio 五十), but the OCR and the careful English are the 綢繆/相繆 citations from another leaf. The printed-number backsteps suggest an offset that may affect more of the book."
+  }
+]

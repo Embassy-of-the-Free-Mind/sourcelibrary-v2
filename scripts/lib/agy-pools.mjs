@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { dropAgyStopsFromBeforeThisWeek } from './model-limits.mjs';
 
 /** Other agy logins this box may carry (scripts/workers/agy-guard.sh AGY_HOME, #7517). */
 export const POOL_HOMES = Object.freeze(['/root/.agy-james', '/root/.agy-milo']);
@@ -126,7 +127,7 @@ export function noteAuthLoss(home, { now = Date.now(), stampDir = defaultStampDi
   if (process.env.AGY_AUTH_PAGE === '0') return { paged: false, stamp };
   send(`agy NOT LOGGED IN: ${pool} on ${host}`,
     `The ${pool} agy login on ${host} fails /quota with an authentication error, so every lane on that pool skips. `
-    + `Fix (scripts/workers/JOB-HOSTS.md): copy antigravity-oauth-token from main's ${home ? `${home}/` : '/root/'}.gemini/antigravity-cli/ to this box; do not log in again here.`);
+    + `agy-guard's last-good copy did not bring it back (/root/agy-quota/token-keeper.log, v3 #69). Fix (scripts/workers/JOB-HOSTS.md): copy antigravity-oauth-token from main's ${home ? `${home}/` : '/root/'}.gemini/antigravity-cli/ to this box; do not log in again here.`);
   return { paged: true, stamp };
 }
 
@@ -143,9 +144,17 @@ export function readPool(home, opts) {
   return null;
 }
 
-/** Every pool on the box: [{ home, busy, reading }], the default login first. */
+/**
+ * Every pool on the box: [{ home, busy, reading }], the default login first. A pool whose week restarted since a
+ * limit stop was stored for it has that stop set aside here, where its fresh reading is in hand (v3#343): the pickers
+ * rank pools by the reading, so a stop the reading contradicts would be picked first and refused every run.
+ */
 export function readPools({ homes = POOL_HOMES, ...opts } = {}) {
-  return [null, ...homes.filter((h) => fs.existsSync(h))].map((home) => ({ home, busy: home ? homeBusy(home) : null, reading: readPool(home, opts) }));
+  return [null, ...homes.filter((h) => fs.existsSync(h))].map((home) => {
+    const reading = readPool(home, opts);
+    if (reading) dropAgyStopsFromBeforeThisWeek(home ? path.basename(home) : null, reading);
+    return { home, busy: home ? homeBusy(home) : null, reading };
+  });
 }
 
 /** The pool to use: of the pools not busy and read, the one with most weekly remaining, if `gate(reading).open`. */
@@ -188,35 +197,129 @@ export const RESERVE_DROP_HOURS = 36;
  * book-finishing translation lane.
  *
  * A QUALITY lane (one that passes `yieldToFinish`) keeps FINISH_RESERVE in every pool on top of LANE_RESERVES while a
- * finishing lane on this box reports work waiting (finishQueueOpen: a stamp under FINISH_QUEUE_DIR, written by
- * cli-translate-lane.mjs finish each run, younger than FINISH_QUEUE_MAX_AGE_H, with pages > 0). The finishing lanes do
- * not keep it. No fresh stamp (an empty queue, or a box that runs no finishing lane) means no extra reserve, so a quality
- * lane never idles a pool the finishing lanes cannot use. The 36-hour drop still takes every reserve to 0.
+ * finishing lane reports work waiting (finishQueueOpen: a stamp written by cli-translate-lane.mjs finish each run,
+ * younger than FINISH_QUEUE_MAX_AGE_H, with pages > 0). The finishing lanes do not keep it. No fresh stamp (an empty
+ * queue, or no finishing lane running anywhere) means no extra reserve, so a quality lane never idles a pool the
+ * finishing lanes cannot use. The 36-hour drop still takes every reserve to 0.
+ *
+ * THE STAMP IS IN TWO PLACES (v3#70). The writer puts it in a file on its own box (FINISH_QUEUE_DIR/<lane>.json) and
+ * in Mongo (ops_reports, _id `finish-queue:<lane>`), each saying which box wrote it and when. A reader takes, per
+ * finishing lane, whichever of the two was written later, then applies the same test (pages > 0, younger than
+ * FINISH_QUEUE_MAX_AGE_H). Why: the boxes cannot reach each other's disks, and the pools are the same Google logins on
+ * every box, so a quality lane on one box must yield to a finishing lane on another. With only the file, a quality
+ * lane moved off the finishing lane's box would never see a stamp and would spend the pools first, with no error.
+ * The Mongo copy is read into this process by pullFinishQueue (the lanes call it at start and before each chunk; it
+ * asks Mongo at most once per FINISH_QUEUE_PULL_EVERY_MS). A process that has not pulled, or whose pull failed, uses
+ * the file alone, which is the behaviour before v3#70, and says so once.
  */
 export const FINISH_RESERVE = 0.25;
 export const FINISH_QUEUE_MAX_AGE_H = 6;
 export const FINISH_QUEUE_DIR = () => (fs.existsSync('/root/agy-quota') ? '/root/agy-quota/finish-queue' : path.join(os.tmpdir(), 'agy-finish-queue'));
+/** Where the shared copy lives: the box-to-box collection claude-limits-share.mjs uses (`claude-limits:latest`). */
+export const FINISH_QUEUE_COLLECTION = 'ops_reports';
+export const FINISH_QUEUE_ID_PREFIX = 'finish-queue:';
+export const FINISH_QUEUE_TYPE = 'finish-queue';
+/** A lane run asks Mongo for the shared stamps at most this often; the stamp itself is fresh for 6 hours. */
+export const FINISH_QUEUE_PULL_EVERY_MS = 10 * 60e3;
+const FINISH_QUEUE_MONGO_MS = 15e3;
 
-/** Record a finishing lane's waiting work: { books, pages } (pages it could still write). Never throws. */
-export function writeFinishQueue(lane, { books, pages }, { dir = FINISH_QUEUE_DIR(), now = Date.now() } = {}) {
+// The shared stamps this process last read from Mongo. `stamps: null` = never read: the file alone decides.
+const sharedFinish = { stamps: null, triedAt: -Infinity, pulling: null, warned: false };
+const sharedFinishWarn = (log, what, e) => {
+  if (sharedFinish.warned) return;
+  sharedFinish.warned = true;
+  log(`agy-pools: ${what} (${e?.message ?? e}); the finish-first stamp is read from this box's file only (${FINISH_QUEUE_DIR()}), as before v3#70. Said once per run.`);
+};
+/** Tests only: forget what this process read from Mongo, so the next reader starts as a fresh process would. */
+export function forgetSharedFinishQueue() { Object.assign(sharedFinish, { stamps: null, triedAt: -Infinity, pulling: null, warned: false }); }
+
+/**
+ * Record a finishing lane's waiting work on this box: { books, pages } (pages it could still write). Never throws.
+ * Returns the stamp ({ lane, books, pages, at, host }) for shareFinishQueue.
+ */
+export function writeFinishQueue(lane, { books, pages }, { dir = FINISH_QUEUE_DIR(), now = Date.now(), host = os.hostname() } = {}) {
+  const stamp = { lane, books, pages, at: new Date(now).toISOString(), host };
   try {
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, `${lane}.json`), JSON.stringify({ lane, books, pages, at: new Date(now).toISOString() }) + '\n');
+    fs.writeFileSync(path.join(dir, `${lane}.json`), JSON.stringify(stamp) + '\n');
   } catch { /* a stamp never fails the lane */ }
+  return stamp;
 }
 
-/** Is any finishing lane's stamp fresh with pages waiting? { open, lanes: [{ lane, books, pages, at }] }. */
-export function finishQueueOpen({ dir = FINISH_QUEUE_DIR(), now = Date.now(), maxAgeH = FINISH_QUEUE_MAX_AGE_H } = {}) {
+/**
+ * Publish a stamp writeFinishQueue returned, so quality lanes on every box read it (header: THE STAMP IS IN TWO
+ * PLACES). ACTUATION: a fresh stamp with pages > 0 makes every `--yield-to-finish` run and every
+ * `cli-translate-lane.mjs stale` run, on any box, keep FINISH_RESERVE more of each pool for up to
+ * FINISH_QUEUE_MAX_AGE_H. `db`: the lane's own Mongo handle (bookstore). Never throws; false when Mongo refused it.
+ */
+export async function shareFinishQueue(db, stamp, { log = console.error } = {}) {
+  const _id = `${FINISH_QUEUE_ID_PREFIX}${stamp.lane}`;
+  try {
+    await db.collection(FINISH_QUEUE_COLLECTION).replaceOne({ _id },
+      { _id, type: FINISH_QUEUE_TYPE, ...stamp, pushed_at: new Date().toISOString() }, { upsert: true, maxTimeMS: FINISH_QUEUE_MONGO_MS });
+    return true;
+  } catch (e) {
+    sharedFinishWarn(log, 'could not publish the finish-first stamp to Mongo; other boxes will not see this run', e);
+    return false;
+  }
+}
+
+/**
+ * Read the shared stamps from Mongo into this process, at most once per `every` ms (a failed read waits as long, so
+ * an unreachable Mongo costs one timeout, not one per chunk). Never throws. A failed read drops whatever was read
+ * before: until the next read succeeds the file alone decides, exactly as before v3#70.
+ */
+export async function pullFinishQueue(db, { now = Date.now(), every = FINISH_QUEUE_PULL_EVERY_MS, log = console.error } = {}) {
+  if (now - sharedFinish.triedAt < every) return sharedFinish.stamps;
+  if (sharedFinish.pulling) return sharedFinish.pulling;
+  sharedFinish.triedAt = now;
+  sharedFinish.pulling = (async () => {
+    try {
+      // An _id range, not `type`: ops_reports has no index on type and holds an hourly row for other reports.
+      const docs = await db.collection(FINISH_QUEUE_COLLECTION)
+        .find({ _id: { $gte: FINISH_QUEUE_ID_PREFIX, $lt: `${FINISH_QUEUE_ID_PREFIX}￿` } }, { maxTimeMS: FINISH_QUEUE_MONGO_MS }).toArray();
+      sharedFinish.stamps = docs.filter((d) => typeof d.lane === 'string' && Number.isFinite(Date.parse(d.at)))
+        .map(({ lane, books, pages, at, host }) => ({ lane, books, pages, at, host: host ?? null }));
+    } catch (e) {
+      sharedFinish.stamps = null;
+      sharedFinishWarn(log, 'could not read the finish-first stamp from Mongo', e);
+    } finally { sharedFinish.pulling = null; }
+    return sharedFinish.stamps;
+  })();
+  return sharedFinish.pulling;
+}
+
+const stampTime = (s) => { const t = Date.parse(s?.at); return Number.isFinite(t) ? t : -Infinity; };
+
+/**
+ * Is any finishing lane's stamp fresh with pages waiting? Per lane, the later-written of this box's file and the
+ * shared copy (`shared`: what pullFinishQueue last read; null = the file alone). Returns { open, lanes, seen }:
+ * `seen` is every lane's deciding stamp ({ lane, books, pages, at, host, source: 'file' | 'mongo' }), `lanes` those of
+ * them that are fresh with pages > 0.
+ */
+export function finishQueueOpen({ dir = FINISH_QUEUE_DIR(), now = Date.now(), maxAgeH = FINISH_QUEUE_MAX_AGE_H, shared = sharedFinish.stamps } = {}) {
+  const byLane = new Map();
   let files = [];
-  try { files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')); } catch { return { open: false, lanes: [] }; }
-  const lanes = [];
+  try { files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')); } catch { /* no stamp on this box */ }
   for (const f of files) {
     try {
-      const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
-      if (j.pages > 0 && now - Date.parse(j.at) <= maxAgeH * 3600e3) lanes.push(j);
+      byLane.set(f.slice(0, -'.json'.length), { ...JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), source: 'file' });
     } catch { /* unreadable stamp: not open */ }
   }
-  return { open: lanes.length > 0, lanes };
+  for (const s of shared ?? []) {
+    if (!byLane.has(s.lane) || stampTime(s) > stampTime(byLane.get(s.lane))) byLane.set(s.lane, { ...s, source: 'mongo' });
+  }
+  const seen = [...byLane.values()];
+  const lanes = seen.filter((j) => j.pages > 0 && now - Date.parse(j.at) <= maxAgeH * 3600e3);
+  return { open: lanes.length > 0, lanes, seen };
+}
+
+/** One log line saying what finishQueueOpen decided and on whose stamp, so a stale or foreign stamp can be traced. */
+export function finishQueueNote(q = finishQueueOpen(), { now = Date.now(), shared = sharedFinish.stamps } = {}) {
+  const one = (j) => `${j.lane}: ${j.pages} page(s) waiting, written ${j.at} (${((now - Date.parse(j.at)) / 3600e3).toFixed(1)} h ago) on ${j.host ?? 'a box that did not name itself'}, read from ${j.source === 'mongo' ? 'Mongo' : "this box's file"}`;
+  const from = shared == null ? "this box's file only; Mongo not read" : "this box's file and Mongo";
+  if (q.open) return `finish queue OPEN (${from}): ${q.lanes.map(one).join('; ')}. Quality lanes keep ${100 * FINISH_RESERVE}% more of each pool.`;
+  return `finish queue closed (${from}): ${q.seen?.length ? q.seen.map(one).join('; ') : 'no stamp'}. No extra reserve.`;
 }
 
 /**

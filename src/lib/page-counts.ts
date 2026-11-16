@@ -84,6 +84,20 @@ const TRANSLATABLE_COND = {
     // A page the OCR model permanently gave up on (#4674). This twin lacked the
     // clause until the parity test (#5325) put both twins on the same fixture.
     { $ne: ['$ocr.fail_blocked', true] },
+    // A page the pipeline recorded it will not translate (`translation.health_blocked`,
+    // #378): a repair item, not owed, unless it is a translate-gate stamp whose OCR has
+    // changed since it was judged. Mirror of HEALTH_NOT_BLOCKED_COND in the .mjs.
+    {
+      $or: [
+        { $in: [{ $ifNull: ['$translation.health_blocked', null] }, [null, '', false]] },
+        {
+          $and: [
+            { $eq: ['$translation.health_blocked', 'translate_gate'] },
+            { $ne: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, { $ifNull: ['$translation.refusal.ocr_chars', -1] }] },
+          ],
+        },
+      ],
+    },
   ],
 };
 

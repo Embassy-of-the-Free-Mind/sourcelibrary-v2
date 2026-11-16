@@ -34,6 +34,28 @@
  *                 spend): FAIL when billed > 1.25 × authorised + $10, for D-1 and D-2. The export
  *                 lags, so a partial D-1 can only under-report. It cannot raise a false FAIL.
  *
+ *       Split (#345): outside-envelope spend in the PIPELINE lanes (OCR, translation, images, by the usage
+ *       row's `type`, as paid-vs-got's laneOf) is measured against the dial exactly as above. All other
+ *       outside spend (lane `other`: search, the Librarian, embeddings, evals) is not pipeline spend and
+ *       is measured against a standing allowance, OUTSIDE_DIAL_ALLOWANCE_USD ($15/day, env
+ *       SPEND_OUTSIDE_DIAL_ALLOWANCE_USD), FAIL above max(1.5 x allowance, allowance + $5). The line names the
+ *       top three sources (usage `type`) with dollars. "Inside an envelope" is by book, so a non-pipeline
+ *       call on an envelope's book counts as envelope spend; envelope books are pipeline books first.
+ *   (e) VERCEL    the team's billed cost (Vercel FOCUS charges, as --week reads them) for the newest complete
+ *                 billing day (08:00Z to 08:00Z, so not always D-1) vs the
+ *                 median of the seven days before it: FAIL when more than 1.5 x the median AND at least $10
+ *                 above it (something changed). WARN when the month-to-date pace (spend / days elapsed x
+ *                 days in month) is over VERCEL_MONTHLY_BUDGET_USD ($1,200, env SPEND_VERCEL_MONTHLY_BUDGET_USD):
+ *                 a standing condition that needs a decision. Names the top two projects. UNKNOWN when the
+ *                 token is missing or the API fails.
+ *   (f) R2        system_config storage_stats (bucket `sourcelibrary`) vs scripts/lib/r2-storage-ceiling.json:
+ *                 FAIL at or over the ceiling; WARN when the room left, at the average daily bytes written over
+ *                 the last three days (metrics_history `r2_writes`, one row per day), is under 7 days. UNKNOWN
+ *                 when the stats document is missing or older than 36 h. Gives TB stored, TB of room, GB
+ *                 written yesterday and the monthly storage cost at list price ($0.015/GB).
+ *
+ * Design rule: FAIL means something changed yesterday; a standing condition that needs a decision is WARN.
+ *
  * Overall: FAIL if any check FAILs, else UNKNOWN if any could not be read, else WARN, else PASS.
  * Exit 1 = FAIL, 2 = UNKNOWN (could not measure), 0 = PASS/WARN. Never branch on != 0.
  *
@@ -63,6 +85,7 @@ import path from 'node:path';
 import { MongoClient, ObjectId } from 'mongodb';
 import { readScopeEnvelopes, getScopeSpendUsd } from '../lib/spend-guard.mjs';
 import { laneOf, REPORT_TYPE as PVG_TYPE } from './paid-vs-got.mjs';
+import { ceilingBytes, BUCKET as R2_BUCKET, MAX_AGE_HOURS as R2_MAX_AGE_H } from '../lib/r2-storage-ceiling.mjs';
 
 const HOUR = 3600e3;
 const DAY = 24 * HOUR;
@@ -72,6 +95,13 @@ export const NEAR_CAP = 0.9;
 export const STORED_DAYS = 3;
 export const INFRA_STALE_H = 3;
 export const MAIL_COOLDOWN_DAYS = 7;
+export const OUTSIDE_DIAL_ALLOWANCE_USD = 15;
+export const VERCEL_MONTHLY_BUDGET_USD = 1200;
+export const VERCEL_SPIKE_RATIO = 1.5;
+export const VERCEL_SPIKE_MIN_USD = 10;
+export const R2_MIN_ROOM_DAYS = 7;
+const R2_USD_PER_GB_MONTH = 0.015;
+const PIPELINE_LANES = new Set(['ocr', 'translation', 'images']);
 const PLACEHOLDER = new Set(['submitted', 'pending', 'duplicate', 'unknown']);
 const INFRA_SOURCES = ['infra-hetzner', 'infra-scaleway'];
 
@@ -207,24 +237,100 @@ export function dialDuring(revs, current, a, b) {
   return nums.length ? Math.max(...nums) : 0;
 }
 
-/** (d) yesterday (and the day before) against the dial in force that day, and the invoice. */
-export function dialCheck({ days, billedUnreadable = null }) {
+const envNum = (name, dflt) => { const v = Number(process.env[name]); return Number.isFinite(v) && v > 0 ? v : dflt; };
+export const outsideAllowanceUsd = () => envNum('SPEND_OUTSIDE_DIAL_ALLOWANCE_USD', OUTSIDE_DIAL_ALLOWANCE_USD);
+export const vercelMonthlyBudgetUsd = () => envNum('SPEND_VERCEL_MONTHLY_BUDGET_USD', VERCEL_MONTHLY_BUDGET_USD);
+/** The dial's over-limit rule, shared by the allowance: FAIL above max(1.5 x n, n + $5). */
+export const overLimit = (x) => Math.max(1.5 * x, x + 5);
+
+/**
+ * (d) yesterday (and the day before) against the dial in force that day, the standing allowance for
+ * non-pipeline spend, and the invoice. A day row carries `outside_pipeline_usd` / `outside_other_usd` /
+ * `other_top` (the split); an older row with only `outside_usd` is judged whole against the dial.
+ */
+export function dialCheck({ days, billedUnreadable = null, allowance = outsideAllowanceUsd() }) {
   const lines = [], fails = [];
+  let allowanceOver = false;
   for (const d of days) {
     const dial = d.dial_usd || 0;
-    const limit = dial ? Math.max(1.5 * dial, dial + 5) : 5;
-    const authorised = dial + d.envelope_usd;
-    const parts = [`${d.day}: metered ${$(d.metered_usd)} (in envelopes ${$(d.envelope_usd)}, outside ${$(d.outside_usd)}) vs dial ${$(dial)} (highest in force that day)`];
-    if (d.primary && d.outside_usd > limit) fails.push(`${d.day}: ${$(d.outside_usd)} spent outside every envelope against a ${$(dial)} dial (limit ${$(limit)})`);
+    const limit = dial ? overLimit(dial) : 5;
+    const split = d.outside_other_usd != null;
+    const pipelineOutside = split ? d.outside_pipeline_usd : d.outside_usd;
+    // Non-pipeline spend counts as authorised only as far as it was METERED, capped at the allowance.
+    // Adding the whole allowance would let up to $15 a day of unmetered spend hide inside it.
+    const authorised = dial + d.envelope_usd + (split ? Math.min(d.outside_other_usd, allowance) : 0);
+    const parts = [`${d.day}: metered ${$(d.metered_usd)} (in envelopes ${$(d.envelope_usd)}, outside ${$(d.outside_usd)}${split ? `: pipeline ${$(pipelineOutside)}, other ${$(d.outside_other_usd)}` : ''}) vs dial ${$(dial)} (highest in force that day)`];
+    if (d.primary && pipelineOutside > limit) fails.push(`${d.day}: ${$(pipelineOutside)} of pipeline spend (OCR, translation, images) outside every envelope against a ${$(dial)} dial (limit ${$(limit)})`);
     if (d.billed_usd != null) {
       parts.push(`billed ${$(d.billed_usd)} vs authorised ${$(authorised)}`);
-      if (d.billed_usd > 1.25 * authorised + 10) fails.push(`${d.day}: billed ${$(d.billed_usd)} > 1.25 × authorised ${$(authorised)} + $10 — spend the dial and envelopes did not see`);
+      if (d.billed_usd > 1.25 * authorised + 10) fails.push(`${d.day}: billed ${$(d.billed_usd)} > 1.25 x authorised ${$(authorised)} + $10 - spend the dial and envelopes did not see`);
     }
     lines.push(parts.join('; '));
+    if (split) {
+      const aLimit = overLimit(allowance);
+      const top = (d.other_top || []).slice(0, 3).map((t) => `${t.k} ${$(t.usd)}`).join(', ') || 'none';
+      lines.push(`${d.day}: non-pipeline spend outside envelopes ${$(d.outside_other_usd)} vs standing allowance ${$(allowance)} (limit ${$(aLimit)}); top sources: ${top}`);
+      if (d.primary && d.outside_other_usd > aLimit) { allowanceOver = true; fails.push(`${d.day}: ${$(d.outside_other_usd)} of non-pipeline spend (search, Librarian, embeddings, evals) over the ${$(allowance)}/day allowance (limit ${$(aLimit)}); top: ${top}`); }
+    }
   }
   if (billedUnreadable) lines.push(`UNKNOWN invoice not readable: ${billedUnreadable}`);
   for (const f of fails) lines.push(`FAIL ${f}`);
-  return { status: fails.length ? 'FAIL' : billedUnreadable ? 'UNKNOWN' : 'PASS', lines, fails, days };
+  return { status: fails.length ? 'FAIL' : billedUnreadable ? 'UNKNOWN' : 'PASS', lines, fails, days, allowance_usd: allowance, allowance_over: allowanceOver };
+}
+
+const median = (a) => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+
+/**
+ * (e) Vercel. `charges` = { byDay: { 'YYYY-MM-DD': { total, byProject: {name: usd} } } } or { error }.
+ * `day` = the newest complete billing day (Vercel's runs 08:00Z to 08:00Z, labelled by its start). Needs yesterday plus at least 4 of the 7 days before it, else UNKNOWN.
+ */
+export function vercelCheck({ charges, day, budget = vercelMonthlyBudgetUsd() }) {
+  if (!charges || charges.error) return { status: 'UNKNOWN', lines: [`UNKNOWN Vercel charges not readable: ${charges?.error || 'not read'}`] };
+  const by = charges.byDay || {};
+  const prev = [1, 2, 3, 4, 5, 6, 7].map((i) => dayStr(Date.parse(`${day}T00:00:00Z`) - i * DAY)).filter((d) => by[d]).map((d) => by[d].total);
+  if (!by[day] || prev.length < 4) return { status: 'UNKNOWN', lines: [`UNKNOWN Vercel charges cover ${by[day] ? 'yesterday' : 'not yesterday'} and ${prev.length} of the 7 days before it - too few to judge a spike`] };
+  const y = by[day].total, med = median(prev);
+  const spikeAt = Math.max(VERCEL_SPIKE_RATIO * med, med + VERCEL_SPIKE_MIN_USD);
+  const spike = y > VERCEL_SPIKE_RATIO * med && y - med >= VERCEL_SPIKE_MIN_USD;
+  const month = day.slice(0, 7), elapsed = Number(day.slice(8, 10));
+  const dim = new Date(Date.UTC(Number(day.slice(0, 4)), Number(day.slice(5, 7)), 0)).getUTCDate();
+  const mtd = Object.entries(by).filter(([d]) => d.startsWith(month)).reduce((a, [, v]) => a + v.total, 0);
+  const pace = mtd / elapsed * dim;
+  const over = pace > budget;
+  const top = Object.entries(by[day].byProject || {}).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([k, v]) => `${k} ${$(v)}`).join(', ') || 'none';
+  const lines = [`${day}: ${$(y)} billed vs median ${$(med)} of the ${prev.length} days before (spike above ${$(spikeAt)}); month to date ${$(mtd)}, pace ${$(pace)} for the month vs budget ${$(budget)}; top projects: ${top}`];
+  if (spike) lines.push(`FAIL ${day}: ${$(y)} is more than ${VERCEL_SPIKE_RATIO} x the median ${$(med)} and ${$(y - med)} above it; top projects: ${top}`);
+  if (over) lines.push(`WARN month-to-date pace ${$(pace)} is over the ${$(budget)} monthly budget (decide: raise it or cut)`);
+  return { status: spike ? 'FAIL' : over ? 'WARN' : 'PASS', lines, yesterday_usd: r2(y), median_usd: r2(med), mtd_usd: r2(mtd), pace_usd: r2(pace), budget_usd: budget, top_projects: top };
+}
+
+/**
+ * (f) R2. `stats` = system_config storage_stats (or null). `writtenDays` = bytes written per recent day,
+ * newest first ([{day, bytes}]; the first three are averaged). `ceiling` bytes from r2-storage-ceiling.json.
+ */
+export function r2Check({ stats, writtenDays = [], ceiling = ceilingBytes(), now = new Date() }) {
+  if (!stats) return { status: 'UNKNOWN', lines: ['UNKNOWN system_config storage_stats is missing - /api/cron/storage-stats has never written'] };
+  const at = ms(stats.updatedAt);
+  if (!Number.isFinite(at) || now.getTime() - at > R2_MAX_AGE_H * HOUR) {
+    return { status: 'UNKNOWN', lines: [`UNKNOWN storage stats are ${Number.isFinite(at) ? `${((now.getTime() - at) / HOUR).toFixed(0)} h old` : 'undated'} (limit ${R2_MAX_AGE_H} h) - the nightly storage-stats cron has stopped`] };
+  }
+  const row = Array.isArray(stats.r2) ? stats.r2.find((r) => r.bucket === R2_BUCKET) : null;
+  if (!row || !Number.isFinite(row.bytes)) return { status: 'UNKNOWN', lines: [`UNKNOWN no reading for bucket ${R2_BUCKET} in storage_stats`] };
+  const tb = (n) => `${(n / 1e12).toFixed(2)} TB`, gb = (n) => `${(n / 1e9).toFixed(0)} GB`;
+  const room = ceiling - row.bytes;
+  const days = writtenDays.filter((d) => Number.isFinite(d.bytes)).slice(0, 3);
+  const yesterday = days[0]?.bytes ?? null;
+  const avg = days.length ? days.reduce((a, d) => a + d.bytes, 0) / days.length : null;
+  const monthly = r2(row.bytes / 1e9 * R2_USD_PER_GB_MONTH);
+  const lines = [`${tb(row.bytes)} stored, ${tb(Math.max(0, room))} of room under the ${tb(ceiling)} ceiling, ${yesterday == null ? 'bytes written yesterday unknown' : `${gb(yesterday)} written yesterday`}, storage ${$(monthly)}/month at $${R2_USD_PER_GB_MONTH}/GB`];
+  const out = { lines, stored_bytes: row.bytes, ceiling_bytes: ceiling, room_bytes: room, written_bytes: yesterday, written_avg_bytes: avg == null ? null : Math.round(avg), written_days: days.length, monthly_usd: monthly };
+  if (room <= 0) { lines.push(`FAIL bucket ${R2_BUCKET} is at or over the ceiling (${tb(row.bytes)} >= ${tb(ceiling)}); raise it with a new approval in scripts/lib/r2-storage-ceiling.json or free space`); return { status: 'FAIL', ...out }; }
+  if (avg == null) { lines.push('UNKNOWN write rate not readable (no r2_writes day stored), so days of room cannot be judged'); return { status: 'UNKNOWN', ...out }; }
+  const roomDays = avg > 0 ? room / avg : Infinity;
+  out.room_days = roomDays === Infinity ? null : r2(roomDays);
+  lines.push(`room lasts ${roomDays === Infinity ? 'indefinitely' : `${roomDays.toFixed(1)} days`} at ${gb(avg)}/day (average of ${days.length} day${days.length === 1 ? '' : 's'}${days.length < 3 ? '; fewer than 3 days stored' : ''})`);
+  if (roomDays < R2_MIN_ROOM_DAYS) { lines.push(`WARN under ${R2_MIN_ROOM_DAYS} days of room at the current write rate (decide: approve more storage or slow the writers)`); return { status: 'WARN', ...out }; }
+  return { status: 'PASS', ...out };
 }
 
 export function overall(checks) {
@@ -243,7 +349,14 @@ export function summaryLine(status, checks) {
   const ef = E.filter((e) => e.level === 'FAIL').length, ew = E.filter((e) => e.level === 'WARN').length;
   if (ef) bits.push(`${ef} envelope(s) paying for no pages`);
   if (ew) bits.push(`${ew} envelope(s) near cap or idle`);
-  if (checks.dial.fails?.length) bits.push('dial/invoice over');
+  const dialFails = (checks.dial.fails?.length || 0) - (checks.dial.allowance_over ? 1 : 0);
+  if (dialFails > 0) bits.push('dial/invoice over');
+  if (checks.dial.allowance_over) bits.push('non-pipeline spend over allowance');
+  const V = checks.vercel, R = checks.r2;
+  if (V && V.status === 'FAIL') bits.push(`Vercel spike ${$(V.yesterday_usd)} vs median ${$(V.median_usd)}`);
+  else if (V && V.status === 'WARN') bits.push(`Vercel pace ${$(V.pace_usd)}/mo over budget`);
+  if (R && R.status === 'FAIL') bits.push('R2 at ceiling');
+  else if (R && R.status === 'WARN') bits.push(`R2 room ${R.room_days} days`);
   const unk = Object.entries(checks).filter(([, c]) => c.status === 'UNKNOWN').map(([k]) => k);
   if (unk.length) bits.push(`not readable: ${unk.join(', ')}`);
   return `spend check: ${status}${bits.length ? ' — ' + bits.join(' · ') : ''}`;
@@ -457,6 +570,40 @@ async function readVercel(from, to) {
   } catch (e) { return { error: e.message }; }
 }
 
+/**
+ * (e): Vercel FOCUS charges by billing day and project, from the earlier of the month start and 9 days
+ * back. Vercel's billing day runs 08:00Z to 08:00Z (midnight Pacific) and is labelled by its start date,
+ * so only periods already ended count and `latest` is the newest complete one (not always D-1).
+ */
+async function readVercelDaily(now) {
+  const token = clean(process.env.VERCEL_API_TOKEN || process.env.VERCEL_TOKEN);
+  if (!token) return { error: 'no VERCEL_API_TOKEN' };
+  const d1 = new Date(now.getTime() - DAY);
+  const from = Math.min(Date.UTC(d1.getUTCFullYear(), d1.getUTCMonth(), 1), now.getTime() - 9 * DAY);
+  try {
+    const r = await fetch(`https://api.vercel.com/v1/billing/charges?from=${new Date(from).toISOString()}&to=${now.toISOString()}`, { headers: { Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(180_000) });
+    if (!r.ok) return { error: `Vercel billing API ${r.status}` };
+    const byDay = {};
+    let n = 0, dated = 0;
+    for (const line of (await r.text()).split('\n')) {
+      if (!line.trim()) continue;
+      const c = JSON.parse(line);
+      n++;
+      const day = String(c.ChargePeriodStart || '').slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue;
+      dated++;
+      if (ms(c.ChargePeriodEnd) > now.getTime()) continue; // a period still open under-reports
+      const usd = Number(c.BilledCost || 0);
+      const e = (byDay[day] ||= { total: 0, byProject: {} });
+      e.total += usd;
+      const p = c.Tags?.ProjectName || '(team)';
+      e.byProject[p] = (e.byProject[p] || 0) + usd;
+    }
+    if (n && !dated) return { error: 'Vercel charges carry no ChargePeriodStart date' };
+    return { byDay, latest: Object.keys(byDay).sort().pop() || null };
+  } catch (e) { return { error: e.message }; }
+}
+
 // ─────────────────────────────────────────── email
 
 async function mail(subject, text) {
@@ -475,9 +622,10 @@ async function mail(subject, text) {
 
 function render(report) {
   const L = [`═══ ${report.line} ═══`, `day ${report.day} · generated ${report.generated_at.toISOString()}`, ''];
-  const names = { ledger: '(a) LEDGER  paid-vs-got', machines: '(b) MACHINES', envelopes: '(c) ENVELOPES', dial: '(d) DIAL vs INVOICE' };
+  const names = { ledger: '(a) LEDGER  paid-vs-got', machines: '(b) MACHINES', envelopes: '(c) ENVELOPES', dial: '(d) DIAL, ALLOWANCE, INVOICE', vercel: '(e) VERCEL', r2: '(f) R2' };
   for (const [k, title] of Object.entries(names)) {
     const c = report.checks[k];
+    if (!c) continue;
     L.push(`${title} — ${c.status}`);
     for (const l of c.lines) L.push(`  ${l}`);
     L.push('');
@@ -532,24 +680,39 @@ async function main() {
     const billed = await billedByDay(D2, dayStr(today0));
     const days = [D1, D2].map((day, i) => {
       const a = Date.parse(`${day}T00:00:00Z`), b = a + DAY;
-      let metered = 0, inEnv = 0;
+      let metered = 0, inEnv = 0, outPipe = 0, outOther = 0;
+      const otherBy = {};
       for (const r of usage.byTime) {
         const t = ms(r.timestamp);
         if (t < a || t >= b) continue;
-        metered += r.cost_usd || 0;
-        if (union.has(String(r.book_id)) && t >= union.get(String(r.book_id))) inEnv += r.cost_usd || 0;
+        const usd = r.cost_usd || 0;
+        metered += usd;
+        if (union.has(String(r.book_id)) && t >= union.get(String(r.book_id))) inEnv += usd;
+        else if (PIPELINE_LANES.has(laneOf(r.type))) outPipe += usd;
+        else { outOther += usd; const k = r.type || '(untyped)'; otherBy[k] = (otherBy[k] || 0) + usd; }
       }
+      const otherTop = Object.entries(otherBy).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([k, usd]) => ({ k, usd: r2(usd) }));
       return { day, primary: i === 0, dial_usd: dialDuring(revs, control?.daily_budget_usd, a, b), metered_usd: r2(metered), envelope_usd: r2(inEnv), outside_usd: r2(metered - inEnv),
+        outside_pipeline_usd: r2(outPipe), outside_other_usd: r2(outOther), other_top: otherTop,
         billed_usd: billed.byDay ? r2(billed.byDay[day] || 0) : null };
     });
     const dialC = dialCheck({ days, billedUnreadable: billed.error || null });
 
-    const checks = { ledger, machines, envelopes, dial: dialC };
+    // (e) + (f)
+    const vercelCharges = await readVercelDaily(now);
+    const vercel = vercelCheck({ charges: vercelCharges, day: vercelCharges.latest || D1 });
+    const stats = await db.collection('system_config').findOne({ _id: 'storage_stats' });
+    const hist = await db.collection('metrics_history').find({ date: { $in: [D1, dayStr(today0 - 2 * DAY), dayStr(today0 - 3 * DAY)] } }, { projection: { date: 1, r2_writes: 1 } }).toArray();
+    const writtenDays = hist.filter((h) => Number.isFinite(h.r2_writes?.total?.bytes)).sort((x, y) => (x.date < y.date ? 1 : -1)).map((h) => ({ day: h.date, bytes: h.r2_writes.total.bytes }));
+    if (!writtenDays.length && Number.isFinite(stats?.r2_writes?.families?.total?.bytes)) writtenDays.push({ day: stats.r2_writes.day, bytes: stats.r2_writes.families.total.bytes });
+    const r2c = r2Check({ stats, writtenDays, now });
+
+    const checks = { ledger, machines, envelopes, dial: dialC, vercel, r2: r2c };
     const status = overall(checks);
     const report = {
       _id: `spend-daily-${D1}`, type: REPORT_TYPE, day: D1, generated_at: now, generated_by: 'scripts/audit/spend-daily.mjs',
       status, line: summaryLine(status, checks), checks,
-      fingerprint: [ledger, machines, envelopes, dialC].flatMap((c) => c.lines.filter((l) => l.startsWith('FAIL')).map((l) => l.replace(/\$[\d.,]+|€\d+|\d+(\.\d+)? h/g, ''))).sort().join('|'),
+      fingerprint: [ledger, machines, envelopes, dialC, vercel, r2c].flatMap((c) => c.lines.filter((l) => l.startsWith('FAIL')).map((l) => l.replace(/\$[\d.,]+|€\d+|\d+(\.\d+)? h/g, ''))).sort().join('|'),
     };
     const text = render(report);
 

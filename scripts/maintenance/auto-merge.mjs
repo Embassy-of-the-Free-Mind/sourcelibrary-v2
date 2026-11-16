@@ -25,8 +25,8 @@
  *     Exit 2 (UNKNOWN) is not clear — see CLAUDE.md.
  *   Since #7008 a merge builds nothing: production is the `release` branch,
  *   which release.yml fast-forwards twice a day and which runs the interlock
- *   itself. The gap and the interlock stay here for one week so that pointing
- *   Vercel back at `main` is a complete rollback; then remove them.
+ *   itself. The gap was kept for one week as a rollback and set to 0 on 2026-11-13
+ *   (nine green PRs were waiting ~2 h on it); pass --gap=8 to restore it. The interlock stays.
  *
  * Merges oldest-first, one per run, with --squash --delete-branch (the repo's
  * merge style). Prints what it did and why it skipped the rest.
@@ -51,7 +51,7 @@ const has = (f) => argv.includes(f);
 const val = (f, d) => { const i = argv.indexOf(f); return i >= 0 && argv[i + 1] ? argv[i + 1] : d; };
 const DRY = has('--dry-run');
 const SETTLE_MIN = parseInt(val('--settle', '10'), 10);
-const BUILD_GAP_MIN = parseInt(val('--gap', '8'), 10);
+const BUILD_GAP_MIN = parseInt(val('--gap', '0'), 10); // 0 since 2026-11-13: a merge builds nothing (#7008); --gap=8 restores the old spacing if Vercel ever builds main again
 const MAX_RETRY_MIN = 10;
 const STALL_HOURS = parseFloat(val('--stall-hours', '6'));
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
@@ -59,7 +59,7 @@ const minutesAgo = (iso) => (Date.now() - new Date(iso).getTime()) / 60000;
 
 function gating(pr) {
   const byName = Object.fromEntries((pr.statusCheckRollup || []).map((c) => [c.name, c.conclusion || c.status]));
-  return { test: byName.test, DCO: byName.DCO, nextBuild: byName['next-build'], issueLink: byName['issue-link'], experimentsValid: byName['experiments-valid'] };
+  return { test: byName.test, static: byName.static, DCO: byName.DCO, nextBuild: byName['next-build'], issueLink: byName['issue-link'], experimentsValid: byName['experiments-valid'] };
 }
 
 // `next-build` (next-build.yml) gates when present: running or failed holds
@@ -72,6 +72,9 @@ const ISSUE_LINK_OK = NEXT_BUILD_OK;
 // scripts/eval/experiments/; absent passes, a failure holds the PR — a write-up
 // main's ledger build would refuse.
 const EXPERIMENTS_VALID_OK = NEXT_BUILD_OK;
+// `static` (unit-tests.yml, #239): tsc, eslint no-undef and the source checks, split out of `test` on
+// 2026-11-13. Absent passes: a head commit pushed before the split ran them inside `test`.
+const STATIC_OK = NEXT_BUILD_OK;
 
 // `gh pr list` reports mergeable=UNKNOWN for EVERY open PR right after anything
 // lands on main (GitHub invalidates them all at once and recomputes lazily, on a
@@ -108,6 +111,7 @@ function candidates() {
     if (!NEXT_BUILD_OK.has(g.nextBuild)) why.push(`next-build=${g.nextBuild}`);
     if (!ISSUE_LINK_OK.has(g.issueLink)) why.push(`issue-link=${g.issueLink}`);
     if (!EXPERIMENTS_VALID_OK.has(g.experimentsValid)) why.push(`experiments-valid=${g.experimentsValid}`);
+    if (!STATIC_OK.has(g.static)) why.push(`static=${g.static}`);
     if (minutesAgo(pr.updatedAt) < SETTLE_MIN) why.push(`updated ${minutesAgo(pr.updatedAt).toFixed(0)} min ago (< ${SETTLE_MIN} settle)`);
     out.push({ pr, why });
   }
@@ -125,7 +129,7 @@ function stallAdvice(why) {
     out.push('CI never ran on this head commit (no `test` or `DCO` result). That usually means the PR conflicted with `main` when it was pushed. Merge `main` into the branch and push, and CI starts.');
   }
   if (why.some((w) => w === 'mergeable=CONFLICTING')) out.push('It conflicts with `main`. Merge `main` into the branch and resolve the conflict.');
-  const failed = why.filter((w) => /^(test|DCO|next-build|issue-link|experiments-valid)=(FAILURE|ERROR|TIMED_OUT|CANCELLED|ACTION_REQUIRED|STARTUP_FAILURE)$/.test(w));
+  const failed = why.filter((w) => /^(test|static|DCO|next-build|issue-link|experiments-valid)=(FAILURE|ERROR|TIMED_OUT|CANCELLED|ACTION_REQUIRED|STARTUP_FAILURE)$/.test(w));
   if (failed.length) out.push(`A gating check did not pass (${failed.join(', ')}). Fix it and push.`);
   return out;
 }

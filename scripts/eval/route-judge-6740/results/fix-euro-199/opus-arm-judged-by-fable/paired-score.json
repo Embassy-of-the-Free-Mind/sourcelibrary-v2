@@ -1,0 +1,149 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "model",
+  "issue": 199,
+  "stage": "ocr",
+  "languages": [
+   "German",
+   "English",
+   "Italian",
+   "French",
+   "Dutch",
+   "Spanish"
+  ],
+  "baseline": "stored",
+  "arms": [
+   "stored",
+   "stored-opus"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — a pooled test of untested euro cells (30 pages, 10 cells); no cell reaches the table n",
+  "waive": {}
+ },
+ "judges": {
+  "fable": {
+   "cells": {
+    "euro": {
+     "routes": {
+      "stored": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "10/30",
+       "accept_wilson": [
+        0.192,
+        0.512
+       ],
+       "accept_by_book": [
+        0.167,
+        0.5
+       ],
+       "wrong_text_pages": "20/30",
+       "wrong_text_wilson": [
+        0.488,
+        0.808
+       ],
+       "fidelity_mean": 3.13,
+       "counts": true,
+       "words": 9867,
+       "misleads_per_1k": 5.68,
+       "wrong_text_per_1k": 10.44
+      },
+      "stored-opus": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "28/30",
+       "accept_wilson": [
+        0.787,
+        0.982
+       ],
+       "accept_by_book": [
+        0.833,
+        1
+       ],
+       "wrong_text_pages": "2/30",
+       "wrong_text_wilson": [
+        0.018,
+        0.213
+       ],
+       "fidelity_mean": 4.63,
+       "counts": true,
+       "words": 10514,
+       "misleads_per_1k": 1.62,
+       "wrong_text_per_1k": 0.48
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 3,
+       "passed": true
+      },
+      "stored-opus": {
+       "n": 3,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 5,
+      "accept_flips": "0/5",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0.2
+     },
+     "against_baseline": {
+      "stored -> stored-opus": {
+       "shared_pages": 30,
+       "better": "25/30",
+       "worse": "0/30",
+       "accept_gained": 18,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.5
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "2 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 2 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "5 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

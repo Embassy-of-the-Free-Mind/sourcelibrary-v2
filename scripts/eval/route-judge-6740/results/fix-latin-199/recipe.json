@@ -1,0 +1,25 @@
+{
+ "question": "route",
+ "issue": 199,
+ "stage": "ocr",
+ "languages": [
+  "Latin"
+ ],
+ "baseline": "stored",
+ "arms": [
+  "stored",
+  "opus",
+  "fable"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": "latin-flash3/unknown",
+ "waive": {}
+}

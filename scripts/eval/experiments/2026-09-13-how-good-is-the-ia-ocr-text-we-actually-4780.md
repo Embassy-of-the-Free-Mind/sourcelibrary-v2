@@ -68,7 +68,7 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   text: the gate's per-book offset was locally wrong — every one is "text one leaf behind", the
   Oxyrhynchus volumes worst; 2 already written), **5 image-side** (the text matches the source
   leaf; the archived R2 image is the neighbouring leaf — the #3368 bulk-JP2 leaf offset,
-  `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`; the TEXT is right; 2 written), 2 unclear.
+  `.claude/handoffs/archive/2026-07-27-bulk-jp2-leaf-offset.md`; the TEXT is right; 2 written), 2 unclear.
   Mechanism for the text-side class: the reference pages are the book's FIRST 25 (the preview
   sample), so the offset is calibrated at the front and drifts by the interior; an 86% vote
   (`--min-offset-share` 0.60 passes it) was locally wrong. **A repair must classify first —

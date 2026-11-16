@@ -5,7 +5,7 @@ import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import type { ReaderSettings, ReaderTheme } from './useReaderV2';
 
 // Shared reading-settings controls, rendered inside 2a's popover, 2c's drawer,
-// and the mobile sheets. All type set in the site's existing faces (Inter UI,
+// and the mobile sheets. All type set in the site's existing faces (Source Sans 3 UI,
 // letterspaced caps for labels — the house style uses no monospace).
 
 // Swatches are literal, never tokens: a token is re-declared by the very theme

@@ -207,11 +207,33 @@ describe('stops (STOP_ROWS, #8283)', () => {
   });
   it('the shipped rows cover every stop on the hetzner listing of 2026-11-11', () => {
     for (const key of ['/mnt/HC_Volume_105839809/siku-lane-5600/STOP', '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP', '/root/acq-wave/STOP-IMPORT',
-      '/root/ft-batches/2026-10-29-05/STOP', '/root/ft-batches/2026-11-11-nightly-0130/STOP.meter-blind-pr8540', '/root/gpu-backlog-5660/zh/STOP']) {
+      // 2026-10-29-05/STOP and 2026-11-11-nightly-0130/STOP.meter-blind-pr8540 were retired 2026-11-15 with their rows (v3#376);
+      // /root/gpu-backlog-5660/zh went with its dir (v3#384)
+      '/root/ft-batches/2026-11-20-nightly-0130/STOP']) {
       expect(stopRowFor({ kind: 'stop-file', box: 'hetzner', key }), key).not.toBeNull();
     }
     expect(stopRowFor({ kind: 'route-off', box: 'gex45', key: 'la-first-read-armc-7701' })).not.toBeNull();
     expect(stopRowFor({ kind: 'route-off', box: 'hetzner', key: 'la-first-read-armc-7701' })).toBeNull();
+  });
+  it('a STOP renamed to record its removal is not a stop (v3#384)', () => {
+    const fs = fakeFs({
+      '/root/ft-batches/2026-10-29-05/STOP.removed-2026-11-15-v3-376': { text: '' },
+      '/root/ft-batches/2026-11-11-nightly-0130/STOP.meter-blind-pr8540.removed-2026-11-15-v3-376': { text: 'meter blind' },
+      '/root/ft-batches/2026-11-12-nightly-0130/STOP.meter-blind': { text: 'still standing' },
+    });
+    expect(discoverStopFiles('hetzner', { fsApi: fs as never }).map(f => f.key)).toEqual(['/root/ft-batches/2026-11-12-nightly-0130/STOP.meter-blind']);
+  });
+  it('a glob row with nothing standing is not STALE; a literal row whose job dir is gone is (v3#384)', () => {
+    const rows = [row({ id: 'glob', match: { path: '/root/ft-batches/*-nightly-*/STOP' } }), row({ id: 'gone', match: { path: '/root/gpu-backlog-5660/zh/STOP' } })];
+    const readable = readableRows(rows as never, { fsApi: fakeFs({ '/root/acq-wave/STOP-IMPORT': { text: '' } }) as never }) as never[];
+    expect(readable).toHaveLength(2);
+    expect(judgeStops([], { box: 'main', judged: ['stop-file'], now: NOW, rows: readable }).map(s => `${s.id}:${s.flags[0].flag}`)).toEqual(['gone:STALE ROW']);
+  });
+  it('a v3 or conceptual-histories owner carries its repo; v2 is the default', () => {
+    const egang = stopRowFor({ kind: 'hold-reason', box: 'corpus', key: 'egangotri-mss-95' }) as { issue: number; repo: string };
+    expect([egang.issue, egang.repo]).toEqual([95, 'v3']);
+    const out = judgeStops([{ kind: 'hold-reason', box: 'corpus', key: 'egangotri-mss-95' }, { kind: 'hold-reason', box: 'corpus', key: 'manifest-only-lazy-pages' }], { box: 'corpus', judged: [], now: NOW });
+    expect(out.map(s => (s as { issue_repo: string }).issue_repo)).toEqual(['v3', 'v2']);
   });
   it('parses only disabled routes from the tsv and skips comment lines', () => {
     const tsv = '# off\tcommented\tx\t1\non\tzh\tpaddle-zh\t7546\noff\tla-first\teuro-draft\t7701\t/root/jobs/x\n-\tdash\tx\t5\n#off\thidden\tx\t6';

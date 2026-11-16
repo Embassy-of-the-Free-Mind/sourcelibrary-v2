@@ -15,7 +15,10 @@
  * Embed text:   POST /embed-text  { text: "allegory of arithmetic" }
  * Embed batch:  POST /embed-images { urls: ["https://...", ...] }
  *
- * Port: 3457 (or CLIP_PORT env var)
+ * Port: 3457 (or CLIP_PORT env var). Host: 127.0.0.1 (or CLIP_HOST). Every caller is on this box:
+ * production reaches it through the embedding server on :3456 (/clip/* → localhost:3457), which
+ * enforces x-embed-key; the scripts use localhost. Bound to loopback so a lost firewall rule (the
+ * iptables DROP on 3457/3458 is not persisted) cannot open an unauthenticated server (v2#6206).
  *
  * Runtime: CLIP_RUNTIME=v2 (default, @xenova/transformers 2.17) or v4
  * (@huggingface/transformers 4.3.0). The two produce DIFFERENT vectors from the
@@ -35,6 +38,7 @@ import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 startWorkerBeacon(import.meta.url);
 
 const PORT = parseInt(process.env.CLIP_PORT || '3457');
+const HOST = process.env.CLIP_HOST || '127.0.0.1';
 const RUNTIME = process.env.CLIP_RUNTIME || 'v2';
 if (!['v2', 'v4'].includes(RUNTIME)) throw new Error(`CLIP_RUNTIME must be v2 or v4, got ${RUNTIME}`);
 const MODEL_ID = 'Xenova/clip-vit-base-patch32';
@@ -207,8 +211,8 @@ const server = http.createServer(async (req, res) => {
   res.end('Not found');
 });
 
-server.listen(PORT, () => {
-  console.log(`CLIP server (${RUNTIME}) listening on port ${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`CLIP server (${RUNTIME}) listening on ${HOST}:${PORT}`);
 });
 
 function readBody(req) {

@@ -27,6 +27,16 @@ const BOOKS = [
   { id: 'no-visible-field', acquisition_campaign: 'x' },
 ].map(b => ({ ...b, 'image_source': { provider: 'sbb' }, pages_count: 10 }));
 
+// Catalogue-only books (#58): one nobody asked for, and three that are wanted.
+const LAZY = { pages_state: { state: 'manifest_only' }, acquisition_campaign: 'acquisition-wave-2026-10-lazy', visible: false };
+const HELD = { pipeline_auto: { status: 'held', hold: { reason: 'manifest-only-lazy-pages' } } };
+const CATALOGUE_BOOKS = [
+  { id: 'lazy-unwanted', ...LAZY, ...HELD },
+  { id: 'lazy-started', ...LAZY, ...HELD, archive_metadata: { last_attempt_at: t(4), manifest_ledger: { canvases: 10, n_done: 3 } } },
+  { id: 'lazy-released', ...LAZY, pipeline_auto: { status: 'queued' }, archive_metadata: { last_attempt_at: t(5) } },
+  { id: 'lazy-published', ...LAZY, ...HELD, visible: true, archive_metadata: { last_attempt_at: t(60) } },
+].map(b => ({ ...b, 'image_source': { provider: 'sbb' }, pages_count: 10 }));
+
 async function drawAll(batch: number) {
   const out: string[] = [];
   for (const tier of laneSelectionTiers({ tierACampaign: TIER_A })) {
@@ -58,6 +68,22 @@ describe('archive lane selection order (#5448 step 5)', () => {
     const ids = await drawAll(100);
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids.length).toBe(BOOKS.length);
+  });
+
+  it('a catalogue-only book nobody asked for is not drawn; a started, released or published one is (#58)', async () => {
+    await getTestDb().collection('books').insertMany(CATALOGUE_BOOKS.map(b => ({ ...b })));
+    const ids = await drawAll(100);
+    expect(ids).not.toContain('lazy-unwanted');
+    expect(ids.slice(0, 4)).toEqual(['live-untried', 'live-tierA', 'live-new', 'lazy-published']);
+    expect(ids).toContain('lazy-started');
+    expect(ids).toContain('lazy-released');
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids.length).toBe(BOOKS.length + CATALOGUE_BOOKS.length - 1);
+  });
+
+  it('negative control: releasing its hold puts the same book back in the draw', async () => {
+    await getTestDb().collection('books').insertOne({ ...CATALOGUE_BOOKS[0], pipeline_auto: { status: 'queued' } });
+    expect(await drawAll(100)).toContain('lazy-unwanted');
   });
 
   it('archive-acquired draws lane mode through these tiers, in this order', () => {

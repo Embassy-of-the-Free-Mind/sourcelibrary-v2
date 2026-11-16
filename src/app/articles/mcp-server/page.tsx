@@ -247,7 +247,7 @@ export default function McpServerPage() {
 
         <p className="text-secondary leading-relaxed mb-4">
           The easiest path today needs no install at all: Source Library is in the{' '}
-          <a href="https://claude.ai/directory/connectors/source-library" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">Claude connector directory</a>
+          <a href="https://claude.ai/directory/005aeb9a-a551-40d5-b3e9-77b860a48e06" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">Claude connector directory</a>
           : switch it on from the connectors menu, or add{' '}
           <code className="text-accent-rust text-sm">https://sourcelibrary.org/api/mcp</code> as a custom connector in any MCP client.
         </p>

@@ -179,7 +179,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
                   <span className="text-xs text-stone-500">{commonsLicense}</span>
                 )}
               </div>
-              <h1 className="text-2xl sm:text-3xl font-display font-bold leading-tight">
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold leading-tight">
                 {titleInfo.display}
                 {titleInfo.isDescriptive && (
                   <AiBadge
@@ -313,7 +313,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Description — prefer enrichment over Commons */}
         {(enrichDescription || commonsDescription) && (
           <div className="card p-6 sm:p-8">
-            <h2 className="text-lg font-display font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Work</h2>
+            <h2 className="text-lg font-serif font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Work</h2>
             <div className="prose-content max-w-none" style={{ color: 'var(--text-secondary)' }}>
               {enrichDescription ? (
                 <p className="mb-4 leading-relaxed">{enrichDescription}</p>
@@ -344,7 +344,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Inscriptions */}
         {enrichInscriptions && (
           <div className="card p-6 sm:p-8">
-            <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-lg font-serif font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <ScrollText className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
               Inscriptions
               {enrichInscriptionsLanguage && (
@@ -368,7 +368,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Cross-references to texts/traditions */}
         {enrichCrossRefs.length > 0 && (
           <div className="card p-6 sm:p-8">
-            <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-lg font-serif font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
               Connected Texts
             </h2>
@@ -417,7 +417,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Related books by this artist */}
         {!sourceBook && relatedBooks.length > 0 && (
           <div className="card p-6 sm:p-8">
-            <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-lg font-serif font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
               {book.author ? `Books by ${book.author}` : 'Related books'}
             </h2>
@@ -450,7 +450,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Collections */}
         {collections.length > 0 && (
           <div className="card p-6">
-            <h2 className="text-lg font-display font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Collections</h2>
+            <h2 className="text-lg font-serif font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Collections</h2>
             <div className="flex flex-wrap gap-2">
               {collections.map(col => (
                 <Link
@@ -480,7 +480,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
 
         {/* Provenance & Source — expanded with Getty identifiers and AI enrichment transparency */}
         <div className="card p-6 sm:p-8">
-          <h2 className="text-lg font-display font-semibold mb-5" style={{ color: 'var(--text-primary)' }}>Provenance &amp; Source</h2>
+          <h2 className="text-lg font-serif font-semibold mb-5" style={{ color: 'var(--text-primary)' }}>Provenance &amp; Source</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
             {/* Left column: Physical object provenance */}

@@ -1,0 +1,57 @@
+[
+  {
+    "book_id": "6976d747097b3607ee4be2f7",
+    "slot": 1,
+    "title": "Les aventures du philosophe inconnu, en la recherche & en l'invention de la pierre philosophale",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1646 French alchemical work (Belin); the leaf is 17th-century French type, consistent with the record. No tradition or collection is given in the packet to test against.",
+    "rights_flag": null,
+    "structure_note": "Record 162 carries printed p. 140, an offset of 22 consistent with front matter. The 7 backsteps and 8 repeats in printed numbers cannot be judged from one page; with 221 of 256 pages numbered, they are more likely misread or repeated numerals than a splice. The counts disagree with each other: structure says pages_translated 0 against a field of 236, and 256 page records against pages_count 254. That looks like a counting or field drift, not something visible on the leaf.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 162,
+        "right_page": "yes",
+        "printed_marker": "140",
+        "layout": "single column of italic-free roman text with a running head and page number at top; no marginalia, ornaments, signature or catchword visible",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>Les Aventures du</header>",
+            "image": "Les Auentures du",
+            "problem": "running head silently normalised u→v, while the body keeps the printed u/v (e.g. 'trouue', 'deuoir')",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Running head rendered as '->**The Adventures of the**<-': the arrow markup and bold leak into the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "Continuity meta '<meta>continues from previous page: the voice's rebuke, \"when interest commands\"</meta>' quotes words that are not on this leaf; they cannot be checked from this page",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"Le Seigneur.\" A gentleman of rank, for whom defen", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"se porter dessus le pré,\" literally \"to go out up", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"d'une aisle.\" A figure for half-hearted devotion,", "verdict": "ok", "helpful": true },
+            { "quote": "The Last Judgment.", "verdict": "ok", "helpful": true },
+            { "quote": "An echo of Matthew 7:2: \"with what measure ye mete, it shall", "verdict": "unsupported", "helpful": true }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is near-perfect and the translation is faithful, with sensible glosses on the duel idiom and the Last Judgment. The only defects on sight are leaked arrow/bold markup around the running head and a continuity meta that quotes text not on this leaf."
+  }
+]

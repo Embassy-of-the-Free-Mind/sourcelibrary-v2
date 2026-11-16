@@ -1,0 +1,36 @@
+<warning>Handwritten Ashkenazi cursive Hebrew. A dense hand with many abbreviations; several readings are uncertain. Partial text from the facing page at the right edge is not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>131 / <unclear>קכט</unclear></page-num>
+<meta>Catchword at foot of page: היינו</meta>
+
+(<unclear>קנ"ו</unclear>) והנה אח"כ צ"ל <unclear>בשניהם</unclear> והוא בחי' יחוד כי ועד הוא בחילוף אתוון אחד
+
+כי הנה בכאן בא לומר ענין התהוות ג' עולמות בי"ע ע"י <unclear>מבחי'</unclear> לבושים ית'
+המתלבשים בהן <unclear>ונשם כבוד</unclear> לבושים הוא התלבשות הכלי בג' עולמות בי"ע <unclear>מקשר סוף</unclear> אוי"ן
+ג' והנה לשון <unclear>בריאה</unclear> בלהן הוא על התהוות יש מאין מהיינו שהנברא הוא בבחי' יש
+ונבדר נפרד בפ"ע והנה שרש הנברא הוא ג"כ <unclear>צל"ח</unclear> ני' מהיינו שבטל במציאות
+לגבי הכח והאור השופע בו <unclear>מהבלים מיס מאבי"ע שהגי' מאוס</unclear> בה מאור בהם
+<unclear>ונמי'</unclear> השרש בשרש כמ"ש <unclear>טעמו חב</unclear> מהיינו ני' <unclear>בוצא</unclear> שבוא ומציאת ית' ממעלה <unclear>אשל</unclear>
+<unclear>בידעה</unclear> <unclear>שלועלע</unclear> השרש הנברא הוא בכח נפרד לגמרי <unclear>בידיעה</unclear> <unclear>שאמעה</unclear> כי המ
+השפע בו מאין מושג צ"ל וגם אין <unclear>מחע</unclear> גל' צ"ל לא מינו ולא <unclear>מנקבי</unclear> מהאיך שמהעלו
+להעולה שהעלו ומשג <unclear>משנה</unclear> השגה בעולם ובטל אצו ע"י ידיעה והשגה <unclear>נו</unclear> וגם
+במהותו ועצמותו אין הרגש גבול כלל רק שגה עולה ומה עלו לא מינה ולא <unclear>מנקבי</unclear>
+מהרגש שבין מהות <gloss>היש</gloss> הנברא למהות הכח ואור השפע בו להוות מאין ליש
+ולכן נק' מאין ליש <unclear>בוצא</unclear> עלי'. ובאור הדבר שבא לגלות מה ההרגש בין <unclear>כשא</unclear>
+לאצי' שבראה בלהן הוא על התהוות מציאות הנבראים שהם בבחי' נפרדים מ
+משאם מציאות הנאצלים שהן בבחי' ביטול לגמרי כמו השרש בשרש שאין שום
+ע"כ בראה צ"ל רק לשון אצי' שהוא לשון <unclear>ואצל</unclear> מן הרוח לשון הרגש האחד
+כמו השרש מן השרש וגם לשון אשל ופירוש אפי' שהן בבחי' ביטול גמור
+הרי הן אצל ופירוש <unclear>למה</unclear> בה עולה ועל <unclear>משה</unclear> לגבו ואור שהנם שהוא
+הנברא הוא ג"כ <unclear>צל"ח</unclear> ני' מהיינו שבטל במציאות בו ואח"כ <unclear>נשב</unclear> מ"ש של בשם
+בראה יש מאין מאחר שבמציאות אינו נפרד צ"ל אלא בטל במציאות לגבי הכח
+והאור השופע בו ג"כ בביטול גם השרש בשרש וה"ל בביטול הנאצלים
+שהוא כמו השרש בשרש וה"ל <unclear>שמציאות</unclear> באמת גם בי"ע ומכל העולם
+שום ומלואו בשום <unclear>עב"ג</unclear> וכו'. ומ"כ הדבר נעשו לרובם לבאורה מ"ש של הנשי'
+גם אצי' וגם בריאה בו וע"ז ת"ל ואמר <gloss>היינו</gloss> ני' <unclear>בוצא</unclear> כו' אשל ב
+<unclear>בידעה</unclear> <unclear>שאמעה</unclear> כו' וה"ל מה שאמר שהשרש הנברא ג"כ <unclear>צל"ח</unclear> ובטל בגופו
+
+<vocab>בריאה יש מאין, אצילות, בי"ע (בריאה יצירה עשיה), לבושים, התלבשות, ביטול במציאות, נאצלים, נבראים, שרש, אור השופע, השגה</vocab>

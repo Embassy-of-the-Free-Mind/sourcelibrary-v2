@@ -196,7 +196,7 @@ export default function SharedLibraryView({
 
         <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display"
+            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif"
           >
             {partner.name}
           </h1>
@@ -273,7 +273,7 @@ export default function SharedLibraryView({
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <h2
-              className="text-xl sm:text-2xl text-primary mb-4 font-display"
+              className="text-xl sm:text-2xl text-primary mb-4 font-serif"
             >
               Illustrations
             </h2>
@@ -338,7 +338,7 @@ export default function SharedLibraryView({
             <div className="flex items-center gap-2 mb-4">
               <Library className="w-5 h-5 text-accent-rust" />
               <h2
-                className="text-xl sm:text-2xl text-primary font-display"
+                className="text-xl sm:text-2xl text-primary font-serif"
               >
                 Contributing Libraries
               </h2>
@@ -399,7 +399,7 @@ export default function SharedLibraryView({
               <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
                 <div>
                   <h2
-                    className="text-2xl sm:text-3xl text-primary font-display"
+                    className="text-2xl sm:text-3xl text-primary font-serif"
                   >
                     All Books
                   </h2>
@@ -508,7 +508,7 @@ export default function SharedLibraryView({
             {/* Selected Books row — hidden on the dedicated /catalog view */}
             {showSelectedBooksRow && topBooks.length > 0 && (
               <div className="mb-10">
-                <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
+                <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-1">
                   Selected Books
                 </h2>
                 <p className="text-sm text-muted mb-4">
@@ -561,7 +561,7 @@ export default function SharedLibraryView({
             {showSelectedBooksRow && (
               <>
                 <div className="mb-6">
-                  <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                  <h2 className="text-2xl sm:text-3xl text-primary font-serif">
                     Library Catalogue
                   </h2>
                   <p className="text-sm text-muted mt-1">

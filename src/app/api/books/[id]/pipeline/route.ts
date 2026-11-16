@@ -51,7 +51,7 @@ export const GET = withAuth(async (request, session, context) => {
     console.error('Error fetching pipeline:', error);
     return NextResponse.json({ error: 'Failed to fetch pipeline' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // POST: Pipeline actions (start, pause, resume, reset)
 export const POST = withAuth(async (request, session, context) => {
@@ -122,7 +122,7 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error updating pipeline:', error);
     return NextResponse.json({ error: 'Failed to update pipeline' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // PATCH: Update individual step state
 export const PATCH = withAuth(async (request, session, context) => {
@@ -198,4 +198,4 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating pipeline step:', error);
     return NextResponse.json({ error: 'Failed to update pipeline step' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

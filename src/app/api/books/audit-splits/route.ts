@@ -97,7 +97,7 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 export const POST = withAuth(async (request, session) => {
   try {
@@ -209,4 +209,4 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

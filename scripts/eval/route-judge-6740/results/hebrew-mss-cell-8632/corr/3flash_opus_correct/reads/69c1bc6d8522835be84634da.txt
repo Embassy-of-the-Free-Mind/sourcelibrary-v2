@@ -1,0 +1,52 @@
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Italian/Sephardic semi-cursive Hebrew. Heavy bleed-through and brown staining across the middle and lower text block reduce legibility; many readings are uncertain.</warning>
+
+הקונה <unclear>שכונתו</unclear>, ונעשה לפרתיה פעם יותר כי <unclear>במתים</unclear> משום <unclear>באונן</unclear>
+<unclear>במשנה</unclear> שהביא <unclear>לירושלמי</unclear> <unclear>בקמא</unclear> רז"ל אשר בן <unclear>שעה</unclear> כל יו' ולכן <unclear>[illegible — 1 word]</unclear>
+<unclear>עתם</unclear> <unclear>ברשב"י</unclear> לכן הקונה <unclear>שכונתם</unclear>, עכ"ל
+
+### דף רצו ע"ב
+
+<unclear>לכתוב</unclear> <unclear>קריאה</unclear> לק"ש ונו' זה <unclear>יובן</unclear> <unclear>בזה</unclear>
+<unclear>שבמשנה</unclear> פ' <unclear>השטים</unclear> <unclear>קין</unclear> <unclear>קנא</unclear> ע"ב
+
+<margin><unclear>בס"ד כנ' עש"ב</unclear></margin>
+<unclear>שהן</unclear> קריאה זו זה <unclear>שיבה</unclear> ופירוש סוד הפסוק <unclear>שהעתיק</unclear> מן הרמב"ם עכ"ל
+
+### דף רצז ע"א
+
+<unclear>אמר</unclear> <unclear>אבא</unclear> וגו' כל <unclear>שהן</unclear> זה <unclear>שכינה</unclear>
+<unclear>פטריה</unclear> בגן קדש לקדש <unclear>ובמזבח</unclear> <unclear>קדשים</unclear>
+
+<unclear>בתבואת</unclear> ומ' קדש יש לפ' וגו' כל זה <unclear>מבואר</unclear> בפ' <unclear>השטים</unclear> <unclear>קין קנא</unclear> <unclear>[illegible — 2 words]</unclear> עש"ב
+
+### דף רצז ע"ב
+
+הספר וגו' <unclear>עד שהשבתי</unclear> עם <unclear>עיקר</unclear> בו
+יש וגו' <unclear>אמשר</unclear> <unclear>[illegible — 1 word]</unclear> זה <unclear>מרבינו</unclear> <unclear>בנים</unclear>
+
+<unclear>שרש"י</unclear> <unclear>דברי</unclear> <unclear>[illegible — 2 words]</unclear> <unclear>בתשובתם</unclear> <unclear>[illegible — 1 word]</unclear> כי <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 2 words]</unclear> יש <unclear>[illegible — 1 word]</unclear> אמשר <unclear>שהבן</unclear> זה <unclear>הפסוק</unclear> פס' <unclear>ונזכר</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 1 word]</unclear> הספר <unclear>ונזכר</unclear> <unclear>[illegible — 1 word]</unclear> וגו' <unclear>ופעם</unclear> כי <unclear>[illegible — 2 words]</unclear> <unclear>המחבר</unclear> יסוד <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 2 words]</unclear> ברית <unclear>[illegible — 1 word]</unclear> כי <unclear>[illegible — 3 words]</unclear> ברית <unclear>[illegible — 2 words]</unclear>
+בסוד <unclear>[illegible — 1 word]</unclear> שהוא היסוד ובזה <unclear>[illegible — 2 words]</unclear> <unclear>[illegible — 2 words]</unclear> וגו'
+<unclear>[illegible — 1 word]</unclear> כי <unclear>[illegible — 1 word]</unclear> <unclear>ונזכר</unclear> <unclear>[illegible — 1 word]</unclear> ברית <unclear>שהיא</unclear> פס' <unclear>[illegible — 3 words]</unclear>
+זה <unclear>[illegible — 1 word]</unclear> פ' <unclear>ויקרא</unclear> <unclear>[illegible — 2 words]</unclear> כי <unclear>[illegible — 1 word]</unclear> <unclear>ופסוק</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 1 word]</unclear> כי <unclear>[illegible — 2 words]</unclear> <unclear>[illegible — 1 word]</unclear> ועוד <unclear>כתיב</unclear> <unclear>[illegible — 3 words]</unclear> וגו', <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 2 words]</unclear> <unclear>שכתבתי</unclear> <unclear>[illegible — 3 words]</unclear> <unclear>עכ"ל</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 2 words]</unclear> יש עכ"ל
+
+### דף רצח ע"א
+
+<unclear>דכתיב</unclear> <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — 1 word]</unclear> וגו' <unclear>[illegible — 4 words]</unclear>
+
+<unclear>[illegible — 2 words]</unclear> ברית <unclear>[illegible — 4 words]</unclear> כי <unclear>[illegible — 4 words]</unclear>
+<unclear>[illegible — 3 words]</unclear> ברית <unclear>[illegible — 4 words]</unclear> <unclear>[illegible — 2 words]</unclear>
+
+<meta>Catchword at foot of page: <unclear>[illegible — 1 word]</unclear>. Mirror-reversed show-through from the verso is visible across the stained area and is not transcribed.</meta>
+
+<vocab>דף רצו ע"ב, דף רצז ע"א, דף רצז ע"ב, דף רצח ע"א, רמב"ם, רז"ל, ברית, יסוד</vocab>

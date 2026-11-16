@@ -233,19 +233,19 @@ export default async function EncyclopediaPage({
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-stone-900">{stats.total.toLocaleString('en-US')}</div>
+            <div className="text-2xl font-semibold text-stone-900">{stats.total.toLocaleString('en-US')}</div>
             <div className="text-sm text-stone-500">Total</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-accent-rust">{stats.people.toLocaleString('en-US')}</div>
+            <div className="text-2xl font-semibold text-accent-rust">{stats.people.toLocaleString('en-US')}</div>
             <div className="text-sm text-stone-500">People</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-accent-sage">{stats.places.toLocaleString('en-US')}</div>
+            <div className="text-2xl font-semibold text-accent-sage">{stats.places.toLocaleString('en-US')}</div>
             <div className="text-sm text-stone-500">Places</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-accent-violet">{stats.concepts.toLocaleString('en-US')}</div>
+            <div className="text-2xl font-semibold text-accent-violet">{stats.concepts.toLocaleString('en-US')}</div>
             <div className="text-sm text-stone-500">Concepts</div>
           </div>
         </div>

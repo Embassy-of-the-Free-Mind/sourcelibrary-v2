@@ -21,7 +21,7 @@ secret-lover run -- node scripts/batch/collect-batch-results.mjs --concurrency 1
 |-----------|---------|---------|
 | `analysis/` | Data inspection, reporting, audits | pipeline-stats, work-coverage |
 | `aws-lambda/` | Lambda worker build & deploy | build-lambda.sh, package-lambda.sh, deploy-lambda.sh |
-| `batch/` | Bulk OCR, translation, chapter extraction | bulk-reocr-local, collect-batch-results, run-bulk-reocr.sh |
+| `batch/` | Bulk OCR, translation, chapter extraction | bulk-reocr-local, collect-batch-results |
 | `custom-prompts/` | Custom OCR prompt text files | kircher.txt, zohar.txt |
 | `enrichment/` | Metadata enrichment & backfill | enrich-from-catalogs, normalize-languages, backfill-year |
 | `import/` | Batch book importing | batch-import-new-thought, import-thirukkural |

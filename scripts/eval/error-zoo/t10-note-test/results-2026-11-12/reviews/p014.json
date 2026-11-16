@@ -1,0 +1,59 @@
+[
+  {
+    "book_id": "69af43aeff29693470c6b04d",
+    "slot": 1,
+    "title": "Grammatici Latini Vol. VI Pt. 1: Scriptores Artis Metricae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Keil's Teubner edition of the Latin metricians (Marius Victorinus on this leaf), a Toronto scan. It belongs with the PIMS/Toronto collections.",
+    "rights_flag": null,
+    "structure_note": "Record 148 shows printed p. 142, which fits a steady offset of 6 for front matter. One page cannot show what the 3 backsteps and 3 repeats are; in a Teubner volume they are most likely misread numerals or front matter. The counts disagree with each other: structure.pages_translated is 0, but pages_translated_field is 294. 17 records have no OCR.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "printed_marker": "142",
+        "layout": "one column of prose, verse examples centred, line numbers 5–30 in the outer margin, running head 'MARII VICTORINI', parallel pagination 'p. 2589. 90 P.' / 'p. 194. 95 G.' under it, two footnote bands at the foot (cross-references, then the critical apparatus)",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The two footnote bands at the foot of the page (the cross-references and the critical apparatus) are tagged <margin> in both the OCR and the translation, so they are styled as marginalia rather than as footnotes. The printed line numbers in the outer margin, which the apparatus keys to, are not kept.", "severity": "minor", "class": "O12" },
+          { "note": "The centring markers '->…<-' around each verse example are carried into the reader text of the translation, and may show raw if the renderer does not support them.", "severity": "minor", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"cantabunt mihi Damoetas et Lyctius Aegon\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"Damoetas et Lyctius Aegon\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"o crudelis Alexi, nihil mea carmina curas\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"o crudelis Alexi nihil mea\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"beatus ille qui procul negotiis\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"beatus ille qui procul quiescit\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"tollor in montes vagus entheus repente\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"entheus repente\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"incipe Maenalios, incipe Maenalios\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"solvitur acris hiems grata vice\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"veris et favoni\"", "verdict": "ok", "helpful": true },
+            { "quote": "eleven-syllable verse", "verdict": "ok", "helpful": true },
+            { "quote": "\"curtailed\"", "verdict": "ok", "helpful": true },
+            { "quote": "longer members of a verse", "verdict": "ok", "helpful": true },
+            { "quote": "shorter segments", "verdict": "ok", "helpful": true },
+            { "quote": "the break after five half-feet", "verdict": "ok", "helpful": true },
+            { "quote": "\"triple five-half-foot verse\"", "verdict": "ok", "helpful": false },
+            { "quote": "\"threefold composite\"", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "For he split off the two and a half feet of the heroic verse", "why": "A general reader will not know that 'heroic verse' means the dactylic hexameter, and the whole derivation depends on it." },
+            { "english": "he brought forth the <term>Phalaecian</term> meter", "why": "The Phalaecian (the hendecasyllable of Catullus) is tagged as a term but gets no gloss, and it comes up twice in the argument." },
+            { "english": "that is, with its dipody placed in front", "why": "'Dipody' (a unit of two feet) and 'anapaestic' are left unexplained." },
+            { "english": "detracta with supremo written above: A", "why": "The apparatus uses the sigla A, B, 'Valentinus' and 'early editions' (for ς) without saying which manuscripts or editions they are." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "This is a clean page. The OCR matches the leaf word for word, including the apparatus, and the translation is faithful. Its notes give the Latin of each verse example, which a book on metre needs, and its glosses are correct. The only flaws are cosmetic: the footnote apparatus is tagged as <margin>, and the centring markup is carried into the reader text."
+  }
+]

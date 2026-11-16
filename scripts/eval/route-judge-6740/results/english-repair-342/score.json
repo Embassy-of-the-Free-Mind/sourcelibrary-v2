@@ -1,0 +1,3660 @@
+{
+ "generated_by": "scripts/eval/english-repair-342/score.py",
+ "n_set": 200,
+ "groups": {
+  "en_only": {
+   "stored": {
+    "pages": 50,
+    "words": 23908,
+    "serious_per_1k": 8.407,
+    "misleads_per_1k": 5.981,
+    "wrong_text_per_1k": 2.426,
+    "accept": 1
+   },
+   "retranslate": {
+    "arm": "B",
+    "pages": 50,
+    "words_A": 23908,
+    "words": 24443,
+    "A_serious_per_1k": 8.407,
+    "serious_per_1k": 4.214,
+    "diff_serious_per_1k": -4.193,
+    "diff_ci95_by_book": [
+     -5.458,
+     -3.138
+    ],
+    "A_misleads_per_1k": 5.981,
+    "misleads_per_1k": 3.355,
+    "diff_misleads_ci95_by_book": [
+     -3.696,
+     -1.768
+    ],
+    "A_wrong_text_per_1k": 2.426,
+    "wrong_text_per_1k": 0.859,
+    "diff_wrong_text_ci95_by_book": [
+     -2.248,
+     -0.97
+    ],
+    "A_serious": 201,
+    "serious": 103,
+    "accept_A": 1,
+    "accept": 27,
+    "new_serious_quote": 98,
+    "pages_with_new_serious_quote": 40,
+    "new_serious_quote_note": "B rewrites the page, so every quote is new: use added_net / pages_worse",
+    "added_net": 4,
+    "removed_net": 102,
+    "pages_worse": 4,
+    "pages_better": 41,
+    "pages_new_wrong_text": 5,
+    "fidelity_mean_A": 2.9,
+    "fidelity_mean": 3.72,
+    "audit_findings": {
+     "findings": 55,
+     "bad_in_A": 51,
+     "removed": 51,
+     "good_present": 1
+    }
+   },
+   "guided": {
+    "arm": "C",
+    "pages": 50,
+    "words_A": 23908,
+    "words": 23326,
+    "A_serious_per_1k": 8.407,
+    "serious_per_1k": 2.658,
+    "diff_serious_per_1k": -5.749,
+    "diff_ci95_by_book": [
+     -7.051,
+     -4.67
+    ],
+    "A_misleads_per_1k": 5.981,
+    "misleads_per_1k": 2.315,
+    "diff_misleads_ci95_by_book": [
+     -4.749,
+     -2.676
+    ],
+    "A_wrong_text_per_1k": 2.426,
+    "wrong_text_per_1k": 0.343,
+    "diff_wrong_text_ci95_by_book": [
+     -2.769,
+     -1.502
+    ],
+    "A_serious": 201,
+    "serious": 62,
+    "accept_A": 1,
+    "accept": 41,
+    "new_serious_quote": 20,
+    "pages_with_new_serious_quote": 9,
+    "added_net": 3,
+    "removed_net": 142,
+    "pages_worse": 1,
+    "pages_better": 48,
+    "pages_new_wrong_text": 1,
+    "fidelity_mean_A": 2.9,
+    "fidelity_mean": 4.02,
+    "audit_findings": {
+     "findings": 55,
+     "bad_in_A": 51,
+     "removed": 47,
+     "good_present": 0
+    },
+    "decoys": {
+     "decoys": 50,
+     "applied": 2,
+     "orig_kept": 37,
+     "rewritten": 11,
+     "applied_pages": [
+      "69a5e483006a40984221767c",
+      "6a43ab2b3c91e2a63d4d8ea5"
+     ]
+    }
+   },
+   "blind": {
+    "arm": "D",
+    "pages": 50,
+    "words_A": 23908,
+    "words": 23331,
+    "A_serious_per_1k": 8.407,
+    "serious_per_1k": 4.886,
+    "diff_serious_per_1k": -3.521,
+    "diff_ci95_by_book": [
+     -4.754,
+     -2.379
+    ],
+    "A_misleads_per_1k": 5.981,
+    "misleads_per_1k": 3.772,
+    "diff_misleads_ci95_by_book": [
+     -3.139,
+     -1.318
+    ],
+    "A_wrong_text_per_1k": 2.426,
+    "wrong_text_per_1k": 1.114,
+    "diff_wrong_text_ci95_by_book": [
+     -2.078,
+     -0.625
+    ],
+    "A_serious": 201,
+    "serious": 114,
+    "accept_A": 1,
+    "accept": 22,
+    "new_serious_quote": 45,
+    "pages_with_new_serious_quote": 26,
+    "added_net": 8,
+    "removed_net": 95,
+    "pages_worse": 4,
+    "pages_better": 39,
+    "pages_new_wrong_text": 7,
+    "fidelity_mean_A": 2.9,
+    "fidelity_mean": 3.56,
+    "audit_findings": {
+     "findings": 55,
+     "bad_in_A": 51,
+     "removed": 41,
+     "good_present": 1
+    }
+   }
+  },
+  "both": {
+   "stored": {
+    "pages": 50,
+    "words": 28148,
+    "serious_per_1k": 13.997,
+    "misleads_per_1k": 6.288,
+    "wrong_text_per_1k": 7.709,
+    "accept": 0
+   },
+   "retranslate": {
+    "arm": "B",
+    "pages": 50,
+    "words_A": 28148,
+    "words": 29191,
+    "A_serious_per_1k": 13.997,
+    "serious_per_1k": 10.86,
+    "diff_serious_per_1k": -3.138,
+    "diff_ci95_by_book": [
+     -4.626,
+     -1.82
+    ],
+    "A_misleads_per_1k": 6.288,
+    "misleads_per_1k": 4.967,
+    "diff_misleads_ci95_by_book": [
+     -2.469,
+     -0.144
+    ],
+    "A_wrong_text_per_1k": 7.709,
+    "wrong_text_per_1k": 5.892,
+    "diff_wrong_text_ci95_by_book": [
+     -3.098,
+     -0.687
+    ],
+    "A_serious": 394,
+    "serious": 317,
+    "accept_A": 0,
+    "accept": 2,
+    "new_serious_quote": 296,
+    "pages_with_new_serious_quote": 50,
+    "new_serious_quote_note": "B rewrites the page, so every quote is new: use added_net / pages_worse",
+    "added_net": 12,
+    "removed_net": 89,
+    "pages_worse": 7,
+    "pages_better": 32,
+    "pages_new_wrong_text": 10,
+    "fidelity_mean_A": 2.44,
+    "fidelity_mean": 2.56,
+    "audit_findings": {
+     "findings": 115,
+     "bad_in_A": 106,
+     "removed": 102,
+     "good_present": 0
+    }
+   },
+   "guided": {
+    "arm": "C",
+    "pages": 49,
+    "words_A": 28056,
+    "words": 28273,
+    "A_serious_per_1k": 13.544,
+    "serious_per_1k": 6.084,
+    "diff_serious_per_1k": -7.461,
+    "diff_ci95_by_book": [
+     -9.824,
+     -5.357
+    ],
+    "A_misleads_per_1k": 6.131,
+    "misleads_per_1k": 3.749,
+    "diff_misleads_ci95_by_book": [
+     -3.604,
+     -1.185
+    ],
+    "A_wrong_text_per_1k": 7.414,
+    "wrong_text_per_1k": 2.334,
+    "diff_wrong_text_ci95_by_book": [
+     -6.969,
+     -3.44
+    ],
+    "A_serious": 380,
+    "serious": 172,
+    "accept_A": 0,
+    "accept": 24,
+    "new_serious_quote": 98,
+    "pages_with_new_serious_quote": 28,
+    "added_net": 5,
+    "removed_net": 213,
+    "pages_worse": 4,
+    "pages_better": 40,
+    "pages_new_wrong_text": 5,
+    "fidelity_mean_A": 2.449,
+    "fidelity_mean": 3.449,
+    "audit_findings": {
+     "findings": 112,
+     "bad_in_A": 106,
+     "removed": 101,
+     "good_present": 1
+    },
+    "decoys": {
+     "decoys": 48,
+     "applied": 4,
+     "orig_kept": 29,
+     "rewritten": 15,
+     "applied_pages": [
+      "6a3c64b539b4508b04e2961a",
+      "69b51d0e47b06ecd581832c1",
+      "69906e738a353648e1ed0070",
+      "69dbcb761040d1d5e20b6a87"
+     ]
+    }
+   },
+   "blind": {
+    "arm": "D",
+    "pages": 49,
+    "words_A": 28056,
+    "words": 28114,
+    "A_serious_per_1k": 13.544,
+    "serious_per_1k": 8.964,
+    "diff_serious_per_1k": -4.581,
+    "diff_ci95_by_book": [
+     -6.165,
+     -3.142
+    ],
+    "A_misleads_per_1k": 6.131,
+    "misleads_per_1k": 4.837,
+    "diff_misleads_ci95_by_book": [
+     -2.364,
+     -0.297
+    ],
+    "A_wrong_text_per_1k": 7.414,
+    "wrong_text_per_1k": 4.126,
+    "diff_wrong_text_ci95_by_book": [
+     -4.611,
+     -2.134
+    ],
+    "A_serious": 380,
+    "serious": 252,
+    "accept_A": 0,
+    "accept": 10,
+    "new_serious_quote": 133,
+    "pages_with_new_serious_quote": 32,
+    "added_net": 9,
+    "removed_net": 137,
+    "pages_worse": 6,
+    "pages_better": 38,
+    "pages_new_wrong_text": 5,
+    "fidelity_mean_A": 2.449,
+    "fidelity_mean": 2.918,
+    "audit_findings": {
+     "findings": 112,
+     "bad_in_A": 106,
+     "removed": 74,
+     "good_present": 1
+    }
+   }
+  },
+  "clean": {
+   "stored": {
+    "pages": 100,
+    "words": 35949,
+    "serious_per_1k": 5.174,
+    "misleads_per_1k": 4.339,
+    "wrong_text_per_1k": 0.835,
+    "accept": 58
+   },
+   "retranslate": {
+    "arm": "B",
+    "pages": 97,
+    "words_A": 35463,
+    "words": 36125,
+    "A_serious_per_1k": 5.019,
+    "serious_per_1k": 2.962,
+    "diff_serious_per_1k": -2.057,
+    "diff_ci95_by_book": [
+     -2.876,
+     -1.256
+    ],
+    "A_misleads_per_1k": 4.286,
+    "misleads_per_1k": 2.63,
+    "diff_misleads_ci95_by_book": [
+     -2.36,
+     -0.97
+    ],
+    "A_wrong_text_per_1k": 0.733,
+    "wrong_text_per_1k": 0.332,
+    "diff_wrong_text_ci95_by_book": [
+     -0.698,
+     -0.115
+    ],
+    "A_serious": 178,
+    "serious": 107,
+    "accept_A": 58,
+    "accept": 72,
+    "new_serious_quote": 102,
+    "pages_with_new_serious_quote": 54,
+    "new_serious_quote_note": "B rewrites the page, so every quote is new: use added_net / pages_worse",
+    "added_net": 20,
+    "removed_net": 91,
+    "pages_worse": 17,
+    "pages_better": 48,
+    "pages_new_wrong_text": 5,
+    "fidelity_mean_A": 3.773,
+    "fidelity_mean": 4.093,
+    "audit_findings": {
+     "findings": 0,
+     "bad_in_A": 0,
+     "removed": 0,
+     "good_present": 0
+    }
+   },
+   "guided": {
+    "arm": "C",
+    "pages": 100,
+    "words_A": 35949,
+    "words": 35542,
+    "A_serious_per_1k": 5.174,
+    "serious_per_1k": 1.941,
+    "diff_serious_per_1k": -3.233,
+    "diff_ci95_by_book": [
+     -4.072,
+     -2.502
+    ],
+    "A_misleads_per_1k": 4.339,
+    "misleads_per_1k": 1.632,
+    "diff_misleads_ci95_by_book": [
+     -3.391,
+     -2.128
+    ],
+    "A_wrong_text_per_1k": 0.835,
+    "wrong_text_per_1k": 0.309,
+    "diff_wrong_text_ci95_by_book": [
+     -0.853,
+     -0.22
+    ],
+    "A_serious": 186,
+    "serious": 69,
+    "accept_A": 58,
+    "accept": 83,
+    "new_serious_quote": 26,
+    "pages_with_new_serious_quote": 19,
+    "added_net": 4,
+    "removed_net": 121,
+    "pages_worse": 4,
+    "pages_better": 63,
+    "pages_new_wrong_text": 4,
+    "fidelity_mean_A": 3.73,
+    "fidelity_mean": 4.15,
+    "audit_findings": {
+     "findings": 0,
+     "bad_in_A": 0,
+     "removed": 0,
+     "good_present": 0
+    },
+    "decoys": {
+     "decoys": 98,
+     "applied": 2,
+     "orig_kept": 85,
+     "rewritten": 11,
+     "applied_pages": [
+      "6a08577715c643eb1af5bae0",
+      "69bd9fd0f6d63c9197482583"
+     ]
+    }
+   },
+   "blind": {
+    "arm": "D",
+    "pages": 100,
+    "words_A": 35949,
+    "words": 35270,
+    "A_serious_per_1k": 5.174,
+    "serious_per_1k": 3.005,
+    "diff_serious_per_1k": -2.169,
+    "diff_ci95_by_book": [
+     -3.05,
+     -1.386
+    ],
+    "A_misleads_per_1k": 4.339,
+    "misleads_per_1k": 2.552,
+    "diff_misleads_ci95_by_book": [
+     -2.529,
+     -1.15
+    ],
+    "A_wrong_text_per_1k": 0.835,
+    "wrong_text_per_1k": 0.454,
+    "diff_wrong_text_ci95_by_book": [
+     -0.749,
+     -0.036
+    ],
+    "A_serious": 186,
+    "serious": 106,
+    "accept_A": 58,
+    "accept": 77,
+    "new_serious_quote": 35,
+    "pages_with_new_serious_quote": 19,
+    "added_net": 15,
+    "removed_net": 95,
+    "pages_worse": 12,
+    "pages_better": 52,
+    "pages_new_wrong_text": 7,
+    "fidelity_mean_A": 3.73,
+    "fidelity_mean": 3.97,
+    "audit_findings": {
+     "findings": 0,
+     "bad_in_A": 0,
+     "removed": 0,
+     "good_present": 0
+    }
+   }
+  },
+  "flagged": {
+   "stored": {
+    "pages": 100,
+    "words": 52056,
+    "serious_per_1k": 11.43,
+    "misleads_per_1k": 6.147,
+    "wrong_text_per_1k": 5.283,
+    "accept": 1
+   },
+   "retranslate": {
+    "arm": "B",
+    "pages": 100,
+    "words_A": 52056,
+    "words": 53634,
+    "A_serious_per_1k": 11.43,
+    "serious_per_1k": 7.831,
+    "diff_serious_per_1k": -3.599,
+    "diff_ci95_by_book": [
+     -4.551,
+     -2.745
+    ],
+    "A_misleads_per_1k": 6.147,
+    "misleads_per_1k": 4.232,
+    "diff_misleads_ci95_by_book": [
+     -2.712,
+     -1.119
+    ],
+    "A_wrong_text_per_1k": 5.283,
+    "wrong_text_per_1k": 3.598,
+    "diff_wrong_text_ci95_by_book": [
+     -2.395,
+     -1.021
+    ],
+    "A_serious": 595,
+    "serious": 420,
+    "accept_A": 1,
+    "accept": 29,
+    "new_serious_quote": 394,
+    "pages_with_new_serious_quote": 90,
+    "new_serious_quote_note": "B rewrites the page, so every quote is new: use added_net / pages_worse",
+    "added_net": 16,
+    "removed_net": 191,
+    "pages_worse": 11,
+    "pages_better": 73,
+    "pages_new_wrong_text": 15,
+    "fidelity_mean_A": 2.67,
+    "fidelity_mean": 3.14,
+    "audit_findings": {
+     "findings": 170,
+     "bad_in_A": 157,
+     "removed": 153,
+     "good_present": 1
+    }
+   },
+   "guided": {
+    "arm": "C",
+    "pages": 99,
+    "words_A": 51964,
+    "words": 51599,
+    "A_serious_per_1k": 11.181,
+    "serious_per_1k": 4.535,
+    "diff_serious_per_1k": -6.646,
+    "diff_ci95_by_book": [
+     -7.998,
+     -5.437
+    ],
+    "A_misleads_per_1k": 6.062,
+    "misleads_per_1k": 3.101,
+    "diff_misleads_ci95_by_book": [
+     -3.78,
+     -2.121
+    ],
+    "A_wrong_text_per_1k": 5.119,
+    "wrong_text_per_1k": 1.434,
+    "diff_wrong_text_ci95_by_book": [
+     -4.785,
+     -2.732
+    ],
+    "A_serious": 581,
+    "serious": 234,
+    "accept_A": 1,
+    "accept": 65,
+    "new_serious_quote": 118,
+    "pages_with_new_serious_quote": 37,
+    "added_net": 8,
+    "removed_net": 355,
+    "pages_worse": 5,
+    "pages_better": 88,
+    "pages_new_wrong_text": 6,
+    "fidelity_mean_A": 2.677,
+    "fidelity_mean": 3.737,
+    "audit_findings": {
+     "findings": 167,
+     "bad_in_A": 157,
+     "removed": 148,
+     "good_present": 1
+    },
+    "decoys": {
+     "decoys": 98,
+     "applied": 6,
+     "orig_kept": 66,
+     "rewritten": 26,
+     "applied_pages": [
+      "6a3c64b539b4508b04e2961a",
+      "69b51d0e47b06ecd581832c1",
+      "69906e738a353648e1ed0070",
+      "69dbcb761040d1d5e20b6a87",
+      "69a5e483006a40984221767c",
+      "6a43ab2b3c91e2a63d4d8ea5"
+     ]
+    }
+   },
+   "blind": {
+    "arm": "D",
+    "pages": 99,
+    "words_A": 51964,
+    "words": 51445,
+    "A_serious_per_1k": 11.181,
+    "serious_per_1k": 7.114,
+    "diff_serious_per_1k": -4.066,
+    "diff_ci95_by_book": [
+     -5.069,
+     -3.11
+    ],
+    "A_misleads_per_1k": 6.062,
+    "misleads_per_1k": 4.354,
+    "diff_misleads_ci95_by_book": [
+     -2.424,
+     -0.993
+    ],
+    "A_wrong_text_per_1k": 5.119,
+    "wrong_text_per_1k": 2.76,
+    "diff_wrong_text_ci95_by_book": [
+     -3.148,
+     -1.655
+    ],
+    "A_serious": 581,
+    "serious": 366,
+    "accept_A": 1,
+    "accept": 32,
+    "new_serious_quote": 178,
+    "pages_with_new_serious_quote": 58,
+    "added_net": 17,
+    "removed_net": 232,
+    "pages_worse": 10,
+    "pages_better": 77,
+    "pages_new_wrong_text": 12,
+    "fidelity_mean_A": 2.677,
+    "fidelity_mean": 3.242,
+    "audit_findings": {
+     "findings": 167,
+     "bad_in_A": 157,
+     "removed": 115,
+     "good_present": 2
+    }
+   }
+  }
+ },
+ "beat_A": [
+  {
+   "page_id": "69af459dd6be7ec9cc323375",
+   "book_id": "69af459dd6be7ec9cc3232bc",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69e011df4e6773d060855799",
+   "book_id": "69e011dc4e6773d0608556e6",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b2f4adf9f1ad2b3b1555a7",
+   "book_id": "69b2f4adf9f1ad2b3b155578",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 4,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b30097e5d6d64d8e199d74",
+   "book_id": "69b30097e5d6d64d8e199c53",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267e546c1f37c9c4f3c32b",
+   "book_id": "6a267e546c1f37c9c4f3c322",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 9,
+   "serious": 5,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c642f39b4508b04e24fe2",
+   "book_id": "6a3c642f39b4508b04e24f63",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 8,
+   "serious": 5,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6992017c7c226bdd25f9938a",
+   "book_id": "6992017b7c226bdd25f99131",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af453b004a024aaf216242",
+   "book_id": "69af453b004a024aaf21615d",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 7,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4aea08ad5997453c8d9705",
+   "book_id": "6a4aea08ad5997453c8d9704",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 9,
+   "serious": 7,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69938d9dd5a98fd66f42dc8f",
+   "book_id": "69938d9dd5a98fd66f42dc60",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69af4521e9a2e38648e40197",
+   "book_id": "69af4521e9a2e38648e400aa",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b222bd56715b0e32475139",
+   "book_id": "69b222bd56715b0e32474f81",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af123e0092756351e4492c",
+   "book_id": "69af123e0092756351e44874",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 9,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b62f3c1c1c21a3737f43f6",
+   "book_id": "69b62f3c1c1c21a3737f43e1",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 1,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a49f96460a0c3556c21aebe",
+   "book_id": "6a49f96460a0c3556c21aeb3",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2f482f9f1ad2b3b153462",
+   "book_id": "69b2f482f9f1ad2b3b1533bf",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af454f004a024aaf216559",
+   "book_id": "69af454f004a024aaf2164af",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 4,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08539f49638a50931bd5aa",
+   "book_id": "6a08539f49638a50931bd52e",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b221d708069e96e8431673",
+   "book_id": "69b221d708069e96e8431644",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 9,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69dbcc041040d1d5e20bbec7",
+   "book_id": "69dbcc041040d1d5e20bbead",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992581aad311253224ccfaa",
+   "book_id": "6992581aad311253224ccf4b",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af45753957da5cf3882fd9",
+   "book_id": "69af45753957da5cf3882d72",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2234e56715b0e324770c5",
+   "book_id": "69b2234e56715b0e32477031",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6992ce8a673ee1e40e320f94",
+   "book_id": "6992ce8a673ee1e40e320f60",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 3,
+   "A_fidelity": 2,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a491633ae20621d947e71dc",
+   "book_id": "6a491633ae20621d947e71d6",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69aeb51c317fd1896b239e2d",
+   "book_id": "69aeb51c317fd1896b239da1",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4bdd38913003fb726ad0e6",
+   "book_id": "6a4bdd38913003fb726ad0df",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a43b6e93c91e2a63d4dc6fe",
+   "book_id": "6a43b6e93c91e2a63d4dc6f8",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a430a2a22c0c8edb0f8c8ee",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c64a939b4508b04e28eb1",
+   "book_id": "6a3c64a939b4508b04e28e59",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b30036e5d6d64d8e198b5d",
+   "book_id": "69b30036e5d6d64d8e1989dc",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af423aed0692ab5c226721",
+   "book_id": "69af423aed0692ab5c226531",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2218b08069e96e8430441",
+   "book_id": "69b2218b08069e96e843034c",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a43ab2b3c91e2a63d4d8ea5",
+   "book_id": "6a43ab2b3c91e2a63d4d8e8b",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c649b39b4508b04e2880e",
+   "book_id": "6a3c649b39b4508b04e287e8",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4b598d162167e7c1e5c76d",
+   "book_id": "6a4b598d162167e7c1e5c768",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a243d7d0f0e4f405e630cdf",
+   "book_id": "6a243d7d0f0e4f405e630ca9",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4b0b4de3f5ea0395c73ece",
+   "book_id": "6a4b0b4de3f5ea0395c73ec4",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69de981fa92e31b120b60423",
+   "book_id": "69de981fa92e31b120b603cc",
+   "group": "en_only",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af459dd6be7ec9cc323375",
+   "book_id": "69af459dd6be7ec9cc3232bc",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2f4adf9f1ad2b3b1555a7",
+   "book_id": "69b2f4adf9f1ad2b3b155578",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 6,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b30097e5d6d64d8e199d74",
+   "book_id": "69b30097e5d6d64d8e199c53",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267e546c1f37c9c4f3c32b",
+   "book_id": "6a267e546c1f37c9c4f3c322",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 9,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992017c7c226bdd25f9938a",
+   "book_id": "6992017b7c226bdd25f99131",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69938d9dd5a98fd66f42dc8f",
+   "book_id": "69938d9dd5a98fd66f42dc60",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af4521e9a2e38648e40197",
+   "book_id": "69af4521e9a2e38648e400aa",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 2,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b222bd56715b0e32475139",
+   "book_id": "69b222bd56715b0e32474f81",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a49f96460a0c3556c21aebe",
+   "book_id": "6a49f96460a0c3556c21aeb3",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2f482f9f1ad2b3b153462",
+   "book_id": "69b2f482f9f1ad2b3b1533bf",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af454f004a024aaf216559",
+   "book_id": "69af454f004a024aaf2164af",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 5,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08539f49638a50931bd5aa",
+   "book_id": "6a08539f49638a50931bd52e",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69dbcc041040d1d5e20bbec7",
+   "book_id": "69dbcc041040d1d5e20bbead",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992581aad311253224ccfaa",
+   "book_id": "6992581aad311253224ccf4b",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 6,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af45753957da5cf3882fd9",
+   "book_id": "69af45753957da5cf3882d72",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2234e56715b0e324770c5",
+   "book_id": "69b2234e56715b0e32477031",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a4b10767622bb5aba12899d",
+   "book_id": "6a4b10767622bb5aba128976",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a491633ae20621d947e71dc",
+   "book_id": "6a491633ae20621d947e71d6",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c5e5040c88a541d8e0d7d",
+   "book_id": "6a3c5e5040c88a541d8e0d55",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69aeb51c317fd1896b239e2d",
+   "book_id": "69aeb51c317fd1896b239da1",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a43b6e93c91e2a63d4dc6fe",
+   "book_id": "6a43b6e93c91e2a63d4dc6f8",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a430a2a22c0c8edb0f8c8ee",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b30036e5d6d64d8e198b5d",
+   "book_id": "69b30036e5d6d64d8e1989dc",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c5e6040c88a541d8e1837",
+   "book_id": "6a3c5e6040c88a541d8e181b",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a3c649b39b4508b04e2880e",
+   "book_id": "6a3c649b39b4508b04e287e8",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4b598d162167e7c1e5c76d",
+   "book_id": "6a4b598d162167e7c1e5c768",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a243d7d0f0e4f405e630cdf",
+   "book_id": "6a243d7d0f0e4f405e630ca9",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4b0b4de3f5ea0395c73ece",
+   "book_id": "6a4b0b4de3f5ea0395c73ec4",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69de981fa92e31b120b60423",
+   "book_id": "69de981fa92e31b120b603cc",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4ef7871a64e53b6a0a2f2b",
+   "book_id": "6a4ef7871a64e53b6a0a2f21",
+   "group": "en_only",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69af459dd6be7ec9cc323375",
+   "book_id": "69af459dd6be7ec9cc3232bc",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69e011df4e6773d060855799",
+   "book_id": "69e011dc4e6773d0608556e6",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b30097e5d6d64d8e199d74",
+   "book_id": "69b30097e5d6d64d8e199c53",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af453b004a024aaf216242",
+   "book_id": "69af453b004a024aaf21615d",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 7,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69938d9dd5a98fd66f42dc8f",
+   "book_id": "69938d9dd5a98fd66f42dc60",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af4521e9a2e38648e40197",
+   "book_id": "69af4521e9a2e38648e400aa",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b222bd56715b0e32475139",
+   "book_id": "69b222bd56715b0e32474f81",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b62f3c1c1c21a3737f43f6",
+   "book_id": "69b62f3c1c1c21a3737f43e1",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 1,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a49f96460a0c3556c21aebe",
+   "book_id": "6a49f96460a0c3556c21aeb3",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08539f49638a50931bd5aa",
+   "book_id": "6a08539f49638a50931bd52e",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b2234e56715b0e324770c5",
+   "book_id": "69b2234e56715b0e32477031",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a3c5e5040c88a541d8e0d7d",
+   "book_id": "6a3c5e5040c88a541d8e0d55",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a43b6e93c91e2a63d4dc6fe",
+   "book_id": "6a43b6e93c91e2a63d4dc6f8",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a430a2a22c0c8edb0f8c8ee",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a3c64a939b4508b04e28eb1",
+   "book_id": "6a3c64a939b4508b04e28e59",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 6,
+   "serious": 5,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69af423aed0692ab5c226721",
+   "book_id": "69af423aed0692ab5c226531",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 6,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a243d7d0f0e4f405e630cdf",
+   "book_id": "6a243d7d0f0e4f405e630ca9",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 5,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4b0b4de3f5ea0395c73ece",
+   "book_id": "6a4b0b4de3f5ea0395c73ec4",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 4,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69aea8481cbf28a363a4f61e",
+   "book_id": "69aea8481cbf28a363a4f5f2",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4ef7871a64e53b6a0a2f2b",
+   "book_id": "6a4ef7871a64e53b6a0a2f21",
+   "group": "en_only",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c64b539b4508b04e2961a",
+   "book_id": "6a3c64b539b4508b04e29610",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6993881f74305116d72cf4ee",
+   "book_id": "6993881f74305116d72cf3c3",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 13,
+   "serious": 8,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69f33257876dd827cbc49f09",
+   "book_id": "69f33257876dd827cbc49efc",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 16,
+   "serious": 12,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69dbcc3c0f8c5edf20f4842e",
+   "book_id": "69dbcc3c0f8c5edf20f4830a",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 17,
+   "serious": 14,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69e74f22d0386839d8718dc6",
+   "book_id": "69e74f22d0386839d8718d10",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69a5e3f5006a409842216bb5",
+   "book_id": "69a5e3f5006a409842216b6c",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 8,
+   "serious": 7,
+   "A_fidelity": 1,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69dbc7f61040d1d5e2095f24",
+   "book_id": "69dbc7f61040d1d5e2095ebc",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 9,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b51d0e47b06ecd581832c1",
+   "book_id": "69b51d0e47b06ecd5818329c",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 14,
+   "serious": 13,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "699066c0249ce014347d198d",
+   "book_id": "699066c0249ce014347d18f1",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a267d336c1f37c9c4f38efc",
+   "book_id": "6a267d336c1f37c9c4f38eec",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69906e738a353648e1ed0070",
+   "book_id": "69906e738a353648e1ecffec",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 18,
+   "serious": 10,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "6a4b05c30d1fa55f9988be10",
+   "book_id": "6a4b05c30d1fa55f9988be08",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69af420eeaef59aff2e0eee0",
+   "book_id": "69af420eeaef59aff2e0edee",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69dbcc051040d1d5e20bbf13",
+   "book_id": "69dbcc051040d1d5e20bbeeb",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 7,
+   "serious": 5,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69c86eb76c6f3cc53c856f5b",
+   "book_id": "69c86e426c6f3cc53c856e5d",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69dbcb761040d1d5e20b6a87",
+   "book_id": "69dbcb761040d1d5e20b6a49",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 7,
+   "serious": 1,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69907c5e5f855ec553e74b6b",
+   "book_id": "69907c5d5f855ec553e74b5b",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 12,
+   "serious": 6,
+   "A_fidelity": 2,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b51e7347b06ecd58190567",
+   "book_id": "69b51e7347b06ecd58190533",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 10,
+   "serious": 6,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b52c963dd6d942302814b8",
+   "book_id": "69b52c953dd6d94230281474",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 21,
+   "serious": 19,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69dbc85a1040d1d5e209884e",
+   "book_id": "69dbc85a1040d1d5e20987ff",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 15,
+   "serious": 10,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69c1bb038522835be845c43c",
+   "book_id": "69c1bb038522835be845c210",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 7,
+   "serious": 4,
+   "A_fidelity": 1,
+   "fidelity": 1
+  },
+  {
+   "page_id": "6992cc36018b80967354cdf3",
+   "book_id": "6992cc36018b80967354cdf2",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 11,
+   "serious": 8,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a267c596c1f37c9c4f35f4c",
+   "book_id": "6a267c596c1f37c9c4f35f47",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69e75accb3d509fcb7a48fdb",
+   "book_id": "69e75accb3d509fcb7a48f0e",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69f66dd980c7a291ec4c225f",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 9,
+   "serious": 7,
+   "A_fidelity": 1,
+   "fidelity": 1
+  },
+  {
+   "page_id": "69a68211b3d8052782b3c2c3",
+   "book_id": "69a68211b3d8052782b3c204",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b9a1344a1112994cb82ddc",
+   "book_id": "69b9a1344a1112994cb82dd7",
+   "group": "both",
+   "arm": "B",
+   "A_serious": 11,
+   "serious": 10,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "69e74f22d0386839d8718dc6",
+   "book_id": "69e74f22d0386839d8718d10",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6ae4e74054bc88666eef0de2",
+   "book_id": "6a20330a18654bf8e190406e",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b525ab95677df8153c6b3a",
+   "book_id": "69b525ab95677df8153c6b00",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b65a6f18b87551bfd02a91",
+   "book_id": "69b65a6f18b87551bfd02a55",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a267d336c1f37c9c4f38efc",
+   "book_id": "6a267d336c1f37c9c4f38eec",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 6,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af39a3102120ca71f0133d",
+   "book_id": "69af39a3102120ca71f01256",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4d574cf80499981ca5d012",
+   "book_id": "6a4d574cf80499981ca5d00c",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a4b05c30d1fa55f9988be10",
+   "book_id": "6a4b05c30d1fa55f9988be08",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af420eeaef59aff2e0eee0",
+   "book_id": "69af420eeaef59aff2e0edee",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69c86eb76c6f3cc53c856f5b",
+   "book_id": "69c86e426c6f3cc53c856e5d",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 6,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f32b513540515589704d15",
+   "book_id": "69f32b513540515589704ac9",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69907c5e5f855ec553e74b6b",
+   "book_id": "69907c5d5f855ec553e74b5b",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 12,
+   "serious": 5,
+   "A_fidelity": 2,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b51e7347b06ecd58190567",
+   "book_id": "69b51e7347b06ecd58190533",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 10,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6992cc36018b80967354cdf3",
+   "book_id": "6992cc36018b80967354cdf2",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 11,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267c596c1f37c9c4f35f4c",
+   "book_id": "6a267c596c1f37c9c4f35f47",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69a68211b3d8052782b3c2c3",
+   "book_id": "69a68211b3d8052782b3c204",
+   "group": "both",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b525ab95677df8153c6b3a",
+   "book_id": "69b525ab95677df8153c6b00",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b65a6f18b87551bfd02a91",
+   "book_id": "69b65a6f18b87551bfd02a55",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267d336c1f37c9c4f38efc",
+   "book_id": "6a267d336c1f37c9c4f38eec",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 6,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69d147de1c2a66dc094b2256",
+   "book_id": "69d147de1c2a66dc094b2249",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69c86eb76c6f3cc53c856f5b",
+   "book_id": "69c86e426c6f3cc53c856e5d",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 6,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f32b513540515589704d15",
+   "book_id": "69f32b513540515589704ac9",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 5,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69b658e118b87551bfcf6e56",
+   "book_id": "69b658e118b87551bfcf6dd5",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267c596c1f37c9c4f35f4c",
+   "book_id": "6a267c596c1f37c9c4f35f47",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69c1bade8522835be845b1a5",
+   "book_id": "69c1bade8522835be845b016",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 2,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c6073879008ba7e15c5b8",
+   "book_id": "6a3c6073879008ba7e15c58d",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 5,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "69f66dd980c7a291ec4c225f",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 9,
+   "serious": 8,
+   "A_fidelity": 1,
+   "fidelity": 1
+  },
+  {
+   "page_id": "69a68211b3d8052782b3c2c3",
+   "book_id": "69a68211b3d8052782b3c204",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b9a1344a1112994cb82ddc",
+   "book_id": "69b9a1344a1112994cb82dd7",
+   "group": "both",
+   "arm": "D",
+   "A_serious": 11,
+   "serious": 7,
+   "A_fidelity": 2,
+   "fidelity": 2
+  },
+  {
+   "page_id": "6a3c632b879008ba7e1668c2",
+   "book_id": "6a3c632b879008ba7e166806",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4ef2ca451d36458a838758",
+   "book_id": "6a4ef2ca451d36458a838749",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a06cd5ac749b698e5b2b500",
+   "book_id": "6a06cd5ac749b698e5b2b4fb",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4cc7af8233388be8b8c5ae",
+   "book_id": "6a4cc7af8233388be8b8c5a7",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b1cb1ca282e3475aab457e",
+   "book_id": "69b1cb1ca282e3475aab44f7",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6ae0bc644adf2ffb52f71caf",
+   "book_id": "6ae0bc644adf2ffb52f71c5b",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69905f2040bc3a0478efafe2",
+   "book_id": "69905f2040bc3a0478efaf14",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e2cefd8df28f2db2161",
+   "book_id": "69b51e2cefd8df28f2db2159",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6aa927a629214a687db64144",
+   "book_id": "6aa927a629214a687db6413a",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a42c9fae76baa13aa84c526",
+   "book_id": "6a42c9fae76baa13aa84c521",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a08577715c643eb1af5bae0",
+   "book_id": "6a08577715c643eb1af5ba59",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a50a00bad1859a71f41c1b1",
+   "book_id": "6a50a00bad1859a71f41bf9e",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a0855f649638a50931c2660",
+   "book_id": "6a0855f649638a50931c2546",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69ac8e62e54b190acc1d3f1a",
+   "book_id": "69ac8e62e54b190acc1d3f13",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6ae0c61d4adf2ffb52f7613e",
+   "book_id": "6ae0c61d4adf2ffb52f76087",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08583d15c643eb1af5df15",
+   "book_id": "6a08583d15c643eb1af5dee3",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c5852cfdd3c8677837223",
+   "book_id": "6a4c5852cfdd3c867783721b",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e22768235dc6598cadc",
+   "book_id": "69b51e22768235dc6598ca90",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b6596a18b87551bfcfb435",
+   "book_id": "69b6596a18b87551bfcfb42f",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69906607ef12272ffdc94e9b",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 8,
+   "serious": 5,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a4c1a370af972fc7bae7e9a",
+   "book_id": "6a4c1a370af972fc7bae7e77",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a085c1749638a50931ccba5",
+   "book_id": "6a085c1749638a50931ccb6f",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b51ebdff09e4fe943b3ecb",
+   "book_id": "69b51ebdff09e4fe943b3e60",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4e4ed8f44db70c33889ec5",
+   "book_id": "6a4e4ed8f44db70c33889eb9",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c412122a2c197c67218f9",
+   "book_id": "6a4c412122a2c197c67218f1",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69905e042fd6a039938a0b62",
+   "book_id": "69905e042fd6a039938a0a1b",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 8,
+   "serious": 3,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "695aa9bfbe4023bd34bd6e5e",
+   "book_id": "695aa9bfbe4023bd34bd6d81",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a088afebd8fc3beee8aa61f",
+   "book_id": "6a088afebd8fc3beee8aa59c",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f65a496d61654cfc9ff1ed",
+   "book_id": "69c7835c6a0f3d112faf9786",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f70ba1b8f2207734053be4",
+   "book_id": "69c853c66c6f3cc53c8536f2",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e11261c58d63664ee46",
+   "book_id": "69b51e11261c58d63664ee30",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4bbc8a6a8b1dab563dc28c",
+   "book_id": "6a4bbc8a6a8b1dab563dc282",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69dbca0d1040d1d5e20a8e61",
+   "book_id": "69dbca0d1040d1d5e20a8e56",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 6,
+   "serious": 4,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a4ecd3b62c75f944baf1711",
+   "book_id": "6a4ecd2762c75f944baf1667",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 5,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c450822a2c197c6721e1e",
+   "book_id": "6a4c450822a2c197c6721e04",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b1cb0ea282e3475aab440f",
+   "book_id": "69b1cb0ea282e3475aab42f6",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992cde281c9d7efb84d0984",
+   "book_id": "6992cde281c9d7efb84d096b",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af201bb93f9affdf29de79",
+   "book_id": "69af201bb93f9affdf29ddf7",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69dbcbed1040d1d5e20bb3ca",
+   "book_id": "69dbcbed1040d1d5e20bb3bd",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e1c47b06ecd5818a3f7",
+   "book_id": "69b51e1c47b06ecd5818a308",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69ac83ddf37088db5191866f",
+   "book_id": "69ac83ddf37088db519184d5",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b302fdd8a5ee4686e41248",
+   "book_id": "69b302fdd8a5ee4686e4121b",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69bd9de56120d54bd037a091",
+   "book_id": "69bd9de56120d54bd0379fce",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267dde6c1f37c9c4f3bb0f",
+   "book_id": "6a267dde6c1f37c9c4f3bb06",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a08509d49638a50931b6f0a",
+   "book_id": "6a08509d49638a50931b6d73",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69942ffdbb14908bbd9a123a",
+   "book_id": "69942ffcbb14908bbd9a1123",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a49233e1bbf4176e1e86260",
+   "book_id": "6a49233e1bbf4176e1e86255",
+   "group": "clean",
+   "arm": "B",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f3279552a77bb28fdb73fd",
+   "book_id": "69f3279552a77bb28fdb739b",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a430bc122c0c8edb0f8f3df",
+   "book_id": "6a430bc122c0c8edb0f8f3c6",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6985cf3e7c63904b826607c4",
+   "book_id": "6985ca74925975beb6da3bef",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c5e5840c88a541d8e1345",
+   "book_id": "6a3c5e5840c88a541d8e12e7",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4ef2ca451d36458a838758",
+   "book_id": "6a4ef2ca451d36458a838749",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a06cd5ac749b698e5b2b500",
+   "book_id": "6a06cd5ac749b698e5b2b4fb",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6ae0bc644adf2ffb52f71caf",
+   "book_id": "6ae0bc644adf2ffb52f71c5b",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69905f2040bc3a0478efafe2",
+   "book_id": "69905f2040bc3a0478efaf14",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6aa927a629214a687db64144",
+   "book_id": "6aa927a629214a687db6413a",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a42c9fae76baa13aa84c526",
+   "book_id": "6a42c9fae76baa13aa84c521",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69f4c1bcd592f75376262cb7",
+   "book_id": "69c82d476c6f3cc53c84d1cc",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992ce3c3ea667fbac82897c",
+   "book_id": "6992ce3c3ea667fbac828938",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69ad76b765c3071e0169b5f0",
+   "book_id": "69ad76b765c3071e0169b4a1",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "698199a130d3b7e77652d2dc",
+   "book_id": "69819208d2e928b4f447f80c",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a0855f649638a50931c2660",
+   "book_id": "6a0855f649638a50931c2546",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69ac8e62e54b190acc1d3f1a",
+   "book_id": "69ac8e62e54b190acc1d3f13",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c5852cfdd3c8677837223",
+   "book_id": "6a4c5852cfdd3c867783721b",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e22768235dc6598cadc",
+   "book_id": "69b51e22768235dc6598ca90",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b6596a18b87551bfcfb435",
+   "book_id": "69b6596a18b87551bfcfb42f",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69906607ef12272ffdc94e9b",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 8,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 3
+  },
+  {
+   "page_id": "6a4c1a370af972fc7bae7e9a",
+   "book_id": "6a4c1a370af972fc7bae7e77",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a085c1749638a50931ccba5",
+   "book_id": "6a085c1749638a50931ccb6f",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51ebdff09e4fe943b3ecb",
+   "book_id": "69b51ebdff09e4fe943b3e60",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b52bd2c5a537bf2d86291c",
+   "book_id": "69b52bd2c5a537bf2d862907",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4e4ed8f44db70c33889ec5",
+   "book_id": "6a4e4ed8f44db70c33889eb9",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c412122a2c197c67218f9",
+   "book_id": "6a4c412122a2c197c67218f1",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c03254f392afd49e43c42",
+   "book_id": "6a4c03254f392afd49e43c35",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c742701fe4f593c1eeba2",
+   "book_id": "6a3c742701fe4f593c1eeb93",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f65a496d61654cfc9ff1ed",
+   "book_id": "69c7835c6a0f3d112faf9786",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f70ba1b8f2207734053be4",
+   "book_id": "69c853c66c6f3cc53c8536f2",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6984751212f185f71942ba36",
+   "book_id": "698420e1acbeea311931758b",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4bbc8a6a8b1dab563dc28c",
+   "book_id": "6a4bbc8a6a8b1dab563dc282",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c450822a2c197c6721e1e",
+   "book_id": "6a4c450822a2c197c6721e04",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b1cb0ea282e3475aab440f",
+   "book_id": "69b1cb0ea282e3475aab42f6",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6991ead52f801130a473e8fa",
+   "book_id": "6991ead42f801130a473e8be",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af201bb93f9affdf29de79",
+   "book_id": "69af201bb93f9affdf29ddf7",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69dbcbed1040d1d5e20bb3ca",
+   "book_id": "69dbcbed1040d1d5e20bb3bd",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e1c47b06ecd5818a3f7",
+   "book_id": "69b51e1c47b06ecd5818a308",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a90b21b549dee7bdfbf20eb",
+   "book_id": "6a90b21b549dee7bdfbf20dc",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b302fdd8a5ee4686e41248",
+   "book_id": "69b302fdd8a5ee4686e4121b",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69bd9de56120d54bd037a091",
+   "book_id": "69bd9de56120d54bd0379fce",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "699065e0726f64800c10c5bb",
+   "book_id": "699065e0726f64800c10c515",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 4,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267dde6c1f37c9c4f3bb0f",
+   "book_id": "6a267dde6c1f37c9c4f3bb06",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08509d49638a50931b6f0a",
+   "book_id": "6a08509d49638a50931b6d73",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69942ffdbb14908bbd9a123a",
+   "book_id": "69942ffcbb14908bbd9a1123",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a49233e1bbf4176e1e86260",
+   "book_id": "6a49233e1bbf4176e1e86255",
+   "group": "clean",
+   "arm": "C",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f3279552a77bb28fdb73fd",
+   "book_id": "69f3279552a77bb28fdb739b",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a430bc122c0c8edb0f8f3df",
+   "book_id": "6a430bc122c0c8edb0f8f3c6",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6985cf3e7c63904b826607c4",
+   "book_id": "6985ca74925975beb6da3bef",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a3c632b879008ba7e1668c2",
+   "book_id": "6a3c632b879008ba7e166806",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 6,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4cc7af8233388be8b8c5ae",
+   "book_id": "6a4cc7af8233388be8b8c5a7",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b1cb1ca282e3475aab457e",
+   "book_id": "69b1cb1ca282e3475aab44f7",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69ac5f537f20875486da44be",
+   "book_id": "69ac5f537f20875486da4421",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69905f2040bc3a0478efafe2",
+   "book_id": "69905f2040bc3a0478efaf14",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6aa927a629214a687db64144",
+   "book_id": "6aa927a629214a687db6413a",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a42c9fae76baa13aa84c526",
+   "book_id": "6a42c9fae76baa13aa84c521",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08577715c643eb1af5bae0",
+   "book_id": "6a08577715c643eb1af5ba59",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 4,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f4c1bcd592f75376262cb7",
+   "book_id": "69c82d476c6f3cc53c84d1cc",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992ce3c3ea667fbac82897c",
+   "book_id": "6992ce3c3ea667fbac828938",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69af20f9b5227118e60e4141",
+   "book_id": "69af20f9b5227118e60e40f5",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69ad76b765c3071e0169b5f0",
+   "book_id": "69ad76b765c3071e0169b4a1",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a08583d15c643eb1af5df15",
+   "book_id": "6a08583d15c643eb1af5dee3",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c5852cfdd3c8677837223",
+   "book_id": "6a4c5852cfdd3c867783721b",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e22768235dc6598cadc",
+   "book_id": "69b51e22768235dc6598ca90",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b6596a18b87551bfcfb435",
+   "book_id": "69b6596a18b87551bfcfb42f",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c1a370af972fc7bae7e9a",
+   "book_id": "6a4c1a370af972fc7bae7e77",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a085c1749638a50931ccba5",
+   "book_id": "6a085c1749638a50931ccb6f",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69b51ebdff09e4fe943b3ecb",
+   "book_id": "69b51ebdff09e4fe943b3e60",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 4,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a4e4ed8f44db70c33889ec5",
+   "book_id": "6a4e4ed8f44db70c33889eb9",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 5
+  },
+  {
+   "page_id": "6a3c742701fe4f593c1eeba2",
+   "book_id": "6a3c742701fe4f593c1eeb93",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69c55ec6881da4556115307a",
+   "book_id": "69c4ec33a3a4a7c546ee6113",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69f65a496d61654cfc9ff1ed",
+   "book_id": "69c7835c6a0f3d112faf9786",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 5,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e11261c58d63664ee46",
+   "book_id": "69b51e11261c58d63664ee30",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4bbc8a6a8b1dab563dc28c",
+   "book_id": "6a4bbc8a6a8b1dab563dc282",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4ecd3b62c75f944baf1711",
+   "book_id": "6a4ecd2762c75f944baf1667",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 5,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a4c450822a2c197c6721e1e",
+   "book_id": "6a4c450822a2c197c6721e04",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b1cb0ea282e3475aab440f",
+   "book_id": "69b1cb0ea282e3475aab42f6",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6992cde281c9d7efb84d0984",
+   "book_id": "6992cde281c9d7efb84d096b",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6991ead52f801130a473e8fa",
+   "book_id": "6991ead42f801130a473e8be",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69dbcbed1040d1d5e20bb3ca",
+   "book_id": "69dbcbed1040d1d5e20bb3bd",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b51e1c47b06ecd5818a3f7",
+   "book_id": "69b51e1c47b06ecd5818a308",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 0,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69b302fdd8a5ee4686e41248",
+   "book_id": "69b302fdd8a5ee4686e4121b",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "69bd9de56120d54bd037a091",
+   "book_id": "69bd9de56120d54bd0379fce",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 2,
+   "serious": 1,
+   "A_fidelity": 4,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a267dde6c1f37c9c4f3bb0f",
+   "book_id": "6a267dde6c1f37c9c4f3bb06",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 1,
+   "serious": 0,
+   "A_fidelity": 4,
+   "fidelity": 5
+  },
+  {
+   "page_id": "69942ffdbb14908bbd9a123a",
+   "book_id": "69942ffcbb14908bbd9a1123",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 2,
+   "A_fidelity": 3,
+   "fidelity": 4
+  },
+  {
+   "page_id": "6a49233e1bbf4176e1e86260",
+   "book_id": "6a49233e1bbf4176e1e86255",
+   "group": "clean",
+   "arm": "D",
+   "A_serious": 3,
+   "serious": 1,
+   "A_fidelity": 3,
+   "fidelity": 4
+  }
+ ],
+ "arm_status": {
+  "A": {
+   "pages": 200,
+   "calls": 0,
+   "returned": 200,
+   "failed": 0,
+   "chatter": 0,
+   "not_run": 0
+  },
+  "B": {
+   "pages": 200,
+   "calls": 197,
+   "returned": 197,
+   "failed": 0,
+   "chatter": 0,
+   "not_run": 3
+  },
+  "C": {
+   "pages": 200,
+   "calls": 200,
+   "returned": 199,
+   "failed": 1,
+   "chatter": 0,
+   "not_run": 0
+  },
+  "D": {
+   "pages": 200,
+   "calls": 200,
+   "returned": 199,
+   "failed": 1,
+   "chatter": 0,
+   "not_run": 0
+  }
+ },
+ "by_stored_model": {
+  "live_model": {
+   "B": {
+    "pages": 26,
+    "A_serious_per_1k": 4.565,
+    "serious_per_1k": 4.135,
+    "diff_ci95_by_book": [
+     -1.324,
+     0.473
+    ],
+    "groups": {
+     "both": 3,
+     "en_only": 4,
+     "clean": 19
+    }
+   },
+   "C": {
+    "pages": 26,
+    "A_serious_per_1k": 4.565,
+    "serious_per_1k": 0.986,
+    "diff_ci95_by_book": [
+     -4.979,
+     -2.36
+    ],
+    "groups": {
+     "both": 3,
+     "en_only": 4,
+     "clean": 19
+    }
+   },
+   "D": {
+    "pages": 26,
+    "A_serious_per_1k": 4.565,
+    "serious_per_1k": 3.412,
+    "diff_ci95_by_book": [
+     -2.189,
+     -0.16
+    ],
+    "groups": {
+     "both": 3,
+     "en_only": 4,
+     "clean": 19
+    }
+   }
+  },
+  "older_model": {
+   "B": {
+    "pages": 171,
+    "A_serious_per_1k": 9.334,
+    "serious_per_1k": 6.075,
+    "diff_ci95_by_book": [
+     -3.962,
+     -2.597
+    ],
+    "groups": {
+     "both": 47,
+     "en_only": 46,
+     "clean": 78
+    }
+   },
+   "C": {
+    "pages": 173,
+    "A_serious_per_1k": 9.211,
+    "serious_per_1k": 3.769,
+    "diff_ci95_by_book": [
+     -6.477,
+     -4.529
+    ],
+    "groups": {
+     "both": 46,
+     "en_only": 46,
+     "clean": 81
+    }
+   },
+   "D": {
+    "pages": 173,
+    "A_serious_per_1k": 9.211,
+    "serious_per_1k": 5.681,
+    "diff_ci95_by_book": [
+     -4.309,
+     -2.781
+    ],
+    "groups": {
+     "both": 46,
+     "en_only": 46,
+     "clean": 81
+    }
+   }
+  }
+ },
+ "study_cells": {
+  "en_only/stored": {
+   "pages": 50,
+   "words": 23908,
+   "misleads_per_1k": 5.981,
+   "wrong_text_per_1k": 2.426,
+   "serious_per_1k": 8.407,
+   "fidelity_mean": 2.9
+  },
+  "en_only/retranslate": {
+   "pages": 50,
+   "words": 24443,
+   "misleads_per_1k": 3.355,
+   "wrong_text_per_1k": 0.859,
+   "serious_per_1k": 4.214,
+   "fidelity_mean": 3.72
+  },
+  "en_only/guided": {
+   "pages": 50,
+   "words": 23326,
+   "misleads_per_1k": 2.315,
+   "wrong_text_per_1k": 0.343,
+   "serious_per_1k": 2.658,
+   "fidelity_mean": 4.02
+  },
+  "en_only/blind": {
+   "pages": 50,
+   "words": 23331,
+   "misleads_per_1k": 3.772,
+   "wrong_text_per_1k": 1.114,
+   "serious_per_1k": 4.886,
+   "fidelity_mean": 3.56
+  },
+  "both/stored": {
+   "pages": 50,
+   "words": 28148,
+   "misleads_per_1k": 6.288,
+   "wrong_text_per_1k": 7.709,
+   "serious_per_1k": 13.997,
+   "fidelity_mean": 2.44
+  },
+  "both/retranslate": {
+   "pages": 50,
+   "words": 29191,
+   "misleads_per_1k": 4.967,
+   "wrong_text_per_1k": 5.892,
+   "serious_per_1k": 10.86,
+   "fidelity_mean": 2.56
+  },
+  "both/guided": {
+   "pages": 49,
+   "words": 28273,
+   "misleads_per_1k": 3.749,
+   "wrong_text_per_1k": 2.334,
+   "serious_per_1k": 6.084,
+   "fidelity_mean": 3.449
+  },
+  "both/blind": {
+   "pages": 49,
+   "words": 28114,
+   "misleads_per_1k": 4.837,
+   "wrong_text_per_1k": 4.126,
+   "serious_per_1k": 8.964,
+   "fidelity_mean": 2.918
+  },
+  "clean/stored": {
+   "pages": 100,
+   "words": 35949,
+   "misleads_per_1k": 4.339,
+   "wrong_text_per_1k": 0.835,
+   "serious_per_1k": 5.174,
+   "fidelity_mean": 3.73
+  },
+  "clean/retranslate": {
+   "pages": 97,
+   "words": 36125,
+   "misleads_per_1k": 2.63,
+   "wrong_text_per_1k": 0.332,
+   "serious_per_1k": 2.962,
+   "fidelity_mean": 4.093
+  },
+  "clean/guided": {
+   "pages": 100,
+   "words": 35542,
+   "misleads_per_1k": 1.632,
+   "wrong_text_per_1k": 0.309,
+   "serious_per_1k": 1.941,
+   "fidelity_mean": 4.15
+  },
+  "clean/blind": {
+   "pages": 100,
+   "words": 35270,
+   "misleads_per_1k": 2.552,
+   "wrong_text_per_1k": 0.454,
+   "serious_per_1k": 3.005,
+   "fidelity_mean": 3.97
+  },
+  "flagged/stored": {
+   "pages": 100,
+   "words": 52056,
+   "misleads_per_1k": 6.147,
+   "wrong_text_per_1k": 5.283,
+   "serious_per_1k": 11.43,
+   "fidelity_mean": 2.67
+  },
+  "flagged/retranslate": {
+   "pages": 100,
+   "words": 53634,
+   "misleads_per_1k": 4.232,
+   "wrong_text_per_1k": 3.598,
+   "serious_per_1k": 7.831,
+   "fidelity_mean": 3.14
+  },
+  "flagged/guided": {
+   "pages": 99,
+   "words": 51599,
+   "misleads_per_1k": 3.101,
+   "wrong_text_per_1k": 1.434,
+   "serious_per_1k": 4.535,
+   "fidelity_mean": 3.737
+  },
+  "flagged/blind": {
+   "pages": 99,
+   "words": 51445,
+   "misleads_per_1k": 4.354,
+   "wrong_text_per_1k": 2.76,
+   "serious_per_1k": 7.114,
+   "fidelity_mean": 3.242
+  }
+ }
+}

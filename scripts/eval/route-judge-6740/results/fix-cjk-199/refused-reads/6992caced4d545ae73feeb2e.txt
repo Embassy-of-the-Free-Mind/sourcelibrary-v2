@@ -1,0 +1,30 @@
+<scan-quality>fair</scan-quality>
+<language>Japanese</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<warning>Handwritten Japanese/Sino-Japanese brush script (semi-cursive), with Siddham seed syllables. The scroll is photographed rotated 90°, so all writing runs sideways. The columns of small cursive text at the left edge are faint and mostly illegible at this resolution. Yellow-brown stains and drip lines run across the drawing. They are not pigment.</warning>
+<meta>Section of a handscroll with an ink line drawing (iconographic sketch). The drawing shows a series of stupa/pagoda shrines with seated figures, linked by mountain or cloud contours and set in waves, with attendant figures. Ruled guide lines show faintly at the left. Large characters and columns of small cursive text appear at the left edge.</meta>
+
+<image-desc size="large" type="diagram" significance="high">Ink line drawing laid out horizontally on the rotated scroll. On the right, a large shrine-pagoda with a seated deity sits inside a flaming or cloud-like enclosure, with smaller pagodas above and below it. A central pagoda holds a seated figure. Above it is a building next to a circle labelled 月, and below it is a building next to a circle labelled 日. Flowing contours join it to a smaller pagoda on the left with a tiny seated figure. Two haloed attendant figures kneel on either side of the left pagoda, holding offerings, and a Siddham seed syllable is written beside them. A band of zigzag wave marks encloses the left group. Small figures appear at the upper and lower edges. On the far left is a separate small stupa or lamp-like shrine among the text.</image-desc>
+
+<insert>月</insert>
+
+<insert><unclear>外</unclear>毒火<unclear>爛</unclear></insert>
+
+<insert><unclear>日</unclear></insert>
+
+<insert><unclear>外</unclear>毒火<unclear>爛</unclear></insert>
+
+<insert><unclear>Siddham seed syllable, not transcribed</unclear></insert>
+
+---
+
+<unclear>楼</unclear><unclear>台</unclear>
+
+<unclear>about 6 columns of small cursive text, largely illegible</unclear>
+
+<unclear>楼</unclear><unclear>台</unclear>
+
+<unclear>about 4 further columns of small cursive text at the left edge, largely illegible</unclear>
+
+<vocab>月 (moon), 日 (sun), 毒火 (poison fire), 塔 (pagoda/stupa), Siddham seed syllable (種子), 図像 (iconographic drawing), 楼 (tower/pavilion)</vocab>

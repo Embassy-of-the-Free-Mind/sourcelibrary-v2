@@ -67,6 +67,15 @@ export default async function AdminDashboard() {
   ]);
   const isSuperadmin = (session?.user as { role?: string } | undefined)?.role === 'superadmin';
   const metrics = metricsRead?.data ?? null, metricsAge = metricsRead?.ageMs ?? null;
+  // Readers = likely-human fingerprints (#48). Null until the first snapshot that carries them.
+  // Both halves or neither: a run of the older script rewrites `series` whole and
+  // would leave `likely` behind without its days.
+  const readerDays = metrics?.series.likelyDaily ?? [];
+  const R = readerDays.length > 1 ? metrics?.likely ?? null : null;
+  const sumPv = (rows: typeof readerDays) => rows.reduce((a, d) => a + d.likelyPageviews, 0);
+  const readerPv7 = sumPv(readerDays.slice(-7)), readerPvPrev7 = sumPv(readerDays.slice(-14, -7));
+  // The newest day before the snapshot's own (UTC) day: the snapshot runs mid-morning, so its last day is partial.
+  const assistantLastFullDay = metrics?.traffic.fromAssistants?.byDay?.filter(d => d.date < new Date(metrics.generatedAt).toISOString().slice(0, 10)).at(-1) ?? null;
   let spend: SpendData | null = null;
   if (spendViewer) { const doc = await getSpendReport(); if (doc) spend = redactForViewer(doc.data, spendViewer); }
 
@@ -85,7 +94,7 @@ export default async function AdminDashboard() {
         {live && L && (
           <p className="text-sm text-stone-600 max-w-3xl">
             <b className="text-stone-900">{fmtFull(live.books)} books</b> and <b className="text-stone-900">{fmtK(live.pages)} pages</b> are open to readers{home ? ` in ${home.languageCount} languages` : ''}. <b className="text-stone-900">{fmtFull(L.totals.readableLive)}</b> of those books can be read in English today.
-            {metrics && <> {fmtK(metrics.engagement.mau)} people read something in the last 30 days.</>}
+            {R ? <> About {fmtK(R.mau)} people read something in the last 30 days.</> : metrics && <> {fmtK(metrics.engagement.mau)} browser fingerprints loaded a page in the last 30 days, crawler fleets included.</>}
             {latestSpendMonth && <> {monthLabel(latestSpendMonth.month)} cost {fmtUsd(monthTotal(latestSpendMonth))} in vendors.</>}
           </p>
         )}
@@ -112,7 +121,8 @@ export default async function AdminDashboard() {
             { l: 'First translations', v: fmtFull(home?.firstTranslationCount ?? snap?.data.canon.first_translations ?? 0), n: home?.firstTranslatedWorksProvisional ? `${fmtFull(home.firstTranslatedWorksProvisional)} provisional` : undefined },
             { l: 'Languages', v: String(home?.languageCount ?? '–'), n: home ? `${fmtFull(home.authorCount)} authors` : undefined },
             { l: 'Collections', v: fmtFull(L.totals.visibleCollections), n: home ? `${fmtK(home.illustrationCount)} illustrations · ${fmtK(home.artworkCount)} artworks` : undefined },
-            { l: 'Readers, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '–', n: metrics ? `${fmtFull(metrics.engagement.avgDau)} a day on average` : undefined },
+            R ? { l: 'Readers, 30 days', v: fmtK(R.mau), n: `about ${fmtFull(R.dau)} on a typical day` }
+              : { l: 'Fingerprints, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '–', n: metrics ? 'browsers, crawler fleets included' : undefined },
             { l: 'Accounts', v: metrics ? fmtFull(metrics.users.total) : '–', n: metrics ? `${signed(metrics.users.new7)} in 7 days` : undefined, up: !!metrics && metrics.users.new7 > 0 },
             { l: latestSpendMonth ? `Spend, ${monthLabel(latestSpendMonth.month)}` : 'Spend', v: latestSpendMonth ? fmtUsd(monthTotal(latestSpendMonth)) : 'allow-listed', n: latestSpendMonth ? 'vendors, before people' : 'see /admin/spend' },
             { l: 'Open feedback', v: fmtFull(L.totals.feedbackOpen), n: metrics?.social ? `${metrics.social.feedbackUnread} unread` : undefined },
@@ -217,36 +227,57 @@ export default async function AdminDashboard() {
 
       {/* ───────── Readers ───────── */}
       {metrics && (
-        <Section id="readers" title="Readers" intro={<><b className="text-stone-900">{fmtK(metrics.engagement.mau)}</b> people read something in the last 30 days{history[0] ? `, up from ${fmtK(history[0].mau)} when the daily record began on ${dayLabel(history[0].date)}` : ''}. The median session with more than one page lasts <b className="text-stone-900">{Math.floor(metrics.engagement.dwellMedianSec / 60)}m {String(metrics.engagement.dwellMedianSec % 60).padStart(2, '0')}s</b>.</>} link={{ href: '/admin/traffic', label: 'Traffic by day, any range' }}>
+        <Section id="readers" title="Readers" intro={<>{R
+          ? <>About <b className="text-stone-900">{fmtFull(R.dau)}</b> people read something on a typical day, and about <b className="text-stone-900">{fmtK(R.mau)}</b> in the last 30 days. These count browsers that behave like readers; the rule and its error are under Definitions. Counting every browser instead gives {fmtK(R.mauAll)}, most of them crawler fleets.</>
+          : <><b className="text-stone-900">{fmtK(metrics.engagement.mau)}</b> browser fingerprints loaded a page in the last 30 days. Most are crawler fleets, not people; the likely-human count appears with the next daily snapshot.</>
+        } The median session with more than one page lasts <b className="text-stone-900">{Math.floor(metrics.engagement.dwellMedianSec / 60)}m {String(metrics.engagement.dwellMedianSec % 60).padStart(2, '0')}s</b>.</>} link={{ href: '/admin/traffic', label: 'Traffic by day, any range' }}>
           <Tiles tiles={[
-            { l: 'Unique visitors, 30 days', v: fmtK(metrics.conversion.uniqVisitors), n: `${pct(metrics.conversion.returningVisitors, metrics.conversion.uniqVisitors)} came back on another day` },
-            { l: 'Daily readers', v: fmtFull(metrics.engagement.avgDau), n: '14-day average' },
-            { l: 'Page views, 7 days', v: fmtK(metrics.deltas.pageviews7.now), n: `${signed(metrics.deltas.pageviews7.now - metrics.deltas.pageviews7.prev)} on the week before`, up: metrics.deltas.pageviews7.now > metrics.deltas.pageviews7.prev },
-            { l: 'New accounts, 30 days', v: fmtFull(metrics.users.new30), n: `${metrics.users.new7} in the last 7 days${metrics.conversion.newSignups != null ? ` · ${pct(metrics.conversion.newSignups, metrics.conversion.uniqVisitors)} of visitors` : ''}` },
-            { l: 'Verified accounts', v: fmtFull(metrics.users.verified), n: `${pct(metrics.users.verified, metrics.users.total)} of ${fmtFull(metrics.users.total)}` },
+            ...(R ? [
+              { l: 'Readers a day', v: fmtFull(R.dau), n: `median of the last ${R.dauDays} days · ${fmtFull(R.dauStrict)} by the strict rule` },
+              { l: 'Readers, 30 days', v: fmtK(R.mau), n: `${fmtK(R.mauStrict)} by the strict rule` },
+              { l: 'All fingerprints, 30 days', v: fmtK(R.mauAll), n: `fleets included · ${pct(R.mau, R.mauAll)} are likely readers` },
+              { l: 'Page views by readers, 7 days', v: fmtK(readerPv7), n: `${signed(readerPv7 - readerPvPrev7)} on the week before`, up: readerPv7 > readerPvPrev7 },
+            ] : [
+              { l: 'Fingerprints, 30 days', v: fmtK(metrics.conversion.uniqVisitors), n: 'every browser, fleets included' },
+              { l: 'Fingerprints a day', v: fmtFull(metrics.engagement.avgDau), n: '14-day mean, fleets included' },
+              { l: 'Page views, 7 days', v: fmtK(metrics.deltas.pageviews7.now), n: `fleets included · ${signed(metrics.deltas.pageviews7.now - metrics.deltas.pageviews7.prev)} on the week before` },
+            ]),
+            { l: 'New accounts, 30 days', v: fmtFull(metrics.users.new30), n: `${metrics.users.new7} in the last 7 days${R && metrics.conversion.newSignups != null ? ` · ${pct(metrics.conversion.newSignups, R.mau)} of readers` : ''}` },
+            { l: 'Signed up by email link', v: fmtFull(metrics.users.verified), n: `${pct(metrics.users.verified, metrics.users.total)} of ${fmtFull(metrics.users.total)} · the rest used Google sign-in` },
             { l: 'Downloads, 30 days', v: fmtFull(metrics.missionActions.download), n: `${metrics.missionActions.share} shares · ${metrics.missionActions.cite} citations${metrics.social.likes != null ? ` · ${fmtFull(metrics.social.likes)} likes` : ''}` },
           ]} />
           <Grid2>
             {metrics.geo?.countries?.length ? <ReadersMap countries={metrics.geo.countries} history={history} /> : null}
-            {history.length > 1 && (
-              <Panel title="Monthly and daily readers" note="Unique visitor fingerprints (IP and browser), humans only, recorded daily.">
-                <Legend names={['Monthly active (30-day unique)', 'Daily active (14-day average)']} colors={[SERIES[0], SERIES[2]]} />
-                <LineChart labels={history.map(h => dayLabel(h.date))} series={[{ name: 'Monthly active', color: SERIES[0], data: history.map(h => h.mau) }, { name: 'Daily active', color: SERIES[2], data: history.map(h => h.avgDau) }]} ariaLabel="Monthly and daily active readers over time" />
+            {readerDays.length > 1 ? (
+              <Panel title="Readers per day" note="Browser fingerprints (IP and browser) per full day. Likely human: came from another site, read 3 or more pages, or used a phone. Strict drops the 3-pages test, which a crawler that reads several pages can pass, so the true figure sits between the two lines. Crawler fleets are not drawn: on their days they outnumber readers by up to 20 to 1.">
+                <Legend names={['Likely human', 'Strict (referred or on a phone)']} colors={[SERIES[0], SERIES[2]]} />
+                <LineChart labels={readerDays.map(d => dayLabel(d.date))} series={[{ name: 'Likely human', color: SERIES[0], data: readerDays.map(d => d.likely) }, { name: 'Strict', color: SERIES[2], data: readerDays.map(d => d.strict) }]} ariaLabel="Likely-human readers per day" />
+              </Panel>
+            ) : history.length > 1 && (
+              <Panel title="Browser fingerprints, monthly and daily" note="Every fingerprint (IP and browser) that loaded a page, crawler fleets included: the spikes are fleets arriving and leaving, not readers. The readers-per-day chart replaces this one with the next daily snapshot.">
+                <Legend names={['30-day unique', '14-day mean per day']} colors={[SERIES[0], SERIES[2]]} />
+                <LineChart labels={history.map(h => dayLabel(h.date))} series={[{ name: '30-day unique', color: SERIES[0], data: history.map(h => h.mau) }, { name: '14-day mean per day', color: SERIES[2], data: history.map(h => h.avgDau) }]} ariaLabel="Browser fingerprints over time" />
               </Panel>
             )}
             {history.length > 1 && (
-              <Panel title="Accounts" note={`${fmtFull(metrics.users.everLoggedIn)} accounts have signed in at least once; the verified gap is people who started a sign-up and never confirmed the email.`}>
-                <Legend names={['Accounts', 'Email verified']} colors={[SERIES[0], SERIES[6]]} />
-                <LineChart labels={history.map(h => dayLabel(h.date))} series={[{ name: 'Accounts', color: SERIES[0], data: history.map(h => h.signupsTotal) }, { name: 'Email verified', color: SERIES[6], data: history.map(h => h.verified) }]} ariaLabel="Accounts and verified accounts over time" />
+              <Panel title="Accounts" note={`${fmtFull(metrics.users.everLoggedIn)} accounts have signed in at least once; the second line is accounts created by clicking an emailed sign-in link. The gap is Google sign-in, not people who failed to confirm: an account only exists once its link is clicked.`}>
+                <Legend names={['Accounts', 'By email link']} colors={[SERIES[0], SERIES[6]]} />
+                <LineChart labels={history.map(h => dayLabel(h.date))} series={[{ name: 'Accounts', color: SERIES[0], data: history.map(h => h.signupsTotal) }, { name: 'By email link', color: SERIES[6], data: history.map(h => h.verified) }]} ariaLabel="Accounts and verified accounts over time" />
               </Panel>
             )}
-            <Panel title="Page views per day, last 30 days" note="Bots and flagged proxy pools excluded. Spikes line up with newsletter and social pushes.">
-              <LineChart labels={metrics.traffic.dailyPageviews.slice(0, -1).map(d => dayLabel(d.date))} series={[{ name: 'Page views', data: metrics.traffic.dailyPageviews.slice(0, -1).map(d => d.hits), fill: true }]} height={200} ariaLabel="Human page views per day" />
-            </Panel>
+            {R && readerDays.length > 1 ? (
+              <Panel title="Page views by readers, per day" note={`Page views from likely-human fingerprints, last 30 days. Every recorded page view in the same period: ${fmtK(R.pageviewsAll30)}, of which ${pct(R.pageviews30, R.pageviewsAll30)} came from likely readers.`}>
+                <LineChart labels={readerDays.slice(-30).map(d => dayLabel(d.date))} series={[{ name: 'Page views by readers', data: readerDays.slice(-30).map(d => d.likelyPageviews), fill: true }]} height={200} ariaLabel="Page views by likely-human readers per day" />
+              </Panel>
+            ) : (
+              <Panel title="Page views per day, last 30 days" note="Every recorded page view. Known bots and flagged proxy pools are excluded; crawler fleets that pass as browsers are not, and they cause the spikes.">
+                <LineChart labels={metrics.traffic.dailyPageviews.slice(0, -1).map(d => dayLabel(d.date))} series={[{ name: 'Page views', data: metrics.traffic.dailyPageviews.slice(0, -1).map(d => d.hits), fill: true }]} height={200} ariaLabel="Page views per day" />
+              </Panel>
+            )}
             <Panel title="Sign-ups per day, last 90 days">
               <Bars labels={metrics.series.signupsByDay.slice(0, -1).map(d => dayLabel(d.date))} series={[{ name: 'New accounts', data: metrics.series.signupsByDay.slice(0, -1).map(d => d.n) }]} height={200} ariaLabel="New accounts per day" />
             </Panel>
-            <Panel title="What people search for" note={`${fmtFull(metrics.search.human)} human searches in 30 days, ${fmtFull(metrics.search.zeroResult)} with no result. Zero-result queries are mostly truncated typeahead; the named works are acquisition leads.`}>
+            <Panel title="What people search for" note={`${fmtFull(metrics.search.human)} searches in 30 days, ${fmtFull(metrics.search.zeroResult)} with no result.${metrics.search.ownTools != null ? ` Known bots are left out, and so are ${fmtFull(metrics.search.ownTools)} searches by our own uptime probe and scripts.` : ' Until the next daily snapshot this still counts our own uptime probe, which replays ten fixed queries about 5,000 times each.'} Zero-result queries are mostly truncated typeahead; the named works are acquisition leads.`}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm min-w-0">
                 {[['Top queries', metrics.search.topQueries.slice(0, 10)], ['Found nothing', metrics.search.zeroQueries.slice(0, 10)]].map(([t, rows]) => (
                   <table key={t as string} className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">{t as string}</th><th className="text-right py-1 font-medium">n</th></tr></thead>
@@ -264,12 +295,22 @@ export default async function AdminDashboard() {
               </Panel>
             )}
             {(metrics.traffic.topBooks?.length || metrics.traffic.topCollections?.length) ? (
-              <Panel title="Most read, last 30 days" note="Human page views, bots excluded. A book counts however it was reached (provider prefixes and partner embeds fold into one).">
+              <Panel title="Most read, last 30 days" note="Page views with known bots excluded. Crawler fleets that pass as browsers are still counted here, so read the order, not the totals. A book counts however it was reached (provider prefixes and partner embeds fold into one).">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm min-w-0">
                   <table className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Books</th><th className="text-right py-1 font-medium w-14">views</th></tr></thead>
                     <tbody>{(metrics.traffic.topBooks ?? []).slice(0, 10).map(b => <tr key={b.key} className="border-t border-stone-100"><td className="py-0.5 pr-2"><Link href={`/book/${b.key}`} className="block truncate hover:underline" title={b.author ? `${b.title} · ${b.author}` : b.title}>{b.title}</Link></td><td className="py-0.5 text-right tabular-nums">{fmtFull(b.hits)}</td></tr>)}</tbody></table>
                   <table className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Collections</th><th className="text-right py-1 font-medium w-14">views</th></tr></thead>
                     <tbody>{(metrics.traffic.topCollections ?? []).slice(0, 10).map(c => <tr key={c.slug} className="border-t border-stone-100"><td className="py-0.5 pr-2"><Link href={`/collections/${c.slug}`} className="block truncate hover:underline">{c.slug}</Link></td><td className="py-0.5 text-right tabular-nums">{fmtFull(c.hits)}</td></tr>)}</tbody></table>
+                </div>
+              </Panel>
+            ) : null}
+            {metrics.traffic.fromAssistants ? (
+              <Panel title="Where readers come from, last 30 days" note={`A source is the link's utm tag when it has one, otherwise the referring site. Tags are stored only from ${dayLabel(metrics.traffic.fromAssistants.utmSince)}, so earlier days undercount ChatGPT and the newsletter. A visitor is an address plus a browser, counted once in the 30 days, not an account.${assistantLastFullDay ? ` On ${dayLabel(assistantLastFullDay.date)}, the last full day, ${fmtFull(assistantLastFullDay.visitors)} readers arrived from an assistant.` : ''}`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm min-w-0">
+                  <table className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">Source</th><th className="text-right py-1 font-medium w-20">visitors</th></tr></thead>
+                    <tbody>{(metrics.traffic.topReferrers ?? []).filter(r => r.referrer !== 'direct').slice(0, 10).map(r => <tr key={r.referrer} className="border-t border-stone-100"><td className="py-0.5 pr-2"><span className="block truncate">{r.referrer}</span></td><td className="py-0.5 text-right tabular-nums">{fmtFull(r.visitors ?? 0)}</td></tr>)}</tbody></table>
+                  <table className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">From assistants: {fmtFull(metrics.traffic.fromAssistants.visitors)}</th><th className="text-right py-1 font-medium w-20">visitors</th></tr></thead>
+                    <tbody>{metrics.traffic.fromAssistants.bySource.slice(0, 10).map(r => <tr key={r.source} className="border-t border-stone-100"><td className="py-0.5 pr-2"><span className="block truncate">{r.source}</span></td><td className="py-0.5 text-right tabular-nums">{fmtFull(r.visitors)}</td></tr>)}</tbody></table>
                 </div>
               </Panel>
             ) : null}
@@ -312,7 +353,8 @@ export default async function AdminDashboard() {
               ['Transcribed, translated', <>Sums of the per-book counters <code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">pages_ocr</code> and <code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">pages_translated</code>. A blank leaf never counts as translated (#3747).</>],
               ['Next step', <>The draft rule from #5469, recomputed read-only every night: what each book needs next given its counters, regardless of the status label it carries.</>],
               ['Spend', <>The private spend report the ops repo pushes (vendor invoices, Google Cloud billing export, Atlas CLI). Shown only to the spend allow-list; people and hours never appear here.</>],
-              ['Readers', <>The daily metrics snapshot (05:45 UTC) over first-party page-view logs. Sessions are IP plus browser, so a person on two devices is two readers. Bots are filtered by user agent and pace.</>],
+              ['Readers', <>The daily metrics snapshot (05:45 UTC) over first-party page-view logs. A reader is a browser fingerprint (IP plus browser) that behaves like a person: it came from another site, read 3 or more pages, or used a phone. Crawler fleets run JavaScript and wear ordinary browser names, so the page-view log cannot tell them from people by name; they are desktop, arrive with no referrer and read one or two pages. Tested on 12 November 2026: the rule keeps 90% of the days of 1,538 browsers known to be people (they loaded a signed-in page) and passed about 3% of the 6 November fleet. It misses a person who opens one or two pages from a bookmark on a desktop, and a person on two devices is two readers. Signed-in readers are counted exactly under “How deeply members read”.</>],
+              ['Strict rule', <>Referred or on a phone only. The “3 or more pages” test is the one a crawler can pass, so strict is the floor and likely human the ceiling.</>],
               ['Freshness', <>Breakdowns and the pipeline series: daily at 05:55 UTC on Hetzner (<code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">scripts/analytics/snapshot-library-dashboard.mjs</code>). Totals and enrichment: hourly (<code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">/api/cron/dashboard-snapshot</code>). Nothing on this page is computed when you load it.</>],
             ] as [string, ReactNode][]).map(([k, v]) => <div key={k} className="contents"><dt className="font-medium text-stone-900">{k}</dt><dd className="min-w-0 max-w-3xl">{v}</dd></div>)}
           </dl>

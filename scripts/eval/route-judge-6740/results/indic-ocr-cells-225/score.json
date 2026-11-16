@@ -1,0 +1,272 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/indic-cells-225/score-file.py from paired-score.json (paired-arm.mjs score); no model calls",
+ "provenance": "#225 (job indic-ocr-tests-225, 2026-11-13). tamil: 40 books of campaign indic-tamil-print-2026-11 (20 Kovilur Andavar, 20 Toronto), one middle-third text page each. series: 24 romanized Pali/Sanskrit text-edition volumes of campaign indic-translation-series-2026-11 (PTS, HOS), one diacritic-dense page each.",
+ "judge": "claude-opus-5-5 route judge (judge.mjs judgePrompt), one output a call, image attached, blind arm names; series judge_note: every dropped or wrong diacritic is a defect",
+ "mapping": "route judge: accept = verdict.accept; wrong_text = a wrong_text defect on the page",
+ "cells": {
+  "tamil": {
+   "task": "ocr",
+   "lang": "Tamil",
+   "script_type": "print",
+   "pages": 40,
+   "noise_floor": {
+    "pairs": 6,
+    "accept_flips": "1/6",
+    "flip_rate": 0.17,
+    "fidelity_abs_diff": 0.33
+   },
+   "against_baseline": {
+    "agy -> ia>agy": {
+     "shared_pages": 39,
+     "better": "9/39",
+     "worse": "3/39",
+     "accept_gained": 5,
+     "accept_lost": 4,
+     "accept_sign_test_p": 1,
+     "fidelity_diff": 0.15
+    },
+    "agy -> surya>agy": {
+     "shared_pages": 40,
+     "better": "14/40",
+     "worse": "5/40",
+     "accept_gained": 5,
+     "accept_lost": 7,
+     "accept_sign_test_p": 0.77,
+     "fidelity_diff": 0.25
+    }
+   },
+   "routes": {
+    "agy": {
+     "n": 40,
+     "books": 40,
+     "accept": "15/40",
+     "wrong_text_pages": "22/40",
+     "accept_wilson": [
+      0.242,
+      0.53
+     ],
+     "wrong_text_wilson": [
+      0.398,
+      0.693
+     ],
+     "fidelity_mean": 3.48,
+     "words": 5127,
+     "misleads_per_1k": 18.72,
+     "wrong_text_per_1k": 10.14,
+     "served": "agy gemini-3.8-flash-low reads the image alone (cli-ocr.mjs read, live OCR prompt), one page a call",
+     "classes_k_of_n": {
+      "O6": "35/40",
+      "O8": "14/40",
+      "E2": "12/40",
+      "O7": "12/40",
+      "O5": "5/40",
+      "O2": "4/40",
+      "O12": "2/40",
+      "O13": "2/40",
+      "O16": "2/40",
+      "D1": "2/40",
+      "O9": "1/40",
+      "O4": "1/40"
+     },
+     "wrong_text_classes": {
+      "O6": "22/40",
+      "O7": "9/40",
+      "O8": "7/40",
+      "E2": "7/40",
+      "O5": "4/40",
+      "O2": "3/40",
+      "O13": "2/40",
+      "O16": "2/40",
+      "D1": "2/40",
+      "O9": "1/40"
+     },
+     "control_passed": true
+    },
+    "ia>agy": {
+     "n": 39,
+     "books": 39,
+     "accept": "15/39",
+     "wrong_text_pages": "16/39",
+     "accept_wilson": [
+      0.249,
+      0.541
+     ],
+     "wrong_text_wilson": [
+      0.271,
+      0.566
+     ],
+     "fidelity_mean": 3.62,
+     "words": 5073,
+     "misleads_per_1k": 15.38,
+     "wrong_text_per_1k": 6.9,
+     "served": "the Internet Archive's own OCR of the leaf (_djvu.xml) as the draft, agy gemini-3.8-flash-low corrects with the image",
+     "classes_k_of_n": {
+      "O6": "31/39",
+      "O8": "15/39",
+      "E2": "11/39",
+      "O7": "10/39",
+      "O2": "7/39",
+      "O16": "5/39",
+      "O5": "4/39",
+      "O12": "3/39",
+      "D1": "2/39",
+      "O1": "2/39",
+      "O13": "1/39",
+      "O11": "1/39",
+      "T6": "1/39",
+      "O4": "1/39"
+     },
+     "wrong_text_classes": {
+      "O6": "15/39",
+      "O2": "7/39",
+      "E2": "6/39",
+      "O7": "6/39",
+      "O8": "4/39",
+      "O16": "3/39",
+      "O5": "3/39",
+      "D1": "2/39",
+      "O1": "2/39",
+      "O13": "1/39",
+      "O11": "1/39",
+      "O12": "1/39",
+      "T6": "1/39",
+      "O4": "1/39"
+     },
+     "control_passed": true
+    },
+    "surya>agy": {
+     "n": 40,
+     "books": 40,
+     "accept": "13/40",
+     "wrong_text_pages": "19/40",
+     "accept_wilson": [
+      0.201,
+      0.48
+     ],
+     "wrong_text_wilson": [
+      0.329,
+      0.625
+     ],
+     "fidelity_mean": 3.73,
+     "words": 5003,
+     "misleads_per_1k": 15.19,
+     "wrong_text_per_1k": 6.4,
+     "served": "Surya 2 (gex45, no lane guards) drafts, agy gemini-3.8-flash-low corrects with the image",
+     "classes_k_of_n": {
+      "O6": "32/40",
+      "O8": "11/40",
+      "O7": "9/40",
+      "E2": "6/40",
+      "O16": "4/40",
+      "O12": "3/40",
+      "O2": "2/40",
+      "O13": "1/40",
+      "O10": "1/40",
+      "O5": "1/40",
+      "O1": "1/40"
+     },
+     "wrong_text_classes": {
+      "O6": "18/40",
+      "O7": "6/40",
+      "O16": "4/40",
+      "E2": "4/40",
+      "O8": "3/40",
+      "O12": "2/40",
+      "O2": "2/40",
+      "O5": "1/40",
+      "O1": "1/40"
+     },
+     "control_passed": true
+    }
+   }
+  },
+  "series": {
+   "task": "ocr",
+   "lang": "Pali/Sanskrit (romanized)",
+   "script_type": "print",
+   "pages": 24,
+   "noise_floor": {
+    "pairs": 6,
+    "accept_flips": "0/6",
+    "flip_rate": 0,
+    "fidelity_abs_diff": 0.17
+   },
+   "against_baseline": {
+    "agy -> gpu2>agy": {
+     "shared_pages": 24,
+     "better": "7/24",
+     "worse": "4/24",
+     "accept_gained": 7,
+     "accept_lost": 1,
+     "accept_sign_test_p": 0.07,
+     "fidelity_diff": 0.17
+    }
+   },
+   "routes": {
+    "gpu2>agy": {
+     "n": 24,
+     "books": 24,
+     "accept": "11/24",
+     "wrong_text_pages": "1/24",
+     "accept_wilson": [
+      0.279,
+      0.649
+     ],
+     "wrong_text_wilson": [
+      0.007,
+      0.202
+     ],
+     "fidelity_mean": 3.75,
+     "words": 6504,
+     "misleads_per_1k": 14.15,
+     "wrong_text_per_1k": 0.15,
+     "served": "the bound english-gpu-7263 route: LightOnOCR + Surya 2 drafts and their word diff, agy gemini-3.8-flash-low reconciles (d-diff.mjs arm D)",
+     "classes_k_of_n": {
+      "O8": "21/24",
+      "O6": "9/24",
+      "E2": "4/24",
+      "O16": "2/24",
+      "O12": "2/24"
+     },
+     "wrong_text_classes": {
+      "O6": "1/24",
+      "O8": "1/24"
+     },
+     "control_passed": true
+    },
+    "agy": {
+     "n": 24,
+     "books": 24,
+     "accept": "5/24",
+     "wrong_text_pages": "1/24",
+     "accept_wilson": [
+      0.092,
+      0.405
+     ],
+     "wrong_text_wilson": [
+      0.007,
+      0.202
+     ],
+     "fidelity_mean": 3.58,
+     "words": 6485,
+     "misleads_per_1k": 21.13,
+     "wrong_text_per_1k": 0.15,
+     "served": "agy gemini-3.8-flash-low reads the image alone (cli-ocr.mjs read, live OCR prompt), one page a call",
+     "classes_k_of_n": {
+      "O8": "22/24",
+      "O6": "16/24",
+      "E2": "4/24",
+      "O16": "2/24",
+      "O5": "1/24",
+      "O11": "1/24"
+     },
+     "wrong_text_classes": {
+      "O6": "1/24",
+      "O8": "1/24"
+     },
+     "control_passed": true
+    }
+   }
+  }
+ }
+}

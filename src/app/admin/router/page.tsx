@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import { Fragment } from 'react';
+import QualityLoopLinks from '../QualityLoopLinks';
 import {
   ageMin, daysLeft, getRouterBoard, splitCells, ROUTER_BOARD_STALE_MIN,
-  type CellStatus, type RouterBoardDoc, type RouterCell,
+  type CellStatus, type RouteRow, type RouterBoardDoc, type RouterCell,
 } from '@/lib/router-board';
 
 /**
@@ -78,6 +80,57 @@ function Lanes({ c, today }: { c: RouterCell; today: string }) {
   );
 }
 
+const f2 = (v: number | null | undefined) => (v == null ? '–' : v.toFixed(2));
+const interval = (v: number[] | null | undefined) => (v && v.length >= 2 ? `[${f2(v[0])}, ${f2(v[v.length - 1])}]` : '');
+
+/** Every route the table holds for one cell (#240): what each scored, not only the one chosen. */
+function RoutesTable({ routes }: { routes: RouteRow[] }) {
+  return (
+    <table className="w-full text-xs">
+      <thead className="text-left text-stone-500">
+        <tr>
+          <th className="py-1 pr-3 font-medium">route</th>
+          <th className="py-1 pr-3 font-medium text-right">accepted</th>
+          <th className="py-1 pr-3 font-medium">rate [90%]</th>
+          <th className="py-1 pr-3 font-medium text-right">wrong text</th>
+          <th className="py-1 pr-3 font-medium text-right">invented / wrong leaf</th>
+          <th className="py-1 pr-3 font-medium">per 1k words: misleads / wrong text</th>
+          <th className="py-1 font-medium">cost per accepted page</th>
+        </tr>
+      </thead>
+      <tbody className="align-top">
+        {routes.map((r) => (
+          <tr key={r.id} className={r.decided || r.in_use ? 'bg-stone-50' : ''}>
+            <td className="py-1 pr-3">
+              <span className={r.decided ? 'font-medium text-stone-900' : 'text-stone-700'}>{r.id}</span>
+              {r.in_use && <span className="ml-1.5 text-emerald-700">in use</span>}
+              {r.decided && <span className="ml-1.5 text-accent-rust">router&apos;s pick</span>}
+              {r.hard_floor_block && <span className="ml-1.5 text-red-700">hard floor</span>}
+            </td>
+            <td className="py-1 pr-3 text-right tabular-nums whitespace-nowrap">{r.tested ? `${fmt(r.k)} of ${fmt(r.n)}` : <span className="text-stone-400">untested</span>}</td>
+            <td className="py-1 pr-3 tabular-nums whitespace-nowrap">
+              {r.tested
+                ? <>{f2(r.rate)} <span className="text-stone-500">{interval(r.ci90)}</span></>
+                : <span className="text-stone-400 italic">prior {f2(r.rate)} {interval(r.ci90)}</span>}
+              {r.written_of_drawn && <div className="text-stone-500">wrote {r.written_of_drawn} drawn</div>}
+            </td>
+            <td className="py-1 pr-3 text-right tabular-nums">{r.tested && r.wrong_text != null ? `${fmt(r.wrong_text)}/${fmt(r.n)}` : '–'}</td>
+            <td className="py-1 pr-3 text-right tabular-nums">{r.invented_or_wrong_leaf ?? '–'}</td>
+            <td className="py-1 pr-3 tabular-nums whitespace-nowrap">
+              {r.defects
+                ? <>{f2(r.defects.misleads_per_1k?.[1])} / {f2(r.defects.wrong_text_per_1k?.[1])} <span className="text-stone-500">({r.defects.books} books)</span></>
+                : <span className="text-stone-400">no verdicts</span>}
+            </td>
+            <td className="py-1 tabular-nums whitespace-nowrap">
+              {r.cost ? <>{r.cost.mid?.toPrecision(3) ?? '–'} {r.cost.unit} <span className="text-stone-500">{r.cost.low != null && r.cost.high != null ? `[${r.cost.low.toPrecision(3)}, ${r.cost.high.toPrecision(3)}]` : ''}</span></> : <span className="text-stone-500">no new call</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 function CellTable({ cells, today }: { cells: RouterCell[]; today: string }) {
   return (
     <div className="overflow-x-auto rounded border border-stone-200 bg-white">
@@ -92,9 +145,10 @@ function CellTable({ cells, today }: { cells: RouterCell[]; today: string }) {
             <th className="px-2 py-1.5 font-medium text-right">pages waiting</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-stone-100 align-top">
+        <tbody className="align-top">
           {cells.map((c) => (
-            <tr key={c.cell}>
+            <Fragment key={c.cell}>
+            <tr id={`cell-${c.cell}`} className="border-t border-stone-200 scroll-mt-4 target:bg-amber-50">
               <td className="px-2 py-1.5">
                 <div className="font-medium text-stone-900">{c.cell}</div>
                 {c.title && <div className="text-stone-500">{c.title}</div>}
@@ -109,6 +163,17 @@ function CellTable({ cells, today }: { cells: RouterCell[]; today: string }) {
               <td className="px-2 py-1.5"><Lanes c={c} today={today} /></td>
               <td className="px-2 py-1.5 text-right tabular-nums">{fmt(c.pages_waiting)}</td>
             </tr>
+            {c.routes && c.routes.length > 0 && (
+              <tr>
+                <td colSpan={6} className="px-2 pb-3 pt-0">
+                  <div className="ml-3 border-l-2 border-stone-200 pl-3">
+                    <div className="text-stone-500 mb-0.5">All {c.routes.length} routes tested or listed for this cell</div>
+                    <RoutesTable routes={c.routes} />
+                  </div>
+                </td>
+              </tr>
+            )}
+            </Fragment>
           ))}
         </tbody>
       </table>
@@ -124,7 +189,7 @@ function Board({ doc, now }: { doc: RouterBoardDoc; now: Date }) {
   return (
     <>
       <p className="text-sm text-stone-700">
-        {decided.length} decided cells in <code>{doc.table}</code> (set {doc.pointer_set ?? '–'}).{' '}
+        {decided.length} decided cells in <code className="break-all">{doc.table}</code> (set {doc.pointer_set ?? '–'}).{' '}
         <span className="text-emerald-700">Served {t('served').cells}</span>;{' '}
         <span className="text-amber-700">waived {t('waived').cells}</span>;{' '}
         <span className="text-red-700">another route {t('mismatch').cells} ({fmt(t('mismatch').pages_waiting)} pages)</span>;{' '}
@@ -132,11 +197,11 @@ function Board({ doc, now }: { doc: RouterBoardDoc; now: Date }) {
         keeps the stored text {t('stored').cells};{' '}
         nothing waiting {t('idle').cells}.
       </p>
-      <section className="grid gap-2">
+      <section className="grid grid-cols-[minmax(0,1fr)] gap-2">
         <h2 className="text-xs uppercase tracking-wider text-stone-500">Decided cells ({decided.length})</h2>
         <CellTable cells={decided} today={today} />
       </section>
-      <details className="grid gap-2">
+      <details className="grid grid-cols-[minmax(0,1fr)] gap-2 min-w-0">
         <summary className="text-xs uppercase tracking-wider text-stone-500 cursor-pointer">
           Undecided cells with a lane or pages waiting ({undecided.length}, {fmt(undecidedPages)} pages)
         </summary>
@@ -164,8 +229,9 @@ export default async function RouterPage() {
   const age = ageMin(doc, now);
   const stale = age == null || age > ROUTER_BOARD_STALE_MIN;
   return (
-    <main className="px-4 py-5 sm:px-6 max-w-6xl mx-auto grid gap-4">
+    <main className="px-4 py-5 sm:px-6 max-w-6xl mx-auto grid grid-cols-[minmax(0,1fr)] gap-4">
       <header className="grid gap-1">
+        <QualityLoopLinks current="/admin/router" />
         <h1 className="text-xl font-semibold text-stone-900">Router</h1>
         <p className={`text-xs ${stale ? 'text-red-700 font-medium' : 'text-stone-500'}`}>
           {doc ? `pushed ${age} min ago${doc.commit ? ` from ${doc.commit}` : ''}` : 'no push yet'}

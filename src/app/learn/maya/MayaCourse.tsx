@@ -67,7 +67,7 @@ interface Answered { chose: string; correct: boolean; value: unknown }
 
 const lessonById = (id: string) => LESSONS.find((l) => l.id === id)!;
 // The look of /learn/yucatec (#6953): lm-r, ink for go, emerald for right, rust for wrong.
-const btn = 'w-full min-h-14 py-4 lm-r text-lg font-bold transition-transform active:translate-y-1 active:shadow-none';
+const btn = 'w-full min-h-14 py-4 lm-r text-lg font-semibold transition-transform active:translate-y-1 active:shadow-none';
 const btnInk = `${btn} bg-[#1a1612] text-white shadow-[0_4px_0_#000]`;
 const btnLight = `${btn} border-2 border-border-light bg-white text-primary shadow-[0_4px_0_#d6d3d1]`;
 const btnRight = `${btn} bg-emerald-600 text-white shadow-[0_4px_0_#047857]`;
@@ -852,7 +852,7 @@ function SignCompare({ chosen, right, lead = 'You picked' }: { chosen: SyllableK
 /** The feedback heading, worded and drawn as on /learn/yucatec. */
 function Verdict({ correct }: { correct: boolean }) {
   return (
-    <p className={`flex items-center gap-2 font-bold text-xl mb-2 ${correct ? 'text-emerald-700' : 'text-accent-rust'}`}>
+    <p className={`flex items-center gap-2 font-semibold text-xl mb-2 ${correct ? 'text-emerald-700' : 'text-accent-rust'}`}>
       <span aria-hidden className={`inline-flex w-8 h-8 lm-round items-center justify-center text-white text-lg lm-pop ${correct ? 'bg-emerald-600' : 'bg-accent-rust'}`}>{correct ? '✓' : '×'}</span>
       {correct ? 'Yes.' : 'Not quite.'}
     </p>

@@ -1,0 +1,990 @@
+[
+ {
+  "id": "stored:695230c6ab34727b1f04478e",
+  "judged_as": "j8121908f7222",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "695230c6ab34727b1f04478e",
+  "book_id": "695230c6ab34727b1f044784"
+ },
+ {
+  "id": "stored:6993890ece1538706594649b",
+  "judged_as": "j06e67f5b66a8",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6993890ece1538706594649b",
+  "book_id": "6993890ece15387065946496"
+ },
+ {
+  "id": "stored:69938fa45d28b693146d14ff",
+  "judged_as": "j2a0df21ca42d",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69938fa45d28b693146d14ff",
+  "book_id": "69938fa45d28b693146d14dd"
+ },
+ {
+  "id": "stored:6993895d74305116d72d1649",
+  "judged_as": "je58f73c7d505",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6993895d74305116d72d1649",
+  "book_id": "6993895d74305116d72d1644"
+ },
+ {
+  "id": "stored:6953ae7f77f38f6761bd7e80",
+  "judged_as": "j4aa7dc077405",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6953ae7f77f38f6761bd7e80",
+  "book_id": "6953ae7f77f38f6761bd7e65"
+ },
+ {
+  "id": "stored:69b52cc7b3537347e51e2f10",
+  "judged_as": "j1efd02590972",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b52cc7b3537347e51e2f10",
+  "book_id": "69b52cc7b3537347e51e2edd"
+ },
+ {
+  "id": "stored:6952c9ca77f38f6761bc3147",
+  "judged_as": "j368eff7df235",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6952c9ca77f38f6761bc3147",
+  "book_id": "6952c9ca77f38f6761bc3062"
+ },
+ {
+  "id": "stored:69b52bd6d6bd9f58edb24ee7",
+  "judged_as": "jc509babce2be",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b52bd6d6bd9f58edb24ee7",
+  "book_id": "69b52bd6d6bd9f58edb24d5e"
+ },
+ {
+  "id": "stored:69920bc6e0a548a13d885687",
+  "judged_as": "j57b801dfd099",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69920bc6e0a548a13d885687",
+  "book_id": "69920bc6e0a548a13d885667"
+ },
+ {
+  "id": "stored:69942f45b2f6748db4ac013f",
+  "judged_as": "j0c8ed4f93004",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69942f45b2f6748db4ac013f",
+  "book_id": "69942f45b2f6748db4ac0121"
+ },
+ {
+  "id": "stored:69b222db56715b0e324757b0",
+  "judged_as": "j08de975618b7",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b222db56715b0e324757b0",
+  "book_id": "69b222db56715b0e324757a1"
+ },
+ {
+  "id": "stored:695311a477f38f6761bcca57",
+  "judged_as": "jcf0a28d7bc1f",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "695311a477f38f6761bcca57",
+  "book_id": "695311a477f38f6761bcc8b8"
+ },
+ {
+  "id": "stored:6990532bd7712f78163cd534",
+  "judged_as": "j2d9d448ae895",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6990532bd7712f78163cd534",
+  "book_id": "6990532bd7712f78163cd522"
+ },
+ {
+  "id": "stored:69942f6fb2f6748db4ac0dbc",
+  "judged_as": "j0e5277352199",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69942f6fb2f6748db4ac0dbc",
+  "book_id": "69942f6fb2f6748db4ac0db5"
+ },
+ {
+  "id": "stored:6955801057e3b773024f5040",
+  "judged_as": "ja9257e7a6991",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6955801057e3b773024f5040",
+  "book_id": "6955801057e3b773024f5030"
+ },
+ {
+  "id": "stored:69937973b0a84a5763964db1",
+  "judged_as": "j17734a93026c",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69937973b0a84a5763964db1",
+  "book_id": "69937973b0a84a5763964d43"
+ },
+ {
+  "id": "stored:69afe660da5fa12b664a7626",
+  "judged_as": "j7c96b4054f01",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69afe660da5fa12b664a7626",
+  "book_id": "69afe65fda5fa12b664a75a2"
+ },
+ {
+  "id": "stored:699383b050654cbbe29181b6",
+  "judged_as": "j825b570ef201",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "699383b050654cbbe29181b6",
+  "book_id": "699383b050654cbbe291801e"
+ },
+ {
+  "id": "stored:69938d895d28b693146d0238",
+  "judged_as": "jc432c3850e83",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69938d895d28b693146d0238",
+  "book_id": "69938d895d28b693146d0231"
+ },
+ {
+  "id": "stored:69b2223d08069e96e843316f",
+  "judged_as": "jf702b7ca8b37",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b2223d08069e96e843316f",
+  "book_id": "69b2223d08069e96e84330fe"
+ },
+ {
+  "id": "stored:69b2f40e0e2f024dfbfba63f",
+  "judged_as": "j544547ae2935",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b2f40e0e2f024dfbfba63f",
+  "book_id": "69b2f40e0e2f024dfbfba5c2"
+ },
+ {
+  "id": "stored:6953cbb777f38f6761bdfd8c",
+  "judged_as": "j5ee21439fbf5",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6953cbb777f38f6761bdfd8c",
+  "book_id": "6953cbb777f38f6761bdfc4d"
+ },
+ {
+  "id": "stored:69938e3bd5a98fd66f430f3e",
+  "judged_as": "jaec9f716aced",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69938e3bd5a98fd66f430f3e",
+  "book_id": "69938e3bd5a98fd66f430e65"
+ },
+ {
+  "id": "stored:69942f42730aecc3c5a7823d",
+  "judged_as": "j0ea92c672f5a",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69942f42730aecc3c5a7823d",
+  "book_id": "69942f42730aecc3c5a7816a"
+ },
+ {
+  "id": "stored:69b52c1d3dd6d9423027dd2b",
+  "judged_as": "j9721c2e63754",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b52c1d3dd6d9423027dd2b",
+  "book_id": "69b52c1d3dd6d9423027dcb0"
+ },
+ {
+  "id": "stored:69bfcc988ab50eb88e8c56d5",
+  "judged_as": "j03212a2e7868",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69bfcc988ab50eb88e8c56d5",
+  "book_id": "69bfcc988ab50eb88e8c5589"
+ },
+ {
+  "id": "stored:69bfcd228ab50eb88e8c7d6b",
+  "judged_as": "j80d729a883ff",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69bfcd228ab50eb88e8c7d6b",
+  "book_id": "69bfcd228ab50eb88e8c7d27"
+ },
+ {
+  "id": "stored:695906ee95a91542b28c0259",
+  "judged_as": "j302821b52dd3",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "695906ee95a91542b28c0259",
+  "book_id": "6952e4b477f38f6761bc7d4c"
+ },
+ {
+  "id": "stored:6953a88d77f38f6761bd1b1f",
+  "judged_as": "j024bdcfe7481",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6953a88d77f38f6761bd1b1f",
+  "book_id": "6953a88c77f38f6761bd19d6"
+ },
+ {
+  "id": "stored:699376e7b0a84a5763961ef2",
+  "judged_as": "j452e641b201b",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "699376e7b0a84a5763961ef2",
+  "book_id": "699376e7b0a84a5763961e8f"
+ },
+ {
+  "id": "opus:695230c6ab34727b1f04478e",
+  "judged_as": "jd3152e4ad9c7",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "695230c6ab34727b1f04478e",
+  "book_id": "695230c6ab34727b1f044784"
+ },
+ {
+  "id": "opus:6993890ece1538706594649b",
+  "judged_as": "jca8556e4cf8f",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6993890ece1538706594649b",
+  "book_id": "6993890ece15387065946496"
+ },
+ {
+  "id": "opus:69938fa45d28b693146d14ff",
+  "judged_as": "j3e502ab7593d",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69938fa45d28b693146d14ff",
+  "book_id": "69938fa45d28b693146d14dd"
+ },
+ {
+  "id": "opus:6993895d74305116d72d1649",
+  "judged_as": "ja94709dbe64e",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6993895d74305116d72d1649",
+  "book_id": "6993895d74305116d72d1644"
+ },
+ {
+  "id": "opus:6953ae7f77f38f6761bd7e80",
+  "judged_as": "j60a87a3a0763",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6953ae7f77f38f6761bd7e80",
+  "book_id": "6953ae7f77f38f6761bd7e65"
+ },
+ {
+  "id": "opus:69b52cc7b3537347e51e2f10",
+  "judged_as": "ja7c082c81ac3",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b52cc7b3537347e51e2f10",
+  "book_id": "69b52cc7b3537347e51e2edd"
+ },
+ {
+  "id": "opus:6952c9ca77f38f6761bc3147",
+  "judged_as": "j098f40b96651",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6952c9ca77f38f6761bc3147",
+  "book_id": "6952c9ca77f38f6761bc3062"
+ },
+ {
+  "id": "opus:69b52bd6d6bd9f58edb24ee7",
+  "judged_as": "j01f871e1a012",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b52bd6d6bd9f58edb24ee7",
+  "book_id": "69b52bd6d6bd9f58edb24d5e"
+ },
+ {
+  "id": "opus:69920bc6e0a548a13d885687",
+  "judged_as": "ja28a9af24fba",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69920bc6e0a548a13d885687",
+  "book_id": "69920bc6e0a548a13d885667"
+ },
+ {
+  "id": "opus:69942f45b2f6748db4ac013f",
+  "judged_as": "jd69331331d0d",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69942f45b2f6748db4ac013f",
+  "book_id": "69942f45b2f6748db4ac0121"
+ },
+ {
+  "id": "opus:69b222db56715b0e324757b0",
+  "judged_as": "j657644cce6fb",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b222db56715b0e324757b0",
+  "book_id": "69b222db56715b0e324757a1"
+ },
+ {
+  "id": "opus:695311a477f38f6761bcca57",
+  "judged_as": "jb71eb518cf44",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "695311a477f38f6761bcca57",
+  "book_id": "695311a477f38f6761bcc8b8"
+ },
+ {
+  "id": "opus:6990532bd7712f78163cd534",
+  "judged_as": "j2d9d448ae895",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6990532bd7712f78163cd534",
+  "book_id": "6990532bd7712f78163cd522",
+  "unchanged": true
+ },
+ {
+  "id": "opus:69942f6fb2f6748db4ac0dbc",
+  "judged_as": "jf9d163fe81c7",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69942f6fb2f6748db4ac0dbc",
+  "book_id": "69942f6fb2f6748db4ac0db5"
+ },
+ {
+  "id": "opus:6955801057e3b773024f5040",
+  "judged_as": "ja450ebae6aaa",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6955801057e3b773024f5040",
+  "book_id": "6955801057e3b773024f5030"
+ },
+ {
+  "id": "opus:69937973b0a84a5763964db1",
+  "judged_as": "j623391971fe0",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69937973b0a84a5763964db1",
+  "book_id": "69937973b0a84a5763964d43"
+ },
+ {
+  "id": "opus:69afe660da5fa12b664a7626",
+  "judged_as": "j1f682535f196",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69afe660da5fa12b664a7626",
+  "book_id": "69afe65fda5fa12b664a75a2"
+ },
+ {
+  "id": "opus:699383b050654cbbe29181b6",
+  "judged_as": "j48d12d288ac3",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "699383b050654cbbe29181b6",
+  "book_id": "699383b050654cbbe291801e"
+ },
+ {
+  "id": "opus:69938d895d28b693146d0238",
+  "judged_as": "j7f7212e93658",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69938d895d28b693146d0238",
+  "book_id": "69938d895d28b693146d0231"
+ },
+ {
+  "id": "opus:69b2223d08069e96e843316f",
+  "judged_as": "j7f3f438b182b",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b2223d08069e96e843316f",
+  "book_id": "69b2223d08069e96e84330fe"
+ },
+ {
+  "id": "opus:69b2f40e0e2f024dfbfba63f",
+  "judged_as": "j913d4ea53d91",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b2f40e0e2f024dfbfba63f",
+  "book_id": "69b2f40e0e2f024dfbfba5c2"
+ },
+ {
+  "id": "opus:6953cbb777f38f6761bdfd8c",
+  "judged_as": null,
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "contain",
+  "page_id": "6953cbb777f38f6761bdfd8c",
+  "book_id": "6953cbb777f38f6761bdfc4d",
+  "reason": "The draft does not transcribe this leaf; it supplies a different Greek text of Judges xi.34–xii.12 (for example \"ΕΜΠΕΠΛΕΚΕΣ ΜΕ ΚΑΙ ΣΥ ΕΓΕΝΟΥ\" where the page shows \"ΕΜΠΕΠΟΔΟΣΤΑΤΗΚΑΣ ΜΕ\", and it leaves out the \"ΕΤΑΠΕΙΝΟΥΝ ΜΕ\" that opens the right column), and this faded, blotted facsimile, with its struck-through lines, is too degraded to transcribe reliably line by line."
+ },
+ {
+  "id": "opus:69938e3bd5a98fd66f430f3e",
+  "judged_as": null,
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "contain",
+  "page_id": "69938e3bd5a98fd66f430f3e",
+  "book_id": "69938e3bd5a98fd66f430e65",
+  "reason": "The draft does not match this leaf: it is invented philosophical prose about daemons, virtue and Helenos, while the image is a two-page spread of a Greek manuscript about Mantinea and the Lacedaemonians (Agesipolis, Philip, Antigonus), with folio number 207 and different marginal notes."
+ },
+ {
+  "id": "opus:69942f42730aecc3c5a7823d",
+  "judged_as": "j5c7fa1e379a7",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69942f42730aecc3c5a7823d",
+  "book_id": "69942f42730aecc3c5a7816a"
+ },
+ {
+  "id": "opus:69b52c1d3dd6d9423027dd2b",
+  "judged_as": "j7ea7c886d3ad",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b52c1d3dd6d9423027dd2b",
+  "book_id": "69b52c1d3dd6d9423027dcb0"
+ },
+ {
+  "id": "opus:69bfcc988ab50eb88e8c56d5",
+  "judged_as": "j7511a15ffa61",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69bfcc988ab50eb88e8c56d5",
+  "book_id": "69bfcc988ab50eb88e8c5589"
+ },
+ {
+  "id": "opus:69bfcd228ab50eb88e8c7d6b",
+  "judged_as": "j528e930a5ccd",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69bfcd228ab50eb88e8c7d6b",
+  "book_id": "69bfcd228ab50eb88e8c7d27"
+ },
+ {
+  "id": "opus:695906ee95a91542b28c0259",
+  "judged_as": "j302821b52dd3",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "695906ee95a91542b28c0259",
+  "book_id": "6952e4b477f38f6761bc7d4c",
+  "unchanged": true
+ },
+ {
+  "id": "opus:6953a88d77f38f6761bd1b1f",
+  "judged_as": "j047168e48197",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6953a88d77f38f6761bd1b1f",
+  "book_id": "6953a88c77f38f6761bd19d6"
+ },
+ {
+  "id": "opus:699376e7b0a84a5763961ef2",
+  "judged_as": "jabb05af2966a",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "699376e7b0a84a5763961ef2",
+  "book_id": "699376e7b0a84a5763961e8f"
+ },
+ {
+  "id": "fable:695230c6ab34727b1f04478e",
+  "judged_as": "j73e1d0a52a52",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "695230c6ab34727b1f04478e",
+  "book_id": "695230c6ab34727b1f044784"
+ },
+ {
+  "id": "fable:6993890ece1538706594649b",
+  "judged_as": "j06e67f5b66a8",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6993890ece1538706594649b",
+  "book_id": "6993890ece15387065946496",
+  "unchanged": true
+ },
+ {
+  "id": "fable:69938fa45d28b693146d14ff",
+  "judged_as": "j999de1bfc487",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69938fa45d28b693146d14ff",
+  "book_id": "69938fa45d28b693146d14dd"
+ },
+ {
+  "id": "fable:6993895d74305116d72d1649",
+  "judged_as": "j8914f18fa127",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6993895d74305116d72d1649",
+  "book_id": "6993895d74305116d72d1644"
+ },
+ {
+  "id": "fable:6953ae7f77f38f6761bd7e80",
+  "judged_as": "jfb00dc411ac5",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6953ae7f77f38f6761bd7e80",
+  "book_id": "6953ae7f77f38f6761bd7e65"
+ },
+ {
+  "id": "fable:69b52cc7b3537347e51e2f10",
+  "judged_as": "j72d299adf75f",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69b52cc7b3537347e51e2f10",
+  "book_id": "69b52cc7b3537347e51e2edd"
+ },
+ {
+  "id": "fable:6952c9ca77f38f6761bc3147",
+  "judged_as": "j88e94b043f9a",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6952c9ca77f38f6761bc3147",
+  "book_id": "6952c9ca77f38f6761bc3062"
+ },
+ {
+  "id": "fable:69b52bd6d6bd9f58edb24ee7",
+  "judged_as": "j8a32dd455fc0",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69b52bd6d6bd9f58edb24ee7",
+  "book_id": "69b52bd6d6bd9f58edb24d5e"
+ },
+ {
+  "id": "fable:69920bc6e0a548a13d885687",
+  "judged_as": "j21f07e975fad",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69920bc6e0a548a13d885687",
+  "book_id": "69920bc6e0a548a13d885667"
+ },
+ {
+  "id": "fable:69942f45b2f6748db4ac013f",
+  "judged_as": "j88a3bcd19355",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69942f45b2f6748db4ac013f",
+  "book_id": "69942f45b2f6748db4ac0121"
+ },
+ {
+  "id": "fable:69b222db56715b0e324757b0",
+  "judged_as": "j940053849bc4",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69b222db56715b0e324757b0",
+  "book_id": "69b222db56715b0e324757a1"
+ },
+ {
+  "id": "fable:695311a477f38f6761bcca57",
+  "judged_as": "j213a01f6f9d9",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "695311a477f38f6761bcca57",
+  "book_id": "695311a477f38f6761bcc8b8"
+ },
+ {
+  "id": "fable:6990532bd7712f78163cd534",
+  "judged_as": "j0e247755abe6",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6990532bd7712f78163cd534",
+  "book_id": "6990532bd7712f78163cd522"
+ },
+ {
+  "id": "fable:69942f6fb2f6748db4ac0dbc",
+  "judged_as": "j7a339d3975e6",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69942f6fb2f6748db4ac0dbc",
+  "book_id": "69942f6fb2f6748db4ac0db5"
+ },
+ {
+  "id": "fable:6955801057e3b773024f5040",
+  "judged_as": "j5f62d691b2fb",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6955801057e3b773024f5040",
+  "book_id": "6955801057e3b773024f5030"
+ },
+ {
+  "id": "fable:69937973b0a84a5763964db1",
+  "judged_as": "jb8c533f9332f",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69937973b0a84a5763964db1",
+  "book_id": "69937973b0a84a5763964d43"
+ },
+ {
+  "id": "fable:69afe660da5fa12b664a7626",
+  "judged_as": "j7089a118cd87",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69afe660da5fa12b664a7626",
+  "book_id": "69afe65fda5fa12b664a75a2"
+ },
+ {
+  "id": "fable:699383b050654cbbe29181b6",
+  "judged_as": "j79f199be7e86",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "699383b050654cbbe29181b6",
+  "book_id": "699383b050654cbbe291801e"
+ },
+ {
+  "id": "fable:69938d895d28b693146d0238",
+  "judged_as": "jc432c3850e83",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69938d895d28b693146d0238",
+  "book_id": "69938d895d28b693146d0231",
+  "unchanged": true
+ },
+ {
+  "id": "fable:69b2223d08069e96e843316f",
+  "judged_as": "jdbfa1fd68000",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69b2223d08069e96e843316f",
+  "book_id": "69b2223d08069e96e84330fe"
+ },
+ {
+  "id": "fable:69b2f40e0e2f024dfbfba63f",
+  "judged_as": "j904fda444e13",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69b2f40e0e2f024dfbfba63f",
+  "book_id": "69b2f40e0e2f024dfbfba5c2"
+ },
+ {
+  "id": "fable:6953cbb777f38f6761bdfd8c",
+  "judged_as": "jc0351102a7cd",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6953cbb777f38f6761bdfd8c",
+  "book_id": "6953cbb777f38f6761bdfc4d"
+ },
+ {
+  "id": "fable:69938e3bd5a98fd66f430f3e",
+  "judged_as": null,
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "contain",
+  "page_id": "69938e3bd5a98fd66f430f3e",
+  "book_id": "69938e3bd5a98fd66f430e65",
+  "reason": "The draft is an invention, not this leaf's text: the image is a two-page spread (folio 207) of a Greek handwritten Pausanias on Mantineia (Lacedaemonians, Mantineans, Antigonus, Philip son of Perseus, Asklepios, Praxiteles, Gryllos son of Xenophon), whereas the draft gives a fabricated philosophical discourse on daemons and virtue, labelled Plotinus, that matches the page in neither its lines nor its marginal notes."
+ },
+ {
+  "id": "fable:69942f42730aecc3c5a7823d",
+  "judged_as": "ja3038542aa1e",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69942f42730aecc3c5a7823d",
+  "book_id": "69942f42730aecc3c5a7816a"
+ },
+ {
+  "id": "fable:69b52c1d3dd6d9423027dd2b",
+  "judged_as": "j469083e15085",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69b52c1d3dd6d9423027dd2b",
+  "book_id": "69b52c1d3dd6d9423027dcb0"
+ },
+ {
+  "id": "fable:69bfcc988ab50eb88e8c56d5",
+  "judged_as": "j502519d66e3e",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69bfcc988ab50eb88e8c56d5",
+  "book_id": "69bfcc988ab50eb88e8c5589"
+ },
+ {
+  "id": "fable:69bfcd228ab50eb88e8c7d6b",
+  "judged_as": "j0fae5c11fdee",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "69bfcd228ab50eb88e8c7d6b",
+  "book_id": "69bfcd228ab50eb88e8c7d27"
+ },
+ {
+  "id": "fable:695906ee95a91542b28c0259",
+  "judged_as": "j302821b52dd3",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "695906ee95a91542b28c0259",
+  "book_id": "6952e4b477f38f6761bc7d4c",
+  "unchanged": true
+ },
+ {
+  "id": "fable:6953a88d77f38f6761bd1b1f",
+  "judged_as": "j9aee71fe2011",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "6953a88d77f38f6761bd1b1f",
+  "book_id": "6953a88c77f38f6761bd19d6"
+ },
+ {
+  "id": "fable:699376e7b0a84a5763961ef2",
+  "judged_as": "jee166630e2ee",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "item",
+  "page_id": "699376e7b0a84a5763961ef2",
+  "book_id": "699376e7b0a84a5763961e8f"
+ },
+ {
+  "id": "wp:stored:opus:6993890ece1538706594649b",
+  "judged_as": "j1134505c74c5",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "wrong_page",
+  "page_id": "6993890ece1538706594649b",
+  "book_id": "6993890ece15387065946496",
+  "other": "69afe660da5fa12b664a7626"
+ },
+ {
+  "id": "wp:stored:opus:69920bc6e0a548a13d885687",
+  "judged_as": "j20d525d4896c",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "wrong_page",
+  "page_id": "69920bc6e0a548a13d885687",
+  "book_id": "69920bc6e0a548a13d885667",
+  "other": "69942f42730aecc3c5a7823d"
+ },
+ {
+  "id": "wp:stored:fable:6953ae7f77f38f6761bd7e80",
+  "judged_as": "jeac91c0c2a8c",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "wrong_page",
+  "page_id": "6953ae7f77f38f6761bd7e80",
+  "book_id": "6953ae7f77f38f6761bd7e65",
+  "other": "69b2223d08069e96e843316f"
+ },
+ {
+  "id": "wp:stored:fable:695311a477f38f6761bcca57",
+  "judged_as": "j0ea3cf0734f9",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "wrong_page",
+  "page_id": "695311a477f38f6761bcca57",
+  "book_id": "695311a477f38f6761bcc8b8",
+  "other": "69bfcd228ab50eb88e8c7d6b"
+ },
+ {
+  "id": "wp:opus:fable:69938fa45d28b693146d14ff",
+  "judged_as": "j6c5057b6544a",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "wrong_page",
+  "page_id": "69938fa45d28b693146d14ff",
+  "book_id": "69938fa45d28b693146d14dd",
+  "other": "69afe660da5fa12b664a7626"
+ },
+ {
+  "id": "wp:opus:fable:69942f45b2f6748db4ac013f",
+  "judged_as": "ja24b3999f58f",
+  "cell": "greek-flash3/unknown",
+  "route": "opus",
+  "kind": "wrong_page",
+  "page_id": "69942f45b2f6748db4ac013f",
+  "book_id": "69942f45b2f6748db4ac0121",
+  "other": "69bfcc988ab50eb88e8c56d5"
+ },
+ {
+  "id": "wp:fable:opus:6993895d74305116d72d1649",
+  "judged_as": "jb906f85502a3",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "wrong_page",
+  "page_id": "6993895d74305116d72d1649",
+  "book_id": "6993895d74305116d72d1644",
+  "other": "69afe660da5fa12b664a7626"
+ },
+ {
+  "id": "wp:fable:opus:69b222db56715b0e324757b0",
+  "judged_as": "jeb893e8571b0",
+  "cell": "greek-flash3/unknown",
+  "route": "fable",
+  "kind": "wrong_page",
+  "page_id": "69b222db56715b0e324757b0",
+  "book_id": "69b222db56715b0e324757a1",
+  "other": "69bfcc988ab50eb88e8c56d5"
+ },
+ {
+  "id": "rep:opus:6993895d74305116d72d1649",
+  "judged_as": "jd39addafe848",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "6993895d74305116d72d1649",
+  "book_id": "6993895d74305116d72d1644"
+ },
+ {
+  "id": "rep:opus:69920bc6e0a548a13d885687",
+  "judged_as": "j12ae5030763f",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69920bc6e0a548a13d885687",
+  "book_id": "69920bc6e0a548a13d885667"
+ },
+ {
+  "id": "rep:opus:69942f6fb2f6748db4ac0dbc",
+  "judged_as": "jba52133e57af",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69942f6fb2f6748db4ac0dbc",
+  "book_id": "69942f6fb2f6748db4ac0db5"
+ },
+ {
+  "id": "rep:opus:69938d895d28b693146d0238",
+  "judged_as": "jc16d40c09df8",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69938d895d28b693146d0238",
+  "book_id": "69938d895d28b693146d0231"
+ },
+ {
+  "id": "rep:opus:69942f42730aecc3c5a7823d",
+  "judged_as": "jb32ac93c2109",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69942f42730aecc3c5a7823d",
+  "book_id": "69942f42730aecc3c5a7816a"
+ },
+ {
+  "id": "rep:fable:6993895d74305116d72d1649",
+  "judged_as": "jaa4fdd9fdc2d",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "6993895d74305116d72d1649",
+  "book_id": "6993895d74305116d72d1644"
+ },
+ {
+  "id": "rep:fable:69920bc6e0a548a13d885687",
+  "judged_as": "jd07105344cea",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69920bc6e0a548a13d885687",
+  "book_id": "69920bc6e0a548a13d885667"
+ },
+ {
+  "id": "rep:fable:69942f6fb2f6748db4ac0dbc",
+  "judged_as": "j1a5e911bda2e",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69942f6fb2f6748db4ac0dbc",
+  "book_id": "69942f6fb2f6748db4ac0db5"
+ },
+ {
+  "id": "rep:fable:69938d895d28b693146d0238",
+  "judged_as": "j4e5e8e68a452",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69938d895d28b693146d0238",
+  "book_id": "69938d895d28b693146d0231"
+ },
+ {
+  "id": "rep:fable:69942f42730aecc3c5a7823d",
+  "judged_as": "j0d22f0916d66",
+  "cell": "greek-flash3/unknown",
+  "route": "stored",
+  "kind": "repeat",
+  "page_id": "69942f42730aecc3c5a7823d",
+  "book_id": "69942f42730aecc3c5a7816a"
+ }
+]

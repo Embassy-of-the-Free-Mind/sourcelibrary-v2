@@ -14,6 +14,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { galleryPageWithBookPipeline } from '@/lib/gallery-page-lookup';
 import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
 import { siteOgImageUrl } from '@/lib/og-locale';
+import { trimmedGalleryImageId } from '@/lib/gallery-image-id';
 
 /** True if `books` has a doc for this id (string `id` field or Mongo `_id`). */
 const bookExists = cache(async (bookId: string): Promise<boolean> => {
@@ -38,7 +39,15 @@ const bookExists = cache(async (bookId: string): Promise<boolean> => {
  * images that resolve only through it (#3049).
  */
 const imageResolves = cache(async (id: string): Promise<boolean> => {
-  try {
+  // Fail open — a transient DB error must not render as a 404.
+  return imageLookup(id).catch(() => true);
+});
+
+/** The same lookup for a REDIRECT: fails closed, so an outage never sends a reader on. */
+const imageServed = (id: string): Promise<boolean> => imageLookup(id).catch(() => false);
+
+async function imageLookup(id: string): Promise<boolean> {
+  {
     const decodedId = decodeURIComponent(id);
     const match = decodedId.match(/^(.+)[:\-](\d+)$/);
     if (!match) return false;
@@ -57,11 +66,8 @@ const imageResolves = cache(async (id: string): Promise<boolean> => {
 
     const galleryDoc = await db.collection('gallery_images').findOne({ id: `${pageId}-${index}` });
     return !!galleryDoc;
-  } catch {
-    // Fail open — a transient DB error must not render as a 404.
-    return true;
   }
-});
+}
 
 /**
  * Rescue (or reject) non-viewer ids that leaked into /gallery/image/ links.
@@ -77,7 +83,12 @@ const imageResolves = cache(async (id: string): Promise<boolean> => {
  * be redirected into another dead `/book/<id>` page; render a clean 404 (#3049).
  */
 async function resolveLeakedId(id: string): Promise<void> {
-  const decoded = decodeURIComponent(id);
+  // A viewer id with pasted text after it (`…-0[reference:4]`, `…-0q`): the
+  // image it names, only when that image resolves (#102).
+  const trimmed = trimmedGalleryImageId(id);
+  if (trimmed && (await imageServed(trimmed))) permanentRedirect(`/gallery/image/${trimmed}`);
+  let decoded = id;
+  try { decoded = decodeURIComponent(id); } catch { /* malformed escape: keep raw */ }
   const prefixed = decoded.match(/^(artwork|cover|gallery)-(.+)$/);
   if (!prefixed) return;
   const [, prefix, rest] = prefixed;

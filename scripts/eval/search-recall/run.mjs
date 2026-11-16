@@ -26,8 +26,9 @@
  * recall@k = 1 if an expected URL is in the first k destinations, else 0.
  * Run it under tsx (it imports src/lib/known-entities.ts):
  *   node_modules/.bin/tsx scripts/eval/search-recall/run.mjs --suite nav [--base-url <preview>] [--out f.json]
- * Requests carry X-Warm-Ping, the internal-traffic header anon-gate.ts exempts,
- * so 42 queries do not meet the anonymous 5-searches-an-hour wall.
+ * Requests carry X-Warm-Ping set to CRON_SECRET (run with
+ * --env-file=.env.production.local), the internal-traffic header anon-gate.ts
+ * exempts, so 42 queries do not meet the anonymous 5-searches-an-hour wall.
  *
  * What this cannot tell you: expected.json ranks books by how many pages print
  * the term. A lane that orders by that same count scores well by construction;
@@ -166,7 +167,7 @@ if (from) {
       : `${base}/api/search?q=${encodeURIComponent(q.query)}&limit=20${ranking ? `&ranking=${ranking}` : ''}&_=${Date.now()}`;
     try {
       const res = await fetch(url, {
-        headers: NAV ? { 'X-Warm-Ping': '1', 'User-Agent': 'SourceLibrary-NavEval/1.0 (+https://sourcelibrary.org)' } : {},
+        headers: NAV ? { ...(process.env.CRON_SECRET ? { 'X-Warm-Ping': process.env.CRON_SECRET } : {}), 'User-Agent': 'SourceLibrary-NavEval/1.0 (+https://sourcelibrary.org)' } : {},
         signal: AbortSignal.timeout(30000),
       });
       responses[q.id] = res.ok ? await res.json() : { error: `HTTP ${res.status}` };

@@ -202,7 +202,7 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // GET - check status / get pages with images
 export const GET = withAuth(async (request: NextRequest, session) => {
@@ -249,4 +249,4 @@ export const GET = withAuth(async (request: NextRequest, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

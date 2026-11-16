@@ -281,4 +281,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error running pipeline condition:', error);
     return NextResponse.json({ error: 'Failed to run condition' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -1,0 +1,93 @@
+[
+  {
+    "book_id": "6a3c640439b4508b04e237f1",
+    "slot": 1,
+    "title": "御定佩文韻府·卷二十六之九 (vol 435)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku quanshu copy of the Peiwen yunfu (block heart reads 欽定四庫全書 / 卷二十六之九) in the generic universallibrary collection. Nothing here is out of place.",
+    "rights_flag": null,
+    "structure_note": "Only 8 of 131 pages carry a printed number, so the 3 backsteps and 2 repeats are most likely misread or cropped block-heart folio numbers, not a splice; on this leaf the folio number is cut off at the right edge. structure.pages_translated is 0, but the book's pages_translated field says 126 and this page has a translation, so the counter disagrees with the data (E2-type instrument issue, not a reader defect).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "printed_marker": "卷二十六之九",
+        "layout": "ruled half-leaf, 8 columns of double-line small characters with the headword 相繆 in large characters, block heart at the right edge reading 欽定四庫全書 … 卷二十六之九 (folio number cropped)",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "晉陽秋祖逖劉琨俱以雄豪著名",
+            "english": "In the *Annals of Jin Yang*: \"Zu Ti and Liu Kun were both famous for their heroic spirit.",
+            "problem": "晉陽秋 is Sun Sheng's 'Jin Yangqiu' (陽秋 stands in for 春秋, 'Annals', to avoid a taboo name), i.e. 'Annals of Jin'. 'Annals of Jin Yang' misreads the title as if Jin Yang were a place.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The <meta> names the Classic of Poetry 'binding closely the window and door with mulberry bark' line (鴟鴞), which is not on this leaf. It is plausibly right about the previous page, but it cannot be checked from this one.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "Zhaoyao and Sheti are star names. The \"two cycles\" are those",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "The \"canons and proclamations\" are sections of the Classic o",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Zu Ti and Liu Kun were Western Jin generals, remembered for t",
+              "verdict": "unsupported",
+              "helpful": false
+            },
+            {
+              "quote": "A rhapsody by Cao Zhi.",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "Master Zhu is Zhu Xi, the Song dynasty Neo-Confucian philoso",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "An allusion to the Classic of Poetry, where gifts of jade ar",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Original: 相繆 (xiangmou), \"mutually entwined\".",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "Sharing hardship within the Chenghua palace, we were **intimately bound** for more than a year.",
+              "why": "Chenghua (承華) is the crown prince's palace, and the line does not make sense without knowing that."
+            },
+            {
+              "english": "like bundled thorns, my feelings are **tightly bound**.",
+              "why": "'Bundled thorns' (束楚) echoes the Classic of Poetry ode 綢繆束楚, and that is why the line is cited under this headword. Nothing tells the reader so."
+            },
+            {
+              "english": "In the *Annals of Jin Yang*:",
+              "why": "The title is not explained, and the English rendering misleads (see tr_errors)."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR matches the leaf character for character, and the translation is faithful, with one title rendered wrongly (晉陽秋 as 'Annals of Jin Yang'). The notes are accurate, but three of them add authors or anecdotes that are not on the page."
+  }
+]

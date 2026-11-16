@@ -1,0 +1,173 @@
+{
+ "about": "Defect rates per 1,000 words by route, Opus judge, from merged/paired-score.json (#218 Hydrogen paired run). Routes by role: draft = the stored lite/3flash text, draft>X = X correcting it. Baseline verdicts are stored ones (German 2026-10-26, Latin 2026-11-12). weighted = misleads + 3 x wrong_text (rules.json decision_rule).",
+ "cells": {
+  "de-lite": {
+   "draft>hydrogen-low": {
+    "n": 28,
+    "words": 7304,
+    "misleads_per_1k": 2.46,
+    "wrong_text_per_1k": 0.27,
+    "weighted_per_1k": 3.27,
+    "fidelity_mean": 4.36,
+    "accept": "23/28"
+   },
+   "hydrogen-low": {
+    "n": 30,
+    "words": 7838,
+    "misleads_per_1k": 1.4,
+    "wrong_text_per_1k": 0.13,
+    "weighted_per_1k": 1.79,
+    "fidelity_mean": 4.53,
+    "accept": "29/30"
+   },
+   "hydrogen-medium": {
+    "n": 30,
+    "words": 7929,
+    "misleads_per_1k": 0.5,
+    "wrong_text_per_1k": 0.5,
+    "weighted_per_1k": 2.0,
+    "fidelity_mean": 4.53,
+    "accept": "27/30"
+   },
+   "draft": {
+    "n": 30,
+    "words": 7399,
+    "misleads_per_1k": 4.87,
+    "wrong_text_per_1k": 1.08,
+    "weighted_per_1k": 8.11,
+    "fidelity_mean": 4,
+    "accept": "20/30"
+   },
+   "draft>agy-flash-low": {
+    "n": 30,
+    "words": 7399,
+    "misleads_per_1k": 2.16,
+    "wrong_text_per_1k": 0.54,
+    "weighted_per_1k": 3.78,
+    "fidelity_mean": 4.33,
+    "accept": "28/30"
+   },
+   "draft>opus-correct": {
+    "n": 30,
+    "words": 7399,
+    "misleads_per_1k": 0.95,
+    "wrong_text_per_1k": 0.14,
+    "weighted_per_1k": 1.37,
+    "fidelity_mean": 4.83,
+    "accept": "28/30"
+   }
+  },
+  "de-flash3": {
+   "draft>hydrogen-low": {
+    "n": 30,
+    "words": 9852,
+    "misleads_per_1k": 1.12,
+    "wrong_text_per_1k": 0.1,
+    "weighted_per_1k": 1.42,
+    "fidelity_mean": 4.33,
+    "accept": "27/30"
+   },
+   "hydrogen-low": {
+    "n": 29,
+    "words": 9355,
+    "misleads_per_1k": 0.43,
+    "wrong_text_per_1k": 0.11,
+    "weighted_per_1k": 0.76,
+    "fidelity_mean": 4.48,
+    "accept": "28/29"
+   },
+   "hydrogen-medium": {
+    "n": 29,
+    "words": 9093,
+    "misleads_per_1k": 0.44,
+    "wrong_text_per_1k": 0.11,
+    "weighted_per_1k": 0.77,
+    "fidelity_mean": 4.45,
+    "accept": "28/29"
+   },
+   "draft": {
+    "n": 30,
+    "words": 9845,
+    "misleads_per_1k": 1.63,
+    "wrong_text_per_1k": 0,
+    "weighted_per_1k": 1.63,
+    "fidelity_mean": 4.23,
+    "accept": "27/30"
+   },
+   "draft>agy-flash-low": {
+    "n": 30,
+    "words": 9845,
+    "misleads_per_1k": 1.42,
+    "wrong_text_per_1k": 0.1,
+    "weighted_per_1k": 1.72,
+    "fidelity_mean": 4.4,
+    "accept": "26/30"
+   },
+   "draft>opus-correct": {
+    "n": 29,
+    "words": 9160,
+    "misleads_per_1k": 0,
+    "wrong_text_per_1k": 0,
+    "weighted_per_1k": 0,
+    "fidelity_mean": 4.79,
+    "accept": "29/29"
+   }
+  },
+  "latin-flash3": {
+   "draft>hydrogen-low": {
+    "n": 29,
+    "words": 7944,
+    "misleads_per_1k": 1.51,
+    "wrong_text_per_1k": 0.13,
+    "weighted_per_1k": 1.9,
+    "fidelity_mean": 4.41,
+    "accept": "24/29"
+   },
+   "hydrogen-low": {
+    "n": 29,
+    "words": 7682,
+    "misleads_per_1k": 0.91,
+    "wrong_text_per_1k": 0.13,
+    "weighted_per_1k": 1.3,
+    "fidelity_mean": 4.72,
+    "accept": "26/29"
+   },
+   "hydrogen-medium": {
+    "n": 29,
+    "words": 7809,
+    "misleads_per_1k": 0.51,
+    "wrong_text_per_1k": 0,
+    "weighted_per_1k": 0.51,
+    "fidelity_mean": 4.69,
+    "accept": "27/29"
+   },
+   "draft": {
+    "n": 30,
+    "words": 8430,
+    "misleads_per_1k": 3.2,
+    "wrong_text_per_1k": 1.78,
+    "weighted_per_1k": 8.54,
+    "fidelity_mean": 4.07,
+    "accept": "21/30"
+   },
+   "draft>agy-flash-low": {
+    "n": 29,
+    "words": 7886,
+    "misleads_per_1k": 1.27,
+    "wrong_text_per_1k": 0.38,
+    "weighted_per_1k": 2.41,
+    "fidelity_mean": 4.48,
+    "accept": "26/29"
+   },
+   "draft>opus-correct": {
+    "n": 30,
+    "words": 8641,
+    "misleads_per_1k": 0.93,
+    "wrong_text_per_1k": 0.12,
+    "weighted_per_1k": 1.29,
+    "fidelity_mean": 4.63,
+    "accept": "28/30"
+   }
+  }
+ }
+}

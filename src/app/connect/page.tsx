@@ -11,8 +11,10 @@ export const revalidate = 86400;
 // The one address every technical path needs. It lives in ONE constant so the copy,
 // the code blocks and the structured data can never disagree. Readers coming from
 // Claude never need it: the directory listing does the work.
+// DIRECTORY_URL is the address the listing's own "copy link" control gives (read 2026-11-13).
+// The older /directory/connectors/source-library form now opens "This connector doesn't exist" (#305).
 const MCP_URL = 'https://sourcelibrary.org/api/mcp';
-const DIRECTORY_URL = 'https://claude.ai/directory/connectors/source-library';
+const DIRECTORY_URL = 'https://claude.ai/directory/005aeb9a-a551-40d5-b3e9-77b860a48e06';
 const SITE = 'https://sourcelibrary.org';
 
 // Hero: Merian's ouroboros dragon from the Musaeum Hermeticum (1678) — the kind of
@@ -243,7 +245,9 @@ export default function ConnectPage() {
             </ul>
             <p className="text-muted mt-4">Things to try once it is connected.</p>
           </div>
-          <a href="https://sourcelibrary.org/book/chrysopoea-of-cleopatra-1" className="hidden md:block">
+          {/* Shown on phones too (#76): it is this page's one link to a book, and
+              most visitors here arrive on a phone from a social post. */}
+          <a href="https://sourcelibrary.org/book/chrysopoea-of-cleopatra-1" className="block w-full max-w-[260px] mx-auto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/artwork/art-chrysopoea-of-cleopatra-1.jpg"
@@ -274,6 +278,21 @@ export default function ConnectPage() {
           Five clicks in Claude
         </SectionTitle>
 
+        <div className="mb-8 bg-warm rounded-2xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-4">
+          <p className="text-secondary text-lg flex-1">
+            The quick way: this button opens the Source Library listing in Claude. Add it there and you are done.
+            Claude renamed its menus in November 2026 (the sidebar item is now <strong>Plugins</strong>), so the
+            pictures below show the older screens.
+          </p>
+          <a
+            href={DIRECTORY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-accent-rust text-white rounded-full font-medium hover:opacity-90 transition-opacity whitespace-nowrap text-center"
+          >
+            Open Source Library in Claude &rarr;
+          </a>
+        </div>
         <ol className="space-y-8 list-none">
           <StepCard
             n={1}
@@ -332,19 +351,6 @@ export default function ConnectPage() {
           </StepCard>
         </ol>
 
-        <div className="mt-8 bg-warm rounded-2xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-4">
-          <p className="text-secondary text-lg flex-1">
-            In a hurry? This link opens the listing from step 4 directly. Click <strong>Connect</strong> there and you are done.
-          </p>
-          <a
-            href={DIRECTORY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-accent-rust text-white rounded-full font-medium hover:opacity-90 transition-opacity whitespace-nowrap text-center"
-          >
-            Open Source Library in Claude &rarr;
-          </a>
-        </div>
       </section>
 
       {/* ── Video ── */}

@@ -24,7 +24,7 @@ export const GET = withAuth(async () => {
       ? 'All prompts have content_hash'
       : `${missingHash} prompts need content_hash backfill (POST to fix)`,
   });
-});
+}, { minRole: 'editor' });
 
 export const POST = withAuth(async (request: NextRequest) => {
   const db = await getDb();
@@ -53,4 +53,4 @@ export const POST = withAuth(async (request: NextRequest) => {
     message: `Backfilled content_hash on ${updated} prompts`,
     updated,
   });
-});
+}, { minRole: 'editor' });

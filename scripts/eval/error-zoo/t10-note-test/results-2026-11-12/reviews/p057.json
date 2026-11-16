@@ -1,0 +1,117 @@
+[
+  {
+    "book_id": "6a358874d8c4016326cdcb7f",
+    "slot": 1,
+    "title": "مخزن الادویه (Makhzan al-Adviyah, Persian materia medica)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A lithographed Persian materia medica (the drug-name glossary at the back of the book) held in medical-heritage collections (McGill Osler, Toronto, Medical Heritage Library). It belongs on that shelf.",
+    "rights_flag": null,
+    "structure_note": "The structure counts give pages_translated 0, but the pages_translated field says 731 and this page has a translation, so the counters disagree (E2). Only 145 of 778 pages carry a printed number, with 43 backsteps and 15 repeats. That is probably not a splice. The glossary at the back has its own pagination (this leaf, record 758, prints '۵۴' while the OCR says '۵۳'), and Persian numerals on a lithograph get misread, which together would produce backsteps and repeats.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 758,
+        "right_page": "yes",
+        "printed_marker": "۵۴",
+        "layout": "lithographed Nastaliq; a central box of five vertical columns of drug-name entries, with dense diagonal marginal text on the top, right and bottom; running head at the top; page number in a diamond in the right margin",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>\n<unclear>عبارت</unclear> از گیاهی است که در اراضی نمناک میروید و برگ آن شبیه به برگ بارهنگ است...\n</margin>",
+            "image": "Long blocks of diagonal marginal text fill the top, right and bottom (more than 30 slanted lines). Two short sentences ending in '...' stand in for all of it, and I cannot find these sentences in the margins.",
+            "problem": "Nearly all of the printed marginal text is dropped, and what replaces it looks invented. This marginal commentary is part of the lithograph, not a later hand, though the OCR's warning calls it handwritten marginalia.",
+            "severity": "serious",
+            "class": "O12"
+          },
+          {
+            "ocr": "| کلنوی اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی |",
+            "image": "Each of the five columns runs on with different entries. No line repeats across columns.",
+            "problem": "The lower rows of the table loop: 'کلر است و نیز لغازی' four times in one row, 'کلر نام است' and 'کل فارسی لغت است' over and over. Entries are invented in place of what the columns actually say.",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "| ستون اول | ستون دوم | ستون سوم | ستون چهارم | ستون پنجم |",
+            "image": "Five independent running columns, read right to left. 'کلاب ماه آلود ست' heads the rightmost column, and 'کلم اسم فارسی کرنب ست' sits in the leftmost.",
+            "problem": "The columns are forced into a row-aligned markdown table in left-to-right order, so the reading order runs backwards and entries break across rows ('Kalab is mah-alud' comes out as the 'Fifth Column').",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "<header>فرهنگ مخزن الادویه فارسی مع ترجمه الارمنین</header>",
+            "image": "فرهنگ مخزن الادویه فارسی مع تحفة المؤمنین (as far as I can read it)",
+            "problem": "The running head misreads the companion work, Tuhfat al-Mu'minin, as 'ترجمه الارمنین'.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<page-num>۵۳</page-num>",
+            "image": "۵۴ in a diamond in the right margin",
+            "problem": "The page number is misread, one lower than printed. The column text matches this leaf, so the image is not the wrong leaf.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "بسپای لغت یونانی است به معنی کثیر الارجل و گویند بسپای لغت یونانی است به معنی کثیر الارجل و گویند بسپای لغت یونانی است به معنی کثیر الارجل...",
+            "image": "The bottom marginal block is about eight lines of different text, not one clause three times.",
+            "problem": "One clause repeats three times and the rest of the bottom block is lost.",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "| کلنوی اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی | کلک بفتح اسم فارسی |",
+            "english": "| Kalnawi is a Persian name | Kalak, with a, is a Persian name | Kalak, with a, is a Persian name | Kalak, with a, is a Persian name | Kalak, with a, is a Persian name |",
+            "problem": "The translation renders the OCR's loops and invented cells as fluent glossary entries. Its meta admits the repeats ('reproduced as given') but marks nothing in the text, so the reader gets entries that are not on the leaf.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "<header>فرهنگ مخزن الادویه فارسی مع ترجمه الارمنین</header>",
+            "english": "# Dictionary of the Storehouse of Medicaments in Persian, with the Translation of the Believers",
+            "problem": "The meta gives 'with the Translation of al-Armanin' and the heading gives 'with the Translation of the Believers', yet the meta itself says the previous page read 'Gift of the Believers', which is right (Tuhfat al-Mu'minin). The running head is also promoted to an H1.",
+            "severity": "moderate"
+          },
+          {
+            "source": "| کل اسم فارسی حنظل است | نامست | اشتقاق النعمان است |",
+            "english": "| Kal is the Persian name of <term>hanzal</term> <gloss>colocynth</gloss> | is a name | is the anemone |",
+            "problem": "'اشتقاق النعمان' is silently corrected to شقائق النعمان (anemone). The English is right, but it no longer matches the OCR.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          { "note": "Invented heading '## Page 53' (the printed number is ۵۴), plus the running head made into an H1", "severity": "moderate", "class": "T16" },
+          { "note": "Arrow markup '-> Kulukh Mansili <-' leaks into the reader text", "severity": "moderate", "class": "D1" },
+          { "note": "The image description is turned into a translated <note>: 'A small decorative floral ornament marks the end of the text block.' I cannot see such an ornament.", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "elephant-ear", "verdict": "ok", "helpful": true },
+            { "quote": "agaric", "verdict": "ok", "helpful": true },
+            { "quote": "centaury", "verdict": "ok", "helpful": true },
+            { "quote": "wallflower", "verdict": "ok", "helpful": true },
+            { "quote": "cabbage", "verdict": "ok", "helpful": true },
+            { "quote": "cauliflower", "verdict": "ok", "helpful": true },
+            { "quote": "formulary", "verdict": "ok", "helpful": true },
+            { "quote": "mugwort", "verdict": "ok", "helpful": true },
+            { "quote": "mugwort", "verdict": "ok", "helpful": false },
+            { "quote": "colocynth", "verdict": "ok", "helpful": true },
+            { "quote": "kid of the earth", "verdict": "ok", "helpful": false },
+            { "quote": "crab", "verdict": "ok", "helpful": true },
+            { "quote": "A small decorative floral ornament marks the end of the text b", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Gulguna, in <term>laghazi</term>, is the name of a colour", "why": "'laghazi' (lughat-i ghāzī? a dialect or lexicon label) is left unexplained, and several entries depend on it." },
+            { "english": "it is stated in the <term>Majma'</term> that in Persian they call it", "why": "The cited authority (a dictionary or compendium called Majma') is not identified." },
+            { "english": "Kalkunin, in Greek, is <term>bajayis</term>", "why": "'bajayis' is untranslated and unglossed, so the equivalence means nothing to a reader." },
+            { "english": "Kulfat, in the Zand language, is a worm", "why": "'Zand' (the Middle Persian commentary language) is not explained for a general reader." },
+            { "english": "### On the Description of Kulukh Mansili", "why": "The substance named in the heading is never identified." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf is right, but the OCR keeps only the first few rows of each column. It drops almost all of the extensive printed marginal text and fills the lower table with looping invented entries, and the translation turns all of that into fluent glossary English. The glosses are accurate; the transcription under them is not."
+  }
+]

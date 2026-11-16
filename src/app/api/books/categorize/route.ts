@@ -273,7 +273,7 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // GET /api/books/categorize - Preview categorization without saving
 export const GET = withAuth(async (request, session) => {
@@ -311,4 +311,4 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

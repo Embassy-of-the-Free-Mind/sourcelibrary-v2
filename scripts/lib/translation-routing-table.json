@@ -96,7 +96,8 @@
       "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
       "evidence": [
         {"issue": 7263, "n": "Italian print first translation, cell italian-tr-first/print (PR #7909): agy Flash-low@4 accepted 13/16 vs the served Flash-Lite lane 11/16, wrong text 2/16 vs 4/16, paired gained/lost 3/1; blind Opus judge with the page image open; 4,706 print pages waiting", "date": "2026-11-01"},
-        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"},
+        {"issue": 104, "n": "SEAM PASS NOT adopted: 27 Italian 2-4 page blocks of stored agy @4 English (only 7 books hold multi-page calls), #7118 Opus seam judge; broken block-start joins 0/27 stored, so nothing to repair; the pass changed 3 pages and broke one sound join (a word split across the page break read as a doubled catchword; Opus page judge wrong text, confirmed by eye). scripts/eval/estimator/router-table/2026-11-13-seam-pass-fr-it-104.json", "date": "2026-11-13"}
       ]
     },
     {
@@ -106,10 +107,12 @@
       "unless": { "providers": ["bph"] },
       "engine": "gemini-3.8-flash+agy-cli",
       "per_call": 4,
+      "seam_pass": "edit-before",
       "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
       "evidence": [
         {"issue": 7263, "n": "French print first translation, cell french-tr-first/print (PR #7909): agy Flash-low@4 accepted 20/29 vs the served Flash-Lite lane 16/29, wrong text 5/29 vs 10/29, paired gained/lost 5/1; blind Opus judge with the page image open; 12,781 print pages waiting", "date": "2026-11-01"},
-        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"},
+        {"issue": 104, "n": "SEAM PASS adopted (seam_pass 'edit-before'): 72 French 2-4 page blocks of stored agy @4 English (44 books, seed 104), #7118 Opus seam judge, blind, both orders; broken block-start joins 15/72 stored, 6/72 with the built stage (9 better, 0 worse, sign p=0.002, 8 books), 14/72 with the page before locked; inside-block joins 6/72 both; no new leak; pages the pass changed accepted 15/18 vs 14/18 stored (Opus page judge, image open), no new wrong text; controls 144/144, plants 143/144, wrong-page 0/6. scripts/eval/estimator/router-table/2026-11-13-seam-pass-fr-it-104.json", "date": "2026-11-13"}
       ]
     },
     {

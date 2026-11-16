@@ -18,7 +18,7 @@ on:
 
 jobs:
   e2e:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     # 10 was too tight: when the site is slow every test burns 15s x 3 attempts
     # and the JOB timeout cancelled the run (11-09, 11-10), which skips the
     # failure()-gated issue step, so nobody was told. The Playwright step has
@@ -35,7 +35,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
       - run: npm ci
 
@@ -49,6 +48,8 @@ jobs:
         timeout-minutes: 15
         env:
           BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
+          # Lets the suite past Cloudflare bot protection (skip rule matching X-E2E-Edge-Token, v2#8603).
+          E2E_EDGE_TOKEN: ${{ secrets.E2E_EDGE_TOKEN }}
 
       - name: Upload test report
         if: always()

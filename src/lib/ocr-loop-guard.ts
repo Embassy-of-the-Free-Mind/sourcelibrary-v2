@@ -1,7 +1,8 @@
 /**
  * PRIOR ART: scripts/lib/ocr-loop-guard.mjs — this is its TS twin, for the OCR write
- * paths that live in Next.js routes (`/api/books/[id]/batch-ocr-async` and the tenant
- * copy). Same arrangement as `src/lib/r2-key.ts` beside `scripts/lib/r2-key.mjs`, and
+ * paths that live in Next.js routes (`/api/process/batch`, the Lambda write processor;
+ * first written for the batch OCR routes and `/api/batch-save`, retired in v2#8590 and v3#212).
+ * Same arrangement as `src/lib/r2-key.ts` beside `scripts/lib/r2-key.mjs`, and
  * for the same reason: guarding only the script-side writer left the other half of the
  * corpus unguarded when the identical bug shipped twice in one week (#3362/#3365).
  *

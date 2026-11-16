@@ -1,0 +1,994 @@
+{
+ "pages": [
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69bd0ac7b01b17638a09803f",
+   "book_id": "69bd0ac6b01b17638a09803e",
+   "page_number": 1,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6992caced4d545ae73feeb20",
+   "book_id": "6992caced4d545ae73feeb1c",
+   "page_number": 4,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "695924fa1cac2ce31a4a8a34",
+   "book_id": "695924fa1cac2ce31a4a8a33",
+   "page_number": 1,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": true,
+    "f": 4
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6992f3d4dc69844b023ff282",
+   "book_id": "6992f3d4dc69844b023ff228",
+   "page_number": 90,
+   "cell": "Chinese × opus × print",
+   "stored": {
+    "a": true,
+    "f": 5
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "699df0873430a1d77dc7926b",
+   "book_id": "699df0863430a1d77dc7922c",
+   "page_number": 63,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a0acab24d80f9c159497451",
+   "book_id": "6a0acab14d80f9c1594971ea",
+   "page_number": 615,
+   "cell": "Chinese × flash3 × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 3
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6992c92869b777d72c76351a",
+   "book_id": "6992c92869b777d72c763513",
+   "page_number": 7,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6992cad1d4d545ae73feeb5d",
+   "book_id": "6992cad1d4d545ae73feeb53",
+   "page_number": 10,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69e72c60a409200ea79f478f",
+   "book_id": "69e72c60a409200ea79f46f6",
+   "page_number": 153,
+   "cell": "Chinese × lite × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c634a4daf85677d170cb9",
+   "book_id": "6a3c634a4daf85677d170c3e",
+   "page_number": 123,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 3
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69f3263852a77bb28fdb673b",
+   "book_id": "69f3263852a77bb28fdb6738",
+   "page_number": 3,
+   "cell": "Korean × lite × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 3
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69af12630092756351e44a9d",
+   "book_id": "69af12630092756351e449f9",
+   "page_number": 164,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69d5ae594dc55b8478de138f",
+   "book_id": "69d5ae594dc55b8478de1380",
+   "page_number": 15,
+   "cell": "Chinese × lite × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69f1347c365e3fcae574ed88",
+   "book_id": "69f1347c365e3fcae574ed1c",
+   "page_number": 108,
+   "cell": "Chinese × lite × print",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "69f33c10876dd827cbc59aeb",
+   "book_id": "69f33c10876dd827cbc597ed",
+   "page_number": 766,
+   "cell": "Chinese × flash3 × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c5e5840c88a541d8e1310",
+   "book_id": "6a3c5e5840c88a541d8e12e6",
+   "page_number": 41,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 3
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c60d540c88a541d8eb164",
+   "book_id": "6a3c60d540c88a541d8eb14f",
+   "page_number": 21,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c614440c88a541d8ef640",
+   "book_id": "6a3c614440c88a541d8ef620",
+   "page_number": 32,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c617a879008ba7e15e78f",
+   "book_id": "6a3c617a879008ba7e15e723",
+   "page_number": 107,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c628e40c88a541d8f473a",
+   "book_id": "6a3c628e40c88a541d8f46a5",
+   "page_number": 17,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c648f39b4508b04e28188",
+   "book_id": "6a3c648f39b4508b04e2814a",
+   "page_number": 62,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c64ab39b4508b04e28f33",
+   "book_id": "6a3c64ab39b4508b04e28ee7",
+   "page_number": 75,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c65fe39b4508b04e30bef",
+   "book_id": "6a3c65fe39b4508b04e30be9",
+   "page_number": 5,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c663039b4508b04e32c24",
+   "book_id": "6a3c663039b4508b04e32b9e",
+   "page_number": 134,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "page_id": "6a3c6ac3af3c49b59c5e9e1a",
+   "book_id": "6a3c6ac3af3c49b59c5e9e15",
+   "page_number": 5,
+   "cell": "Chinese × flash3 × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69bd0ac7b01b17638a09803f",
+   "book_id": "69bd0ac6b01b17638a09803e",
+   "page_number": 1,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6992caced4d545ae73feeb20",
+   "book_id": "6992caced4d545ae73feeb1c",
+   "page_number": 4,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "695924fa1cac2ce31a4a8a34",
+   "book_id": "695924fa1cac2ce31a4a8a33",
+   "page_number": 1,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": true,
+    "f": 4
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6992f3d4dc69844b023ff282",
+   "book_id": "6992f3d4dc69844b023ff228",
+   "page_number": 90,
+   "cell": "Chinese × opus × print",
+   "stored": {
+    "a": true,
+    "f": 5
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "699df0873430a1d77dc7926b",
+   "book_id": "699df0863430a1d77dc7922c",
+   "page_number": 63,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a0acab24d80f9c159497451",
+   "book_id": "6a0acab14d80f9c1594971ea",
+   "page_number": 615,
+   "cell": "Chinese × flash3 × print",
+   "stored": {
+    "a": false,
+    "f": 4
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6992c92869b777d72c76351a",
+   "book_id": "6992c92869b777d72c763513",
+   "page_number": 7,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6992cad1d4d545ae73feeb5d",
+   "book_id": "6992cad1d4d545ae73feeb53",
+   "page_number": 10,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69e72c60a409200ea79f478f",
+   "book_id": "69e72c60a409200ea79f46f6",
+   "page_number": 153,
+   "cell": "Chinese × lite × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c634a4daf85677d170cb9",
+   "book_id": "6a3c634a4daf85677d170c3e",
+   "page_number": 123,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 3
+   },
+   "cmp": "same"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69f3263852a77bb28fdb673b",
+   "book_id": "69f3263852a77bb28fdb6738",
+   "page_number": 3,
+   "cell": "Korean × lite × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69af12630092756351e44a9d",
+   "book_id": "69af12630092756351e449f9",
+   "page_number": 164,
+   "cell": "Chinese × flash3 × unknown",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69d5ae594dc55b8478de138f",
+   "book_id": "69d5ae594dc55b8478de1380",
+   "page_number": 15,
+   "cell": "Chinese × lite × print",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69f1347c365e3fcae574ed88",
+   "book_id": "69f1347c365e3fcae574ed1c",
+   "page_number": 108,
+   "cell": "Chinese × lite × print",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "69f33c10876dd827cbc59aeb",
+   "book_id": "69f33c10876dd827cbc597ed",
+   "page_number": 766,
+   "cell": "Chinese × flash3 × print",
+   "stored": {
+    "a": false,
+    "f": 4
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c5e5840c88a541d8e1310",
+   "book_id": "6a3c5e5840c88a541d8e12e6",
+   "page_number": 41,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c60d540c88a541d8eb164",
+   "book_id": "6a3c60d540c88a541d8eb14f",
+   "page_number": 21,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c614440c88a541d8ef640",
+   "book_id": "6a3c614440c88a541d8ef620",
+   "page_number": 32,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c617a879008ba7e15e78f",
+   "book_id": "6a3c617a879008ba7e15e723",
+   "page_number": 107,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c628e40c88a541d8f473a",
+   "book_id": "6a3c628e40c88a541d8f46a5",
+   "page_number": 17,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c648f39b4508b04e28188",
+   "book_id": "6a3c648f39b4508b04e2814a",
+   "page_number": 62,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c64ab39b4508b04e28f33",
+   "book_id": "6a3c64ab39b4508b04e28ee7",
+   "page_number": 75,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c65fe39b4508b04e30bef",
+   "book_id": "6a3c65fe39b4508b04e30be9",
+   "page_number": 5,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": false,
+    "f": 4
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c663039b4508b04e32c24",
+   "book_id": "6a3c663039b4508b04e32b9e",
+   "page_number": 134,
+   "cell": "Chinese × paddle × manuscript",
+   "stored": {
+    "a": false,
+    "f": 3
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "page_id": "6a3c6ac3af3c49b59c5e9e1a",
+   "book_id": "6a3c6ac3af3c49b59c5e9e15",
+   "page_number": 5,
+   "cell": "Chinese × flash3 × print",
+   "stored": {
+    "a": false,
+    "f": 2
+   },
+   "corr": {
+    "a": true,
+    "f": 5
+   },
+   "cmp": "better"
+  }
+ ],
+ "arms": [
+  {
+   "arm": "opus",
+   "judge": "fable",
+   "n": 25,
+   "better": 20,
+   "same": 5,
+   "worse": 0,
+   "gain": 19,
+   "lost": 0,
+   "worse_pages": [],
+   "by": {
+    "Chinese × flash3 × unknown": {
+     "n": 7,
+     "better": 7,
+     "same": 0,
+     "worse": 0
+    },
+    "Chinese × opus × print": {
+     "n": 1,
+     "better": 0,
+     "same": 1,
+     "worse": 0
+    },
+    "Chinese × flash3 × print": {
+     "n": 3,
+     "better": 2,
+     "same": 1,
+     "worse": 0
+    },
+    "Chinese × lite × print": {
+     "n": 3,
+     "better": 3,
+     "same": 0,
+     "worse": 0
+    },
+    "Chinese × paddle × manuscript": {
+     "n": 10,
+     "better": 8,
+     "same": 2,
+     "worse": 0
+    },
+    "Korean × lite × manuscript": {
+     "n": 1,
+     "better": 0,
+     "same": 1,
+     "worse": 0
+    }
+   },
+   "controls": [
+    "accept=false f=1",
+    "accept=false f=1"
+   ],
+   "pass": true
+  },
+  {
+   "arm": "fable",
+   "judge": "opus",
+   "n": 25,
+   "better": 23,
+   "same": 2,
+   "worse": 0,
+   "gain": 19,
+   "lost": 0,
+   "worse_pages": [],
+   "by": {
+    "Chinese × flash3 × unknown": {
+     "n": 7,
+     "better": 7,
+     "same": 0,
+     "worse": 0
+    },
+    "Chinese × opus × print": {
+     "n": 1,
+     "better": 0,
+     "same": 1,
+     "worse": 0
+    },
+    "Chinese × flash3 × print": {
+     "n": 3,
+     "better": 3,
+     "same": 0,
+     "worse": 0
+    },
+    "Chinese × lite × print": {
+     "n": 3,
+     "better": 3,
+     "same": 0,
+     "worse": 0
+    },
+    "Chinese × paddle × manuscript": {
+     "n": 10,
+     "better": 9,
+     "same": 1,
+     "worse": 0
+    },
+    "Korean × lite × manuscript": {
+     "n": 1,
+     "better": 1,
+     "same": 0,
+     "worse": 0
+    }
+   },
+   "controls": [
+    "accept=false f=1",
+    "accept=false f=1"
+   ],
+   "pass": true
+  }
+ ],
+ "stored_controls_fable": [
+  "accept=false f=1",
+  "accept=false f=1"
+ ],
+ "noise_fable": {
+  "n": 5,
+  "accept_flips": 0,
+  "fid_diffs": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "stored_controls_opus": [
+  "accept=false f=1",
+  "accept=false f=1"
+ ],
+ "noise_opus": {
+  "n": 5,
+  "accept_flips": 0,
+  "fid_diffs": [
+   1,
+   0,
+   1,
+   0,
+   1
+  ]
+ }
+}

@@ -1,0 +1,290 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "route",
+  "issue": 199,
+  "stage": "ocr",
+  "languages": [
+   "Latin"
+  ],
+  "baseline": "stored",
+  "arms": [
+   "stored",
+   "opus",
+   "fable"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "latin-flash3/unknown",
+  "waive": {}
+ },
+ "judges": {
+  "fable": {
+   "cells": {
+    "latin-flash3/unknown": {
+     "routes": {
+      "stored": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "4/30",
+       "accept_wilson": [
+        0.053,
+        0.297
+       ],
+       "accept_by_book": [
+        0.033,
+        0.267
+       ],
+       "wrong_text_pages": "26/30",
+       "wrong_text_wilson": [
+        0.703,
+        0.947
+       ],
+       "fidelity_mean": 2.9,
+       "counts": true,
+       "words": 11336,
+       "misleads_per_1k": 8.12,
+       "wrong_text_per_1k": 11.56
+      },
+      "opus": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "23/30",
+       "accept_wilson": [
+        0.591,
+        0.882
+       ],
+       "accept_by_book": [
+        0.6,
+        0.9
+       ],
+       "wrong_text_pages": "8/30",
+       "wrong_text_wilson": [
+        0.142,
+        0.444
+       ],
+       "fidelity_mean": 4.23,
+       "counts": true,
+       "words": 11862,
+       "misleads_per_1k": 3.79,
+       "wrong_text_per_1k": 2.78
+      },
+      "fable": {
+       "n": 2,
+       "books": 2,
+       "unjudged": 28,
+       "accept": "2/2",
+       "accept_wilson": [
+        0.342,
+        1
+       ],
+       "accept_by_book": [
+        1,
+        1
+       ],
+       "wrong_text_pages": "0/2",
+       "wrong_text_wilson": [
+        0,
+        0.658
+       ],
+       "fidelity_mean": 4.5,
+       "counts": false,
+       "words": 352,
+       "misleads_per_1k": 0,
+       "wrong_text_per_1k": 0
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 2,
+       "passed": true
+      },
+      "opus": {
+       "n": 2,
+       "passed": true
+      },
+      "fable": {
+       "n": 0,
+       "passed": false
+      }
+     },
+     "noise_floor": {
+      "pairs": 5,
+      "accept_flips": "0/5",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0
+     },
+     "against_baseline": {
+      "stored -> opus": {
+       "shared_pages": 30,
+       "better": "26/30",
+       "worse": "0/30",
+       "accept_gained": 19,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.33
+      },
+      "stored -> fable": {
+       "shared_pages": 2,
+       "better": "0/2",
+       "worse": "0/2",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": 0
+      }
+     }
+    }
+   }
+  },
+  "opus": {
+   "cells": {
+    "latin-flash3/unknown": {
+     "routes": {
+      "stored": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "5/30",
+       "accept_wilson": [
+        0.073,
+        0.336
+       ],
+       "accept_by_book": [
+        0.033,
+        0.3
+       ],
+       "wrong_text_pages": "23/30",
+       "wrong_text_wilson": [
+        0.591,
+        0.882
+       ],
+       "fidelity_mean": 3.23,
+       "counts": true,
+       "words": 11336,
+       "misleads_per_1k": 6.62,
+       "wrong_text_per_1k": 5.03
+      },
+      "opus": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 30,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      },
+      "fable": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "27/30",
+       "accept_wilson": [
+        0.744,
+        0.965
+       ],
+       "accept_by_book": [
+        0.8,
+        1
+       ],
+       "wrong_text_pages": "2/30",
+       "wrong_text_wilson": [
+        0.018,
+        0.213
+       ],
+       "fidelity_mean": 4.57,
+       "counts": true,
+       "words": 11749,
+       "misleads_per_1k": 0.68,
+       "wrong_text_per_1k": 0.17
+      }
+     },
+     "controls": {
+      "stored": {
+       "n": 2,
+       "passed": true
+      },
+      "opus": {
+       "n": 0,
+       "passed": false
+      },
+      "fable": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 5,
+      "accept_flips": "0/5",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0
+     },
+     "against_baseline": {
+      "stored -> opus": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "stored -> fable": {
+       "shared_pages": 30,
+       "better": "27/30",
+       "worse": "0/30",
+       "accept_gained": 22,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.33
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "3 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 3 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "5 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

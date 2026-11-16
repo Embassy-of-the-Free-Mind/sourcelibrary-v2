@@ -74,4 +74,4 @@ export const DELETE = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

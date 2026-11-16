@@ -223,7 +223,7 @@ function HookBlock({ text, attribution }: { text: string; attribution?: string }
     <div className="bg-dark text-white px-6 py-8 sm:py-10 -mx-6">
       <div className="max-w-4xl mx-auto text-center">
         <Sparkles className="w-5 h-5 text-accent-gold mx-auto mb-3 opacity-60" />
-        <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90 italic">
+        <p className="text-lg sm:text-xl md:text-2xl font-serif leading-relaxed text-white/90 italic">
           &ldquo;{text}&rdquo;
         </p>
         {attribution && (
@@ -243,7 +243,7 @@ function StatsBlock({ items }: { items: { value: string; label: string }[] }) {
     <div className="flex flex-wrap justify-center gap-8 sm:gap-12 py-6 border-y border-border-light">
       {items.map((item, i) => (
         <div key={i} className="text-center">
-          <div className="text-2xl sm:text-3xl font-display text-primary">{item.value}</div>
+          <div className="text-2xl sm:text-3xl font-serif text-primary">{item.value}</div>
           <div className="text-xs sm:text-sm text-muted mt-1">{item.label}</div>
         </div>
       ))}
@@ -269,7 +269,7 @@ function SectionsBlock({ sections, books }: {
         <div key={si}>
           <div className="mb-6">
             <div className="flex items-baseline gap-3 mb-2">
-              <h3 className="text-xl sm:text-2xl font-display text-primary">
+              <h3 className="text-xl sm:text-2xl font-serif text-primary">
                 {section.title}
               </h3>
               {section.period && (
@@ -307,7 +307,7 @@ function SectionsBlock({ sections, books }: {
                     </div>
                   </div>
                   <div className="flex-1 min-w-0 py-0.5">
-                    <h4 className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-display text-sm sm:text-base">
+                    <h4 className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-serif text-sm sm:text-base">
                       {bookTitle(book)}
                     </h4>
                     <p className="text-xs text-muted mb-1.5">
@@ -347,7 +347,7 @@ function KeyFiguresBlock({ figures, books }: {
 }) {
   return (
     <div>
-      <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
+      <h3 className="text-xl sm:text-2xl font-serif text-primary mb-6 flex items-center gap-2">
         <Users className="w-5 h-5 text-muted" />
         Key Figures
       </h3>
@@ -357,7 +357,7 @@ function KeyFiguresBlock({ figures, books }: {
           return (
             <div key={i} className="p-5 rounded-xl bg-white border border-border-light">
               <div className="mb-2">
-                <h4 className="font-display text-lg text-primary">{fig.name}</h4>
+                <h4 className="font-serif text-lg text-primary">{fig.name}</h4>
                 {fig.dates && <p className="text-xs text-muted">{fig.dates}</p>}
               </div>
               <p className="text-sm text-secondary leading-relaxed mb-3">{fig.bio}</p>
@@ -411,7 +411,7 @@ function QuotesBlock({ quotes, books, title }: {
     return (
       <blockquote className={`relative ${isHero ? 'py-6 px-8 bg-white/60 rounded-xl border border-accent-gold/20' : 'pl-6 border-l-2 border-accent-gold/40 py-2'}`}>
         {isHero && <Quote className="absolute top-4 left-4 w-8 h-8 text-accent-gold/20" />}
-        <p className={`${isHero ? 'text-xl sm:text-2xl leading-relaxed' : 'text-base sm:text-lg leading-relaxed'} font-display text-primary/85 italic ${isHero ? 'pl-6' : ''}`}>
+        <p className={`${isHero ? 'text-xl sm:text-2xl leading-relaxed' : 'text-base sm:text-lg leading-relaxed'} font-serif text-primary/85 italic ${isHero ? 'pl-6' : ''}`}>
           &ldquo;{q.text}&rdquo;
         </p>
         {q.original_text && (
@@ -441,7 +441,7 @@ function QuotesBlock({ quotes, books, title }: {
   return (
     <div>
       {title && (
-        <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
+        <h3 className="text-xl sm:text-2xl font-serif text-primary mb-6 flex items-center gap-2">
           <Quote className="w-5 h-5 text-accent-gold/40" />
           {title}
         </h3>
@@ -468,7 +468,7 @@ function TimelineBlock({ start_year, end_year, highlights, books }: {
 }) {
   return (
     <div>
-      <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
+      <h3 className="text-xl sm:text-2xl font-serif text-primary mb-6 flex items-center gap-2">
         <Clock className="w-5 h-5 text-muted" />
         Timeline
       </h3>
@@ -563,13 +563,13 @@ function ReadingPathsBlock({ paths, books }: {
 }) {
   return (
     <div>
-      <h3 className="text-xl sm:text-2xl font-display text-primary mb-6">
+      <h3 className="text-xl sm:text-2xl font-serif text-primary mb-6">
         Where to Start
       </h3>
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         {paths.map((path, pi) => (
           <div key={pi} className="p-5 rounded-xl bg-white border border-border-light">
-            <h4 className="font-display text-lg text-primary mb-1">{path.audience}</h4>
+            <h4 className="font-serif text-lg text-primary mb-1">{path.audience}</h4>
             {path.description && (
               <p className="text-sm text-muted mb-4">{path.description}</p>
             )}
@@ -613,7 +613,7 @@ function CrossCollectionsBlock({ links }: {
 }) {
   return (
     <div>
-      <h3 className="text-lg font-display text-primary mb-4">Related Collections</h3>
+      <h3 className="text-lg font-serif text-primary mb-4">Related Collections</h3>
       <div className="flex flex-wrap gap-3">
         {links.map((link, i) => (
           <Link
@@ -656,7 +656,7 @@ function ThematicGalleryBlock({ clusters, books }: {
         const heroSrc = imageUrl(hero);
         return (
           <div key={ci}>
-            <h3 className="text-xl sm:text-2xl font-display text-primary mb-1">
+            <h3 className="text-xl sm:text-2xl font-serif text-primary mb-1">
               {cluster.theme}
             </h3>
             {cluster.description && (
@@ -736,7 +736,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
   return (
     <div>
       {title && (
-        <h3 className="text-xl sm:text-2xl font-display text-primary mb-4 flex items-center gap-2">
+        <h3 className="text-xl sm:text-2xl font-serif text-primary mb-4 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-muted" />
           {title}
         </h3>

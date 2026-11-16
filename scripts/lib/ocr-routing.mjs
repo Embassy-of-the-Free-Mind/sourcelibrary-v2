@@ -3,7 +3,7 @@
  * TRANSLATION phase (getTranslateModelForBook) until the two split in #4759, and
  * is documented as "the one door" for translation writes. It does not cover OCR, and the OCR side had
  * grown two private copies of the allowlist instead
- * (scripts/workers/pipeline-orchestrator.mjs, scripts/migration/backfill-ocr-near-complete.mjs),
+ * (scripts/workers/pipeline-orchestrator.mjs, scripts/migration/backfill-ocr-near-complete.mjs, archived 2026-11 under v3#241),
  * neither importable by a test because the orchestrator runs `run()` on import.
  * This module is the importable OCR-side door those copies now share.
  *

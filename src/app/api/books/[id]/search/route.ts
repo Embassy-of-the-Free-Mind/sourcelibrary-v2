@@ -106,7 +106,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: bookId } = await params;
+    // What the caller named the book by: its id, or the slug from a book URL.
+    const { id: bookRef } = await params;
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q');
     // Which EDITION of the page text to search and quote. `en` (the default)
@@ -138,12 +139,18 @@ export async function GET(
     // A book is only "hidden" if its books doc exists with visible:false; if no
     // doc is found we preserve prior behavior (just search pages) rather than 404.
     const gateBook = await db.collection('books').findOne(
-      { $or: [{ id: bookId }, { slug: bookId }] },
+      { $or: [{ id: bookRef }, { slug: bookRef }] },
       { projection: { id: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION } }
     );
     if (gateBook && !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+    // Every leg below filters pages by `book_id`, which holds the book's id.
+    // The gate above accepts a slug, so search by the id of the book it found:
+    // with the caller's string, a slug passed the gate and then matched no
+    // page on the Atlas, localized and meaning legs, and the caller read an
+    // empty or partial result as "the book does not say that".
+    const bookId: string = (typeof gateBook?.id === 'string' && gateBook.id) || bookRef;
 
     // Full page text per result, kept for the scoring pass below. Held outside
     // the two branches so a page found semantically is scored the same way as a

@@ -1,0 +1,15 @@
+<warning>The right edge of the text block is cut off in the scan. The last letters or words of most lines are missing. Words that can be completed with confidence have been completed; lost text is marked as unclear.</warning>
+<scan-quality>fair</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>4</page-num>
+<meta>Catchword at foot of page partly cut off; only a single character is visible. Digitized by Google watermark.</meta>
+
+hemos germanis permixtos ipsam Germaniam inhabitare asserit.
+
+§. 16. Pariter ineptiunt, qui Bohemum propterea quod non sit Elector electione privandum, assertum eunt? Primaria vero eorum argumentatio hæc est: Quicunque non habet sessionem in Comitiis, nec Contributionibus aliisque Imperii oneribus est obnoxius, non est status Imperii, nec per consequens Elector. Atque de Rege Bohemiæ verum est antecedens. Ergo & consequens. Sed respondeo. I. Inanem de <unclear>[cut off]</unclear> quæstione censeri disputationem, ubi clara constitutionis <unclear>[cut off]</unclear> determinatio; neque cognitis diu immorandum: Quin autem de eo, quod Elector sit, clara adsit constitutio, ex conjunctione antecedentium cum subsequentibus apparebit. II. Respondeo Limitando Majorem hoc modo: Quicunque nec in universalibus nec particularibus Comitiis votum & sessionem habet, ille non est status Imperii. Atque sic negamus Minorem. Sciendum & hic est, quod vox Status sumatur dupliciter. 1. Late & generaliter; sic omnis ille est status Imperii, qui in matriculâ hodiè invenitur, & ab omnibus pro tali habetur. 2. Stricte & specialiter, sic nullus est status Imperii, qui non habet votum & sessionem in Comitiis: hoc modo Rex Boh. non <unclear>est</unclear> status, sed priori. Præsuppono & hic cum *Nobilissimo, Amplissimo, Consultissimo atque Excellentissimo Domino Præside P. P. <unclear>[cut off]</unclear> hâc Salanâ decantatissimo, Præceptore meo æternùm suspiciendo <unclear>[cut off]</unclear> Lectionibus suis privatis ad Epit. Jurisprud. Publ. Brandlach<unclear>[cut off]</unclear> lib. 1. c. 3.* duplicem esse matriculam, aliam in quibus nomina statuum tantum sunt consignata, aliam in quibus tantùm <unclear>ii</unclear> status enumerantur, qui contribuunt imperio: Hinc etiam <unclear>[cut off]</unclear> quod Rex Bohemiæ in hâc posteriori, cum nihil contribuat Imperio Romano, non contineatur.
+
+§. 17. Alii quidem quibus meliora præcordia Titan finxit, mitiores sese exhibent: & tum demum vocandum esse Regem Bohem. Si nimirum alii discordent, *ut Petrus de An<unclear>[cut off]</unclear> de Imp. Rom. l. 2. c. 2.* & velut arbitrum saltem honorarium paria vota discrepantia in electione fuerint, intervenire, censent ac largiuntur *Ut Pacian. lib. 2. cap. 35. in 26. de probat.* S<unclear>[cut off]</unclear>
+
+<vocab>Bohemia, Rex Bohemiæ, Elector, Comitia, status Imperii, matricula, Petrus de Andlo, Pacianus, Brandlach, Jurisprudentia Publica, Salana</vocab>

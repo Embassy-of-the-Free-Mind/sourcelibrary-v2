@@ -1,0 +1,146 @@
+[
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bc0d8522835be84615d4",
+  "book_id": "69c1bc0d8522835be8461541",
+  "why": "CONTAIN: The draft is made-up text: it has the same run of common Hebrew filler words (\"אשר\", \"כי\", \"הוא\", \"בזה\"…) in both columns rather than the leaf's real lines. The leaf itself is a heavily faded two-column Hebrew cursive page with wormholes, and its text can't be read reliably enough to transcribe; the only clearly legible mark is a pencil folio number, \"69\", at the upper left.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bb5a8522835be845f28e",
+  "book_id": "69c1bb5a8522835be845f27d",
+  "why": "CONTAIN: The draft is not this leaf's text: it gives a Yiddish homily on Moses and David that is not on the page, while the image shows a different Hebrew text in Ashkenazi cursive, with numbered paragraphs (ד, ט, ד), a top line reading roughly \"ישפשף ופסוקים\", and folio marks \"ח\" and \"7\".",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bb558522835be845f047",
+  "book_id": "69c1bb558522835be845f021",
+  "why": "CONTAIN: The draft is machine-invented text, not a reading of this leaf: it is meaningless filler made of the same few words repeated (המחשבה, וחי, וזכור, ביו\"ד), lines 26–28 are three copies of one line, and its words do not match the 32 lines of Hebrew cursive in brown ink that the page actually carries, ending with a short closing line.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1ba928522835be84596c8",
+  "book_id": "69c1ba928522835be845954d",
+  "why": "CONTAIN: Apart from the heading line \"שער שלשים וארבעה שער יעקב ולאה\", the draft does not match this leaf; its body text is invented, with runaway repeated sentences (\"והנה דע כי הנשמה של המקיפים הם י\"א\") and made-up centred lines. The page actually shows the end of the previous gate (ending \"סליק שער שלשים ושלשה\"), the opening of Gate 34 on Jacob and Leah (פרק א on the inner and back aspects, \"אחוריים\", of Abba and Imma, and the start of פרק ב), and a two-column section with a הגהה, none of which the draft reproduces.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bc148522835be846165f",
+  "book_id": "69c1bc148522835be846161f",
+  "why": "CONTAIN: The draft does not match this leaf. Its passage about the verse \"לו חכמו ישכילו זאת\" and its two cases about a gift deed and maintenance payments (\"פייגא\", \"שטר מתנה\") do not appear in the image. The image shows a page in Ashkenazi semi-cursive Hebrew: one block of about 15 lines, then two sections that each open with a large \"להיות\", the second reading \"להיות שראובן\". The draft's wording and line count do not match any of these sections, so it looks invented rather than misread.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bad58522835be845ae46",
+  "book_id": "69c1bad58522835be845ae24",
+  "why": "CONTAIN: The draft is Syriac Serto text about Saint Antony that this leaf does not contain. The image shows a handwritten Hebrew cursive draft with verse numbers and many deletions and interlinear corrections, apparently a Hebrew rendering of 1 Maccabees 15–16, mentioning יהודה, שמעון, יוחנן and קנדבאוס, with a folio number of 36.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bb3e8522835be845ddb7",
+  "book_id": "69c1bb3e8522835be845dcd3",
+  "why": "CONTAIN: The draft is invented, repetitive text about חכמה and בינה (wisdom and understanding) and is not on this leaf. The handwritten page actually discusses the six thousand years, the seventh millennium as the great Shabbat, rises and falls (עליות וירידות), and two aspects of Shabbat, and its catchword is \"לכן\", not \"לפיכך\".",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69b3e679304c1c6b3950b736",
+  "book_id": "69b3e679304c1c6b3950b712",
+  "why": "CONTAIN: The draft is invented text: generic formulaic Hebrew with whole sentences repeated several times, and it doesn't match this leaf's handwritten Hebrew cursive (31 lines including the catchword, with display words ישב, שם and כל set off in the text) beyond those three words.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "6a7de037fd8615d37af98e48",
+  "book_id": "6a7de037fd8615d37af98df8",
+  "why": "CONTAIN: The draft is not this leaf's text. It reads like a made-up Merkabah adjuration (\"ארבעה המלאכים… אוריאל רפאל גבריאל מיכאל\", \"קדוש קדוש קדוש\"), but the handwritten page has a different heading line, \"בשמא דאלהא רבה וקדישא\", and an opening about the angels appointed (הממונים) and the names \"שקד חוזי\". Hardly any of the draft's lines match the image beyond the printed caption \"Sword of Moses\".",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bc098522835be84613a3",
+  "book_id": "69c1bc098522835be846135b",
+  "why": "CONTAIN: The draft is invented text (a generic Spanish royal provision dated Madrid 1600), but this leaf carries only faint, mirror-reversed show-through from the other side, plus ink spots and stains, so none of the draft's words appear on this page.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bab38522835be8459cbf",
+  "book_id": "69c1bab38522835be8459bf4",
+  "why": "CONTAIN: The draft is not this leaf's text. It matches only a few words of the first three lines of the image (for example \"פ' ימינ…\", \"יורד\", \"ובונה\", \"מועלת\"). After that it is invented kabbalistic-sounding text that loops on phrases like \"למעלה למעלה\" and \"חסד ושלום\", and none of it matches the Hebrew cursive written on the 35 lines of folio 199.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69b3e5c1304c1c6b3950a109",
+  "book_id": "69b3e5c1304c1c6b3950a0a3",
+  "why": "CONTAIN: Only the opening lines of the draft roughly match the page (e.g. \"פקח ואמר כי פ' יפה לך לומר עולם עולם\", \"לזמנין ... לזמנין\", \"מסתברא דקב\"ה\"); most of the rest is invented text, including repeated \"פ' פ' פ'\", passages about \"מן העולם ועד העולם\" and the Temple that are not on this leaf, and marginal and vocabulary entries that do not match the two-line marginal note at the top right, so the draft is not a transcription of this page.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69b3f794a107e55a0ee1e1ac",
+  "book_id": "69b3f794a107e55a0ee1e15e",
+  "why": "CONTAIN: The draft does not match this leaf: it covers only the left page of a two-page spread, leaves out the whole right page, and gives standard liturgical wording that doesn't fit the handwritten lines visible here; at this resolution the small Hebrew cursive is too unclear to transcribe reliably.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "69c1bb8e8522835be846041c",
+  "book_id": "69c1bb8e8522835be84603f3",
+  "why": "CONTAIN: The draft is invented Latin prose that is not on this leaf. The leaf is a pasted-down or flyleaf page that shows only mirror-reversed, faded handwriting bleeding through from the other side, plus pencil ruling and a pencil numeral \"12\" in the lower left margin.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>opus-correct",
+  "page_id": "6a209de889e8715c5947ac84",
+  "book_id": "6a209de889e8715c5947ac76",
+  "why": "CONTAIN: The draft doesn't match this leaf. The image is a Hebrew cursive page with about 18 lines, then a section beginning \"עוד ברע׳\" and a short signature at the bottom left. The draft's wording, line count and ending (\"בטחון\") don't follow the page; only scattered opening words match, so it looks like an OCR invention rather than this leaf's text.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69c1bad58522835be845ae46",
+  "book_id": "69c1bad58522835be845ae24",
+  "why": "CONTAIN: The draft transcribes an unrelated Christian Syriac text (Life of Anthony) while the manuscript leaf is Samaritan Hebrew/Aramaic written upside-down.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69c1bb8e8522835be846041c",
+  "book_id": "69c1bb8e8522835be84603f3",
+  "why": "CONTAIN: The draft is an invented Latin transcription of a leaf whose ink is severely faded and abraded beyond legible decipherment.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3-manuscript",
+  "route": "3flash>agy-flash-low",
+  "page_id": "6a209de889e8715c5947ac84",
+  "book_id": "6a209de889e8715c5947ac76",
+  "why": "CONTAIN: The draft is an invented Hebrew transcription bearing no textual relation to the cursive Judeo-Arabic text on the page.",
+  "contain": true
+ }
+]

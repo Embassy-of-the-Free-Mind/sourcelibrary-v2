@@ -132,7 +132,7 @@ export default async function BrowseYearsPage({ params, searchParams }: PageProp
     <>
       <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: base }]} />
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20">
-        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+        <h1 className="text-3xl md:text-4xl font-serif mb-2" style={{ color: 'var(--text-primary)' }}>
           {p.label}
         </h1>
         <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>

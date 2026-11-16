@@ -74,7 +74,11 @@ between pairs (page 2 of one pair and page 1 of the next) is never read; only th
 verdicts by eye on a new shelf (#8518 did the first 50).
 
 **Rows written by** `scripts/eval/paired-fifths-check.mjs --books=… --apply` (run ids `pfc-p5-<date>-…`), one row per
-book per run, through `recordPageVerdicts()`.
+book per run, through `recordPageVerdicts()`. The spare lane's end-of-week rounds (`scripts/audit/spare-paired-fifths.mjs`,
+v3#197; run ids `spare-pf-<date>-<n>-uniform` / `-risk`) add how the BOOK was chosen to the frame: `frame.stratum`
+(`uniform`: served books drawn uniformly inside a language × print/manuscript cell; `risk`: the head of
+book-check-priority) and `frame.cell`. Read a library rate from the uniform rows only, weighted by each cell's served
+books; `frame.selection` stays `random` (the pages) in both.
 
 **Versions.** v1, 2026-11-08 (#8405): a page judge a page and a join judge a break, 15 calls a book, join judge v2.
 v2, 2026-11-10 (#8518): one call per pair (P5-opus, #8478), English read on every page. v1 rows stay valid as v1.

@@ -31,4 +31,4 @@ export const GET = withAuth(async (_request, _session, context) => {
     console.error('Analytics API error:', error);
     return NextResponse.json({ error: 'Failed to fetch analytics' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

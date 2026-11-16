@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getRevision } from '@/lib/page-revisions';
 import { getDb } from '@/lib/mongodb';
 import { pageGateForRequest, meteredSignInResponse } from '@/lib/metered-gate';
+import { isBookIdReadable } from '@/lib/book-access';
 
 /**
  * GET /api/pages/[id]/revisions/[revisionId]
@@ -32,6 +33,10 @@ export async function GET(
         { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, seo_indexable: 1 } },
       );
       if (page) {
+        // A revision is the page's text, so it follows the book's reader gate (ops #17).
+        if (!(await isBookIdReadable(db, page.book_id, request))) {
+          return NextResponse.json({ error: 'Revision not found' }, { status: 404 });
+        }
         const gate = await pageGateForRequest(db, request, page);
         if (gate) return meteredSignInResponse(gate);
       }

@@ -1,0 +1,123 @@
+[
+  {
+    "book_id": "6991c53c3074a1745a4107ab",
+    "slot": 1,
+    "title": "Aureum Vellus: Guldin Schatz und Kunstkammer with Splendor Solis illustrations (Cod. Sang. 1727)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A German alchemical manuscript in a 17th-century cursive hand (a recipe for a 'gradier' process). It matches the catalogue description. No collection is set, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "The leaf carries pencil foliation '196' and is record 200, an offset of 4, which is plausible for front matter. printed_backsteps 59 and printed_repeats 62 out of 432 numbered pages is high. It more likely reflects a pencil numbering that the OCR misread or that the volume restarts (a compiled codex) than a scan splice, but this one page cannot settle it. structure.pages_translated is 0 while pages_translated_field is 517, so the counts disagree.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 200,
+        "right_page": "yes",
+        "printed_marker": "196",
+        "layout": "single column of cursive text in a ruled frame; two-line title repeated above the frame; alchemical symbols inline; catchword 'das' at foot right",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Process eines geheimen gradier 🜂",
+            "image": "Process Eines geheimen gradier ▽ (a downward triangle, the water sign, in both title lines)",
+            "problem": "The water sign is transcribed as the fire sign (🜂 is an upward triangle). The process is a grading water ('Gradierwasser'), not a fire.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "In ☿ man darin Bad dz ☉",
+            "image": "Jm ▽ man darin Baad dz ☉ (again a downward triangle)",
+            "problem": "The water sign is read as mercury, which changes the medium of the bath.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "℞ <unclear>Halbe</unclear> ☉ das\nLaminier",
+            "image": "℞ 3 lot ☉, das Laminier (numeral '3' with ditto marks, then 'lot')",
+            "problem": "The quantity '3 lot' of gold is replaced by 'Halbe' (half). This is a dose error.",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Und folgt in Parafolon dz Stuhls",
+            "image": "Und Volgt in Parasolon, dz Stuckh, (apparently 'Stuck/Stück', piece)",
+            "problem": "'Stuhls' (chair) for what looks like 'Stuckh' (piece/item). The misreading yields nonsense.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "des Boginds 7 ½ Lot",
+            "image": "the numeral before 'Lot' looks like the scribe's 'z'-shaped 2, written between ditto marks like the '2' elsewhere on the page",
+            "problem": "The quantity may be misread (7½ vs 2). The hand is hard to read here, so confidence is low.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Beuor aus Losen hof-\nfertigen Leuffen.",
+            "image": "hof-/fertigen Leuthen",
+            "problem": "'Leuffen' for 'Leuthen' (people). The translation still gives 'people'.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Process eines geheimen gradier 🜂",
+            "english": "Process of a secret grading fire 🜂 <note>The symbol 🜂 normally stands for fire.",
+            "problem": "Built on the misread sign. The image has the water sign, so this is a 'grading water'. The note gives the error a confident, authoritative explanation.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "In ☿ man darin Bad dz ☉",
+            "english": "In mercury ☿ one bathes the gold ☉ therein",
+            "problem": "The image reads water (▽), not mercury. The OCR misreading is carried into the English, which gives the wrong medium.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "℞ <unclear>Halbe</unclear> ☉",
+            "english": "**Take** ℞ <unclear>half</unclear> of the gold ☉",
+            "problem": "The image gives a weight, '3 lot' of gold. 'Half' loses the dose.",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "in Parafolon dz Stuhls",
+            "english": "in the <term>Parafolon</term> <note>an obscure word, perhaps a cover name or a garbled \"paraphrase\"</note> of the chair",
+            "problem": "'of the chair' comes from the 'Stuhls' misreading. The note speculates instead of flagging the reading as doubtful.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The title line above the frame is wrapped in <insert>, but it is in the same hand: a repeated title, not a later insertion.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The symbol 🜂 normally stands for fire. A \"grading\" preparati", "verdict": "wrong", "helpful": false },
+            { "quote": "The Rhenish grade was the standard of fineness for Rhenish g", "verdict": "ok", "helpful": true },
+            { "quote": "into a viscous state", "verdict": "ok", "helpful": true },
+            { "quote": "an obscure word, perhaps a cover name or a garbled \"paraphra", "verdict": "unsupported", "helpful": false },
+            { "quote": "into a viscous state", "verdict": "ok", "helpful": false },
+            { "quote": "hammer it into thin plates", "verdict": "ok", "helpful": true },
+            { "quote": "a cover name, explained by the symbol that follows", "verdict": "ok", "helpful": false },
+            { "quote": "an alchemical symbol for a salt", "verdict": "unsupported", "helpful": false },
+            { "quote": "a lot was a small weight, about half an ounce", "verdict": "ok", "helpful": true },
+            { "quote": "another cover name", "verdict": "ok", "helpful": false },
+            { "quote": "seal it with clay or paste", "verdict": "ok", "helpful": true },
+            { "quote": "an unexplained cover name for a strong solvent", "verdict": "ok", "helpful": false },
+            { "quote": "obscure term", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "put it into a cucurbit", "why": "A general reader will not know a cucurbit is the gourd-shaped lower vessel of an alembic for distillation." },
+            { "english": "in a cementation box", "why": "Cementation, heating metal packed in a reactive powder, is a technical assaying term the reader needs explained." },
+            { "english": "Let it macerate in hot sand, up to 2 🜔.", "why": "The symbol after '2' is left unexplained, so the duration or quantity of the step cannot be followed. The image shows a boxed-X sign, not the salt sign." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf, a fair transcription of a hard cursive hand, and a fluent English version. But the alchemical signs are misread at the points that matter: water is read as fire and as mercury, and '3 lot' of gold becomes 'half'. A confident note then explains the wrong sign as fire, so the recipe reaches the reader with the wrong substances and dose."
+  }
+]

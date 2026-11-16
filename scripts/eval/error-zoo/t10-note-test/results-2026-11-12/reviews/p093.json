@@ -1,0 +1,123 @@
+[
+  {
+    "book_id": "6992cad0d4d545ae73feeb43",
+    "slot": 1,
+    "title": "Pelliot chinois 2449",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Dunhuang manuscript fragment in red ink with a medieval Chinese votive formula (天王, 龍神, 景福, 皇祠). That fits a Pelliot chinois shelfmark. No tradition or collection is set to check it against. The OCR's own meta calls it 'likely of Vietnamese Hán-Nôm origin', which is unfounded and contradicts the record.",
+    "rights_flag": null,
+    "structure_note": "This is the last record (14 of 14). The pencil archival mark '2449' with a superscript (apparently 'v°', verso) is read into <page-num> as if it were a page number. That accounts for with_printed_number = 1, so it is not a real printed folio. structure.pages_translated = 0 contradicts pages_translated_field = 14, and this page does carry a translation. This looks like a counting mismatch, not missing translations.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "天南皇帝輦來儀",
+            "image": "天?帝?来儀 — only one character stands between 天 and 帝 on the leaf (it resembles 南/青); I see no separate 皇",
+            "problem": "an extra character (皇) appears to be supplied, which yields the title 'Emperor of the Heavenly South'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "豈而宣助",
+            "image": "the second column opens with characters that look like 昜/功/宜/真/歟, not 豈而宣助 (read at low confidence)",
+            "problem": "the column's opening appears misread. The translation builds a rhetorical question ('How, then, shall this aid be proclaimed?') on it",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "以此景福",
+            "image": "以斯景福",
+            "problem": "斯 read as 此 (the sense is the same, but the text is normalised)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "一至神贊善",
+            "image": "一室神贊善",
+            "problem": "室 ('chamber') misread as 至, which turns 'adorn the whole chamber' into 'adorn … completely'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "津狽",
+            "image": "津狼 (the right-hand component reads 良)",
+            "problem": "character misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "清嘆美",
+            "image": "the character before 嘆 looks more like 讃/讚 than 清 (low confidence)",
+            "problem": "possible misread; 'praise and admire' becomes 'clear sighs'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "豈而宣助",
+            "english": "How, then, shall this aid be proclaimed?",
+            "problem": "a fluent rhetorical question built on a doubtful reading of the column's opening characters",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "先用庄嚴一至",
+            "english": "first used to <term>adorn</term> … all things completely",
+            "problem": "'all things' has no source. The leaf reads 一室 ('the whole chamber/shrine'); the translator smooths over the misread 一至",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "莫限津狽",
+            "english": "unbounded by the ford of hardship",
+            "problem": "a confident rendering of a garbled compound (津狽, really 津狼 on the leaf), with no uncertainty marker",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "(none)",
+            "english": "Continues the closing verses of the votive text from the previous page.",
+            "problem": "the continuity meta asserts content of the previous page that this page cannot confirm",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR <meta> says the text is 'likely of Vietnamese Hán-Nôm origin given the opening phrase \"Thiên Nam\"'. This is invented provenance on a Pelliot Dunhuang manuscript, and the phrase it rests on is itself doubtful on the leaf.",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "<page-num>2449</page-num> is the pencil archival shelfmark (with what looks like a 'v°' superscript), not a page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "printed_marker": "2449 v° (pencil archival mark, top left; the superscript is uncertain)",
+        "layout": "two vertical columns of red-ink running script along the right edge of a torn, clipped-corner sheet; the rest of the leaf is blank",
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"天南\" (tiannan)", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"輦\" (nian), the carriage of an emperor", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"龍神\" (longshen)", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"景福\" (jingfu)", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"庄嚴\" (zhuangyan), to adorn or make solemn, in the ", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"皇祠\" (huangci)", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "The Emperor of the <term>Heavenly South</term>", "why": "the reader is not told who or what the 'Heavenly South' is, or whether this is a title or a place" },
+            { "english": "unbounded by the ford of hardship", "why": "an opaque phrase; nothing tells the reader that the source compound is obscure or uncertain" },
+            { "english": "The Heavenly King descends", "why": "the reader is not told which deity, or what kind of deity, 天王 denotes here" }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "The fragment is real and on the right leaf. The OCR misreads several cursive characters (室→至, 斯→此, 狼→狽, and probably the second column's opening), and the translation turns those misreads into fluent prose with no uncertainty marker. The OCR meta also invents a Vietnamese origin for a Pelliot Dunhuang manuscript."
+  }
+]

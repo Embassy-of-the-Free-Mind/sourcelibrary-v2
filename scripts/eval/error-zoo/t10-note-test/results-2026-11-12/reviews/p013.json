@@ -1,0 +1,52 @@
+[
+  {
+    "book_id": "69b51e67cf111105c429c037",
+    "slot": 1,
+    "title": "Confessio catholica. 2,3",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Johann Gerhard's Lutheran controversial theology (Confessio catholica), an early 17th-century Latin print. No tradition or collection is assigned, but nothing on the page is out of place for a library of historical primary sources.",
+    "rights_flag": null,
+    "structure_note": "There are 113 printed backsteps and 111 repeats among 859 printed numbers. That is far more than a few misread numerals would make. It suggests either several pagination sequences bound under one record (the title '2,3' points to combined parts) or page-num tags taken from the wrong place. One page cannot settle which. On this page the tag is right: index 111 carries printed 93, and <page-num>93 matches the leaf. The structure count gives pages_translated as 0 while the book field says 581. That is an instrument disagreement, since this page does have a translation.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "printed_marker": "93 (signature \"M 3\", catchword \"di-\")",
+        "layout": "single column with a ruled running head; a centred chapter title in large italic capitals; a large drop initial T; signature and catchword at the foot; a strip of the facing page's edge at the left (correctly ignored)",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nullam discrimen", "image": "nullum dif rimen", "problem": "wrong gender ending; meaning unaffected", "severity": "minor" },
+          { "ocr": "in Baptismo culpam omnem dimitti", "image": "in Baptiſmo & culpam omnem dimitti", "problem": "'&' dropped", "severity": "minor" },
+          { "ocr": "Exthesis:", "image": "Ἔκθεσις.", "problem": "Greek word printed on the page given in a Latin-letter approximation", "severity": "minor" },
+          { "ocr": "Adjejunium", "image": "Ad jejunium", "problem": "two words run together", "severity": "minor" },
+          { "ocr": "per flagella effunditur.", "image": "per flagella effun- [catchword] di-", "problem": "word at the break completed silently, catchword 'di-' not recorded", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "verbum Graecum <unclear>ὑπωπιάζω</unclear>", "english": "the Greek word <unclear>I beat black and blue</unclear>", "problem": "the Greek word Gerhard cites is replaced by an English gloss, so the sentence names no word and then explains it a second time ('means to beat until it bruises')", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "the meta says 'Argument 16 begins on the previous page', which is a claim about the previous page that this page does not support", "severity": "minor", "class": "T15" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original header: \"On Satisfaction\"", "verdict": "ok", "helpful": true },
+            { "quote": "Pierre Coton, 1564–1626, French Jesuit and confessor to King", "verdict": "unsupported", "helpful": true },
+            { "quote": "Theophylact of Ohrid, c. 1055–c. 1107, Byzantine archbishop", "verdict": "unsupported", "helpful": false },
+            { "quote": "Luis de la Puente, 1554–1624, Spanish Jesuit spiritual write", "verdict": "unsupported", "helpful": false },
+            { "quote": "Jacob Gretser, 1562–1625, German Jesuit controversialist, wh", "verdict": "unsupported", "helpful": false },
+            { "quote": "penitential whips", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "Bellarmine, book 4 *On Penance*, chapter 6.", "why": "Bellarmine is the main Catholic opponent quoted across the page, and he gets no identification, while minor figures get dated notes." },
+            { "english": "there are three kinds of satisfactory works", "why": "'satisfactory' is used in its technical sense (works that make satisfaction for sin in penance), not the everyday sense, and nothing says so." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription and translation of this page are sound, with only minor slips. The one real blemish is the Greek ὑπωπιάζω replaced by an English gloss. The notes on persons are accurate but all add dates and biography that are not on the page. The book's printed-number counts suggest a pagination or tagging problem that one page cannot resolve."
+  }
+]

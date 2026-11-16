@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { createCronLogger } from '@/lib/cron-logger';
+import { fetchR2WriteMeter } from '@/lib/r2-write-meter';
 
 export const maxDuration = 120;
 export const preferredRegion = 'fra1';
@@ -18,6 +19,11 @@ export const dynamic = 'force-dynamic';
  *    re-measures and updates the seed; exact scan takes ~80 min so it
  *    can't run in a cron).
  *  - Book/page counts: single aggregation over books.
+ *  - R2 writes per key family for the last complete UTC day (v3#94): bytes and
+ *    objects PUT under pages/, archived/, deepzoom/ and everything else, from
+ *    Cloudflare's write log (src/lib/r2-write-meter.ts). Stored on the snapshot
+ *    as `r2_writes` and on metrics_history for the day it DESCRIBES (yesterday),
+ *    as `r2_writes`. Records only; nothing alarms on it.
  */
 
 // Fallback calibration from the 2026-07-04 full scan. The live seed is read
@@ -76,9 +82,13 @@ export async function GET(request: NextRequest) {
   try {
     const db = await getDb();
 
-    const [r2, existing, bookAgg, collections] = await Promise.all([
+    const [r2, r2Writes, existing, bookAgg, collections] = await Promise.all([
       fetchR2Analytics().catch((e: Error) => {
         log.error(e.message, { phase: 'r2-analytics' });
+        return null;
+      }),
+      fetchR2WriteMeter().catch((e: Error) => {
+        log.error(e.message, { phase: 'r2-write-meter' });
         return null;
       }),
       db.collection('system_config').findOne({ _id: 'storage_stats' } as object),
@@ -142,6 +152,9 @@ export async function GET(request: NextRequest) {
     const snapshot = {
       updatedAt: new Date(),
       r2,
+      // A failed read leaves the previous value in place: it carries its own `day`,
+      // so a stale meter is visibly stale and never reads as "nothing was written".
+      ...(r2Writes ? { r2_writes: r2Writes } : {}),
       text,
       text_seed: seed,
       collections,
@@ -187,6 +200,17 @@ export async function GET(request: NextRequest) {
       { upsert: true },
     );
     log.action('metrics_history_upserted');
+
+    if (r2Writes) {
+      // Filed under the day the writes happened, so a series by `date` lines up
+      // with the writers' own logs.
+      await db.collection('metrics_history').updateOne(
+        { date: r2Writes.day },
+        { $set: { date: r2Writes.day, r2_writes: r2Writes.families, r2_writes_updated_at: new Date() } },
+        { upsert: true },
+      );
+      log.action('r2_writes_upserted');
+    }
 
     await log.flush();
     return NextResponse.json({ ok: true, snapshot });

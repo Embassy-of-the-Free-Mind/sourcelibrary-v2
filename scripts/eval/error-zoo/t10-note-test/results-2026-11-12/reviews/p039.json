@@ -1,0 +1,57 @@
+[
+  {
+    "book_id": "6985ca72c9d0c217260e737b",
+    "slot": 1,
+    "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century French exposé of Masonic high-degree rituals; the page is ritual text (Knight of the Sword, Court of Cyrus), as the title says. No collection is given to test it against.",
+    "rights_flag": null,
+    "structure_note": "There are 205 page records but only 200 distinct page numbers, so 5 records are duplicates. pages_count_field 189 does not match that, and structure pages_translated 0 contradicts pages_translated_field 177, so the counts disagree. The 12 backsteps and 18 repeats are more than misread numerals usually explain. They fit the duplicate records, and perhaps inserted plates or a splice. I cannot confirm which from one page. This page is correctly numbered (printed 117, sig. H iij, matching <page-num>117).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 159,
+        "right_page": "yes",
+        "printed_marker": "117 (running head); signature \"H iij\" at foot",
+        "layout": "single column of text; running head \"DE LA MAÇONNERIE.\" with page number; quoted speech marked by ,, in the left margin; signature centred at foot",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "ne font plus de la Cour de Cyrus",
+            "image": "ne ſont plus de la Cour de Cyrus",
+            "problem": "long-s read as f (font for ſont). The translation reads it correctly.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "<header>DE LA MAÇONNERIE.</header>",
+            "english": "117 OF FREEMASONRY.",
+            "problem": "the running head and page number are put into the reading text as a line of body text",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The summary says the candidate is sent \"for safe conduct to Jerusalem\", and the keywords include \"Sixth Degree\". The page names neither Jerusalem nor a degree number; both come from outside the page (derived metadata).",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "Warden", "verdict": "ok", "helpful": true },
+            { "quote": "candidate being received", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "I place you in the hands\n> ,, of Nabazardin", "why": "Nabazardin is the biblical Nebuzaradan (Nebuchadnezzar's captain). A general reader will not see that the ritual is acting out the Babylonian exile and the return to rebuild the Temple." },
+            { "english": "knocks seven times in the manner of a Knight of the Sword", "why": "Knight of the Sword is the name of the Masonic high degree being conferred. Without a note, 'in the manner of' reads as obscure." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is a clean, faithful transcription and translation of p. 117. There is one long-s slip that does no harm, and the two glosses are correct. The only flags are book-level: the page counts disagree, and the summary adds details that are not on the page."
+  }
+]

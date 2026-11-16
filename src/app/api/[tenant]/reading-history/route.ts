@@ -183,4 +183,4 @@ export const GET = withAuth(async (request, session, context) => {
   ]);
 
   return NextResponse.json({ entries, total: totalResult, offset, limit });
-});
+}, { minRole: 'reader' });

@@ -145,8 +145,10 @@ export async function correctionRead({ template, draft, imageBuf, ws, key, model
 /** The pace guard of the sampler: model-limits' local stop, then the meter (weekly 85 / 5-hour 95). */
 export async function paceCheck(limits, state) {
   if (Date.now() - (state.at ?? 0) > 5 * 60e3) { state.meter = await claudeMeter(limits); state.at = Date.now(); }
-  const local = limits.claudeBlocked({ weeklyMax: 85, sessionMax: 95 });
-  return local ? `${local.reason} (until ${local.until})` : paceBlock(state.meter, { weeklyMax: 85, sessionMax: 95 });
+  // ROUTE_JUDGE_WEEKLY_MAX, as route-judge-6740 reads it: the spare lane's drain sets 99, where quota left expires unused.
+  const weeklyMax = Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85);
+  const local = limits.claudeBlocked({ weeklyMax, sessionMax: 95 });
+  return local ? `${local.reason} (until ${local.until})` : paceBlock(state.meter, { weeklyMax, sessionMax: 95 });
 }
 /** One absolute verdict: route-judge judgePrompt, image in the workspace, Opus via claude -p. */
 export async function judgeAbsolute(item, imageBuf) {

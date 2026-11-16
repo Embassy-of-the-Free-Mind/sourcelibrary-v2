@@ -1,0 +1,64 @@
+[
+  {
+    "book_id": "694f8d99efce46492e19fdad",
+    "slot": 1,
+    "title": "Conclusiones sive Theses DCCCC",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Latin incunable of Pico's 900 Theses (Rome, 1486); the leaf is roman-type Latin, so it belongs on the Latin language shelves.",
+    "rights_flag": null,
+    "structure_note": "The structure count gives pages_translated 0, but the book record says 76 translated, and this page has an English translation. The counts disagree, which looks like a measurement or field problem, not damage to the book. with_printed_number 1 of 89 is what you would expect: this incunable is unfoliated, and no number is visible on this leaf.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Coelum calefacit inferiora",
+            "image": "Cœlum calefacit inferiora",
+            "problem": "The æ/œ ligatures are normalised throughout (\"coeleſtia\", \"quae\", \"Methaphyſicae\", \"praedicamen\", \"uerae uel falſae\"; the image has cœleſtia, quæ, Methaphyſicæ, prædicamen, ueræ uel falſæ). The meaning is not affected.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "ad pbandum",
+            "image": "ad ꝓbandum",
+            "problem": "The pro-abbreviation (ꝓ) is reduced to a plain p. The word is still readable as probandum.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "apprehendentis phantaſma ut ſenſibile",
+            "english": "when it apprehends a <term>phantasm</term> <gloss>mental image</gloss> as if it were a sensible object",
+            "problem": "\"ut sensibile\" means \"as a sensible\". The English \"as if it were\" adds a counterfactual nuance that the Latin does not have.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "printed_marker": "none visible",
+        "layout": "single column of ¶-marked theses with centred capital section headings; ink pen marks in the left margin; show-through from the verso",
+        "notes_audit": {
+          "items": [
+            { "quote": "\"species\" here means the likenesses or images of things carr", "verdict": "ok", "helpful": true },
+            { "quote": "mental image", "verdict": "ok", "helpful": true },
+            { "quote": "the active power that makes things understandable", "verdict": "ok", "helpful": true },
+            { "quote": "the \"whatness\" or essence", "verdict": "ok", "helpful": true },
+            { "quote": "efficient cause: what produces a thing; final cause: the pur", "verdict": "ok", "helpful": true },
+            { "quote": "common sensibles, such as motion or shape, are perceived by ", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "CONCLUSIONS ACCORDING TO MOSES\n## THE EGYPTIAN, THREE IN NUMBER", "why": "A general reader will not know that \"Moses the Egyptian\" is Maimonides. The theses that follow (the proof of a first mover, divine simplicity) only make sense once you know whose they are." },
+            { "english": "The actual cognition of the common sense", "why": "\"Common sense\" here is the scholastic sensus communis, the inner faculty that unifies the senses. A reader will take it in its everyday meaning." },
+            { "english": "The first intention is the", "why": "\"First intention\" is a technical term of logic (the concept of a thing itself, as against concepts of concepts). Without a gloss it is opaque." },
+            { "english": "CONCLUSIONS ACCORDING TO ABUMARON\n## THE BABYLONIAN, FOUR IN NUMBER", "why": "This obscure Arabic authority is not identified, so the reader cannot place the theses attributed to him." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is faithful apart from minor ligature normalisation, and the translation is accurate. Its notes and glosses are all correct and useful. The only gap is that names like Moses the Egyptian (Maimonides) are left without a gloss. No on-sight defect."
+  }
+]

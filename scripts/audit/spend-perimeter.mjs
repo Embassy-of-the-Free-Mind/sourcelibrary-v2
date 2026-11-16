@@ -74,6 +74,8 @@ const UNATTENDED = [
   // ── Hetzner crontab ──
   { match: 'ia-ocr-nightly.mjs', spends: false, gated: false,
     note: 'copies the Internet Archive\'s own OCR text into empty pages through ia-ocr-ingest gates; archive.org only, no model call (#4763)' },
+  { match: 'public-mirror.sh', spends: false, gated: false,
+    note: 'clones v3, rsyncs, pushes the code to the public v2 repo; no model call, no paid API (v3#1)' },
   { match: 'climits check', spends: false, gated: false,
     note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
   { match: 'embed-frame-height.mjs', spends: false, gated: false,
@@ -204,6 +206,7 @@ const UNATTENDED = [
     note: 'Wikidata, not Gemini — verified 2026-08-31' },
   { match: '/api/cron/storage-stats', spends: false, gated: false, note: 'reads only' },
   { match: '/api/cron/dashboard-snapshot', spends: false, gated: false, note: 'reads only' },
+  { match: '/api/cron/scheduler-liveness', spends: false, gated: false, note: 'reads cron_runs; pages ntfy/email (v2#4528)' },
 ];
 
 /** Known-ungated, traffic-driven. Listed so the hole is named, not hidden. */

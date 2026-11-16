@@ -6,7 +6,7 @@ import { resolveHoldingCopy } from '@/lib/holding-library';
 import { resolveImprintPlace } from '@/lib/imprint';
 import type { Book, Chapter, Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { markForExport } from '@/lib/provenance';
+import { markForEpub } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
 import { images } from '@/lib/api-client';
 
@@ -84,8 +84,8 @@ function escapeXml(str: string): string {
  * that removes the AI page-description blocks (<meta>/<summary>/<keywords>/…)
  * that are never verbatim source text and must never be published as quotable
  * prose (PR #2232). Here we only handle the remaining body: markdown headers,
- * bold/italic, and paragraph/line breaks. Zero-width provenance marks from
- * markForExport() pass through untouched.
+ * bold/italic, and paragraph/line breaks. An EPUB carries no zero-width
+ * provenance mark (markForEpub, #90: Kindle §6.7).
  */
 function proseToHtml(clean: string): string {
   if (!clean?.trim()) return '';
@@ -131,7 +131,7 @@ function frontMatterToHtml(text: string): string {
 function translationToHtml(text: string, bookId: string): string {
   const clean = stripEditorialWrappers(text);
   if (!clean.trim()) return '';
-  return proseToHtml(markForExport(clean, bookId));
+  return proseToHtml(markForEpub(clean, bookId));
 }
 
 // ─── Chapter grouping ──────────────────────────────────────────────────────

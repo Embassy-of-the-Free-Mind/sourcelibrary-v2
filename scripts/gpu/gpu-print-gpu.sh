@@ -11,6 +11,11 @@
 # scripts/workers/gpu-print-lane.mjs apply --apply writes the pages.
 set -uo pipefail
 LANE_DIR=${LANE_DIR:-/root/jobs/gpu-print-6871}; VL=/root/bench/vl; CODE=${CODE_DIR:-/root/sourcelibrary}
+# The lane dir's `lang` file names its profile (scripts/workers/gpu-print-lane.mjs reads the same file). Sanskrit (sa,
+# v3 #95) is read by Surya 2, not LightOnOCR: hand the whole task over to its reader. Every other profile reads below.
+case "${LANE_LANG:-$(cat "$LANE_DIR/lang" 2>/dev/null)}" in
+  sa) export LANE_DIR CODE_DIR="$CODE"; exec bash "$CODE/scripts/gpu/surya-print-gpu.sh" ;;
+esac
 # FP8 weights, util 0.85, 32 clients (benchmark 39-gpu-print-bench-6871, 2026-10-29, 240 pages): 4,827 pages/h against
 # 3,724 at bf16 / 0.6 / 16, with the text as close to the production read as an unchanged rerun (p10 similarity 0.994 vs
 # 0.991). The card is power-capped (70 W SFF), so fewer joules a token is more pages. QUANT= (empty) restores bf16.

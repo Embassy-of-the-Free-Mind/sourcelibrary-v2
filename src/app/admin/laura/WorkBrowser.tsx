@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import type { WorkItem, WorkStatus } from '@/lib/work-record';
 
 const LINK = 'text-accent-rust hover:underline';
-const HEADING = 'font-sans !font-bold tracking-tight text-stone-950';
+const HEADING = 'font-sans !font-semibold tracking-tight text-stone-950';
 
 const STATUS: Record<WorkStatus, { label: string; tone: string }> = {
   live: { label: 'Finished', tone: 'bg-green-100 text-green-800' },

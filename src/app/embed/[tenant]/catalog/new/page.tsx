@@ -58,7 +58,7 @@ export default async function NewCatalogEntryPage({ params }: Props) {
         >
           ← Back to catalogue
         </a>
-        <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif leading-tight mb-1">
           New catalogue entry
         </h1>
         <p className="text-sm text-muted mb-6">

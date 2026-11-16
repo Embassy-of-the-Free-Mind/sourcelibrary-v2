@@ -1,0 +1,143 @@
+[
+  {
+    "book_id": "69e7517810ee9075bcdcd959",
+    "slot": 1,
+    "title": "Liber Scivias",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Latin manuscript of Hildegard's Scivias (Heidelberg footer: digi.ub.uni-heidelberg.de/diglit/salX16), so it belongs on the Latin shelf. The '1151' date is when the work was composed, not when this copy was made.",
+    "rights_flag": "The scan footer carries a credit burned into the image: '© Universitätsbibliothek Heidelberg' and 'gefördert von der Manfred Lautenschläger Stiftung'. This is the library's digitisation credit on a medieval manuscript, not a modern edition. The reuse licence should be checked, but this does not look like an in-copyright text.",
+    "structure_note": "The book field says pages_translated is 400, but the structure count says 0. The two disagree. The leaf carries a pencilled folio number ('114') on the recto only, so a printed number shared by recto and verso, or misread, would explain much of printed_repeats 90 and printed_backsteps 32. I read these as foliation artefacts, not a scan splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 229,
+        "right_page": "yes",
+        "printed_marker": "114",
+        "layout": "two columns; red initials 'I' and 'S'; chapter numerals '·vi·' and '·vij·' in the right margin; a strip of the facing leaf's text at the left edge; library colour-bar footer",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>\n<unclear>si</unclear> id est post\ninfinita ad\ninadulte",
+            "image": "the left-edge strip is the cut-off right column of the facing leaf (fragments like 'iuſtıcıb: ad', 'uiſ-inadulte'). This leaf has no such marginal note.",
+            "problem": "the neighbour strip was transcribed as this page's marginalia",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "Sicut pastor grege sui pascet in brachio suo leuabit suas ipse portabit.",
+            "image": "Sicut pastor gregē suū pascet· in brachio suo congregabit agnos· et in sinu suo leuabit· fetas ipse portabit·",
+            "problem": "'congregabit agnos et in sinu suo' was dropped from the Isaiah quotation, and 'fetas' was misread as 'suas'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Hoc tale e Sicut pastor grege sui pas cet eu suum lege qua ipsemet pme plantauit.",
+            "image": "Hoc tale ē· Sicut pastor gregē suū paſ cet· ſic paſcet filiuſ mſ paſtor bonꝰ redeptū gregē suū· Quom̄· Ipſe paſ cet eū ſua lege· quā ipſemet p̄me plantauit·",
+            "problem": "an eye-skip from one 'pascet' to the next dropped the whole explanation 'sic pascet filius meus pastor bonus redemptum gregem suum. Quomodo? Ipse pascet'. This is the sentence that identifies the Son as the good shepherd.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "qa recta he rednare filio amisi mada",
+            "image": "qa rectā he reditatē filioꝝ amiſi mādā",
+            "problem": "'hereditatem filiorum' (the inheritance of sons) was misread as 'he rednare filio'. The translation then builds a false clause on it.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Istud e cunctus unus que uidet inspectore pu patris",
+            "image": "Iſtud ē luceuſ lumuſ (lucens lumen?) que uideſ in pectore p̄d patriſ",
+            "problem": "the subject (a shining light?) was misread as 'cunctus unus'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "qd deberent facere uet qd deberent facere uet qd debe rent dimmere",
+            "image": "the first 'qd deberent facere uel' is struck through by the scribe",
+            "problem": "the scribal deletion is transcribed as text, with no deletion mark",
+            "severity": "minor"
+          },
+          {
+            "ocr": "pape uidelicet",
+            "image": "pcepe (precepta) uidelicet",
+            "problem": "'precepta' (precepts) was misread as 'pape' (popes). The translation took the correct sense from the image.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Outu de istis erit sup ha bundanes inbomina",
+            "image": "Gaudiu de iſtis erit ſup ha bundanſ in bonis",
+            "problem": "'Gaudium' and 'in bonis' are garbled",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(no marginal numerals transcribed)",
+            "image": "'·vi·' beside 'Istud' and '·vij·' beside 'Sicut pastor' in the right margin",
+            "problem": "the real chapter numerals in the margin were dropped, while the neighbour strip was transcribed as marginalia",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "qa recta he rednare filio amisi mada: qui cre aus filui iniusticia detaui e gla felicians",
+            "english": "For it is right that this redeem the lost son, who was created and through injustice lost the glory of happiness.",
+            "problem": "fluent English invented on the misreading. The source says 'because I lost the rightful inheritance of sons…', not that something rightly 'redeems the lost son'.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Hoc tale e Sicut pastor grege sui pas cet eu suum lege qua ipsemet pme plantauit.",
+            "english": "This means: As a shepherd he will feed his flock, that is, through his law, which he himself first planted.",
+            "problem": "this inherits the OCR omission. 'So my Son, the good shepherd, will feed his redeemed flock. How? He feeds it…' is missing, and 'through his law' is attached to the wrong subject.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "source": "Sicut pastor grege sui pascet in brachio suo leuabit suas ipse portabit.",
+            "english": "\"As a shepherd he will feed his flock; in his arm he will gather the lambs, and he himself will carry them.\"",
+            "problem": "'gather the lambs' is not in the transcription. It was restored from memory of Isaiah 40:11, while 'in sinu suo leuabit' and 'fetas' are still missing.",
+            "severity": "moderate"
+          },
+          {
+            "source": "Istud e cunctus unus que uidet inspectore pu patris.",
+            "english": "This is the one thing that you see in the breast of the aforesaid father.",
+            "problem": "this follows the misreading. The image seems to name a shining light seen in the father's breast.",
+            "severity": "moderate"
+          },
+          {
+            "source": "nisi qd acutissime uident facie patris",
+            "english": "for they see most keenly the face of the Father",
+            "problem": "'nisi quod' (except that) is rendered as 'for'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Fragments from the facing leaf are presented as marginal notes and 'translated' into a vertical list of English stubs ('the unripe / full and / in all / has in …'). A reader sees this on sight.",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "note": "A raw '<column-break/>' sits in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "notes_audit": {
+          "items": [],
+          "missing": [
+            {
+              "english": "This is the one thing that you see in the breast of the aforesaid father.",
+              "why": "The sentence refers to a figure in the vision being explained. Without a note saying it explains part of the vision image, a reader cannot tell who 'the aforesaid father' is or what 'you see'."
+            },
+            {
+              "english": "as Isaiah the prophet, my servant, says: \"As a shepherd he will feed his flock;",
+              "why": "No reference (Isaiah 40:11) is given for the quotation, and the speaker 'I, the Father' is not identified as the voice of the vision."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is the right leaf of a 12th/13th-century Scivias manuscript. The main text is broadly readable in English, but the scribe's abbreviations are often misread and two passages are silently dropped, one of them the 'good shepherd' explanation. A strip of the facing leaf is shown as translated marginalia, which an expert would flag on sight."
+  }
+]

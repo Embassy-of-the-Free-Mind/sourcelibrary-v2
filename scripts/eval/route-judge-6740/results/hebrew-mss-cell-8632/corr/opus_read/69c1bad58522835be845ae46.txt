@@ -1,0 +1,103 @@
+<warning>Handwritten Hebrew cursive (Ashkenazi/Italian-style semi-cursive) working draft with heavy strike-throughs, interlinear revisions and marginal corrections. Struck-out words are mostly left out. Readings of the interlinear corrections are uncertain. The left edge has partial text from the facing page, which is ignored. A transparent tab or clip at the right edge hides a few letters at line ends.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>36</page-num>
+
+<gloss>והחרבתם את גבולם</gloss>
+<gloss>ושמתם שמות ושממות</gloss>
+
+7 <unclear>למען</unclear> שממה גדולה בארץ, ומשלתם בערים רבות אחרות במלכותי: ועתה השיבו
+
+<gloss>הערים האלה</gloss> <gloss>בהן</gloss>
+את הערים אשר תפשתם ואת תרומות הערים אשר משלתם בהן מחוץ לגבולי יהודה: ואם <unclear>לא</unclear>
+
+<gloss>ואם לא</gloss> <gloss>בעד</gloss>
+<unclear>תתנו</unclear> אחרת חמש מאות ככר כסף, וחמש מאות ככרים אחרים בעד השמה אשר השמתם <unclear>ובעד</unclear>
+
+<gloss>ואז תבואו נבוא ונלחמה</gloss>
+<margin>(כ״ט) <unclear>[illegible — struck, 1-2 words]</unclear></margin>
+9 גבול תרומות הערים, <unclear>ואם לא</unclear> <unclear>[illegible — struck]</unclear> ונלחמה עליכם: ויבוא אתנובים רע המלך ירושלים
+
+<gloss>תפארת</gloss> <gloss>ול<unclear>…</unclear></gloss>
+ויראו את <unclear>כבוד</unclear> שמעון ואת אשר הוא לו בזהב ובכסף <unclear>[illegible — struck]</unclear> לרב מאוד
+
+10 ויגד לשמעון את דברי המלך: ויען שמעון ויאמר אליו לא ארצות נכר לקחנו ולא תפשנו ממשל<unclear>…</unclear>
+
+<gloss>והיא בתחלה בידי אויבינו <unclear>…</unclear></gloss>
+<margin>(ל״א) <unclear>[illegible — struck]</unclear></margin>
+11 אשר לא לנו: (ארץ נכר) כי רק נחלת אבותינו <unclear>[illegible — struck, 3-4 words]</unclear> בארץ <unclear>…</unclear>
+
+<gloss><unclear>שבנו ושבה</unclear></gloss>
+12 אחיר: ועתה <unclear>בבוא עתנו</unclear> <unclear>[illegible — struck]</unclear> את נחלת אבותינו <unclear>…</unclear> אשר <unclear>…</unclear>
+
+<gloss><unclear>ואחר כך</unclear> עשר <unclear>…</unclear> ואתנובים</gloss>
+<margin>(ל״ג) שממה גדולה בעמנו ובגבולנו</margin>
+13 <unclear>[illegible — struck line]</unclear>, <unclear>אחרי</unclear> <unclear>[struck]</unclear> מאה ככרים <unclear>אנו השיב</unclear> <unclear>…</unclear>
+
+<gloss>תפארת</gloss>
+14 ויוסף <unclear>[struck]</unclear>: וישב בחמה אל המלך ויספר לו את כל הדברים האלה ואת כבוד שמעון ואת כל
+
+<gloss>והתנוכן</gloss>
+<margin>ט״ו</margin>
+15 אשר ראה, <unclear>ויקצף</unclear> המלך <unclear>[struck]</unclear> קצף מאוד   וטריפון ירד באניה ויברח אורתוסיא: ויפקד
+
+<gloss><unclear>ויאמר לו</unclear></gloss> <gloss>את</gloss>
+המלך את קנדבאוס לראש על חיל הים ויתן על ידו חיל הפרשים ורגלי: <unclear>[struck]</unclear> לחנות נכח
+
+<margin>(עפרון)</margin>
+<gloss>קדרון</gloss>
+17 יהודה, ויצוהו לבנות את קדרון ולחזק את שעריה ולהלחם בעם: והמלך רדף אחרי טריפון
+
+18 ויבוא קנדבאוס אל יבנה ויחל להתגרות ולהלחם בעם, ויבוא וילך אל יהודה <unclear>[struck]</unclear> ושבה: ויבן
+
+קנדבאוס את <insert>קדרון</insert> וישם שם חיל פרשים ורגלי, ויהי הם יוצאים ומתהלכים בדרכות יהודה
+
+כאשר צוה המלך: ויעל יוחנן מגזר ויספר לשמעון אביו את אשר עשה קנדבאוס: ויקרא
+
+<gloss>אל</gloss>
+שמעון לשני בניו הגדולים ליהודה וליוחנן ויאמר אליהם: אני ואחי ובית אבי נלחמנו מלחמות
+
+23 ישראל מנעורינו ועד היום הזה, והצליח בידינו להושיע את ישראל פעמים רבות: ועתה הנה
+
+24 גם זקנתי ושבתי, ואתם ברחמי אלהים בני חיל אתם: קחו והיו תחתי ותחת אחי וצאו <unclear>…</unclear>
+
+<gloss>בעד</gloss> <gloss><unclear>ויבחר</unclear></gloss> <gloss><unclear>מן העם</unclear></gloss>
+25 למלחמה בעד עמנו, ואלהי השמים יהי בעזרכם: ויבחר יוחנן מן העם עשרים אלף איש בחורים
+
+26 למלחמה ופרשים, וילכו על קנדבאוס וילינו במודיעים: וישכימו בבקר וילכו בבקעה והנה חיל
+
+27 גדול לקראתם רגלי ופרשים, ונחל עובר ביניהם: ויחן נכחם הוא ועמו וירא את העם
+
+כי יראו לעבור את הנחל ויעבר הוא בראשונה ויראו אותו אנשים ויעברו גם הם אחריו:
+
+<gloss>שם</gloss> <gloss><unclear>…</unclear></gloss> <gloss>היו לרב מאוד</gloss>
+<margin>(ס) <unclear>[struck]</unclear></margin>
+28 ויחץ את העם <unclear>[struck]</unclear> ואת הפרשים בין <unclear>האחלים</unclear> <unclear>[struck]</unclear> הפרשים אשר לאויביהם <unclear>[struck]</unclear> רבו:
+
+29 ויתקעו בחצצרות וינוס קנדבאוס ומחנהו ויפלו מהם חללים רבים, <unclear>[struck]</unclear> וינוסו
+
+<gloss><unclear>ורדף</unclear> אחריהם</gloss>
+<margin>(*) ושאריתם <unclear>נסו</unclear> אל המגדלים</margin>
+30 <unclear>[struck]</unclear>: ויהודה אחי יוחנן החלה <unclear>[struck]</unclear> אחריהם עד <insert>קדרון</insert> היא העיר אשר בנה:
+
+31 וינוסו עד המגדל אשר בשדה אשדוד, וישרפו אותו באש: ויפלו מהם כשלשת אלפים איש, ויבוא
+
+יוחנן שב בשלום <unclear>[struck]</unclear> אל ארץ יהודה
+
+<gloss>חבוב</gloss> <gloss><unclear>ולגבו</unclear></gloss>
+<margin>(ס) <unclear>[struck]</unclear></margin>
+ותלמי בן חבובא הוא <unclear>תלמי</unclear> אשר הופקד לראש <unclear>[struck]</unclear> <unclear>בבקעת</unclear> ירחו ויהי לו זהב וכסף לרב, כי הוא
+
+2 חתן לכהן הגדול: ויגבה לבו ויבקש לתפש את הארץ ולמשל בה, ויתנכל אל שמעון ובניו
+
+<gloss><unclear>היה עובר ובודק</unclear></gloss> <gloss>הארץ</gloss> <gloss><unclear>ויבקר</unclear></gloss>
+3 להמיתם: ושמעון <unclear>[struck]</unclear> את ערי הארץ <unclear>[struck]</unclear> לכל אשר יבקש להם: וירד ירחו
+
+הוא ומתתיהו ויהודה בניו, בשנת מאה ושבעים ושבע בחדש עשתי עשר הוא חדש שבט
+
+<gloss>במרדוק</gloss>
+5 ויקבלם תלמי בן חבובא <unclear>[struck]</unclear> במבצר אשר נקרא שמו <unclear>דוק</unclear> אשר בנה, ויעש להם משתה
+
+<vocab>שמעון, יוחנן, יהודה, מתתיהו, קנדבאוס, אתנובים, טריפון, אורתוסיא, קדרון, עפרון, יבנה, גזר, מודיעים, אשדוד, ירחו, תלמי בן חבובא, דוק, ככר כסף, תרומות הערים, נחלת אבותינו, Maccabees</vocab>

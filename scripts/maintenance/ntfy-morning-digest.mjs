@@ -38,8 +38,11 @@ import { fileURLToPath } from 'node:url';
 
 export const MAX_BODY_LINES = 15;
 const TOPIC = process.env.NTFY_DIGEST_TOPIC || 'https://ntfy.sh/sourcelibrary-uptime';
+// Issues opened before 2026-11-12 stay on the public v2 repo; PRs moved to the private v3 (v3#1).
 const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const GH = `https://github.com/${REPO}`;
+const PR_REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v3';
+const PR_GH = `https://github.com/${PR_REPO}`;
 const JOB_SH = '/root/bin/claude-job.sh';
 const DECISIONS = '/root/claude-jobs/decisions.txt';
 const HB_STALE_MIN = 15;
@@ -88,8 +91,16 @@ export function recentDecisions(text, sinceDay) {
 export const MARKS_FROM = '2026-10-17';
 export function untriagedDecisions(text, today, ageDays = 7) {
   const cut = new Date(Date.parse(today) - ageDays * 864e5).toISOString().slice(0, 10);
-  const days = String(text || '').split('\n').map((l) => l.match(/^(\d{4}-\d\d-\d\d) \| [^|]+ \| DECISION: /)?.[1]).filter((d) => d && d >= MARKS_FROM);
+  const days = untriagedRows(text).map((r) => r.day);
   return { total: days.length, old: days.filter((d) => d < cut).length };
+}
+
+/** The unmarked rows themselves, file order (oldest first): { day, job, text }. work-board-push carries them to `situation` (#368). */
+export function untriagedRows(text) {
+  return String(text || '').split('\n')
+    .map((l) => l.match(/^(\d{4}-\d\d-\d\d) \| ([^|]+) \| DECISION: (.*)$/))
+    .filter((m) => m && m[1] >= MARKS_FROM)
+    .map((m) => ({ day: m[1], job: m[2].trim(), text: m[3].trim() }));
 }
 
 /** `box.sh others decisions` output ("== <box>" headers, then that box's rows) → { box: text }. */
@@ -174,13 +185,13 @@ export function formatDigest(d) {
 
   const h = d.holds;
   if (h?.error) L.push(un('tier:hold PRs', h.error));
-  else L.push(`tier:hold PRs waiting: ${h.length} ${GH}/pulls?q=is%3Aopen+label%3Atier%3Ahold`);
+  else L.push(`tier:hold PRs waiting: ${h.length} ${PR_GH}/pulls?q=is%3Aopen+label%3Atier%3Ahold`);
 
   // Stops (#8283, STOP_ROWS): omitted when the caller has no `stops` key; an unreadable read says so.
   if (d.stops?.error) L.push(un('Stops', d.stops.error));
   else if (d.stops) {
     const s = d.stops;
-    L.push(s.length ? `Stops: ${s.length} past review / unowned: ${list(s.map((x) => `${x.key.split('/').slice(-2).join('/')}${x.issue ? ` #${x.issue}` : ' NO OWNER'}`), 3)} https://sourcelibrary.org/admin/pipeline/now` : 'Stops: every stop has an owner and is in date');
+    L.push(s.length ? `Stops: ${s.length} past review / unowned: ${list(s.map((x) => `${x.key.split('/').slice(-2).join('/')}${x.issue ? ` ${x.issue_repo && x.issue_repo !== 'v2' ? x.issue_repo : ''}#${x.issue}` : ' NO OWNER'}`), 3)} https://sourcelibrary.org/admin/pipeline/now` : 'Stops: every stop has an owner and is in date');
   }
 
   if (L.length > MAX_BODY_LINES) return [...L.slice(0, MAX_BODY_LINES - 1), '…(cut at 15 lines)'].join('\n');
@@ -263,7 +274,7 @@ async function readStops(db) {
 }
 
 function readHolds() {
-  return JSON.parse(sh('gh', ['pr', 'list', '--repo', REPO, '--label', 'tier:hold', '--state', 'open', '--limit', '200', '--json', 'number']));
+  return JSON.parse(sh('gh', ['pr', 'list', '--repo', PR_REPO, '--label', 'tier:hold', '--state', 'open', '--limit', '200', '--json', 'number']));
 }
 
 // ───────────────────────────────────────────── main

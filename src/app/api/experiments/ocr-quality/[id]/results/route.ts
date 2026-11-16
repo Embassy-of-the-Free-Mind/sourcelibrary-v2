@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 
 // ELO rating calculation
 function calculateELO(judgments: Array<{ condition_a: string; condition_b: string; winner: string }>) {
@@ -63,7 +63,7 @@ function normalCDF(z: number): number {
 }
 
 // GET /api/experiments/ocr-quality/[id]/results - Get experiment results
-export const GET = withAuth(async (request, session, context) => {
+export const GET = withInnerCircleAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getReadDb();

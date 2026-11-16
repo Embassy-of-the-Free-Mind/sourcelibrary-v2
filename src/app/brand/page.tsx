@@ -424,7 +424,7 @@ export default function BrandPage() {
               <ColorSwatch color="#1a1612" name="Primary" hex="--text-primary: #1a1612" usage="Headings, body text" />
               <ColorSwatch color="#444444" name="Secondary" hex="--text-secondary: #444" usage="Subheadings, supporting text" />
               <ColorSwatch color="#6b6560" name="Muted" hex="--text-muted: #6b6560" usage="Captions, metadata (5.2:1)" />
-              <ColorSwatch color="#8a8480" name="Faint" hex="--text-faint: #8a8480" usage="Timestamps, hints (4.5:1)" />
+              <ColorSwatch color="#6b6560" name="Faint" hex="--text-faint: #6b6560" usage="Timestamps, hints (same value as Muted, 5.2:1)" />
             </div>
           </div>
 
@@ -587,7 +587,7 @@ export default function BrandPage() {
                 <p><strong>&ldquo;Beta&rdquo; sup:</strong> 0.6em, weight 300, normal case, tracking-normal, ml 0.25em, opacity 0.8, offset &minus;0.5em</p>
               </div>
               <div className="mt-4 bg-[#1a1612] text-white p-6 rounded-lg inline-block">
-                <span className="font-sans text-2xl uppercase tracking-wider">
+                <span className="font-logo text-2xl uppercase tracking-wider">
                   <span className="font-semibold">Source</span><span className="font-light">Library</span>
                   <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80 relative -top-[0.5em]">Beta</sup>
                 </span>
@@ -599,22 +599,21 @@ export default function BrandPage() {
               <h3 className="font-medium text-stone-700 mb-3">Site Typography</h3>
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Display / Headings</p>
-                  <p className="font-serif text-2xl text-stone-800 font-display">Playfair Display</p>
+                  <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Headings / Display</p>
+                  <p className="font-serif font-semibold text-3xl text-stone-800">Cormorant Garamond</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Body / Reading</p>
-                  <p className="text-lg text-stone-800 font-body">Newsreader: optimized for extended reading</p>
-                </div>
-                <div>
-                  <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Scholarly / OCR text</p>
-                  <p className="text-lg text-stone-800 font-serif">Cormorant Garamond: historical text display</p>
+                  <p className="text-lg text-stone-800 font-body">Newsreader: book pages, translations and long prose</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">UI / Navigation</p>
-                  <p className="font-sans text-lg text-stone-800">Inter: clean, functional interface text</p>
+                  <p className="font-sans text-lg text-stone-800">Source Sans 3: navigation, labels, buttons and tables</p>
                 </div>
               </div>
+              <p className="mt-4 text-sm text-stone-600">
+                Three families. Inter appears only in the logo wordmark.
+              </p>
             </div>
           </div>
         </section>
@@ -789,9 +788,9 @@ export default function BrandPage() {
             <ul className="text-sm text-stone-600 space-y-1.5 list-disc pl-5">
               <li>1200&times;630 canvas, dark background or a manuscript photograph at low brightness</li>
               <li>White full logo (use <code className="text-xs bg-white px-1 rounded">brand/svg/logo-full--white-on-dark.svg</code>), top-left, ~60px tall</li>
-              <li>Headline in Playfair Display (display), centered or left-aligned, white</li>
+              <li>Headline in Cormorant Garamond, weight 600, centered or left-aligned, white</li>
               <li>Subhead in Newsreader (body) at ~24px, muted white (#d6d3d1)</li>
-              <li>Footer URL: <code className="text-xs bg-white px-1 rounded">sourcelibrary.org</code> in Inter, bottom-left</li>
+              <li>Footer URL: <code className="text-xs bg-white px-1 rounded">sourcelibrary.org</code> in Source Sans 3, bottom-left</li>
               <li>Keep ample dark margin; the card needs to read at 600&times;315 thumbnail size</li>
             </ul>
           </div>
@@ -812,7 +811,7 @@ export default function BrandPage() {
                 <p>--text-primary: #1a1612;</p>
                 <p>--text-secondary: #444;</p>
                 <p>--text-muted: #6b6560;</p>
-                <p>--text-faint: #8a8480;</p>
+                <p>--text-faint: #6b6560;</p>
                 <p>--accent-rust: #9e4a3a;</p>
                 <p>--accent-gold: #c9a86c;</p>
                 <p>--accent-sage: #8b9a7d;</p>

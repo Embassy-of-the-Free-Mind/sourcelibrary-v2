@@ -84,7 +84,7 @@ await c.close();' 2>/dev/null)
 fi
 
 # 4. Other work on the same issue, on every box: two jobs on one issue have overwritten each other (#8550).
-lands=$(head -15 "$brief" | grep -m1 -iE '^[[:space:]]*Lands:' | grep -oE '[0-9]{3,5}' | head -1)
+lands=$(head -15 "$brief" | grep -m1 -iE '^[[:space:]]*Lands:' | sed -E 's/v[23]#/#/g; s/^[^:]*://' | grep -oE '[0-9]+' | head -1)   # v3 issue numbers are short; 'v2#N' is an old issue
 if [ -n "$lands" ]; then
   live=$({ /root/bin/claude-job.sh status 2>/dev/null | sed 's/^/this-box: /'
            [ -x /root/bin/box.sh ] && tmo 40 /root/bin/box.sh others status </dev/null 2>/dev/null; } |

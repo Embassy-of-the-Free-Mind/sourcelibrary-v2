@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "31f820f4-d3d8-4a68-a025-40b69230d35f",
+    "slot": 1,
+    "title": "Polygraphia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Collange's 1561 French Trithemius, Polygraphie, Livre troisiesme cipher tables, as catalogued. The 'americana' collection tag is odd for a French cryptography book, but it reads like an Internet Archive/BPL provenance tag, not a wrong shelf.",
+    "rights_flag": null,
+    "structure_note": "The book-level pages_translated_field is 644, but structure.pages_translated is 0, so the two counts disagree. The 35 backsteps and 27 repeats out of 326 printed numbers are most likely from table numbers being read as page numbers. On this leaf the OCR puts the cipher-table indices into page-num as '<page-num>88, 89, 90</page-num>', but the leaf has no page number at all. This is an O11 tagging problem, not a scan splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 352,
+        "right_page": "yes",
+        "printed_marker": "a ſama-",
+        "layout": "running head 'LIVRE TROISIESME', three numbered columns (88, 89, 90) of letter-to-code-word cipher alphabets, catchword at the bottom right, no page number",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ſtrofan", "image": "ſtroſan", "problem": "the second long s is read as f. The column's endings in -ſan (oniſan, boriſan, apiſan) support the long s", "severity": "minor" },
+          { "ocr": "afardes", "image": "aſardes", "problem": "long s read as f", "severity": "minor" },
+          { "ocr": "**m** memoran", "image": "m emoran", "problem": "the key letter may be doubled into the code word. The image shows the key 'm' and then 'emoran' set close together. Low certainty", "severity": "minor" },
+          { "ocr": "<page-num>88, 89, 90</page-num>", "image": "88 / 89 / 90 as column headings, no page number on the leaf", "problem": "table indices tagged as the page number, which corrupts the printed-number structure counts", "severity": "moderate" },
+          { "ocr": "Catchword \"a fama-\"", "image": "a ſama-", "problem": "catchword given only in the meta, with the long s read as f", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "**m** amores", "english": "| m | **Loves** <note>original: \"amores\"</note> |", "problem": "a cipher code word has been translated as if it were a word. The table's entry for m now reads 'Loves', so anyone using the table would encode wrongly. The note brings the original back, so it can be recovered", "severity": "moderate" },
+          { "source": "**e** zefires", "english": "| e | **Zephyrs** <note>original: \"zefires\"</note> |", "problem": "a code word translated, which changes the cipher value", "severity": "moderate" },
+          { "source": "**q** equales", "english": "| q | **Equals** <note>original: \"equales\"</note> |", "problem": "a code word translated, which changes the cipher value", "severity": "moderate" },
+          { "source": "**r** arcades", "english": "| r | **Arcadians** <note>original: \"arcades\"</note> |", "problem": "a code word translated, and inconsistently, since look-alike words such as 'Azures', 'Retires' and 'Rutiles' are left as they are", "severity": "moderate" },
+          { "source": "<header>LIVRE TROISIESME</header>", "english": "# THIRD BOOK", "problem": "running head promoted to an H1 heading", "severity": "minor" },
+          { "source": "(summary)", "english": "each table shares a common word ending", "problem": "not true of table 88, whose words end in -in, -im and -eu", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "a raw '<column-break/>' sits between the markdown tables in the reader text, twice", "severity": "moderate", "class": "D1" },
+          { "note": "the code words are capitalised and set in bold ('**Rabin**'), but the print has them in lower case", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"zefires\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"amores\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"equales\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"arcades\"", "verdict": "ok", "helpful": true }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this cipher-table leaf is good apart from a few ſ/f slips. The English, though, translates four code words that should have been copied ('Loves', 'Zephyrs', 'Equals', 'Arcadians'), and it leaks a raw <column-break/> into the reader text. The structure counts are also distorted, because table numbers are being read as page numbers."
+  }
+]

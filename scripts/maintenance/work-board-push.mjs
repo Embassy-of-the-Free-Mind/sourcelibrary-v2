@@ -23,8 +23,9 @@
  *   --dry-run      print the document, write nothing.
  *
  * Privacy: a brief is stored as its FIRST LINE only, clipped; every stored string goes through
- * redact(). No env, no paths beyond job names. Nothing else reads these documents — the page is the
- * only consumer, so a write here actuates nothing.
+ * redact(). No env, no paths beyond job names. Readers: the page and `situation` (scripts/maintenance/situation.mjs);
+ * neither acts on them, so a write here actuates nothing. Each box document also carries the box's unmarked
+ * DECISION lines (decisions.txt) and each running job's heartbeat; main's carries a rolling 48 h ntfy log (#368).
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/work-board-push.mjs --box hetzner
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/work-board-push.mjs --github
@@ -35,6 +36,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { readRegistry, standing } from '../lib/lane-stop.mjs';
+import { untriagedRows } from './ntfy-morning-digest.mjs';
 
 export const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v2';
 export const COLLECTION = 'ops_reports';
@@ -43,6 +45,9 @@ export const WINDOW_DAYS = 7;
 /** --github also sweeps open issues whose last comment (this recent) asks for a decision. */
 export const RECENT_DECISION_HOURS = 48;
 const TRANSCRIPT_CAP_BYTES = 40 * 1024 * 1024;
+/** ntfy.sh keeps a topic about 12 h; main's board keeps this much so `situation` can tell a STANDING alarm (#368). */
+export const ALARM_LOG_HOURS = 48;
+const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
 
 // ───────────────────────────────────────────── pure helpers (unit-tested)
 
@@ -191,6 +196,46 @@ export function decisionLines(body) {
   return out;
 }
 
+/**
+ * The wrapper's heartbeat: `$JD/<name>.hb` holds epoch seconds, rewritten every minute while the job's wrapper
+ * runs (claude-job.sh), so it moves during a long tool call when the log does not (#368, #239 check 3).
+ */
+export function heartbeatAt(text, fileMtime = null) {
+  const n = Number(String(text ?? '').trim());
+  if (Number.isFinite(n) && n > 1e9) return new Date(n * 1000);
+  return fileMtime;
+}
+
+/**
+ * This box's decisions.txt → what nobody has marked yet (the morning digest's reader, #8551): how many, the oldest
+ * day, which jobs asked, and the three oldest rows (redacted). Marking is box-rpc.sh decisions-mark.
+ */
+export function summarizeDecisions(text) {
+  const rows = untriagedRows(text);
+  return {
+    unmarked: rows.length,
+    oldest: rows[0]?.day ?? null,
+    jobs: [...new Set(rows.map(r => r.job))].slice(0, 12).map(j => redact(j, 60)),
+    oldest_rows: rows.slice(0, 3).map(r => ({ day: r.day, job: redact(r.job, 60), text: redact(r.text, 200) })),
+  };
+}
+
+/**
+ * Keep a rolling 48 h log of the ntfy topic, which itself forgets after about 12 h: the previous log plus what
+ * the poll returned, deduplicated by message id, newest last, older than `hours` dropped. Rows are clipped.
+ */
+export function mergeAlarmLog(prev, jsonl, now = new Date(), hours = ALARM_LOG_HOURS) {
+  const floor = now.getTime() / 1000 - hours * 3600;
+  const by = new Map();
+  for (const r of prev ?? []) if (r?.id && r.time >= floor) by.set(r.id, r);
+  for (const line of String(jsonl || '').split('\n')) {
+    let m; try { m = JSON.parse(line); } catch { continue; }
+    if (m.event !== 'message' || !m.id || m.time < floor) continue;
+    by.set(m.id, { id: m.id, time: m.time, priority: m.priority || 3, title: redact(m.title || '', 120), message: redact(m.message || '', 200) });
+  }
+  return [...by.values()].sort((a, b) => a.time - b.time);
+}
+
 /** GitHub's check rollup → one word. */
 export function checksWord(state) {
   switch (state) {
@@ -313,12 +358,16 @@ export function collectBox({ box, jobScript = '/root/bin/claude-job.sh', now = n
     const log = parseWrapperLog(readTail(logPath));
     let brief = '';
     try { brief = fs.readFileSync(briefPath, 'utf8'); } catch { /* none */ }
+    const hbPath = path.join(JD, `${name}.hb`);
+    let hbText = '';
+    try { hbText = fs.readFileSync(hbPath, 'utf8'); } catch { /* not running, or a pre-heartbeat job */ }
     const created = createdFromTranscript(raw);
     jobs.push({
       name,
       state: jobState({ tmuxAlive, doneAt, blockedAt, startedAt: started, gaveUp: log.gave_up }),
       started,
       last_activity: lastActivity,
+      heartbeat_at: hbText ? heartbeatAt(hbText, mtime(hbPath)) : null,
       done_at: doneAt,
       blocked_at: blockedAt,
       brief_first_line: firstLine(brief, 200),
@@ -342,7 +391,15 @@ export function collectBox({ box, jobScript = '/root/bin/claude-job.sh', now = n
     jobs,
     chains: collectChains(JD),
     stops: collectStops(),
+    decisions: collectDecisions(JD),
   };
+}
+
+/** Unmarked DECISION lines in this box's decisions.txt; an unreadable file says so rather than reading as none. */
+function collectDecisions(JD) {
+  const f = path.join(JD, 'decisions.txt');
+  if (!fs.existsSync(f)) return { unmarked: 0, oldest: null, jobs: [], oldest_rows: [] };
+  try { return summarizeDecisions(fs.readFileSync(f, 'utf8')); } catch (e) { return { error: redact(String(e.message), 120) }; }
 }
 
 /** Standing lane STOPs from this box's registry (scripts/lib/lane-stop.mjs, #7912). Strings redacted, no evidence. */
@@ -501,6 +558,17 @@ async function main() {
   }
   try {
     const doc = github ? await collectGithub(db) : collectBox({ box, jobScript: arg('--job-script') ?? '/root/bin/claude-job.sh' });
+    // Main keeps the fleet's 48 h alarm log (one writer; every box reads it through `situation`). A failed poll
+    // keeps the previous log rather than dropping it.
+    if (!github && box === 'hetzner') {
+      const prev = db ? (await db.collection(COLLECTION).findOne({ _id: doc._id }, { projection: { alarm_log: 1 } }).catch(() => null))?.alarm_log : null;
+      let jsonl = '';
+      try {
+        const res = await fetch(`${NTFY_TOPIC}/json?poll=1&since=${ALARM_LOG_HOURS}h`, { signal: AbortSignal.timeout(15_000) });
+        if (res.ok) jsonl = await res.text(); else doc.alarm_log_error = `ntfy ${res.status}`;
+      } catch (e) { doc.alarm_log_error = redact(`ntfy unreachable: ${e.message}`, 120); }
+      doc.alarm_log = mergeAlarmLog(prev, jsonl, doc.generated_at);
+    }
     if (dry) { console.log(JSON.stringify(doc, null, 2)); return; }
     const { _id, ...rest } = doc;
     await db.collection(COLLECTION).replaceOne({ _id }, rest, { upsert: true });

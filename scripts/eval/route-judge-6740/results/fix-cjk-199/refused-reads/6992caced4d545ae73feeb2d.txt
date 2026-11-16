@@ -1,0 +1,18 @@
+<scan-quality>fair</scan-quality>
+<language>Japanese (kanbun)</language>
+<script>handwritten</script>
+<page-type>diagram</page-type>
+<warning>Handwritten Japanese brush script in a horizontal handscroll drawing; the small labels in the circular nodes and the inscription beside the tower are faint and cursive.</warning>
+<meta>The draft gave the column of shrines as vertical and read the node labels as 18 instances of 持. In the image the structure runs horizontally across the scroll. Only the lower-row nodes and the two small nodes beside the frame carry characters, and these cannot be read with confidence. The upper streamers end in empty cloud-curls.</meta>
+
+<image-desc size="large" type="diagram" significance="high">Ink drawing on a handscroll. A long horizontal pole runs across the sheet. It is made of many small stacked pavilion segments, each with a framed window, and runs from an ornate tiered base on the left, beside large flame- or cloud-like forms at the left edge, to a rectangular frame with ornamental finials and scrolled cloud brackets on the right. Wavy streamers rise above the pole and end in cloud-curls. Below the pole, wavy streamers end in small circular nodes, most of which hold a brushed character. Two small round nodes on short streamers flank the junction of the pole and the frame. Parts of shrine-like structures appear at the top right and bottom right.</image-desc>
+
+<insert>樓子上下各有<unclear>鈴… [2–3 characters]</unclear></insert>
+
+<insert><unclear>single brushed characters in about 15 circular nodes below the pole and in 2 small nodes beside the frame, possibly 菩 or 鈴, not reliably legible</unclear></insert>
+
+<insert>仏</insert>
+
+<insert><unclear>仏</unclear></insert>
+
+<vocab>樓子 (pavilion segments), 仏 (Buddha), handscroll diagram, pole of stacked pavilions, cloud-streamers</vocab>

@@ -1,0 +1,20 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>B</sig>
+<meta>catchword: tur</meta>
+
+est, decessit relictâ filiâ, quæ in feudo non succedit, §. *hoc autem: de His. qui feud. dar. poss. in usib. feud.* ita ut feudum ex lege Contractus sit reversum ad Dominum, & per consequens evictum, quæritur ergò, an filia contra patruum agere possit de Evictione? Et dico quod non, quia non potest aliqua culpa patruo imputari, cum ipsa Evictio ex natura rei feudalis succedat: Ideo non præstatur, non aliter, ac si fato & naturaliter res interiisset. *l. si servus 21. in prin. ff. de Evict.* & facit alia ratio, quia Feudum est ei adjudicatum cum sua qualitate & natura. *Berlich. practic. conclus. 24. part. 1. n. 60. & seq.*
+
+### XVII.
+
+Ecquid de re legatâ, perque fideicommissum relictâ statuendum? Distingvo inter Legatum generis & speciei: Si Testator certam speciem legaverit, eamque designaverit, ut puta Stichum, talis tantum dari debet, qualis est. *l. 45. in fin. ff. de legat. 1.* sicque hæres factâ traditione liberatur ab obligatione, nec succedit obligatio ad interesse re evictâ. Quoniam lucrativa causa, non est ex sua natura evictioni obnoxia. At verò si res legata sit in genere, ut puta homo, & hæres Stichum tradiderit, isque evincatur, poterit legatarius iterum ex Testamento agere, ut homo ei detur, *l. 29. §. hæres. ff. de legat. 3.* ne sit in potestate hæredis alienum dando, voluntatem testatoris elusoriam facere. *l. 58. ff. h. t.*
+
+### XVIII.
+
+Maritus re dotali evictâ agere de Evictione potest, si stipulatio sit interposita, quia in re aliena data non est satisfactum obligationi, cum marito habere non liceat. Quid si nec pollicitatio nec stipulatio intercesserit, res tamen æstimata in dotem data fuerit? datur marito adversus mulierem utilis actio ex empto ad id quod interest, quoniam vera venditio contrahitur per hujusmodi æstimationem. *l. 1. §. 1. cod. de rei uxor. act. l. si pro re pupilli 22. §. 1. l. sed & 23. l. non tamen 24. ff. de Eviction. l. ex promissione 19. ff. de O. & A.* Ast extraneus, ad dotandum non obligatus, si rem alienam bonâ fide in dotem dederit, de evictione conveniri non potest, *arg. l. 1. Cod. de jur. dot.* Quia est mera donatio, sponsæ facta, ac proinde donator non tenetur de Evictione. Quicquid autem Maritus evictionis nomine consequitur, id ad mulierem redigatur, cum non debeat maritus lucrari damno mulieris, & sufficiat eum indemnem servari. *l. 16. ff. de Jur. dot.* Pati-
+
+<vocab>Evictio, Feudum, Legatum, Fideicommissum, Dos, Berlichius, Pandectae, Codex</vocab>
+<<<END>>>

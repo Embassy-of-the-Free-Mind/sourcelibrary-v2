@@ -76,7 +76,7 @@ export const GET = withAuth(async (req: NextRequest, _session: Session, context?
     console.error('Book collection gallery error:', error);
     return NextResponse.json({ error: 'Failed to fetch gallery' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * POST /api/admin/book-collections/[slug]/gallery
@@ -149,4 +149,4 @@ export const POST = withAuth(async (req: NextRequest, _session: Session, context
     console.error('Save curated gallery error:', error);
     return NextResponse.json({ error: 'Failed to save' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

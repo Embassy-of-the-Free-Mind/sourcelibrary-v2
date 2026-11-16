@@ -4,11 +4,12 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import PipelineDiagram, { type StageData } from '@/components/pipeline/PipelineDiagram';
 import { getReadDb } from '@/lib/mongodb';
 import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
+import { BOOK_CORPUS_STATS } from '@/lib/public-stats';
 
 export const metadata: Metadata = {
   title: 'Pipeline Architecture | Source Library',
   description:
-    'How Source Library processes 10,000+ historical books: Lambda workers, SQS queues, Gemini AI, and a 10-stage pipeline from import to complete.',
+    `How Source Library processes ${BOOK_CORPUS_STATS.books} historical books: Lambda workers, SQS queues, Gemini AI, and a 10-stage pipeline from import to complete.`,
   alternates: { canonical: '/developers/pipeline' },
 };
 
@@ -155,7 +156,7 @@ export default async function PipelineArchitecturePage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Pipeline Architecture"
-          subtitle="How 10,000+ historical books flow from scanned images to searchable, translated text: the full technical picture."
+          subtitle={`How ${BOOK_CORPUS_STATS.books} historical books flow from scanned images to searchable, translated text: the full technical picture.`}
         />
       }
       bg="bg-cream"
@@ -408,7 +409,7 @@ export default async function PipelineArchitecturePage() {
           />
           <MechCard
             title="MCP Server & API"
-            description="The full library is accessible via a Model Context Protocol server (for AI assistants) and a REST API. Seven tools let AI models search books, read translations, and find illustrations across 10,000+ historical texts."
+            description={`The full library is accessible via a Model Context Protocol server (for AI assistants) and a REST API. Seven tools let AI models search books, read translations, and find illustrations across ${BOOK_CORPUS_STATS.books} historical texts.`}
           />
         </div>
 

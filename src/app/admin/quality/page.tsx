@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { getQualityReport, type QualityData, type Rate, type Interval, type TrendChart } from '@/lib/quality-report';
 import { TranslationTrend, TrendLines } from './QualityCharts';
+import QualityLoopLinks from '../QualityLoopLinks';
 
 /**
  * /admin/quality — is the text we serve good, and is it getting better? (#5474)
@@ -123,6 +124,7 @@ export default async function QualityPage() {
     return (
       <main className="q-root px-6 py-8 max-w-5xl mx-auto grid gap-4 min-h-screen" style={{ background: 'var(--q-bg)', color: 'var(--q-text)' }}>
         <style>{THEME}</style>
+        <QualityLoopLinks current="/admin/quality" />
         <h1 className="text-2xl font-semibold">Quality</h1>
         <p className="text-sm q-muted max-w-2xl">
           No report has been pushed yet. Run <code>scripts/eval/quality-dashboard/build.mjs --push</code>; the page reads the
@@ -142,6 +144,7 @@ export default async function QualityPage() {
       <style>{THEME}</style>
       <div className="max-w-6xl w-full mx-auto grid gap-8">
         <header className="grid gap-1">
+          <QualityLoopLinks current="/admin/quality" />
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
             <h1 className="text-2xl font-semibold">Is the text we serve good, and is it getting better?</h1>
             <div className="text-xs q-muted">generated {day(generated)} by {doc.generated_by} · read only</div>

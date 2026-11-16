@@ -1,0 +1,55 @@
+[
+  {
+    "book_id": "69905d7f2fd6a0399389f99f",
+    "slot": 1,
+    "title": "Fortalitium Fidei",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Alfonso de Espina's Latin treatise against heretics, Jews and Saracens, printed in 1487 in two-column gothic type. It belongs on a medieval-literature (arlima) shelf and in the patron library.",
+    "rights_flag": null,
+    "structure_note": "The structure count gives pages_translated 0, but the book field gives 504 and this page has a translation. That is an instrument mismatch (E2), not missing translations. Only 26 of 506 pages have a printed number. The leaf shows a running head ('Liber' / 'Secundus') and no folio, so the 10 backsteps and 13 repeats most likely come from reading running heads or stray numerals as page numbers, not from a scan splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 128,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "two columns of gothic type; running head 'Liber' over the left column and 'Secundus' over the right; a section heading with a paragraph mark; a large printed initial 'U' at the start of the eleventh heresy; 'Digitized by Google' at the foot",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Diceret etiā", "image": "Dicim' eti-am (Dicimus etiam)", "problem": "the author's first-person 'we also say' is misread as a subjunctive 'one might say', and the translation follows it ('It might also be said')", "severity": "moderate", "class": "O6" },
+          { "ocr": "Secundum\ntū q̄ duplex est deuotio", "image": "Sciendū tū q̄ duplex est deuotio", "problem": "'Sciendum' ('it must be known') is misread as 'Secundum', and the translation invents an enumeration: 'Secondly, devotion is twofold.'", "severity": "moderate", "class": "O6" },
+          { "ocr": "mulierū vita duxit", "image": "mulierū vr̃a duxit (vestra duxit)", "problem": "the abbreviated 'vestra', the incipit of the decretal cited, is read as 'vita'. The translator's note then blames the print for the garble", "severity": "moderate", "class": "O6" },
+          { "ocr": "Quo-\nniā pōt prodesse alijs cui nō pōt pdesse sibi", "image": "Quō enī pōt prodesse alijs cū nō pōt pdesse sibi", "problem": "'Quomodo enim … cum' is misread as 'Quoniam … cui'. The translation still gives the right sense", "severity": "minor" },
+          { "ocr": "Verū ē q̄ suis quā ad i-\ntercedendū", "image": "Verū ē q̄ si is q̄ ad intercedendū", "problem": "'si is qui' is misread. The translation gives the right sense", "severity": "minor" },
+          { "ocr": "Item .uj. q. vij.", "image": "Item .iij.q.vij.", "problem": "the canon-law citation numeral is misread", "severity": "minor" },
+          { "ocr": "Oratio que fit in orātē pniatē", "image": "Oratio que fit in orāti pniciē", "problem": "'perniciem' (ruin) is garbled", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Diceret etiā\nquod licet cōmutari penā corporalē", "english": "It might also be said that it is permitted to commute a bodily penalty", "problem": "the image reads 'Dicimus etiam'. The author's own claim becomes a hypothetical", "severity": "moderate", "class": "O6" },
+          { "source": "Secundum\ntū q̄ duplex est deuotio", "english": "Secondly, devotion is twofold.", "problem": "the image reads 'Sciendum'. The English adds an enumeration that is not on the page", "severity": "moderate", "class": "O6" },
+          { "source": "Itē dicit auctioritas de\ncohabi. cle. et mulierū vita duxit.", "english": "an authority in the title *On the cohabitation of clerics and women* <note>a section of the papal decretals; the following words \"vita duxit\" in the printed text appear garbled", "problem": "the decretal's incipit ('Vestra duxit') is dropped from the English. The note says the PRINTED text is garbled, but the print clearly reads 'vr̃a duxit' and only the OCR is wrong. The note blames the source for an OCR misread", "severity": "moderate", "class": "T10" },
+          { "source": "Quoniā pōt prodesse alijs cui nō pōt pdesse sibi\nOratio que fit in orātē pniatē", "english": "How can a prayer that turns into punishment for the one praying serve for the salvation of another?", "problem": "'perniciem' means ruin or destruction, not punishment. A slight shift in sense", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "prayers, Masses and good works offered on behalf of the dead", "verdict": "ok", "helpful": true },
+            { "quote": "a canon in Gratian's Decretum, the standard collection of ch", "verdict": "unsupported", "helpful": true },
+            { "quote": "Psalm 50 in modern Protestant numbering", "verdict": "ok", "helpful": true },
+            { "quote": "a section of the papal decretals; the following words \"vita", "verdict": "wrong", "helpful": false },
+            { "quote": "Alan of Lille, the twelfth-century theologian cited earlier", "verdict": "unsupported", "helpful": true }
+          ],
+          "missing": [
+            { "english": "Such a person sins \"under God,\" because he grieves that he is in sin.", "why": "the contrast between sinning 'under God' and 'against God' (sub deo / in deum) is a scholastic distinction the argument depends on, and the English does not explain it" },
+            { "english": "what he prays in the person of the Church, when he says \"Let us pray,\"", "why": "'in the person of the Church' (in persona ecclesiae) is a technical sacramental notion: the priest prays as the Church's minister, so the prayer's effect does not depend on his merit. The English does not explain it" },
+            { "english": "as much of the purgatorial penalty as the bishop relaxed in this present world", "why": "'relaxed' / 'relaxation' is the technical language of indulgences (remission of temporal penalty), and a general reader will not recognise it" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf, with a faithful and readable translation. A few OCR misreadings of abbreviations ('Dicimus' to 'Diceret', 'Sciendum' to 'Secundum', 'vestra' to 'vita') carry over as small shifts in sense. One translator's note wrongly blames the printed text for an OCR misread. Nothing here is serious."
+  }
+]

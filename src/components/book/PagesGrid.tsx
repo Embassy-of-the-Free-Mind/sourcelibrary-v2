@@ -124,7 +124,7 @@ const framed = useEmbed();
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4 mb-1">
-        <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>{t.pagesHeading}</h2>
+        <h2 className="font-serif font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>{t.pagesHeading}</h2>
         <span className="text-sm text-stone-500 whitespace-nowrap">
           {t.pagesShownOf(Math.min(visibleCount, pages.length), displayTotal)}
         </span>

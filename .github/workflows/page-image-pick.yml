@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   page-image-pick:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

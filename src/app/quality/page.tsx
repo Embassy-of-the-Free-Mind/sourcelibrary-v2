@@ -8,6 +8,10 @@ import bookGradesData from '../../../scripts/eval/confidence-7866/results/book-g
 import judgeCal from '../../../scripts/eval/judge-cal-7866bar-7263/results/score.json';
 import threeWay from '../../../scripts/eval/judge-cal-7866bar-7263/results/three-way.json';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
+import zoo from '../../../scripts/eval/error-zoo/site-2026-11-11.json';
+import ErrorHeatGrid from './ErrorHeatGrid';
+import { MIN_BOOKS, MIN_PAGES, DEFECT_STEP_BOUNDS } from '@/lib/error-zoo-heat';
+
 
 // The Quality Center (#5918): one question for a reader — how far can I trust the text on a page here,
 // and in my language? — answered from the #7866 check of live books against the page images, re-graded
@@ -85,7 +89,7 @@ const BANDS = [
   { key: 'slips', label: 'Small slips only', what: 'Several slips, such as a running head out of place; none changes the sense.', share: g.fit_to_read.share, color: 'bg-stone-400' },
   { key: 'some', label: 'Some errors that may change the meaning', what: '1 or 2 on the page: a misread word, a wrong number, a phrase dropped.', share: g.some_errors.share, color: 'bg-amber-300' },
   { key: 'many', label: 'Many errors that may change the meaning', what: '3 or more on the page.', share: g.many_errors.share, color: 'bg-amber-600' },
-  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'We withhold these pages as we find them.', share: serious, color: 'bg-amber-900' },
+  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'A page found to carry another page’s text is withheld.', share: serious, color: 'bg-amber-900' },
 ];
 
 /** Languages with at least three books in the draw, fewest errors first. */
@@ -152,13 +156,8 @@ const bookGrades = bookGradesData as unknown as {
   book_list: { language: string; form: string; year: number | null }[];
 };
 const GRADE_KEYS: GradeKey[] = ['A', 'B', 'C', 'D'];
-/** What a reader can do with a book of each grade. */
-const BOOK_CAN: Record<GradeKey, string> = {
-  A: 'Read it and quote it. Check the scan for a line your argument rests on.',
-  B: 'Read it for the sense. Check the scan before you quote a line.',
-  C: 'Use it to find what the book says and where. Read the scan for the wording.',
-  D: 'Read it beside the scan: at least one of the pages we checked carries text from elsewhere or misses most of the page.',
-};
+/** Below this many books a cell gives counts, not shares (quality-statements.md: a small sample must not read as a rate). */
+const MIN_BOOKS_FOR_SHARE = 10;
 const FORM_COLS = ['print', 'manuscript'] as const;
 type FormCol = (typeof FORM_COLS)[number];
 const formCell = (form: string) => bookGrades.by_form.find(r => r.form === form);
@@ -216,9 +215,31 @@ function ShareCI({ s }: { s: { share: number; ci95: [number, number] } }) {
   );
 }
 
-/** One cell's four book grades on a line, with its number of books; a cell under three books says so. */
+/** Grade A or B in a cell, as a share when it holds enough books and as a count when it does not. */
+const goodOf = (c: GradeCell | undefined) =>
+  !c ? 'too few books to say'
+    : c.books >= MIN_BOOKS_FOR_SHARE ? `${pct(goodShare(c))} of the ${c.books} books`
+    : `${c.A.books + c.B.books} of the ${c.books} books`;
+
+/**
+ * One cell's four book grades on a line, with its number of books. A cell under three books says so; a cell under
+ * MIN_BOOKS_FOR_SHARE gives the number of books in each grade, because one book would move a share by ten points or more.
+ */
 function GradeLine({ c }: { c: GradeCell | undefined }) {
   if (!c) return <span className="text-stone-400">fewer than 3 books</span>;
+  if (c.books < MIN_BOOKS_FOR_SHARE) {
+    return (
+      <>
+        {GRADE_KEYS.map((k, i) => (
+          <span key={k} className="whitespace-nowrap">
+            {i > 0 && ' · '}
+            {k} <b className="text-stone-900">{c[k].books}</b>
+          </span>
+        ))}
+        <span className="block text-xs text-stone-500 mt-1">{c.books} books, too few for a share</span>
+      </>
+    );
+  }
   return (
     <>
       {GRADE_KEYS.map((k, i) => (
@@ -361,8 +382,9 @@ function Header() {
             For most books here nobody has typed the text, and what a reader would otherwise have is the Internet
             Archive&rsquo;s machine reading. On pages drawn at random, the same reviewer found about{' '}
             {Math.round(rndArchive.flagged_per_1k)} such errors per 1,000 words in the Archive&rsquo;s text and about{' '}
-            {Math.round(rndOurs.flagged_per_1k)} in ours. Where people have typed an edition, ours has no more errors than
-            theirs. Every page is shown beside its scan, so you can always check.
+            {Math.round(rndOurs.flagged_per_1k)} in ours. Beside scholarly typed editions of the same printing, ours is about
+            level: {one(scholarly.ours.flagged_per_1k)} against {one(scholarly.human.flagged_per_1k)}. Every page is shown
+            beside its scan, so you can always check.
           </p>
         </div>
       </div>
@@ -396,8 +418,8 @@ export default function QualityCenterPage() {
               <caption className="sr-only">Share of books in each grade, weighted back to the library, with 95% intervals</caption>
               <thead>
                 <tr>
-                  <th className={th}>Grade: what you can do with the book</th>
-                  <th className={th}>What the reviewer found on its five pages</th>
+                  <th className={th}>Grade</th>
+                  <th className={th}>What the reviewer found on the book&rsquo;s five pages</th>
                   <th className={th}>All books ({bookGrades.overall.books})</th>
                   {FORM_COLS.map(f => (
                     <th key={f} className={th}>{f === 'print' ? 'Print' : 'Manuscript'} ({formCell(f)?.books ?? 0})</th>
@@ -407,11 +429,10 @@ export default function QualityCenterPage() {
               <tbody>
                 {GRADE_KEYS.map(k => (
                   <tr key={k}>
-                    <td className={`${td} w-[32%]`}>
-                      <b className="font-serif text-lg text-stone-900 mr-2">{k}</b>
-                      <span className="text-stone-900">{BOOK_CAN[k]}</span>
+                    <td className={`${td} w-[8%]`}>
+                      <b className="font-serif text-lg text-stone-900">{k}</b>
                     </td>
-                    <td className={`${td} w-[26%]`}>{bookGrades.rule[k].charAt(0).toUpperCase()}{bookGrades.rule[k].slice(1)}</td>
+                    <td className={`${td} w-[40%]`}>{bookGrades.rule[k].charAt(0).toUpperCase()}{bookGrades.rule[k].slice(1)}</td>
                     <td className={td}><ShareCI s={bookGrades.overall[k]} /></td>
                     {FORM_COLS.map(f => {
                       const c = formCell(f);
@@ -435,8 +456,9 @@ export default function QualityCenterPage() {
           <p className="mb-3">
             The same {bookGrades.books} books, by language and by whether the book is printed or written by hand. Most of
             the manuscripts in the draw are Chinese ({msChinese} of {msBooks}), so the manuscript column is largely a
-            reading of Chinese manuscripts. A cell is shown when it holds at least three books; with three, one book is a
-            third of the cell, so read those as a few books, not as a language.
+            reading of Chinese manuscripts. A cell with {MIN_BOOKS_FOR_SHARE} or more books gives the share of books in each
+            grade. A cell with three to nine gives the number of books in each grade: that is a few books, not a
+            language.
           </p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             <table className="min-w-[640px] w-full text-sm text-stone-700">
@@ -461,17 +483,18 @@ export default function QualityCenterPage() {
             </table>
           </div>
           <Source>
-            <code>by_language_form</code> in book-grades.json, with a 95% interval for every share. Languages with fewer
+            <code>by_language_form</code> in book-grades.json, with a 95% interval for every share. Counts are books as drawn;
+            shares are weighted back to the library. Languages with fewer
             than three books in both columns are left out here and counted in every figure above. The draw was stratified
             by our confidence in each book, not by language or form.
           </Source>
 
           <Sub>Books by date</Sub>
           <p className="mb-3">
-            Among printed books the grade rises with the date. Grade A or B: {pct(goodShare(yearCell('before 1501', 'print')))}{' '}
-            of books printed before 1501, {pct(goodShare(yearCell('1501–1600', 'print')))} of those printed 1501–1600,{' '}
-            {pct(goodShare(yearCell('1601–1800', 'print')))} for 1601–1800 and {pct(goodShare(yearCell('after 1800', 'print')))}{' '}
-            after 1800. Our catalogue records no date for {msUndated} of the {msBooks} manuscripts, and {msChinese} of them
+            Among printed books the grade rises with the date. Grade A or B: {goodOf(yearCell('before 1501', 'print'))}{' '}
+            printed before 1501, {goodOf(yearCell('1501–1600', 'print'))} printed 1501–1600,{' '}
+            {goodOf(yearCell('1601–1800', 'print'))} printed 1601–1800 and {goodOf(yearCell('after 1800', 'print'))}{' '}
+            printed after 1800. Our catalogue records no date for {msUndated} of the {msBooks} manuscripts, and {msChinese} of them
             are Chinese, so the manuscripts cannot yet be cut by date or read as more than a reading of Chinese
             manuscripts.
           </p>
@@ -518,9 +541,9 @@ export default function QualityCenterPage() {
           </ul>
           <p className="text-sm text-stone-600 mb-2">
             The reviewer found at least one such error on {pct(rndArchive.judge_bad)} of the Archive&rsquo;s pages and{' '}
-            {pct(rndOurs.judge_bad)} of ours. Page by page, ours had fewer on {randomPaired.ours_fewer_flags} of{' '}
-            {randomPaired.pages} pages and the Archive on {randomPaired.archive_fewer_flags}. The gap is wider on older
-            books: on ten random pages each,{' '}
+            {pct(rndOurs.judge_bad)} of ours. Page by page, over these and the {randomPaired.pages - rndArchive.n_pages} older
+            pages below ({randomPaired.pages} in all), ours had fewer on {randomPaired.ours_fewer_flags} and the Archive on{' '}
+            {randomPaired.archive_fewer_flags}. The gap is wider on older books: on ten random pages each,{' '}
             {RANDOM_OTHER.map((r, i) => (
               <span key={r.lang}>
                 {i > 0 && ' and '}
@@ -649,10 +672,30 @@ export default function QualityCenterPage() {
           </p>
         </Section>
 
+        <Section id="language-and-period" title="Language and period together">
+          <p className="mb-5">
+            The charts above split the library one way at a time. This map crosses the two, in the measure the language
+            chart above uses: errors that change the sense, per 1,000 words. Spelling, abbreviations and punctuation are not
+            counted. It draws on two more checks of pages chosen at random, each read by an AI reviewer beside the
+            photograph: {n(zoo.defects.n_pages)} pages from {n(zoo.defects.n_books)} books, read by {longDate(zoo.built)}.
+            Across the map the rate is {one(zoo.defects.per_1k_all)}; typed editions, checked the same way on easier
+            pages, carry about {one(humanPer1k.per_1k)}. German and French printed after 1600 mostly come out under 4. Latin before
+            1500 comes to about 11, and Greek, Arabic and Hebrew from before 1500 to between 20 and 34.
+          </p>
+          <ErrorHeatGrid data={zoo.defects.heat} unit="per1k" bounds={DEFECT_STEP_BOUNDS} what="errors that change the sense per 1,000 words" />
+          <p className="text-sm text-stone-600 mt-3">
+            The two checks count errors on somewhat different scales, so each is brought to the scale of the chart above,
+            language by language, before they are combined. Chinese is counted at one and a half characters a word and
+            Tibetan by syllable. Squares with fewer than {MIN_PAGES} pages or {MIN_BOOKS} books are too thin for a
+            figure and are left grey; rows and periods with no square that size are not shown. Books with no date in our
+            catalogue have their own column. Figures are of the pages read, not weighted back to the library.
+          </p>
+        </Section>
+
         <Section id="over-time" title="Over time">
           <p>
-            This is the first check of its kind, made on {longDate(drawDate)}. We will repeat it every month on a fresh
-            draw, and a chart of how the figures move will appear here from the second.
+            This is the first check of its kind, made on {longDate(drawDate)}, and it has run once. A repeat on a fresh
+            draw is planned; a chart of how the figures move will appear here once there are two.
           </p>
         </Section>
 
@@ -712,8 +755,8 @@ export default function QualityCenterPage() {
             </li>
             <li>A second model now re-reads transcriptions against the page image, starting with German and French.</li>
             <li>Greek, Sanskrit, Korean and Arabic are next, with readers chosen for each script.</li>
-            <li>Pages that are mostly wrong or carry another page&rsquo;s text are withheld as we find them.</li>
-            <li>We will repeat this check every month and show here whether the figures move.</li>
+            <li>A page found to carry another page&rsquo;s text is withheld.</li>
+            <li>This check has run once. A repeat on a fresh draw is planned.</li>
           </ul>
         </Section>
 

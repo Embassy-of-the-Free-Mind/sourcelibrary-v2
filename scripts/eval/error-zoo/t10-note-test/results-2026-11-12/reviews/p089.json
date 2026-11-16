@@ -1,0 +1,83 @@
+[
+  {
+    "book_id": "6a4a8968393655740c43b2df",
+    "slot": 1,
+    "title": "Pappus, Johann: De Scriptura sacra",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Strasbourg academic disputation (theses under Johann Pappus, respondent Nicolaus Herrenberger) in Latin, printed in italic type. It is a sound primary source for Lutheran polemic. It has no tradition or collections recorded, so there is nothing for it to contradict.",
+    "rights_flag": null,
+    "structure_note": "Record 18 pairs the transcription of one leaf (theses C to CVII, ending 'omnibus alijs in lo-') with an image of the NEXT leaf, which opens 'eis, vbi Verbi Dei fit mentio' and runs from CVII to CXIII. So at least here the text and the images are offset by one leaf. The printed_backsteps (2) and printed_repeats (1) are more likely misread numbers than a scan splice: the leaf shown carries no page number at all, yet the OCR assigns '<page-num>59' in a 21-page pamphlet, and the printer himself repeats thesis numbers on this leaf ('CVII' after CVI, 'CX' twice). The structure counts show pages_translated 0, against a pages_translated field of 19.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "no",
+        "printed_marker": "none visible",
+        "layout": "single column of italic type, centred roman thesis numbers (CVII, CIX, CX, CX, CXII, CXIII), a later reader's ink flourishes in the left margin and underlining on CIX and CXIII, a plastic clip at the left edge",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Hanc nos scrutari, eiusque solius sententia stare, & in ea acquiescere decet.",
+            "image": "eis, vbi Verbi Dei fit mentio, Essentiale hoc semper, & nunquam prædicatum seu vocale intelligi, concedi minimè potest.",
+            "problem": "The whole transcription (theses C–CVII) belongs to the preceding leaf. The image starts with the continuation of 'in lo-|cis' and contains theses CVII–CXIII, none of which appear in the OCR.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "<script>handwritten</script>",
+            "image": "printed italic type",
+            "problem": "The script tag and the warning 'Handwritten [Humanist italic hand]' call a printed italic page handwritten.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "<unclear>Hst.</unclear>",
+            "english": "<unclear>History</unclear>",
+            "problem": "An illegible abbreviation is expanded to a confident English word. Otherwise the English is a faithful rendering of its transcription, but that transcription is of another leaf, so nothing here translates the page in the image.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The text panel is not the leaf shown: the reader sees CVII–CXIII on the scan and C–CVII in the transcription and translation.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "The signature '<sig>C</sig>' is left in the English as a stray line 'C' at the end of the text.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "followers of Caspar Schwenckfeld, a Silesian reformer",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Word",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "there is only one Word of God, and that this is the Essential Word",
+              "why": "'Essential Word' is a technical term: the eternal Word, the second Person (Christ), as against the preached or written word. The argument turns on this distinction, and the passage does not explain it."
+            },
+            {
+              "english": "Even though fanatics attach a foreign sense to Scripture",
+              "why": "'Fanatics' (fanatici, Schwärmer) is a Lutheran polemical label for spiritualist and radical reformers, not the modern sense. A reader would not know whom it means."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A genuine 16th-century Strasbourg disputation that belongs on the shelf. On page 18, though, the image is the next leaf (CVII–CXIII) while the transcription and translation are theses C–CVII, a wrong-leaf pairing (I1) that a reader sees at once. The translation is faithful to its own transcription, and both notes are sound."
+  }
+]

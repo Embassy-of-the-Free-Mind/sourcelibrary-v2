@@ -31,7 +31,7 @@ function LeadCard({ item, href, count }: { item: CuratedShowcaseItem; href: stri
       </div>
       <div className="mt-4 sm:mt-5">
         <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-1.5">{count}</p>
-        <h3 className="font-display text-2xl md:text-3xl text-primary group-hover:text-accent-rust transition-colors">
+        <h3 className="font-serif text-2xl md:text-3xl text-primary group-hover:text-accent-rust transition-colors">
           {item.name}
         </h3>
         {item.subtitle && (
@@ -57,7 +57,7 @@ function SideCard({ item, href, count }: { item: CuratedShowcaseItem; href: stri
       </div>
       <div className="min-w-0">
         <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-1">{count}</p>
-        <h3 className="font-display text-lg md:text-xl text-primary group-hover:text-accent-rust transition-colors leading-tight">
+        <h3 className="font-serif text-lg md:text-xl text-primary group-hover:text-accent-rust transition-colors leading-tight">
           {item.name}
         </h3>
         {item.subtitle && (

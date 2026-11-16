@@ -1,0 +1,88 @@
+[
+  {
+    "book_id": "6991c5483074a1745a410b8b",
+    "slot": 1,
+    "title": "Schürstab Codex: Astrological-Medical Treatises (ZB Zurich, C 54)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A c.1472 German astrological-medical codex; this leaf is a computus table (Cisiojanus-style syllables for the moveable feasts), which belongs in such a codex. No tradition or collection is assigned, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "The leaf carries the folio number '58' and the OCR <page-num> is 58 on record 121. That fits recto-only foliation (about two records per folio). The 14 backsteps and 8 repeats among 54 printed numbers are probably misread or mixed numerals in a foliated manuscript with many tables, not a splice; I cannot confirm that from one page. The structure counts give pages_translated 0, but the book field says 119 and this page has a translation, so the two counts disagree.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "printed_marker": "58",
+        "layout": "ruled grid of three syllable tables (eight, nine, ten) in red and black ink; red Sunday letters A–g down the left; column labels (feast names) written vertically between the tables; faint mirror-image show-through in the margins",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "| | Herrleichnā | pfingstag | aufftag | Creutz woch | der ostertag | reussensunntag | vasnacht | das alla hille = |",
+            "image": "The feast labels are written vertically under table viii. Left to right they read 'das alla hilet', 'vasnacht', 'reussensuntag', 'der ostertag', 'Creutz woch', 'auffertag', 'pfingstag', 'herrnleichnā'. 'das alla hilet' stands over the column that begins 'Ag' and 'herrnleichnā' over the column that begins 'Jun'.",
+            "problem": "The header row is in reverse order, so every syllable column is assigned to the wrong feast (the column for Septuagesima is labelled Corpus Christi, and so on). On a computus table the assignment of feast to column is the content.",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "ocr": "<margin>\nJob\nTobias\nJudit\n</margin>",
+            "image": "The margins carry only faint mirror-image show-through (reversed feast names such as 'pfingstag' and 'vasnacht' on the left). I cannot read 'Job', 'Tobias', 'Judit', 'Esther', 'Machab' or 'Ezechiel' on this face.",
+            "problem": "The biblical-book marginalia may be invented, or read from show-through. Low confidence at this resolution.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "| **f** | sto | am | us | n | hac | te | mar | xi |",
+            "image": "row f, 4th cell reads 'ti'",
+            "problem": "syllable misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "| **d** | lent | vs | the | ler | not | pe | dut | mar |",
+            "image": "5th cell reads 'net'",
+            "problem": "syllable misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "| **b** | ca | mar | n | et | e | ban | bo | re |",
+            "image": "3rd cell reads 'a'",
+            "problem": "syllable misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "aufftag",
+            "image": "auffertag",
+            "problem": "feast label shortened",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "| | Herrleichnā | pfingstag | aufftag | Creutz woch | der ostertag | reussensunntag | vasnacht | das alla hille = |",
+            "english": "| | Corpus Christi | Pentecost | Ascension Day | Cross Week | Easter Day | <term>Reussensunntag</term> | Shrove Tuesday | the laying aside of the Alleluia |",
+            "problem": "The translation is faithful to the transcription, but it inherits the reversed column labels. The summary then repeats the error: 'the columns run from Corpus Christi back to the laying aside of the Alleluia'. The image runs the other way.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"viii octo\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"novem\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"decem\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"das alla hulegt\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "<term>Reussensunntag</term>", "why": "The feast name is left in German with no gloss, so the reader cannot tell which Sunday this column gives." },
+            { "english": "Sunday\nletter", "why": "The dominical (Sunday) letter A–g keys every row. Without a note, a general reader cannot see how to use the table." },
+            { "english": "| **A** | Ag | tunc | aug | tis | et | m | pe | jun |", "why": "The cells are mnemonic syllables, not words. Nothing tells the reader why they are left untranslated or how they encode dates." },
+            { "english": "the laying aside of the Alleluia", "why": "A reader needs to know that this is Septuagesima, the Sunday from which the Alleluia is dropped before Lent." },
+            { "english": "Cross Week", "why": "This is Rogation week, before Ascension. The literal English does not say so." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real 15th-century computus leaf, on the right page, with the syllable cells mostly transcribed correctly. But the feast labels are assigned to the columns in reverse order in both the OCR and the English, which makes the table give wrong answers. The biblical-book marginalia may not be on the leaf."
+  }
+]

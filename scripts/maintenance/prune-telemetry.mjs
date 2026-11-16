@@ -14,7 +14,7 @@
  *     --yes-i-know-this-deletes.
  *   - Allowlisted collections only (api_usage, gemini_usage, analytics_events,
  *     mcp_tool_calls, mcp_clients, search_queries, analytics_pageviews,
- *     audit_log). Anything else is refused.
+ *     audit_log, wall_shadow). Anything else is refused.
  *   - Before deleting, every doomed row is exported (gzipped EJSON-NDJSON) to
  *     scripts/output/<collection>-prune-<date>.json.gz and the export is
  *     verified non-empty; if the export fails or is empty, nothing is deleted.
@@ -30,13 +30,19 @@ import { createGzip } from 'zlib';
 import path from 'path';
 import { MongoClient } from 'mongodb';
 import { EJSON } from 'bson';
+import { pathToFileURL } from 'url';
 
 // Allowlist: collection -> the Date field its age is measured on.
 // Field choices come from the #2976 audit + the lazy creators
 // (src/lib/{api-usage,mcp-usage,search-log}.ts) and the archived
 // analytics writers. Scope is the six no-retention collections of the
 // 2026-07-05 decision ("nine minus the heartbeats") plus audit_log.
-const ALLOWLIST = {
+//
+// wall_shadow (#109, src/lib/wall-shadow.ts) holds a hashed IP and the full
+// User-Agent per sampled caller, and its writer stops on its own at
+// WALL_SHADOW_UNTIL (2026-12-01). Same rule as its neighbours: no TTL, no
+// cron; prune it by hand once the wall decision (#90) no longer needs it.
+export const ALLOWLIST = {
   api_usage: 'ts',
   gemini_usage: 'timestamp',
   analytics_events: 'created_at',
@@ -45,6 +51,7 @@ const ALLOWLIST = {
   search_queries: 'ts',
   analytics_pageviews: 'timestamp',
   audit_log: 'timestamp',
+  wall_shadow: 'ts',
 };
 
 const BATCH_SIZE = 5000;
@@ -194,7 +201,9 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

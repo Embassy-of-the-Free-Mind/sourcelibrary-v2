@@ -1,0 +1,18 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: autem</meta>
+
+iis, qui è terrâ veniunt, coeli delicias & immensae pulchritudinis spectacula. Clarius hoc exponit quando ita pergit : Si aliqui multorum caedis causâ fuissent, aut civitates prodidissent, aut alicujus alterius afflictionis cum aliis Autores fuissent, hos omnium horum decuplas poenas pro unoquoque facinore dare. Et vicissim, si beneficia aliqui in alios contulissent, & justi ac sancti fuissent, hos eodem modo decupla praemia ferre, affirmabat. Plura quoque hâc de re Plato, praesertim quâ poenâ Ardiaeus, qui Patrem senem, ac majorem natû fratrem occiderat afficitur, lectu dignissima in medium profert, quae videantur. Conf. Idem Dialogo X. de LL. pag. 933. Et in universum ea omnia hùc referantur, quae de campis Elysiis, & variis tartari suppliciis Ethnici statuerunt. De quibus vid. Homerus Odyss. IV. p. 132. & Iliad. VIII. p. 267. Virgilius lib. V. Aeneid. v. 730. & seqq. Horatius lib. III. Od. XI.
+
+IV. Quanquàm verò isti DEUM, ut remuneratorem bonorum in alterâ vitâ quam negabant, non venerabantur, attamen cùm ex aliis audiverant ingentia virtutis esse praemia, mercedesque illi propositas amplas, uti Plato lib. X. de Republ pag. 757. docet, aliquod tamen rerum benè gestarum â DEO in hâc vitâ sperabant praemium, uti apparet è Senecâ, apud quem Thyestes, fratri â Diis pro praestitis beneficiis parilem voto impetrare contendit felicitatem, quando ait Act. III. in Thyeste Scen. II.
+
+->Dii paria Frater praemia pro tantis Tibi<-
+->Meritis rependant.<-
+
+Nec obscurius colligitur idem ex Homeri Odyss. XIV. pag. 200. Ubi Eumaeus qui Ulyssi hospitalitios aperuerat lares, procorum describit petulantiam in dilapidandis Ulyssis bonis, quam deinde deteriorem esse contendit, quam eorum qui alienam terram depopulati sunt, quod hi praedam ubi abstulerint, discedant, illis
+
+<vocab>Plato, Homerus, Virgilius, Horatius, Seneca, Thyestes, Elysiis, Ardiaeus, Odysseus, Eumaeus</vocab>
+<<<END>>>

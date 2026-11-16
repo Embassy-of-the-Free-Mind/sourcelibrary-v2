@@ -46,7 +46,7 @@ export default function AuthorCrossReference({ author, authorId, crossRef, conte
     return (
       <div className="card p-6 sm:p-8">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-lg font-serif font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Paintbrush className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
             Artworks by {author}
           </h2>
@@ -95,7 +95,7 @@ export default function AuthorCrossReference({ author, authorId, crossRef, conte
   return (
     <div className="card p-6 sm:p-8">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+        <h2 className="text-lg font-serif font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
           <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
           Books by {author}
         </h2>

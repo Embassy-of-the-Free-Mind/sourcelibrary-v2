@@ -207,6 +207,17 @@ for (const workId of workList) {
     status = 'under_review';
   }
 
+  // #4575: first_modern / first_complete / first_from_source map to prior_exists on the promise that
+  // "entries carry the year / completeness". When the ledger yields no citable entry, that promise is
+  // broken: 38 cards said "priors exist" and listed none. Hold instead — and the hold flag is required,
+  // because Phase 7.7 fills any unflagged under_review card with no cited entry and may write
+  // no_prior_known over a verdict that says an older or partial prior exists.
+  let heldEmptyPrior = false;
+  if (status === 'prior_exists' && entries.length === 0) {
+    status = 'under_review';
+    heldEmptyPrior = true;
+  }
+
   const badge = computedBadge(status, entries);
   const badgesToday = new Set(siblings.map((b) => b.is_first_translation === true));
   const disagrees = badgesToday.size > 1;
@@ -246,6 +257,11 @@ for (const workId of workList) {
       verified_at: ft.resolved_at ?? null,
       basis_attempt_id: ft.best_attempt_id ?? null,
       seeded_from_book: verifiedBook.id,
+      ...(heldEmptyPrior ? {
+        identity_flag: true,
+        held_from_status: 'prior_exists',
+        notes: `Held (#4575): verdict ${ft.verdict} implies a prior, but the ledger holds no citable entry.`,
+      } : {}),
     },
     pilot: !ALL_VERIFIED,
     seeded_from: ALL_VERIFIED ? 'phase1-verified-layer' : 'pilot-cast',

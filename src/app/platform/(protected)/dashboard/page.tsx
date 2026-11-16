@@ -250,7 +250,7 @@ function StatCard({ label, value, color }: { label: string; value: number; color
       background: '#161b22', border: '1px solid #21262d', borderRadius: 8,
       padding: '16px 20px', minWidth: 110, flex: '1 1 0',
     }}>
-      <div style={{ fontSize: 24, fontWeight: 700, color: color || '#f0f6fc', lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 24, fontWeight: 600, color: color || '#f0f6fc', lineHeight: 1 }}>{value}</div>
       <div style={{ fontSize: 12, color: '#8b949e', marginTop: 4 }}>{label}</div>
     </div>
   );
@@ -349,7 +349,7 @@ export default function PlatformDashboard() {
 
       {/* Page header */}
       <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#f0f6fc', margin: '0 0 4px' }}>Platform Overview</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 600, color: '#f0f6fc', margin: '0 0 4px' }}>Platform Overview</h1>
         <p style={{ fontSize: 13, color: '#8b949e', margin: 0 }}>Manage libraries, members, and platform settings.</p>
       </div>
 

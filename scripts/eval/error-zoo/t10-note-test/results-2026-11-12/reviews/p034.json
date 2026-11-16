@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "6992cdfe00f13b15f3ca3b1f",
+    "slot": 1,
+    "title": "本草綱目拾遺(一)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Zhao Xuemin's 1765 supplement to the Bencao gangmu. The page is Chinese materia medica (remedies, lotus-leaf dew), so it belongs in a general Chinese/universal collection.",
+    "rights_flag": null,
+    "structure_note": "The structure counts say pages_translated 0, but the book field says 99, and this page carries a translation. That is a counting discrepancy (E2), not a defect on the page. Only 1 page has a printed number, which fits a Chinese print whose foliation sits in the block-heart: on this leaf the block-heart is cut off at the right edge. There are no backsteps or repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<script>handwritten</script>", "image": "printed (woodblock/type) characters in a ruled frame", "problem": "The self-reported script tag is wrong. It is not shown as reading text.", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "將長杓坐碗於首向荷池葉上傾瀉之", "english": "take a long ladle with a bowl set at its head and tip the lotus leaves over the pond to pour the dew into it", "problem": "The source has the ladle-and-bowl reaching toward the lotus leaves on the pond, and the dew is tipped from the leaves into it. 'tip the lotus leaves over the pond' is a loose, slightly confusing rendering, but the sense can be recovered.", "severity": "minor" },
+          { "source": "治食百尿", "english": "To treat \"eating hundred urine\"", "problem": "This is a word-for-word rendering of an obscure disease name. The quotation marks flag it, but nothing explains it, so the heading means nothing to a reader.", "severity": "minor" }
+        ],
+        "other": [],
+        "printed_marker": "none visible",
+        "layout": "ten vertical columns between ruled lines, inside a heavy single-line frame. Entry heads (荷葉上露) are set as their own columns. The block-heart is cut off at the right edge.",
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"喉蛾\", swelling of the throat", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"喉瘧\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"陸氏濟世良方\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"肥婆草\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"食百尿\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"荷葉上露\"", "verdict": "ok", "helpful": false },
+            { "quote": "the hottest period of summer", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"氣脹\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"大力丸\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "To treat \"eating hundred urine\"", "why": "The disease name makes no sense in English. The reader needs to be told that the term is obscure, or what condition is probably meant." },
+            { "english": "drains water-drum swelling", "why": "'Water-drum' (水臌) is a technical term from Chinese medicine for abdominal dropsy or ascites. Without a gloss the reader cannot tell what the dew treats." },
+            { "english": "mixed with a little holy water", "why": "'Holy water' (聖水) is an odd ingredient in a Chinese recipe. A reader needs a note on what the term refers to here." },
+            { "english": "uses fat-woman herb", "why": "The literal plant name gives no clue which plant is meant. A short note saying it is a folk name, unidentified or identified, would help." },
+            { "english": "Great Strength Pill", "why": "These words stand alone at the foot of the page. The reader needs to be told that this entry continues on the next page." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches the leaf character for character, and the translation is faithful, with only small looseness in the dew-gathering passage. The notes are accurate but mostly just repeat the original characters, while the medical terms a reader needs explained ('water-drum', 'holy water', 'eating hundred urine') get none."
+  }
+]

@@ -214,4 +214,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Reimport error:', error);
     return NextResponse.json({ error: 'Reimport failed', details: String(error) }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

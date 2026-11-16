@@ -1,0 +1,33 @@
+<warning>Severe darkening, staining and water damage across all three columns; much of the ink has blurred into the discoloured parchment, and most lines cannot be read with confidence. Handwritten square/semi-cursive Hebrew hand of the Ashkenazi type. Hebrew reads right to left, so the right-hand column is given first, then the middle, then the left. Only fragmentary readings are given; large passages are marked unclear rather than reconstructed.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>3</columns>
+<meta>Small mark in the upper right corner that cannot be read. Bottom margin, left: a short word, possibly a catchword or quire mark, read tentatively as "פרחת". A clip or tab is attached at the right edge.</meta>
+
+<unclear>[illegible — first line, 4-5 words]</unclear>
+<unclear>[illegible — 4-5 words]</unclear>
+<unclear>העם ההלכים בחשך</unclear>
+<unclear>ראו אור</unclear> <unclear>[illegible — 1-2 words]</unclear> <unclear>יושבי</unclear>
+<unclear>בארץ צלמות אור נגה</unclear>
+<unclear>עליהם</unclear> <unclear>[illegible — 2-3 words]</unclear>
+<unclear>[illegible — 10 lines]</unclear>
+
+<unclear>[large initial word, illegible]</unclear> <unclear>[illegible — 1-2 words]</unclear>
+<unclear>[illegible — 7 lines]</unclear>
+
+<unclear>תקות</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 4 lines]</unclear>
+
+<column-break/>
+
+<unclear>[illegible — first line, 4 words]</unclear>
+<unclear>[illegible — 26 lines; scattered letters visible but no reliable word readings]</unclear>
+<unclear>[illegible — 2-3 words]</unclear> <unclear>ים סוף</unclear>
+
+<column-break/>
+
+<unclear>[illegible — 30 lines; text heavily blurred into stained parchment]</unclear>
+
+<vocab>Isaiah 9:1 (tentative), העם ההלכים בחשך, ארץ צלמות, piyyut, biblical verse quotation, three-column manuscript</vocab>

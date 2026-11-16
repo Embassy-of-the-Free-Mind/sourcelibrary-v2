@@ -1,0 +1,62 @@
+[
+  {
+    "book_id": "695258d1ab34727b1f045aed",
+    "slot": 1,
+    "title": "Magia naturalis sive de miraculis rerum naturalium",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 16th-century Latin print of Porta's Magia naturalis, shelved under Latin books. It belongs there.",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree: pages_translated is 0 but pages_translated_field is 320, and this page has a translation, so the counter looks wrong (E2), not the book. The 10 backsteps and 19 repeats come from only 152 pages that carry a printed number. That is more likely misread or restarting numerals (Liber secundus is printed p.35 at record 90) than a splice, but one page cannot settle it.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 90,
+        "right_page": "yes",
+        "printed_marker": "35; signature \"E 3\"; catchword \"ramen\"",
+        "layout": "single column of italic text, running head \"LIBER SECVNDVS.\", two roman section headings, \"Digitized by Google\" at the foot",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "superſæ-",
+            "image": "ſuperſæ- (long s kept here, while every other ſ on the page is normalised to s)",
+            "problem": "the long-s convention is inconsistent within the page",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "papyro diligenter alligato humido, ac præpingui solo",
+            "english": "with damp papyrus, dig a trench in moist and very rich soil",
+            "problem": "'humido' belongs with 'solo' but is rendered twice, as 'damp papyrus' and as 'moist ... soil'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "original: \"sarmentum, vel flagellum\", a young vine-shoot or trai",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "original: \"scyllae bulbum\", the sea squill, a Mediterranean",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "as Democritus teaches",
+              "why": "A general reader will take this to be the atomist philosopher. The authority quoted in Porta's grafting recipes is the agricultural 'Democritus' of the ancient farming literature, and the English does not say so."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page. The transcription is accurate and the translation is faithful, with only minor slips and two sound notes. The one problem is that the book's pages_translated counter (0) contradicts its own field (320)."
+  }
+]

@@ -71,7 +71,7 @@ export default async function ArtworkLandingPage() {
 
         <div className="relative max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-20 sm:py-32">
           <p className="text-xs uppercase tracking-[0.25em] text-accent-gold/70 mb-6 font-medium">Source Library</p>
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] max-w-3xl">
+          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] max-w-3xl">
             Visual Art
           </h1>
           <p className="text-lg sm:text-xl text-stone-400 mt-6 max-w-2xl leading-relaxed font-serif">
@@ -113,7 +113,7 @@ export default async function ArtworkLandingPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   <div className="absolute bottom-0 inset-x-0 p-6">
                     <p className="text-white/50 text-xs uppercase tracking-wider mb-2">{col.book_count} works</p>
-                    <h2 className="text-white font-display font-semibold text-2xl leading-tight group-hover:text-accent-gold transition-colors">
+                    <h2 className="text-white font-serif font-semibold text-2xl leading-tight group-hover:text-accent-gold transition-colors">
                       {col.name}
                     </h2>
                     {col.subtitle && <p className="text-white/70 text-sm mt-2 font-serif">{col.subtitle}</p>}
@@ -150,7 +150,7 @@ export default async function ArtworkLandingPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 inset-x-0 p-4">
                     <p className="text-white/50 text-xs mb-1">{col.book_count} works</p>
-                    <h3 className="text-white font-display font-semibold text-base leading-tight group-hover:text-accent-gold transition-colors">
+                    <h3 className="text-white font-serif font-semibold text-base leading-tight group-hover:text-accent-gold transition-colors">
                       {col.name}
                     </h3>
                     {col.subtitle && <p className="text-white/60 text-xs mt-1 line-clamp-1">{col.subtitle}</p>}

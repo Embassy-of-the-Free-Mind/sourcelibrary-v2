@@ -1,0 +1,35 @@
+{
+ "fix-cjk-test-ocr": [
+  "6992cad1d4d545ae73feeb5d",
+  "69f3263852a77bb28fdb673b"
+ ],
+ "fix-euro-w2-ocr": [
+  "6953ab7477f38f6761bd7592",
+  "6867c8e0aadfee9e955ecd01"
+ ],
+ "fix-latin-w1-ocr": [
+  "69520f03ab34727b1f04431c"
+ ],
+ "fix-latin-w4-ocr": [
+  "6a42fb76feb36226e8f0c97a",
+  "6a4bdb49913003fb726ad016"
+ ],
+ "fix-scripts-w1-ocr": [
+  "6985ce7e2d26b4d51e059559"
+ ],
+ "fix-scripts-w3-ocr": [
+  "6955801057e3b773024f50be",
+  "69c1b7bb8522835be8449015"
+ ],
+ "fix-scripts-w6-ocr": [
+  "6a0851bb49638a50931b90d7"
+ ],
+ "fix-scripts-w7-ocr": [
+  "6959067f95a91542b28bd2d0",
+  "69a5e3d7006a409842216652",
+  "699f4f4c4098b50dd586023a"
+ ],
+ "fix-scripts-w8-ocr": [
+  "69b1deccca46fa60ea1ee580"
+ ]
+}

@@ -144,13 +144,32 @@ const AGY = (model) => ({ by: 'agy', model });
 // A FRESH read (#7517): the page image alone on the live OCR prompt (cli-ocr.mjs read, no draft), in place of the draft.
 const FRESH = (model) => ({ by: 'agy', model, fresh: true });
 // The router tests' cells (header). `draft` is the stored engine; correctors read that stored text and the image.
+// #47 (v3): Gemini 4 Carbon low as a corrector (`<draft>>carbon-low`) and as a fresh reader (`carbon-low`) on the German and
+// Latin cells; run with `draw --from=<an earlier sample.json> --routes=...` so it pairs with the stored verdicts.
+// #218 (v3): Gemini 4 Hydrogen low on the same three cells, the same two ways (`<draft>>hydrogen-low`, `hydrogen-low`), and
+// Hydrogen medium as a fresh reader (`hydrogen-medium`: about 2x low's output tokens and 1.5x its seconds on the #218 smoke),
+// on the pages Carbon's routes use, so the two models' verdicts pair.
 const RT = {
   // Every Paddle-lane book carries an OCR-only lane hold (translation waits; not a containment): those are allowed.
   'zh-dice': { lang: 'Chinese', draft: 'paddle', laneHolds: /^(paddle-zh-(5600|6388)-ocr-only|gpu-backlog-5660)$/, correctors: { 'paddle>agy-flash-high': AGY('gemini-3.8-flash-high'), 'paddle>opus-correct': { by: 'opus' }, 'paddle>agy-flash-low': AGY('gemini-3.8-flash-low') }, kanripo: true },
-  'de-lite': { lang: 'German', draft: 'lite', models: LITE, books: '^German', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'lite>opus-correct': { by: 'opus' }, 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
-  'de-flash3': { lang: 'German', draft: '3flash', models: FLASH3, books: '^German', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), '3flash>opus-correct': { by: 'opus' } } },
+  'de-lite': { lang: 'German', draft: 'lite', models: LITE, books: '^German', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'lite>opus-correct': { by: 'opus' }, 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'lite>carbon-low': AGY('gemini-4-carbon-low'), 'carbon-low': FRESH('gemini-4-carbon-low'), 'lite>hydrogen-low': AGY('gemini-4-hydrogen-low'), 'hydrogen-low': FRESH('gemini-4-hydrogen-low'), 'hydrogen-medium': FRESH('gemini-4-hydrogen-medium') } },
+  'de-flash3': { lang: 'German', draft: '3flash', models: FLASH3, books: '^German', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), '3flash>opus-correct': { by: 'opus' }, '3flash>carbon-low': AGY('gemini-4-carbon-low'), 'carbon-low': FRESH('gemini-4-carbon-low'), '3flash>hydrogen-low': AGY('gemini-4-hydrogen-low'), 'hydrogen-low': FRESH('gemini-4-hydrogen-low'), 'hydrogen-medium': FRESH('gemini-4-hydrogen-medium') } },
   latin: { lang: 'Latin', draft: 'lite', models: LITE, pilot: true, routes: ['lite', 'lite>opus-correct', 'lite>agy-flash-low'], correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low') } },
-  'latin-flash3': { lang: 'Latin', draft: '3flash', models: FLASH3, books: '^Latin', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
+  // 3flash>opus-correct (#8632 decision 2): the cell's live route, 3flash>opus, had no defect verdicts, so the router
+  // held both latin-flash3 rows; this judges it on the 2026-10-26 pages (draw --from) beside the two routes judged then.
+  'latin-flash3': { lang: 'Latin', draft: '3flash', models: FLASH3, books: '^Latin', correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), '3flash>opus-correct': { by: 'opus' }, '3flash>carbon-low': AGY('gemini-4-carbon-low'), 'carbon-low': FRESH('gemini-4-carbon-low'), '3flash>hydrogen-low': AGY('gemini-4-hydrogen-low'), 'hydrogen-low': FRESH('gemini-4-hydrogen-low'), 'hydrogen-medium': FRESH('gemini-4-hydrogen-medium') } },
+  // #8632 cell tests (job cell-test-flash3): the stored 3 Flash read against the agy correction, a fresh agy read 4 a
+  // call (the page inside a block of 4 consecutive pages, as the re-read lane reads) and, as the bar only, the Opus
+  // correction on the first `barN` pages. `script` keeps one router script type (router-next-7263/script-type.mjs:
+  // print | unknown), so each draw is one router cell; a book serves one cell of its language only.
+  ...Object.fromEntries([['latin', 'Latin', '^Latin', { print: 40, unknown: 50 }], ['greek', 'Greek', '^(Ancient |Classical |Koine |Byzantine )?Greek', { print: 40, unknown: 40 }]].flatMap(([k, lang, books, ns]) => Object.entries(ns).map(([script, n]) =>
+    [`${k}-flash3-${script}`, { lang, draft: '3flash', models: FLASH3, books, script, n, block: 4, group: `${k}-flash3-8632`, correctors: { '3flash>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, '3flash>opus-correct': { by: 'opus', firstN: 30 } } }]))),
+  // #8632 (job hebrew-mss-cell): Hebrew manuscript, the cell the Hebrew `fix` books wait on (hebrew-flash3/manuscript,
+  // 14.6K pages, HOLD at n=4). One page per book over every eligible book; manuscript pages are the point, so the
+  // handwritten tag does not exclude a page here (manuscriptOk). Arms: the stored read, the live route's Opus correction,
+  // a fresh Opus read (claude-ocr.mjs --reread, one page a call) and the agy Flash-low correction.
+  'hebrew-flash3-manuscript': { lang: 'Hebrew', draft: '3flash', models: FLASH3, books: '^Hebrew', script: 'manuscript', n: 60, block: 1, group: 'hebrew-flash3-8632', manuscriptOk: true,
+    correctors: { '3flash>opus-correct': { by: 'opus' }, 'opus-read': { by: 'opus-read', fresh: true }, '3flash>agy-flash-low': AGY('gemini-3.8-flash-low') } },
   'fr-lite': { lang: 'French', draft: 'lite', models: LITE, books: '^French', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
   // #7517: Latin print, Flash-Lite drafts, one page per book (the pilot's latin cell is 30 pages in 9 books).
   'latin-lite': { lang: 'Latin', draft: 'lite', models: LITE, books: '^Latin', correctors: { 'lite>agy-flash-low': AGY('gemini-3.8-flash-low'), 'agy-flash-low': FRESH('gemini-3.8-flash-low') } },
@@ -298,6 +317,11 @@ async function drawRouterTests(names) {
   const row = (p, extra = {}) => ({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, draft_model: p.ocr.model, draft_sha: contentHash(p.ocr.data), ...extra });
   const shuffled = (ids, salt) => [...ids].sort((a, b) => h(salt + a).localeCompare(h(salt + b)));
   const cells = {};
+  // #8632 script-type cells: a book serves one cell of a draw; --exclude-sample=<sample.json>[,…] leaves out the books of
+  // earlier tests, so the new pages are independent of theirs and can be pooled with them.
+  const { classifyPages } = await import('../router-next-7263/script-type.mjs');
+  const usedBooks = new Set();
+  const excludeBooks = new Set((arg('exclude-sample') || '').split(',').filter(Boolean).flatMap((f) => Object.values(JSON.parse(fs.readFileSync(f, 'utf8')).cells).flatMap((x) => x.pages.map((p) => p.book_id))));
   for (const name of names) {
     const t = RT[name];
     if (name === 'german') { cells.german = await drawGerman(db, 'german-r2', new Set(pilot.cells.german.pages.map((p) => p.book_id))); continue; }
@@ -348,23 +372,40 @@ async function drawRouterTests(names) {
       eligible = (p) => { const q = p.ocr?.qa_screen; return p.ocr?.source === 'paddle' && !p.ocr.unreadable && p.ocr.pipeline !== 'paddle-zh-guarded-2026-10' && q?.status === 'screened' && q.dice >= 0.6 && q.dice < 0.9 && [...foldHan(bodyText(p.ocr.data))].length >= 40; };
     } else {
       frameBooks = (await db.collection('books').find({ ...notHeld, language: { $regex: t.books, $options: 'i' } }, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id);
-      eligible = (p) => t.models.includes(p.ocr?.model) && typeof p.ocr.data === 'string' && p.ocr.data.length >= 300 && !/<script>\s*handwritten/i.test(p.ocr.data);
+      eligible = (p) => t.models.includes(p.ocr?.model) && typeof p.ocr.data === 'string' && p.ocr.data.length >= 300 && (t.manuscriptOk || !/<script>\s*handwritten/i.test(p.ocr.data));
     }
     const order = shuffled(frameBooks, `rt-${name}`);
-    const pages = [], tally = { books_walked: 0, held_or_hidden: 0, no_eligible_page: 0 };
+    const pages = [], tally = { books_walked: 0, held_or_hidden: 0, no_eligible_page: 0, ...(t.script && { excluded_book: 0, no_page_of_script: 0, short_book: 0 }) };
+    const want = t.script ? (arg('n') ? N : t.n) : N;
     for (const bid of order) {
-      if (pages.length >= N) break;
+      if (pages.length >= want) break;
+      if (t.script && (usedBooks.has(bid) || excludeBooks.has(bid))) { tally.excluded_book++; continue; }
       tally.books_walked++;
       const b = await db.collection('books').findOne({ id: bid, visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1, pages_count: 1, pipeline_auto: 1 } });
       const hold = b?.pipeline_auto?.hold;
       if (!b || ((hold || b.pipeline_auto?.status === 'held') && !(hold && t.laneHolds?.test(hold.reason)))) { tally.held_or_hidden++; continue; }
-      const ps = (await db.collection('pages').find({ book_id: bid, page_number: { $gt: 0 } }, { projection: PROJ }).toArray())
-        .filter((p) => !p.translation_withheld && !SKIP_TRANSLATION_PAGE_TYPES.includes(p.page_type) && isInterior(p.page_number, b.pages_count) && eligible(p));
+      const all = await db.collection('pages').find({ book_id: bid, page_number: { $gt: 0 } }, { projection: PROJ }).toArray();
+      const ps = all.filter((p) => !p.translation_withheld && !SKIP_TRANSLATION_PAGE_TYPES.includes(p.page_type) && isInterior(p.page_number, b.pages_count) && eligible(p));
       if (!ps.length) { tally.no_eligible_page++; continue; }
-      const p = ps.sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`)))[0];
-      pages.push(row(p, name === 'zh-dice' ? { qa_dice: p.ocr.qa_screen.dice, qa_pb: p.ocr.qa_screen.pb ?? null } : {}));
+      ps.sort((x, y) => h(`rt-${t.group ?? name}${x.id}`).localeCompare(h(`rt-${t.group ?? name}${y.id}`)));
+      let p = ps[0], extra = {};
+      if (t.script) {
+        // #8632: the first seeded page of the cell's script type; its block is the 4 consecutive scans that hold it, the
+        // page at a seeded position (book end: shifted back), which is the call the re-read lane would make.
+        const cls = await classifyPages(db, ps.map((x) => x.id));
+        p = ps.find((x) => cls.get(x.id)?.cls === t.script);
+        if (!p) { tally.no_page_of_script++; continue; }
+        const nums = all.map((x) => x.page_number).sort((x, y) => x - y), byNum = new Map(all.map((x) => [x.page_number, x.id]));
+        const i = nums.indexOf(p.page_number), pos = parseInt(h(`pos-${p.id}`).slice(0, 8), 16) % t.block;
+        let start = Math.max(0, Math.min(i - pos, nums.length - t.block));
+        const blk = nums.slice(start, start + t.block);
+        if (blk.length < t.block || blk[blk.length - 1] - blk[0] !== t.block - 1) { tally.short_book++; continue; }
+        usedBooks.add(bid);
+        extra = { script: t.script, script_basis: cls.get(p.id).basis, block: blk.map((n) => byNum.get(n)) };
+      }
+      pages.push(row(p, name === 'zh-dice' ? { qa_dice: p.ocr.qa_screen.dice, qa_pb: p.ocr.qa_screen.pb ?? null } : extra));
     }
-    cells[name] = { ...base, pages, frame: { books: frameBooks.length, ...tally, rule: t.guarded ? 'paddle_zh_guarded_ocr books, visible (their lane holds allowed, no other hold); ocr.pipeline paddle-zh-guarded-2026-10, Paddle text (not the Flash fallback), interior, >= 40 Han' : name === 'zh-dice' ? 'paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han' : `visible ${t.lang} books not held; stored OCR by ${t.models.join('/')}, interior, >= 300 chars, not handwritten` } };
+    cells[name] = { ...base, pages, frame: { books: frameBooks.length, ...tally, rule: t.guarded ? 'paddle_zh_guarded_ocr books, visible (their lane holds allowed, no other hold); ocr.pipeline paddle-zh-guarded-2026-10, Paddle text (not the Flash fallback), interior, >= 40 Han' : name === 'zh-dice' ? 'paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han' : `visible ${t.lang} books not held; stored OCR by ${t.models.join('/')}, interior, >= 300 chars${t.manuscriptOk ? '' : ', not handwritten'}${t.script ? `; script type ${t.script} (script-type.mjs); the page inside ${t.block} consecutive scan${t.block > 1 ? 's' : ''}; books of --exclude-sample and of this draw's other cells left out (${excludeBooks.size} named)` : ''}` } };
   }
   await c.close();
   fs.mkdirSync(OUT, { recursive: true });
@@ -558,11 +599,22 @@ async function correct() {
       if (cor.by === 'opus-prompt') {
         const r = await opusPromptCorrect(cs, cor, dir, limits);
         if (r === 'blocked') process.exit(3);
+      } else if (cor.by === 'opus-read') {
+        // #8632: a fresh Opus read of the image alone, the live OCR prompt with the book's language slot, one page a
+        // call (claude-ocr.mjs --reread). Its DIR is in cli-ocr.mjs's read shape, so `cli-ocr.mjs apply` can write it.
+        const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
+        if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
+        fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(ids));
+        console.log(`${cell}/${route}: claude-ocr.mjs --reread on ${ids.length} pages`);
+        const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/claude-ocr.mjs'), `--out=${dir}`, `--page-ids-file=${path.join(dir, 'ids.json')}`, '--reread', '--model=opus', '--per-call=1', '--concurrency=3', `--job=${arg('job') || 'route-judge-6740'}`, '--fresh'],
+          { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT });
+        if (r.status === 3) { console.log('Opus usage limit: stopped'); process.exit(3); }
       } else if (cor.by === 'opus') {
         const b = limits.claudeBlocked({ weeklyMax: Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85), sessionMax: SESSION_MAX });
         if (b) { console.log(`BLOCKED until=${b.until} (${b.reason})`); process.exit(3); }
-        fs.writeFileSync(path.join(dir, 'manifest.jsonl'), ids.map((id) => JSON.stringify({ page_id: id })).join('\n') + '\n');
-        console.log(`${cell}/${route}: correct.mjs on ${ids.length} pages`);
+        const barIds = cor.firstN ? ids.slice(0, cor.firstN) : ids;   // #8632: the Opus bar on the first N pages of the seeded draw
+        fs.writeFileSync(path.join(dir, 'manifest.jsonl'), barIds.map((id) => JSON.stringify({ page_id: id })).join('\n') + '\n');
+        console.log(`${cell}/${route}: correct.mjs on ${barIds.length} pages`);
         const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/batch/ocr-convergence/correct.mjs'), `--set-dir=${dir}`, '--model=opus', '--per-call=10', '--concurrency=3', '--job=route-judge-6740', '--fresh'],
           { stdio: 'inherit', env: { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT });
         if (r.status === 3) { console.log('Opus usage limit: stopped'); process.exit(3); }
@@ -705,6 +757,9 @@ async function packet() {
       return a.text ?? null;
     }
     if (cs.kind === 'router-test' && (cs.correctors[route] || route === cs.draft_route)) {
+      // A FRESH read never saw the draft (#218: 2 de-lite pages whose draft was replaced after the draw kept their
+      // fresh reads, which this check used to drop with the corrector's).
+      if (cs.correctors[route]?.fresh) { const a = correction(cell, cs, route, sp, ''); corrOf.set(`${cell}/${route}/${sp.page_id}`, a); return a.text ?? null; }
       const d = draftOf(cs, sp);
       if (!d) { corrOf.set(`${cell}/${route}/${sp.page_id}`, { none: 'stored draft changed since the draw' }); return null; }
       if (route === cs.draft_route) return d;
@@ -825,7 +880,9 @@ ${it.reference}
 """
 
 ` : '';
-  return `${head}${ref}CANDIDATE ${ocr ? 'TRANSCRIPTION' : 'TRANSLATION'}:
+  // judge_note (#225): a cell's own reading rule, the same for every arm of the cell (e.g. count each dropped diacritic).
+  const note = it.judge_note ? `${it.judge_note}\n\n` : '';
+  return `${head}${ref}${note}CANDIDATE ${ocr ? 'TRANSCRIPTION' : 'TRANSLATION'}:
 """
 ${it.text}
 """
@@ -848,9 +905,12 @@ export const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'bool
 export const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** Opus with the image in its workspace and Read as its only tool (replicate-6547/run-claude-arm.py's call). */
+// The seal's flags: a CLI without --restricted (the Mac's, v3#104) takes the lean flags instead (no user or project
+// settings, no skills); Read stays the only tool either way.
+const SEAL_ARGS = /--restricted/.test(spawnSync('claude', ['--help'], { encoding: 'utf8', timeout: 30e3 }).stdout || '') ? ['--restricted'] : ['--setting-sources', 'local', '--disable-slash-commands'];
 export function opusCall(prompt, cwd, model = 'opus') {
   return new Promise((resolve) => {
-    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn('claude', ['-p', '--model', model, ...SEAL_ARGS, '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     const timer = setTimeout(() => child.kill('SIGKILL'), 900e3);
     child.stdout.on('data', (d) => { out += d; }); child.stderr.on('data', (d) => { err += d; });

@@ -1,0 +1,16 @@
+<language>Classical Chinese</language>
+<script>handwritten</script>
+<page-type>diagram</page-type>
+<warning>Handwritten East Asian brush script (semi-cursive kaishu). In each label, the character the draft read as "并" is the ligature 𦬇 for 菩薩, so it is expanded here. Drawings from the neighbouring panels are partly visible at the left and right edges.</warning>
+
+<image-desc size="large" type="diagram" significance="high">An ink line drawing of a mandala. A square outer enclosure has a gateway on each side, and each gateway holds a wheel-like emblem. Inside are concentric circles and a square, with triangles pointing to the four gates. At the centre is an eight-petalled lotus, with a central disc and small flower and vajra motifs on the petals. Lotus blossoms, crescent moons, vajras, ritual vessels, offering stands and spears fill the spaces between the enclosures. Brush labels in vertical cartouches name the four gates, two on each side.</image-desc>
+
+<margin>第一東門香蔵菩薩白色</margin>
+
+<margin>第二北門水蔵菩薩<unclear>録</unclear>色</margin>
+
+<margin>第三西門火蔵菩薩赤</margin>
+
+<margin>第四南門風蔵菩薩青色</margin>
+
+<vocab>四門, 東門, 北門, 西門, 南門, 香蔵菩薩, 水蔵菩薩, 火蔵菩薩, 風蔵菩薩, 白色, 赤, 青色, 八葉蓮華, 曼荼羅, 壇</vocab>

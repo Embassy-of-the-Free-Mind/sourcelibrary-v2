@@ -10,7 +10,9 @@ let db: Db;
  * Start once per test file, clean up after.
  */
 beforeAll(async () => {
-  mongod = await MongoMemoryServer.create();
+  // The library gives mongod 10 s to start. On a busy CI runner it needed longer and a different handful
+  // of suites failed on each run (#37). The hook limit in vitest.integration.config.ts is above this one.
+  mongod = await MongoMemoryServer.create({ instance: { launchTimeout: process.env.CI ? 60_000 : 10_000 } });
   const uri = mongod.getUri();
   process.env.MONGODB_URI = uri;
   process.env.MONGODB_DB = 'test';

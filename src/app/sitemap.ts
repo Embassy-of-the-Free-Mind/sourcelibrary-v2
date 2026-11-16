@@ -9,6 +9,7 @@ import { isRepeatCapture } from '@/lib/page-counts';
 import { HISTORIES } from '@/app/explore/histories/histories';
 import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
 import { sibuCodes } from '@/lib/sibu-catalogue';
+import { BOOKS_PER_CHUNK, SITEMAP_BOOK_FILTER } from '@/lib/sitemap-index';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -23,7 +24,6 @@ import { sibuCodes } from '@/lib/sibu-catalogue';
 //   3000+ = artwork pages (books with resource_type; with <image:loc>)
 
 const BASE_URL = 'https://sourcelibrary.org';
-const BOOKS_PER_CHUNK = 5000;
 const PAGES_PER_CHUNK = 5000;
 // Indexable reader-page chunks get a high id offset so they never collide with
 // the dynamically-counted book chunks (2..N). Books realistically span a
@@ -98,7 +98,7 @@ async function computeSitemapIds() {
   // Count books to determine how many chunks we need
   const bookCount = await safeQuery('book-count', async (db) => {
     return db.collection('books').countDocuments(
-      { visible: true, slug: { $exists: true, $ne: null }, pages_count: { $gt: 0 } },
+      SITEMAP_BOOK_FILTER,
       { maxTimeMS: 30000 }
     );
   }, 10000);
@@ -336,14 +336,9 @@ function categoryPages(): MetadataRoute.Sitemap {
 async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
   return safeQuery('books', async (db) => {
     const books = await db.collection('books').find(
-      {
-        visible: true,
-        // Only include books with slugs — hex IDs are bad for SEO
-        slug: { $exists: true, $ne: null },
-        // Canonical live filter (same as /api/books/library): every readable
-        // book is listed, including untranslated and short ones.
-        pages_count: { $gt: 0 },
-      },
+      // Shared with the index count (#78): slugged, live books, including
+      // untranslated and short ones.
+      SITEMAP_BOOK_FILTER,
       {
         projection: { slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, human_read_count: 1 },
         sort: { _id: 1 },

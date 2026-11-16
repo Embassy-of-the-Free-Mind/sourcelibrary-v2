@@ -1,0 +1,30 @@
+{
+ "question": "prompt",
+ "issue": 104,
+ "stage": "translation",
+ "languages": [
+  "fr",
+  "it"
+ ],
+ "baseline": "A",
+ "arms": [
+  "A",
+  "S"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": [
+  "french-cli-agy4",
+  "italian-cli-agy4"
+ ],
+ "waive": {
+  "R1": "the brief asks for every page the pass changed, so a book can have up to four pages (two blocks, the page before and the first page of each); the score reports by-book counts beside the page counts"
+ }
+}

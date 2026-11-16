@@ -1,0 +1,43 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<vocab>territorium, jurisdictio, Imperium Romanum, Andreas Knichen, Landtsfürstliche Obrigkeit, civitates imperiales, Zasius, Menochius</vocab>
+<meta>catchword: & Im-</meta>
+
+& apparet ex l.3. §. non perpetua ff. de sepulchris viol. l. cetera §. sed si
+quis ff. de legat. 1. sed & provinciarum territoria esse. Nam ut pro-
+vinciae alicujus civitates esse possunt plures, ita etiam pro nume-
+ro civitatum illius provinciae totidem in provincia illa sunt terri-
+toria, & sicut civitates illae conjunctae totum aliquod constituunt,
+quod provinciam nominamus, ita territoria illa plura conjuncta
+unum iterum constituunt territorium universale, quod a pote-
+state illius supremae provinciae dependeat, ad cujus nutum & volun-
+tatem caeterorum omnium istius provinciae, qui praesunt, magi-
+stratus & officiarii singuli respiciunt. Quo modo universum Im-
+perium Romanum territorium est universale, cujus provinciae
+singulae peculiaria iterum sua habent territoria, atque haec rursus toti-
+dem, quot in ea sunt civitates & oppida Zasius consil. 16. n. 46. De-
+cius Respons. 123. n. 17. Andreas Knichen de jure territorii ca. 1. Uti &
+in impropria significatione dicitur territorium constare posse sine
+jurisdictione Menochius praesumt. 97. n. 6. lib. 3. Sic quoad jurisdi-
+ctionalia appellatur territorum quod habet formam universita-
+tis, nec non magistratum, qui jus dicat, quo pertinet illud Pauli:
+Extra jurisdictionem vel territorium ius dicenti impune non pa-
+retur l. fin. ff. de jurisdictio. At quando tractatio est de jure superio-
+ritatis, uti hoc loco, tunc territorium sumitur pro ditione seu pro-
+vincia, quae illi qui status est Imperii & Imperatorem eo nomine
+immediate agnoscit, Imperatoris concessione vel aliis legitimis
+modis est concessa.
+
+### IX.
+
+> *Non solum autem Principibus, Ducibus, Landtgraviis, Mar-
+> chionibus & Comitibus, sed & civitatibus imperialibus liberis
+> iura territorialia competunt.*
+
+Andreas Knichen vir celeberrimus annititur in suo tractatu de
+jure territorii quodammodo civitatibus imperialibus iura talia
+adimere, quod non probo. Quamvis enim iura principum quae
+personalia sunt & appellantur **die Landtsfürstliche Obrigkeit** non
+habeant, habent tamen eo ipso, quo territoria civitates possident

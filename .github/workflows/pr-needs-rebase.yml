@@ -27,7 +27,11 @@ on:
 
 permissions:
   contents: read
+  repository-projects: read  # `gh pr|issue edit` queries classic Projects; without this it fails on a private repo
   pull-requests: write
+  checks: read
+  statuses: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 concurrency:
   group: pr-needs-rebase
@@ -35,7 +39,7 @@ concurrency:
 
 jobs:
   label:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4

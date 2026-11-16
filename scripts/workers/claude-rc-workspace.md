@@ -31,6 +31,9 @@ unless you read them. A private copy, synced from the laptop daily, is in `/root
   if a clone is already in use, make a worktree (`git -C <repo> worktree add ../<repo>-<task> -b <branch>`).
   Active repos (2026-11): rehumanize, makemode, dereklomas-site, talks, earthlove, the-intelligences,
   conceptual-histories, voynich-translations, claude-limits, secret-lover; Embassy-of-the-Free-Mind/sourcelibrary-ops.
+- **What is going on across all four boxes:** run `/root/bin/situation` first (about 7 s): running and stopped
+  jobs per box, red lanes, stops, Gemini pools, Claude accounts, recent alarms, open decisions. When Derek asks
+  "what's running?" or "is anything broken?", answer from it, not from memory or RUNNING.md.
 - **Other boxes:** `/root/bin/box.sh <main|cloudlayer|l7a|gex45> <verb>` runs only the verbs their
   box-rpc.sh allows (status and similar — no shell, by design). For real work on another box, Derek starts
   a session there instead: every box with Remote Control shows in the app under its own name.

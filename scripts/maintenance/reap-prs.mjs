@@ -62,7 +62,7 @@ const sh = (cmd) => {
 // result is frequently a spurious FAILURE that an automatic retry flips to pass
 // (the deployment is often still Building when GitHub reports it), so treating
 // it as blocking would misclassify healthy PRs. See CLAUDE.md, PR Conventions.
-const GATING_CHECKS = new Set(['test', 'DCO']);
+const GATING_CHECKS = new Set(['test', 'static', 'DCO']); // static: split out of test (#239)
 const NEEDS_REBASE = 'needs-rebase';
 const NEEDS_REBASE_MARKER = '<!-- pr-needs-rebase -->';
 

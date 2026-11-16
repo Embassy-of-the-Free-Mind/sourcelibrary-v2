@@ -118,3 +118,51 @@ export function pageImageUrl(p) {
   for (const k of ['enhanced_photo', 'archived_photo', 'photo_original', 'photo']) if (usable(p[k])) return p[k];
   return null;
 }
+
+// ── text the reader is not served (v3#154) ───────────────────────────────────
+// On an English leaf of an English edition the reader, /quote, /text and the exports serve the TRANSCRIPTION; a
+// stored `translation` there is a model's rewording nobody is shown (#7100). exposureOf() calls such a page
+// `rewrite_not_served`. Round 7 (2026-11-13) handed reviewers that stored text and counted 7 serious findings in it
+// in the headline: 5 of 30 pages, where the text readers meet gave 2 of 30.
+
+const REWRITE_NOT_SERVED = 'rewrite_not_served';
+
+/**
+ * The translation fields of a packet page: what the reviewer is given. On a `rewrite_not_served` page the stored
+ * text is left out and a note says why, so the reviewer judges the transcription against the image as the reader's
+ * English and files nothing against text no reader sees.
+ */
+export function packetTranslation(page, exposure) {
+  if (exposure === REWRITE_NOT_SERVED) {
+    return { translation: '', translation_model: null, translation_source: null,
+      translation_note: 'English leaf of an English edition: the reader is served the transcription. The stored English is not served and is not in this packet; tr_score is null.' };
+  }
+  return { translation: page.translation?.data ?? '', translation_model: page.translation?.model ?? null, translation_source: page.translation?.source ?? null };
+}
+
+/**
+ * A run's results as SCORED: findings in text the reader is not served are taken out. `exposure` is the run's
+ * draw-log.json `exposure` ({ book_id: { page_number: exposure } }). On a `rewrite_not_served` page the `tr_errors`
+ * are findings in the stored rewrite and are dropped; `ocr_errors`, `other` and `right_page` stay, because the
+ * transcription and the image are what the reader gets. A run whose draw recorded no such page is returned as it is,
+ * so earlier rounds score as they did.
+ * Returns { results, notServed: { pages, books, findings, serious } }; `pages` and `books` count where something
+ * was dropped. Pure: the input is not changed.
+ */
+export function servedResults(results, exposure = {}) {
+  const notServed = { pages: 0, books: 0, findings: 0, serious: 0 };
+  const out = results.map((r) => {
+    let touched = false;
+    const pages = (r.pages ?? []).map((p) => {
+      if (exposure?.[r.book_id]?.[p.page_number] !== REWRITE_NOT_SERVED) return p;
+      const dropped = (p.tr_errors ?? []).filter((e) => e && typeof e === 'object');
+      if (!dropped.length) return p;
+      touched = true;
+      notServed.pages++; notServed.findings += dropped.length; notServed.serious += dropped.filter((e) => e.severity === 'serious').length;
+      return { ...p, tr_errors: [], tr_errors_not_served: dropped };
+    });
+    if (touched) notServed.books++;
+    return touched ? { ...r, pages } : r;
+  });
+  return { results: out, notServed };
+}

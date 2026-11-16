@@ -186,6 +186,10 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
         Period is the catalogue year, which for a reprint is the work&rsquo;s date and not the scan&rsquo;s (#4884).
       </p>
 
+      <p style={{ ...C.dim, fontSize: 12.5, margin: '-8px 0 14px' }}>
+        Related: <Link href="/platform/admin/ocr-evidence/read-surface" style={{ color: '#58a6ff' }}>read surface</Link>, the same readings drawn as a settings surface.
+      </p>
+
       <nav style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 22 }} aria-label="Slice">
         {slices.map(([k, label]) => (
           <Link

@@ -1,0 +1,23 @@
+<warning>Handwritten Italian/Sephardic semi-cursive Hebrew, a small and rapid hand. Only the three enlarged headwords (ישב, שם, כל) could be read with confidence at this resolution. The running text is clean and not damaged, but its readings could not be checked, so most lines are marked unclear and not reconstructed. Partial text from the facing page (enlarged words ונגוחו and והיה are visible) appears at the left edge and is not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Catchword at foot of page, possibly "נב" (uncertain). Colour calibration chart and ruler in the image to the right of the leaf.</meta>
+
+<unclear>[illegible — 4 lines of cursive Hebrew text, about 14–16 words each]</unclear>
+<unclear>ישראל</unclear> <unclear>[illegible — rest of line]</unclear>
+
+**ישב** <unclear>[illegible — rest of line, about 8 words]</unclear>
+
+<unclear>[illegible — 3 lines of cursive Hebrew text, the last one ending before the next headword]</unclear>
+
+**שם** <unclear>[illegible — rest of line, about 8 words]</unclear>
+
+<unclear>[illegible — 3 lines of cursive Hebrew text]</unclear>
+
+**כל** <unclear>[illegible — rest of line, about 10 words]</unclear>
+
+<unclear>[illegible — 23 lines of cursive Hebrew text, about 14–16 words each, running to the foot of the page]</unclear>
+
+<vocab>ישב, שם, כל, ישראל</vocab>

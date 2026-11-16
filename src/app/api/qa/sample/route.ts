@@ -209,4 +209,4 @@ export const GET = withAuth(async (request: NextRequest) => {
     console.error('Error sampling pages:', error);
     return NextResponse.json({ error: 'Failed to sample pages' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

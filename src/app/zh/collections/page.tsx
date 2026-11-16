@@ -32,7 +32,7 @@ function Card({ col, priority }: { col: ZhCollectionSummary; priority?: boolean 
       <CollectionCardImage candidates={col.imageCandidates} alt="" sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" priority={priority} />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="text-white text-xl font-display leading-tight group-hover:text-accent-rust transition-colors">{col.name}</h3>
+        <h3 className="text-white text-xl font-serif leading-tight group-hover:text-accent-rust transition-colors">{col.name}</h3>
         <p className="text-white/60 text-xs tabular-nums mt-1">{nf(col.bookCount)} 册</p>
       </div>
     </Link>
@@ -55,10 +55,10 @@ export default async function ZhCollectionsPage() {
     <div className="min-h-screen bg-cream" lang="zh-Hans">
       <ConditionalSiteHeader variant="light" />
       <main className="max-w-[1500px] mx-auto px-6 py-10 sm:py-14">
-        <h1 className="text-4xl sm:text-5xl font-display text-primary mb-8">专题</h1>
+        <h1 className="text-4xl sm:text-5xl font-serif text-primary mb-8">专题</h1>
 
         <Link href="/zh/sibu" className="block border border-primary/20 hover:border-accent-rust p-6 mb-12 max-w-3xl transition-colors">
-          <span className="block text-2xl font-display text-primary mb-1">四部书目</span>
+          <span className="block text-2xl font-serif text-primary mb-1">四部书目</span>
           <span className="block leading-relaxed text-primary/90">
             全部馆藏中文古籍（{nf(SIBU_TOTALS.works)} 种，{nf(SIBU_TOTALS.volumes)} 册），按《四库全书总目》的经、史、子、集分类检索。
           </span>
@@ -66,13 +66,13 @@ export default async function ZhCollectionsPage() {
 
         {exhibits.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-5">策展专题</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-5">策展专题</h2>
             <Grid cols={exhibits} priority />
           </section>
         )}
         {shelves.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-5">主题书架</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-5">主题书架</h2>
             <Grid cols={shelves} />
           </section>
         )}

@@ -365,7 +365,7 @@ async function stageOcr(db) {
 // ---------- stage: rediagnose (paid, ~30 pages) ----------
 // A flagged page can be wrong on EITHER side: the delivered TEXT is the neighbouring leaf (the gate's
 // offset was locally wrong), or the archived IMAGE is the neighbouring leaf (#3368 bulk-JP2 leaf offset,
-// .claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md) while the text is right. The two need opposite
+// .claude/handoffs/archive/2026-07-27-bulk-jp2-leaf-offset.md) while the text is right. The two need opposite
 // repairs, so each flagged page is re-read from the SOURCE leaf the record points at (`pages.photo`, the
 // archive.org IIIF URL) and classified. Peer verification of four cases on #4790 found both kinds.
 async function stageRediagnose(db) {

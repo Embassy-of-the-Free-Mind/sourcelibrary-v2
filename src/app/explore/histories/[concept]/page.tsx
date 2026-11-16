@@ -11,6 +11,7 @@ import Quote from '../Quote';
 import HistoryHero from '../HistoryHero';
 import KeepTerms from '../KeepTerms';
 import SenseLanes from '../SenseLanes';
+import Plate from '../Plate';
 
 // Static (#7623). dynamicParams=false makes an unknown concept a routing-level
 // 404, not a notFound() under /explore's loading.tsx (a soft 200, rendering-and-seo.md).
@@ -76,10 +77,29 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
           </p>
         </section>
 
+        {pick.article && (
+          <section>
+            <H2>Read the essay</H2>
+            <p className="font-body text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              The same sources, told as one story: <Link href={pick.article.href}>{pick.article.title}</Link>
+              {pick.article.share && <>, or <a href={pick.article.share}>read it as a book</a></>}.
+            </p>
+          </section>
+        )}
+
         {key.length > 0 && (
           <section>
             <H2>From the sources</H2>
             {key.map((f) => <Quote key={`${f.claim}-${f.u}`} f={f} />)}
+          </section>
+        )}
+
+        {pick.plates && pick.plates.length > 0 && (
+          <section>
+            <H2>Pictures from the books</H2>
+            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2">
+              {pick.plates.map((p) => <Plate key={`${p.book}-${p.page}`} p={p} />)}
+            </div>
           </section>
         )}
 

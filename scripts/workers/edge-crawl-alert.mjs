@@ -75,7 +75,7 @@ const AGENT_LIMIT = 2000;
 // AS56046) reverse-resolved to *.crawl.sogou.com and forward-confirmed.
 const INVITED = /Googlebot|Sogou web spider|Google-InspectionTool|bingbot|Applebot|DuckDuckBot|YandexBot|Claude-SearchBot|Claude-User|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|facebookexternalhit|Twitterbot|LinkedInBot|Slackbot|Discordbot|UptimeRobot/i;
 // Edge actions that mean the request did NOT reach the site.
-const STOPPED = new Set(['block', 'managed_challenge', 'challenge', 'jschallenge', 'connection_close']);
+export const STOPPED = new Set(['block', 'managed_challenge', 'challenge', 'jschallenge', 'connection_close']);
 
 const args = process.argv.slice(2);
 const arg = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; };

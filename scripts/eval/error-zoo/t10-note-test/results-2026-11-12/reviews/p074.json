@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "6ae0bfe04adf2ffb52f73751",
+    "slot": 1,
+    "title": "前漢書·卷四十一~卷四十三 (Hanshu, Siku Quanshu, vol. 27 of 57)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu manuscript copy of the Hanshu (block-heart reads 前漢書, frame edge shows 欽定四庫全書), which matches the title, author and 1782 date. A general 'universallibrary' collection raises no conflict.",
+    "rights_flag": null,
+    "structure_note": "Only 52 of 126 pages have a printed number. The 43 repeats are what Siku folio numbering produces: both half-leaves of a folio carry one block-heart numeral. The volume holds three juan, so about 2 backsteps would be expected from juan restarts. 19 backsteps is far more than that and points to misread or misassigned block-heart numerals, not a broken sequence (this page's 九 is read correctly). The structure count shows pages_translated 0, but the book field says 121 and this page is translated, so that instrument looks wrong (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "printed_marker": "九",
+        "layout": "one half-leaf of a Siku manuscript; 8 ruled vertical columns, double-line small interlinear commentary (Su Lin, Yan Shigu), block-heart strip at the left edge with 前漢書 and leaf numeral 九",
+        "notes_audit": {
+          "items": [
+            { "quote": "Su Lin says: She was Zang'er, mother of Emperor Jing's Empres", "verdict": "ok", "helpful": true },
+            { "quote": "Shigu says: Mou is the name of the town he was granted.", "verdict": "ok", "helpful": true },
+            { "quote": "Chamberlain for Ceremonials", "verdict": "ok", "helpful": true },
+            { "quote": "Marquis Within the Passes", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "The world said that Li Kuang had sold out his friend.", "why": "Li Kuang (酈況) is Li Ji's courtesy name, not another person. The sentence also alludes to Li Ji luring his friend Lü Lu away so the Lü clan could be destroyed. Without a note the reader meets a new name and a betrayal they cannot place." },
+            { "english": "He was implicated in the affair of witchcraft and executed", "why": "The witchcraft (gu sorcery) affair of Emperor Wu's last years (91 BCE) is a specific purge. The reader cannot tell what 'the affair' refers to." },
+            { "english": "In the Yuanshi era", "why": "An unexplained reign title. It is Emperor Ping's era (1–5 CE), about two centuries later, and the reader needs that to understand the restoration of honours." },
+            { "english": "the states of Wu, Chu, Qi and Zhao rebelled", "why": "This is the Rebellion of the Seven States (154 BCE). The summary names it but the text does not." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page. The transcription matches the manuscript column for column, including the interlinear commentary and the block-heart, and the English is faithful, with correct commentary glosses. The only gaps are a few missing notes: Li Kuang is Li Ji himself, and the witchcraft affair and the Yuanshi era are unexplained."
+  }
+]

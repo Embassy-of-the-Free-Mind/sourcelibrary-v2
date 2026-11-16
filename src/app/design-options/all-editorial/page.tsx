@@ -153,7 +153,7 @@ export default async function AllEditorialPage() {
           <Link href="/design-options" className="text-sm text-muted hover:text-accent-rust transition-colors">
             &larr; Back to design options
           </Link>
-          <h1 className="text-3xl md:text-4xl font-display text-primary mt-4">
+          <h1 className="text-3xl md:text-4xl font-serif text-primary mt-4">
             Editorial Spread: All Collections
           </h1>
           <p className="text-muted mt-2 max-w-2xl">
@@ -202,7 +202,7 @@ export default async function AllEditorialPage() {
                 <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
                   Featured Collection
                 </span>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white leading-[1.1] mb-4">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.1] mb-4">
                   {col.name}
                 </h2>
                 {col.subtitle && (

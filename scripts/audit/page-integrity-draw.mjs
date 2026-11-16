@@ -8,7 +8,9 @@
 /**
  * page-integrity-draw — one random served page from each of 200 random visible books, judged sealed by Opus (#8040).
  *
- *   node --env-file=.env.production.local scripts/audit/page-integrity-draw.mjs --seed 20261201 --out <dir> [--land]
+ * RETIRED 2026-11-15 (v3#381): exits at once without --run-retired; QA is the daily paired-fifths lane.
+ *
+ *   node --env-file=.env.production.local scripts/audit/page-integrity-draw.mjs --run-retired --seed 20261201 --out <dir> [--land]
  *
  * Re-run the same command to resume: the draw is never redone, and judged items are never re-asked.
  *
@@ -517,6 +519,10 @@ async function main() {
   const argv = process.argv.slice(2);
   const arg = (n, d = null) => { const i = argv.indexOf(`--${n}`); return i >= 0 && i + 1 < argv.length ? argv[i + 1] : d; };
   const has = (n) => argv.includes(`--${n}`);
+  // RETIRED 2026-11-15 (v3#381, #8405): one served page a book never sees a page break; the daily paired-fifths lane
+  // (scripts/audit/paired-fifths-daily.sh, cloudlayer) reads ten facing pages of 40 served books a day. The gex45
+  // cron line stays harmless until a session there removes it. --run-retired runs the old draw by hand.
+  if (!has('run-retired')) { console.log(`${new Date().toISOString()} page-integrity-draw is retired (v3#381): the daily paired-fifths lane reads served books; nothing drawn`); return; }
   const today = new Date().toISOString().slice(0, 10);
   const seed = Number(arg('seed', today.replace(/-/g, '')));
   const N = Number(arg('books', '200')), REJUDGE = Number(arg('rejudge', '20')), CONC = Math.min(6, Number(arg('concurrency', '4')));

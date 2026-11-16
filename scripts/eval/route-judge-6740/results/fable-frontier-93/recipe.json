@@ -1,0 +1,15 @@
+{
+  "question": "model",
+  "issue": 93,
+  "stage": "translation",
+  "languages": ["fa", "sa", "lzh", "grc", "he"],
+  "baseline": "LIVE",
+  "arms": ["LIVE", "OPUS2", "OPUSX", "FABLE"],
+  "batch": { "pages_per_call": 1, "tested": null },
+  "noise_floor": { "repeat_kind": "repeat", "from": null },
+  "feeds": "route",
+  "router_evidence": "none — rules.json has no translation cell for these languages that a Claude route is rated in; the live route here is gemini-3.8-flash+agy-cli (flash-measured-cli-agy), and LIVE is the stored text, written by several earlier Gemini lanes",
+  "judges": ["opus (claude-opus-5-5, default effort)", "fable (claude-fable-5-2, default effort)"],
+  "primary_measure": "severity-weighted defects per 1,000 words: (misleads + 3 x wrong_text) / words x 1000 (#8283)",
+  "waive": {}
+}

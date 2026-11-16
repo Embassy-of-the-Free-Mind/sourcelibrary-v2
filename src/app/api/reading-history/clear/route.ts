@@ -21,4 +21,4 @@ export const POST = withAuth(async (request, session) => {
     success: true,
     deleted: result.deletedCount,
   });
-});
+}, { minRole: 'reader' });

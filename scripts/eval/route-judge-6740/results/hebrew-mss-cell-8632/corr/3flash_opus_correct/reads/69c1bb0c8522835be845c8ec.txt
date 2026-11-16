@@ -1,0 +1,41 @@
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Ashkenazi square/semi-cursive Hebrew. The top lines are badly faded and stained. Text from the other side of the leaf shows through, mainly in the outer margins. A refrain abbreviation stands at the left end of most lines and is partly faded.</warning>
+
+<unclear>[illegible — 2 lines, faded]</unclear>
+
+->פועל<-
+
+->דגלי <unclear>עזרה</unclear> לעמוד בעזרה <unclear>חו' בר'</unclear><-
+
+->ליושב תהילות<-
+
+->עמך המולה לשוכן מעלה <unclear>חו' קר'</unclear><-
+
+->הולכי דרך תמים להצור תמים חו' בר'<-
+
+->נדיבים <unclear>ישכילים</unclear> נועם צור מקשיבים חו' קר'<-
+
+->חוכי ישועות וקווי סליחות <unclear>קדוש בר'</unclear><-
+
+->ליושב תהילות<-
+
+->רבות זכי שמי ערבות חו' בר'<-
+
+->זרע מטע אמת לאלהים אמת חו' בר'<-
+
+->חשמלים עזים לעושה חזיזים חו' קר'<-
+
+->חונים ונשאים למעלה נשיאים ק' וכו'<-
+
+->ליושב תהילות<-
+
+->שפרי מרומים לרם על רמים חו' ק'<-
+
+->טוכי <unclear>הנחליו</unclear> יונקיו ועולליו חו' בר'<-
+
+->וחרדון הולכים כורעים ובורכים חו' בר'<-
+
+<vocab>ליושב תהילות, פועל, עזרה, סליחות, ערבות, חשמלים, חזיזים, נשיאים, שפרי מרומים, piyyut</vocab>

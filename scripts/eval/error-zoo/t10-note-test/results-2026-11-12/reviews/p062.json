@@ -1,0 +1,54 @@
+[
+  {
+    "book_id": "69e7517810ee9075bcdcd959",
+    "slot": 1,
+    "title": "Liber Scivias",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A medieval Latin manuscript of Hildegard's Scivias (Heidelberg, salX16 per the scan footer), shelved under Latin books. It fits.",
+    "rights_flag": "The scan footer is burned in: \"© Universitätsbibliothek Heidelberg\" and \"http://digi.ub.uni-heidelberg.de/diglit/salX16/0229\". The work is a medieval manuscript and in the public domain. Only the digitisation's licence terms need checking; this is not a modern edition.",
+    "structure_note": "pages_translated is 0 in the structure counts, but the book field says 400. One of the two counts is wrong. 32 printed backsteps and 90 repeats are what folio numbering produces: only rectos carry a pencilled folio number (this scan 229 = fol. 114), and versos inherit or misread it. I read these as foliation artefacts, not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 229,
+        "right_page": "yes",
+        "printed_marker": "114",
+        "layout": "Two columns of protogothic book hand with red initials 'I' and 'S'. Chapter numerals 'vi.' and 'vij.' sit in the right margin. A strip of the facing verso shows at the left edge.",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>\n<unclear>si</unclear> id est post\ninfinita ad\ninadulte", "image": "the left-edge strip is the line-ends of the facing verso, not marginalia of fol. 114", "problem": "The neighbour-page strip was transcribed as this leaf's marginal notes (29 lines of word fragments)", "severity": "serious", "class": "I4" },
+          { "ocr": "ut ii spnat angls nec ulla creatura homine", "image": "ut n̄ (non) sp(er)nat angl(u)s nec ulla creatura hominē", "problem": "The negation 'non' was misread as 'ii', which led to the inverted translation", "severity": "serious", "class": "O6" },
+          { "ocr": "Sicut pastor grege sui pascet in brachio suo leuabit suas ipse portabit.", "image": "Sicut pastor gregē suū pascet in brachio suo congregabit agnos et in sinu suo leuabit fetas ipse portabit", "problem": "'congregabit agnos et in sinu suo' dropped without a mark, and 'fetas' read as 'suas'", "severity": "moderate", "class": "O5" },
+          { "ocr": "Hoc tale e Sicut pastor grege sui pas cet eu suum lege qua", "image": "Hoc tale ē. Sicut pastor gregē suū pascet, sic pascet filius m(eu)s pastor bon(us) redemptū gregē suū. Quom(odo)? Ipse pascet eū sua lege quā", "problem": "A clause of about one and a half lines is dropped, and the shepherd–Son identification goes with it", "severity": "moderate", "class": "O5" },
+          { "ocr": "Istud e cunctus unus que uidet inspectore pu patris", "image": "Istud ē lucidus limus quē uides in pectore p(re)d(ic)ti patris", "problem": "'lucidus limus' (the shining clay of the vision) misread as 'cunctus unus', and 'uides' as 'uidet'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Outu de istis erit sup ha bundanes inbomina ut nec faci antur", "image": "Multi de istis erūt superhabundantes in bonis ita ut nec satientur", "problem": "'Multi' misread as 'Outu', plus several other garbled words", "severity": "moderate", "class": "O6" },
+          { "ocr": "qd deberent facere uet qd deberent facere uet qd debe rent dimmere", "image": "the first 'qd deberent facere uel' is struck through by the scribe", "problem": "The struck-through dittography is transcribed as text with no mark", "severity": "minor" },
+          { "ocr": "<columns>2</columns> … (no marginal numerals)", "image": "'vi.' and 'vij.' chapter numerals in the right margin", "problem": "The chapter numerals are not transcribed", "severity": "minor" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "ut ii spnat angls nec ulla creatura homine", "english": "so that angels serve him, and no creature serves a human being", "problem": "The source (and image) says neither angel nor any creature spurns the human being. The English invents 'serve' twice and reverses the sense.", "severity": "serious", "class": "T8" },
+          { "source": "<margin> … or filius dei / mei et dicit / in filius facit …", "english": "<margin>\n<unclear>if</unclear>, that is, after\ninfinite to\nthe unripe", "problem": "Word stubs from the facing page are translated and shown as this page's marginal notes", "severity": "serious", "class": "I4" },
+          { "source": "Istud e cunctus unus que uidet inspectore pu patris", "english": "This is the one who is seen in the breast of the father described above.", "problem": "The vision's referent, 'lucidus limus' (shining clay), is lost, and the English invents 'the one'", "severity": "moderate", "class": "O6" },
+          { "source": "Hoc tale e Sicut pastor grege sui pas cet eu suum lege qua", "english": "This means: As a shepherd feeds his flock, so he feeds it with his own law", "problem": "Hildegard's gloss 'so my Son, the good shepherd, will feed his redeemed flock' is missing (it is on the image but not in the OCR)", "severity": "moderate", "class": "O5" },
+          { "source": "Outu de istis erit sup ha bundanes", "english": "Of such people it will be that they overflow in good things", "problem": "'Many of these will be' became a general statement", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "A raw <column-break/> tag sits in the English reading text", "severity": "minor", "class": "D1" },
+          { "note": "The OCR warning calls the hand 'Carolingian minuscule'. It is a later protogothic or early gothic book hand.", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "Isaiah 40:11. The OCR gives a shortened form of the verse; th", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "This is the one who is seen in the breast of the father described above.", "why": "The sentence points back to a figure in Hildegard's vision. Without a note saying which vision image this is, a general reader cannot tell who 'the father described above' is." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf is in a fitting Scivias manuscript. The page has serious errors: a dropped negation ('non' read as 'ii') reverses the statement about angels and humans, and the facing page's edge strip is transcribed and translated as marginalia. Two clauses are also lost from the Isaiah passage and its gloss."
+  }
+]

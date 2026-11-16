@@ -1,0 +1,19 @@
+live_model {'B': (26, 4.565, 4.135, [-1.324, 0.473]), 'C': (26, 4.565, 0.986, [-4.979, -2.36]), 'D': (26, 4.565, 3.412, [-2.189, -0.16])}
+older_model {'B': (171, 9.334, 6.075, [-3.962, -2.597]), 'C': (173, 9.211, 3.769, [-6.477, -4.529]), 'D': (173, 9.211, 5.681, [-4.309, -2.781])}
+en_only  A n=50 serious/1k=8.407
+   B n=50 A=8.407 arm=4.214 diff=-4.193 ci=[-5.458, -3.138] added=4 worse=4 better=41 newq=98 fixed=51/51
+   C n=50 A=8.407 arm=2.658 diff=-5.749 ci=[-7.051, -4.67] added=3 worse=1 better=48 newq=20 fixed=47/51 decoys={'decoys': 50, 'applied': 2, 'orig_kept': 37, 'rewritten': 11, 'applied_pages': ['69a5e483006a40984221767c', '6a43ab2b3c91e2a63d4d8ea5']}
+   D n=50 A=8.407 arm=4.886 diff=-3.521 ci=[-4.754, -2.379] added=8 worse=4 better=39 newq=45 fixed=41/51
+both     A n=50 serious/1k=13.997
+   B n=50 A=13.997 arm=10.86 diff=-3.138 ci=[-4.626, -1.82] added=12 worse=7 better=32 newq=296 fixed=102/106
+   C n=49 A=13.544 arm=6.084 diff=-7.461 ci=[-9.824, -5.357] added=5 worse=4 better=40 newq=98 fixed=101/106 decoys={'decoys': 48, 'applied': 4, 'orig_kept': 29, 'rewritten': 15, 'applied_pages': ['6a3c64b539b4508b04e2961a', '69b51d0e47b06ecd581832c1', '69906e738a353648e1ed0070', '69dbcb761040d1d5e20b6a87']}
+   D n=49 A=13.544 arm=8.964 diff=-4.581 ci=[-6.165, -3.142] added=9 worse=6 better=38 newq=133 fixed=74/106
+clean    A n=100 serious/1k=5.174
+   B n=97 A=5.019 arm=2.962 diff=-2.057 ci=[-2.876, -1.256] added=20 worse=17 better=48 newq=102 fixed=0/0
+   C n=100 A=5.174 arm=1.941 diff=-3.233 ci=[-4.072, -2.502] added=4 worse=4 better=63 newq=26 fixed=0/0 decoys={'decoys': 98, 'applied': 2, 'orig_kept': 85, 'rewritten': 11, 'applied_pages': ['6a08577715c643eb1af5bae0', '69bd9fd0f6d63c9197482583']}
+   D n=100 A=5.174 arm=3.005 diff=-2.169 ci=[-3.05, -1.386] added=15 worse=12 better=52 newq=35 fixed=0/0
+flagged  A n=100 serious/1k=11.43
+   B n=100 A=11.43 arm=7.831 diff=-3.599 ci=[-4.551, -2.745] added=16 worse=11 better=73 newq=394 fixed=153/157
+   C n=99 A=11.181 arm=4.535 diff=-6.646 ci=[-7.998, -5.437] added=8 worse=5 better=88 newq=118 fixed=148/157 decoys={'decoys': 98, 'applied': 6, 'orig_kept': 66, 'rewritten': 26, 'applied_pages': ['6a3c64b539b4508b04e2961a', '69b51d0e47b06ecd581832c1', '69906e738a353648e1ed0070', '69dbcb761040d1d5e20b6a87', '69a5e483006a40984221767c', '6a43ab2b3c91e2a63d4d8ea5']}
+   D n=99 A=11.181 arm=7.114 diff=-4.066 ci=[-5.069, -3.11] added=17 worse=10 better=77 newq=178 fixed=115/157
+beat_A 278

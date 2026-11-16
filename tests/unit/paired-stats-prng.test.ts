@@ -32,11 +32,15 @@ describe('paired-stats seeded generator', () => {
   it('is uniform: every decile holds 10% of 1,000,000 draws, within 1%', () => {
     resetSeed();
     const deciles = new Array(10).fill(0);
+    // One assertion after the loop, not a million inside it: the per-draw `expect` took 49 s on a busy
+    // runner and timed out with nothing wrong (#37).
+    let outOfRange = 0;
     for (let i = 0; i < N; i++) {
       const x = seededRand();
-      expect(x >= 0 && x < 1).toBe(true);
+      if (!(x >= 0 && x < 1)) outOfRange++;
       deciles[Math.floor(x * 10)]++;
     }
+    expect(outOfRange).toBe(0);
     for (const count of deciles) {
       expect(count).toBeGreaterThanOrEqual(99_000);
       expect(count).toBeLessThanOrEqual(101_000);

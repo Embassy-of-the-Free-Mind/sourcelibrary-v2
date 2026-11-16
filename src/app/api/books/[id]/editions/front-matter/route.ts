@@ -110,7 +110,7 @@ export const POST = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 function buildBookContext(book: Book, pages: Page[]): string {
   const parts: string[] = [];

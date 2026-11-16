@@ -1,0 +1,130 @@
+{
+ "greek-flash3-print/3flash>agy-flash-low-written": {
+  "written": "32/40",
+  "accept": "23/40",
+  "wrong_text": "15/40",
+  "floor": "0/40"
+ },
+ "greek-flash3-print/agy-flash-low@4-written": {
+  "written": "36/40",
+  "accept": "25/40",
+  "wrong_text": "12/40",
+  "floor": "1/40"
+ },
+ "greek-flash3-print/3flash": {
+  "accept": "19/40",
+  "wrong_text": "17/40",
+  "floor": "1/40"
+ },
+ "greek-flash3-print/3flash>agy-flash-low": {
+  "accept": "24/40",
+  "wrong_text": "14/40",
+  "floor": "1/40"
+ },
+ "greek-flash3-print/agy-flash-low@4": {
+  "accept": "24/40",
+  "wrong_text": "12/40",
+  "floor": "2/40"
+ },
+ "greek-flash3-print/3flash>opus-correct": {
+  "accept": "29/30",
+  "wrong_text": "0/30",
+  "floor": "0/30"
+ },
+ "greek-flash3-unknown/3flash>agy-flash-low-written": {
+  "written": "35/40",
+  "accept": "14/40",
+  "wrong_text": "21/40",
+  "floor": "7/40"
+ },
+ "greek-flash3-unknown/agy-flash-low@4-written": {
+  "written": "34/40",
+  "accept": "19/40",
+  "wrong_text": "17/40",
+  "floor": "7/40"
+ },
+ "greek-flash3-unknown/3flash": {
+  "accept": "16/40",
+  "wrong_text": "20/40",
+  "floor": "8/40"
+ },
+ "greek-flash3-unknown/3flash>agy-flash-low": {
+  "accept": "13/40",
+  "wrong_text": "21/40",
+  "floor": "7/40"
+ },
+ "greek-flash3-unknown/agy-flash-low@4": {
+  "accept": "19/39",
+  "wrong_text": "16/39",
+  "floor": "7/39"
+ },
+ "greek-flash3-unknown/3flash>opus-correct": {
+  "accept": "25/28",
+  "wrong_text": "1/28",
+  "floor": "1/28"
+ },
+ "latin-flash3-print/3flash>agy-flash-low-written": {
+  "written": "33/40",
+  "accept": "32/40",
+  "wrong_text": "4/40",
+  "floor": "1/40"
+ },
+ "latin-flash3-print/agy-flash-low@4-written": {
+  "written": "39/40",
+  "accept": "29/40",
+  "wrong_text": "6/40",
+  "floor": "2/40"
+ },
+ "latin-flash3-print/3flash": {
+  "accept": "30/40",
+  "wrong_text": "6/40",
+  "floor": "1/40"
+ },
+ "latin-flash3-print/3flash>agy-flash-low": {
+  "accept": "33/38",
+  "wrong_text": "1/38",
+  "floor": "0/38"
+ },
+ "latin-flash3-print/agy-flash-low@4": {
+  "accept": "30/40",
+  "wrong_text": "5/40",
+  "floor": "1/40"
+ },
+ "latin-flash3-print/3flash>opus-correct": {
+  "accept": "29/30",
+  "wrong_text": "1/30",
+  "floor": "0/30"
+ },
+ "latin-flash3-unknown/3flash>agy-flash-low-written": {
+  "written": "30/50",
+  "accept": "33/50",
+  "wrong_text": "15/50",
+  "floor": "4/50"
+ },
+ "latin-flash3-unknown/agy-flash-low@4-written": {
+  "written": "44/50",
+  "accept": "34/50",
+  "wrong_text": "12/50",
+  "floor": "3/50"
+ },
+ "latin-flash3-unknown/3flash": {
+  "accept": "33/50",
+  "wrong_text": "15/50",
+  "floor": "5/50"
+ },
+ "latin-flash3-unknown/3flash>agy-flash-low": {
+  "accept": "37/50",
+  "wrong_text": "12/50",
+  "floor": "4/50"
+ },
+ "latin-flash3-unknown/agy-flash-low@4": {
+  "accept": "34/50",
+  "wrong_text": "12/50",
+  "floor": "3/50"
+ },
+ "latin-flash3-unknown/3flash>opus-correct": {
+  "accept": "28/30",
+  "wrong_text": "1/30",
+  "floor": "0/30"
+ }
+}

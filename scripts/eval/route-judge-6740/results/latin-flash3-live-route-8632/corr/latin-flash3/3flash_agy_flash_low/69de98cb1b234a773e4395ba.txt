@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>6.</page-num>
+
+<image-desc size="large" type="engraving" significance="high">
+An architectural linear perspective engraving enclosed within an oval border set into a rectangular plate, with elaborate strapwork and scrollwork ornaments filling the four corners. The composition features a view looking through colonnaded classical porticos and under a massive coffered barrel vault with an oculus. In the foreground on the left, an inscribed pedestal bears the designer's attribution. Beyond the vaulted corridor, a courtyard opens onto an elaborate Renaissance palace facade with arched openings, niches with statues, multiple stories, and a prominent shaped roofline with spires and finials.
+</image-desc>
+
+<insert>
+VRIE
+SE
+INV
+ENT
+</insert>
+
+<vocab>Hans Vredeman de Vries, perspective, architecture, engraving, strapwork, Renaissance</vocab>

@@ -1,0 +1,78 @@
+<scan-quality>good</scan-quality>
+<language>Aramaic</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<warning>Handwritten [Yemenite square Hebrew script]. The page mixes three languages line by line: the Hebrew biblical verse (with vowel points, here left out), the Aramaic Targum and a Judeo-Arabic translation. The marginal Masoretic notes are small and partly uncertain.</warning>
+
+יא ערוסא מא אגוד מחבתך אטיב מן
+אלכמר ודהאנך אכיר מן אלאטיאב
+נפת תטפנה שפתותיך כלה דבש
+וחלב תחת לשונך וריח שלמתיך
+כריח לבנון ובעידן דמצלין כהניא
+בעזרתא דקודשא ולהון <unclear>שפותהן</unclear>
+כיערת דובשא לישנך <unclear>כנעפי</unclear> צניעא
+במללותך שירין ותשבחן מתילן
+<margin>בשמן</margin>
+כחלב ודבש וריח לבושי כהנין כריח
+אלבנן שפתאך תנטף שהדא יא
+ערוס אעסל ולבן תחת לסאנך ור
+ואיחה בזך כראיחה אלבנאן גן
+נעול אחתי כלה גל נעול מעין חתום
+ונשייך דמתנסבן לגברין צניען כגנתי
+<unclear>שי</unclear>עא וכגינתא דעדן דלית רשו
+לגבר למיעל לגוה אלהן צדיקיא
+דנפשהון משתלחין תמן על יד
+מלאכיא ובתוליך טמירן כגנזין
+דאלפילין וחתימין תמן כמבועא
+דמיא חיין מתחות עיקרי אילנא
+דחיין בנהרא דנפיק מעדן ומתפרש
+לארבעא רישי נהרין ואלמלי דהוא
+חתים בשמא רבא וקדישא הוה
+נפיק ומבע ושטף כל עלמא יא
+
+<column-break/>
+
+<margin>ש</margin>
+בריש טור תלגא ואומיא דבחרמון
+ויהון מסקין לך מסין יתבי כרכין
+<margin>ב</margin>
+תקיפין דאינון גברין כאריון ותקרבתא
+<margin>ג</margin>
+מן קרוי טוריא דחסינין מן נמורים
+<margin>א</margin>
+עורי מן אלבנאן יא כנה תם עורי אתי
+<margin>פיסו ראש וסופה</margin>
+מן אלבנאן תגין תלמחין מן ראס
+<margin>ז</margin>
+ברדא מן ראס שניר וחרמון מואטן
+<margin>ב</margin>
+<unclear>ואסד</unclear> מן גבל נמורים לבבתני אחתי
+<margin>באחת ק</margin>
+כלה לבבתני באחד מעיניך באחד
+<margin>ב חס</margin>
+ענק מצורניך קביע על לוח לבי
+חבת זוטר דבנך והוא כחד מן רבני
+<margin>ב</margin>
+סנהדרין וכחד מן <unclear>לנפי</unclear> דהיא צניעא
+<margin>ב</margin>
+קביע על מלכא דבית יהודה דהוה
+יהיבא כלילא דמלכותא על צואריה
+אכדת קלבי יא אכתי יא ערוס אכדת
+קלבי באחדה מן עיניך במכנקה
+ואחדה מן ענקך מה יפו דדיך אחתי
+<margin>ב</margin>
+כלה מה טבו דדיך מיין וריח שמניך
+מכל בשמים כמה שפירין עלי
+חביבתיך אחתי כנשתא דישראל
+דמתילא <unclear>לנפי</unclear> דהיא צניעא כמה
+טבן עלי חבתיך יתיר מן שבעין
+אומיא ושום דצדיקין נדיף מכל
+בסמהון מא אחסן תודדך יא אכתי
+
+---
+
+<margin>עד יא בטעמים סוף פסוקי שלחך <unclear>ודדתה</unclear> <unclear>אבדך</unclear> שובך <unclear>חיותם</unclear> קדקדך קדקדו לשמים עד שתחפץ ג בו — נעול ב ואמון בחד פיסוק</margin>
+<margin><unclear>מעין ד</unclear></margin>
+
+<vocab>Song of Songs 4, Targum, Judeo-Arabic translation, Masorah, כלה, אחתי, לבנון, גן נעול, מעין חתום, כנשתא דישראל, סנהדרין, חרמון, שניר</vocab>

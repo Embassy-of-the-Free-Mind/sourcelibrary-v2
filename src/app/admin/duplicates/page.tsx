@@ -159,7 +159,7 @@ export default function DuplicatesPage() {
                 <div className="text-xs font-medium mb-1" style={{ color: CONFIDENCE_COLORS[level] }}>
                   {CONFIDENCE_LABELS[level]} confidence
                 </div>
-                <div className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
                   {data.summary[level].groups}
                 </div>
                 <div className="text-xs" style={{ color: 'var(--text-muted)' }}>

@@ -62,7 +62,7 @@ export function PrList({ prs, repo }: { prs: WorkPr[]; repo: string }) {
       {months.length === 0 ? <p className="text-sm text-stone-600">Nothing matches.</p> : null}
       {months.map(([m, list]) => (
         <div key={m} className="grid gap-2 min-w-0">
-          <h3 className="font-sans !font-bold tracking-tight text-xl text-stone-950">{m} <span className="font-normal text-stone-500">{list.length}</span></h3>
+          <h3 className="font-sans !font-semibold tracking-tight text-xl text-stone-950">{m} <span className="font-normal text-stone-500">{list.length}</span></h3>
           <ul className="rounded border border-stone-200 bg-white divide-y divide-stone-100">
             {list.map((p) => (
               <li key={p.n} className="px-3 py-2.5 flex items-baseline gap-3 text-base min-w-0">

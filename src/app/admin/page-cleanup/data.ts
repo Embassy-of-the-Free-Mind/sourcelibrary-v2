@@ -90,16 +90,6 @@ export const TRIAGE: TriageRow[] = [
 
 // Every hard-coded library count that should read from the live stats instead.
 export const NUMBERS: NumberRow[] = [
-  ['Site search and MCP feature list', 'src/lib/site-features.json:53, 136', '"10,000+ books", "19,000+ texts in 200+ languages"', 'Feeds site search and the AI tools.'],
-  ['/developers', 'src/app/developers/page.tsx:47, 59', '15,000+ texts', ''],
-  ['/developers/pipeline', 'src/app/developers/pipeline/page.tsx:11, 158', '10,000+ books', ''],
-  ['/for-researchers', 'src/app/for-researchers/page.tsx:8, 50, 58', '17,000 books', ''],
-  ['/dataset', 'src/app/dataset/page.tsx:15', '19,000+ texts in 200+ languages', ''],
-  ['/explore/map', 'src/app/explore/map/page.tsx:104', '10,000+ books', 'The map itself says 53,042.'],
-  ['/explore/constellation', 'src/app/explore/constellation/page.tsx:11, 16', '33,000 books and artworks', 'Read from the map data, not the library total.'],
-  ['/upload', 'src/app/upload/page.tsx:274', '~37k books', ''],
-  ['/libraries', 'src/app/libraries/page.tsx', '14,000 works', ''],
-  ['/terms', 'src/app/terms/page.tsx:229', '17,000+ texts', 'Legal text: drop the number rather than make it move.'],
   ['/about/by-the-numbers', 'page.tsx:16-40', 'whole May snapshot', 'Archived in the plan; if kept, rebuild on live stats.'],
   ['/beta', 'BetaLandingClient.tsx', '10,000 books, 85,000 illustrations', 'Archived in the plan.'],
 ];

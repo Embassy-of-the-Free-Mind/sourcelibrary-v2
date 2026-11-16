@@ -1,0 +1,705 @@
+{
+ "frame": 726,
+ "tagged": 726,
+ "not_fetched": [],
+ "untagged_pending": 0,
+ "table": {
+  "sharada | manuscript": 500,
+  "sharada | lithograph": 117,
+  "devanagari | manuscript": 49,
+  "unclear | manuscript": 5,
+  "devanagari | lithograph": 10,
+  "devanagari | print": 19,
+  "arabic-persian | lithograph": 2,
+  "gurmukhi | manuscript": 4,
+  "newar | manuscript": 2,
+  "unclear | unclear": 1,
+  "mixed | print": 4,
+  "mixed | manuscript": 3,
+  "kannada | manuscript": 1,
+  "none | unclear": 3,
+  "latin | print": 3,
+  "arabic-persian | print": 1,
+  "arabic-persian | manuscript": 1,
+  "none | manuscript": 1
+ },
+ "unsure": {
+  "sharada": 142,
+  "unclear": 6,
+  "gurmukhi": 3,
+  "newar": 1,
+  "devanagari": 15,
+  "mixed": 5,
+  "kannada": 1,
+  "none": 2
+ },
+ "leaves_disagree": 14,
+ "disagree": [
+  {
+   "id": "6a94ccfb8e2a2ffc91d268d5",
+   "script": "Sharada",
+   "leaves": [
+    {
+     "page": 4,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 6,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 8,
+     "writing": true,
+     "script": "Sharada"
+    }
+   ]
+  },
+  {
+   "id": "6ade18a0655d20b046c6b170",
+   "script": "mixed",
+   "leaves": [
+    {
+     "page": 54,
+     "writing": true,
+     "script": "Latin"
+    },
+    {
+     "page": 70,
+     "writing": false,
+     "script": "none"
+    },
+    {
+     "page": 85,
+     "writing": true,
+     "script": "Devanagari"
+    }
+   ]
+  },
+  {
+   "id": "6a94905a31b41d9c57446fe8",
+   "script": "mixed",
+   "leaves": [
+    {
+     "page": 12,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 16,
+     "writing": true,
+     "script": "Devanagari"
+    },
+    {
+     "page": 19,
+     "writing": true,
+     "script": "Devanagari"
+    }
+   ]
+  },
+  {
+   "id": "6a94d6deb24b5a49c27d61c7",
+   "script": "Sharada",
+   "leaves": [
+    {
+     "page": 4,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 6,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 8,
+     "writing": true,
+     "script": "mixed"
+    }
+   ]
+  },
+  {
+   "id": "6a94943231b41d9c5744a920",
+   "script": "mixed",
+   "leaves": [
+    {
+     "page": -2,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 3,
+     "writing": true,
+     "script": "Devanagari"
+    },
+    {
+     "page": 6,
+     "writing": true,
+     "script": "Sharada"
+    }
+   ]
+  },
+  {
+   "id": "6a94d38b8e2a2ffc91d28b09",
+   "script": "Sharada",
+   "leaves": [
+    {
+     "page": 1,
+     "writing": true,
+     "script": "mixed"
+    },
+    {
+     "page": 5,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 8,
+     "writing": true,
+     "script": "Sharada"
+    }
+   ]
+  },
+  {
+   "id": "6a94945931b41d9c5744aa72",
+   "script": "mixed",
+   "leaves": [
+    {
+     "page": 1,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 2,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 3,
+     "writing": true,
+     "script": "Arabic-Persian"
+    }
+   ]
+  },
+  {
+   "id": "6a94a49cbf723b215d8bddf0",
+   "script": "Devanagari",
+   "leaves": [
+    {
+     "page": 3,
+     "writing": true,
+     "script": "Devanagari"
+    },
+    {
+     "page": 4,
+     "writing": true,
+     "script": "Devanagari"
+    }
+   ]
+  },
+  {
+   "id": "6a94905e31b41d9c57447009",
+   "script": "Sharada",
+   "leaves": [
+    {
+     "page": 10,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 14,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 17,
+     "writing": true,
+     "script": "unclear"
+    }
+   ]
+  },
+  {
+   "id": "6a94d201c3eaca06302665aa",
+   "script": "unclear",
+   "leaves": [
+    {
+     "page": 2,
+     "writing": false,
+     "script": "none"
+    },
+    {
+     "page": 3,
+     "writing": true,
+     "script": "unclear"
+    },
+    {
+     "page": 4,
+     "writing": false,
+     "script": "none"
+    }
+   ]
+  },
+  {
+   "id": "6a94e08feb0a31948266e76f",
+   "script": "mixed",
+   "leaves": [
+    {
+     "page": 5,
+     "writing": true,
+     "script": "mixed"
+    },
+    {
+     "page": 7,
+     "writing": true,
+     "script": "Latin"
+    },
+    {
+     "page": 8,
+     "writing": true,
+     "script": "Latin"
+    }
+   ]
+  },
+  {
+   "id": "6a94c7b88e2a2ffc91d25010",
+   "script": "Sharada",
+   "leaves": [
+    {
+     "page": -2,
+     "writing": true,
+     "script": "Latin"
+    },
+    {
+     "page": 6,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 12,
+     "writing": true,
+     "script": "Sharada"
+    }
+   ]
+  },
+  {
+   "id": "6a9492d631b41d9c57449d56",
+   "script": "Sharada",
+   "leaves": [
+    {
+     "page": 2,
+     "writing": true,
+     "script": "Latin"
+    },
+    {
+     "page": 7,
+     "writing": true,
+     "script": "Sharada"
+    },
+    {
+     "page": 12,
+     "writing": true,
+     "script": "Sharada"
+    }
+   ]
+  },
+  {
+   "id": "6a94a866bf723b215d8c0004",
+   "script": "Devanagari",
+   "leaves": [
+    {
+     "page": 4,
+     "writing": true,
+     "script": "unclear"
+    },
+    {
+     "page": 5,
+     "writing": true,
+     "script": "Devanagari"
+    },
+    {
+     "page": 6,
+     "writing": true,
+     "script": "Devanagari"
+    }
+   ]
+  }
+ ],
+ "control": {
+  "rows": [
+   {
+    "id": "6a94a79ebf723b215d8bf3a5",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "lithograph",
+    "opus_conf": "unsure",
+    "script_match": true,
+    "kind_match": false,
+    "sonnet_script": "gurmukhi",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a942fcbfc29dbd7ff1fb079",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "unsure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "lithograph"
+   },
+   {
+    "id": "6a94d47b8e2a2ffc91d29bb6",
+    "key_script": "devanagari",
+    "key_kind": "manuscript",
+    "opus_script": "devanagari",
+    "opus_kind": "manuscript",
+    "opus_conf": "unsure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94dc1cb24b5a49c27d8ba8",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94d38b8e2a2ffc91d28b09",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94ba7b56cac2f882c80dff",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94b97456cac2f882c808b7",
+    "key_script": "devanagari",
+    "key_kind": "manuscript",
+    "opus_script": "devanagari",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94c3d256cac2f882c84da3",
+    "key_script": "devanagari",
+    "key_kind": "print",
+    "opus_script": "devanagari",
+    "opus_kind": "lithograph",
+    "opus_conf": "unsure",
+    "script_match": true,
+    "kind_match": false,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "lithograph"
+   },
+   {
+    "id": "6a948e2431b41d9c574464df",
+    "key_script": "devanagari",
+    "key_kind": "print",
+    "opus_script": "devanagari",
+    "opus_kind": "lithograph",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": false,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "lithograph"
+   },
+   {
+    "id": "6a949a7931b41d9c5744d8a1",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94c9728e2a2ffc91d2594c",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94906431b41d9c57447026",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94a139bf723b215d8bd2b5",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "devanagari",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94d02f8e2a2ffc91d282b5",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "manuscript",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a94da34b24b5a49c27d7e3e",
+    "key_script": "sharada",
+    "key_kind": "lithograph",
+    "opus_script": "sharada",
+    "opus_kind": "lithograph",
+    "opus_conf": "sure",
+    "script_match": true,
+    "kind_match": true,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "lithograph"
+   },
+   {
+    "id": "6a948f7e31b41d9c57446bcb",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "lithograph",
+    "opus_conf": "unsure",
+    "script_match": true,
+    "kind_match": false,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "manuscript"
+   },
+   {
+    "id": "6a942ed752baa7aee625ade4",
+    "key_script": "sharada",
+    "key_kind": "manuscript",
+    "opus_script": "sharada",
+    "opus_kind": "lithograph",
+    "opus_conf": "unsure",
+    "script_match": true,
+    "kind_match": false,
+    "sonnet_script": "sharada",
+    "sonnet_kind": "manuscript"
+   }
+  ],
+  "script_matched": 17,
+  "script_compared": 17,
+  "kind_matched": 12,
+  "mismatches": []
+ },
+ "sonnet": {
+  "first100_pairs": 100,
+  "agree_script": 83,
+  "agree_kind": 92,
+  "confusion": {
+   "sharada → sharada": 77,
+   "devanagari → devanagari": 5,
+   "sharada → devanagari": 13,
+   "sharada → unclear": 4,
+   "unclear → unclear": 1
+  },
+  "kindConfusion": {
+   "manuscript → manuscript": 69,
+   "lithograph → manuscript": 7,
+   "lithograph → lithograph": 20,
+   "manuscript → lithograph": 1,
+   "print → print": 3
+  },
+  "scriptDiffs": [
+   {
+    "id": "6a9491eb31b41d9c574495a4",
+    "order": 13,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "small oblong book, magenta dandas, name-list stotra",
+    "sonnet_note": "Small oblong pothi, verses with magenta danda marks; some Sharada-like forms"
+   },
+   {
+    "id": "6a9491ef31b41d9c574495d3",
+    "order": 17,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "two leaves per image; magenta dandas",
+    "sonnet_note": "Bold pen hand, pink danda marks, marginal folio marks"
+   },
+   {
+    "id": "6a94da37b24b5a49c27d7e65",
+    "order": 19,
+    "opus": "Sharada/sure",
+    "sonnet": "unclear/unsure",
+    "opus_note": "almanac tables, printed frames, Sharada numerals",
+    "sonnet_note": "Almanac tables in printed ruled frames, handwritten-style numerals and text"
+   },
+   {
+    "id": "6a94c1af56cac2f882c830f8",
+    "order": 23,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "painted yellow-red frames around the text",
+    "sonnet_note": "Framed leaves with orange borders, red double dandas"
+   },
+   {
+    "id": "6a949a1831b41d9c5744d660",
+    "order": 26,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "oblong leaves, namah-litany, marginal folio marks",
+    "sonnet_note": "Namah formulae; Devanagari with Kashmiri flavour"
+   },
+   {
+    "id": "6a949d4131b41d9c5744e7d1",
+    "order": 37,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "badly damaged leaves, red dandas",
+    "sonnet_note": "Red double dandas, damaged paper, Panjab Digital Library; Sharada not excluded"
+   },
+   {
+    "id": "6a94c8f08e2a2ffc91d25663",
+    "order": 38,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "red-and-black ruled frames, Sharada folio numbers",
+    "sonnet_note": "Red-ruled border frame, Gurmukhi-influenced forms, possibly vernacular text"
+   },
+   {
+    "id": "6a942f9f52baa7aee625b82b",
+    "order": 41,
+    "opus": "Sharada/unsure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "late Sharada hand with headstrokes; page 16 blank; red-ruled leaf",
+    "sonnet_note": "Red-ruled small leaf; one blank page; letter forms Devanagari-like but somewhat cursive"
+   },
+   {
+    "id": "6a94d0cd8e2a2ffc91d2851b",
+    "order": 42,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/sure",
+    "opus_note": "damaged Sharada paper manuscript, red overlining",
+    "sonnet_note": "Damaged paper, red rubrication, Devanagari text"
+   },
+   {
+    "id": "6a94cfa08e2a2ffc91d27c78",
+    "order": 43,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/sure",
+    "opus_note": "Sharada with red/yellow dandas; Devanagari pencil accession note",
+    "sonnet_note": "Red danda marks; opening invocation; coloured paper on some leaves"
+   },
+   {
+    "id": "6a94994131b41d9c5744cb4a",
+    "order": 44,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "bold Sharada hand, small oblong leaves",
+    "sonnet_note": "Bold broad-pen hand, landscape leaves; possibly Nepalese style"
+   },
+   {
+    "id": "6a94d0c68e2a2ffc91d2850e",
+    "order": 45,
+    "opus": "Sharada/unsure",
+    "sonnet": "unclear/unsure",
+    "opus_note": "badly worm-eaten leaves; letter forms look like Sharada",
+    "sonnet_note": "Heavily insect-damaged; Devanagari and Gurmukhi-like forms both appear"
+   },
+   {
+    "id": "6a94cfed8e2a2ffc91d27eb5",
+    "order": 47,
+    "opus": "Sharada/unsure",
+    "sonnet": "unclear/unsure",
+    "opus_note": "heavily damaged; pages 3-4 show same leaf; page 5 blank board",
+    "sonnet_note": "Badly worm-eaten; letters Devanagari or Gurmukhi-like; final page is a blank cover"
+   },
+   {
+    "id": "6a9493e631b41d9c5744a63a",
+    "order": 66,
+    "opus": "Sharada/sure",
+    "sonnet": "unclear/unsure",
+    "opus_note": "handwritten tabular register in purple ink with numeric columns",
+    "sonnet_note": "Ruled ledger in purple ink, cursive Sharada/Takri-like forms"
+   },
+   {
+    "id": "6a94bf0256cac2f882c81ed1",
+    "order": 78,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "decorated leaves with yellow and red ruled frames, red daṇḍas",
+    "sonnet_note": "Bordered coloured frames, red verse marks; Sharada not excluded"
+   },
+   {
+    "id": "6a942e2152baa7aee625ab57",
+    "order": 81,
+    "opus": "Sharada/sure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "bold late Sharada hand, yellow and orange highlighting",
+    "sonnet_note": "Bold hand, long diagonal strokes, Kashmiri-style Devanagari; Sharada not ruled out"
+   },
+   {
+    "id": "6a94d1e1c3eaca0630266586",
+    "order": 86,
+    "opus": "Sharada/unsure",
+    "sonnet": "Devanagari/unsure",
+    "opus_note": "badly insect-damaged leaves, red dandas; some letters look close to Devanagari",
+    "sonnet_note": "Worm-eaten paper, red dandas; Sharada possible"
+   }
+  ],
+  "keyed_sharada_called_devanagari": [
+   "6a94dc1cb24b5a49c27d8ba8",
+   "6a94d38b8e2a2ffc91d28b09",
+   "6a94c9728e2a2ffc91d2594c",
+   "6a94a139bf723b215d8bd2b5"
+  ],
+  "key_script_match": "12/17",
+  "pass": false
+ }
+}

@@ -1,0 +1,3163 @@
+{
+ "tally": {
+  "write": 67,
+  "no fresh read accepted": 23,
+  "stored kept": 30
+ },
+ "pages": [
+  {
+   "page_id": "69b51e3b9a81ef7feb3d1fff",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "je64843c7ad88"
+  },
+  {
+   "page_id": "69b51ec99a81ef7feb3dad8a",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jdc1c06e5a621"
+  },
+  {
+   "page_id": "6a42a96fdec0f9e2eccabf9e",
+   "lang": "Latin",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a4cf29c692072e77e2ca333",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "6a4b741e998fdd30218faf08",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j67caa8227fc0"
+  },
+  {
+   "page_id": "6a4a69d87b720133514b0db8",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j86e64bd95c86"
+  },
+  {
+   "page_id": "6a4b54068ee707cba1b15452",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j7c990163aec7"
+  },
+  {
+   "page_id": "6a4fd17b67dbb523ea0f55f4",
+   "lang": "Latin",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a3eb5535598be95b4ffd65f",
+   "lang": "Latin",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69906161ef12272ffdc8d70f",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j96d860114109"
+  },
+  {
+   "page_id": "6a4c601e4f9f1be4c86c0990",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "6a4a59173a479d44b0033f00",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j02f63ef8e170"
+  },
+  {
+   "page_id": "6a4ee02ad5c834174f815d4e",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "6a4ad58102f968641aca2fdd",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T2": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jdd62f112a29e"
+  },
+  {
+   "page_id": "6a4aaefd14a573f4677191c6",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "6a4bc5536a8b1dab563dfa36",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j3f5c60b3b99f"
+  },
+  {
+   "page_id": "69dbc93d1040d1d5e20a1736",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 3
+    }
+   },
+   "judged_as": "j4b0fbfabb762"
+  },
+  {
+   "page_id": "6a4939271bbf4176e1e96ffe",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 3
+    }
+   },
+   "judged_as": "j052adc3badf1"
+  },
+  {
+   "page_id": "6a42b7a05207af7c42f63166",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 3
+    }
+   },
+   "judged_as": "j7b8d39dbb4e3"
+  },
+  {
+   "page_id": "6a4f0239b18250223e2f3cc0",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j3e2c4ba3b4d3"
+  },
+  {
+   "page_id": "6a4cbdb0a4a65af01ae27207",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "6a4ba194debad28d8e8de5b7",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j99df346338f2"
+  },
+  {
+   "page_id": "6a0850c115c643eb1af48a2f",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j7b5e03216362"
+  },
+  {
+   "page_id": "6a4bd743ce03c0929df13687",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69dbc7d21040d1d5e209488b",
+   "lang": "Latin",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69f32ea6876dd827cbc444a0",
+   "lang": "Latin",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a43851557a09c2c0fcc0019",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 1,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j35a2b97a331f"
+  },
+  {
+   "page_id": "6a4ecd3b62c75f944baf1ab1",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j4ee2a5a4cb5e"
+  },
+  {
+   "page_id": "6a4a5b150673e7922c995a8b",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j1ebf91c15536"
+  },
+  {
+   "page_id": "69dbc7e31040d1d5e2095090",
+   "lang": "Latin",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a42566e2c7e112824a635ed",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j629ab0db8808"
+  },
+  {
+   "page_id": "6a512ced9dbe7960a4049ff2",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T2": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j903eb4aa3df3"
+  },
+  {
+   "page_id": "6a4ccd19b65d3df956356bf9",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 5,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T2": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jf7c4011423c2"
+  },
+  {
+   "page_id": "69b303295facc83a9a3d952b",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "jc1bea1ff9c39"
+  },
+  {
+   "page_id": "6a4524bf3f399e603381744d",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j733d345bbf71"
+  },
+  {
+   "page_id": "6a4b846e998fdd30218fce76",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "6a43b3963c91e2a63d4dc05e",
+   "lang": "Latin",
+   "decision": "stored kept",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69b2f37f21208ea9dc278578",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jf774f24a112b"
+  },
+  {
+   "page_id": "69dbcbb51040d1d5e20ba429",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j4b3044e29240"
+  },
+  {
+   "page_id": "6a42817628e9db2e39c255fa",
+   "lang": "Latin",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j1dc4684357a3"
+  },
+  {
+   "page_id": "69aead9166bcc9447837db76",
+   "lang": "German",
+   "decision": "stored kept",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69b51d71261c58d63664a993",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j7c5540abb56c"
+  },
+  {
+   "page_id": "6a26bd0ed6b178e5aad87e33",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6991eb0d2f801130a473f536",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j3839ffd29e78"
+  },
+  {
+   "page_id": "6a49160fa9e39181572e2997",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a100a11f71729295096dd4b",
+   "lang": "German",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69bd9f28f6d63c919747fa0c",
+   "lang": "German",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "6a491cd0a9e39181572e660a",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j562a1db02ae0"
+  },
+  {
+   "page_id": "69dbca481040d1d5e20aabbe",
+   "lang": "German",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j122689ac0054"
+  },
+  {
+   "page_id": "6a267ef46c1f37c9c4f3d27a",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jdc2edaf4af76"
+  },
+  {
+   "page_id": "6a100a03f71729295096d8e8",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69b51df8261c58d63664d90b",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j24e431e2499b"
+  },
+  {
+   "page_id": "6a3f02de97e91e1768f689b2",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69afdc01e42898a2828788cd",
+   "lang": "German",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69ac80971aa2dc787a6851b2",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j3848b1cd684f"
+  },
+  {
+   "page_id": "6a26dce54fe8b0974950ddf6",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j91bd768d3e1d"
+  },
+  {
+   "page_id": "6a26be2f0e247ebad6de6f43",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a267cf76c1f37c9c4f37b4a",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jd9b2858eb4d3"
+  },
+  {
+   "page_id": "6a492b63337a56e8828ac28e",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j2867536bef5b"
+  },
+  {
+   "page_id": "69905e1a2fd6a039938a11a7",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j106883a394ff"
+  },
+  {
+   "page_id": "6a4265c5dfbbb4d07aa6c00c",
+   "lang": "German",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jdf2c7e91554c"
+  },
+  {
+   "page_id": "69906330ef12272ffdc901d3",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T2": {
+     "accept": false,
+     "serious": 4,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j85227dce6d5f"
+  },
+  {
+   "page_id": "69b51dcfcf111105c4290a25",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69ac8e57e54b190acc1d3aeb",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jaf00a0bb6d14"
+  },
+  {
+   "page_id": "6a243f300f0e4f405e6350d8",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j0933d8792942"
+  },
+  {
+   "page_id": "6a49304d1bbf4176e1e8e543",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "je054e5078d00"
+  },
+  {
+   "page_id": "69b51eddc35d928cea4f1131",
+   "lang": "German",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j7e45717d03cf"
+  },
+  {
+   "page_id": "6a425311343d756d34e34f7c",
+   "lang": "German",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jf779d93fcc51"
+  },
+  {
+   "page_id": "6a492bd91bbf4176e1e8bfd1",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j32c9b7786221"
+  },
+  {
+   "page_id": "6a243e5a0f0e4f405e633da1",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j1379b0bb455e"
+  },
+  {
+   "page_id": "6a4913b6ae20621d947e3a2a",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jb82857b296f4"
+  },
+  {
+   "page_id": "6a425e61744db9e3105a42e6",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j560eea2d85dd"
+  },
+  {
+   "page_id": "69b4ccc4d5b6c3815e1a2379",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j18c1d719934f"
+  },
+  {
+   "page_id": "6a49241ea45b99e46af97633",
+   "lang": "German",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69bda06af6d63c9197487935",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j9664a95a0a43"
+  },
+  {
+   "page_id": "6a26bc2cd6b178e5aad814d6",
+   "lang": "German",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j3e8d901d19e8"
+  },
+  {
+   "page_id": "69b51de7efd8df28f2dacee2",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": true,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j4940db6ba57c"
+  },
+  {
+   "page_id": "69ade6cc2fcf4ffa86cec283",
+   "lang": "German",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j90cdbfa50918"
+  },
+  {
+   "page_id": "6a26bf6a0e247ebad6dec83a",
+   "lang": "German",
+   "decision": "stored kept",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "6a26bbffd6b178e5aad80743",
+   "lang": "German",
+   "decision": "stored kept",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69e41efcd0364cb0bcf79d26",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69de9bdcee732e00cc8a47c2",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "6990793c7d066daf3b4a96eb",
+   "lang": "French",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "ja7af5e9120df"
+  },
+  {
+   "page_id": "69528cf1ab34727b1f04f6f7",
+   "lang": "French",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j4e71c0c6f81b"
+  },
+  {
+   "page_id": "6a426f79e0c18453d93887fd",
+   "lang": "French",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "T": {
+     "accept": false,
+     "serious": 3,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 4,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j253969eb397a"
+  },
+  {
+   "page_id": "69b4cca1d5b6c3815e1a18c0",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69f33274876dd827cbc4a0b0",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69ee4f136dd925d126f42e68",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69b21c6079013c38632897b4",
+   "lang": "French",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j3a24c95f0eae"
+  },
+  {
+   "page_id": "69b4ccacd5b6c3815e1a1e4e",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "699047e612d83c216b7e8c5a",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69b525ce6be6046083032b3f",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69e41a448a8dae1074c538c0",
+   "lang": "French",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "je3e2e4bd4e9e"
+  },
+  {
+   "page_id": "6991bd4770254d38471e3ac4",
+   "lang": "French",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j942fab50887e"
+  },
+  {
+   "page_id": "69bd958ad9007d72ade0c7f9",
+   "lang": "French",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j6336f373f049"
+  },
+  {
+   "page_id": "69f33ac9876dd827cbc5823a",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69b5258a2379d2fed6c28a74",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "699068a8249ce014347d7370",
+   "lang": "French",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "j18d8c5969d6e"
+  },
+  {
+   "page_id": "69b51eac9a81ef7feb3d9424",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69f3327d876dd827cbc4a183",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69b4c08d6248be021e01f707",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69b4ccbdd5b6c3815e1a22d4",
+   "lang": "French",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "jb6c0e90eabd3"
+  },
+  {
+   "page_id": "69aea5a757ed98c21d25a8e7",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69ac5f7cebeb54840de0f1d0",
+   "lang": "French",
+   "decision": "write",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "jf967e30abea4"
+  },
+  {
+   "page_id": "69b51eb047b06ecd5819526b",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "695935a57d14807348773959",
+   "lang": "French",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "jea700a7cc7ce"
+  },
+  {
+   "page_id": "69b525b229577f283b57b1d9",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "I",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69bda11ff6d63c919748e665",
+   "lang": "French",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 1,
+     "wrong_text": 1,
+     "fidelity": 3
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   },
+   "judged_as": "j0e163f3b7824"
+  },
+  {
+   "page_id": "6a8ee24090f5a0e4155eb08f",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "695935e13b43cb6630c91536",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69b525af95677df8153c6ffc",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69b51eafcf111105c42a2ee8",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "699200c0768b42660023a4ba",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 1,
+     "wrong_text": 0,
+     "fidelity": 4
+    }
+   }
+  },
+  {
+   "page_id": "69f33177876dd827cbc48efb",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69e8054cfdad300064d9cea5",
+   "lang": "French",
+   "decision": "write",
+   "best": "T2",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 4,
+     "wrong_text": 2,
+     "fidelity": 2
+    },
+    "T": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 1,
+     "fidelity": 4
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 3
+    }
+   },
+   "judged_as": "j2a6ef641b0c7"
+  },
+  {
+   "page_id": "695935a27d148073487738fb",
+   "lang": "French",
+   "decision": "write",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": false,
+     "serious": 2,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 4
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   },
+   "judged_as": "je1481336ddf6"
+  },
+  {
+   "page_id": "69b4cc71d5b6c3815e1a0522",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "6a100980f71729295096a5c5",
+   "lang": "French",
+   "decision": "stored kept",
+   "best": "T",
+   "arms": {
+    "S": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "T2": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    },
+    "I": {
+     "accept": true,
+     "serious": 0,
+     "wrong_text": 0,
+     "fidelity": 5
+    }
+   }
+  },
+  {
+   "page_id": "69e41a3d8a8dae1074c5371e",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  },
+  {
+   "page_id": "69aea6ec29b07b134d10ecc3",
+   "lang": "French",
+   "decision": "no fresh read accepted"
+  }
+ ]
+}

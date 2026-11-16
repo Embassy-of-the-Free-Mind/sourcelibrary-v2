@@ -1,5 +1,5 @@
 {
-  "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (history), .claude/docs/routing.md (the router table's four routes per cell, and what to do with a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/maintenance/router-routing-rows.mjs --write), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. It RECORDS routing; it does not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
+  "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (history), .claude/docs/routing.md (the router table's four routes per cell, and what to do with a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/maintenance/router-routing-rows.mjs --write), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. Its `rows` are PAGE-KIND DESCRIPTIONS, not routes: a row's `reader` is the engine its dated evidence chose (e.g. latin-script-print says Flash-Lite, while the live route for Latin print is agy), so never read a route off `rows`. The routes are `router_cells` (generated from scripts/eval/estimator/router-table/current.json; .claude/docs/routing.md explains them). The rows do not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
   "as_of": "2026-10-26",
   "issue": 6688,
   "fields": {
@@ -1017,6 +1017,11 @@
           "lane": "reread",
           "set": "2026-11-01",
           "until": "2026-11-14"
+        },
+        {
+          "lane": "reread",
+          "set": "2026-11-13",
+          "until": "2026-11-27"
         }
       ]
     },

@@ -75,9 +75,10 @@ describe('materializePages (#7343)', () => {
     await seedLazyBook(db);
     const { calls, fetchManifest } = slowFetcher();
 
+    // waitMs is how long the second caller waits for the first to finish writing: 5 s was not enough on a loaded CI runner (gex45-3, 2026-11-13)
     const [a, b] = await Promise.all([
-      materializePages(db, BOOK, { trigger: 'reader', fetchManifest, waitMs: 5000 }),
-      materializePages(db, BOOK, { trigger: 'ocr-dispatch', fetchManifest, waitMs: 5000 }),
+      materializePages(db, BOOK, { trigger: 'reader', fetchManifest, waitMs: 60_000 }),
+      materializePages(db, BOOK, { trigger: 'ocr-dispatch', fetchManifest, waitMs: 60_000 }),
     ]);
 
     expect(a.status).toBe('materialized');

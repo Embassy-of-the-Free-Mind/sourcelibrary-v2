@@ -149,3 +149,95 @@ describe('/admin/work line', () => {
     expect(spendLine(doc({ generated_at: ago(SPEND_STALE_H + 1) }), NOW).status).toBe('STALE');
   });
 });
+
+describe('(d) non-pipeline allowance (#345)', () => {
+  const day = (o: Record<string, unknown>) => ({ day: '2026-11-13', primary: true, dial_usd: 0, metered_usd: 30, envelope_usd: 20, outside_usd: 10, outside_pipeline_usd: 0, outside_other_usd: 10, other_top: [{ k: 'search', usd: 6 }, { k: 'embed', usd: 3 }, { k: 'eval', usd: 1 }], billed_usd: null, ...o });
+  it('does not FAIL $6.93 of non-pipeline spend under a $0 dial, and names the top sources', () => {
+    const r = S.dialCheck({ days: [day({ outside_usd: 6.93, outside_other_usd: 6.93 })], allowance: 15 });
+    expect(r.status).toBe('PASS');
+    expect(r.lines.join('\n')).toMatch(/allowance \$15\.00 \(limit \$22\.50\); top sources: search \$6\.00, embed \$3\.00, eval \$1\.00/);
+  });
+  it('FAILs non-pipeline spend over max(1.5 x allowance, allowance + 5)', () => {
+    const r = S.dialCheck({ days: [day({ outside_usd: 23, outside_other_usd: 23 })], allowance: 15 });
+    expect(r.status).toBe('FAIL');
+    expect(r.allowance_over).toBe(true);
+  });
+  it('still FAILs pipeline spend outside envelopes against the dial', () => {
+    expect(S.dialCheck({ days: [day({ outside_usd: 12, outside_pipeline_usd: 12, outside_other_usd: 0 })], allowance: 15 }).status).toBe('FAIL');
+  });
+  it('counts only METERED non-pipeline spend as authorised, so an unmetered bill still FAILs', () => {
+    // $3 metered, $30 billed: authorised is 3 (not the whole $15 allowance), limit 1.25 x 3 + 10 = 13.75.
+    const over = S.dialCheck({ days: [day({ metered_usd: 3, envelope_usd: 0, outside_usd: 3, outside_other_usd: 3, billed_usd: 30 })], allowance: 15 });
+    expect(over.status).toBe('FAIL');
+    expect(over.allowance_over).toBe(false);
+    // $6.93 metered, $10.61 billed (2026-11-13): authorised 6.93, limit 18.66. No FAIL.
+    expect(S.dialCheck({ days: [day({ metered_usd: 6.93, envelope_usd: 0, outside_usd: 6.93, outside_other_usd: 6.93, billed_usd: 10.61 })], allowance: 15 }).status).toBe('PASS');
+  });
+  it('reads the allowance from the environment', () => {
+    process.env.SPEND_OUTSIDE_DIAL_ALLOWANCE_USD = '4';
+    try { expect(S.outsideAllowanceUsd()).toBe(4); } finally { delete process.env.SPEND_OUTSIDE_DIAL_ALLOWANCE_USD; }
+    expect(S.outsideAllowanceUsd()).toBe(15);
+  });
+});
+
+describe('(e) vercel (#345)', () => {
+  const mk = (vals: number[], y: number) => {
+    const byDay: Record<string, { total: number; byProject: Record<string, number> }> = {};
+    vals.forEach((v, i) => { byDay[`2026-11-0${6 + i}`] = { total: v, byProject: { app: v } }; });
+    byDay['2026-11-13'] = { total: y, byProject: { app: y * 0.7, docs: y * 0.2, x: y * 0.1 } };
+    return { byDay };
+  };
+  it('FAILs a spike: more than 1.5 x the median and $10 above it, naming the top two projects', () => {
+    const r = S.vercelCheck({ charges: mk([30, 30, 30, 30, 30, 30, 30], 62), day: '2026-11-13', budget: 99999 });
+    expect(r.status).toBe('FAIL');
+    expect(r.lines.join('\n')).toMatch(/app \$43\.40, docs \$12\.40/);
+  });
+  it('PASSes a steady day, and a rise under $10 even when over 1.5 x', () => {
+    expect(S.vercelCheck({ charges: mk([60, 62, 61, 63, 60, 62, 61], 63), day: '2026-11-13', budget: 99999 }).status).toBe('PASS');
+    expect(S.vercelCheck({ charges: mk([4, 4, 4, 4, 4, 4, 4], 9), day: '2026-11-13', budget: 99999 }).status).toBe('PASS');
+  });
+  it('WARNs on a month-to-date pace over budget without a spike', () => {
+    const r = S.vercelCheck({ charges: mk([60, 62, 61, 63, 60, 62, 61], 63), day: '2026-11-13', budget: 1000 });
+    expect(r.status).toBe('WARN');
+  });
+  it('is UNKNOWN, never zero, when the token is missing or the history is too short', () => {
+    expect(S.vercelCheck({ charges: { error: 'no VERCEL_API_TOKEN' }, day: '2026-11-13' }).status).toBe('UNKNOWN');
+    expect(S.vercelCheck({ charges: { byDay: { '2026-11-13': { total: 50, byProject: {} } } }, day: '2026-11-13' }).status).toBe('UNKNOWN');
+  });
+});
+
+describe('(f) r2 (#345)', () => {
+  const NOW = new Date('2026-11-14T07:00:00Z');
+  const stats = (o: Record<string, unknown> = {}) => ({ updatedAt: new Date('2026-11-14T03:00:00Z'), r2: [{ bucket: 'sourcelibrary', bytes: 40.56e12, objects: 1 }], ...o });
+  const w = (...gb: number[]) => gb.map((g, i) => ({ day: `2026-11-${13 - i}`, bytes: g * 1e9 }));
+  const CEIL = 43.1e12;
+  it('WARNs when the room lasts under 7 days at the 3-day average (2.54 TB at 400 GB/day)', () => {
+    const r = S.r2Check({ stats: stats(), writtenDays: w(400, 400, 400), ceiling: CEIL, now: NOW });
+    expect(r.status).toBe('WARN');
+    expect(r.lines[0]).toMatch(/40\.56 TB stored, 2\.54 TB of room.*400 GB written yesterday.*\$608\.40\/month/);
+  });
+  it('PASSes with room for more than 7 days, and with no writes at all', () => {
+    expect(S.r2Check({ stats: stats(), writtenDays: w(100, 100, 100), ceiling: CEIL, now: NOW }).status).toBe('PASS');
+    expect(S.r2Check({ stats: stats(), writtenDays: w(0, 0, 0), ceiling: CEIL, now: NOW }).status).toBe('PASS');
+  });
+  it('FAILs at or over the ceiling', () => {
+    expect(S.r2Check({ stats: stats(), writtenDays: w(1), ceiling: 40.56e12, now: NOW }).status).toBe('FAIL');
+  });
+  it('is UNKNOWN when the document is missing or older than 36 h', () => {
+    expect(S.r2Check({ stats: null, writtenDays: [], ceiling: CEIL, now: NOW }).status).toBe('UNKNOWN');
+    expect(S.r2Check({ stats: stats({ updatedAt: new Date('2026-11-12T07:00:00Z') }), writtenDays: w(1), ceiling: CEIL, now: NOW }).status).toBe('UNKNOWN');
+  });
+  it('is UNKNOWN, not PASS, when no write day is stored', () => {
+    expect(S.r2Check({ stats: stats(), writtenDays: [], ceiling: CEIL, now: NOW }).status).toBe('UNKNOWN');
+  });
+});
+
+describe('headline carries the new checks only when not PASS (#345)', () => {
+  const C = (status: string, o = {}) => ({ status, lines: [], flags: [], envelopes: [], fails: [], ...o });
+  it('names Vercel and R2 clauses', () => {
+    const base = { ledger: C('PASS'), machines: C('PASS'), envelopes: C('PASS'), dial: C('PASS') };
+    expect(S.summaryLine('PASS', { ...base, vercel: C('PASS'), r2: C('PASS') })).toBe('spend check: PASS');
+    expect(S.summaryLine('WARN', { ...base, vercel: C('PASS'), r2: C('WARN', { room_days: 6.3 }) })).toMatch(/R2 room 6\.3 days/);
+    expect(S.summaryLine('FAIL', { ...base, vercel: C('FAIL', { yesterday_usd: 62, median_usd: 30 }), r2: C('PASS') })).toMatch(/Vercel spike \$62\.00 vs median \$30\.00/);
+  });
+});

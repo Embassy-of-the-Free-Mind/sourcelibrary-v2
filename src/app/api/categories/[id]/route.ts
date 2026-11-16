@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '../route';
+import { publicationFilter } from '@/lib/publication';
 
 // GET /api/categories/[id] - Get books in a category
 export async function GET(
@@ -14,9 +15,9 @@ export async function GET(
     // Find the category
     const category = LIBRARY_CATEGORIES.find(c => c.id === id);
 
-    // Get books with this category
+    // Get the published books with this category (ops #17)
     const books = await db.collection('books').aggregate([
-      { $match: { categories: id } },
+      { $match: { categories: id, ...publicationFilter('live') } },
       {
         $lookup: {
           from: 'pages',

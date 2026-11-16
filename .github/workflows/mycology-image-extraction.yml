@@ -24,12 +24,16 @@ on:
 
 jobs:
   sweep:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # manual one-off; its appleboy/ssh-action needs Docker, which the gex45 runners lack
     timeout-minutes: 5
 
     steps:
       - name: Launch sweep on Hetzner
-        uses: appleboy/ssh-action@v1
+        # Pinned to a commit, not the `v1` tag: this step is handed the SSH key,
+        # and a tag can be moved by the action's owner. To update, resolve the
+        # new tag (`gh api repos/appleboy/ssh-action/git/ref/tags/<tag>`) and
+        # change the SHA and the version comment together.
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
         env:
           # Passed through as an env var rather than interpolated into the shell,
           # so the input can never be spliced into the command itself.

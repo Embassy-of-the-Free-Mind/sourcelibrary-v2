@@ -157,7 +157,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
           ← Back to catalogue
         </a>
 
-        <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif leading-tight mb-1">
           Catalogue workspace
         </h1>
         <p className="text-sm text-muted mb-8">
@@ -174,7 +174,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
 
         {/* 1. Your work — the reason this page exists. */}
         <section className="mb-10">
-          <h2 className="text-lg text-primary font-display mb-3">Your work</h2>
+          <h2 className="text-lg text-primary font-serif mb-3">Your work</h2>
           <div className="border border-stone-200 bg-white p-5">
             {memorixCount > 0 ? (
               <p className="text-primary mb-3">
@@ -221,7 +221,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
 
         {/* 2. What needs a librarian. Every number links to the actual records. */}
         <section className="mb-10">
-          <h2 className="text-lg text-primary font-display mb-1">Needs your attention</h2>
+          <h2 className="text-lg text-primary font-serif mb-1">Needs your attention</h2>
           <p className="text-sm text-muted mb-3">
             {totalAttention > 0
               ? `${n(totalAttention)} records where only a librarian can decide what is right.`
@@ -232,7 +232,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
             <div key={w.category} className="border border-stone-200 bg-white p-5 mb-3">
               <div className="flex items-baseline justify-between gap-4">
                 <h3 className="text-primary font-medium">{w.label}</h3>
-                <span className="text-xl text-primary font-display shrink-0">{n(Number(w.n))}</span>
+                <span className="text-xl text-primary font-serif shrink-0">{n(Number(w.n))}</span>
               </div>
               <p className="text-sm text-muted mt-1">{w.detail}</p>
               {w.samples?.length > 0 && (
@@ -261,7 +261,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
 
         {/* 3. What has been done to the catalogue, in plain words. */}
         <section className="mb-10">
-          <h2 className="text-lg text-primary font-display mb-1">Recent changes</h2>
+          <h2 className="text-lg text-primary font-serif mb-1">Recent changes</h2>
           <p className="text-sm text-muted mb-3">
             Every edit to this catalogue, by a person or by our software, with what changed and why.
           </p>

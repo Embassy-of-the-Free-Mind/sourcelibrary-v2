@@ -191,7 +191,11 @@ function LangSuggestBanner({ t }: { t: HomeStrings }) {
   );
 }
 
-export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
+export default function HeroSection({ lang = 'en', startReadingHref }: {
+  lang?: HomeLang;
+  /** A featured book's page (#76), or nothing when the homepage has none to offer. */
+  startReadingHref?: string;
+}) {
   const { status } = useStableSession();
   const hasRecorded = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
@@ -235,7 +239,7 @@ export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
         <div className="w-full max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="w-full max-w-4xl">
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display text-balance"
+            className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-serif text-balance"
           >
             {t.heroTitle}
           </h1>
@@ -258,6 +262,14 @@ export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
                 {/* Google is blocked in mainland China, and WeChat's in-app browser refuses
                     Google sign-in too, so /zh offers email only (#7537). */}
                 <HeroSignUp t={t} showGoogle={lang !== 'zh'} />
+                {/* A visitor who will not sign up still gets a book on the
+                    first screen (#76: 59% of phone visitors left `/` after one
+                    page; those who land on a book page mostly read on). */}
+                {startReadingHref && (
+                  <Link href={startReadingHref} className="mt-4 inline-block text-white font-medium hover:underline">
+                    {t.startReading} &rarr;
+                  </Link>
+                )}
               </div>
             )}
           </div>

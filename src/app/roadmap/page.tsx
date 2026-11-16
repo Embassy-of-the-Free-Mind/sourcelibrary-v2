@@ -154,15 +154,15 @@ export default function RoadmapPage() {
           {/* Stats */}
           <div className="flex gap-8 mt-8">
             <div>
-              <div className="text-3xl font-bold text-accent-gold">{totalWorks}</div>
+              <div className="text-3xl font-semibold text-accent-gold">{totalWorks}</div>
               <div className="text-sm text-stone-400">Total Works</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-accent-gold">{inDatabase}</div>
+              <div className="text-3xl font-semibold text-accent-gold">{inDatabase}</div>
               <div className="text-sm text-stone-400">In Database</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-accent-gold">{pending}</div>
+              <div className="text-3xl font-semibold text-accent-gold">{pending}</div>
               <div className="text-sm text-stone-400">Pending</div>
             </div>
           </div>

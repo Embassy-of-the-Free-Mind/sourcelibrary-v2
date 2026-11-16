@@ -1,0 +1,56 @@
+<warning>Handwritten Ashkenazic semi-cursive Hebrew. Many abbreviations are ambiguous, and several words are uncertain readings. Partial text at the right edge belongs to the facing leaf and has been left out.</warning>
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>162</page-num>
+
+כי רז"ל שאמרו עולם הזה <unclear>נקראת</unclear> וע"ב חיי שעה ועה"ב חיי
+
+עולם ע"כ יש <unclear>בהן</unclear> <unclear>מעלות</unclear> <unclear>יותר</unclear>. כי השמחה שנמשך בבחי'
+
+<unclear>אלי'</unclear> גבוה רז"ל שנמשך בבחי' גבוה כי <unclear>ע"ז</unclear> <unclear>[illegible — 2 words]</unclear>
+
+<unclear>ומזה</unclear> שהי' לו <unclear>אוסטרלגיא</unclear> והוא מורה שעות הוא המשכה
+
+בבחי' חיי שעה בא במזלו <unclear>ושרש</unclear> <unclear>משכנו</unclear> <unclear>מגלי</unclear> התורה <unclear>מסר</unclear>
+
+להם הקב"ה המשכת חיי שעה. וע"ש תורתו אומנתו אתן <unclear>[illegible — 1 word]</unclear>
+
+ותפלה כי <unclear>ממשכתו</unclear> זה עד תורה שהוא חיי עולם. והוא גדול
+
+<unclear>חוזק</unclear> רבה יותר <unclear>מתמן</unclear> <unclear>[illegible — 1 word]</unclear> <unclear>משעוורת</unclear> <unclear>ברעיה</unclear> כי הי' <unclear>השלה</unclear>
+
+<unclear>אשלו</unclear> והמשך בחו' <unclear>[illegible — 1 word]</unclear> דמחיי שעה לבד רז"ל המשיך עד
+
+חיי עולם <unclear>שמו</unclear> עד שאתה חכם בחכמת <unclear>המשנה</unclear> <unclear>דהמלך</unclear>
+
+<unclear>בצלום</unclear> ומזלות וגם הוא חכם <unclear>בצורות</unclear> לעשות צורות הנ"ל אין
+
+ערך הכל <unclear>בצורות</unclear> לגבי חכמתו שבמקום שהוא חכם בחכמות
+
+הנבואה. ולכן זה מה <unclear>שמתח</unclear> חכמתו <unclear>בצור</unclear> הרי הוא <unclear>השלה</unclear>
+
+<unclear>ועבדו</unclear> מעלה הנ"ל דתורה גבוה הרבה יותר מכל דמעלה
+
+בראשונה. וע"ש אין ערך הכל דמעלה לחכמת התורה. <unclear>שמו</unclear> עד
+
+באדם אין ערך חכמה <unclear>דבעור</unclear> או כל <unclear>שבצורות</unclear> לגבי <unclear>מדם</unclear>
+
+הכל שבו. וע"ש זה כמו בתפלה כי המשך זה עד
+
+חיי עולם. ולכן אמר רבא מניחין חיי עולם ועוסקים בחיי
+
+שעה. וע"ב במאמר בשלמה שאמר לו הקב"ה שאל מה אתן
+
+לך ובקש הכל דבר <unclear>דנ"ל</unclear> עמו כאחד שאמר לו המלך בקש
+
+איזה דבר מעט ויתן לו ובקש בתו של מלך. והכל <unclear>דנ"ל</unclear>
+
+והבן שתורת <gloss><unclear>יותר</unclear></gloss> <unclear>ממוסיפין</unclear> תפלה ולכן אמרו תורתו אומנתו
+
+על רשב"י דוגמת הנה שהי' רבה תפלתו שהי' תורתו אומנתו
+
+<meta>Catchword at the foot of the page, partly illegible: <unclear>[illegible — 1 word]</unclear></meta>
+
+<vocab>חיי שעה, חיי עולם, עולם הזה, עולם הבא, תורתו אומנתו, תפלה, רשב"י, רבא, שלמה, חכמת התורה, מזלות, צורות, המשכה</vocab>

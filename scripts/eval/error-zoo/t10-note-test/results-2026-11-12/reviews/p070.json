@@ -1,0 +1,50 @@
+[
+  {
+    "book_id": "6a08514b15c643eb1af4a379",
+    "slot": 1,
+    "title": "Ton en tede te biblo periechomenon onomata kai taxis = Eorum quae in hoc libro continentur, nomina & ordo",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Aldine Greek Theophrastus (1497), opening of Historia plantarum Book I; belongs in the biodiversity / Chicago Botanic collections.",
+    "rights_flag": null,
+    "structure_note": "Only 25 of 462 pages have OCR. The structure count says 0 pages translated, but the pages_translated field says 19, and this page carries a translation, so the counters disagree. The single printed backstep is probably a misread numeral or the restart of the foliation: this page is record 9 and printed '1', the start of the text after the preliminaries. It does not look like a splice. The catalogue title is the volume's Greek/Latin contents title, not the work title.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "printed_marker": "1",
+        "layout": "single column; woodcut interlace headpiece; Greek heading; large ornamental woodcut initial T; signature line 'aaa ααα' and a separate 'D' at the foot",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "θεωρηταὶ τῷ τρόπῳ καὶ ἐφ’ ὅλους", "image": "εὐθεωρητότεραι καὶ ῥᾴους (as far as the Aldine ligatures can be read)", "problem": "comparative 'easier to observe and simpler' misread into a different phrase; the translation follows the misread ('can be observed in this way and in general terms')", "severity": "moderate", "class": "O6" },
+          { "ocr": "μὴ πηρωθέντα διὰ νόσον ἢ πήρωσιν ἀποβαίνει", "image": "μὴ πλὴν εἴ τι διὰ νόσον ἢ γῆρας ἢ πήρωσιν ἀποβάλλει", "problem": "'ἢ γῆρας' (old age) dropped and the verb misread; the English drops old age as a cause of losing parts", "severity": "moderate", "class": "O5" },
+          { "ocr": "ὧν τέλεια ἡ μεταβολὴ φαίνεται", "image": "δι’ ὧν τέλεια γίνεται καὶ φαίνεται", "problem": "'γίνεται καὶ' read as 'ἡ μεταβολὴ' (change); the sense is roughly kept in the English", "severity": "minor" },
+          { "ocr": "τότε τὰ καλλίω καὶ τελεώτερα καὶ δοκεῖ εἶναι", "image": "πάντα καλλίω καὶ τελειότερα καὶ δοκεῖ καὶ ἔστιν", "problem": "'πάντα' read as 'τότε'; 'καὶ ἔστιν' normalised", "severity": "minor" },
+          { "ocr": "ἀεὶ γὰρ τὴν φύσιν λαμβάνει", "image": "ἀεὶ γὰρ ἐπίφυσιν λαμβάνει", "problem": "'ἐπίφυσιν' (fresh growth) read as 'τὴν φύσιν'; the English 'take on fresh growth' still has it right", "severity": "minor" },
+          { "ocr": "ὁμοιωσέντα τοῖς ἄνω", "image": "ὁμοίως ἔν τε τοῖς ἄνω", "problem": "words run together into a non-word", "severity": "minor" },
+          { "ocr": "<meta>catchword: aaa ααα</meta>", "image": "aaa ααα", "problem": "the quire signature is tagged as a catchword; the separate 'D' is tagged <sig>", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "θεωρηταὶ τῷ τρόπῳ καὶ ἐφ’ ὅλους", "english": "can be observed in this way and in general terms", "problem": "faithful to the OCR, but it passes on the OCR misread: the source says these differences are easier to observe", "severity": "moderate" },
+          { "source": "μὴ πηρωθέντα διὰ νόσον ἢ πήρωσιν ἀποβαίνει", "english": "unless they are lost through disease or mutilation", "problem": "passes on the OCR omission of 'old age'", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "The OCR's descriptions of the decorative headpiece and initial are rendered as <note>s in the reading flow ('A rectangular headpiece decorated with interlacing vines…').", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "A rectangular headpiece decorated with interlacing vines and", "verdict": "ok", "helpful": false },
+            { "quote": "An ornamental initial letter 'T', set in a square frame with", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"τὰ πάθη\", literally \"affections\" or \"experiences\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"βρύον\", a moss-like or downy growth", "verdict": "ok", "helpful": true }
+          ],
+          "missing": []
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf: the Aldine 1497 opening of Theophrastus's Historia plantarum. The OCR is fluent, but in places it gives a normalised or misread text rather than the printed one: it drops 'old age', and 'easier to observe' becomes something else. The translation is faithful to the OCR and its notes are sound, but it carries those moderate errors into the English."
+  }
+]

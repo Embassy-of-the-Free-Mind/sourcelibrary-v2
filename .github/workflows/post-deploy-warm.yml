@@ -46,10 +46,14 @@ on:
 permissions:
   deployments: read
   contents: read
+  checks: read     # a private repo hides check results from a token that does not ask (v3 move, 2026-11-12)
+  statuses: read
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 jobs:
   warm:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       # Wait for the deploy of THIS commit to actually be live.
       #

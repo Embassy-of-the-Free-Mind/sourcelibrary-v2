@@ -137,7 +137,7 @@ export default function BphUnifiedCatalogue({
   return (
     <>
       <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl text-primary font-display">
+        <h2 className="text-2xl sm:text-3xl text-primary font-serif">
           Library Catalogue
         </h2>
         <p className="text-sm text-muted mt-1">

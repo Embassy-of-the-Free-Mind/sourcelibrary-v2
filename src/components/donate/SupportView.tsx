@@ -156,7 +156,7 @@ export default function SupportView({
           <SiteHeader variant="dark" homeLocale={locale} />
 
           <div className="px-6 md:px-12 max-w-5xl mx-auto pt-12 pb-14 md:pt-20 md:pb-20">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight font-display drop-shadow-sm">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight font-serif drop-shadow-sm">
               {s.heroTitle}
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
@@ -169,13 +169,13 @@ export default function SupportView({
 
             <div className="flex flex-wrap gap-x-10 gap-y-4 text-white/80">
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">{formatStat(stats.totalBooks, locale)}</strong> {s.statBooks}
+                <strong className="font-serif text-white text-lg md:text-xl">{formatStat(stats.totalBooks, locale)}</strong> {s.statBooks}
               </span>
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">{formatStat(stats.pagesTranslated, locale)}</strong> {s.statPages}
+                <strong className="font-serif text-white text-lg md:text-xl">{formatStat(stats.pagesTranslated, locale)}</strong> {s.statPages}
               </span>
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">{formatStat(stats.firstTranslations, locale)}</strong> {s.statFirst}
+                <strong className="font-serif text-white text-lg md:text-xl">{formatStat(stats.firstTranslations, locale)}</strong> {s.statFirst}
               </span>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function SupportView({
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div>
-              <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 leading-tight font-display">{s.giveTitle}</h2>
+              <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 leading-tight font-serif">{s.giveTitle}</h2>
               <p className="text-stone-600 leading-relaxed mb-6">{s.giveLead}</p>
 
               {/* The same picker /give serves, so the fast path and the long
@@ -223,7 +223,7 @@ export default function SupportView({
       {/* Where it goes */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-12 md:py-16">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-xl md:text-2xl text-stone-900 mb-6 font-display">{s.whereTitle}</h2>
+          <h2 className="text-xl md:text-2xl text-stone-900 mb-6 font-serif">{s.whereTitle}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {s.where.map((item) => (
               <div key={item.title}>
@@ -238,7 +238,7 @@ export default function SupportView({
       {/* Follow the work */}
       <section className="bg-white border-t border-stone-200 py-12 md:py-16">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-xl md:text-2xl text-stone-900 mb-2 font-display">{s.followTitle}</h2>
+          <h2 className="text-xl md:text-2xl text-stone-900 mb-2 font-serif">{s.followTitle}</h2>
           <p className="text-stone-600 text-sm leading-relaxed mb-6 max-w-md">{s.followLead}</p>
           <QuickSubscribe source="support" />
         </div>

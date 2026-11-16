@@ -1,0 +1,2279 @@
+{
+ "generated_at": "2026-11-13T14:42:12.128Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 173,
+  "unparsed": 0,
+  "list_usd_equiv": 17.85
+ },
+ "meter": null,
+ "cells": {
+  "hebrew-flash3-manuscript": {
+   "task": "ocr",
+   "lang": "Hebrew",
+   "frame": {
+    "books": 256,
+    "books_walked": 256,
+    "held_or_hidden": 0,
+    "no_eligible_page": 22,
+    "excluded_book": 0,
+    "no_page_of_script": 190,
+    "short_book": 0,
+    "rule": "visible Hebrew books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars; script type manuscript (script-type.mjs); the page inside 1 consecutive scan; books of --exclude-sample and of this draw's other cells left out (0 named)"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "opus-read": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 44,
+     "books": 44,
+     "accept": "0/44",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 44
+     },
+     "wrong_text_pages": "44/44",
+     "wrong_text_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 44
+     },
+     "wrong_text_classes": {
+      "O1": "36/44",
+      "O6": "23/44",
+      "O5": "20/44",
+      "O3": "14/44",
+      "O4": "13/44",
+      "O12": "7/44",
+      "O7": "3/44",
+      "O17": "1/44",
+      "O8": "1/44",
+      "O2": "1/44",
+      "E2": "1/44",
+      "I4": "1/44"
+     },
+     "classes_k_of_n": {
+      "O1": "36/44",
+      "O6": "26/44",
+      "O5": "26/44",
+      "O16": "25/44",
+      "O12": "23/44",
+      "O4": "15/44",
+      "O3": "14/44",
+      "O11": "8/44",
+      "O7": "7/44",
+      "O8": "6/44",
+      "E2": "3/44",
+      "O17": "2/44",
+      "O15": "2/44",
+      "T6": "1/44",
+      "O10": "1/44",
+      "O2": "1/44",
+      "I4": "1/44",
+      "I3": "1/44",
+      "O9": "1/44"
+     },
+     "fidelity_mean": 1.82,
+     "commonest": "O1",
+     "examples": [
+      {
+       "page": "69c1bb3c8522835be845d9af:261",
+       "quote": "לו וזהו לפי שאינו בדרך הזה ע\"י העולמות כי אלקים הוא בגימט' הטבע וכו'",
+       "severity": "wrong_text",
+       "what": "Invented. This line is not on the page; from line 4 on, most lines are generic Kabbalistic phrasing that only loosely echoes the leaf."
+      },
+      {
+       "page": "69c1bb3c8522835be845d9af:261",
+       "quote": "וע\"ז אמר רשע רשע למה תכה רעך פי' המזיק ע\"י בחי' רע שבו בחי' נשמה",
+       "severity": "wrong_text",
+       "what": "Invented verse and gloss. This is not on the leaf."
+      },
+      {
+       "page": "69c1bc0d8522835be8461541:147",
+       "quote": "<unclear>...שם...</unclear>\n<unclear>...הנה...</unclear>\n<unclear>...כי אם...</unclear>",
+       "severity": "wrong_text",
+       "what": "Both columns are lists of common Hebrew function words wrapped in <unclear> tags. Lines still readable on the page in both columns (for example in the upper-middle of each column) are not transcribed; the words are filler, not this leaf's text."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": null,
+     "counts": true,
+     "contain_answers": "0/44",
+     "contain_reasons": [],
+     "unchanged": "0/44",
+     "skipped": 0
+    },
+    "3flash>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 29,
+     "books": 29,
+     "accept": "13/29",
+     "accept_rate": 0.45,
+     "accept_ci": {
+      "ci95": [
+       0.276,
+       0.621
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "13/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0.276,
+       0.621
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O5": "6/29",
+      "O6": "3/29",
+      "E2": "2/29",
+      "O1": "2/29",
+      "O14": "1/29",
+      "O8": "1/29",
+      "I4": "1/29"
+     },
+     "classes_k_of_n": {
+      "O6": "21/29",
+      "O5": "10/29",
+      "O12": "8/29",
+      "E2": "7/29",
+      "O16": "4/29",
+      "O17": "3/29",
+      "O8": "3/29",
+      "O1": "2/29",
+      "T6": "1/29",
+      "O14": "1/29",
+      "O7": "1/29",
+      "D1": "1/29",
+      "O4": "1/29",
+      "I4": "1/29",
+      "O11": "1/29"
+     },
+     "fidelity_mean": 3.34,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69c1bd708522835be846a1df:213",
+       "quote": "<unclear>٢٥ ...</unclear> م يوم <unclear>...</unclear> / <unclear>٢٣ ...</unclear>",
+       "severity": "wrong_text",
+       "what": "Most of the date and time numerals in the left-hand entries are cut short with ellipses."
+      },
+      {
+       "page": "69c1bb178522835be845ccc2:344",
+       "quote": "<unclear>[illegible — about 8 lines, heavily darkened]</unclear>",
+       "severity": "wrong_text",
+       "what": "The lower part of the left column is darkened but still largely legible. About 8 lines of text are dropped as illegible."
+      },
+      {
+       "page": "69c1bb178522835be845ccc2:344",
+       "quote": "המדבר <unclear>כי פוק</unclear>",
+       "severity": "wrong_text",
+       "what": "The middle column has about 30 lines but the candidate gives only 26. Several lower lines are missing."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00763
+     },
+     "counts": true,
+     "contain_answers": "15/44",
+     "contain_reasons": [
+      "CONTAIN: The draft is made-up text: it has the same run of common Hebrew filler words (\"אשר\", \"כי\", \"הוא\", \"בזה\"…) in both columns rather than the leaf's real lines. The leaf itself is a heavily faded",
+      "CONTAIN: The draft is not this leaf's text: it gives a Yiddish homily on Moses and David that is not on the page, while the image shows a different Hebrew text in Ashkenazi cursive, with numbered para",
+      "CONTAIN: The draft is machine-invented text, not a reading of this leaf: it is meaningless filler made of the same few words repeated (המחשבה, וחי, וזכור, ביו\"ד), lines 26–28 are three copies of one l",
+      "CONTAIN: Apart from the heading line \"שער שלשים וארבעה שער יעקב ולאה\", the draft does not match this leaf; its body text is invented, with runaway repeated sentences (\"והנה דע כי הנשמה של המקיפים הם י",
+      "CONTAIN: The draft does not match this leaf. Its passage about the verse \"לו חכמו ישכילו זאת\" and its two cases about a gift deed and maintenance payments (\"פייגא\", \"שטר מתנה\") do not appear in the im",
+      "CONTAIN: The draft is Syriac Serto text about Saint Antony that this leaf does not contain. The image shows a handwritten Hebrew cursive draft with verse numbers and many deletions and interlinear cor",
+      "CONTAIN: The draft is invented, repetitive text about חכמה and בינה (wisdom and understanding) and is not on this leaf. The handwritten page actually discusses the six thousand years, the seventh mill",
+      "CONTAIN: The draft is invented text: generic formulaic Hebrew with whole sentences repeated several times, and it doesn't match this leaf's handwritten Hebrew cursive (31 lines including the catchword",
+      "CONTAIN: The draft is not this leaf's text. It reads like a made-up Merkabah adjuration (\"ארבעה המלאכים… אוריאל רפאל גבריאל מיכאל\", \"קדוש קדוש קדוש\"), but the handwritten page has a different heading ",
+      "CONTAIN: The draft is invented text (a generic Spanish royal provision dated Madrid 1600), but this leaf carries only faint, mirror-reversed show-through from the other side, plus ink spots and stains",
+      "CONTAIN: The draft is not this leaf's text. It matches only a few words of the first three lines of the image (for example \"פ' ימינ…\", \"יורד\", \"ובונה\", \"מועלת\"). After that it is invented kabbalistic-",
+      "CONTAIN: Only the opening lines of the draft roughly match the page (e.g. \"פקח ואמר כי פ' יפה לך לומר עולם עולם\", \"לזמנין ... לזמנין\", \"מסתברא דקב\"ה\"); most of the rest is invented text, including rep",
+      "CONTAIN: The draft does not match this leaf: it covers only the left page of a two-page spread, leaves out the whole right page, and gives standard liturgical wording that doesn't fit the handwritten ",
+      "CONTAIN: The draft is invented Latin prose that is not on this leaf. The leaf is a pasted-down or flyleaf page that shows only mirror-reversed, faded handwriting bleeding through from the other side, ",
+      "CONTAIN: The draft doesn't match this leaf. The image is a Hebrew cursive page with about 18 lines, then a section beginning \"עוד ברע׳\" and a short signature at the bottom left. The draft's wording, l"
+     ],
+     "unchanged": "0/29",
+     "skipped": 0
+    },
+    "opus-read": {
+     "served": "this run's fresh read of the image, not served (opus-read undefined)",
+     "n": 44,
+     "books": 44,
+     "accept": "20/44",
+     "accept_rate": 0.45,
+     "accept_ci": {
+      "ci95": [
+       0.318,
+       0.591
+      ],
+      "unit": "book",
+      "units": 44
+     },
+     "wrong_text_pages": "16/44",
+     "wrong_text_ci": {
+      "ci95": [
+       0.227,
+       0.523
+      ],
+      "unit": "book",
+      "units": 44
+     },
+     "wrong_text_classes": {
+      "O5": "7/44",
+      "O18": "6/44",
+      "O14": "3/44",
+      "O6": "3/44",
+      "E2": "2/44",
+      "T4": "1/44"
+     },
+     "classes_k_of_n": {
+      "O6": "28/44",
+      "O16": "17/44",
+      "E2": "14/44",
+      "O5": "14/44",
+      "O12": "10/44",
+      "O18": "6/44",
+      "O8": "6/44",
+      "O14": "3/44",
+      "O1": "2/44",
+      "O11": "1/44",
+      "O17": "1/44",
+      "O7": "1/44",
+      "T4": "1/44",
+      "O10": "1/44",
+      "I3": "1/44",
+      "D1": "1/44"
+     },
+     "fidelity_mean": 3.2,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69c1bd708522835be846a1df:213",
+       "quote": "اجتماع جمادى الاولى <unclear>[abjad values — about 1 line]</unclear>",
+       "severity": "wrong_text",
+       "what": "The abjad date and time values in every caption are left out, even though most of them are written clearly."
+      },
+      {
+       "page": "69c1bb178522835be845ccc2:344",
+       "quote": "<unclear>[illegible — 26 lines; scattered letters visible but no reliable word readings]</unclear>",
+       "severity": "wrong_text",
+       "what": "The middle column is dark but mostly readable, with clear letter forms on nearly every line. Its whole text is dropped, and only 'ים סוף' is given."
+      },
+      {
+       "page": "69c1bb178522835be845ccc2:344",
+       "quote": "<unclear>[illegible — 30 lines; text heavily blurred into stained parchment]</unclear>",
+       "severity": "wrong_text",
+       "what": "The left column is stained but still largely readable at full resolution. All 30 lines are dropped."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy undefined call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000495
+     },
+     "counts": true,
+     "contain_answers": "0/44",
+     "contain_reasons": [],
+     "unchanged": "0/44",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 41,
+     "books": 41,
+     "accept": "0/41",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 41
+     },
+     "wrong_text_pages": "41/41",
+     "wrong_text_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 41
+     },
+     "wrong_text_classes": {
+      "O1": "32/41",
+      "O6": "22/41",
+      "O5": "16/41",
+      "O4": "10/41",
+      "O3": "9/41",
+      "O12": "5/41",
+      "O7": "3/41",
+      "O18": "2/41",
+      "O14": "1/41",
+      "O17": "1/41",
+      "O2": "1/41",
+      "O10": "1/41",
+      "O15": "1/41",
+      "O8": "1/41",
+      "O11": "1/41",
+      "I3": "1/41"
+     },
+     "classes_k_of_n": {
+      "O1": "32/41",
+      "O6": "30/41",
+      "O16": "25/41",
+      "O5": "19/41",
+      "O12": "15/41",
+      "O4": "11/41",
+      "O11": "9/41",
+      "O3": "9/41",
+      "O8": "6/41",
+      "O7": "5/41",
+      "O18": "2/41",
+      "O14": "2/41",
+      "E2": "2/41",
+      "T6": "2/41",
+      "O15": "2/41",
+      "O17": "1/41",
+      "O13": "1/41",
+      "O2": "1/41",
+      "O10": "1/41",
+      "I3": "1/41"
+     },
+     "fidelity_mean": 1.95,
+     "commonest": "O1",
+     "examples": [
+      {
+       "page": "69c1bb3c8522835be845d9af:261",
+       "quote": "לו וזהו לפי שאינו בדרך הזה ע\"י התהוות כי אלקים הוא בגימט' הטבע וכו'",
+       "severity": "wrong_text",
+       "what": "Invented line. The page reads roughly 'והנה לשון כשאמר בורא הוא על התהוות יש מאין מהיות שהנברא הוא בחי' יש'."
+      },
+      {
+       "page": "69c1bb3c8522835be845d9af:261",
+       "quote": "ובשם נפש ורוח ונפש בחי' הנשמה היא גם בחי' נפש בחי' רוח בחי' נשמה",
+       "severity": "wrong_text",
+       "what": "The nefesh/ruach/neshamah passage is not on the page. The page discusses the creature as nullified in existence ('בטל במציאות')."
+      },
+      {
+       "page": "69c1bb3c8522835be845d9af:261",
+       "quote": "וע\"ז אמר רשע למה תכה רעך פי' המזיק ע\"י בחי' רע שבו בחי' נפש",
+       "severity": "wrong_text",
+       "what": "Invented verse and commentary"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": null,
+     "counts": true,
+     "contain_answers": "3/44",
+     "contain_reasons": [
+      "CONTAIN: The draft transcribes an unrelated Christian Syriac text (Life of Anthony) while the manuscript leaf is Samaritan Hebrew/Aramaic written upside-down.",
+      "CONTAIN: The draft is an invented Latin transcription of a leaf whose ink is severely faded and abraded beyond legible decipherment.",
+      "CONTAIN: The draft is an invented Hebrew transcription bearing no textual relation to the cursive Judeo-Arabic text on the page."
+     ],
+     "unchanged": "0/41",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>opus-correct": {
+     "pairs": 29,
+     "identical_text": 0,
+     "fidelity_diff": 1.14,
+     "fidelity_diff_ci": [
+      0.862,
+      1.379
+     ],
+     "worse": "0/29",
+     "better": "23/29",
+     "accept_lost": "0/29",
+     "accept_gained": "13/29",
+     "wrong_text_added": "0/29",
+     "worse_pages": []
+    },
+    "3flash -> opus-read": {
+     "pairs": 44,
+     "identical_text": 0,
+     "fidelity_diff": 1.39,
+     "fidelity_diff_ci": [
+      1.091,
+      1.659
+     ],
+     "worse": "1/44",
+     "better": "36/44",
+     "accept_lost": "0/44",
+     "accept_gained": "20/44",
+     "wrong_text_added": "0/44",
+     "worse_pages": [
+      {
+       "page": "69c1bc148522835be846161f:64",
+       "draft": 2,
+       "after": 1,
+       "accept": "false->false",
+       "note": "Apart from two headings, a few loose words and the folio mark לב, this page's text is missing: three sections of legible formulary text appear only as 'illegible' placeholders."
+      }
+     ]
+    },
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 41,
+     "identical_text": 1,
+     "fidelity_diff": 0.07,
+     "fidelity_diff_ci": [
+      -0.073,
+      0.22
+     ],
+     "worse": "3/41",
+     "better": "6/41",
+     "accept_lost": "0/41",
+     "accept_gained": "0/41",
+     "wrong_text_added": "0/41",
+     "worse_pages": [
+      {
+       "page": "69c1bb6c8522835be845fafb:496",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The text is littered with 'יי' where the leaf has only ״ word dividers. That inserts the divine name dozens of times, and a few words are also misread, so the two piyyutim cannot be trusted word for word."
+      },
+      {
+       "page": "69c1bc858522835be8463804:149",
+       "draft": 2,
+       "after": 1,
+       "accept": "false->false",
+       "note": "Except for scattered words like מרדכי, המלך and מדינות, the text doesn't match the image. It's a fabricated passage (Tabernacle vessels, a Samuel verse, '(סוף)' markers) in place of the leaf's Esther/Mordecai commentary."
+      },
+      {
+       "page": "69c1bc6b8522835be8463238:361",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The page headings and the opening psalm verses are mostly right, but the poem's rhyme words and almost all of the commentary column are misread or invented, so the text beside the image cannot be trusted."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb3c8522835be845dab4",
+   "book_id": "69c1bb3c8522835be845d9af",
+   "page_number": 261,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "לו וזהו לפי שאינו בדרך הזה ע\"י העולמות כי אלקים הוא בגימט' הטבע וכו'",
+     "severity": "wrong_text",
+     "what": "Invented. This line is not on the page; from line 4 on, most lines are generic Kabbalistic phrasing that only loosely echoes the leaf."
+    },
+    {
+     "class": "O1",
+     "quote": "וע\"ז אמר רשע רשע למה תכה רעך פי' המזיק ע\"י בחי' רע שבו בחי' נשמה",
+     "severity": "wrong_text",
+     "what": "Invented verse and gloss. This is not on the leaf."
+    },
+    {
+     "class": "O3",
+     "quote": "ולכן יש לומר יש רשע וטוב לו וצדיק ורע לו",
+     "severity": "wrong_text",
+     "what": "A well-known Talmudic phrase put in place of what the page says (roughly 'ולכן צ\"ל דנקט עשה')."
+    },
+    {
+     "class": "O4",
+     "quote": "בינה מלכות כי הנשמה היא בחי' נפש ורוח ונשמה בחי' מלכות ובינה וכו'",
+     "severity": "wrong_text",
+     "what": "The same invented line appears twice."
+    },
+    {
+     "class": "O6",
+     "quote": "כי הנה בבחי' כח לומר ע\"י התהוות ב' עולמות ע\"י שם אלהים",
+     "severity": "wrong_text",
+     "what": "Misread. The page says 'ענין התהוות ג' עולמות בי\"ע'."
+    },
+    {
+     "class": "O5",
+     "quote": "בחינה שאינה בבחי' ביטול גמור",
+     "severity": "wrong_text",
+     "what": "The real last lines (about 'הנברא ג\"כ ... וביטול בגופו') are replaced, and the page's actual content is lost throughout."
+    }
+   ],
+   "note": "Apart from a few phrases in the opening lines and near the middle, the transcription does not match the handwriting: most lines are invented Kabbalistic boilerplate, one line is repeated, and the catchword is wrong."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bc0d8522835be84615d4",
+   "book_id": "69c1bc0d8522835be8461541",
+   "page_number": 147,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<unclear>...שם...</unclear>\n<unclear>...הנה...</unclear>\n<unclear>...כי אם...</unclear>",
+     "severity": "wrong_text",
+     "what": "Both columns are lists of common Hebrew function words wrapped in <unclear> tags. Lines still readable on the page in both columns (for example in the upper-middle of each column) are not transcribed; the words are filler, not this leaf's text."
+    },
+    {
+     "class": "O4",
+     "quote": "<unclear>...בזה...</unclear>\n<unclear>...מכל...</unclear>\n<unclear>...הדברים...</unclear>\n<unclear>...אבל...</unclear>",
+     "severity": "wrong_text",
+     "what": "The second column repeats the first column's word sequence almost exactly, and a short pattern (אשר / הוא / כי / על) repeats within each column."
+    },
+    {
+     "class": "O5",
+     "quote": "<column-break/>",
+     "severity": "wrong_text",
+     "what": "The actual text of both columns, roughly 40 or more lines each, is missing. None of the legible stretches are given."
+    }
+   ],
+   "note": "A reader would get no text from this page: there is a list of generic Hebrew words such as 'כי', 'אשר' and 'הוא', the same list twice, in place of two columns of faded but partly legible cursive."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bd708522835be846a2b4",
+   "book_id": "69c1bd708522835be846a1df",
+   "page_number": 213,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "| ١٢ | ١ | ٤ | ٥ | ٤ | ٢ | ٤ | ١ | ٣ | ٤ | ٣ | ٤ |",
+     "severity": "wrong_text",
+     "what": "Table cells are invented. The page has columns of abjad letters (ط, د, كد, نط, لو…), not these Arabic-Indic digits."
+    },
+    {
+     "class": "O4",
+     "quote": "| ١٤ | ١ | ٩ | ٥ | ٤ | ٩ | ٤ | ٩ | ٤ | ٩ | ٤ | ٩ |",
+     "severity": "wrong_text",
+     "what": "The same three-row block repeats for all nine months, though the page's values differ in every block."
+    },
+    {
+     "class": "O4",
+     "quote": "| ١ | ١ | ١ | ١ | ١ | ١ | ١ | ١ | ١ | ١ | ١ | ١ |",
+     "severity": "wrong_text",
+     "what": "A filler row of all-1s is repeated in every block."
+    },
+    {
+     "class": "O17",
+     "quote": "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+     "severity": "wrong_text",
+     "what": "The grid is re-laid as 13 columns. The page has a heading column plus about 8 ruled columns, each holding several stacked entries and a sub-total line."
+    },
+    {
+     "class": "O7",
+     "quote": "٢٣ كـ ٠٩ د ٣٢ ثـ ٤٠ ر ٢٠ خـ",
+     "severity": "wrong_text",
+     "what": "Conjunction time and position values are guessed and recycled across months. The page's figures (abjad, with dots/zeros) differ."
+    },
+    {
+     "class": "O5",
+     "quote": "| <margin>مخرج ٨٣١ عبرانية تنسبه في دجديد</margin> ٢٣ كـ ٠٩ د ٣٢ ثـ ٤٠ ر ٢٠ خـ |",
+     "severity": "wrong_text",
+     "what": "The two-line row with the Hebrew/Arabic year conversion (عبرانية … جديد) and its column values is garbled and attached to the wrong numerals. Its table cells are invented."
+    }
+   ],
+   "note": "Only the month headings and ordinal labels match the page. Every table cell is a made-up repeating digit pattern in place of the manuscript's abjad values, so the table is useless and misleading."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb178522835be845ce1a",
+   "book_id": "69c1bb178522835be845ccc2",
+   "page_number": 344,
+   "defects": [
+    {
+     "class": "O4",
+     "quote": "יענו בערך חוסה\nיענו בערך חוסה\nיענו בערך חוסה\nיענו בערך חוסה\nיענו בערך חוסה\nיענו בערך חוסה\nיענו בערך חוסה\nיענו בערך חוסה",
+     "severity": "wrong_text",
+     "what": "One line repeated eight times. The page has a different line in each of these positions in the left column."
+    },
+    {
+     "class": "O1",
+     "quote": "יענו עני ופחד ענה\nיענו המוניו מענה",
+     "severity": "wrong_text",
+     "what": "Lines in the lower half of the left column do not match the page. The 'ענה'/'מענה' rhymes look invented."
+    },
+    {
+     "class": "O5",
+     "quote": "יענו אמונים מענה",
+     "severity": "wrong_text",
+     "what": "About a third of the left column's roughly 30 lines is lost behind the repetition and the invented lines."
+    },
+    {
+     "class": "O5",
+     "quote": "לו פתח שער וחזון",
+     "severity": "wrong_text",
+     "what": "Several lines in the right column, before and after the display headings, are left out."
+    }
+   ],
+   "note": "One line in the left column is repeated eight times, much of that column doesn't match the page, the columns are in the wrong reading order, and several lines are missing."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb478522835be845e5de",
+   "book_id": "69c1bb478522835be845e4d1",
+   "page_number": 269,
+   "defects": [
+    {
+     "class": "O12",
+     "quote": "<margin>\nחטא\nעון\nפשע\n</margin>",
+     "severity": "wrong_text",
+     "what": "The note at the top right reads roughly 'רמא. נ\"ש ח'. The words 'חטא עון פשע' are invented, and the cut-off gloss column in the right margin is not mentioned."
+    },
+    {
+     "class": "O6",
+     "quote": "נשא ונשגב חסדך על עולם. כי עולם חסד יבנה",
+     "severity": "wrong_text",
+     "what": "The leaf has 'ונחשב חשבון של עולם ... יחשב העולם'. The candidate puts a familiar 'חסד' phrase in its place."
+    },
+    {
+     "class": "O6",
+     "quote": "ואמרנו נשגב חסדך וירידת השכינה",
+     "severity": "wrong_text",
+     "what": "The page reads 'נחשב חשבון ירידת השכינה'."
+    },
+    {
+     "class": "O1",
+     "quote": "ותקון באלו כי נסתלקו ע\"י הכל שחטאו",
+     "severity": "wrong_text",
+     "what": "The middle lines are largely guessed and drift away from the cursive. The page has 'נתקון כשאול כיון שנסתלק'."
+    },
+    {
+     "class": "O1",
+     "quote": "ונעלה כח העל וז' תיבות כי ב' עיני ה' על ה' ו' בנפש שם הוי\"ה בגי' בינה פה",
+     "severity": "wrong_text",
+     "what": "This line is confabulated and does not match the hand."
+    },
+    {
+     "class": "O1",
+     "quote": "יעלהו שם וזה בחי' ע' תיבות שבתהלים וזהו : ולכן ע\"י שחזר הקפה וזהו ויאמר",
+     "severity": "wrong_text",
+     "what": "The lower-middle lines are invented or garbled, and the asterisked insertion is lost."
+    }
+   ],
+   "note": "Only the first few lines and some key words roughly match the hand; most of the middle is guesswork, and the marginal note and running head are wrong."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69f3302c876dd827cbc46905",
+   "book_id": "69f3302c876dd827cbc46814",
+   "page_number": 241,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "ירצה יחודש בתנועות המתנגדות שבכללם אמנם יהיה מה ששמו",
+     "severity": "wrong_text",
+     "what": "Line 1 is misread. The page reads roughly 'יחדש התחלפות והתנועות שבכלל... משך'."
+    },
+    {
+     "class": "O6",
+     "quote": "מה שקדם וזה שהפשטות הפכיות ההויה והפסד רשומים",
+     "severity": "wrong_text",
+     "what": "The start of line 3 is garbled. The page has 'שהפשטיות והפסדות הסבות ההויה'."
+    },
+    {
+     "class": "O1",
+     "quote": "התנועה בעצמה מן צד המנוחה",
+     "severity": "wrong_text",
+     "what": "The opening of line 4 does not match the strokes on the page."
+    },
+    {
+     "class": "O6",
+     "quote": "ואולם הקושיות בין מלים שהתנועות הוא שהתנועות הם ההויה והפסד",
+     "severity": "wrong_text",
+     "what": "Line 6 is garbled and repeats 'שהתנועות'. The page has 'שהפשטיות'."
+    },
+    {
+     "class": "O6",
+     "quote": "ואחר ואולם הפשטות ליתן כן וזה שהדבר אשר ישתנו יהיה צורת הגוף לא אחר כי",
+     "severity": "wrong_text",
+     "what": "The page reads roughly 'השתנות אינו כן... צורת העצם לא נאמר בו'."
+    },
+    {
+     "class": "O1",
+     "quote": "רצה ולא הדבר אשר תהיה ממנו תנועה . וקול השעה ירך",
+     "severity": "wrong_text",
+     "what": "The tail of this short line is a guess and doesn't match the page."
+    },
+    {
+     "class": "O1",
+     "quote": "הקיום נוסף לכל נשתנה ועוד",
+     "severity": "wrong_text",
+     "what": "The page reads roughly 'ושהלבן נעדר אצל נשתנה'."
+    },
+    {
+     "class": "O6",
+     "quote": "מעתה וזה אשר רצה במענו אצל למען נעור",
+     "severity": "wrong_text",
+     "what": "The page has 'משנה וזה אשר רצה במאמרו' and 'שכלל מאמרו', not 'מעתה'/'מלאכתו'."
+    }
+   ],
+   "note": "The line breaks follow the manuscript's 31 lines, but many words are misread or guessed, so the text often doesn't match the leaf and can't be relied on next to the image."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb5a8522835be845f28e",
+   "book_id": "69c1bb5a8522835be845f27d",
+   "page_number": 17,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ובאור העניין מה דאיתא במדרש ויהי בנסוע הארון וג'",
+     "severity": "wrong_text",
+     "what": "The whole body is invented. The page is a Talmudic-halakhic Hebrew/Aramaic discussion, with paragraphs opening ר' and ד' and terms like חגיגה, טומאה, ספיקא. It is not a homily on Moshe Rabbeinu and David HaMelekh."
+    },
+    {
+     "class": "O1",
+     "quote": "על פי שורש העניין משה רבינו ז\"ל שכינה מדברת מתוך גרונו",
+     "severity": "wrong_text",
+     "what": "The second section, about tzaddik, shoresh and prudah, also does not appear on the leaf."
+    },
+    {
+     "class": "O12",
+     "quote": "<margin>הגה</margin>",
+     "severity": "wrong_text",
+     "what": "This marginal note is invented. The leaf's real marginal and interlinear additions (e.g. near the top, and the bracketed insertion in the lower middle) are not transcribed."
+    },
+    {
+     "class": "O5",
+     "quote": "דהיינו ע\"י משה רבינו <unclear>וע\"י</unclear> תפילתו הוא",
+     "severity": "wrong_text",
+     "what": "About 30 lines of the page, including the heading line, have no real transcription."
+    }
+   ],
+   "note": "None of the transcription matches the image: the page is a dense Hebrew/Aramaic halakhic discussion (חגיגה, טומאה, ספיקא), not a Yiddish homily on Moshe Rabbeinu."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb558522835be845f047",
+   "book_id": "69c1bb558522835be845f021",
+   "page_number": 38,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "השיב לו אי שמים עלינו עדותינו כל זכרון וכל המעשה למי שמשלם ופורע לו",
+     "severity": "wrong_text",
+     "what": "Invented text. The page's first line opens differently: הרבה לא שייך ... אתערותא כו' ובאופן ..."
+    },
+    {
+     "class": "O1",
+     "quote": "לו המחשבה וחי וזכור אליו שלומנו והמחשבה בבני המחשבה ביו\"ד ביו\"ד ביו\"ד וחי המחשבה ביו\"ד",
+     "severity": "wrong_text",
+     "what": "Most of the body is a meaningless loop of stock words that does not match the handwriting"
+    },
+    {
+     "class": "O4",
+     "quote": "של המחשבה הזה המעלה הזה והוא וחי ביו\"ד המחשבה של המחשבה בבני המחשבה",
+     "severity": "wrong_text",
+     "what": "The same line appears three times in a row"
+    },
+    {
+     "class": "O5",
+     "quote": "אליו וחי ע\"כ",
+     "severity": "wrong_text",
+     "what": "The page has about 37 lines and the candidate has about 31. The real ending, a short closing line (אס\"ו ית' ...), is missing"
+    }
+   ],
+   "note": "The text has nothing to do with the manuscript beside it. It is repetitive filler (for example 'ביו\"ד ביו\"ד ביו\"ד' and three identical lines), and none of it can be matched to the handwriting."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb4c8522835be845eaa7",
+   "book_id": "69c1bb4c8522835be845e9f3",
+   "page_number": 180,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "על הט' פנים וציור הנשמה כו'",
+     "severity": "wrong_text",
+     "what": "the page has 'על הט' שרש וציור הנשמה'; 'פנים' is a misread"
+    },
+    {
+     "class": "O1",
+     "quote": "ציור ב' בחי' בחלל הו' ובו נגד ג' אותיות פשוטות בגמ' הו' ע\"י שבעה אותיות כפולות בגמ' הו' וז' השנה",
+     "severity": "wrong_text",
+     "what": "invented; the page reads roughly 'ציורי ג' בחי' בחלל הו' ... אותיות דשם הוי' עד שבאה להתלבש בגוף וזאת כל הנשמה המלובשת בגוף'"
+    },
+    {
+     "class": "O1",
+     "quote": "יג' מעלות והתורה והעבודה למע' בחי' ובו וממנו נוכל לנטות להפרדה המוחלטת",
+     "severity": "wrong_text",
+     "what": "the page has 'רק מעלת והארה וציורה ... להארה המלובשת בגוף'"
+    },
+    {
+     "class": "O6",
+     "quote": "ח\"ו תשובת וגמ' וזאת התשובה",
+     "severity": "wrong_text",
+     "what": "the page has 'מאין תמצא וזהו מהות התשובה'"
+    },
+    {
+     "class": "O1",
+     "quote": "והנה ובו' מ' בגימ' צד וציור צד הו' כ' וצ' וצ' נוטה וצד' וצ' וצ' ומל\"מ",
+     "severity": "wrong_text",
+     "what": "a garbled invented string in place of 'יובן מ\"ש ... ציור צורך הו''"
+    },
+    {
+     "class": "O1",
+     "quote": "ואין מ' בחי' צמצום והתפשטות כל המצי' בחי' האין בחי' א' וצד' אשר בו אותו סייג ההתהוות",
+     "severity": "wrong_text",
+     "what": "the page has 'מאין יש ... בחי' אין עצמו אשר בו אינו שייך התהוות'; this flips the sense"
+    },
+    {
+     "class": "O6",
+     "quote": "כי החומר חטא ופגם אין ומעיין ורצון ברחב'",
+     "severity": "wrong_text",
+     "what": "the page has 'כי האומר אחטא ואשוב אין מספיקין' (a known dictum), which the candidate garbles"
+    },
+    {
+     "class": "O1",
+     "quote": "שנת גאולה לכל בחי' שונה באותתו רג' רחמי' אשר שהיא עמוקה וחיצוני' בבחי' כוח'",
+     "severity": "wrong_text",
+     "what": "a largely invented line"
+    },
+    {
+     "class": "O6",
+     "quote": "בחי' אסיפה ורצון כמו ואין חפץ פי' וסוד פי'",
+     "severity": "wrong_text",
+     "what": "the page has 'לשון אסיפה ... כמו ... פי' אוספו'"
+    },
+    {
+     "class": "O6",
+     "quote": "לכן הו' בחי' ובו וז' מ' וזה נתת להשיב",
+     "severity": "wrong_text",
+     "what": "the page has 'לכן הוא בשונו ... ראה נתתי לפניך את החיים'; the verse is misquoted"
+    }
+   ],
+   "note": "The line count and some stock phrases match, but most lines are garbled or invented, with cryptic abbreviations (ובו, צד', גמ' הו') that are not on the page, so it can't be used as this page's text."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb398522835be845d956",
+   "book_id": "69c1bb398522835be845d733",
+   "page_number": 547,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "אמנם ידיעה שייך גם על השגת האמצעות וכמו שהוא ית' על ידיעתו מציאותו נמצא",
+     "severity": "wrong_text",
+     "what": "The page reads 'משא\"כ ידיעה ... השגת המציאות ... על הידוע מציאותו ולא'."
+    },
+    {
+     "class": "O6",
+     "quote": "ופשוט שזאת ובקשת הראות זו כלו גדולה",
+     "severity": "wrong_text",
+     "what": "The page reads 'ונמצא שזאת ובקשת הראני נא פי' גדולה'."
+    },
+    {
+     "class": "O1",
+     "quote": "הובא בילקוט בשם הרע\"מ",
+     "severity": "wrong_text",
+     "what": "There is no Yalkut on the page. It reads roughly 'הובא ושם בשם'."
+    },
+    {
+     "class": "O6",
+     "quote": "כמו ל' רוחן גברי וכו' ומכבדותי",
+     "severity": "wrong_text",
+     "what": "The page reads 'כמו ר' יוחנן קארי למאני מכבדותא'."
+    },
+    {
+     "class": "O6",
+     "quote": "בבחי' זוכן על שמו מלכות והנה כבוד הוא גי' לב\" כנבואת ח\"י",
+     "severity": "wrong_text",
+     "what": "The page reads 'בבחי' עולם ע\"כ נק' לבוש מלכות ... גי' ל\"ב נתיבות חכ''."
+    },
+    {
+     "class": "O6",
+     "quote": "ח\"י",
+     "severity": "wrong_text",
+     "what": "The abbreviation חכ' (Chochmah) is consistently misread as ח\"י, all through the page."
+    },
+    {
+     "class": "O6",
+     "quote": "נשמה שההנאה לפי שאין זה ח\"י ושי' הוא",
+     "severity": "wrong_text",
+     "what": "The page reads 'נשמה שבבהמה לפי שאין זה חכ' ושפל הוא'."
+    },
+    {
+     "class": "O6",
+     "quote": "בע' שי' כי השם הוא העושה",
+     "severity": "wrong_text",
+     "what": "The page reads 'בע' שפל כי השפל הוא העושה'."
+    },
+    {
+     "class": "O6",
+     "quote": "ודבר סוד וצריך וכו' עיין ח\"י תתאה",
+     "severity": "wrong_text",
+     "what": "The page reads 'יש ודבר סוד ועפ\"ז יובן ענין חכ' תתאה'."
+    },
+    {
+     "class": "O6",
+     "quote": "וכמ\"ש במתנה וסוד אלף אבא יסד ברתא",
+     "severity": "wrong_text",
+     "what": "The page reads 'בחכמה יסד ארץ אבא יסד ברתא'."
+    },
+    {
+     "class": "O6",
+     "quote": "מבחינה אמונה בה\" מאיר בתוכה ממש וכמ\"ש איזהו אור כשינה",
+     "severity": "wrong_text",
+     "what": "The page reads 'אדרבה אוא\"ס בה' מאיר ... עוטה אור כשלמה'."
+    },
+    {
+     "class": "O6",
+     "quote": "גבי כי עז לו כי כבוד חופה ופי' עפ' ואולם חי אני (באמ\"ר",
+     "severity": "wrong_text",
+     "what": "The page reads 'כי על כל כבוד חופה ומ\"ש עפ' ואולם חי אני וימלא'."
+    },
+    {
+     "class": "O6",
+     "quote": "וקנה יסוד תפילת המבקשים מלך השנה למחול כו'",
+     "severity": "wrong_text",
+     "what": "The page reads 'ובזה יסולק תמיהת המפרשים איך הנשה לשאול כ\"כ'."
+    }
+   ],
+   "note": "The line order and the overall argument follow the page, but many phrases are garbled or invented. These include a Yalkut citation that does not appear on the leaf, חכ' repeatedly misread as ח\"י, and a wrong running head, so the text cannot be trusted next to the image."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb588522835be845f1d4",
+   "book_id": "69c1bb588522835be845f08d",
+   "page_number": 327,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "שהי' לו אונטולוגיא והוא צורה לעצמו הוא המשכה",
+     "severity": "wrong_text",
+     "what": "The page has a clock word (something like אורלוגין) glossed 'מורה שעות'. The candidate turns it into 'ontology' and invents 'צורה לעצמו'."
+    },
+    {
+     "class": "O6",
+     "quote": "ויש תורת אונטולוגיא",
+     "severity": "wrong_text",
+     "what": "The page reads roughly 'ונמשל תורת אומנות'. 'Ontology' is a misread and recurs through the page."
+    },
+    {
+     "class": "O6",
+     "quote": "פי' נבדל נפש שיתפשט בבחי' נבדל כי ע\"כ צד נפש בבחי'",
+     "severity": "wrong_text",
+     "what": "The page reads about 'לי' גבול ... שנתפשט בבחי' גבול ... משל במדרש'. 'גבול' (limit) is read as 'נבדל' (separate) and the sense changes."
+    },
+    {
+     "class": "O6",
+     "quote": "המות חיי עולם",
+     "severity": "wrong_text",
+     "what": "The page reads 'ע\"י תורה שהוא חיי עולם', so 'death' replaces 'Torah'."
+    },
+    {
+     "class": "O6",
+     "quote": "וזהו ע\"כ שחיה חסר בחכמת המשכה",
+     "severity": "wrong_text",
+     "what": "The page reads 'שפיר צדה שאתה חכם בחכמת המשכה'. 'Lacking' replaces 'wise', which inverts the sense."
+    },
+    {
+     "class": "O1",
+     "quote": "מאדם וחיותו וגם הוא חסר בחיות המעלה לחיות המעלה",
+     "severity": "wrong_text",
+     "what": "The page speaks of being wise in forms/images ('חכם בצורות לעשות צורות'). The candidate's line is garbled filler."
+    },
+    {
+     "class": "O6",
+     "quote": "וע\"ז העלה הי' לו בחינה גבוה הרבה וחיות מעט במעלה",
+     "severity": "wrong_text",
+     "what": "The page reads about 'ומעלה הנפש היא דתורה גבוה הרבה ויותר מחכ' במעשה'."
+    },
+    {
+     "class": "O3",
+     "quote": "ובקש לב להבין בין טוב ורע פירש לו המלך ע\"כ",
+     "severity": "wrong_text",
+     "what": "The biblical verse is substituted for what the leaf says, which is a parable of asking for the king's daughter."
+    },
+    {
+     "class": "O1",
+     "quote": "למה חסר עמו ואין לו וביקש בין לב טוב. והנה נראה",
+     "severity": "wrong_text",
+     "what": "Not on the page, which reads about 'ובקש בתו של מלך. והנה בזה'."
+    },
+    {
+     "class": "O1",
+     "quote": "לשון שחכמה ובינה ודעת וגבורה וחסד ורחמים ומשפט",
+     "severity": "wrong_text",
+     "what": "An invented list of sefirot/virtues. The page reads about 'וזהו שתורת אומנות ... ולכן אמרו תורת אומנתם'."
+    },
+    {
+     "class": "O6",
+     "quote": "על רשעי גוונא הגם שהי' כמה חסרונות שאל חכמה ובינה",
+     "severity": "wrong_text",
+     "what": "The page reads 'על רשב\"י דוגמא הגם שהי' כמה תנאים(?) ... תורתם אומנתם'. The name and the sense are lost."
+    }
+   ],
+   "note": "The page number and the first two lines are about right, but most of the page is misread. An invented 'ontology' keeps recurring, the Solomon passage is replaced by the familiar verse, and the last lines are made up."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69b3e67c304c1c6b3950b918",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "page_number": 341,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "->קדיש<-",
+     "severity": "wrong_text",
+     "what": "The heading reads something like קפיצא/קפיצה, not קדיש."
+    },
+    {
+     "class": "O3",
+     "quote": "ואנחנו צדקיך ועמך וצאן מרעיתך נודה לך",
+     "severity": "wrong_text",
+     "what": "A familiar psalm phrase replaces the page's line, which reads roughly ואנחנו צדקיך ומשרתיך עבדך יום ויום כרצונך."
+    },
+    {
+     "class": "O6",
+     "quote": "ועמהם לטובה ולישר חפצנו והשכר בפינו לכל",
+     "severity": "wrong_text",
+     "what": "The page has roughly עמהם לי ואשר אחפוץ והשכר יהיה לכל."
+    },
+    {
+     "class": "O3",
+     "quote": "כל עצת אויבינו ואל תתננו בידי בשר ודם",
+     "severity": "wrong_text",
+     "what": "A familiar liturgical phrase replaces the page, which reads roughly כל עצת אויבי ומלא כל משאלותי לטובה."
+    },
+    {
+     "class": "O3",
+     "quote": "בבוא יומן ואל תצטרכנו לידי מתנת בשר",
+     "severity": "wrong_text",
+     "what": "Grace-after-meals wording that is not on the page; the leaf reads roughly ...לך כלבבך וכל עצתך ימלא."
+    },
+    {
+     "class": "O6",
+     "quote": "ודם נרננה בישועתך",
+     "severity": "wrong_text",
+     "what": "There is no ודם on the page; the line begins with נרננה."
+    },
+    {
+     "class": "O6",
+     "quote": "דלני ותחייני ותעמידני ביראתך ותגמלני",
+     "severity": "wrong_text",
+     "what": "The page has roughly דלני תרוממני ותעמידני כימין ברכותיך ותגמלני."
+    },
+    {
+     "class": "O6",
+     "quote": "חסדים טובים לפניך ולפני חסדים טובים לעיני",
+     "severity": "wrong_text",
+     "what": "The page has roughly חסדים טובים באי' ומאל חסדים טובים לנו."
+    },
+    {
+     "class": "O1",
+     "quote": "כל רואי",
+     "severity": "wrong_text",
+     "what": "This line is not on the page; only ישר\"י follows."
+    }
+   ],
+   "note": "The heading and many lines (1, 2, 5, 7, 8, 15, 16) have been swapped for familiar liturgical wording or misread, and a line has been invented; the page's singular first-person prayer was turned into the plural."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bae58522835be845b564",
+   "book_id": "69c1bae58522835be845b540",
+   "page_number": 36,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "יבואו מחנה של מיכאל גבריאל ורפאל",
+     "severity": "wrong_text",
+     "what": "the angel names aren't on the page; the leaf has roughly 'יבטלו מחנה כל מזיקין קשין ורעין'"
+    },
+    {
+     "class": "O1",
+     "quote": "ויטעו נטוע ה' ויתפאר על גן דעת אל חי ונהר עדנו",
+     "severity": "wrong_text",
+     "what": "line 3 is made up and doesn't match the faded line on the page"
+    },
+    {
+     "class": "O6",
+     "quote": "יפתח לך שער צדק שער ברכה שער נחמה",
+     "severity": "wrong_text",
+     "what": "the page reads 'שער אורה ... שער גילה', not 'צדק' and 'נחמה'"
+    },
+    {
+     "class": "O1",
+     "quote": "יקים נחמה ויקנה לה שם לדור דורותיו וכבודו על",
+     "severity": "wrong_text",
+     "what": "the page reads 'יפתח רחמה ויקנה לה שם טוב ... ובניו'"
+    },
+    {
+     "class": "O1",
+     "quote": "גופו שער וקנה לה",
+     "severity": "wrong_text",
+     "what": "the page has 'שם עשר וקנה לה'"
+    },
+    {
+     "class": "O6",
+     "quote": "בארץ חס חסדך יאיר אמתך ותלך מלכי המלכים יחד",
+     "severity": "wrong_text",
+     "what": "the wording and line division of lines 5–7 don't match the leaf"
+    }
+   ],
+   "note": "Comparing this to the image, a reader would find many lines that are invented or rewritten. The angel names and several of the 'gates' in the list are not what the leaf says, so the transcription can't be trusted line by line."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69520c10ab34727b1f0440c9",
+   "book_id": "69520c0fab34727b1f043e63",
+   "page_number": 614,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "בשם אד' והנה הברכה שביצירה ובזה לפי שחכמה שלמה חסד לו",
+     "severity": "wrong_text",
+     "what": "From about line 5 on, most lines are invented text that only loosely echoes words on the leaf"
+    },
+    {
+     "class": "O8",
+     "quote": "לא משמש בהם וכל ז' למן דקדושה",
+     "severity": "wrong_text",
+     "what": "The page is a dense Zohar-style Aramaic passage (דעלמא, קמיה, זווגא, בריך הוא); the candidate turns much of it into generic Hebrew kabbalistic phrasing"
+    },
+    {
+     "class": "O5",
+     "quote": "וברכה אתו ג'",
+     "severity": "wrong_text",
+     "what": "The rest of line 4 (…להון / מברכן) is dropped, and the page has about 24 lines against the candidate's 22"
+    },
+    {
+     "class": "O1",
+     "quote": "פתח לכל בכל וחי למנהג ברכה חי' של והכל שמעי' אמן:",
+     "severity": "wrong_text",
+     "what": "The last line ends in an invented 'אמן:'; the page's last line reads roughly ותהא לון כל חד וחד ... ברכאן ... קמיה"
+    },
+    {
+     "class": "O6",
+     "quote": "והשי\"ת בם ברוך ברוך דמי ונוקבא",
+     "severity": "wrong_text",
+     "what": "Garbled; the page has דכר ונוקבא and other wording"
+    }
+   ],
+   "note": "Only the opening lines and a few scattered words (ההוא יחידי, ונוקבא, זווג) match the leaf; most of the transcription is invented text that does not follow the Aramaic on the page line by line."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1ba928522835be84596c8",
+   "book_id": "69c1ba928522835be845954d",
+   "page_number": 379,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "שלום רב לאוהבי תורתך",
+     "severity": "wrong_text",
+     "what": "invented centred line; the page has no such line"
+    },
+    {
+     "class": "O1",
+     "quote": "דע כי האורות הנזכרים בשער הקודם הם בחינת נפש רוח נשמה חיה יחידה",
+     "severity": "wrong_text",
+     "what": "the closing paragraph of Shaar 33 (about gevurot, ending 'סליק שער שלשים ושלשה') is replaced by invented text"
+    },
+    {
+     "class": "O1",
+     "quote": "ברוך ה' לעולם אמן ואמן",
+     "severity": "wrong_text",
+     "what": "invented doxology; the page has 'סליק שער שלשים ושלשה' here instead"
+    },
+    {
+     "class": "O6",
+     "quote": "ובבאנו לבאר ענין לאה ורחל",
+     "severity": "wrong_text",
+     "what": "the page reads 'ענין יעקב ולאה'"
+    },
+    {
+     "class": "O1",
+     "quote": "צריכין אנו להקדים בחינת המקיפים של זעיר אנפין",
+     "severity": "wrong_text",
+     "what": "the whole body of chapter 1 is invented and does not match the manuscript"
+    },
+    {
+     "class": "O4",
+     "quote": "והנה דע כי הנשמה של המקיפים הם י\"א. והנה דע כי הנשמה של המקיפים הם י\"א.",
+     "severity": "wrong_text",
+     "what": "the same clause repeats in a loop about ten times"
+    },
+    {
+     "class": "O1",
+     "quote": "ברוך ה' לעולם אמן",
+     "severity": "wrong_text",
+     "what": "invented doxology between the chapters"
+    },
+    {
+     "class": "O1",
+     "quote": "בביאור ענין לאה ורחל. והנה כבר ביארנו בפרק א'",
+     "severity": "wrong_text",
+     "what": "the opening of chapter 2 is invented"
+    },
+    {
+     "class": "O1",
+     "quote": "האורות הפנימיים. והנה כבר ביארנו כי",
+     "severity": "wrong_text",
+     "what": "the main-text column is invented (the page speaks of יעקב, פנים ואחור, אבא)"
+    },
+    {
+     "class": "O12",
+     "quote": "אמר שמואל הנה כבר ביארנו כי",
+     "severity": "wrong_text",
+     "what": "the הגהה column is invented; its real text is not transcribed"
+    },
+    {
+     "class": "O5",
+     "quote": "היא בחינת רשימו של האורות המקיפים.",
+     "severity": "wrong_text",
+     "what": "real lines are missing, including the closing catchword 'הגהה' and the right-margin note"
+    }
+   ],
+   "note": "Apart from the folio number 189, the chapter headings and the shaar title, the transcription is invented, repetitive Kabbalistic boilerplate that does not match a single line of the manuscript."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb218522835be845d1d1",
+   "book_id": "69c1bb218522835be845d0eb",
+   "page_number": 230,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "ואמרם להם ראובן ושמעון אחים ובהפך שמעון נפטר בלא זרע",
+     "severity": "wrong_text",
+     "what": "The case is replaced with a stock levirate scenario. The page reads roughly 'ראובן ויעקב נשא אשה ובתוך שנתו נפטר'."
+    },
+    {
+     "class": "O6",
+     "quote": "נשאר שמעון זקוק ליבם קטן",
+     "severity": "wrong_text",
+     "what": "The page reads 'ונשארה אשתו זקוקה ליבם קטן'. It is the widow, not Shimon, who awaits the minor levir."
+    },
+    {
+     "class": "O1",
+     "quote": "בכתובת האשה בחזקת יורשיה הם וכל מה שימצא",
+     "severity": "wrong_text",
+     "what": "Invented text. The page reads roughly 'בכתובה בשוה ובחזקת יעקב הם ובאו היבמה'."
+    },
+    {
+     "class": "O3",
+     "quote": "פ' המדיר דתנן התם ומתה יבם",
+     "severity": "wrong_text",
+     "what": "The page cites 'פ' החולץ ... שומרת יבם'. The candidate gives the wrong chapter and quote."
+    }
+   ],
+   "note": "The page number, the line layout and the catchword are right, but the opening case (the parties and facts) is invented, the mishnah citation is wrong (המדיר for החולץ), and many lines are garbled, so it cannot stand beside the image."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bc148522835be846165f",
+   "book_id": "69c1bc148522835be846161f",
+   "page_number": 64,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "שיש להם הוויה והפסד והם הדברים הגופניים והמוחשים שהם נרמזים",
+     "severity": "wrong_text",
+     "what": "The first block is a looping, repetitive philosophical gloss on 'לו חכמו'. What can be made out of the dense cursive on the page does not support it, so it looks like generated filler rather than a reading of the leaf."
+    },
+    {
+     "class": "O1",
+     "quote": "ומורינו ורבינו נר\"ו השיב ששטר המתנה שביד ראובן הוא שטר גמור",
+     "severity": "wrong_text",
+     "what": "This ruling, and the case details before it, cannot be checked against the leaf. The responsa wording looks formulaic, not read from the page."
+    }
+   ],
+   "note": "The layout is right: three blocks, two of them opening with a large 'להיות', with matching line counts. But the words, especially the circular first block, do not seem to be read from this hard cursive leaf, so a reader comparing them with the image could not trust them."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bc858522835be8463899",
+   "book_id": "69c1bc858522835be8463804",
+   "page_number": 149,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "אחר מנחת ערב שאל אותי בחדריו אם נתחדש לי שום דבר אם לאו ואני אמרתי לו",
+     "severity": "wrong_text",
+     "what": "Invented opening. The page's first line is about מרדכי, the Jews and כרצונם and has no such words."
+    },
+    {
+     "class": "O1",
+     "quote": "להעמיד המדרגות בסדר הכלים והנה השלחן היק המזבח הפנימי והמנורה והמזבח החיצון",
+     "severity": "wrong_text",
+     "what": "Invented Tabernacle-vessels passage that is not on the leaf."
+    },
+    {
+     "class": "O6",
+     "quote": "קם היקולי בזה",
+     "severity": "wrong_text",
+     "what": "The repeated 'היקולי' misreads היהודי/היהודים, the page's main subject."
+    },
+    {
+     "class": "O1",
+     "quote": "וגם הקונדס שהבין ששייכות הקם לא באו למשכן",
+     "severity": "wrong_text",
+     "what": "Invented 'קונדס' and 'משכן' content. The page discusses the Jews, the king's provinces and not touching the spoil (בבזה לא שלחו את ידם)."
+    },
+    {
+     "class": "O1",
+     "quote": "ישראל ביניהם למלכות (סוף) גם הם לא באו אל בניה להם שמיחס חסור",
+     "severity": "wrong_text",
+     "what": "Invented lines with spurious '(סוף)' markers that are not on the page."
+    }
+   ],
+   "note": "Most of the candidate is invented: the page is a commentary on Esther (Mordecai, the Jews, the king's provinces, not touching the spoil), but the candidate turns it into a Tabernacle-vessels text with many made-up words, keeping only a few real phrases."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bad58522835be845ae46",
+   "book_id": "69c1bad58522835be845ae24",
+   "page_number": 34,
+   "defects": [
+    {
+     "class": "O2",
+     "quote": "<language>Syriac</language>",
+     "severity": "wrong_text",
+     "what": "The leaf is a heavily corrected Hebrew cursive draft, but the candidate is entirely in Syriac Serto script."
+    },
+    {
+     "class": "O1",
+     "quote": "ܐܝܬ ܗܘܐ ܓܒܪܐ ܚܕ ܕܫܡܗ ܗܘܐ ܐܢܛܘܢܝܘܣ",
+     "severity": "wrong_text",
+     "what": "A whole text about Abba Antonius (Antony) is invented; nothing on the page matches it."
+    },
+    {
+     "class": "O3",
+     "quote": "ܕܐܢ ܨܒܐ ܐܢܬ ܕܓܡܝܪ ܬܗܘܐ. ܙܠ ܙܒܢ ܟܠܡܕܡ",
+     "severity": "wrong_text",
+     "what": "Known hagiographic and gospel passages are put in place of the leaf's Hebrew narrative about the king, Judah and the chariots and horsemen."
+    },
+    {
+     "class": "O12",
+     "quote": "(ܐ) ܒܡܫܝܚܐ",
+     "severity": "wrong_text",
+     "what": "The margin notes are invented. The real Hebrew marginalia, such as the circled word and the notes keyed (ס), (סא) and (*), are dropped."
+    },
+    {
+     "class": "O5",
+     "quote": "36 ܘܐܢܐ ܐܢܐ ܕܡܫܕܠ ܐܢܐ ܠܥܠܝܡ̈ܐ ܠܙܢܝܘܬܐ.",
+     "severity": "wrong_text",
+     "what": "The page's actual Hebrew lines, verse numbers and many interlinear corrections are not transcribed at all."
+    }
+   ],
+   "note": "Beside an image of a Hebrew manuscript draft full of crossings-out, the reader would find an unrelated Syriac life of St Antony that has nothing to do with the page."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb3e8522835be845ddb7",
+   "book_id": "69c1bb3e8522835be845dcd3",
+   "page_number": 228,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "כל פנים יש בו אלו שני תנאים להיות נחשב שכל גמור וכל אדם שיש לו אלו שני",
+     "severity": "wrong_text",
+     "what": "Opening text is not on the leaf. The page starts 'ימשך העולם עד יום שכולו שבת שהוא אלף הז''"
+    },
+    {
+     "class": "O1",
+     "quote": "והחכמה מאין תמצא ואי זה הוא מקום בינה",
+     "severity": "wrong_text",
+     "what": "The whole discussion of wisdom and understanding is invented. The page is about Shabbat, the millennia and tikkun"
+    },
+    {
+     "class": "O1",
+     "quote": "(ה) והנה לפי מה שבארנו יובן כי יש חילוק גדול בין חכמה ובינה",
+     "severity": "wrong_text",
+     "what": "The page's section (ה) begins with 'והנה...' and goes on about kinds of Shabbat, not wisdom and understanding"
+    },
+    {
+     "class": "O3",
+     "quote": "אמרו חז\"ל בפרקי אבות אם אין חכמה אין בינה ואם אין בינה אין חכמה",
+     "severity": "wrong_text",
+     "what": "Pirkei Avot quotations substituted for what the leaf actually says"
+    },
+    {
+     "class": "O4",
+     "quote": "כי השבת היא מקור השלום והחיים וזהו ענין השלום",
+     "severity": "wrong_text",
+     "what": "Repetitive loop that fills the second half of the page"
+    },
+    {
+     "class": "O4",
+     "quote": "והבינה והתעלות הנשמה ביום השבת בבחינת השכל והבינה והתעלות הנשמה ביום השבת",
+     "severity": "wrong_text",
+     "what": "The same phrase is repeated inside a line and across lines"
+    }
+   ],
+   "note": "The transcription has nothing to do with the leaf. It is invented text about wisdom and understanding with long repetitive loops, while the page discusses Shabbat, the millennia and tikkun."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69b3e679304c1c6b3950b736",
+   "book_id": "69b3e679304c1c6b3950b712",
+   "page_number": 36,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ומפני זה השפע המגיע לחיות ולמזונות הנפש ולמזונות הגוף ולכבוד ולעושר ולבנים ולבני בנים וכל זה ע\"י",
+     "severity": "wrong_text",
+     "what": "The body text is generic pious filler written over the cursive hand. It does not follow the leaf's lines anywhere. Only the display words ישב, שם and כל match the page."
+    },
+    {
+     "class": "O3",
+     "quote": "ונתתי מטר ארצכם וגו' ונתתי עשב בשדך וגו' השמר לכם פן יפתה לבבכם",
+     "severity": "wrong_text",
+     "what": "Familiar verses from Deuteronomy (the Shema's second paragraph) are put in place of what the leaf actually says."
+    },
+    {
+     "class": "O4",
+     "quote": "ויהי רצון מלפני אבינו שבשמים שישרה שכינתו בבית הזה ובכל בתי כנסיות ובתי מדרשות של ישראל בכל מקום שהם",
+     "severity": "wrong_text",
+     "what": "Whole blocks are copied two or three times: 'אלה הדברים אשר דברנו בזה הפרק...', 'וכל המאמין...', 'ויהי רצון...' and 'קדש השם...'."
+    },
+    {
+     "class": "O5",
+     "quote": "סלה ועד —",
+     "severity": "wrong_text",
+     "what": "The leaf's real lines after the כל paragraph, about 20 lines down to the foot of the page, are not transcribed. The foliation/page mark (נב?) at the foot is also missing."
+    }
+   ],
+   "note": "Apart from the three large display words, the transcription has nothing to do with the cursive text on this leaf: it is invented, repetitive devotional filler with long passages repeated word for word."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1baba8522835be8459ec6",
+   "book_id": "69c1baba8522835be8459dc6",
+   "page_number": 256,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "כי הם יסודות ואע\"פ שאינו מוצא בהם חטא אלא בן בו שיעור חלה כך נכון אצלי סדר",
+     "severity": "wrong_text",
+     "what": "Line 1 is mostly invented. The page reads roughly 'כי הם … ואמ\"ש … שיעור חלה רק …'."
+    },
+    {
+     "class": "O1",
+     "quote": "דאמר ר' אחא בר יצחק דף שיעור וחוק",
+     "severity": "wrong_text",
+     "what": "The rabbi's name is not on the page, which reads about 'דאמר הוי מחדש בתוך עיסה דף שיעור ודוק'."
+    },
+    {
+     "class": "O1",
+     "quote": "עד כאן לא אמר ר' יוחנן אלא שכתבתי",
+     "severity": "wrong_text",
+     "what": "R. Yohanan is invented. The page reads 'עד כו' כלומ' עד היכן …'."
+    },
+    {
+     "class": "O1",
+     "quote": "כל חוקה וחוקה חלה (חוקה וטענה למצאו) לא לוק",
+     "severity": "wrong_text",
+     "what": "Line 10 does not match the page, which reads 'ר\"ל לחלקה …'. The same kind of garbling runs through the rest of the body."
+    },
+    {
+     "class": "O12",
+     "quote": "וזהו פירוש דברי ר' יוחנן בב' חטאות או בב' אשמות וזהו פירוש דברי ר' יוחנן בזה (מהגליון)",
+     "severity": "wrong_text",
+     "what": "The long note in the left margin is invented and not placed with the line it belongs to. It begins about 'וזהו … בה לעצמו …'."
+    }
+   ],
+   "note": "The line count roughly matches the page, but most of the wording is invented (e.g. R. Aha bar Yitzhak and R. Yohanan, who are not on the leaf), so the text cannot be read against the image."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69e7490485f786e884a4d197",
+   "book_id": "69e7490485f786e884a4d186",
+   "page_number": 17,
+   "defects": [
+    {
+     "class": "E2",
+     "quote": "<column-break/>",
+     "severity": "wrong_text",
+     "what": "Columns are in the wrong order. The right column (בריש טור תלגא…יא אכתי) comes first and runs on into the left column (יא ערוסא…), but the candidate gives the left column first."
+    },
+    {
+     "class": "O3",
+     "quote": "חמרא וריחא דמשחך אכיר מן ואטבא",
+     "severity": "wrong_text",
+     "what": "The page reads אכמר ורהאנך אכיר מן ואטיאב (Judeo-Arabic). The candidate puts the Targum wording in its place."
+    },
+    {
+     "class": "O6",
+     "quote": "גלרין בארעא דתרכנא",
+     "severity": "wrong_text",
+     "what": "The page reads גברין כארעון ותקרבתא."
+    },
+    {
+     "class": "O6",
+     "quote": "חביבותך לבבי דהוא כחרמן",
+     "severity": "wrong_text",
+     "what": "The page reads חלת זוטר דלבנך דהוא כחרמן."
+    },
+    {
+     "class": "O6",
+     "quote": "מהי פירידך אחתי",
+     "severity": "wrong_text",
+     "what": "The page reads מה יפו דדיך אחתי."
+    }
+   ],
+   "note": "The two columns are swapped, so the text doesn't read in order. The Judeo-Arabic lines are partly replaced by the standard Targum wording, several words are misread, and the marginal verse markers are garbled."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "6a7de037fd8615d37af98e48",
+   "book_id": "6a7de037fd8615d37af98df8",
+   "page_number": 80,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "בשם יהוה אלהי ישראל",
+     "severity": "wrong_text",
+     "what": "The heading line on the page is a different short formula, something like 'בשמא ד... רבה וקדישא'. This heading is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "בשם ארבעה המלאכים נגד חיות המרכבה אלו הן אוריאל רפאל גבריאל",
+     "severity": "wrong_text",
+     "what": "The first line of the leaf does not read this way. The four archangels' names are not visible where the candidate puts them."
+    },
+    {
+     "class": "O3",
+     "quote": "יהוה צבאות מלא כל הארץ כבודו. והחיות עומדים ואומרים ברוך\nכבוד יהוה ממקומו",
+     "severity": "wrong_text",
+     "what": "The Kedushah verses from Isaiah and Ezekiel are put in place of what the manuscript lines actually say."
+    },
+    {
+     "class": "O1",
+     "quote": "ואני משביע\nעליכם בשם אהיה אשר אהיה המפורש",
+     "severity": "wrong_text",
+     "what": "This is generic Merkabah or adjuration wording that cannot be matched to the leaf. The whole body reads as a made-up pastiche."
+    },
+    {
+     "class": "O5",
+     "quote": "אלהי השמים ואלהי הארץ בשם המפורש הזה וכל המלאכים המשרתים",
+     "severity": "wrong_text",
+     "what": "The candidate has about 34 lines, but the page has about 38 to 39. Lines are missing, and the bottom lines of the page are not transcribed."
+    }
+   ],
+   "note": "The text beside the image is not this page's text. It is an invented Merkabah-style adjuration that matches neither the heading nor any line of the faint red manuscript, and the page has more lines than the candidate gives."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb0c8522835be845c8ec",
+   "book_id": "69c1bb0c8522835be845c840",
+   "page_number": 172,
+   "defects": [
+    {
+     "class": "O5",
+     "quote": "->פועל<-",
+     "severity": "wrong_text",
+     "what": "two or three faded lines at the top of the page, above this line, are left out without any note"
+    },
+    {
+     "class": "O6",
+     "quote": "רעיו ישכיל נועם צור מקשיב קול",
+     "severity": "wrong_text",
+     "what": "the page reads 'נדיביו ישכיל / נועם צור מקשיבים'; 'קול' is not there"
+    },
+    {
+     "class": "O1",
+     "quote": "זכור רחמיך וכי שמי ערבות",
+     "severity": "wrong_text",
+     "what": "'זכור רחמיך' is invented; the page has '…רות רבות / זכי שמי ערבות'"
+    }
+   ],
+   "note": "The main column is roughly right, but the faded top lines and the refrain cues on every line are missing, and some words are invented or misread, such as 'זכור רחמיך', 'מקשיב קול' and 'נעילה'."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bc098522835be84613a3",
+   "book_id": "69c1bc098522835be846135b",
+   "page_number": 72,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "en esta manera que es la que se sigue ... del mes de mayo de mil y seiscientos años",
+     "severity": "wrong_text",
+     "what": "The whole text is invented. This leaf carries only faint, mirrored show-through from the other side, and none of these Spanish words can be read on it."
+    },
+    {
+     "class": "O7",
+     "quote": "a veinte dias del mes de mayo de mil y seiscientos años",
+     "severity": "wrong_text",
+     "what": "A Madrid date of 20 May 1600 is invented, and so is the 'diez mil maravedis' penalty. Neither is on the page."
+    }
+   ],
+   "note": "The image shows an almost blank leaf with only faint mirror-image bleed-through, but the transcription prints a full Spanish royal decree dated Madrid 1600 that is not on the page."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb078522835be845c660",
+   "book_id": "69c1bb078522835be845c606",
+   "page_number": 90,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "על פער יד וסימ' כתבום בספר וחתום וכתב בספר וחתום וכתוב בספר וחתום וכתוב בספר",
+     "severity": "wrong_text",
+     "what": "the top Masorah magna note is garbled into invented, repetitive text; the page reads על העיר י״ג וסי' כתבים... ליהודה אכתוב לו"
+    },
+    {
+     "class": "O6",
+     "quote": "להרטיב אותם",
+     "severity": "wrong_text",
+     "what": "the page reads להיטיב"
+    },
+    {
+     "class": "O6",
+     "quote": "בארע חטיבת בנימן",
+     "severity": "wrong_text",
+     "what": "the page reads בארע שבט בנימן"
+    }
+   ],
+   "note": "The main biblical and Targum text is mostly right, but the whole left column is tagged as marginalia, the Masorah notes are garbled or dropped, and a few Targum words are misread (חטיבת for שבט, להרטיב for להיטיב, ובחלוף for ובתקוף)."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bc6b8522835be84633a1",
+   "book_id": "69c1bc6b8522835be8463238",
+   "page_number": 361,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "והשתחוו לו כל מלכי ארץ",
+     "severity": "wrong_text",
+     "what": "a familiar verse is put in place of the page's proof text, which reads ולפני י\"י ישתחוו"
+    },
+    {
+     "class": "O6",
+     "quote": "ויענו חבור ויעקב בבוא חטף",
+     "severity": "wrong_text",
+     "what": "the lemma on the page is אביר / אביר יעקב בשוא חטף; garbled"
+    },
+    {
+     "class": "O3",
+     "quote": "\"בערוגות הבושם\"",
+     "severity": "wrong_text",
+     "what": "a canonical phrase replaces the page's כערוג(ת) / כאיל תערוג"
+    },
+    {
+     "class": "O6",
+     "quote": "רעמים היסומטברי ירתיחה",
+     "severity": "wrong_text",
+     "what": "the page reads ירעים הים ומשבריו ירתיחה; garbled"
+    },
+    {
+     "class": "O6",
+     "quote": "חננו ישעה לקולינו כנס אהמה ואשמה",
+     "severity": "wrong_text",
+     "what": "the page reads חנון … ואשיחה; ואשמה changes the sense"
+    },
+    {
+     "class": "O6",
+     "quote": "יבחנונו רחמיך",
+     "severity": "wrong_text",
+     "what": "the page reads יבואונו רחמיך"
+    },
+    {
+     "class": "O6",
+     "quote": "שומע נפתלים ישתעשע",
+     "severity": "wrong_text",
+     "what": "the page reads שומע נופלים"
+    },
+    {
+     "class": "O6",
+     "quote": "ח\"ס ישמיע קול כשהיה פער",
+     "severity": "wrong_text",
+     "what": "the page reads הים ישמיע קול כשהיה סער; the nearby ירדן should be דרך"
+    },
+    {
+     "class": "O6",
+     "quote": "זכות ראות",
+     "severity": "wrong_text",
+     "what": "the page reads צופות רואות"
+    },
+    {
+     "class": "O6",
+     "quote": "שעוררו כמעורר את שהיא חרס נהרים של אדם מקום",
+     "severity": "wrong_text",
+     "what": "the bottom gloss is garbled; the page has שעוררו במזרח או שהיה … מקדם"
+    }
+   ],
+   "note": "The main Selichah is broadly right but has several word misreads. The commentary column is heavily garbled and in places swaps in familiar verses for what the page actually says."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bab38522835be8459cbf",
+   "book_id": "69c1bab38522835be8459bf4",
+   "page_number": 203,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "להיות נבנה ונתקן ע\"י התעוררות מ\"ן מלמטה וזהו החסד של הבוקר שהם חמשה גבורות",
+     "severity": "wrong_text",
+     "what": "Opening line doesn't match the leaf, which begins roughly 'שהיה נבנה יתברך שיותקנו חיים…'. Most of the body is invented kabbalistic prose built on stock terms, not read from the page."
+    },
+    {
+     "class": "O1",
+     "quote": "עלה עלה כי יתעלה מהם למעלה וחסד ושלום פן עלה יתברך ויתעלה על חסד והשלום",
+     "severity": "wrong_text",
+     "what": "The second half is incoherent and repetitive filler made from formulae ('יתברך ויתעלה', 'חסד ושלום', 'למעלה מכל'). The page doesn't say this."
+    },
+    {
+     "class": "O5",
+     "quote": "חסד ורחמים לפניו ית' שהוא קדוש וקדוש למעלה ובינה פועל אמת שמו לעד שמו של",
+     "severity": "wrong_text",
+     "what": "The page has about 33 lines and the candidate has 30. Real content is missing, such as the lines near the bottom naming 'שלמה בן דוד' and the last line ending in '…'."
+    },
+    {
+     "class": "O3",
+     "quote": "שלום עליכם מלאכי השרת וכו' השלום וכו' תתקבל תפלתן של ישראל",
+     "severity": "wrong_text",
+     "what": "Familiar liturgical phrases are put in place of what the leaf actually says."
+    },
+    {
+     "class": "O4",
+     "quote": "וכן שמו של הקב\"ה יתברך ית' על פי שמו וזכרו זכרו",
+     "severity": "wrong_text",
+     "what": "Phrases and half-lines repeat over and over in the last third ('שמו של הקב\"ה', 'למעלה למעלה', 'חסד ושלום')."
+    }
+   ],
+   "note": "Apart from a few phrases that happen to match (e.g. 'ויהי י\"י את יוסף', 'חיים ושלום'), the transcription doesn't follow the manuscript line by line. Most of it is invented, repetitive kabbalistic wording, so a reader comparing it with the image would find almost nothing that lines up."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb438522835be845e109",
+   "book_id": "69c1bb438522835be845df1f",
+   "page_number": 490,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "ועוד יסוד על אברהם התמים שנאמר לו התהלך לפני והיה תמים",
+     "severity": "wrong_text",
+     "what": "The opening line is replaced with a familiar verse about Abraham. The leaf seems to say 'ועי\"ז נולד לך כו' ועוד משל על ... זצ\"ל מבארדיטשוב'."
+    },
+    {
+     "class": "O6",
+     "quote": "בבחי' תפלה תענוג",
+     "severity": "wrong_text",
+     "what": "The page's subject is תשובה (repentance), read here as תפלה (prayer). The leaf reads 'בבחי' תשובה מעומקא דלבא'."
+    },
+    {
+     "class": "O6",
+     "quote": "והנה למאור המאור שנתר' ההעלאה",
+     "severity": "wrong_text",
+     "what": "The leaf reads something like 'והנה ליסוד התורה שאחר ההעלאה'."
+    },
+    {
+     "class": "O1",
+     "quote": "וכמו באליהו הנביא זכור לטוב ובהעלאה נפשו רצה לברך טובה ועמדו על פי ה'",
+     "severity": "wrong_text",
+     "what": "Invented reference to Elijah. The leaf has roughly 'וכמו ... שרפא אותו והעבירו מדרך רעה לדרך טובה ואמרו אז לפני ה''."
+    },
+    {
+     "class": "O1",
+     "quote": "וזאת וזאת דבקה בו אפי' ה' צדיק יסוד עולם",
+     "severity": "wrong_text",
+     "what": "Invented phrase. The leaf has roughly '...דכתיב ... ה' אלקיך ...'."
+    },
+    {
+     "class": "O6",
+     "quote": "שקצת צדיקים צ\"ל א\"י לעמוד שם",
+     "severity": "wrong_text",
+     "what": "Garbles the known saying about penitents. The leaf has 'שבמקום שבעלי תשובה עומדים צ\"ג א\"י לעמוד שם'."
+    },
+    {
+     "class": "O1",
+     "quote": "שביקשה אברהם לב' בתפלה",
+     "severity": "wrong_text",
+     "what": "Abraham does not appear on the leaf."
+    },
+    {
+     "class": "O6",
+     "quote": "יש בה כמה אפשריות רב' בחי' רוח תפלה",
+     "severity": "wrong_text",
+     "what": "The leaf has 'יש כמה מדריגות הא' הוא בחי' תשובה'."
+    },
+    {
+     "class": "O6",
+     "quote": "על להיות בבחי' סוד ואור",
+     "severity": "wrong_text",
+     "what": "The leaf has 'סור מרע ועשה טוב'."
+    },
+    {
+     "class": "O6",
+     "quote": "בו כל פעולה פ\"פ הכחות",
+     "severity": "wrong_text",
+     "what": "The leaf's wording here differs, apparently about transgressions becoming merits."
+    },
+    {
+     "class": "O6",
+     "quote": "בטל או שהולך ובטל בנהר והתפלל למבוע מים",
+     "severity": "wrong_text",
+     "what": "The leaf has the parable 'כמשל מי שהולך לרחוץ בנהר והתחיל לטבוע במים שמתחרט'."
+    }
+   ],
+   "note": "A reader would find a largely made-up text about prayer, Abraham and Elijah, while the handwritten leaf is a passage on repentance (תשובה) that names a rabbi of Berdichev."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69b3e5c1304c1c6b3950a109",
+   "book_id": "69b3e5c1304c1c6b3950a0a3",
+   "page_number": 102,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ועולם הבא אלא דבגמרא מפרש לה הכי ועד עולם היינו בית המקדש",
+     "severity": "wrong_text",
+     "what": "From line 2 onward the text is invented: the Hebrew is fluent but does not match the Aramaic-heavy cursive lines on the leaf"
+    },
+    {
+     "class": "O3",
+     "quote": "ברוך אתה ה' אלהי ישראל אבינו מעולם ועד עולם",
+     "severity": "wrong_text",
+     "what": "A well-known liturgical formula put in place of what the leaf actually says"
+    },
+    {
+     "class": "O3",
+     "quote": "וסברו ואמרו ברוך שם כבוד מלכותו לעולם ועד",
+     "severity": "wrong_text",
+     "what": "A canonical formula is inserted that is not on the page"
+    },
+    {
+     "class": "O4",
+     "quote": "וזהו שאמר פנחס למספרת דפי פנחס לפי ששמעו כן ואמר",
+     "severity": "wrong_text",
+     "what": "Repeats an earlier line almost word for word, along with other repeated phrases (\"פ' פ' פ' לך ואמר עולם\", \"ברוך שם כבוד מלכותו\")"
+    },
+    {
+     "class": "O12",
+     "quote": "בשם ה' אל עולם אקרא אמן\nא\"ש (אור זרוע) וחסד ה' מעולם ועד עולם על יראיו",
+     "severity": "wrong_text",
+     "what": "The two-line marginal note at the top right is not read; this text and its gloss are invented"
+    },
+    {
+     "class": "O5",
+     "quote": "כלפי סברו ואמרו ברוך שם כבוד מלכותו לעולם ועד",
+     "severity": "wrong_text",
+     "what": "The page has about 26 lines of text; the candidate gives 24 lines that do not correspond to them, so the real lines are effectively lost"
+    }
+   ],
+   "note": "Apart from the opening words and the catchword, the transcription does not match the page: it is invented Hebrew filled with stock liturgical phrases and repeated lines, and both the margin note and the body text are lost."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1baee8522835be845b881",
+   "book_id": "69c1baee8522835be845b7b6",
+   "page_number": 203,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "השמים כי אם פחדו ורעדו לפניו המה",
+     "severity": "wrong_text",
+     "what": "Only the opening 'השמים' matches. The rest of the line is a fluent devotional guess and not the faded line on the leaf."
+    },
+    {
+     "class": "O1",
+     "quote": "וכשהם נסוגים לאחוריהם לפניו יפחדו",
+     "severity": "wrong_text",
+     "what": "Line 2 on the leaf (וכשהם ... ) goes on differently. The reading here is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "ויעמדו <unclear>מרעדה</unclear> וחיל ורעדה",
+     "severity": "wrong_text",
+     "what": "Line 3 on the leaf starts roughly 'ושעורם...'. This text is invented."
+    },
+    {
+     "class": "O5",
+     "quote": "ויעמדו <unclear>מרעדה</unclear> וחיל ורעדה",
+     "severity": "wrong_text",
+     "what": "The partial 4th line just above the hole is left out with no note."
+    },
+    {
+     "class": "I4",
+     "quote": "<unclear>הדין</unclear> ועיניו תחזינה ותעפעפנה\n<unclear>לפניו</unclear> וכל גבוריו ועם עשק לפניו",
+     "severity": "wrong_text",
+     "what": "These lines come from the underlying leaf seen through the hole, but they are run into this page's text as if they belonged to it. Only 'ועם עשק' is plainly visible there."
+    },
+    {
+     "class": "O1",
+     "quote": "<unclear>יחילו</unclear> וכל צבא השמים <unclear>יזועו</unclear>",
+     "severity": "wrong_text",
+     "what": "Doesn't match the lower lines (~עמה ... מעלה ..., עבור ... מים בשש ..., ערב וחרב ...). Invented."
+    },
+    {
+     "class": "O4",
+     "quote": "ועמדו <unclear>מרעדה</unclear> וחיל ורעדה <unclear>לפניו</unclear>",
+     "severity": "wrong_text",
+     "what": "Repeats line 3. The scribe did not write it twice."
+    },
+    {
+     "class": "O4",
+     "quote": "<unclear>יעמדו</unclear> <unclear>יעמדו</unclear> <unclear>לפניו</unclear>",
+     "severity": "wrong_text",
+     "what": "A loop of repeated words standing in for the last lines."
+    },
+    {
+     "class": "O5",
+     "quote": "<unclear>יעמדו</unclear> <unclear>לפניו</unclear>",
+     "severity": "wrong_text",
+     "what": "The leaf has about 6 lines below the hole, ending with a short line ('ערב וחרב...'). They are not properly represented."
+    }
+   ],
+   "note": "Apart from the opening 'השמים' and 'ועם עשק' (visible through the hole), this text doesn't match the leaf: it is invented, repetitive 'trembling before Him' wording, and the lines below the hole are not transcribed."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bc6d8522835be84634da",
+   "book_id": "69c1bc6d8522835be8463468",
+   "page_number": 114,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "הקדוש ובמקום דאמר דכתיב פעם יחיד כי כתיב פעם ראשון",
+     "severity": "wrong_text",
+     "what": "The body text is invented. The repeated 'פעם' formulas are not on the page; the opening line actually reads roughly 'בקונו שבשמים...'"
+    },
+    {
+     "class": "O4",
+     "quote": "פעם אחת פעם אחת פעם אחת פעם אחת",
+     "severity": "wrong_text",
+     "what": "The same phrase is repeated many times in a loop, which pads out the invented text"
+    },
+    {
+     "class": "O4",
+     "quote": "הכי קאמר כל היכא דכתיב פעם פעם",
+     "severity": "wrong_text",
+     "what": "This line appears again and again across the sections"
+    },
+    {
+     "class": "O7",
+     "quote": "### דף רצו ע\"ב\nהכי קאמר כל היכא דכתיב פעם פעם\nחד זימנא",
+     "severity": "wrong_text",
+     "what": "The third heading is given as רצו ע\"ב again. On the page it is a different leaf, apparently רצז ע\"ב"
+    },
+    {
+     "class": "O12",
+     "quote": "<margin>עיין בביאור זה דף רצו ע\"ב</margin>",
+     "severity": "wrong_text",
+     "what": "These margin notes are invented. The real marginal glosses at the line ends (e.g. '...עד עכ\"ל') are not transcribed"
+    },
+    {
+     "class": "O5",
+     "quote": "פ\"א חסר מן הבית פ\"א בבית פעם אחת פעם אחת",
+     "severity": "wrong_text",
+     "what": "None of the page's real lines are transcribed, including the closing lines under דף רצח ע\"א"
+    }
+   ],
+   "note": "Apart from the leaf headings, the transcription has nothing in common with the handwritten commentary on the page. It is invented text that repeats 'פעם' and 'פעם אחת' over and over, with fake margin notes and one wrong leaf heading."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69b3f794a107e55a0ee1e1ac",
+   "book_id": "69b3f794a107e55a0ee1e15e",
+   "page_number": 78,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "נצח סגולתך קבצנו חיים סלון וברכותיך שיהיו בכל ומכל וכל וכן א'",
+     "severity": "wrong_text",
+     "what": "Top block is fluent but invented; it doesn't match the cursive lines on the leaf"
+    },
+    {
+     "class": "O3",
+     "quote": "כי אהבת עולם אהבתנו חמלה גדולה ויתירה חמלת עלינו אבינו מלכנו",
+     "severity": "wrong_text",
+     "what": "The standard Ahavah Rabbah prayer is put in place of what the lower block actually says"
+    },
+    {
+     "class": "O4",
+     "quote": "ידינו כוננה עלינו ומעשה ידינו כוננהו אמן סלה אמן סלה",
+     "severity": "wrong_text",
+     "what": "Repeated phrase, padding the text"
+    },
+    {
+     "class": "O5",
+     "quote": "באמת להודות לך וליחדך באהבה ברוך אתה ה' הבוחר בעמו ישראל באהבה",
+     "severity": "wrong_text",
+     "what": "Line count doesn't match: the leaf's lower block is about 14 lines, the candidate gives 18 canonical ones"
+    }
+   ],
+   "note": "Only the layout matches (a short block, a large heading, three short lines, a prose block). The words are invented or swapped for a standard prayer, and the facing page in the spread isn't transcribed."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb538522835be845ef6c",
+   "book_id": "69c1bb538522835be845ee95",
+   "page_number": 215,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "וספר בזה ע\"י שנתעורר להתפלל אל גבר אחד אביו וסבו ויהי' רשום בספר הזכרונות להראות א\"כ הכל הוא",
+     "severity": "wrong_text",
+     "what": "Line 1 is largely invented. The page reads roughly 'ונבאר בזה … להתפלל אל גבר אחד … ביטול העולמות לאלהות א\"כ הכל כלא'."
+    },
+    {
+     "class": "O1",
+     "quote": "ואין לגבי אלהות שום מציאות וזהו' הפי' במ' לא תדור בנזירות אע\"פ שסייעו לך מן השמים",
+     "severity": "wrong_text",
+     "what": "Line 2 is invented. The page reads roughly 'ואין לגבי אלהות שהוא היש האמיתי והוי' בטל לה' …'."
+    },
+    {
+     "class": "O1",
+     "quote": "הפי' ע\"ד צדק צדק תרד' הבית כו' אבל הענוות בצדק' הם הדין",
+     "severity": "wrong_text",
+     "what": "Line 3 is invented. The page reads roughly 'הנ\"ל גרם אדם שיש בהן בחי' הבדלות כו' אבל הנשמות בבי\"ע …'."
+    },
+    {
+     "class": "O6",
+     "quote": "שאין אלהות אלא ברוחניות חכמה אלהי' יש ולכן לא ידע אדם אמונה לעלמין",
+     "severity": "wrong_text",
+     "what": "Misread. The page reads roughly 'שאינו אלהות ממש אלא בריאה חדשה מאין ליש ולכן לא נק' אדם …'."
+    },
+    {
+     "class": "O1",
+     "quote": "וזהו' ובריות וחיות וסוסים באו' בלית גם בענוות גבון",
+     "severity": "wrong_text",
+     "what": "Much of the middle of the page is plausible-sounding Hasidic text that is not on the leaf."
+    },
+    {
+     "class": "O1",
+     "quote": "בחינות ווקל' אף בלית ג\"כ ע\"י הנפש כוונות בזה' והכח היה קושה",
+     "severity": "wrong_text",
+     "what": "Garbled or invented wording throughout the lower half."
+    },
+    {
+     "class": "O1",
+     "quote": "והנה במנוחת הענוות אן בזה וזהו' ענין כבוד הארץ באנחנו נגלה לה לנו \"אשר\"",
+     "severity": "wrong_text",
+     "what": "Closing lines are mostly invented."
+    }
+   ],
+   "note": "A reader would find that only a few anchor phrases (עולם הפירוד, אין ערוך כלל בין נברא לבורא, ויתהלך חנוך את האלהים, עולם התהו/התיקון) match the handwritten leaf. Most lines are confabulated text that is not on the page."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb5c8522835be845f453",
+   "book_id": "69c1bb5c8522835be845f2eb",
+   "page_number": 360,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "דעה כי הוא נבחן על פי הנפש כי שהוא הדין הוא למטה וכו'",
+     "severity": "wrong_text",
+     "what": "The opening line is largely invented. The page reads roughly 'למעלה כך הוא בבחי' עצמות הנפש כמו שהוא הרי הוא למעלה מכתר' (up above, so it is with the soul's essence…), but the candidate has different words and 'למטה' (below) where the page has 'למעלה' (above)."
+    },
+    {
+     "class": "O1",
+     "quote": "בעצם המעלה הנפש הוא בזה שהנפש מאירה בהתעוררות",
+     "severity": "wrong_text",
+     "what": "The page has 'בעצם עצמות הנפש'; the candidate's 'המעלה' is not there."
+    },
+    {
+     "class": "O1",
+     "quote": "נכר המעלה של הנפש כנזכר להיות רצון הוא כלי זין",
+     "severity": "wrong_text",
+     "what": "The middle lines are a loose paraphrase, with many invented words and phrases."
+    },
+    {
+     "class": "O1",
+     "quote": "כי א\"כ ונתת אין שייך רצון המעלה וגמר ההתפשטות",
+     "severity": "wrong_text",
+     "what": "Words that are not on the page."
+    },
+    {
+     "class": "O6",
+     "quote": "בפ' פנחס שאין ההתגלות כלל לפי המלך",
+     "severity": "wrong_text",
+     "what": "Adds a reference to Parashat Pinchas that is not on the page. The page reads roughly 'בכל מקום שאין ההתגלות רק לפי המלך'."
+    },
+    {
+     "class": "O1",
+     "quote": "ופרושו גם בזה זין המאור ותפלה פתח רצון אלה שאין לו",
+     "severity": "wrong_text",
+     "what": "Garbled invented text where the page is legible."
+    },
+    {
+     "class": "O1",
+     "quote": "וכן בבחי' נסתר כי המעלה ואחר שנתן ואור\nהנפש כל זה וכו'",
+     "severity": "wrong_text",
+     "what": "The ending does not match the page. The page ends roughly '…ובחי' העלם נכרת כמו העצמות ואחר שנתגלה ואור / העצמות כו' ודפק'."
+    }
+   ],
+   "note": "The candidate loosely follows the page's topic and some recurring words (soul, will, awakening, the King's light), but most lines are invented paraphrase rather than the handwritten text. This includes a reference to Parashat Pinchas that is not on the page, a different ending, and a marginal note that is not there."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "69c1bb8e8522835be846041c",
+   "book_id": "69c1bb8e8522835be84603f3",
+   "page_number": 41,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<unclear>non solum illud, sed etiam</unclear> ... <unclear>rationi consentanea.</unclear>",
+     "severity": "wrong_text",
+     "what": "All 26 Latin lines are invented. The leaf shows only mirrored bleed-through of Hebrew cursive from the other side, with no text of its own."
+    },
+    {
+     "class": "O1",
+     "quote": "<vocab>actio humana, finis, ratio, contrarius, perfecta</vocab>",
+     "severity": "wrong_text",
+     "what": "Glossary of terms taken from the invented Latin; none of them is on the page."
+    }
+   ],
+   "note": "The page has no text of its own: what shows is mirrored Hebrew script bleeding through from the reverse, plus a pencil '12'. The candidate gives a full invented Latin passage about human action and its end."
+  },
+  {
+   "cell": "hebrew-flash3-manuscript",
+   "route": "3flash",
+   "page_id": "6a209de889e8715c5947ac84",
+   "book_id": "6a209de889e8715c5947ac76",
+   "page_number": 14,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ענין אל קנות כגון במכר לשקול בצדק ובכל בשקל וזמן כמעשה בית דין כגון כיל ומשקל עד בחזק",
+     "severity": "wrong_text",
+     "what": "The opening line doesn't match the cursive line on the leaf. The page seems to open with a different word, possibly a name like שמואל. The candidate gives generic weights-and-measures text instead."
+    },
+    {
+     "class": "O1",
+     "quote": "דנאמר שהיה הקדוש ברוך הוא מקפיד ומחמיר בזה יותר מן הערוה של עובדי גלולים",
+     "severity": "wrong_text",
+     "what": "The whole first block (about 19 lines on the leaf, 17 in the candidate) is fluent but unrelated moralising text. Its words can't be matched to the strokes on the page."
+    },
+    {
+     "class": "O1",
+     "quote": "עוד נודע בפי הכל דע וחי והוא חסיד חל חלק פשוט",
+     "severity": "wrong_text",
+     "what": "Only the first word עוד matches. The rest of the second block (about 24 lines on the leaf, 22 in the candidate) is invented."
+    },
+    {
+     "class": "O5",
+     "quote": "בחן כחו שאל ובכדי המעלה וחכמה בלבב פת שלמה ובזה לקחת עבורו בין קהל עם יחד עד סוף ימי חייו\nבטחון",
+     "severity": "wrong_text",
+     "what": "The closing lines and the two-line signature at the bottom left (עני ... ) aren't transcribed. The candidate ends with an invented word instead."
+    }
+   ],
+   "note": "A reader comparing the two would find almost no line of the candidate on the leaf. It's fluent made-up rabbinic Hebrew over a cursive text it never actually read, apart from the word עוד that opens the second section."
+  }
+ ]
+}

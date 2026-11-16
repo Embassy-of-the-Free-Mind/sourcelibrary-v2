@@ -60,7 +60,7 @@ function A({ to, children }: { to: string; children: ReactNode }) {
 
 function H2({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <h2 id={id} className="font-display text-2xl text-stone-900 mt-14 mb-4 scroll-mt-24">
+    <h2 id={id} className="font-serif text-2xl text-stone-900 mt-14 mb-4 scroll-mt-24">
       {children}
     </h2>
   );
@@ -140,7 +140,7 @@ export default function QualityMethodsPage() {
           {instruments.map((m) => (
             <section key={m.id} id={m.id} className="border border-stone-200 rounded-md p-5 bg-white scroll-mt-24">
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                <h3 className="font-display text-xl text-stone-900 mr-2">{m.name}</h3>
+                <h3 className="font-serif text-xl text-stone-900 mr-2">{m.name}</h3>
                 <span className={`rounded-sm border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${KIND[m.kind].className}`}>{KIND[m.kind].label}</span>
                 <span className="text-xs text-stone-500 uppercase tracking-wider">{STATUS[m.status] ?? m.status}</span>
               </div>

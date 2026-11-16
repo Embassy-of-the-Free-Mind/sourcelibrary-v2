@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>223</page-num>
+<header>AD MEMMIVM, ET ALIOS.</header>
+<meta>The text uses italic type for the body of the letters and roman type for the headings and marginalia. Abbreviations like -q; and -m̄ have been expanded according to instructions.</meta>
+
+*mento, molestia sincerum, integrumque; conserues. et ipse spondeo, et omnes hoc tibi tui pro me recipient, ex mea amicitia, et ex tuo in me officio maximum te fructum summaque; uoluptatem esse capturum. Vale.*
+
+---
+
+### M. CICERO P. CAESIO S. D.
+
+<margin>P.</margin> *Messienum, equitem Romanum omnibus rebus ornatum, meumque; perfamiliarem, tibi commendo ea commendatione, quae potest esse diligentissima. peto a te et pro nostra, et pro paterna amicitia, ut eum in tuam fidem recipias, eiusque; rem, famamque; tueare. uirum bonum, tuaque; amicitia dignum tibi adiunxeris, mihique; gratissimum feceris. Vale.*
+
+---
+
+### CICERO REGI S.
+
+<margin>A.</margin> *Licinius Aristoteles Melitensis, antiquissimus est hospes meus, et praeterea coniunctus magno usu familiaritatis. haec cum ita sint, non dubito, quin tibi satis commendatus sit: etenim ex multis cognosco, meam commendationem plurimum apud te ualere. hunc ego a Caesare liberaui: frequens enim fuerat nobiscum: atque etiam diutius in causa est, quam nos, commoratus. quo melius te de eo existimaturum arbitror. fac igitur mi Rex, ut intelligat has sibi literas plurimum profuisse. Vale.*
+
+---
+
+### M. C. Q. THERMO PROPRAET. S.
+
+<margin>L.</margin> *Genucilio Curuo iampridem familiarissime utor, optimo uiro, et homine gratissimo. eum*
+
+<vocab>Memmius, P. Caesius, Messienus, Licinius Aristoteles Melitensis, Caesar, Q. Thermus, Genucilius Curvus, amicitia, commendatio</vocab>

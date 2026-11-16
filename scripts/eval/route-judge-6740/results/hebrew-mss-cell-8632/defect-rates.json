@@ -1,0 +1,63 @@
+{
+ "about": "Defect rates per 1,000 words by route, from paired-score.json (v2#8632 hebrew-mss-cell). Opus judge, plus the Gemini second judge on the two Opus arms.",
+ "cells": {
+  "gemini": {
+   "3flash>opus-correct": {
+    "n": 28,
+    "words": 10263,
+    "misleads_per_1k": 8.57,
+    "wrong_text_per_1k": 11.89,
+    "fidelity_mean": 3.29,
+    "accept": "10/28",
+    "wrong_text_pages": "18/28"
+   },
+   "opus-read": {
+    "n": 44,
+    "words": 15823,
+    "misleads_per_1k": 5.94,
+    "wrong_text_per_1k": 16.18,
+    "fidelity_mean": 2.66,
+    "accept": "9/44",
+    "wrong_text_pages": "35/44"
+   }
+  },
+  "opus": {
+   "3flash": {
+    "n": 44,
+    "words": 15745,
+    "misleads_per_1k": 8.64,
+    "wrong_text_per_1k": 15.12,
+    "fidelity_mean": 1.82,
+    "accept": "0/44",
+    "wrong_text_pages": "44/44"
+   },
+   "3flash>opus-correct": {
+    "n": 29,
+    "words": 10673,
+    "misleads_per_1k": 5.15,
+    "wrong_text_per_1k": 2.9,
+    "fidelity_mean": 3.34,
+    "accept": "13/29",
+    "wrong_text_pages": "13/29"
+   },
+   "opus-read": {
+    "n": 44,
+    "words": 15823,
+    "misleads_per_1k": 5.31,
+    "wrong_text_per_1k": 2.53,
+    "fidelity_mean": 3.2,
+    "accept": "20/44",
+    "wrong_text_pages": "16/44"
+   },
+   "3flash>agy-flash-low": {
+    "n": 41,
+    "words": 13588,
+    "misleads_per_1k": 7.58,
+    "wrong_text_per_1k": 17.52,
+    "fidelity_mean": 1.95,
+    "accept": "0/41",
+    "wrong_text_pages": "41/41"
+   }
+  }
+ }
+}

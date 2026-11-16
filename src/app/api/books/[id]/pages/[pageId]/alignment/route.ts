@@ -60,7 +60,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     if (result.status === 'unavailable') {
       // Cache miss — generation is a paid Gemini call, so gate anonymous volume.
-      const gate = await anonActionGate(request, { name: 'word-alignment', limit: 60 });
+      const gate = await anonActionGate(request, { name: 'word-alignment', limit: 60, allowBotBypass: false });
       if (!gate.allowed) {
         return NextResponse.json(
           { status: 'rate_limited', retry_after: gate.retryAfter },

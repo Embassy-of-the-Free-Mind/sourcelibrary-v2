@@ -27,13 +27,15 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 jobs:
   # Static gate: a $set of an unknown `books` field fails HERE, on the PR that
   # introduces it — a week before the census would notice, and before the write
   # ever runs. No database, no secrets, seconds to run.
   field-write-lint:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,7 +52,7 @@ jobs:
     # The census reads production, so it stays on the schedule rather than
     # running against the DB on every pull request.
     if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

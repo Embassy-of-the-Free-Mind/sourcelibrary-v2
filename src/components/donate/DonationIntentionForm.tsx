@@ -80,7 +80,7 @@ export default function DonationIntentionForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-display text-stone-900 mb-3">Thank you, {name.split(' ')[0]}</h3>
+        <h3 className="text-2xl font-serif text-stone-900 mb-3">Thank you, {name.split(' ')[0]}</h3>
         <p className="text-stone-600 text-lg leading-relaxed max-w-md mx-auto mb-4">
           We've sent you an email with next steps and a personal introduction to Derek Lomas, our Project Director, who can help with anything you need.
         </p>
@@ -94,7 +94,7 @@ export default function DonationIntentionForm() {
   return (
     <form onSubmit={handleSubmit} className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 md:p-10">
       <div className="mb-8">
-        <h3 className="text-2xl font-display text-stone-900 mb-2">Express Your Interest</h3>
+        <h3 className="text-2xl font-serif text-stone-900 mb-2">Express Your Interest</h3>
         <p className="text-stone-600 text-sm leading-relaxed">
           Tell us a bit about yourself and we'll follow up personally to help make your contribution as easy as possible.
         </p>

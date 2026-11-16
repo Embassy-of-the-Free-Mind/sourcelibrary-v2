@@ -11,7 +11,7 @@
  *   KIND      what the wrong text is, as a reader meets it (KINDS). A reviewer names it; where an older record has
  *             only a taxonomy class, kindOfClass() gives that class's default kind.
  *   EXPOSURE  whether a reader could see the text when it was judged (EXPOSURES): served | withheld | no_english |
- *             hidden. A rate quoted without it mixes pages nobody can read with pages everybody can.
+ *             hidden | rewrite_not_served. A rate quoted without it mixes pages nobody can read with pages everybody can.
  *   REPORT    rates as k of n BOOKS, one page per book, Wilson 95% intervals, served-only as the headline
  *             (kOfNBooks, formatKOfN).
  *
@@ -21,6 +21,7 @@
  */
 import { createHash } from 'node:crypto';
 import { wilson } from '../eval/lib/agreement-stats.mjs';
+import { servesTranscriptionInsteadOfTranslation } from './english-original-text.mjs';
 
 /** The kinds, in the order a report lists them. `invents` = text with no basis on this leaf reaches the reader. */
 export const KIND_DEFS = Object.freeze([
@@ -41,7 +42,11 @@ export const KINDS = Object.freeze(KIND_DEFS.map((k) => k.id));
 export const INVENTING_KINDS = Object.freeze(KIND_DEFS.filter((k) => k.invents).map((k) => k.id));
 export const kindLabel = (id) => KIND_DEFS.find((k) => k.id === id)?.label ?? id;
 
-export const EXPOSURES = Object.freeze(['served', 'withheld', 'no_english', 'hidden']);
+export const EXPOSURES = Object.freeze(['served', 'withheld', 'no_english', 'hidden', 'rewrite_not_served']);
+/** The exposure of a page whose stored English is not what the reader is shown (v3#154). */
+export const EXPOSURE_REWRITE_NOT_SERVED = 'rewrite_not_served';
+/** The book fields exposureOf() reads. Project these wherever a caller loads the book. */
+export const EXPOSURE_BOOK_PROJECTION = Object.freeze({ visible: 1, pages_count: 1, language: 1, 'translation_state.english_original': 1, 'facing_translation.source': 1 });
 /** A row written from a record that did not keep it (a backfill). Never produced by exposureOf(). */
 export const EXPOSURE_UNRECORDED = 'unrecorded';
 
@@ -81,10 +86,19 @@ const hasText = (x) => typeof x === 'string' && x.trim().length > 0;
  *   withheld    the page's English was withheld (`translation_withheld`), so the reader sees the original only
  *   served      English is on the page (a translation, or the transcription of an English-language book)
  *   no_english  the book is live, the page has no English: only the transcription is shown
+ *   rewrite_not_served  an English leaf of an English edition (or of a facing-page edition with a published
+ *               translation) that also holds a stored translation. The reader, /quote, /text and the exports serve
+ *               the TRANSCRIPTION there (#7100, servesTranscriptionInsteadOfTranslation); the stored text is a
+ *               model's rewording that nobody is shown. A finding in the transcription is in served text; a finding
+ *               in the stored translation is not. Before v3#154 these pages read `served`, and round 7 of the spot
+ *               check counted 7 serious findings in text no reader meets.
+ * Pass the book with EXPOSURE_BOOK_PROJECTION: without `translation_state` the English test falls back to
+ * `books.language`, and without `facing_translation` a facing-page edition reads `served`.
  */
 export function exposureOf({ book, page } = {}) {
   if (!book || book.visible !== true || book.pages_count === 0) return 'hidden';
   if (page?.translation_withheld) return 'withheld';
+  if (servesTranscriptionInsteadOfTranslation(page, book)) return EXPOSURE_REWRITE_NOT_SERVED;
   if (hasText(page?.translation?.data)) return 'served';
   if (ENGLISH.test(String(book.language ?? '').trim()) && hasText(page?.ocr?.data)) return 'served';
   return 'no_english';
@@ -92,7 +106,7 @@ export function exposureOf({ book, page } = {}) {
 
 /** Exposure of pages as they are NOW: one entry per page number. A missing page record is `hidden`. */
 export async function pageExposure(db, bookId, pageNumbers) {
-  const book = await db.collection('books').findOne({ id: bookId }, { projection: { _id: 0, visible: 1, pages_count: 1, language: 1 } });
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { _id: 0, ...EXPOSURE_BOOK_PROJECTION } });
   const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $in: [...pageNumbers] } },
     { projection: { _id: 0, page_number: 1, 'translation.data': 1, 'ocr.data': 1, translation_withheld: 1 } }).toArray();
   const by = new Map(rows.map((r) => [r.page_number, r]));
@@ -135,7 +149,7 @@ const cell = (k, n) => ({ k, n, rate: n ? k / n : null, ci: n ? wilson(k, n) : n
 /**
  * Rates as k of n books. `rows`: page verdicts { book_id, page_number, exposure, serious: boolean, kinds: [kind…] }
  * (`kinds` = the kinds of the SERIOUS findings on the page). Returns
- *   { headline, by_exposure: { served, withheld, no_english, hidden, unrecorded? }, all, books, pages, dropped_pages }
+ *   { headline, by_exposure: { served, withheld, no_english, hidden, rewrite_not_served, unrecorded? }, all, books, pages, dropped_pages }
  * where each group is { n, any_serious: {k, n, rate, ci}, inventing: {…}, by_kind: { kind: {…} } }. `headline` is the
  * SERVED group: what a reader can actually meet. `inventing` = any kind in INVENTING_KINDS.
  */
@@ -170,7 +184,7 @@ export function kOfNMarkdown(report, { what = 'books', reader = null } = {}) {
     `${who}**Served text, ${what}: a serious error on ${formatKOfN(h.any_serious)}; text not on the leaf on ${formatKOfN(h.inventing)}.**`,
     `Kinds among served books (a book can carry more than one): ${kinds(h)}.`,
   ] : [`${who}**Served text, ${what}: no served book was read, so there is no headline rate.**`];
-  for (const [e, g] of Object.entries(report.by_exposure)) if (e !== 'served' && g.n) lines.push(`Not in the headline, ${e.replace('_', ' ')}: serious on ${formatKOfN(g.any_serious)}; kinds ${kinds(g)}.`);
+  for (const [e, g] of Object.entries(report.by_exposure)) if (e !== 'served' && g.n) lines.push(`Not in the headline, ${e.replaceAll('_', ' ')}: serious on ${formatKOfN(g.any_serious)}; kinds ${kinds(g)}.`);
   if (report.dropped_pages) lines.push(`One page per book: ${report.pages} pages read in ${report.books} books, ${report.dropped_pages} extra pages not counted.`);
   return lines;
 }

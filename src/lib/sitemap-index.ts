@@ -13,7 +13,22 @@ import { getReadDb } from '@/lib/mongodb';
 // crawlers see the canonical path.
 
 const BASE_URL = 'https://sourcelibrary.org';
-const BOOKS_PER_CHUNK = 5000;
+export const BOOKS_PER_CHUNK = 5000;
+
+/**
+ * Which books the sitemap lists. The book chunks (src/app/sitemap.ts) select
+ * these and the index counts these, so the two can never disagree. They did:
+ * the index counted `pages_ocr > 0` (50,184 books on 2026-11-12) while the
+ * chunks selected `pages_count > 0` (71,315), so /sitemap.xml and
+ * /sitemap-core.xml listed chunks 2-12 and the newest 16,315 books, served at
+ * /sitemap/13-16.xml, were in no index (#78). `pages_count > 0` is the
+ * canonical live filter (/api/books/library).
+ */
+export const SITEMAP_BOOK_FILTER = {
+  visible: true,
+  slug: { $exists: true, $ne: null },
+  pages_count: { $gt: 0 },
+};
 // Reader-page (/sitemap/1000+) and gallery-image (/sitemap/2000+) chunks are
 // still served by src/app/sitemap.ts but no longer listed in either index:
 // those URLs now name their book as canonical, so a sitemap must not offer
@@ -40,7 +55,7 @@ export async function sitemapIndexResponse({ core }: { core: boolean }) {
     // revalidation).
     [bookCount, artworkCount] = await Promise.all([
       db.collection('books').countDocuments(
-        { visible: true, slug: { $exists: true, $ne: null }, pages_ocr: { $gt: 0 } },
+        SITEMAP_BOOK_FILTER,
         { maxTimeMS: 10000 }
       ).catch((error) => { console.error('sitemap-index: book count failed', error); return 0; }),
       // Artworks (#4357).

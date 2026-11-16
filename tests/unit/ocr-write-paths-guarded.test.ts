@@ -53,7 +53,6 @@ const ALLOWED: Record<string, string> = {
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
   'scripts/maintenance/backfill-leaf-break-markers.mjs': 'inserts the <leaf-break/> marker between the stored leaf reads of a page (#5260); introduces no new text, and the text was loop-screened when apply-reocr-verdicts.mjs served it',
   'scripts/split-book.mjs': 'splits stored text across new page docs',
-  'scripts/migration/backfill-ocr-near-complete.mjs': 'backfills counters from stored text',
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription",
   'src/lib/import-utils.ts': 'seeds an empty ocr object when a page doc is created',
 };

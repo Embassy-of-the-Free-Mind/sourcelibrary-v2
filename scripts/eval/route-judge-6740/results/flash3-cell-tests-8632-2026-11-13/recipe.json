@@ -1,0 +1,20 @@
+{
+  "question": "route",
+  "issue": 8632,
+  "stage": "ocr",
+  "languages": ["Latin", "Greek"],
+  "about": "v2#8632 job cell-test-flash3, pre-registered on v2#8632 (issuecomment-6848364669) before any model call. Four router cells with no bound route: latin-flash3/unknown (n 50), latin-flash3/print (40), greek-flash3/print (40), greek-flash3/unknown (40), one page per book, the 30 books of v3#26 left out. Arms on the same pages: the stored 3 Flash read; agy Flash-low correcting it (one page a call, #5924 template); a fresh agy Flash-low read 4 a call inside the page's block of 4 consecutive scans (only the drawn page judged); and the Opus correction on the first 30 pages of each cell, as the bar only.",
+  "baseline": "3flash",
+  "arms": ["3flash", "3flash>agy-flash-low", "agy-flash-low@4", "3flash>opus-correct"],
+  "batch": {
+    "pages_per_call": 1,
+    "tested": null
+  },
+  "noise_floor": {
+    "repeat_kind": "repeat",
+    "from": null
+  },
+  "feeds": "route",
+  "router_evidence": ["latin-flash3", "greek-flash3"],
+  "waive": {}
+}

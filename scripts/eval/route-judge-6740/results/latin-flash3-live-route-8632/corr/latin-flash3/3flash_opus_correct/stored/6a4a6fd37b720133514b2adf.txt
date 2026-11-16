@@ -1,0 +1,46 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>B 2</sig>
+<meta>catchword: Spiri-</meta>
+
+*caput I. pagina 822. Vel, si audiendus Eugubinus libro IX. de perenni Phi-
+losophia capitulo 33. tantum bonos : Interim ceteri, qui post eum, pro-
+miscue bonos et malos tradiderunt. Sic Porphyrius libro de Sacri-
+ficio expresse duo Daemonum facit genera, bonos et beneficos, malos
+et maleficos, prout in hanc sententiam citatur ab Eusebio libro IV.
+de Praeparatione Evangelica capitulo 2. atque hoc Porphyrio cum Platonicis
+fere commune esse notat Vives loco dicto. Praeterea testatur Plutarchus, a-
+pud Homerum et Hesiodum esse Daemones bonos et malos, mala
+et bona volentes, impulsores ad bona et mala. Et hanc senten-
+tiam Platonicorum ab Orpheo et Chaldaeis derivat Eugubinus loco citato
+siquidem, referente Psello, Chaldaei alios bonos, alios malos Dae-
+mones agnoscebant, quo consilio Orpheus in Hymnis invocat*
+
+-> *δαίμον' ἀγαθὸν καὶ δαίμονα πήμονα θνητῶν.* <-
+
+** *Leguntur ista apud Porphyrium in libro de sacrificio prout
+citata fuerunt Thesi praecedenti numero ultimo. Similia, quod nimirum, qui vi-
+ctimis caesis delectantur, mali et mendaces sint, habet in libro Re-
+sponsum, quando illos omnes Divos, tum caelestes, tum aethereos,
+aereos, marinos, terrestres, inferos, quibus sacra fieri Apollo ex a-
+nimantibus jusserat, bonos esse Deos negat, sed nefarios Daemones,
+qui sanguine et cadaveribus teneantur. Jamblichus ergo, verior
+Daemonum cultor, (ut Vives vocatur) cum haec omnia videret ad
+declarandum Daemonum naturam tendere, omnia fuit inficiatus.*
+
+*** *Conferatur huc incomparabilis Vossius, Idololatriae o-
+riginem et progressum persequens. Ita autem ille libro I. capitulo 8. pagina 61.
+post multa concludit : quamobrem ita statuendum, non illos in-
+vocasse Angelos, qui continuo faciem Dei vident in caelis, sed il-
+los, ut Empedocles vocat, (apud Plutarchum de non foenerando)*
+*οὐρανοπετεῖς δαίμονας id est Daemones, qui de caelo deciderunt et cetera.*
+*Hoc etiam ostendit eorum μυστικὴ θυσία seu arcanum sacrifici-
+um, sic enim in Christianorum opprobrium, quibus ita dicitur
+Eucharistiae sacramentum, nominarunt abominandum sacrifici-
+um suum et cetera. in quo quandoque etiam mactabatur (dictu horren-
+dum) infans materno exsectus utero et cetera. Hactenus ille. Immo
+longe ante illum Daemones a Platonicis cultos Augustinus judicavit*
+
+<vocab>Daemones, Porphyrius, Jamblichus, Platonicis, sacrificium, Orpheus, Chaldaei, Vossius, Plutarchus, Eugubinus</vocab>

@@ -1,0 +1,318 @@
+[
+ {
+  "id": "k5f4d50f423",
+  "judged_as": "j58e97073ba5d",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6953ab9577f38f6761bd7885",
+  "book_id": "6953ab9577f38f6761bd786e",
+  "page_number": 23,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k482c96f80b",
+  "judged_as": "j76b363c1bb77",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69906f5b4b3bd4d1fffd0819",
+  "book_id": "69906f5b4b3bd4d1fffd0739",
+  "page_number": 224,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k2dd2739df9",
+  "judged_as": "jbb6f6ce0ffa0",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69905e292fd6a039938a1613",
+  "book_id": "69905e292fd6a039938a15c6",
+  "page_number": 77,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k137d4736b9",
+  "judged_as": "j6314b1e240a3",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69520f03ab34727b1f044320",
+  "book_id": "69520f03ab34727b1f044317",
+  "page_number": 17,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k0088090bbb",
+  "judged_as": "ja1f95fd578ca",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b43d3c06b196d69f66fab8",
+  "book_id": "69b43d3c06b196d69f66f8f7",
+  "page_number": 449,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "kc723fe8f7c",
+  "judged_as": "j8302da235ab0",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "699065a2726f64800c10c074",
+  "book_id": "699065a1726f64800c10bff7",
+  "page_number": 125,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "kb12d2842b4",
+  "judged_as": "j0eb93154b21f",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69906ed78a353648e1ed0866",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 7,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k593d37a3e0",
+  "judged_as": "j729dee666512",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69906ecb7d027b8182c0a9fd",
+  "book_id": "69906eca7d027b8182c0a9dc",
+  "page_number": 33,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "kcd0fdf8c48",
+  "judged_as": "j7d7d2ebc0d44",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6959117fecb01322b3069bc9",
+  "book_id": "31f2d90a-88af-4414-a445-68406caca58d",
+  "page_number": 158,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k7b53510fcb",
+  "judged_as": "j43808770306f",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6953ab4577f38f6761bd6d9b",
+  "book_id": "6953ab4577f38f6761bd6c6f",
+  "page_number": 300,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k3ce5832c9a",
+  "judged_as": "j3141906d9135",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "wrong_page",
+  "page_id": "6953ab9577f38f6761bd7885",
+  "book_id": "6953ab9577f38f6761bd786e",
+  "page_number": 23,
+  "judges": [
+   "fable"
+  ],
+  "other": "699065a2726f64800c10c074"
+ },
+ {
+  "id": "k0de16e8d3b",
+  "judged_as": "j76c3893ba9b4",
+  "cell": "fix-latin-w1",
+  "route": "stored",
+  "kind": "wrong_page",
+  "page_id": "69906f5b4b3bd4d1fffd0819",
+  "book_id": "69906f5b4b3bd4d1fffd0739",
+  "page_number": 224,
+  "judges": [
+   "fable"
+  ],
+  "other": "69906ed78a353648e1ed0866"
+ },
+ {
+  "id": "k604e2ba914",
+  "judged_as": "je4de345eb134",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6953ab9577f38f6761bd7885",
+  "book_id": "6953ab9577f38f6761bd786e",
+  "page_number": 23,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k8220541284",
+  "judged_as": "j796d9a344adc",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69906f5b4b3bd4d1fffd0819",
+  "book_id": "69906f5b4b3bd4d1fffd0739",
+  "page_number": 224,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k626e0f042f",
+  "judged_as": "jd4c3a5f9a234",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69905e292fd6a039938a1613",
+  "book_id": "69905e292fd6a039938a15c6",
+  "page_number": 77,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "ke969b43984",
+  "judged_as": "jdc49c56ebed0",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69520f03ab34727b1f044320",
+  "book_id": "69520f03ab34727b1f044317",
+  "page_number": 17,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k1903df8496",
+  "judged_as": "j98eee9b74672",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b43d3c06b196d69f66fab8",
+  "book_id": "69b43d3c06b196d69f66f8f7",
+  "page_number": 449,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "ka203cc69a2",
+  "judged_as": "jbb3a25441e9b",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "699065a2726f64800c10c074",
+  "book_id": "699065a1726f64800c10bff7",
+  "page_number": 125,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k0fdeae0315",
+  "judged_as": "j5280bb3afdce",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69906ed78a353648e1ed0866",
+  "book_id": "69906ed78a353648e1ed085f",
+  "page_number": 7,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k1faf5cd280",
+  "judged_as": "jbf527cbdbc70",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69906ecb7d027b8182c0a9fd",
+  "book_id": "69906eca7d027b8182c0a9dc",
+  "page_number": 33,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "kff570b58ab",
+  "judged_as": "j552a5bffc72e",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6959117fecb01322b3069bc9",
+  "book_id": "31f2d90a-88af-4414-a445-68406caca58d",
+  "page_number": 158,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "k5694967735",
+  "judged_as": "jb5f9d5bb2392",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6953ab4577f38f6761bd6d9b",
+  "book_id": "6953ab4577f38f6761bd6c6f",
+  "page_number": 300,
+  "judges": [
+   "fable"
+  ]
+ },
+ {
+  "id": "kf4d6cb24ff",
+  "judged_as": "j2113914f99ca",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "wrong_page",
+  "page_id": "6953ab9577f38f6761bd7885",
+  "book_id": "6953ab9577f38f6761bd786e",
+  "page_number": 23,
+  "judges": [
+   "fable"
+  ],
+  "other": "699065a2726f64800c10c074"
+ },
+ {
+  "id": "k97d09fcc89",
+  "judged_as": "j1e67cc694656",
+  "cell": "fix-latin-w1",
+  "route": "opus",
+  "kind": "wrong_page",
+  "page_id": "69906f5b4b3bd4d1fffd0819",
+  "book_id": "69906f5b4b3bd4d1fffd0739",
+  "page_number": 224,
+  "judges": [
+   "fable"
+  ],
+  "other": "69906ed78a353648e1ed0866"
+ }
+]

@@ -43,7 +43,7 @@ import { stripAnnotations } from '@/lib/semantic-alignment';
 import { authorPageExists } from '@/lib/author-thesaurus';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { authorSlug } from '@/lib/slugify';
-import { getBookThumbnailUrl } from '@/lib/utils';
+import { getBookThumbnailUrl, toGalleryCardUrl } from '@/lib/utils';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
 import collectionRedirects from '@/lib/collection-redirects.json';
@@ -110,6 +110,24 @@ const CITE_PAGES_DEFAULT = process.env.LIBRARIAN_CITE_PAGES === '1';
  * LIBRARIAN_FOLLOWUP_SEARCH=0 turns it off.
  */
 const FOLLOWUP_SEARCH_DEFAULT = process.env.LIBRARIAN_FOLLOWUP_SEARCH !== '0';
+/**
+ * Quote requests (v3#249): when the reader asks for someone's own words
+ * ("quote him", "in her words", "what did X say about Y"), the first round must
+ * call find_passages (later in a thread, get_book_page / read_nearby_pages are
+ * allowed too). On 2026-11-13 a "Quote him." first turn ran one `search`, got
+ * title pages and prefaces, and quoted from memory; both quotations were on no
+ * page and were removed. One turn later find_passages found the pages and the
+ * answer held three real quotations.
+ *
+ * What the measurement showed and did not (scripts/eval/experiments/
+ * 2026-11-13-librarian-quote-requests-249.md, 12 questions, 24 turns an arm on
+ * the production model): the old routing did NOT fail on that set, so the run
+ * cannot show this prevents the live failure. It showed find_passages in the
+ * first round on every turn (was 15 of 24), at no cost in time or money, and
+ * nothing else beyond noise. The case for it is the guarantee, not a measured rate.
+ * LIBRARIAN_QUOTE_REQUESTS=0 turns it off.
+ */
+const QUOTE_REQUESTS_DEFAULT = process.env.LIBRARIAN_QUOTE_REQUESTS !== '0';
 /**
  * Cite by ID (#6946): every page in a tool result carries an ID (`[P7]`), the
  * model cites the ID, and the server writes the page link while the text
@@ -885,7 +903,7 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
   // in the gallery). An exact keyword hit on the curated description is
   // stronger evidence than borderline visual similarity, so the merged order
   // is: corroborated by both → keyword-only → CLIP-only.
-  const projection = { id: 1, page_id: 1, detection_index: 1, image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 };
+  const projection = { id: 1, page_id: 1, detection_index: 1, image_url: 1, thumbnail_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 };
 
   // The keyword arm uses the weighted $text index (gallery_images_text_idx:
   // description ×5, museum_description ×3, subjects/figures/symbols ×2), NOT a
@@ -962,7 +980,13 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
       // NOT the Mongo ObjectId — /gallery/image/<objectIdHex> can't be parsed
       // by the viewer route and soft-404s.
       id: img.id || `${img.page_id}-${img.detection_index}`,
-      imageUrl: img.image_url,
+      // The figure's own gallery crop, not the page master: `image_url` is the
+      // ~2000 px archived scan (850 KB), shown in an answer at 400 px (v3#250).
+      // The 300 px `-thumb.jpg` exists for every crop; the answer renderer
+      // upgrades it to the 600 px `-card.jpg` where that exists
+      // (MarkdownImage in librarian/_components/MessageBody.tsx). Rows with no gallery crop
+      // keep the page image.
+      imageUrl: toGalleryCardUrl(img.thumbnail_url) ? img.thumbnail_url : img.image_url,
       description: (img.museum_description || img.description || '').slice(0, 300),
       bookId: img.book_id,
       bookTitle: img.book_title || 'Unknown',
@@ -1360,7 +1384,9 @@ async function executeTool(
         pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
       }));
 
-      const focusNote = data.collectionUsed ? `, focused on ${data.collectionUsed}` : '';
+      const { collectionNameForSlug } = await import('@/lib/embassy/collection-catalog');
+      const focusName = await collectionNameForSlug(data.collectionUsed);
+      const focusNote = focusName ? `, focused on ${focusName}` : '';
       return {
         result: { found: totalFound, context, collection: data.collectionUsed },
         step: { type: 'tool_result', name: 'search', query, found: totalFound,
@@ -1389,7 +1415,7 @@ async function executeTool(
           const author = p.authorSlug ? `[${p.bookAuthor}](https://sourcelibrary.org/author/${p.authorSlug})` : p.bookAuthor;
           return `\n--- ${id} ${p.bookTitle}${editionTag(p)} by ${author}, page ${p.page_number} — book: ${base}/book/${p.bookSlug || p.book_id}${extra} ---\n`;
         }
-        const url = `${base}/book/${p.bookSlug || p.book_id}?page=${p.page_number}`;
+        const url = `${base}/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
         // The author's link, not the name alone: given a name, the model builds
         // an /author/ slug of its own and it 404s (agent-tool-results.md).
         const author = p.authorSlug ? `[${p.bookAuthor}](https://sourcelibrary.org/author/${p.authorSlug})` : p.bookAuthor;
@@ -1706,6 +1732,7 @@ function buildSystemPrompt(
   citePages = false,
   citeIds = false,
   followupSearch = false,
+  quoteRequest = false,
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -1724,7 +1751,7 @@ ${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not eve
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds, citePages, citeIds, followupSearch);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds, citePages, citeIds, followupSearch, quoteRequest);
 }
 
 /**
@@ -1738,22 +1765,28 @@ function languageSection(lang: Locale, citeIds = false): string {
   if (lang === 'en') return '';
   const name = LANG_NAMES[lang];
   const base = siteBase(lang);
+  // Chinese: we hold no Chinese edition of any page text (the /zh site serves
+  // Chinese-language ORIGINALS). So there is nothing to "quote in the edition";
+  // the model answers in Chinese and quotes pages as the tools return them.
+  const quotation = lang === 'zh'
+    ? `Quotations: we hold no Chinese translation of the library's pages. Quote each passage exactly as the tool returns it — the English translation, or the original text (Chinese, Latin, etc.) when that is what the tool gives — inside a blockquote, and write everything around it in Chinese. Do NOT translate a quotation into Chinese and present it as the text. Paraphrasing in Chinese outside the blockquote is fine; say in Chinese when the quoted words are in English. The "original language" rule below still applies.`
+    : `Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.`;
   return `## Language — this is a ${name} conversation
 
 The reader is using the ${name} edition of the library. Write your whole answer in ${name} (headers, captions, suggested next steps included), unless the reader switches language.
 
 Searching: the search index is English, so write your **search queries in English** (translate the reader's terms yourself — "piedra filosofal" → "philosopher's stone") even though you answer in ${name}.
 
-Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.
+${quotation}
 
 What the library HOLDS in ${name} — "how many books do you have in ${name}", "show me everything in ${name}" — goes to **browse_catalog**, never to \`search\`, which only ranks passages and would answer a shelf of hundreds with the handful it happened to match. Two different questions live here and the tool takes both: \`readable_in: "${lang}"\` is what a reader means (books written in ${name} PLUS the ones we have translated into it), while \`language: "${name}"\` is the narrower "printed in ${name}". Prefer \`readable_in\`, and say which one you counted.
 
-Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). ${citeIds ? 'Pages are cited by their ID ([P7]); the server writes the page link in the right prefix.' : `Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).`}
+Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). ${citeIds ? 'Pages are cited by their ID ([P7]); the server writes the page link in the right prefix.' : `Page links use the same prefix: [${lang === 'zh' ? '页码' : 'Página'} N](${base}/book/SLUG?page=N).`}
 
 `;
 }
 
-export function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false, citePages = false, citeIds = false, followupSearch = false): string {
+export function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false, citePages = false, citeIds = false, followupSearch = false, quoteRequest = false): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -1764,7 +1797,7 @@ You are a research agent, not just a Q&A chatbot. You help users conduct real re
 
 ## Conversation state
 
-This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user has established their direction — skip choices and go straight to research.' : ''}${followupSearch && messageIndex >= 2 ? `\n\n${FOLLOWUP_SEARCH_LINES}` : ''}
+This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user has established their direction — skip choices and go straight to research.' : ''}${followupSearch && messageIndex >= 2 ? `\n\n${FOLLOWUP_SEARCH_LINES}` : ''}${quoteRequest ? `\n\n${quoteRequestLines(messageIndex === 1)}` : ''}
 
 ## Your approach — conversational first, then deep research
 
@@ -1884,6 +1917,44 @@ const FOLLOWUP_SEARCH_LINES = `**This is a follow-up, and a follow-up gets its o
 Your first step this turn must be a tool call. When the message needs nothing from the library (thanks or small talk, or a request to rewrite, shorten, translate or reformat what you already wrote), call no_search_needed and then answer. Without a search, never say what the library holds or lacks.`;
 
 /**
+ * Does the message ask for someone's own words? Deliberately a plain pattern,
+ * not a model call: it decides which tools the first round may use, so it has
+ * to be decided before the model runs. It matched 23 of 881 first messages in
+ * the 30 days to 2026-11-13 (2.6%). A miss costs nothing new (the turn runs as
+ * it does today); a false hit costs one find_passages call.
+ */
+const QUOTE_REQUEST = new RegExp([
+  String.raw`\bquot(?:e|es|ed|ing|ation|ations)\b`,
+  String.raw`\bin (?:his|her|their|its) (?:own |exact )?words\b`,
+  String.raw`\b(?:exact|actual|own) words\b`,
+  String.raw`\bverbatim\b`,
+  String.raw`\bword for word\b`,
+  String.raw`\bwhat (?:did|does|do) .{1,80}? (?:say|write|teach)\b`,
+  String.raw`\bc[ií]ta(?:s|r|me|lo|la)?(?![\p{L}])`,
+  String.raw`\btextual(?:es|mente)?\b`,
+  String.raw`\bcon sus (?:propias )?palabras\b`,
+  String.raw`\bqu[eé] (?:dijo|dice|escribi[oó]|escribe)(?![\p{L}])`,
+].join('|'), 'iu');
+
+export function asksForQuotation(message: string): boolean {
+  return QUOTE_REQUEST.test(message);
+}
+
+/**
+ * What a quote request's first round may call. On a thread's first message:
+ * find_passages alone. Reading a page by name needs a book id, and with no tool
+ * result yet the model makes one up: allowed get_book_page and
+ * read_nearby_pages in round one, it tried 22 such reads over 24 first turns,
+ * 21 found nothing and the other read the wrong book (the experiment file).
+ * Later in a thread the earlier answers carry real slugs, so those two tools
+ * are allowed there.
+ */
+const QUOTE_FIRST_MESSAGE_TOOLS = ['find_passages'];
+const QUOTE_FOLLOWUP_TOOLS = ['find_passages', 'get_book_page', 'read_nearby_pages'];
+
+const quoteRequestLines = (firstMessage: boolean) => `**The reader asked for the author's own words.** Your first step this turn is to read pages: call find_passages with the request as a full sentence${firstMessage ? '' : ', or get_book_page / read_nearby_pages for a book and page already linked in this thread'}. Then give at least one quotation, in a blockquote, using only words you read on those pages this turn, with the page link the tool gave. If no page you read holds words that answer the request, say that in one sentence and quote the closest passage you did read. Never quote from memory: a quotation that is on no page you read is removed from the answer before the reader sees it.`;
+
+/**
  * Arm B of the citation-prompt A/B (#6946): the four closing Formatting lines,
  * rewritten against the failure kinds the per-link judges found (a link to the
  * book's first hit instead of the page that says it, background dressed as a
@@ -1913,7 +1984,7 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean; citePages?: boolean; citeIds?: boolean; followupSearch?: boolean; model?: string },
+  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean; citePages?: boolean; citeIds?: boolean; followupSearch?: boolean; quoteRequests?: boolean; model?: string },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   const lang: Locale = options?.lang ?? 'en';
@@ -1922,7 +1993,7 @@ export async function* streamAgenticResponse(
   const followupSearch = options?.followupSearch ?? FOLLOWUP_SEARCH_DEFAULT;
   const model = options?.model ?? MODEL;
   // Cite by ID (#6946): the turn's page IDs, and the rewrite of IDs to links in the text the reader gets.
-  const cite = (options?.citeIds ?? CITE_IDS_DEFAULT) ? new CiteIds(siteBase(lang), lang === 'es' ? 'Página' : 'Page') : undefined;
+  const cite = (options?.citeIds ?? CITE_IDS_DEFAULT) ? new CiteIds(siteBase(lang), lang === 'es' ? 'Página' : lang === 'zh' ? '页码' : 'Page') : undefined;
   const citeStream = cite ? new CiteIdStream(cite) : null;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
@@ -1947,12 +2018,20 @@ export async function* streamAgenticResponse(
   ]);
   const notebookContext = formatNotebookForPrompt(notebook);
   const mustChooseTool = followupSearch && messageIndex >= 2;
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds, citePages, !!cite, followupSearch);
+  // A quote request reads pages first, on any message of the thread. On a
+  // follow-up the model may still decline ("shorten that quote" needs no page).
+  const quoteRequest = (options?.quoteRequests ?? QUOTE_REQUESTS_DEFAULT) && asksForQuotation(userMessage);
+  const firstRoundTools = quoteRequest
+    ? (messageIndex === 1 ? QUOTE_FIRST_MESSAGE_TOOLS : [...QUOTE_FOLLOWUP_TOOLS, ...(mustChooseTool ? [NO_SEARCH_TOOL] : [])])
+    : mustChooseTool ? FOLLOWUP_FIRST_ROUND_TOOLS : null;
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds, citePages, !!cite, followupSearch, quoteRequest);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
     { role: 'model', parts: [{ text: lang === 'es'
       ? 'Entendido. Soy el Bibliotecario: listo para investigar en la colección, en español.'
+      : lang === 'zh'
+      ? '明白。我是图书馆员，随时可以用中文在馆藏中为您查找资料。'
       : 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
     ...history.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
@@ -2025,6 +2104,18 @@ export async function* streamAgenticResponse(
   // history, so scanning it for citations re-flags every earlier answer's
   // broken links — which crowds real, new breakage out of the repair budget.
   const generatedChunks: string[] = [];
+  // Length of the opening the model wrote before its first tool calls (Step 1
+  // of the prompt). When the answer after the searches starts over on the same
+  // subject, the grounding pass removes the opening (v3#249).
+  let openingEnd = 0;
+  // The opening and the answer are separate paragraphs even when the model
+  // leaves no blank line between its rounds: the break to send before `text`,
+  // the first text after the opening.
+  const breakAfterOpening = (text: string): string => {
+    if (openingEnd === 0) return '';
+    const soFar = generatedChunks.join('');
+    return soFar.length === openingEnd && !/\n\s*$/.test(soFar) && !/^\s*\n/.test(text) ? '\n\n' : '';
+  };
   let choicesPresented = false;
   // True once add_to_notebook really saved a finding this turn. Without it the
   // answer may not say "Saved to your research notebook" (#6255).
@@ -2052,6 +2143,10 @@ export async function* streamAgenticResponse(
       return;
     }
     for (const m of blob.matchAll(/https?:\/\/[^\s"'\\)]+/g)) toolImageUrls.add(m[0]);
+    // A gallery thumb carries a `?v=` cache-buster (search_images, v3#250); a
+    // model that copies the URL without it still names the same object, so
+    // the path alone passes too. Dropping a query cannot invent a path.
+    for (const m of blob.matchAll(/https?:\/\/[^\s"'\\)?]+\?/g)) toolImageUrls.add(m[0].slice(0, -1));
   }
 
   function collectSources(sources?: SourceCard[]) {
@@ -2072,7 +2167,7 @@ export async function* streamAgenticResponse(
       contents,
       config: {
         tools: [{ functionDeclarations: mustChooseTool ? [...TOOL_DECLARATIONS, NO_SEARCH_DECLARATION] : TOOL_DECLARATIONS }],
-        ...(mustChooseTool && round === 0 ? { toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY, allowedFunctionNames: FOLLOWUP_FIRST_ROUND_TOOLS } } } : {}),
+        ...(firstRoundTools && round === 0 ? { toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY, allowedFunctionNames: firstRoundTools } } } : {}),
         temperature: TEMPERATURE,
         ...(fastToolRounds ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } } : {}),
       },
@@ -2101,6 +2196,11 @@ export async function* streamAgenticResponse(
           // The model's own record (allParts) keeps its IDs; the reader gets links.
           const text = citeStream ? citeStream.push(p.text) : p.text;
           if (!text) continue;
+          const gap = breakAfterOpening(text);
+          if (gap) {
+            generatedChunks.push(gap);
+            yield { type: 'text', text: gap };
+          }
           generatedChunks.push(text);
           yield { type: 'text', text };
           if (citationRouting && text.includes('\n')) citationRouting.feed(generatedChunks.join(''));
@@ -2125,6 +2225,7 @@ export async function* streamAgenticResponse(
     contents.push({ role: 'model', parts: allParts });
 
     if (functionCalls.length === 0) { answeredNaturally = true; break; }
+    if (round === 0) openingEnd = generatedChunks.join('').length;
 
     // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
@@ -2221,6 +2322,11 @@ export async function* streamAgenticResponse(
             finalParts.push(p);
             const text = citeStream ? citeStream.push(p.text) : p.text;
             if (!text) continue;
+            const gap = breakAfterOpening(text);
+            if (gap) {
+              generatedChunks.push(gap);
+              yield { type: 'text', text: gap };
+            }
             generatedChunks.push(text);
             yield { type: 'text', text };
             if (citationRouting && text.includes('\n')) citationRouting.feed(generatedChunks.join(''));
@@ -2286,7 +2392,7 @@ export async function* streamAgenticResponse(
   citationRouting?.finish(rawText);
   const { edits, report: groundingReport, citations, pages: supportPages } = await groundTurn({
     rawText, history, retrievedPageKeys, images: [...groundingImages.values()], lang,
-    toolSupportText, userMessage, notebookSaved, routing: citationRouting,
+    toolSupportText, userMessage, notebookSaved, routing: citationRouting, openingEnd,
   });
   const grounding = { edits, report: groundingReport };
   if (edits.length > 0) {
@@ -2456,6 +2562,8 @@ export interface GroundTurnInput {
   notebookSaved: boolean;
   /** The citation router's verdicts, routed while the answer streamed (#6946); null turns routing off. */
   routing: Pick<CitationRoutingStream, 'settled' | 'verdicts'> | null;
+  /** Where the text written before the first tool call ends (see GroundingInput.openingEnd). */
+  openingEnd?: number;
 }
 
 /**
@@ -2498,6 +2606,7 @@ export async function groundTurn(input: GroundTurnInput): Promise<{
     images: support?.images ?? input.images,
     question: input.userMessage,
     siteBase: siteBase(lang),
+    openingEnd: input.openingEnd,
   });
   // The prompt forbids claiming a save that did not happen; the model claims
   // one anyway about three times in four (#6255). Strip the claim when no
@@ -3104,16 +3213,21 @@ export async function resolveSlugToHeldBook(
  */
 export function emptyAnswerFallback(sources: SourceCard[], lang: Locale = 'en'): string {
   const top = sources.filter(s => s.pageNumber != null).slice(0, 6);
-  const prefix = lang === 'es' ? '/es' : '';
+  const prefix = lang === 'es' ? '/es' : lang === 'zh' ? '/zh' : '';
   const lines = top.map(s => {
     const url = `https://sourcelibrary.org${prefix}/book/${s.bookSlug || s.book_id}/page-number/${s.pageNumber}`;
-    const page = lang === 'es' ? `Página ${s.pageNumber}` : `Page ${s.pageNumber}`;
+    const page = lang === 'es' ? `Página ${s.pageNumber}` : lang === 'zh' ? `页码 ${s.pageNumber}` : `Page ${s.pageNumber}`;
     return `- *${s.bookTitle}*${s.bookAuthor ? ` — ${s.bookAuthor}` : ''}, [${page}](${url})`;
   });
   if (lang === 'es') {
     return top.length
       ? `Encontré estas páginas pero no logré redactar la respuesta. Ábralas directamente, o vuelva a preguntar con otras palabras:\n\n${lines.join('\n')}`
       : 'No logré redactar una respuesta esta vez. Vuelva a preguntar con otras palabras, o nombre un autor u obra concretos.';
+  }
+  if (lang === 'zh') {
+    return top.length
+      ? `找到了这些页面，但未能整理成回答。请直接打开查看，或换个说法再问一次：\n\n${lines.join('\n')}`
+      : '这次未能写出回答。请换个说法再问，或直接写出具体的作者或作品名。';
   }
   return top.length
     ? `I found these pages but couldn't compose the answer. Open them directly, or ask again in other words:\n\n${lines.join('\n')}`

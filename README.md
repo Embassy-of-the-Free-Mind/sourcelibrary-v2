@@ -247,8 +247,6 @@ These require a signed-in session cookie, editor role, or (for some dataset endp
 |----------|--------|---------|
 | `/api/books` | POST | Create a new book (editor) |
 | `/api/books/[id]` | PATCH | Update book metadata (curator+) |
-| `/api/books/[id]/batch-ocr-async` | POST | Queue batch OCR job |
-| `/api/books/[id]/batch-translate-async` | POST | Queue batch translation job |
 | `/api/pages/[id]` | PATCH | Update page OCR/translation |
 | `/api/jobs/[id]/process` | POST | Async job processor (Lambda) |
 
@@ -386,18 +384,6 @@ The system:
 2. 🖱️ Adjust split line visually (drag or Gemini AI auto-detection)
 3. ✅ Click "Apply Split" — creates two virtual pages with crop coordinates
 4. 📸 Original images preserved; OCR runs on cropped versions
-
-### ✍️ Batch OCR with Gemini Batch API
-
-```typescript
-POST /api/books/[id]/batch-ocr-async
-{
-  "page_ids": ["page-1", "page-2", "page-3"],
-  "language": "la"
-}
-```
-
-Returns a job ID; Gemini processes offline, saves results when complete. 50% cheaper than standard API.
 
 ### 🎓 Generating a Scholarly Edition
 

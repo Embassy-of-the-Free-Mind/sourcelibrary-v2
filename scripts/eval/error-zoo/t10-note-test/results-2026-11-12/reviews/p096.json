@@ -1,0 +1,67 @@
+[
+  {
+    "book_id": "6985ca72c9d0c217260e737b",
+    "slot": 1,
+    "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century French exposé of high-degree Masonic ritual. The page is ritual text for the Knight of the Sword/Cyrus degree, which matches the title. The packet gives no tradition or collections to test it against.",
+    "rights_flag": null,
+    "structure_note": "There are 205 page records against pages_count 189, with 5 duplicate records. The structure count shows pages_translated 0, but the field says 177, so one of the two counters is wrong. Record 159 carries printed p.117, an offset of 42, which points to substantial front matter or an earlier sequence. The 12 backsteps and 18 repeats are more than misread numerals would explain. They probably come from the duplicate records plus a second pagination sequence (a multi-part volume), though one page cannot confirm that.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 159,
+        "right_page": "yes",
+        "printed_marker": "117 (signature \"H iij\")",
+        "layout": "single column of text; running head \"DE LA MAÇONNERIE.\" with the page number top right; quoted speech marked by ,, at each line start; signature at the foot",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ne font plus de la Cour de Cyrus",
+            "image": "ne ſont plus de la Cour de Cyrus",
+            "problem": "long s read as f, which turns 'are' into 'make/do'. The translation has the right sense (\"no longer belong to\"), so the damage is in the transcription only",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The running head and page number are rendered as a body line at the top of the English: \"117 OF FREEMASONRY.\"",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "A form of Nebuzaradan, the Babylonian captain of the guard n",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Original: *Récipiendaire*, the person receiving the degree.",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "This recalls Nehemiah 4:17, where the builders of Jerusalem",
+              "verdict": "unsupported",
+              "helpful": false
+            }
+          ],
+          "missing": [
+            {
+              "english": "The Brothers in the second Apartment no longer belong to the Court of Cyrus",
+              "why": "Nothing tells a general reader that the ritual re-enacts Cyrus the Persian king releasing the Jews from Babylon to rebuild the Temple. That is the frame of the whole scene, including 'rebuild the new Temple'."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "This is a clean page. The OCR is faithful apart from one ſ→f slip (\"font\" for \"ſont\") that the English silently corrects, and the translation is accurate. The notes are correct, but the Nehemiah allusion is the translator's interpretation and is not on the page."
+  }
+]

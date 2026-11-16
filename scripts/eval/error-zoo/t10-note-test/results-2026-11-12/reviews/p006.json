@@ -1,0 +1,43 @@
+[
+  {
+    "book_id": "6976d747097b3607ee4be2f7",
+    "slot": 1,
+    "title": "Les aventures du philosophe inconnu, en la recherche & en l'invention de la pierre philosophale",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1646 French alchemical-devotional work (Belin); the page is 17th-century French print with long s and u/v. No tradition or collection is given to check against, and nothing on the page contradicts the record.",
+    "rights_flag": null,
+    "structure_note": "Scan page 162 carries printed p. 140, a 22-leaf offset that is plausible for front matter. Backsteps (7) and repeats (8) among 221 printed numbers more likely come from misread numerals than from a splice, but one page cannot confirm that. The structure count says 0 pages translated, while the field says 236 and this page has a translation, so the count is stale or wrong (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 162,
+        "right_page": "yes",
+        "printed_marker": "140",
+        "layout": "single column of text, running head with page number, no marginal notes or ornaments",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<header>Les Aventures du</header>", "image": "Les Auentures du", "problem": "running head silently normalised u→v, while the body keeps the u/v spelling (\"trouue\", \"deuoir\")", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Le Seigneur prend plaiſir à ſe\nporter deſſus le pré , pour venger\nſon honneur.", "english": "The Lord takes pleasure in going out onto the field", "problem": "\"Seigneur\" here means a nobleman going out to duel, not God. In a passage about God, \"The Lord\" with a capital reads as God; only the duel note and the context let the reader recover the meaning", "severity": "moderate", "class": "O6" }
+        ],
+        "other": [
+          { "note": "Display markup leaks into the reader text: \"->**The Adventures of the**<-\" (arrows and bold), with the page number \"140\" as a bare first line", "severity": "moderate", "class": "D1" },
+          { "note": "The continuity meta quotes the previous page (\"beginning \\\"when interest commands\\\"\"). This page cannot verify that quote", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"se porter dessus le pré,\" literally \"to take hims", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"d'une aisle,\" that is, by halves", "verdict": "ok", "helpful": true },
+            { "quote": "the Last Judgment", "verdict": "ok", "helpful": true }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is the right leaf and its transcription is almost exact; the translation is faithful apart from rendering a duelling \"Seigneur\" as \"The Lord\". The notes are sound. Leaked arrow-and-bold markup in the running head is the defect a reader sees on sight."
+  }
+]

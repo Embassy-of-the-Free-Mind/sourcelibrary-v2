@@ -1,0 +1,31 @@
+<warning>Handwritten Sephardic semi-cursive Hebrew in brown ink. Several readings are uncertain. There are stains along the top edge and an ink blot in line 4.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+<unclear>שמחה ליו נברכה</unclear> עד <unclear>שתהנה</unclear> ותוציא <unclear>א״ה</unclear> תעבור
+ברווחה קומי אורי כי בא אורך וכבוד ה׳ עליך זרח ונאמר
+<unclear>ויפתח</unclear> תשבע לה׳ ה׳ ויאמר לה נא דבר נא לך ונאמר
+עבדיך לך כי והשתחוו לך <unclear>[blot — 1 word]</unclear> ונאמר <unclear>ורדוף</unclear>
+אשר בירכך ואחר כך תצא ויצא ונאמר בא אליה וכו׳ וגם
+בארצך את מספר ימיך אמלא . ולא תהיה משכלה ועקרה
+<unclear>בחודש</unclear> עליה ככתוב קומי אורי כי בא אורך . מלך מלכי המלכים יאיר
+זרח . ונאמר <unclear>אומר</unclear> ויקם לך וכל דרכיך וכבוד ה׳ עליך
+מלכי המלכים יבטל ממנה כל <unclear>מיני</unclear> נגה אור . מלך
+ובשם קרע <unclear>שטן</unclear> קרע גזר דינה <unclear>ובעור בשם</unclear> קשות ורעות .
+בשם <unclear>שדי</unclear> וירבה את <unclear>תבואתיה</unclear> ואת <unclear>תבואותיה</unclear> <unclear>תנחמתי</unclear>
+ויכפר את חטאתיה ויחדש כנשר נעוריה . מלך מלכי <unclear>ומבואותיה</unclear>
+המלכים יפקח לך שנה אורה . שנה ברכה . שנה גילה .
+שנה דיצה . שנה הרווחה . שנה ועד <unclear>טוב</unclear> . שנה
+זכיות . שנה חיים טובים . שנה טובה . שנה <unclear>ישועה</unclear> . שנה
+שנה כפרה . שנה לב טוב שמח . שנה מחילה . שנה
+נחמה . שנה <unclear>סליחה</unclear> . שנה עזרה . שנה <unclear>פדות</unclear> . שנה
+צדקה . שנה קוממיות . שנה רפואה <unclear>שלימה</unclear> . שנה
+שמחה . שנה תשועה . ככתוב ותשועת צדיקים מה׳
+<unclear>ותשועתם בעת צרה</unclear> ויעזרם ויפלטם . מלך מלכי המלכים
+יפקח רחמה ויתן לה <unclear>זרע</unclear> <unclear>של קיימא</unclear> בתורתו ובקיום <unclear>מצותיו</unclear>
+<unclear>שום</unclear> <unclear>צער</unclear> ויתן לה בריאות ואורך ימים ושנים . מי שענה
+<unclear>לשרה</unclear> <unclear>אמנו</unclear> ועניה . מי שענה לרחל כאשר ילדה ליוסף
+
+<vocab>תפילה, ברכה, קומי אורי (ישעיה ס:א), משכלה ועקרה (שמות כג:כו), מלך מלכי המלכים, שנה טובה, פקידת עקרות, שרה, רחל, יוסף, תשועת צדיקים (תהלים לז:לט-מ)</vocab>

@@ -8,6 +8,7 @@ import { DatasetPageRecord } from '@/lib/dataset/types';
 import { markForExport } from '@/lib/provenance';
 import { keyRef } from '@/lib/bot-attribution';
 import { traceRefFor } from '@/lib/trace-ref';
+import { gradePages, GRADE_SUBFIELDS } from '@/lib/provenance-grade';
 
 export const maxDuration = 30;
 
@@ -51,6 +52,11 @@ function parseCursor(after: string | null): Record<string, unknown> | null {
  *               deep offsets it walks every skipped document and will exceed
  *               maxDuration. Ignored when `after` is supplied.
  *   limit     - max records (default: 1000, max: 10000)
+ *
+ * Each row carries `provenance_grade` per text field (sourcelibrary-v3 #201): recorded, human,
+ * recorded_on_page, imported, inferred or not_recorded, the month written, and the batch_jobs /
+ * gemini_usage record that corroborates it. Graded on read (src/lib/provenance-grade.ts); the call
+ * log is read once per book in the response, through indexes.
  */
 export async function GET(request: NextRequest) {
   // Authenticate
@@ -179,10 +185,14 @@ export async function GET(request: NextRequest) {
   const pages = await db.collection('pages')
     .find(pageQuery)
     .project({
+      _id: 1,
+      id: 1,
       book_id: 1,
       page_number: 1,
       'ocr.data': 1,
       'translation.data': 1,
+      // what the provenance grader reads (no text bodies beyond the two above)
+      ...Object.fromEntries(GRADE_SUBFIELDS.flatMap((k) => [[`ocr.${k}`, 1], [`translation.${k}`, 1]])),
     })
     .sort({ book_id: 1, page_number: 1 })
     .skip(cursorClause ? 0 : offset)
@@ -199,6 +209,19 @@ export async function GET(request: NextRequest) {
   const ref = traceRefFor({ apiKeyId: String(apiKey._id) }) ?? keyRef(String(apiKey._id));
   const markText = (text: string | undefined, bookId: string) =>
     text ? markForExport(text, bookId, { ref }) : null;
+
+  // Provenance grade per field, for the text this response serves. A failed call-log read leaves
+  // the grade standing and `corroborated: null`, and says so in a header — never a silent `false`.
+  const servesText = (p: any, f: 'ocr' | 'translation') => typeof p[f]?.data === 'string' && p[f].data.length > 0;
+  let callLog = 'read';
+  let graded: Awaited<ReturnType<typeof gradePages>>['grades'];
+  try {
+    ({ grades: graded } = await gradePages(db, pages as any[], servesText));
+  } catch (e) {
+    console.error('[dataset/v1/pages] provenance call-log read failed:', (e as Error).message);
+    callLog = 'unavailable';
+    ({ grades: graded } = await gradePages(db, pages as any[], servesText, { skipCallLog: true }));
+  }
 
   const bookIdsAccessed = new Set<string>();
   const lines: string[] = [];
@@ -222,6 +245,7 @@ export async function GET(request: NextRequest) {
       cluster: book.taxonomy?.cluster || null,
       subcluster: book.taxonomy?.subcluster || null,
       source_url: `https://sourcelibrary.org/book/${book.slug || bookId}?page=${page.page_number}`,
+      provenance_grade: graded.get(page) ?? {},
     };
 
     lines.push(JSON.stringify(record));
@@ -256,6 +280,7 @@ export async function GET(request: NextRequest) {
       ...(nextCursor ? { 'X-Next-Cursor': nextCursor } : {}),
       'Content-Type': 'application/x-ndjson',
       'X-Total-Records': String(lines.length),
+      'X-Provenance-Call-Log': callLog,
       'X-Offset': String(offset),
       'X-Limit': String(limit),
     },

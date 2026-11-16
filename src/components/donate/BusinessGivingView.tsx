@@ -269,7 +269,7 @@ export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale 
       <section className="bg-[#faf8f5] border-b border-stone-200">
         <div className="px-6 md:px-12 max-w-5xl mx-auto py-14 md:py-20">
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">{s.eyebrow}</div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-6 leading-tight font-display">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-6 leading-tight font-serif">
             {s.heroTitle}
           </h1>
           <p className="text-lg text-stone-600 leading-relaxed max-w-3xl">{s.heroLead}</p>
@@ -283,7 +283,7 @@ export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale 
             <div className="text-xs uppercase tracking-[0.2em] text-[#c9a86c] mb-3">
               {s.shortLabel}
             </div>
-            <h2 className="font-display text-2xl md:text-3xl mb-4 leading-snug">{s.shortTitle}</h2>
+            <h2 className="font-serif text-2xl md:text-3xl mb-4 leading-snug">{s.shortTitle}</h2>
             <p className="text-stone-300 leading-relaxed max-w-3xl">{s.shortBody}</p>
           </div>
         </div>
@@ -293,7 +293,7 @@ export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale 
       <section className="bg-[#faf8f5] py-14 md:py-20 border-y border-stone-200">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">{s.nlLabel}</div>
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-serif">
             {s.nlTitle}
           </h2>
 
@@ -399,7 +399,7 @@ export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale 
       <section className="bg-white py-14 md:py-20">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">{s.usLabel}</div>
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-serif">
             {s.usTitle}
           </h2>
 
@@ -421,7 +421,7 @@ export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale 
       {/* How to give */}
       <section className="bg-[#faf8f5] py-14 md:py-20 border-t border-stone-200">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-8 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-8 leading-tight font-serif">
             {s.howTitle}
           </h2>
 
@@ -487,7 +487,7 @@ export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale 
       {/* Where it goes */}
       <section className="bg-white py-14 md:py-20 border-t border-stone-200">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl text-stone-900 mb-4 leading-tight font-display">
+          <h2 className="text-2xl md:text-3xl text-stone-900 mb-4 leading-tight font-serif">
             {s.whereTitle}
           </h2>
           <p className="text-stone-600 leading-relaxed max-w-3xl mb-6">{s.whereBody}</p>

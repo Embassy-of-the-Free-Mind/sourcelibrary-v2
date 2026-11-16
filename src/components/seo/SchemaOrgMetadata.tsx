@@ -5,6 +5,20 @@ import { formatAuthor } from '@/lib/utils';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { institutionalByline, bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { toLanguageCodes, toBcp47 } from '@/lib/language-normalize';
+
+/**
+ * `inLanguage` as schema.org asks for it: IETF BCP 47 tags ("la", "grc"), not our display label
+ * ("Latin"). A label the vocabulary cannot resolve in full is passed through unchanged: a name is a
+ * weaker answer than a code, and a guessed code is a wrong one (#103).
+ */
+export function schemaInLanguage(label: string | null | undefined): string | string[] | undefined {
+  if (!label) return undefined;
+  const { codes, unresolved } = toLanguageCodes(label);
+  const tags = codes.map((c) => toBcp47(c));
+  if (!codes.length || unresolved.length || tags.some((t) => !t)) return label;
+  return tags.length === 1 ? (tags[0] as string) : (tags as string[]);
+}
 
 interface SchemaOrgMetadataProps {
   book: Book;
@@ -80,7 +94,9 @@ export default function SchemaOrgMetadata({
     ...(authorNode && { author: authorNode }),
     ...(provenanceNode && institutional?.role === 'holder' && { provider: provenanceNode }),
     ...(provenanceNode && institutional?.role !== 'holder' && { publisher: provenanceNode }),
-    inLanguage: book.language,
+    ...(schemaInLanguage(book.language) !== undefined && { inLanguage: schemaInLanguage(book.language) }),
+    // The English translation we serve of this edition, when any page of it is translated (#103).
+    ...(translatedCount > 0 && { workTranslation: { '@id': `${baseUrl}/book/${bookPath}#translation` } }),
     ...(book.published && { datePublished: book.published }),
     ...(compositionLayer && { dateCreated: compositionLayer.date_display }),
     ...(book.publisher && {

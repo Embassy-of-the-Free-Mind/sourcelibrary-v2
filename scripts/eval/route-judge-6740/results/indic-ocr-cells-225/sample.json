@@ -1,0 +1,652 @@
+{
+ "built_at": "2026-11-13T18:02:35.374Z",
+ "run": "/mnt/HC_Volume_105839809/jobs/indic-ocr-tests-225/run",
+ "cells": {
+  "tamil": {
+   "task": "ocr",
+   "lang": "Tamil",
+   "paired": true,
+   "routes": [
+    "agy",
+    "ia>agy",
+    "surya>agy"
+   ],
+   "draws": [
+    "draw-tamil-kov.json",
+    "draw-tamil-tor.json"
+   ],
+   "pages": [
+    {
+     "book_id": "6af6fe1e2922fe4745793824",
+     "page_id": "6af6fe212922fe4745793a83",
+     "page_number": 605,
+     "ia": "acc.-no.-43256-swami-vivekanandar-1847",
+     "title": "சுவாமி விவேகானந்தர்",
+     "year": 1847,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-43256-swami-vivekanandar-1847/page/n604/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f9ad2922fe474577fd1d",
+     "page_id": "6af6f9ae2922fe474577fd5b",
+     "page_number": 60,
+     "ia": "acc.-no.-45230-kaarigai-1853",
+     "title": "காரிகை மூலமும், விருத்தியுரையும்",
+     "year": 1853,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-45230-kaarigai-1853/page/n59/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fb2e2922fe47457886bd",
+     "page_id": "6af6fb2f2922fe47457886da",
+     "page_number": 27,
+     "ia": "Acc.No.6022Aparokshanubhuti",
+     "title": "ஆபரோக்ஷாநுபூதி",
+     "year": 1867,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/Acc.No.6022Aparokshanubhuti/page/n26/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af709112922fe47457a7dc9",
+     "page_id": "6af709162922fe47457a7e22",
+     "page_number": 55,
+     "ia": "pdf-or-362-nishttaa-nuboothy-1871",
+     "title": "நிஷ்ட்டா நுபூதி மூலம்,",
+     "year": 1871,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/pdf-or-362-nishttaa-nuboothy-1871/page/n54/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fc9f2922fe474578e007",
+     "page_id": "6af6fca12922fe474578e073",
+     "page_number": 106,
+     "ia": "acc.-no.-45634-saththirakkovai-1884",
+     "title": "சாத்திரக் கோவை",
+     "year": 1884,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-45634-saththirakkovai-1884/page/n105/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af70ebd2922fe47457b11ec",
+     "page_id": "6af70ec32922fe47457b122e",
+     "page_number": 34,
+     "ia": "ims-0087-yappilakkana-vinavidai-1895",
+     "title": "யாப்பிலக்கண வினாவிடை",
+     "year": 1895,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/ims-0087-yappilakkana-vinavidai-1895/page/n33/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af70da62922fe47457aeed0",
+     "page_id": "6af70dac2922fe47457aefb5",
+     "page_number": 226,
+     "ia": "acc.-no.-59-vivekanatha-vijayam-1907",
+     "title": "விவேகாநந்த விஜயம்",
+     "year": 1907,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-59-vivekanatha-vijayam-1907/page/n225/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af708622922fe47457a6fe4",
+     "page_id": "6af708672922fe47457a70ef",
+     "page_number": 117,
+     "ia": "na-thirukkovaiyar-1917",
+     "title": "திருக்கோவையார்",
+     "year": 1917,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/na-thirukkovaiyar-1917/page/n116/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af702e82922fe474579ff99",
+     "page_id": "6af702ec2922fe47457a0012",
+     "page_number": 81,
+     "ia": "Acc.No.8248VedasaraSamuththaranam1921",
+     "title": "வேதசார சமுத்தரணம்",
+     "year": 1921,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/Acc.No.8248VedasaraSamuththaranam1921/page/n80/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fdf22922fe47457930ec",
+     "page_id": "6af6fdf42922fe474579314b",
+     "page_number": 92,
+     "ia": "acc.-no.-14639-kalinkaththu-parani-mulam-1840",
+     "title": "கலிங்கத்துப்பரணி - மூலம்",
+     "year": 1840,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-14639-kalinkaththu-parani-mulam-1840/page/n91/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af70d5d2922fe47457ae57d",
+     "page_id": "6af70d5d2922fe47457ae689",
+     "page_number": 266,
+     "ia": "acc.-no.-45426-thirumanthiram-1869",
+     "title": "திருமந்திரம் - 3000",
+     "year": 1869,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-45426-thirumanthiram-1869/page/n265/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fbbe2922fe474578a950",
+     "page_id": "6af6fbc02922fe474578a993",
+     "page_number": 11,
+     "ia": "acc.-no.-45622-thiruvannamalai-venba-1874",
+     "title": "திருவண்ணாமலை வெண்பா",
+     "year": 1874,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-45622-thiruvannamalai-venba-1874/page/n10/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fe142922fe4745793773",
+     "page_id": "6af6fe162922fe47457937ca",
+     "page_number": 18,
+     "ia": "acc.-no.-2847-thiruvengada-kalambagam-1886",
+     "title": "திருவேங்கடக் கலம்பகம் மூலபாடம்",
+     "year": 1886,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-2847-thiruvengada-kalambagam-1886/page/n17/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af704f32922fe47457a2a73",
+     "page_id": "6af704f82922fe47457a2a89",
+     "page_number": 19,
+     "ia": "Acc.No.16915Agnavadaiparani",
+     "title": "அஞ்ஞவதைப் பரணி",
+     "year": 1897,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/Acc.No.16915Agnavadaiparani/page/n18/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af710fc2922fe47457b530b",
+     "page_id": "6af711032922fe47457b538a",
+     "page_number": 73,
+     "ia": "acc.-no.-45385-kasi-rameshwara-yathirai-1908",
+     "title": "தலயாத்திரைப் பொதுவிதி காசிமான்மியம்",
+     "year": 1908,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-45385-kasi-rameshwara-yathirai-1908/page/n72/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fa462922fe4745783b94",
+     "page_id": "6af6fa462922fe4745783c75",
+     "page_number": 223,
+     "ia": "kvc-0031-anandha-bothini-1917-18",
+     "title": "ஆனந்த போதினி - 1918",
+     "year": 1917,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/kvc-0031-anandha-bothini-1917-18/page/n222/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fdff2922fe474579357c",
+     "page_id": "6af6fe012922fe474579360c",
+     "page_number": 100,
+     "ia": "acc.-no.-2349-thirumoorthy-unmmai-1928",
+     "title": "திரிமூர்த்தி உண்மை",
+     "year": 1928,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-2349-thirumoorthy-unmmai-1928/page/n99/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af700d52922fe474579a7eb",
+     "page_id": "6af700d82922fe474579a894",
+     "page_number": 166,
+     "ia": "acc.-no.-31634-kaasikaandamoolam-1846",
+     "title": "காசிகாண்டமூலம்",
+     "year": 1846,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-31634-kaasikaandamoolam-1846/page/n165/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af70f0b2922fe47457b1ee4",
+     "page_id": "6af70f112922fe47457b1ef4",
+     "page_number": 13,
+     "ia": "Acc.No.10063SivaprakasaSwamigal1856",
+     "title": "துறைமங்கலம் சிவபிரகாச சுவாமிகள் அருளிச்செய்த நால்வர்நான்மணிமாலை, பெரியநாயகி விருத்தம், பெரியநாயகி கலித்துறை, பீக்ஷாடன நவமணிமாலை",
+     "year": 1856,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/Acc.No.10063SivaprakasaSwamigal1856/page/n12/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6fe4f2922fe4745794642",
+     "page_id": "6af6fe512922fe4745794744",
+     "page_number": 256,
+     "ia": "acc.-no.-45251-sathuragarathy-1860",
+     "title": "சதுரகராதி",
+     "year": 1860,
+     "collection": "kov",
+     "image_url": "https://archive.org/download/acc.-no.-45251-sathuragarathy-1860/page/n255/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af720572922fe47457d1dce",
+     "page_id": "6af720572922fe47457d1e33",
+     "page_number": 99,
+     "ia": "gc-sh10-0055",
+     "title": "tiruvaḷḷuva nāyaṉār kuṟaḷ mūlapāṭam",
+     "year": 1812,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh10-0055/page/n98/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af721422922fe47457d7c77",
+     "page_id": "6af721422922fe47457d7caf",
+     "page_number": 54,
+     "ia": "gc-sh10-0001",
+     "title": "Pañcatantirak katai",
+     "year": 1826,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh10-0001/page/n53/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af721462922fe47457d7ded",
+     "page_id": "6af721462922fe47457d7e39",
+     "page_number": 74,
+     "ia": "gc-sh10-0100",
+     "title": "pañcatantira katai",
+     "year": 1838,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh10-0100/page/n73/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af721312922fe47457d75a9",
+     "page_id": "6af721312922fe47457d75f7",
+     "page_number": 76,
+     "ia": "tamiirmyaammutal00kamp",
+     "title": "Tamiḻirāmāyaṇam: mutalāvatu pālakāṇṭam",
+     "year": 1845,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/tamiirmyaammutal00kamp/page/n75/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af721082922fe47457d64ab",
+     "page_id": "6af721082922fe47457d6551",
+     "page_number": 164,
+     "ia": "gc-sh2-0023",
+     "title": "Patārtta kuṇa cintāmaṇi",
+     "year": 1854,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh2-0023/page/n163/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af721902922fe47457da01a",
+     "page_id": "6af721902922fe47457da035",
+     "page_number": 25,
+     "ia": "tacaivakvaimlam00poyy",
+     "title": "Tañcaivāṇaṉ kōvai mūlam",
+     "year": 1864,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/tacaivakvaimlam00poyy/page/n24/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7213e2922fe47457d7bd9",
+     "page_id": "6af7213e2922fe47457d7bf7",
+     "page_number": 28,
+     "ia": "vekaikkvai00tuai",
+     "title": "Veṅkaik kōvai",
+     "year": 1875,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/vekaikkvai00tuai/page/n27/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7204f2922fe47457d1cd0",
+     "page_id": "6af7204f2922fe47457d1d02",
+     "page_number": 48,
+     "ia": "gc-sh1-1-0219",
+     "title": "Talayāttiraip Potuviti, Kāci Māṉmiyam",
+     "year": 1882,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh1-1-0219/page/n47/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7211f2922fe47457d6d79",
+     "page_id": "6af7211f2922fe47457d6e38",
+     "page_number": 189,
+     "ia": "gc-sh8-0078",
+     "title": "Tolkāppiyam eḻuttatikāram",
+     "year": 1891,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh8-0078/page/n188/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7212b2922fe47457d73ec",
+     "page_id": "6af7212b2922fe47457d7438",
+     "page_number": 74,
+     "ia": "cakaranryaacmiky00cval",
+     "title": "Caṅkaranārāyaṇacāmi kōyiṟ purāṇam",
+     "year": 1909,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/cakaranryaacmiky00cval/page/n73/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7211e2922fe47457d6c9a",
+     "page_id": "6af7211e2922fe47457d6d27",
+     "page_number": 139,
+     "ia": "gc-sh1-0080",
+     "title": "šrīmat rāma.co. cokkaliñkac ceṭṭiyāriṉ tūṣaṇa nāvukkōr cūṭṭukkōl - mutaṟ pākam",
+     "year": 1918,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh1-0080/page/n138/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af721712922fe47457d8eb1",
+     "page_id": "6af721712922fe47457d8ebd",
+     "page_number": 10,
+     "ia": "31761089452965",
+     "title": "Tiruvaraṅka veṇpā vantāti, tirumāl veṇpāp patikam, tirumāl pōṟṟip patikam",
+     "year": 1927,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/31761089452965/page/n9/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af720532922fe47457d1d5f",
+     "page_id": "6af720532922fe47457d1da1",
+     "page_number": 64,
+     "ia": "gc-sh10-0044",
+     "title": "a grammar of the common dialect of the Tamil language, called koṭuntamil",
+     "year": 1831,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh10-0044/page/n63/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7208d2922fe47457d2d88",
+     "page_id": "6af7208d2922fe47457d2dcf",
+     "page_number": 69,
+     "ia": "kamparmyaammvatu00kamp",
+     "title": "Kamparāmāyaṇam: mūṉṟāvatu āraṇiya kāṇṭam",
+     "year": 1845,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/kamparmyaammvatu00kamp/page/n68/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af720712922fe47457d216a",
+     "page_id": "6af720712922fe47457d2297",
+     "page_number": 116,
+     "ia": "gc-sh10-0110",
+     "title": "vētiyaroḻukkam",
+     "year": 1858,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh10-0110/page/n115/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af720cf2922fe47457d49ba",
+     "page_id": "6af720cf2922fe47457d4a53",
+     "page_number": 148,
+     "ia": "31761121415665",
+     "title": "Tattuvapōtiṉi : mutalputtakam",
+     "year": 1864,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/31761121415665/page/n147/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af720c42922fe47457d432b",
+     "page_id": "6af720c42922fe47457d4354",
+     "page_number": 39,
+     "ia": "paruvatarjapuram00caum",
+     "title": "Paruvatarāja purāṇam",
+     "year": 1875,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/paruvatarjapuram00caum/page/n38/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7213c2922fe47457d7818",
+     "page_id": "6af7213c2922fe47457d79be",
+     "page_number": 420,
+     "ia": "gc-sh5-0308",
+     "title": "Cīvakacintāmaṇi",
+     "year": 1887,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/gc-sh5-0308/page/n419/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af7215f2922fe47457d8883",
+     "page_id": "6af7215f2922fe47457d88b7",
+     "page_number": 50,
+     "ia": "murukcarmutuneiv00cita",
+     "title": "Murukēcar mutuneṟiveṇpā",
+     "year": 1892,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/murukcarmutuneiv00cita/page/n49/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af720a12922fe47457d37d6",
+     "page_id": "6af720a12922fe47457d37f8",
+     "page_number": 32,
+     "ia": "meykaacivataanik00timu",
+     "title": "Meykaṇṭa civatūṣaṇa nikraham, meykaṇṭa civastavam",
+     "year": 1900,
+     "collection": "tor",
+     "image_url": "https://archive.org/download/meykaacivataanik00timu/page/n31/full/full/0/default.jpg"
+    }
+   ]
+  },
+  "series": {
+   "task": "ocr",
+   "lang": "romanized Pali / Sanskrit / Prakrit",
+   "paired": true,
+   "routes": [
+    "gpu2>agy",
+    "agy"
+   ],
+   "draws": [
+    "draw-series.json"
+   ],
+   "pages": [
+    {
+     "book_id": "6af6f7dafbe7a128b561d904",
+     "page_id": "6af6f7dafbe7a128b561d95b",
+     "page_number": 85,
+     "ia": "in.ernet.dli.2015.217461",
+     "title": "Harvard Oriental Series Vol 2",
+     "year": 1895,
+     "image_url": "https://images.sourcelibrary.org/archived/6af6f7dafbe7a128b561d904/85.jpg"
+    },
+    {
+     "book_id": "6af6f7fefbe7a128b561ec99",
+     "page_id": "6af6f7fefbe7a128b561ed0d",
+     "page_number": 114,
+     "ia": "in.ernet.dli.2015.97816",
+     "title": "Harvard Oriental Series, Vol.24, Rig- Veda Repetitions Part.2-3",
+     "year": 1916,
+     "image_url": "https://archive.org/download/in.ernet.dli.2015.97816/page/n113/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8b8fbe7a128b5623dda",
+     "page_id": "6af6f8b9fbe7a128b5623e41",
+     "page_number": 101,
+     "ia": "india.history.resource.89469",
+     "title": "The Ayaramga Sutta of the Cvetambara Jains, Part I Text",
+     "year": 1882,
+     "image_url": "https://archive.org/download/india.history.resource.89469/page/n100/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f874fbe7a128b562231a",
+     "page_id": "6af6f874fbe7a128b5622375",
+     "page_number": 89,
+     "ia": "buddhavasaandca00morrgoog",
+     "title": "The Buddhavaṃsa and the Cariyā-piṭaka",
+     "year": 1882,
+     "image_url": "https://archive.org/download/buddhavasaandca00morrgoog/page/n88/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8b9fbe7a128b5623e7f",
+     "page_id": "6af6f8b9fbe7a128b5623ec1",
+     "page_number": 64,
+     "ia": "india.history.resource.106164",
+     "title": "Udanam (Pali Text Society)",
+     "year": 1885,
+     "image_url": "https://archive.org/download/india.history.resource.106164/page/n63/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f91cfbe7a128b5625ec0",
+     "page_id": "6af6f91cfbe7a128b5625ef3",
+     "page_number": 49,
+     "ia": "thevimana00vimauoft",
+     "title": "The Vimana-Vatthu of the Khuddhaka nikaya Sutta pitaka. Edited by Edmund Rowland Gooneratne",
+     "year": 1886,
+     "image_url": "https://archive.org/download/thevimana00vimauoft/page/n48/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f856fbe7a128b5621591",
+     "page_id": "6af6f856fbe7a128b5621633",
+     "page_number": 160,
+     "ia": "paramatthadipani00dhamrich",
+     "title": "Paramatthadipani. Dhammapala's commentary on the Therigatha",
+     "year": 1893,
+     "image_url": "https://images.sourcelibrary.org/archived/6af6f856fbe7a128b5621591/160.jpg"
+    },
+    {
+     "book_id": "6af6f914fbe7a128b5625b3c",
+     "page_id": "6af6f914fbe7a128b5625b77",
+     "page_number": 57,
+     "ia": "petavatthuedited00petauoft",
+     "title": "Petavatthu. Edited by J. Minayeff",
+     "year": 1888,
+     "image_url": "https://archive.org/download/petavatthuedited00petauoft/page/n56/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8aafbe7a128b5623889",
+     "page_id": "6af6f8abfbe7a128b562391e",
+     "page_number": 147,
+     "ia": "yamakabeingsixth02daviuoft",
+     "title": "The Yamaka, being the sixth book of the Abhidhamma Pitaka. Edited by Caroline Rhys Davids (vol. 02)",
+     "year": 1911,
+     "image_url": "https://archive.org/download/yamakabeingsixth02daviuoft/page/n146/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f86cfbe7a128b5621e9b",
+     "page_id": "6af6f86cfbe7a128b5621f5e",
+     "page_number": 193,
+     "ia": "bub_gb_cScYAAAAYAAJ",
+     "title": "The Aṅguttaranikâya Ekanipâta, Dukanipâta, and Tikanipâta",
+     "year": 1900,
+     "image_url": "https://archive.org/download/bub_gb_cScYAAAAYAAJ/page/n192/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f943fbe7a128b5626a2b",
+     "page_id": "6af6f943fbe7a128b5626a70",
+     "page_number": 67,
+     "ia": "yogvacarasmanual00davi",
+     "title": "The Yogvacara's manual of Indian mysticism as practised by Buddhists",
+     "year": 1896,
+     "image_url": "https://archive.org/download/yogvacarasmanual00davi/page/n66/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8defbe7a128b562452d",
+     "page_id": "6af6f8defbe7a128b56245e9",
+     "page_number": 186,
+     "ia": "textseries00socigoog",
+     "title": "The Mahāvamsa;",
+     "year": 1908,
+     "image_url": "https://archive.org/download/textseries00socigoog/page/n185/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8a6fbe7a128b562361a",
+     "page_id": "6af6f8a6fbe7a128b56236b7",
+     "page_number": 153,
+     "ia": "niddesamahanidde01lava",
+     "title": "Niddesa, Mahaniddesa. Edited by L. de La Vallée Poussin and E.J. Thomas (vol. 1)",
+     "year": 1916,
+     "image_url": "https://archive.org/download/niddesamahanidde01lava/page/n152/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8f9fbe7a128b56250ae",
+     "page_id": "6af6f8f9fbe7a128b5625151",
+     "page_number": 161,
+     "ia": "niddesacullanidd02steduoft",
+     "title": "Niddesa, Cullaniddesa. Edited by W. Stede (vol. 02)",
+     "year": 1918,
+     "image_url": "https://archive.org/download/niddesacullanidd02steduoft/page/n160/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f937fbe7a128b5626479",
+     "page_id": "6af6f937fbe7a128b56264b5",
+     "page_number": 58,
+     "ia": "dhtukathpakaraa00gugoog",
+     "title": "The Dhātu kathā pakaraṇa and its commentary",
+     "year": 1892,
+     "image_url": "https://archive.org/download/dhtukathpakaraa00gugoog/page/n57/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f888fbe7a128b562290f",
+     "page_id": "6af6f888fbe7a128b5622a5a",
+     "page_number": 329,
+     "ia": "vibhagabeingsec00davigoog",
+     "title": "The Vibhaṅga, being the second book of the Abhidhamma piṭaka",
+     "year": 1904,
+     "image_url": "https://archive.org/download/vibhagabeingsec00davigoog/page/n328/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8a6fbe7a128b5623619",
+     "page_id": "6af6f8a6fbe7a128b5623802",
+     "page_number": 208,
+     "ia": "nettipakaranawi00hardgoog",
+     "title": "The Netti-pakarana, with extracts from Dhammapāla's commentary (vol. 50)",
+     "year": 1902,
+     "image_url": "https://archive.org/download/nettipakaranawi00hardgoog/page/n207/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f901fbe7a128b56254cf",
+     "page_id": "6af6f901fbe7a128b5625622",
+     "page_number": 337,
+     "ia": "india.history.resource.89470",
+     "title": "The Majjhima-Nikaya, Vol. I",
+     "year": 1888,
+     "image_url": "https://archive.org/download/india.history.resource.89470/page/n336/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f911fbe7a128b5625a03",
+     "page_id": "6af6f911fbe7a128b5625aa0",
+     "page_number": 155,
+     "ia": "samyuttanikayaof03paliuoft",
+     "title": "The Samyutta-nikaya of the Sutta-pitaka. Edited by M. Léon Feer (vol. 3)",
+     "year": 1884,
+     "image_url": "https://archive.org/download/samyuttanikayaof03paliuoft/page/n154/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f938fbe7a128b562651a",
+     "page_id": "6af6f938fbe7a128b56265f9",
+     "page_number": 221,
+     "ia": "dukapatthanavol101pattuoft",
+     "title": "Dukapatthana, vol. 1, being part of the Abhidhamma pitaka. Edited by Mrs. Rhys Davids",
+     "year": 1906,
+     "image_url": "https://archive.org/download/dukapatthanavol101pattuoft/page/n220/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8e7fbe7a128b56248a0",
+     "page_id": "6af6f8e7fbe7a128b562492d",
+     "page_number": 139,
+     "ia": "dhammapalasparam00dham",
+     "title": "Dhammapāla's Paramattha-dīpanī Part IV : being the commentary on the Vimāna-vatthu",
+     "year": 1901,
+     "image_url": "https://archive.org/download/dhammapalasparam00dham/page/n138/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f87efbe7a128b56225b4",
+     "page_id": "6af6f87efbe7a128b562264a",
+     "page_number": 148,
+     "ia": "sasanavamsa00pa",
+     "title": "Sasanavamsa",
+     "year": 1897,
+     "image_url": "https://archive.org/download/sasanavamsa00pa/page/n147/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f93dfbe7a128b562674c",
+     "page_id": "6af6f93dfbe7a128b56267bb",
+     "page_number": 109,
+     "ia": "tikapatthanaofab02budduoft",
+     "title": "Tikapatthana of the Abhidhamma pitaka (vol. 02)",
+     "year": 1921,
+     "image_url": "https://archive.org/download/tikapatthanaofab02budduoft/page/n108/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6af6f8d5fbe7a128b5624305",
+     "page_id": "6af6f8d5fbe7a128b562436b",
+     "page_number": 100,
+     "ia": "mahbodhivamsa00strogoog",
+     "title": "The Mahā-bodhi-vamsa (vol. 28)",
+     "year": 1891,
+     "image_url": "https://archive.org/download/mahbodhivamsa00strogoog/page/n99/full/full/0/default.jpg"
+    }
+   ]
+  }
+ }
+}

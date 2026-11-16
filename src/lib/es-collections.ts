@@ -180,6 +180,33 @@ export function hasEsCollectionPage(doc: { visible?: unknown; collection_type?: 
 }
 
 /**
+ * Where a reader who asked for `/es/collections/<slug>` should go when that
+ * page does not exist: the English page, if and only if the English route
+ * would serve this slug (its own filter, `visible: { $ne: false }`). Null for
+ * a slug no page serves, which stays a 404.
+ *
+ * The language switcher and old links reach Spanish addresses of visual-art
+ * collections and of collections whose `visible` was never set: 30 such 404s
+ * in the 30 days to 2026-11-12, each for a collection that was live in
+ * English (#102).
+ */
+export async function englishCollectionFallback(
+  db: { collection: (name: string) => { findOne: (q: object, o?: object) => Promise<unknown> } },
+  slug: string,
+): Promise<string | null> {
+  if (hasNoSlugShape(slug)) return null;
+  const doc = await db.collection('collections').findOne(
+    { slug, visible: { $ne: false } },
+    { projection: { _id: 0, slug: 1 }, maxTimeMS: 8000 },
+  );
+  return doc ? `/collections/${slug}` : null;
+}
+
+function hasNoSlugShape(slug: string): boolean {
+  return !/^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(slug);
+}
+
+/**
  * Which of these slugs have a Spanish page (`/es/collections/<slug>`) — the
  * same filter `getEsCollection` applies, so a link built from it cannot 404.
  *

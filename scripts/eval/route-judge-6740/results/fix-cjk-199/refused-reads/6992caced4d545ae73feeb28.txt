@@ -1,0 +1,22 @@
+<scan-quality>fair</scan-quality>
+<language>Japanese</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<meta>Section of a horizontal handscroll. Two sheets are pasted together, and the join runs vertically through the middle of the image. A yellowish wash or stain makes zigzag and wavy lines across the paper. Faint sketches run along the damaged top edge.</meta>
+<warning>Handwritten, in a cursive Japanese hand. The four vertical inscriptions on the right are each a large character followed by smaller cursive marks, and only the large character can be read with any confidence. The line along the bottom left is written sideways, rotated 90° to the scroll, and is mostly illegible. The earlier transcription's reading of this line ("諸尊二十五名神精在此等即神名大衆靈意云") cannot be confirmed from the image and has been removed.</warning>
+
+<unclear>樓</unclear><unclear>[illegible — 1-2 cursive characters]</unclear>
+
+<unclear>樓</unclear><unclear>[illegible — 1-2 cursive characters]</unclear>
+
+<unclear>樓</unclear><unclear>[illegible — 1-2 cursive characters]</unclear>
+
+<unclear>樓</unclear><unclear>[illegible — 1-2 cursive characters]</unclear>
+
+<image-desc size="large" type="diagram" significance="high">An ink-drawn grid of nine panels in three rows and three columns. Each panel shows a seated Buddhist figure in a halo on a lotus or cloud seat. Smaller standing attendant figures surround each one, and some panels also contain small structures such as a frame, a canopy or a ladder-like object. Yellow wash lines cross the grid.</image-desc>
+
+<image-desc size="large" type="diagram" significance="high">To the left of the grid, about seven long wavy ink lines spread out from a single point at the grid's left edge. Each ends in a cloud-like or trefoil-shaped knot. At the top, a partly visible sketch shows a figure holding a leafy branch, with further faint figures along the damaged upper edge.</image-desc>
+
+<unclear>one line of cursive characters written sideways along the bottom edge, about 20 characters, not transcribed</unclear>
+
+<vocab>樓, handscroll, Buddhist iconography, nine-panel grid, seated deities, attendants, cloud motifs</vocab>

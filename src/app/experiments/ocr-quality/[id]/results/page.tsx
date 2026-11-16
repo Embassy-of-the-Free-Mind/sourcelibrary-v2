@@ -148,7 +148,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                           {comp.label_a || comp.condition_a}
                         </span>
                       </div>
-                      <div className="text-2xl font-bold text-primary">
+                      <div className="text-2xl font-semibold text-primary">
                         {(comp.a_win_rate * 100).toFixed(0)}%
                       </div>
                       <div className="text-sm text-muted">
@@ -159,7 +159,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     {/* Ties */}
                     <div className="p-3 rounded-lg bg-warm text-center">
                       <div className="text-base font-medium text-muted mb-1">Ties</div>
-                      <div className="text-2xl font-bold text-secondary">
+                      <div className="text-2xl font-semibold text-secondary">
                         {comp.ties}
                       </div>
                       <div className="text-sm text-muted">
@@ -175,7 +175,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                           {comp.label_b || comp.condition_b}
                         </span>
                       </div>
-                      <div className="text-2xl font-bold text-primary">
+                      <div className="text-2xl font-semibold text-primary">
                         {(comp.b_win_rate * 100).toFixed(0)}%
                       </div>
                       <div className="text-sm text-muted">
@@ -212,7 +212,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                       i === 0 ? 'bg-green-50 border border-green-200' : 'bg-warm'
                     }`}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-base ${
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-base ${
                       i === 0 ? 'bg-status-success text-white' : 'bg-border-medium text-secondary'
                     }`}>
                       {i + 1}
@@ -224,7 +224,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xl font-bold text-primary">
+                      <div className="text-xl font-semibold text-primary">
                         {(cond.win_rate * 100).toFixed(0)}%
                       </div>
                       <div className="text-sm text-muted">

@@ -1,0 +1,813 @@
+{
+ "captured_at": "2026-11-13T09:20:57.137Z",
+ "note": "Real page subdocuments from bookstore.pages (sourcelibrary-v3 #201); only text bodies (data, text) are redacted. Also redacted: correction.volunteer_id (an account id; this repo is mirrored publicly).",
+ "pages": [
+  {
+   "_id": "69e7aaf45f1a22ab19a90519",
+   "id": "69e7aaf45f1a22ab19a90519",
+   "book_id": "69e7aaf45f1a22ab19a90424",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 2195 chars>",
+    "language": "Tibetan",
+    "model": "bdrc-yigdzin-v1",
+    "source": "bdrc",
+    "updated_at": "2026-09-29T13:47:59.031Z",
+    "pipeline": "reocr_bdrc_4523",
+    "content_hash": "097cc874eacb1c0a",
+    "engine": {
+     "name": "Yigdzin",
+     "version": "v1",
+     "model": "BDRC/tibetan-ocr",
+     "model_label": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+     "revision": "50506eb6d8ed8738df86b448f6f6cdc688de29ea",
+     "revision_source": "inferred: BDRC/tibetan-ocr main for the whole run (2026-09-11 to 09-15); the run loaded a local copy and logged no sha; corroborated by 10 HF download-metadata files on sl-mitra-1 (2026-09-25 re-read)",
+     "model_url": "https://huggingface.co/BDRC/tibetan-ocr/tree/50506eb6d8ed8738df86b448f6f6cdc688de29ea",
+     "licence": "Apache-2.0",
+     "read_mode": "leaf",
+     "decode": {
+      "runtime": "vLLM 0.29 + vllm_paddleocr_seqpos (sequential M-RoPE), bf16, L4",
+      "image": "downscaled to 2400 px wide (Lanczos, JPEG q95) when wider",
+      "sampling": "greedy; DRY multiplier 0.8 base 1.75 allowed_length 12",
+      "loop_retry": "temperature 0.4, n=2, when the greedy read shows measured repetition",
+      "truncation_redecode": "min_tokens=300 re-decode where the greedy read ended on whitespace (kept only if longer)"
+     },
+     "run": "yigdzin-leaf-2026-09-25",
+     "issue": 4722,
+     "leaf_seams": {
+      "marker": "<leaf-break/>",
+      "count": 1,
+      "at_lines": [
+       7
+      ],
+      "leaf_lines": [
+       7,
+       7
+      ],
+      "source": "leaf-run-logs/pages.jsonl per-leaf line counts, mapped through txt-yigdzin-leaf",
+      "issue": 5260,
+      "run": "leaf-break-backfill-2026-09-29",
+      "at": "2026-09-29T13:47:59.031Z"
+     }
+    },
+    "verdict": {
+     "verdict": "SERVE",
+     "rule": "agree_wood",
+     "agree_wood": 0.9729,
+     "agree_uchan": null,
+     "align": null,
+     "align_src": null,
+     "dharani": 0.003,
+     "valid": null,
+     "judged_engine": "bdrc-yigdzin-v1",
+     "run": "verdicts-yig2-final-20260929T0700Z",
+     "issue": 4523,
+     "at": "2026-09-29T08:56:48.657Z"
+    }
+   }
+  },
+  {
+   "_id": "6a3c64a739b4508b04e28dc2",
+   "id": "6a3c64a739b4508b04e28dc2",
+   "book_id": "6a3c64a739b4508b04e28cda",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 3772 chars>",
+    "language": "English",
+    "model": "gemini-3-flash-preview",
+    "updated_at": "2026-10-04T17:20:49.995Z",
+    "source": "ai",
+    "prompt_version": "13",
+    "prompt_id": "6a98b8a175660c6a8b09a8f9",
+    "prompt_hash": "516510147237b6a79d9d3f6e797bba7f",
+    "prompt_name": "Standard Translation",
+    "content_hash": "c6b6bce72352698d",
+    "engine": {
+     "schema": "gemini-engine/1",
+     "name": "gemini",
+     "model": "gemini-3-flash-preview",
+     "model_version": "3-flash-preview-12-2025",
+     "model_version_source": "GET /v1beta/models/gemini-3-flash-preview 2026-09-28",
+     "api": "batch",
+     "call_site": "scripts/lib/translate-batch-chained.mjs",
+     "prompt": {
+      "id": "6a98b8a175660c6a8b09a8f9",
+      "name": "Standard Translation",
+      "version": "13",
+      "hash": "516510147237b6a79d9d3f6e797bba7f",
+      "sent_hash": "9f59235e0fcbe802",
+      "sent_chars": 7807
+     },
+     "generation": {
+      "temperature": 1,
+      "top_p": 0.95,
+      "top_k": 64,
+      "max_output_tokens": 4096,
+      "thinking_budget": 0,
+      "media_resolution": "model_default",
+      "sent": {
+       "maxOutputTokens": 4096,
+       "thinkingConfig": {
+        "thinkingBudget": 0
+       }
+      },
+      "defaulted": [
+       "temperature",
+       "top_p",
+       "top_k",
+       "media_resolution"
+      ],
+      "defaults_source": "GET /v1beta/models/gemini-3-flash-preview 2026-09-28"
+     },
+     "run": {
+      "code_version": "7f80a531c",
+      "host": "clawdbot",
+      "job_id": "tbc_muu2kotm_wlkogs",
+      "batch_job_id": "batches/x82xfzksprnu2yj5nyigar3ii86xptp3di5y",
+      "round": 2,
+      "at": "2026-10-04T17:20:49.978Z"
+     },
+     "input": {
+      "source_field": "ocr",
+      "source_text_hash": "12d4678470525635",
+      "source_text_chars": 490,
+      "source_updated_at": "2026-10-02T19:52:44.596Z",
+      "context": {
+       "previous_translation": false,
+       "prev_ocr": false,
+       "next_ocr": false,
+       "page_break": "scoped",
+       "mode": "none"
+      }
+     },
+     "recorded_by": "scripts/lib/write-provenance.mjs"
+    }
+   }
+  },
+  {
+   "_id": "69dbcb181040d1d5e20b219d",
+   "id": "69dbcb181040d1d5e20b219d",
+   "book_id": "69dbcb181040d1d5e20b1f8e",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 6529 chars>",
+    "language": "auto-detect",
+    "model": "gemini-3.8-flash-low",
+    "updated_at": "2026-11-07T20:52:20.071Z",
+    "source": "ai",
+    "prompt_version": "19.1",
+    "prompt_id": "6ac02220413a82637da889bb",
+    "prompt_name": "Standard OCR",
+    "content_hash": "5f5968cbe755b4c0",
+    "engine": {
+     "schema": "gemini-engine/1",
+     "name": "gemini",
+     "model": "gemini-3.8-flash-low",
+     "model_version": null,
+     "model_version_source": "not_recorded",
+     "api": "cli",
+     "cli": {
+      "name": "agy",
+      "version": "1.5.3"
+     },
+     "call_site": "scripts/batch/cli-ocr.mjs",
+     "prompt": {
+      "id": "6ac02220413a82637da889bb",
+      "name": "Standard OCR",
+      "version": "19.1",
+      "hash": "9d8f959e053491362b2c4acec1e20c9a",
+      "sent_hash": "647c60db2aa4ccbe",
+      "sent_chars": 13545
+     },
+     "generation": {
+      "status": "not_recorded",
+      "reason": "agy -p exposes no temperature, output cap or thinking setting; the model id names the tier"
+     },
+     "run": {
+      "job_id": "cli-ocr-20261107205215-4022295",
+      "code_version": "df63a1c1b",
+      "host": "gex45-1",
+      "at": "2026-11-07T20:47:58.264Z",
+      "read_started_at": "2026-11-07T20:46:48.479Z",
+      "agent": "page-reader",
+      "read_call": "cli-ocr-reread-2026-11-07-69dbcb181040d1d5e20b1f8e-527-4-0",
+      "call_pages": 4,
+      "call_position": 1,
+      "reason": "#7263 Latin re-read lane, route agy-flash-low@4-read: the stored Flash-Lite text replaced by a fresh gemini-3.8-flash-low read of the image through agy, 4 page(s) a call (Derek 2026-11-03; V4, PR #8000: 20/30 accepted against the served 9/30); lane run cli-ocr-reread-20261107203529-3991765"
+     },
+     "input": {
+      "image_url": "https://images.sourcelibrary.org/archived/69dbcb181040d1d5e20b1f8e/527.jpg",
+      "image_mime": "image/jpeg",
+      "image_bytes": 2854538,
+      "image_sha256": "e74de8cb2d125cdb6b5f76303cd23b6248a09b63144f6df2ea8b2243275b982e"
+     },
+     "recorded_by": "scripts/lib/write-provenance.mjs"
+    },
+    "lane": "agy-flash-ocr",
+    "pipeline": "agy-reread-lite-7853"
+   }
+  },
+  {
+   "_id": "69f675653b8d959cfe92dfa7",
+   "id": "69f675653b8d959cfe92dfa7",
+   "book_id": "6867bf5a009d20a23245ac0d",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 1482 chars>",
+    "language": "auto-detect",
+    "model": "gemini-3.8-flash-low",
+    "updated_at": "2026-11-02T17:17:10.632Z",
+    "source": "ai",
+    "prompt_version": "0601ef30e816f7a7",
+    "prompt_id": "correct:fc-correct-prompt.txt",
+    "prompt_name": "correction prompt fc-correct-prompt.txt",
+    "content_hash": "c2dd5ce341ed79ee",
+    "engine": {
+     "schema": "gemini-engine/1",
+     "name": "gemini",
+     "model": "gemini-3.8-flash-low",
+     "model_version": null,
+     "model_version_source": "not_recorded",
+     "api": "cli",
+     "cli": {
+      "name": "agy",
+      "version": "1.4.12"
+     },
+     "call_site": "scripts/batch/cli-ocr.mjs",
+     "prompt": {
+      "id": "correct:fc-correct-prompt.txt",
+      "name": "correction prompt fc-correct-prompt.txt",
+      "version": "0601ef30e816f7a7",
+      "hash": null,
+      "sent_hash": "c6978f3c96c066fe",
+      "sent_chars": 16080
+     },
+     "generation": {
+      "status": "not_recorded",
+      "reason": "agy -p exposes no temperature, output cap or thinking setting; the model id names the tier"
+     },
+     "run": {
+      "job_id": "cli-ocr-20261102171703-3727308",
+      "code_version": "1e3c47c1e",
+      "host": "gex45-1",
+      "at": "2026-11-02T17:07:51.052Z",
+      "read_started_at": "2026-11-02T17:07:36.715Z",
+      "reason": "#7558 correction lane: Flash-Lite draft corrected by gemini-3.8-flash-low through agy (lite>agy-flash-low passed #7520's router test on German and French)"
+     },
+     "input": {
+      "image_url": "https://images.sourcelibrary.org/pages/6867bf5a009d20a23245ac0d/sp69f675653b8d959cfe92dfa7.jpg",
+      "image_mime": "image/jpeg",
+      "image_bytes": 930433,
+      "image_sha256": "800f601d50ac67d93b170a89825f44faa433ec6300a7f2f6590ec53993698cdb",
+      "draft": {
+       "model": "gemini-3.1-flash-lite-preview",
+       "pipeline": null,
+       "content_hash": "12734160c649fedc",
+       "text_hash": "12734160c649fedc",
+       "updated_at": "2026-05-04T04:40:16.050Z"
+      }
+     },
+     "recorded_by": "scripts/lib/write-provenance.mjs"
+    },
+    "lane": "agy-flash-ocr",
+    "pipeline": "agy-correct-lite-7558"
+   }
+  },
+  {
+   "_id": "6953e49577f38f6761beeb01",
+   "id": "6953e49577f38f6761beeb01",
+   "book_id": "6953e49577f38f6761beeaed",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 2623 chars>",
+    "language": "English",
+    "source": "same-language",
+    "model": null,
+    "updated_at": "2026-09-30T14:58:39.383Z",
+    "content_hash": "15b97b8585a27e44",
+    "engine": {
+     "name": "same-language-copy/1",
+     "input": {
+      "source_field": "ocr",
+      "source_text_hash": "15b97b8585a27e44",
+      "source_text_chars": 2623,
+      "source_updated_at": "2026-03-02T11:13:20.689Z"
+     },
+     "run": {
+      "code_version": "not_recorded",
+      "host": "clawdbot",
+      "job_id": "repair-t3-t12-5354"
+     }
+    },
+    "replaced_by": "repair-t3-t12-5354",
+    "text": "<redacted: 2334 chars>",
+    "text_from": {
+     "source": "parser",
+     "parser_version": "annotation-layer/3",
+     "data_hash": "15b97b8585a27e44",
+     "annotations": 6
+    }
+   }
+  },
+  {
+   "_id": "69b418b72b0edf3eaa2ddbc7",
+   "id": "69b418b72b0edf3eaa2ddbc7",
+   "book_id": "69b418b72b0edf3eaa2ddb8e",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 2970 chars>",
+    "source": "volunteer-correction",
+    "model": "human",
+    "content_hash": "c71e5a78844c423d",
+    "updated_at": "2026-10-26T14:11:35.611Z",
+    "edited_by": "claude-job planet-fix-7274",
+    "edited_at": "2026-10-26T14:11:35.611Z",
+    "correction": {
+     "id": "52CF9TyNJjJr",
+     "volunteer_id": "<redacted: volunteer account id>",
+     "drafted_by": "assistant",
+     "assistant_model": "claude-opus-5-5",
+     "second_reader": "claude-job planet-fix-7274 second reader (Opus, image)",
+     "shift_id": null,
+     "base_hash": "f337eefd8093fad1",
+     "revision_id": "c962632ba0eb"
+    }
+   }
+  },
+  {
+   "_id": "69dbcb721040d1d5e20b69af",
+   "id": "69dbcb721040d1d5e20b69af",
+   "book_id": "69dbcb721040d1d5e20b6962",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 2003 chars>",
+    "language": "English",
+    "source": "volunteer-correction",
+    "model": "human",
+    "content_hash": "e44a56722d81fbf2",
+    "updated_at": "2026-10-26T14:11:47.236Z",
+    "edited_by": "claude-job planet-fix-7274",
+    "edited_at": "2026-10-26T14:11:47.236Z",
+    "correction": {
+     "id": "HxiAs8C-AQJe",
+     "volunteer_id": "<redacted: volunteer account id>",
+     "drafted_by": "assistant",
+     "assistant_model": "claude-opus-5-5",
+     "second_reader": "claude-job planet-fix-7274 second reader (Opus, image)",
+     "shift_id": null,
+     "base_hash": "1b9f5edcd8c6f889",
+     "revision_id": "cf169e400671"
+    }
+   }
+  },
+  {
+   "_id": "68415b58f49b0bc64f2e1275",
+   "id": "68415b58f49b0bc64f2e1274",
+   "book_id": "6836f8ee811c8ab472a49e36",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 1178 chars>",
+    "language": "Latin",
+    "model": "manual",
+    "updated_at": "2026-03-16T14:32:38.690Z",
+    "source": "manual",
+    "prompt_version": "v5.2026-02",
+    "content_hash": "8e7f6d570757d16472555ed81fcc91a5adda92bfaa739ecda79af3dbe1c69896",
+    "edited_at": "2026-03-16T14:32:38.690Z",
+    "edited_by": "Unknown"
+   }
+  },
+  {
+   "_id": "68415b58f49b0bc64f2e1275",
+   "id": "68415b58f49b0bc64f2e1274",
+   "book_id": "6836f8ee811c8ab472a49e36",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 1248 chars>",
+    "language": "English",
+    "model": "manual",
+    "updated_at": "2026-03-16T14:32:38.690Z",
+    "source": "manual",
+    "prompt_version": "v2",
+    "content_hash": "2df0355de5e1a6fd8c9e96ec8185dbbe6a2002d0a3cd686db3d63fe971de6230",
+    "edited_at": "2026-03-16T14:32:38.690Z",
+    "edited_by": "Unknown",
+    "prompt_hash": "6f712937c0c374e54a0dce2e823b84b8",
+    "prompt_name": "Standard Translation",
+    "text": "<redacted: 1248 chars>",
+    "text_from": {
+     "source": "parser",
+     "parser_version": "annotation-layer/3",
+     "data_hash": "2df0355de5e1a6fd",
+     "annotations": 0
+    }
+   }
+  },
+  {
+   "_id": "695004e8f426a210d109a8b0",
+   "id": "695004e8f426a210d109a8b0",
+   "book_id": "9754fae4-b3c6-45e6-8742-53c85117ca09",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 5104 chars>",
+    "language": "English",
+    "source": "volunteer-correction",
+    "model": "human",
+    "content_hash": "52e9f560cd922f2b",
+    "updated_at": "2026-11-11T12:48:40.403Z",
+    "edited_by": "job:pages-8570 (read from the page image)",
+    "edited_at": "2026-11-11T12:48:40.403Z",
+    "correction": {
+     "id": "UGCsOYQBN9rT",
+     "volunteer_id": "<redacted: volunteer account id>",
+     "drafted_by": "assistant",
+     "assistant_model": "claude-opus-5-5",
+     "second_reader": "job:pages-8570 (Claude Opus 5.5 reader, read from the page image, #8570)",
+     "shift_id": null,
+     "base_hash": "8ec4e7f597e92b26",
+     "revision_id": "470b07ecf279"
+    },
+    "text": "<redacted: 3494 chars>",
+    "text_from": {
+     "source": "parser",
+     "parser_version": "annotation-layer/3",
+     "data_hash": "52e9f560cd922f2b",
+     "annotations": 15
+    }
+   }
+  },
+  {
+   "_id": "69ea0f4613a685002bb8dbe1",
+   "id": "69ea0f4613a685002bb8dbe1",
+   "book_id": "69ea0f4613a685002bb8da9f",
+   "field": "ocr",
+   "sub": {
+    "batch_job_id": "3eChB13G83ycQN64tbhRD",
+    "data": "<redacted: 4691 chars>",
+    "input_tokens": 2820,
+    "language": null,
+    "model": "gemini-3.1-flash-lite-preview",
+    "output_tokens": 1404,
+    "prompt_hash": "e1a8c7ee5b0a1a0239813eb881fb3491",
+    "prompt_id": "69e95dce00d00c207591167c",
+    "prompt_name": "Standard OCR",
+    "prompt_version": "12",
+    "source": "batch_api",
+    "updated_at": "2026-05-07T11:32:06.153Z"
+   }
+  },
+  {
+   "_id": "6a4a1f80fd99a02b936ff3c9",
+   "id": "6a4a1f80fd99a02b936ff3c9",
+   "book_id": "6a4a1f80fd99a02b936ff38c",
+   "field": "ocr",
+   "sub": {
+    "last_skip": {
+     "reason": "recitation",
+     "finish_reason": "RECITATION",
+     "at": "2026-09-12T20:10:51.958Z",
+     "model": "gemini-3.1-flash-lite"
+    },
+    "recitation_count": 1,
+    "data": "<redacted: 2163 chars>",
+    "source": "ia_djvu",
+    "model": "ia-ocr/0.0.14",
+    "language": "English",
+    "source_url": "https://archive.org/download/cu31924092892102/cu31924092892102_djvu.xml#leaf=60",
+    "updated_at": "2026-09-13T21:23:37.779Z",
+    "has_warning": false,
+    "agreement_ref": {
+     "median": 0.902,
+     "n": 7,
+     "min_agreement": 0.85,
+     "offset": 0,
+     "offset_share": 1
+    },
+    "ia": {
+     "item": "cu31924092892102",
+     "engine": "ABBYY FineReader 8.0",
+     "module_version": "0.0.14",
+     "converter": "abbyy-to-hocr 1.1.11",
+     "ocr_date": "2024-05-18T10:21:31.000Z",
+     "scandate": "20070622",
+     "contributor": "Cornell University Library",
+     "detected_lang": null,
+     "item_url": "https://archive.org/details/cu31924092892102",
+     "licence": {
+      "rule": "ia-text-licence/1",
+      "jurisdiction": "US",
+      "publication_year": 1904,
+      "ia_rights": null,
+      "ia_licenseurl": null,
+      "ia_copyright_status": null,
+      "ia_access_restricted": false,
+      "status": "publicdomain",
+      "licence_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "basis": "published 1904, before 1931: US public domain (95-year term); a machine transcription adds no copyright"
+     }
+    }
+   }
+  },
+  {
+   "_id": "695289c1ab34727b1f04dd75",
+   "id": "695289c1ab34727b1f04dd75",
+   "book_id": "695289c1ab34727b1f04dd68",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 890 chars>",
+    "language": "English",
+    "model": "mineru-pipeline",
+    "source": "mineru",
+    "engine": "mineru pipeline backend (PP-OCR + PDF-Extract-Kit)",
+    "updated_at": "2026-06-20T01:35:16.707Z"
+   }
+  },
+  {
+   "_id": "6abeb8ee896ea18127c86797",
+   "id": "6abeb8ee896ea18127c86797",
+   "book_id": "6abeb8ed896ea18127c8665b",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 1660 chars>",
+    "content_hash": "8e818ca5946891f1",
+    "language": "Tibetan",
+    "source": "esukhia-derge-tengyur",
+    "pipeline": "derge-tengyur-import-5497",
+    "text_edition": {
+     "name": "Esukhia digital Derge Tengyur",
+     "repo": "https://github.com/Esukhia/derge-tengyur",
+     "commit": "174653137d62af481f53c6ae3dc842bf8629323e",
+     "path": "text/125_སེམས་ཙམ།_མི.txt",
+     "folio": "157b",
+     "tohoku": [],
+     "licence": "public domain — \"mechanical reproduction of a public-domain work\" (Esukhia README)",
+     "conventions": "Esukhia markup kept verbatim: {D####} opens the text with that Tohoku number; (x,y) = (reading of the blocks, suggested correction); [x] = doubtful or untranscribable; # = a peydurma note point. Folio line markers [2a.1] became line breaks; a line-initial # is escaped as \\# for the Markdown reader.",
+     "issue": 5497
+    },
+    "alignment": {
+     "method": "canvas index + measured offset → esukhia side (manifest has no folio labels), verified by independent sampled reads",
+     "measured_shift": 0,
+     "measured_offset": 0,
+     "samples": 5,
+     "read_engine": "bdrc-yigdzin-woodblock@5fa7588ef1",
+     "min_identity": 0.933,
+     "max_control": 0.22,
+     "uninformative_reads": 0,
+     "weak_reads": 0,
+     "rules": {
+      "version": 4,
+      "informativeFloor": 0.4,
+      "minMargin": 0.25,
+      "verbatimIdentity": 0.9,
+      "verbatimMargin": 0.1,
+      "minScored": 4,
+      "minReadSyllables": 40
+     },
+     "measured_at": "2026-10-01T22:34:24.822Z"
+    },
+    "generated_at": "2026-10-01T22:34:24.837Z",
+    "updated_at": "2026-10-01T22:34:24.837Z"
+   }
+  },
+  {
+   "_id": "6ac0c3eef427c9bb0692e5f6",
+   "id": "6ac0c3eef427c9bb0692e5f6",
+   "book_id": "6ac0c3edf427c9bb0692e494",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 1682 chars>",
+    "content_hash": "9ff273e66157b9ec",
+    "language": "Tibetan",
+    "source": "esukhia-derge-kangyur",
+    "pipeline": "derge-kangyur-import-5665",
+    "text_source": {
+     "name": "Esukhia digital Derge Kangyur",
+     "url": "https://github.com/Esukhia/derge-kangyur",
+     "license": "Public Domain",
+     "license_url": "https://github.com/Esukhia/derge-kangyur/blob/master/README.md",
+     "license_quote": "This work is a mechanical reproduction of a Public Domain work, and as such is also in the Public Domain.",
+     "version": "text/091_རྒྱུད་འབུམ།_བ.txt@a582cf471b",
+     "content_hash": "9ff273e66157b9ec"
+    },
+    "text_edition": {
+     "name": "Esukhia digital Derge Kangyur",
+     "repo": "https://github.com/Esukhia/derge-kangyur",
+     "commit": "a582cf471b7c85a101035071078032f106a8e536",
+     "path": "text/091_རྒྱུད་འབུམ།_བ.txt",
+     "folio": "176b",
+     "tohoku": [],
+     "licence": "public domain — \"mechanical reproduction of a public-domain work\" (Esukhia README)",
+     "conventions": "Esukhia markup kept verbatim: {D####} opens the text with that Tohoku number; (x,y) = (reading of the blocks, suggested correction); [x] = doubtful or untranscribable; # = a peydurma note point. Folio line markers [2a.1] became line breaks; a line-initial # is escaped as \\# for the Markdown reader.",
+     "issue": 5665,
+     "texts": [
+      "D658"
+     ],
+     "texts_84000": {
+      "D658": "In Progress"
+     },
+     "left_to_84000": true
+    },
+    "alignment": {
+     "method": "canvas index + per-segment measured offset → esukhia side (a skipped or repeated leaf moves the offset), each segment verified by its own independent sampled reads",
+     "measured_shift": 0,
+     "measured_offset": 0,
+     "segment": {
+      "from_page": 1,
+      "to_page": 580,
+      "of": 1
+     },
+     "samples": 2,
+     "read_engine": "bdrc-yigdzin-woodblock@5fa7588ef1+redink-rg2",
+     "min_identity": 0.828,
+     "max_control": 0.409,
+     "uninformative_reads": 1,
+     "weak_reads": 0,
+     "rules": {
+      "version": 4,
+      "informativeFloor": 0.4,
+      "minMargin": 0.25,
+      "verbatimIdentity": 0.9,
+      "verbatimMargin": 0.1,
+      "minScored": 4,
+      "minReadSyllables": 40
+     },
+     "segment_rules": {
+      "version": 1,
+      "coarse": 14,
+      "edge": 0.01,
+      "probesPerGap": 3,
+      "maxRefineRounds": 6,
+      "maxIterations": 3,
+      "minSegmentAligned": 2,
+      "verifyPerRound": 3
+     },
+     "measured_at": "2026-10-04T00:12:14.476Z"
+    },
+    "generated_at": "2026-10-04T00:12:14.558Z",
+    "updated_at": "2026-10-04T00:12:14.558Z"
+   }
+  },
+  {
+   "_id": "69dfe2f02e48086c70d8a27d",
+   "id": "69bd9e8bf6d63c919747b85e",
+   "book_id": "69bd9e8bf6d63c919747b5a1",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 3719 chars>",
+    "content_hash": "d00075e19f8245e2",
+    "language": "English",
+    "model": "gemini-3.1-flash-lite-preview",
+    "updated_at": "2026-05-08T14:48:43.653Z",
+    "source": "ai",
+    "prompt_version": "11",
+    "prompt_id": "69de17371d85ecbcc1558316",
+    "prompt_hash": "33ae9a4a09e91a42891a396b382d497a",
+    "prompt_name": "Standard Translation",
+    "text": "<redacted: 2797 chars>",
+    "text_from": {
+     "source": "parser",
+     "parser_version": "annotation-layer/3",
+     "data_hash": "d00075e19f8245e2",
+     "annotations": 27
+    }
+   }
+  },
+  {
+   "_id": "6a4ae435f16f8258b8ade075",
+   "id": "6a4ae435f16f8258b8ade075",
+   "book_id": "6a4ae435f16f8258b8ade065",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 2234 chars>",
+    "language": "auto-detect",
+    "model": "gemini-3-flash-preview",
+    "updated_at": "2026-07-06T08:40:34.515Z",
+    "source": "ai",
+    "prompt_version": "v5.1.2026-03",
+    "prompt_id": "6a3edbd0fd4d2f05ea592418",
+    "prompt_hash": "d048140cb048de32223645d9cd33bb1a",
+    "content_hash": "c8caa65513dc1866"
+   }
+  },
+  {
+   "_id": "69dbc7ff1040d1d5e20964e4",
+   "id": "69dbc7ff1040d1d5e20964e4",
+   "book_id": "69dbc7ff1040d1d5e20964dc",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 3842 chars>",
+    "model": "gemini-3.1-flash-lite-preview",
+    "prompt_version": "v10",
+    "source": "pipeline_preview",
+    "updated_at": "2026-04-14T19:14:16.087Z",
+    "content_hash": "180a76f1f5d4a249"
+   }
+  },
+  {
+   "_id": "69dd5629c762bec37d193f6c",
+   "id": "69b51db3cf111105c428e56c",
+   "book_id": "69b51db3cf111105c428e55e",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 2566 chars>",
+    "language": "auto-detect",
+    "model": "gemini-3-flash-preview",
+    "updated_at": "2026-03-14T10:28:51.168Z",
+    "source": "ai",
+    "prompt_version": "v5.2026-02",
+    "content_hash": "28341347b6c3be8be5ee4d5922327aa0267f7cceaceaaee088a7a0984d221913"
+   }
+  },
+  {
+   "_id": "6993794ab0a84a576396464d",
+   "id": "6993794ab0a84a576396464d",
+   "book_id": "69937949b0a84a57639645df",
+   "field": "translation",
+   "sub": {
+    "data": "<redacted: 3060 chars>",
+    "content_hash": "d734a291d1c047e75d01453c50bfc1ead67624fadfce7c092938d7558dabe8c1",
+    "language": "English",
+    "model": "gemini-3-flash-preview",
+    "updated_at": "2026-03-18T11:18:15.415Z",
+    "source": "ai",
+    "prompt_version": "v5.2026-02",
+    "prompt_hash": "fe12a2938451929c94bd9b63c3369ca0",
+    "prompt_name": "Standard Translation",
+    "text": "<redacted: 1916 chars>",
+    "text_from": {
+     "source": "parser",
+     "parser_version": "annotation-layer/3",
+     "data_hash": "d734a291d1c047e7",
+     "annotations": 19
+    }
+   }
+  },
+  {
+   "_id": "69d37ac706d3fb3af895363a",
+   "id": "69d37ac706d3fb3af895363a",
+   "book_id": "69c82a976c6f3cc53c84c8c2",
+   "field": "ocr",
+   "sub": {
+    "data": "<redacted: 1289 chars>",
+    "model": "gemini-3.1-flash-lite-preview",
+    "prompt_version": "spread-v2+ocr-v10"
+   }
+  },
+  {
+   "_id": "69d38442823383edd6e6dd73",
+   "id": "69d38442823383edd6e6dd73",
+   "book_id": "69c866316c6f3cc53c856381",
+   "field": "translation",
+   "sub": {
+    "data": "[Blank page — no translatable content]",
+    "language": "English",
+    "source": "system",
+    "updated_at": "2026-04-12T09:43:48.450Z",
+    "text": "[Blank page — no translatable content]",
+    "text_from": {
+     "source": "parser",
+     "parser_version": "annotation-layer/3",
+     "data_hash": "99cf7122cd04f425",
+     "annotations": 1
+    }
+   }
+  },
+  {
+   "_id": "69d5ac824dc55b8478dddc18",
+   "id": "69d5ac824dc55b8478dddc18",
+   "book_id": "69d5ac824dc55b8478dddb9a",
+   "field": "translation",
+   "sub": {
+    "health_blocked": "source_loop",
+    "health_blocked_at": "2026-09-19T00:08:26.868Z"
+   }
+  }
+ ],
+ "batch_jobs": [
+  {
+   "_id": "69fc755ab3bf0e9386fdedde",
+   "id": "3eChB13G83ycQN64tbhRD",
+   "job_name": "batches/sueodctit7j13m352mywe5ietgqxo7pxduoa",
+   "type": "ocr",
+   "model": "gemini-3.1-flash-lite-preview",
+   "created_at": "2026-05-07T11:19:54.249Z",
+   "updated_at": "2026-05-07T11:32:06.153Z",
+   "completed_at": "2026-05-07T11:32:06.153Z"
+  }
+ ],
+ "gemini_usage": [
+  {
+   "_id": "6a4b6a02a2391dfd2aa33bde",
+   "id": "gu_1783327234523_8xmtii",
+   "timestamp": "2026-07-06T08:40:34.523Z",
+   "type": "ocr",
+   "mode": "realtime",
+   "model": "gemini-3-flash-preview",
+   "page_ids": [
+    "6a4ae435f16f8258b8ade075"
+   ],
+   "batch_job_id": null,
+   "endpoint": "worker/ocr"
+  }
+ ]
+}

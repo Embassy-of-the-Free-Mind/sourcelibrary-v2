@@ -1,0 +1,66 @@
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>189</page-num>
+<header>שער לד שער יעקב ולאה פא ופב</header>
+<meta>Pencil foliation "189" at top left; pencil number "34" in left margin beside the gate heading. Edge of facing page visible at right (ignored). Lower part of page set in two columns (main text right, gloss "הגהה" left).</meta>
+<warning>Handwritten Sephardic/Oriental semi-cursive Hebrew with many abbreviations; ink bleed and dense, small writing, especially in the two-column lower section, make large parts of the page hard to read. The readings are tentative, and many passages are marked unclear.</warning>
+
+כי כל יציאות המלכות הוא סוד הגבורה ושם נבנית בט' ספירות עליונות כמו שנודע בסוד <unclear>[illegible — 2 words]</unclear> באמא והנה
+גבורות הרבה <unclear>[illegible — 3 words]</unclear> ומלכות והוא סוד <unclear>[illegible — 2 words]</unclear> בינה במלכות וסוד גבורה והוד
+שבמלכות כל אלו נקראים גבורות <unclear>[illegible — 2 words]</unclear> בבנין שהוא סוד הגבורות האלו שהם הבנין של
+אמא גבורה <unclear>[illegible — 3 words]</unclear> גבורותיו · ולכן <unclear>[illegible — 2 words]</unclear> הגבורות שהוא יותר <unclear>[illegible — 3 words]</unclear>
+גוון <unclear>הקליפות</unclear> · סליק שער שלשים ושלשה
+
+# שער שלשים וארבעה שער יעקב ולאה ונחלק לח' פרקים
+
+## פרק א'
+
+ונבאר ענין יעקב ולאה דרך כללות · הנה נתבאר כי זו"א <unclear>[illegible — 2 words]</unclear> אחוריים של אבא ושל אמא
+שנפלו בעת מיתת המלכים ולא ירדו לעולם הבריאה אלא נשארו בעולם האצילות <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+שהם ישראל ורחל אחר <unclear>[illegible — 2 words]</unclear> אלו האחוריים <unclear>[illegible — about half a line]</unclear>
+שהם אחוריים דאמא והם יותר <unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear> אחוריים
+<unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear> שלשה <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — about 1 line]</unclear> אבא <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — about half a line]</unclear> · והנה יעקב הוא תורה
+<unclear>[illegible — about 1 line]</unclear> אחוריים <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear> · <unclear>[illegible — 2 words]</unclear>
+תורה <unclear>[illegible — about 1 line]</unclear>
+את התורה <unclear>[illegible — about 1 line]</unclear>
+בחי' <unclear>[illegible — 2 words]</unclear>
+
+## פרק ב'
+
+ונבאר עתה ענין <unclear>[illegible — about 1 line]</unclear> כי הנה יעקב שהוא אחוריים
+דאבא <unclear>[illegible — about 1 line]</unclear>
+
+והיו אחוריים די<unclear>עקב</unclear> <unclear>[illegible — about half a line]</unclear>
+ואחוריים <unclear>[illegible — about half a line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+ולאה <unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+ובאשר יצאו המלכים <unclear>[illegible — about half a line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+בבריאה <unclear>[illegible — about half a line]</unclear> ולאה
+<unclear>[illegible — about 1 line]</unclear>
+היו שם ולאה ויעקב <unclear>[illegible — about half a line]</unclear>
+ולאה <unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+<unclear>[illegible — about 1 line]</unclear>
+פנים דאמא
+
+<column-break/>
+
+### הגהה
+
+<unclear>[illegible — about 13 lines of dense cursive gloss, not reliably legible]</unclear>
+<unclear>[illegible — about 2 words]</unclear> הגהה
+
+<vocab>שער יעקב ולאה, יעקב, לאה, רחל, ישראל, זו"א, זו"ן, אחוריים, אבא, אמא, גבורות, מלכות, מיתת המלכים, עולם האצילות, עולם הבריאה, הגהה</vocab>

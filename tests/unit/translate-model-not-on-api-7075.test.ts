@@ -47,16 +47,6 @@ describe('every paid translation door asks the gate before it spends', () => {
   const API_DOORS = [
     'src/app/api/jobs/queue-books/route.ts',
   ];
-  // The two batch-translate-async routes got the same refusal in #8548 (inline, LITE_MODEL); pinned on that form.
-  const API_DOORS_8548 = [
-    'src/app/api/books/[id]/batch-translate-async/route.ts',
-    'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts',
-  ];
-  it.each(API_DOORS_8548)('%s refuses a non-lite model with a 409 (#8548)', (rel) => {
-    const src = read(rel);
-    expect(src).toMatch(/if \(model !== API_TRANSLATE_MODEL\)/);
-    expect(src).toMatch(/status: 409/);
-  });
   const OTHER_DOORS = [
     'src/workers/translation-processor-logic.ts',
     'scripts/workers/translate-worker.mjs',

@@ -29,6 +29,10 @@
 # All pipeline workers managed by unified scheduler (issue #646)
 # ── Daily maintenance (early morning, staggered) ──
 # Heavy jobs staggered across 2-hour windows to avoid Atlas contention
+# Weekly public copy of the code to sourcelibrary-v2 (AGPL), Mondays 05:10 UTC. Work lives in the
+# private sourcelibrary-v3; the mirror withholds .claude/, memory/ and eval data (scripts/maintenance/public-mirror.sh).
+10 5 * * 1 flock -n /tmp/sl-public-mirror.lock /root/sourcelibrary/scripts/maintenance/public-mirror.sh >> /var/log/sourcelibrary/public-mirror.log 2>&1
+
 # ── Heavy periodic jobs (staggered across 2h windows) ──
 # ── HTTP-only / monitoring (no Atlas load) ──
 # Installed: 2026-04-10
@@ -178,15 +182,19 @@
 30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
 # provenance coverage audit (#4613): every page written in the window carries its engine block + content_hash
 40 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-provenance.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/provenance-coverage.mjs --days=2" >> /var/log/sourcelibrary/provenance-coverage.log 2>&1
+# provenance grade summary (sourcelibrary-v3 #201), weekly: per book × field, pages per grade and month written; writes only provenance_grade_summary (the dataset export grades each page on read). ~2 h.
+10 2 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/provenance-grade-summary.mjs ] && flock -n /tmp/sl-provenance-summary.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/provenance-grade-summary.mjs --apply" >> /var/log/sourcelibrary/provenance-grade-summary.log 2>&1
 # pipeline-hold drift audit (committed in crontab.production since #4919 but never installed; installed 2026-09-28)
 55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs --alert" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
 # mark-stale-translations.mjs --apply (#4927): installed 2026-09-30 (was absent 2026-09-19..30 despite the template)
 45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
+# Translation Card status vs its own entries (#4575): EMPTY_PRIOR must be 0 (exit 1 otherwise); NPK_COMPLETE listed. Read-only. NOT YET INSTALLED.
+50 4 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/card-status-consistency.mjs ] && flock -n /tmp/sl-card-status.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/card-status-consistency.mjs" >> /var/log/sourcelibrary/card-status-consistency.log 2>&1
 # installed 2026-09-30 per DECIDED (#4927 marker; read by the paid translate lanes)
 30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
 # Monthly translation corpus audit, stage 1 = the draw (#5301, runbook scripts/eval/translation-corpus-audit/MONTHLY.md).
 # No model call, no spend; pushes branch eval/tca-<YYYY-MM>. Stage 2 (the judge) is a claude.ai routine on the 2nd.
-30 4 1 * * [ -f /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh ] && flock -n /tmp/sl-tca-monthly.lock bash /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh >> /var/log/sourcelibrary/tca-monthly.log 2>&1
+# RETIRED 2026-11-15 (v3#381: QA is the daily paired-fifths lane on cloudlayer) # 30 4 1 * * [ -f /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh ] && flock -n /tmp/sl-tca-monthly.lock bash /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh >> /var/log/sourcelibrary/tca-monthly.log 2>&1
 # Chained Batch translation lane (#4681): every 5 min one tick collects finished rounds and submits
 # the next ones in shared Batch jobs; hourly, up to 40 gap-fill books are enrolled (at most 60 open runs).
 # Every round asks the dial / scope envelopes at submit (a queue is stored spend). Both lines share one
@@ -246,6 +254,10 @@
 # 06:00 UTC = 08:00 Europe/Amsterdam in summer (CEST). After the clocks go back (last Sunday of October) it arrives
 # at 07:00 CET — move it to 07:00 UTC for winter if Derek wants 08:00 local year-round. Crontab here is UTC.
 0 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/ntfy-morning-digest.mjs ] && flock -n /tmp/sl-morning-digest.lock node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/ntfy-morning-digest.mjs >> /var/log/sourcelibrary/morning-digest.log 2>&1
+# Morning brief (v3#379): five lines for Derek's phone, 07:23 Europe/Amsterdam, to the same ntfy topic as the digest
+# above (sourcelibrary-uptime: the one topic his phone and every agent already read). Cron here is UTC with no
+# CRON_TZ, so it fires at 05:23Z and 06:23Z and only the run that is 07h in Amsterdam sends (summer 05:23Z, winter 06:23Z).
+23 5,6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/situation.mjs ] && flock -n /tmp/sl-morning-brief.lock node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/situation.mjs --brief --send --at-local=7 --tz=Europe/Amsterdam >> /var/log/sourcelibrary/morning-brief.log 2>&1
 #REPLACED-7683 40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # move idle /root folders to the volume + reap merged worktrees (#6223)
 
 # Decision queue drainer (#6258): acts on PR answers from /platform/admin/decisions
@@ -276,6 +288,8 @@
 7 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
 # Crawl-protection canary (weekly Mon 06:13, PR #6437): rate-limit challenge + detector visibility; ntfy only on failure.
 13 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs --canary" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
+# Who visits (#312): readers, pools, walkers, named bots and Cloudflare rule outcomes, last 24 h -> ops_reports/visitor-cast for /admin/visitors. Read-only; needs CLOUDFLARE_API_TOKEN_READ.
+41 */3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-visitor-cast.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/visitor-cast.mjs --apply" >> /var/log/sourcelibrary/visitor-cast.log 2>&1
 # quality trends (#6429, Derek 2026-10-10)
 30 6 * * * cd /root/sourcelibrary && [ -f scripts/eval/quality-dashboard/trends.mjs ] && flock -n /tmp/sl-quality-dashboard.lock bash -c "set -a; source .env.production.local; set +a; node scripts/eval/quality-dashboard/build.mjs --push" >> /var/log/sourcelibrary/quality-dashboard.log 2>&1
 # page-vector-truth weekly (#6175/#6197), approved by Derek 2026-10-10/11 (#6428); installed by hand 2026-10-12
@@ -339,15 +353,19 @@
 35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=4000 --deadline-min=110 --concurrency=3" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
 # Claude transcripts -> restic (Hetzner Object Storage), never pruned; sourcelibrary #7673 (2026-10-29)
 30 3 * * * /root/restic-transcripts.sh
-# ft-search nightly (#7598): one batch per account per day; applies itself, pages ntfy
-30 1 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/ft-code && git fetch -q origin main && git reset -q --hard origin/main && ENV_FILE=/root/sourcelibrary/.env.production.local FT_CAPW=70 FT_PARALLEL=6 sh scripts/ft-search/nightly.sh /root/.claude-team team@sourcelibrary.org 1500 >> /root/ft-batches/nightly.log 2>&1
-30 13 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/ft-code && git fetch -q origin main && git reset -q --hard origin/main && ENV_FILE=/root/sourcelibrary/.env.production.local FT_CAPW=70 FT_PARALLEL=6 sh scripts/ft-search/nightly.sh /root/.claude-derek derek@sourcelibrary.org 1500 >> /root/ft-batches/nightly.log 2>&1
+# ft-search nightly (#7598): one batch per account per day; applies itself, pages ntfy. Wrapped (v3#376, Derek yes
+# 2026-11-15): a failure BEFORE nightly.sh (cd, fetch, reset) used to go to cron mail only; now the whole chain
+# writes to nightly.log and a non-zero exit logs one FAILED line and pages ntfy high.
+30 1 * * * export PATH=/usr/local/bin:/usr/bin:/bin; { cd /root/ft-code && git fetch -q origin main && git reset -q --hard origin/main && ENV_FILE=/root/sourcelibrary/.env.production.local FT_CAPW=70 FT_PARALLEL=6 sh scripts/ft-search/nightly.sh /root/.claude-team team@sourcelibrary.org 1500; } >> /root/ft-batches/nightly.log 2>&1 || { rc=$?; echo "$(date -u +\%FT\%TZ) ft nightly 01:30Z team@ FAILED, exit $rc (before or inside nightly.sh; v3 376)" >> /root/ft-batches/nightly.log; curl -s -m 20 -H "Priority: high" -H "Title: FT nightly failed: 01:30Z team@" -d "ft-search nightly (01:30Z team@) exited $rc on main before or inside nightly.sh. Read /root/ft-batches/nightly.log (v3#376, #7598)" https://ntfy.sh/sourcelibrary-uptime >/dev/null; }
+30 13 * * * export PATH=/usr/local/bin:/usr/bin:/bin; { cd /root/ft-code && git fetch -q origin main && git reset -q --hard origin/main && ENV_FILE=/root/sourcelibrary/.env.production.local FT_CAPW=70 FT_PARALLEL=6 sh scripts/ft-search/nightly.sh /root/.claude-derek derek@sourcelibrary.org 1500; } >> /root/ft-batches/nightly.log 2>&1 || { rc=$?; echo "$(date -u +\%FT\%TZ) ft nightly 13:30Z derek@ FAILED, exit $rc (before or inside nightly.sh; v3 376)" >> /root/ft-batches/nightly.log; curl -s -m 20 -H "Priority: high" -H "Title: FT nightly failed: 13:30Z derek@" -d "ft-search nightly (13:30Z derek@) exited $rc on main before or inside nightly.sh. Read /root/ft-batches/nightly.log (v3#376, #7598)" https://ntfy.sh/sourcelibrary-uptime >/dev/null; }
 
 # Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
 7 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box hetzner >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
 50 2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-corpus.lock timeout 20m node --no-warnings --env-file=.env.production.local $f --corpus >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
 # Mondays: one ntfy line naming the red cron lines of every box (UNREGISTERED / RETIRED BUT LIVE / PAST REVIEW / IDLE 7 DAYS / retired pattern), from scripts/lib/lanes.mjs CRON_ROWS (#8283)
 15 8 * * 1 export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-red.lock timeout 5m node --no-warnings --env-file=.env.production.local $f --red-ntfy >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now red lines (#8283)
+# Batches (v3#269): each batch of books by stage and what blocks it -> ops_reports batches:latest, rendered at /admin/pipeline/batches. Read-only; ~0.5 MB from Atlas a run (counts only) x 720 = ~0.4 GB/month; page-level image counts rotate under --budget-sec.
+37 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/batches-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-batches-push.lock timeout 15m node --no-warnings --env-file=.env.production.local $f --budget-sec 240 >> /var/log/sourcelibrary/batches-push.log 2>&1  # /admin/pipeline/batches (v3#269)
 # #6223 PR #7683 merged 2026-10-30: hourly steward
 25 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /root/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # hourly: HF cache trim to 50 GB + idle folders archived to R2 while a disk is above 75% + merged worktrees reaped + agy WAL (#6223)
 # Weekly: point covers stored on hosts browsers cannot load (gallica, SBB, Harvard) at our R2 copy of the same page (#5448, Derek 2026-11-01)
@@ -379,3 +397,11 @@
 # Allmaps georeferencing sync (#5076). Restored 2026-11-11 (#5469): never ran from the live crontab. WEEKLY (Sun 03:40), not nightly: 2 req/s gate, ~2.5K lookups per full pass (~20 min), and volunteers add annotations slowly. Writes gallery_images.allmaps only.
 40 3 * * 0 cd /root/sourcelibrary && [ -f scripts/workers/allmaps-sync.mjs ] && flock -n /tmp/sl-allmaps-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/allmaps-sync.mjs" >> /var/log/sourcelibrary/allmaps-sync.log 2>&1
 # RETIRED 2026-11-11 (#5469): status-output-drift nightly (30 4 * * *, #3740). No reader (stdout to a log nobody opens), minutes of unindexed Atlas counts per run, and the daily pipeline-next-step-audit (#5478) now covers status-vs-step drift. The script stays for on-demand use (pipeline-status-truth.md).
+
+# hold-release-check weekly (#7860): holds nobody is releasing — QUIET / DECIDED / DUE / NO_CONDITION; one issue (v2#7865), closes itself when clean. No model call. Installed 2026-11-12 by job dec-boxes-90 (#90).
+40 7 * * 1 cd /root/sourcelibrary && [ -f scripts/audit/hold-release-check.mjs ] && flock -n /tmp/sl-hold-release.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/hold-release-check.mjs --alert --out /var/log/sourcelibrary/hold-release-check.json" >> /var/log/sourcelibrary/hold-release-check.log 2>&1
+
+# page-count audit daily (v2#5331): sample recount of six counters; ONE issue "Page count audit: …" on v3, closed by the next PASS. Reads only, no model call. Installed 2026-11-12 by job dec-boxes-90 (#90).
+30 5 * * * cd /root/sourcelibrary && [ -f scripts/audit/page-count-audit.mjs ] && flock -n /tmp/sl-page-count-audit.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/audit/page-count-audit.mjs --file-issue --history /var/log/sourcelibrary/page-count-audit-history.jsonl --json /var/log/sourcelibrary/page-count-audit-last.json' >> /var/log/sourcelibrary/page-count-audit.log 2>&1
+# translation-state audit weekly (v2#5290): rung recount + every public headline vs readable_in_english; ONE issue "Translation state audit: …" on v3, closed by the next PASS. Reads only, no model call. Inert until #117 (count-up 0 on /about) is on main. Installed 2026-11-12 by job dec-boxes-90 (#90).
+35 5 * * 1 cd /root/sourcelibrary && grep -q 'count-up counter' scripts/lib/translation-state-audit.mjs && flock -n /tmp/sl-translation-state-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/translation-state-audit.mjs --seed \$(date +\%G\%V) --file-issue --json /var/log/sourcelibrary/translation-state-audit-last.json" >> /var/log/sourcelibrary/translation-state-audit.log 2>&1

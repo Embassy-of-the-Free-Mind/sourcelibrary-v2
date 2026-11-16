@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { getTestDb, cleanDb } from '../setup';
 import {
   measureByProvider, laneOfProvider, laneRates, quietLanes, alarmTransition, QUIET_HOURS,
+  archivedBooksTotal, CATALOGUE_ONLY_HOLD, CATALOGUE_ONLY_UNWANTED_FILTER, CATALOGUE_ONLY_UNWANTED_EXPR,
 } from '../../scripts/lib/archive-progress.mjs';
 
 const TABLE = {
@@ -40,8 +41,59 @@ describe('archive progress (#5448 step 6)', () => {
       { id: 'f', pages_count: 0, image_source: { provider: 'sbb' } },
     ]);
     const m = await measureByProvider(getTestDb());
-    expect(m.sbb).toEqual({ books: 4, pages: 230, archived: 120, remaining: 60 + 30 + 20, lazy_books: 2 });
+    expect(m.sbb).toEqual({ books: 4, pages: 230, archived: 120, remaining: 60 + 30 + 20, lazy_books: 2, books_done: 1, catalogue_only_books: 0, catalogue_only_pages: 0 });
     expect(m.erara.remaining).toBe(0);
+    expect(m.erara.books_done).toBe(1);
+    expect(archivedBooksTotal(m)).toBe(2);
+    // A snapshot taken before #58 has no books_done: unknown, never zero.
+    expect(archivedBooksTotal({ sbb: { books: 4, pages: 230, archived: 120, remaining: 110, lazy_books: 2 } })).toBeNull();
+  });
+
+  // ARCHIVE SCOPE (#58). One fixture set, read two ways: the find() filter the lanes select with and
+  // the aggregation expression the progress snapshot counts with must name the same books.
+  const HOLD = { reason: CATALOGUE_ONLY_HOLD };
+  const SCOPE_BOOKS = [
+    // Out of scope: catalogue-only, on its import hold, hidden, nothing archived (three ledger shapes).
+    { id: 'unwanted-no-ledger', pages_count: 100, visible: false, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'held', hold: HOLD } },
+    { id: 'unwanted-zero', pages_count: 50, visible: false, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'held', hold: HOLD }, archive_metadata: { manifest_ledger: { canvases: 50, n_done: 0 } } },
+    { id: 'unwanted-no-visible-field', pages_count: 30, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'held', hold: HOLD } },
+    // In scope: a lane already started it.
+    { id: 'started', pages_count: 40, visible: false, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'held', hold: HOLD }, archive_metadata: { manifest_ledger: { canvases: 40, n_done: 10 } } },
+    // In scope: its hold was released for reading.
+    { id: 'released', pages_count: 20, visible: false, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'queued' } },
+    // In scope: held for another reason (a decision about reading, not "nobody asked").
+    { id: 'other-hold', pages_count: 20, visible: false, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'held', hold: { reason: 'rights-review' } } },
+    // In scope: published.
+    { id: 'published', pages_count: 20, visible: true, pages_state: { state: 'manifest_only' }, pipeline_auto: { status: 'held', hold: HOLD } },
+    // In scope: has page docs, whatever its hold says.
+    { id: 'materialized', pages_count: 20, pages_archived: 5, visible: false, pipeline_auto: { status: 'held', hold: HOLD } },
+  ].map(b => ({ ...b, image_source: { provider: 'sbb' } }));
+  const UNWANTED = ['unwanted-no-ledger', 'unwanted-no-visible-field', 'unwanted-zero'];
+
+  it('the scope filter and the scope expression name the same books', async () => {
+    const books = getTestDb().collection('books');
+    await books.insertMany(SCOPE_BOOKS.map(b => ({ ...b })));
+    const byFilter = (await books.find(CATALOGUE_ONLY_UNWANTED_FILTER).toArray()).map(b => b.id).sort();
+    const byExpr = (await books.aggregate([{ $match: { $expr: CATALOGUE_ONLY_UNWANTED_EXPR } }]).toArray()).map(b => b.id).sort();
+    expect(byFilter).toEqual(UNWANTED);
+    expect(byExpr).toEqual(UNWANTED);
+  });
+
+  it('a catalogue-only book nobody asked for is not work remaining, and is reported on its own line', async () => {
+    await getTestDb().collection('books').insertMany(SCOPE_BOOKS.map(b => ({ ...b })));
+    const m = await measureByProvider(getTestDb());
+    expect(m.sbb.catalogue_only_books).toBe(3);
+    expect(m.sbb.catalogue_only_pages).toBe(100 + 50 + 30);
+    // started 30 + released 20 + other-hold 20 + published 20 + materialized 15; the 180 unwanted pages are not owed.
+    expect(m.sbb.remaining).toBe(30 + 20 + 20 + 20 + 15);
+    expect(m.sbb.books).toBe(8);
+  });
+
+  it('negative control: with the hold released, the same book is owed in full', async () => {
+    await getTestDb().collection('books').insertOne({ ...SCOPE_BOOKS[0], pipeline_auto: { status: 'queued' } });
+    const m = await measureByProvider(getTestDb());
+    expect(m.sbb.catalogue_only_books).toBe(0);
+    expect(m.sbb.remaining).toBe(100);
   });
 
   it('pages/day and projected finish from snapshots; providers sum into their lane', () => {

@@ -1,0 +1,299 @@
+{
+ "note": "image-translate-106 (v3#106): per-arm defect rates copied unchanged from paired-score.json in this directory (paired-arm.mjs score), in the shape experiments-lint reads. One judge (Opus, image opened on every call). agy-text = live route text only; agy-text-again = same call again (arm noise); agy-image = same call with the page image; stored = English already served.",
+ "cells": {
+  "Latin, opus": {
+   "agy-text": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "26/40",
+    "accept_wilson": [
+     0.495,
+     0.779
+    ],
+    "accept_by_book": [
+     0.5,
+     0.8
+    ],
+    "wrong_text_pages": "7/40",
+    "wrong_text_wilson": [
+     0.087,
+     0.319
+    ],
+    "fidelity_mean": 3.98,
+    "counts": true,
+    "words": 18871,
+    "misleads_per_1k": 2.76,
+    "wrong_text_per_1k": 0.74
+   },
+   "agy-text-again": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "29/40",
+    "accept_wilson": [
+     0.572,
+     0.839
+    ],
+    "accept_by_book": [
+     0.575,
+     0.85
+    ],
+    "wrong_text_pages": "3/40",
+    "wrong_text_wilson": [
+     0.026,
+     0.199
+    ],
+    "fidelity_mean": 4.13,
+    "counts": true,
+    "words": 18688,
+    "misleads_per_1k": 2.73,
+    "wrong_text_per_1k": 0.37
+   },
+   "agy-image": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "29/40",
+    "accept_wilson": [
+     0.572,
+     0.839
+    ],
+    "accept_by_book": [
+     0.6,
+     0.85
+    ],
+    "wrong_text_pages": "5/40",
+    "wrong_text_wilson": [
+     0.055,
+     0.261
+    ],
+    "fidelity_mean": 4.03,
+    "counts": true,
+    "words": 18663,
+    "misleads_per_1k": 2.09,
+    "wrong_text_per_1k": 0.59
+   },
+   "stored": {
+    "n": 27,
+    "books": 27,
+    "unjudged": 0,
+    "accept": "15/27",
+    "accept_wilson": [
+     0.373,
+     0.724
+    ],
+    "accept_by_book": [
+     0.37,
+     0.741
+    ],
+    "wrong_text_pages": "5/27",
+    "wrong_text_wilson": [
+     0.082,
+     0.367
+    ],
+    "fidelity_mean": 3.56,
+    "counts": true,
+    "words": 11683,
+    "misleads_per_1k": 4.37,
+    "wrong_text_per_1k": 1.11
+   }
+  },
+  "German, opus": {
+   "agy-text": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "27/40",
+    "accept_wilson": [
+     0.52,
+     0.799
+    ],
+    "accept_by_book": [
+     0.525,
+     0.825
+    ],
+    "wrong_text_pages": "5/40",
+    "wrong_text_wilson": [
+     0.055,
+     0.261
+    ],
+    "fidelity_mean": 3.92,
+    "counts": true,
+    "words": 14132,
+    "misleads_per_1k": 3.04,
+    "wrong_text_per_1k": 0.5
+   },
+   "agy-text-again": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "26/40",
+    "accept_wilson": [
+     0.495,
+     0.779
+    ],
+    "accept_by_book": [
+     0.5,
+     0.8
+    ],
+    "wrong_text_pages": "3/40",
+    "wrong_text_wilson": [
+     0.026,
+     0.199
+    ],
+    "fidelity_mean": 3.92,
+    "counts": true,
+    "words": 13887,
+    "misleads_per_1k": 3.31,
+    "wrong_text_per_1k": 0.43
+   },
+   "agy-image": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "30/40",
+    "accept_wilson": [
+     0.598,
+     0.858
+    ],
+    "accept_by_book": [
+     0.6,
+     0.875
+    ],
+    "wrong_text_pages": "3/40",
+    "wrong_text_wilson": [
+     0.026,
+     0.199
+    ],
+    "fidelity_mean": 4.08,
+    "counts": true,
+    "words": 13883,
+    "misleads_per_1k": 2.38,
+    "wrong_text_per_1k": 0.36
+   },
+   "stored": {
+    "n": 30,
+    "books": 30,
+    "unjudged": 0,
+    "accept": "9/30",
+    "accept_wilson": [
+     0.167,
+     0.479
+    ],
+    "accept_by_book": [
+     0.133,
+     0.467
+    ],
+    "wrong_text_pages": "9/30",
+    "wrong_text_wilson": [
+     0.167,
+     0.479
+    ],
+    "fidelity_mean": 3.43,
+    "counts": true,
+    "words": 9325,
+    "misleads_per_1k": 5.04,
+    "wrong_text_per_1k": 1.29
+   }
+  },
+  "French, opus": {
+   "agy-text": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "24/40",
+    "accept_wilson": [
+     0.446,
+     0.737
+    ],
+    "accept_by_book": [
+     0.45,
+     0.75
+    ],
+    "wrong_text_pages": "8/40",
+    "wrong_text_wilson": [
+     0.105,
+     0.348
+    ],
+    "fidelity_mean": 4,
+    "counts": true,
+    "words": 14386,
+    "misleads_per_1k": 2.99,
+    "wrong_text_per_1k": 2.29
+   },
+   "agy-text-again": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "26/40",
+    "accept_wilson": [
+     0.495,
+     0.779
+    ],
+    "accept_by_book": [
+     0.5,
+     0.8
+    ],
+    "wrong_text_pages": "7/40",
+    "wrong_text_wilson": [
+     0.087,
+     0.319
+    ],
+    "fidelity_mean": 4.05,
+    "counts": true,
+    "words": 14687,
+    "misleads_per_1k": 2.52,
+    "wrong_text_per_1k": 2.18
+   },
+   "agy-image": {
+    "n": 40,
+    "books": 40,
+    "unjudged": 0,
+    "accept": "29/40",
+    "accept_wilson": [
+     0.572,
+     0.839
+    ],
+    "accept_by_book": [
+     0.575,
+     0.85
+    ],
+    "wrong_text_pages": "5/40",
+    "wrong_text_wilson": [
+     0.055,
+     0.261
+    ],
+    "fidelity_mean": 4.2,
+    "counts": true,
+    "words": 14574,
+    "misleads_per_1k": 2.74,
+    "wrong_text_per_1k": 1.65
+   },
+   "stored": {
+    "n": 39,
+    "books": 39,
+    "unjudged": 0,
+    "accept": "21/39",
+    "accept_wilson": [
+     0.386,
+     0.684
+    ],
+    "accept_by_book": [
+     0.385,
+     0.692
+    ],
+    "wrong_text_pages": "11/39",
+    "wrong_text_wilson": [
+     0.165,
+     0.438
+    ],
+    "fidelity_mean": 3.72,
+    "counts": true,
+    "words": 13550,
+    "misleads_per_1k": 3.69,
+    "wrong_text_per_1k": 2.73
+   }
+  }
+ }
+}

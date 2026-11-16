@@ -1,0 +1,13 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Faint offset/show-through text from the facing page is visible at the top and bottom of the leaf; it is not transcribed.</warning>
+
+# LAURENT. RHODOMANNUS
+
+->Praefat. in Diod. Siculum.<-
+
+*Cacoëthes illorum mihi imitari non placuit, qvi meros crepantes Archaismos novum loqvendi genus ab inferis resuscitatum prae nitidissimâ Romanae dictionis puritate, tot laboribus & curis per decrepitam hanc mundi senectam à summis ingeniis reparatâ, nobis obtrudunt; & cùm eloqventiâ Ciceronianâ excellere neqveant, antiqvariâ saltem novitate, admirationem sui leviter ac stolidè affectant. Qvibus ut omnes sanae mentis studiosi τὸ μακρὰν χαίρειν dicant, totus fidelium magistrorum chorus per elegantiores Musas obtestatur atque suadet.*
+
+<vocab>Laurentius Rhodomannus, Diodorus Siculus, Archaismos, cacoëthes, Ciceronian eloquence, antiquaria novitas, μακρὰν χαίρειν</vocab>

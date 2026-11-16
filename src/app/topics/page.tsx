@@ -134,7 +134,7 @@ function FacetValueCard({ value, facetId }: { value: FacetCount; facetId: string
       )}
       <div className="p-3">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="font-display text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight">
+          <h3 className="font-serif text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight">
             {value.label}
           </h3>
           <span className="text-xs text-muted whitespace-nowrap flex-shrink-0">
@@ -173,7 +173,7 @@ function DomainGroupedGrid({ values, facetId }: { values: FacetCount[]; facetId:
     <div className="space-y-8">
       {activeGroups.map((group) => (
         <div key={group.id}>
-          <h3 className="font-display text-base text-secondary mb-3">
+          <h3 className="font-serif text-base text-secondary mb-3">
             {group.label}
           </h3>
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -213,7 +213,7 @@ export default async function TopicsPage() {
         {groups.map((group) => (
           <section key={group.id}>
             <div className="mb-4">
-              <h2 className="font-display text-xl md:text-2xl text-primary">
+              <h2 className="font-serif text-xl md:text-2xl text-primary">
                 {group.label}
               </h2>
               <p className="text-sm text-muted mt-1">{group.question}</p>

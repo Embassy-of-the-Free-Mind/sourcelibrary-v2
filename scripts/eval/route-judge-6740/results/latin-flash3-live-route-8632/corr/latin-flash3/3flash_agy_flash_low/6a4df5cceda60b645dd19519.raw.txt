@@ -1,0 +1,26 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>A 5</sig>
+<meta>catchword: DE</meta>
+
+CVM interdum in extractione, quando numerus non absolute est quadratus, residuum aliquod relinquitur, tunc in proba residuo ad productum, quod ex radicis ductione in se producitur, addito resultabit rursus numerus ex quo radicis extractio facta est.
+
+Sin autem ad residuum cupis denominatorem inuenire, ut sic radicem in aliquo numero non quadrato quantum fieri potest exactissime habeas, dupla radicem extractam, et eius duplato adde unitatem, aggregatum erit denominator ad residuum. Hinc sequitur quod residuum loco numeratoris ponendum sit, et nunquam duplata radice maius esse possit. Et hac ratione habebis quidem quantum fieri potest radicem exactissime, non tamen omnino perfecte, quia numerus irrationalis non patitur extractionem radicis absolutam, de quo in quarta nostri compendij parte agemus.
+
+### EXEMPLVM
+
+Radix ex 46 est 6 et residuum 10 quod erit numerator, cui radix duplata cum unitate adiuncta denominatoris loco subijciatur, sic <image-desc size="small" type="diagram" significance="low">Fraction 10 over 13</image-desc>
+->10<-
+->---<-
+->13<-
+
+Est itaque ex 46 radix quadrata exactissime inuenta sed tamen non absolute 6 et <image-desc size="small" type="diagram" significance="low">Fraction 10 over 13</image-desc>
+->10<-
+->---<-
+->13<-
+
+<vocab>extractio radicis, numerus quadratus, residuum, denominator, numerator, numerus irrationalis, compendium, proba, radix quadrata</vocab>
+<<<END>>>

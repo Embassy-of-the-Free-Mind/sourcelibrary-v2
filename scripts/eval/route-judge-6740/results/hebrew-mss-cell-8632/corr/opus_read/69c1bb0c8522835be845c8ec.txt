@@ -1,0 +1,46 @@
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten square/semi-cursive Hebrew. The top four lines are badly faded and stained and mostly illegible. The right-hand ends of many lines (the opening words of each verse) are faded and partly lost at the edge of the writing area. Ink offset and show-through from the facing page appear across the middle and lower parts of the leaf.</warning>
+<meta>Piyyut laid out in three columns per line (two hemistichs plus an abbreviated refrain), with a recurring line ליושב תהלות. The recurring refrain is abbreviated (e.g. קדו׳ ברו׳ for קדוש וברוך).</meta>
+
+<unclear>[illegible — 1 faded line]</unclear>
+
+<unclear>[illegible — 1 faded line]</unclear>
+
+<unclear>[illegible — 2-3 words]</unclear> <unclear>ערוך</unclear>
+
+<unclear>[illegible — 2-3 words]</unclear> <unclear>פועלי</unclear> <unclear>[illegible — 1 word]</unclear>
+
+דגלי <unclear>עטרה</unclear> &nbsp;&nbsp; לעיר <unclear>בערה</unclear> &nbsp;&nbsp; <unclear>[illegible — 1-2 words]</unclear>
+
+->ליושב תהלות<-
+
+<unclear>[illegible — 1 word]</unclear> <unclear>עפו המולה</unclear> &nbsp;&nbsp; לשוכן <unclear>מעונה</unclear> &nbsp;&nbsp; <unclear>[illegible — 1-2 words]</unclear>
+
+הולכי דרך תמים &nbsp;&nbsp; <unclear>להדור רמים</unclear> &nbsp;&nbsp; <unclear>קדו׳</unclear> ברו׳
+
+נדיבים ישרים &nbsp;&nbsp; נועם צור מקשיבים &nbsp;&nbsp; <unclear>קדו׳ וברו׳</unclear>
+
+וחוני ישועות &nbsp;&nbsp; וקווי סליחות &nbsp;&nbsp; קדוש וברו׳
+
+->ליושב תהלות<-
+
+<unclear>אדירות</unclear> רבות &nbsp;&nbsp; זכי שמי ערבות &nbsp;&nbsp; <unclear>קדו׳ ברו׳</unclear>
+
+זרע מעט המה &nbsp;&nbsp; <unclear>לאל אלהים חיים</unclear> &nbsp;&nbsp; <unclear>קדו׳ ברו׳</unclear>
+
+חשמלים עזים &nbsp;&nbsp; לעושה חזיזים &nbsp;&nbsp; <unclear>קדו׳ וברו׳</unclear>
+
+חונים ונשאים &nbsp;&nbsp; למעלה <unclear>משיחים</unclear> &nbsp;&nbsp; ק׳ וברו׳
+
+->ליושב תהלות<-
+
+שפרי מרומים &nbsp;&nbsp; לרם על רמים &nbsp;&nbsp; <unclear>קדו׳ ק׳</unclear>
+
+<unclear>שוכני אהליו</unclear> &nbsp;&nbsp; יונקיו ועולליו &nbsp;&nbsp; <unclear>קדו׳ ברו׳</unclear>
+
+<unclear>[illegible — 1-2 words]</unclear> <unclear>אדון</unclear> הולכים &nbsp;&nbsp; פורשים ומברכים &nbsp;&nbsp; <unclear>קדו׳ ברו׳</unclear>
+
+<vocab>piyyut, ליושב תהלות, קדוש וברוך, ערבות, חשמלים, חזיזים, ישועות, סליחות, liturgical poetry</vocab>

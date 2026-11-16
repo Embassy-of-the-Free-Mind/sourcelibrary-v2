@@ -1,0 +1,19 @@
+{
+  "issue": 249,
+  "frozen": "2026-11-13",
+  "note": "PRIOR ART: scripts/eval/librarian-grounding/questions.json — 20 general questions across traditions, 2 of them phrased as a request for words; this set is only quote requests, the class v3#249 is about. Fixed set, written before any run. Do not edit a question once a run is recorded against it; add a new id. The first is the live turn that surfaced the defect (thread 6af70498c205a9be6ed8c6bb); the rest ask for the words of authors the library holds, one per tradition, in the phrasings the detector is meant to catch.",
+  "questions": [
+    { "id": "ficino-melancholy", "q": "What did Marsilio Ficino say about melancholy? Quote him." },
+    { "id": "paracelsus-tria", "q": "Quote Paracelsus on the three principles: salt, sulphur and mercury." },
+    { "id": "agrippa-magic", "q": "In Agrippa's own words, what is natural magic?" },
+    { "id": "emerald-tablet", "q": "What does the Emerald Tablet say? Give me the exact words." },
+    { "id": "fama-tomb", "q": "Give me a direct quotation from the Fama Fraternitatis about the tomb of Christian Rosenkreutz." },
+    { "id": "boehme-signature", "q": "What did Jacob Boehme write about the signature of things? Quote him." },
+    { "id": "kircher-magnet", "q": "Quote Athanasius Kircher on the magnet." },
+    { "id": "dee-monad", "q": "What did John Dee say about the monad? I want his words, with the page." },
+    { "id": "picatrix-talisman", "q": "Quote the Picatrix on how a talisman is made." },
+    { "id": "poimandres-man", "q": "What does the Poimandres say about the creation of man? Quote it verbatim." },
+    { "id": "fludd-macrocosm", "q": "What did Robert Fludd write about the macrocosm and the microcosm? Quote him." },
+    { "id": "bruno-worlds", "q": "What did Giordano Bruno say about infinite worlds? Quote him." }
+  ]
+}

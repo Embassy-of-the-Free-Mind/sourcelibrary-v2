@@ -463,7 +463,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
             </div>
           )}
           <div className="flex-1 min-w-0">
-          <h1 className="text-3xl sm:text-4xl font-display font-bold">
+          <h1 className="text-3xl sm:text-4xl font-serif font-bold">
             {authorName}
             {hanName && !authorName.includes(hanName) && <> <span lang="zh-Hant">{hanName}</span></>}
           </h1>
@@ -614,7 +614,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
               <h2 className="text-xs uppercase tracking-wide font-medium" style={{ color: 'var(--text-muted)' }}>
                 Artworks ({artworks.length})
               </h2>
-              {artistUrl(authorName) && (
+              {hasVisualWorks && artistUrl(authorName) && (
                 <Link
                   href={artistUrl(authorName)!}
                   className="text-xs text-accent-rust hover:underline"

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
+import { OCR_WRITE, TR_WRITE, OCR_PARENT, TR_PARENT, writesText, clearsText, pageTextWriterFiles, usesPageTextWriter } from './page-text-probe';
 
 /**
  * Every Gemini writer of page TEXT stamps provenance through the one builder (#4613).
@@ -19,10 +20,8 @@ import path from 'node:path';
  * (see the snapshot below), so a new writer cannot be parked here.
  */
 
+// The probe is shared with page-text-doors.test.ts (v2#8590); it lives in ./page-text-probe.ts.
 const REPO = path.resolve(__dirname, '../..');
-
-const OCR_WRITE = /(?:'ocr\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter)[A-Za-z(]|^\s*data:\s*(?:text|ocrText|result\.text|ocrResult\.text|v\.text|art\.atf|leaves\[k\])\b)/;
-const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter|r\b|\d)[A-Za-z(]|^\s*data:\s*(?:text|clean|translation|translatedText|result\.text|res\.text|english)\b)/;
 
 /** Writers whose text is not a Gemini reading — reason required. */
 const ALLOWED: Record<string, string> = {
@@ -58,14 +57,12 @@ const ALLOWED: Record<string, string> = {
   'scripts/maintenance/withhold-stale-translations.mjs': 'removes text; writes none',
   'scripts/lib/stale-translation.mjs': 'withholdPin() builds the update FILTER that pins a withhold to the judged text; writes none',
   'scripts/split-book.mjs': 'splits stored text across new page docs',
-  'scripts/migration/backfill-ocr-near-complete.mjs': 'backfills counters from stored text',
   'scripts/migration/add-page-translations-withheld.mjs': 'migration of stored text',
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription",
   'scripts/maintenance/fix-unclosed-note-tags.mjs': 'repairs tags in stored translation text; introduces no new text',
   'scripts/lib/translation-text-repair.mjs': 'hand repair of stored translation text (a wrong note, a broken tag); revision row with before/after content_hash, no model output (#5624, #5644)',
   'scripts/maintenance/withdraw-fabricated-translation-4584.mjs': 'replaces invented spans with <lacuna>; introduces no new text',
   'scripts/workers/mineru-ocr-worker.mjs': "MinerU (specialist, not Gemini) — its own engine block (specialist-engine/1: version, licence, backend, run, input), checked by missingProvenance under source 'mineru'",
-  'src/app/api/books/[id]/import-batch/route.ts': 'text supplied by the importer with the request, not a model read here',
   'src/app/api/iiif/[id]/search/route.ts': 'reads; the probe matches its regex filters',
   'src/lib/chat-page-search.ts': 'reads (both chat routes); the probe matches its regex filters',
   'scripts/enrichment/dedup-entities.mjs': 'entity records, not page text (matches the probe on a `data:` line)',
@@ -92,20 +89,12 @@ function candidateFiles(): string[] {
   }
 }
 
-function writesText(lines: string[], re: RegExp, parent: RegExp): boolean {
-  return lines.some((l, i) => {
-    if (!re.test(l)) return false;
-    if (/'(ocr|translation)\.data'/.test(l)) return true;
-    return lines.slice(Math.max(0, i - 8), i).some((prev) => parent.test(prev));
-  });
-}
-
 /** Files that write OCR or translation text. */
 function writerFiles(): string[] {
   return candidateFiles().filter((f) => {
     if (/(^|\/)(_archived|tests|eval)\//.test(f) || /\/audit\//.test(f) || /\.test\.[jt]sx?$/.test(f)) return false;
     const lines = readFileSync(path.join(REPO, f), 'utf8').split('\n');
-    return writesText(lines, OCR_WRITE, /\bocr\b\s*[:=]|'ocr'/) || writesText(lines, TR_WRITE, /\btranslation\b\s*[:=]|'translation'/);
+    return writesText(lines, OCR_WRITE, OCR_PARENT) || writesText(lines, TR_WRITE, TR_PARENT);
   });
 }
 
@@ -173,43 +162,7 @@ describe('every Gemini writer of page text goes through the provenance builder (
  * writePageText fails here.
  */
 const GRANDFATHER_FILE = path.join(REPO, 'tests/unit/fixtures/page-text-writers-grandfathered.json');
-const GRANDFATHER_CEILING = 88; // measured 2026-10-21 (90), 89 after #7384, 88 after paddle-zh-guarded-lane migrated (#6871); lower it as writers migrate, never raise it
-
-const CLEAR_FIELD = /['"]?\b(ocr|translation)(\.data)?['"]?\s*:/;
-const SET_EMPTY = /['"](ocr|translation)\.data['"]\s*:\s*(null|''|""|undefined)\b/;
-
-/** `x['ocr.data'] = …` / `x[`${field}.data`] = …` — an update doc assembled by assignment. */
-const ASSIGN_TEXT = /\[\s*(['"](ocr|translation)(\.data)?['"]|`\$\{\w+\}\.data`)\s*\]\s*=(?!=)/;
-/** `[`${field}.data`]: text` — a computed-key write (not a `{ $exists … }` filter). */
-const COMPUTED_KEY_TEXT = /\[`\$\{\w+\}\.data`\]\s*:\s*(?!null\b|undefined\b|''|\{)[A-Za-z(]/;
-/** `ocr: { data: … }` / `translation: {` — a whole-field set. */
-const WHOLE_FIELD = /(^|[\s{,])['"]?(ocr|translation)['"]?\s*:\s*\{/;
-
-function clearsText(lines: string[]): boolean {
-  return lines.some((l, i) => {
-    const ctx = lines.slice(Math.max(0, i - 3), i + 1).join('\n');
-    if (/\$unset/.test(ctx) && CLEAR_FIELD.test(l)) return true;
-    if (/\$set/.test(ctx) && (SET_EMPTY.test(l) || WHOLE_FIELD.test(l) || COMPUTED_KEY_TEXT.test(l))) return true;
-    if (ASSIGN_TEXT.test(l)) return true;
-    return false;
-  });
-}
-
-function pageTextWriterFiles(): string[] {
-  let files: string[] = [];
-  try {
-    files = execFileSync('git', ['grep', '-lE', String.raw`ocr|translation`, '--', 'scripts', 'src'], { cwd: REPO, encoding: 'utf8' })
-      .split('\n').filter(Boolean);
-  } catch { return []; }
-  return files.filter((f) => {
-    if (/^scripts\/(_archived|output)\//.test(f) || /\/_archived\//.test(f) || /\.test\.[jt]sx?$/.test(f) || !/\.(m?[jt]sx?|cjs)$/.test(f)) return false;
-    if (f === 'scripts/lib/page-text-writer.mjs' || f === 'src/lib/page-text-writer.ts') return false;
-    const lines = readFileSync(path.join(REPO, f), 'utf8').split('\n');
-    return writesText(lines, OCR_WRITE, /\bocr\b\s*[:=]|'ocr'/) || writesText(lines, TR_WRITE, /\btranslation\b\s*[:=]|'translation'/) || clearsText(lines);
-  });
-}
-
-const usesPageTextWriter = (src: string) => /page-text-writer(\.mjs)?['"]/.test(src) && /\bwritePageText\s*\(/.test(src);
+const GRANDFATHER_CEILING = 81; // measured 2026-10-21 (90), 89 after #7384, 88 after paddle-zh-guarded-lane migrated (#6871), 84 after the batch routes were retired (v2#8590), 81 after batch-save, import-batch and stitch-translations (v3#212); lower it as writers migrate, never raise it
 
 function grandfathered(): { count: number; files: string[] } {
   return JSON.parse(readFileSync(GRANDFATHER_FILE, 'utf8'));

@@ -112,7 +112,7 @@ export default function ThumbnailComparePage() {
   return (
     <div className="min-h-screen bg-cream">
       <div className="max-w-[1500px] mx-auto px-6 py-10">
-        <h1 className="text-3xl font-display text-primary mb-2">Gallery Image Quality Comparison</h1>
+        <h1 className="text-3xl font-serif text-primary mb-2">Gallery Image Quality Comparison</h1>
         <p className="text-muted mb-10 max-w-3xl">
           Diverse gallery images across types (frontispiece, emblem, woodcut, diagram, engraving, portrait) and bounding box sizes.
           The homepage &quot;From the Collection&quot; now uses <code className="text-xs bg-warm px-1 py-0.5 rounded">extracted_url</code> (full-size crop) instead of <code className="text-xs bg-warm px-1 py-0.5 rounded">thumbnail_url</code> (300px).
@@ -121,7 +121,7 @@ export default function ThumbnailComparePage() {
 
         {/* Section 1: Good images */}
         <div className="mb-16">
-          <h2 className="text-2xl font-display text-primary mb-6">Good Images (bbox &ge; 10%)</h2>
+          <h2 className="text-2xl font-serif text-primary mb-6">Good Images (bbox &ge; 10%)</h2>
 
           <GalleryGrid items={good} label="Gallery Grid (thumbnail_url)" />
 
@@ -134,7 +134,7 @@ export default function ThumbnailComparePage() {
 
         {/* Section 2: Bad examples that should be filtered */}
         <div className="mb-16">
-          <h2 className="text-2xl font-display text-primary mb-2">Filtered Out (bbox &lt; 10%)</h2>
+          <h2 className="text-2xl font-serif text-primary mb-2">Filtered Out (bbox &lt; 10%)</h2>
           <p className="text-sm text-muted mb-6">These tiny decorative initials are now excluded from the homepage selection by the new <code className="text-xs bg-warm px-1 py-0.5 rounded">bbox.width &ge; 0.1</code> filter.</p>
 
           <GalleryGrid items={bad} label="Gallery Grid (still shown in gallery)" />

@@ -99,7 +99,7 @@ function StatCard({
   return (
     <div className="bg-white border border-stone-200 rounded-xl px-5 py-4 min-w-[140px] shadow-sm">
       <div className="text-[11px] uppercase tracking-wider text-stone-500 font-sans">{label}</div>
-      <div className={`text-3xl font-light mt-1 ${accentClass} font-display`}>{value.toLocaleString()}</div>
+      <div className={`text-3xl font-light mt-1 ${accentClass} font-serif`}>{value.toLocaleString()}</div>
     </div>
   );
 }
@@ -180,7 +180,7 @@ export default function AdminUsersPage() {
       <div className="max-w-[1400px] mx-auto px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl text-stone-900 mb-1 font-display font-normal">Users</h1>
+          <h1 className="text-3xl text-stone-900 mb-1 font-serif font-normal">Users</h1>
           <p className="text-sm text-stone-600 font-sans">
             Everyone who has signed up or subscribed to Source Library, with their reading activity.
           </p>

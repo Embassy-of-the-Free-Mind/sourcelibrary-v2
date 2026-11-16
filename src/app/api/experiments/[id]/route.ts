@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAuth, withInnerCircleAuth } from '@/lib/auth-helpers';
 
 // GET /api/experiments/[id] - Get experiment details and results
-export const GET = withAuth(async (request, session, context) => {
+export const GET = withInnerCircleAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getDb();
@@ -49,7 +49,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating experiment:', error);
     return NextResponse.json({ error: 'Failed to update experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // DELETE /api/experiments/[id] - Delete experiment and its results
 export const DELETE = withAuth(async (request, session, context) => {
@@ -68,4 +68,4 @@ export const DELETE = withAuth(async (request, session, context) => {
     console.error('Error deleting experiment:', error);
     return NextResponse.json({ error: 'Failed to delete experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

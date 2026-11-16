@@ -1,0 +1,58 @@
+[
+  {
+    "book_id": "6992cad0d4d545ae73feeb43",
+    "slot": 1,
+    "title": "Pelliot chinois 2449",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Chinese manuscript fragment (Pelliot chinois, Dunhuang) in red ink. Its vocabulary (天尊 as I read it, 天王, 龍神, 皇祠) fits the catalogued Daoist scripture. No tradition or collections are set, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "The structure count gives pages_translated 0, but the book's pages_translated field is 14, and this page does carry a translation. The counts disagree with each other. The single 'printed number' is the pencil shelfmark 2449, which the OCR tagged as <page-num>; it is not a page number.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "printed_marker": "2449 v° (pencil archival/shelf number at top; reading of the small suffix uncertain)",
+        "layout": "two vertical columns of red-ink running script at the right edge of an octagonally trimmed, stained fragment; the rest of the leaf is blank",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "天南皇帝輦來儀", "image": "天尊帝輦来儀 (one character, apparently 尊, between 天 and 帝)", "problem": "One character is read as two ('南皇'), which turns 'the Celestial Worthy's imperial carriage' into a 'Heavenly South' emperor. The OCR meta's Vietnamese attribution and the translation's opening both grow out of this misreading.", "severity": "serious", "class": "O6" },
+          { "ocr": "龍神助清嘆", "image": "龍神助讃嘆 (speech radical; 讃嘆 'praise')", "problem": "讃 misread as 清, so the translation has 'clear sighs'", "severity": "moderate" },
+          { "ocr": "地叹嘆", "image": "地歡嘆 (欠-radical character, 歡)", "problem": "歡 ('rejoice') misread as 叹", "severity": "minor" },
+          { "ocr": "豈而宣助以此景福", "image": "豈而宜?真?助以斯景福 (a character is dropped before 助; 斯 not 此)", "problem": "One character is omitted and 斯 is read as 此; I am unsure of the cursive at the head of the column", "severity": "moderate" },
+          { "ocr": "津狽", "image": "津狼 (犭 + 良), probably standing for 津梁 'ford-bridge'", "problem": "misread as 狽, which yields the 'ford of hardship' rendering", "severity": "moderate" },
+          { "ocr": "一至神贊", "image": "一室神贊", "problem": "室 ('hall, chamber') read as 至, so 'the whole hall' is lost", "severity": "moderate" },
+          { "ocr": "<page-num>2449</page-num>", "image": "pencil shelfmark '2449 v°'", "problem": "The archival number is tagged as a page number", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "天南皇帝輦來儀", "english": "In the Heavenly South <note>original: \"天南\"; literally \"south of heaven,\" a poetic name for a southern realm</note>, the Emperor's carriage comes with fitting ceremony.", "problem": "The note gives confident learning (a southern realm) to a misread. The image appears to read 天尊帝輦, the Celestial Worthy's imperial carriage.", "severity": "serious", "class": "T10" },
+          { "source": "景福莫限津狽", "english": "let there be no limit; do not depend on the <unclear>ford of hardship</unclear>", "problem": "莫限 ('without limit') is split into two clauses, and the verb 'do not depend on' is invented to make a clause for 津狽", "severity": "moderate" },
+          { "source": "助清嘆美", "english": "Clear sighs of praise rise in the air", "problem": "'Clear' comes from the misread 清 (the image has 讃 'praise')", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "The OCR <meta> asserts 'likely of Vietnamese Hán-Nôm origin given the opening phrase \"Thiên Nam\"'. This is an invented provenance claim, built on a misread, for a Pelliot Dunhuang manuscript.", "severity": "moderate", "class": "O15" },
+          { "note": "The translation <meta> claims 'This page overlaps closely with the closing lines of the previous page's translation and appears to be a fuller witness of the same passage'. The page cannot support this continuity claim.", "severity": "moderate", "class": "T15" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "South of Heaven", "verdict": "wrong", "helpful": false },
+            { "quote": "original: \"天南\"; literally \"south of heaven,\" a poetic name", "verdict": "wrong", "helpful": false },
+            { "quote": "original: \"天王\"; in Buddhist usage, the guardian kings of th", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"龍神\"; protective serpent or dragon deities in Bud", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"景福\"; a stock phrase for abundant good fortune", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"津狽\"; the reading and sense are uncertain", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"庄嚴\" (zhuangyan); the Buddhist term for adorning ", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"皇祠\"; an ancestral or imperial hall of worship", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "the Emperor's carriage comes with fitting ceremony", "why": "The reader is not told which emperor or deity is meant. In this Daoist scripture it is most likely the Celestial Worthy (天尊), and nothing says so." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is the right leaf, but the cursive red-ink OCR misreads a key character (天尊 as 天南皇). That misreading feeds an invented Vietnamese-origin claim in the meta and a footnoted 'Heavenly South' opening, so an expert would flag the page on sight."
+  }
+]

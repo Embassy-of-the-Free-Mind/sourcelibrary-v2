@@ -394,7 +394,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
 
       {/* Section Heading */}
       <div className="mb-8">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic font-display">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic font-serif">
           {showCollections ? 'Explore the Library' : 'Library'}
         </h2>
         {showCollections && (
@@ -520,7 +520,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
           {/* New Arrivals */}
           {newArrivals.length > 0 && (
             <div className="mt-12">
-              <h3 className="text-xl md:text-2xl text-gray-900 mb-4 font-display">
+              <h3 className="text-xl md:text-2xl text-gray-900 mb-4 font-serif">
                 New to the Library
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
@@ -534,7 +534,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
           {/* Recently Translated */}
           {recentlyTranslated.length > 0 && (
             <div className="mt-12">
-              <h3 className="text-xl md:text-2xl text-gray-900 mb-4 font-display">
+              <h3 className="text-xl md:text-2xl text-gray-900 mb-4 font-serif">
                 Recently Translated
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
@@ -770,7 +770,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
             <div className="mt-12 pt-8 border-t border-stone-200">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-stone-900 font-display">
+                  <h3 className="text-xl font-semibold text-stone-900 font-serif">
                     Discover More
                   </h3>
                   <p className="text-sm text-stone-500 mt-1">

@@ -39,7 +39,7 @@ const PARTNERS: Partner[] = [
 // wordmark sits at the same visual weight as the stacked logos beside it.
 const GLOBAL_PARTNERS: Partner[] = [
   { name: 'Folium', src: '/ai-partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
-  { name: 'Wisdom Frontiers', src: '/ai-partners/wisdom-frontiers-white.svg', href: 'https://wisdomfrontiers.org', width: 151, height: 25, invert: false },
+  { name: 'Wisdom Frontiers', src: '/ai-partners/wisdom-frontiers-white.svg', href: 'https://wisdom-frontiers.com', width: 151, height: 25, invert: false },
 ];
 
 // Source Library's own accounts. Kept beside PARTNERS so the two lists that

@@ -131,7 +131,7 @@ export default async function ArtistPage({ params }: PageProps) {
             <span className="text-stone-400">{name}</span>
           </nav>
 
-          <h1 className="font-display text-4xl sm:text-5xl font-bold">{name}</h1>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold">{name}</h1>
           <div className="flex items-center gap-4 mt-3 text-sm text-stone-400">
             <span>{artworks.length} artworks</span>
             {books.length > 0 && (
@@ -155,7 +155,7 @@ export default async function ArtistPage({ params }: PageProps) {
       {/* Books by this author */}
       {books.length > 0 && (
         <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pt-10 pb-2">
-          <h2 className="text-xl font-display font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
             Books by {name}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -194,7 +194,7 @@ export default async function ArtistPage({ params }: PageProps) {
       {/* Artworks grid */}
       <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
         {books.length > 0 && (
-          <h2 className="text-xl font-display font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-xl font-serif font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
             Artworks
           </h2>
         )}

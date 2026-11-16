@@ -138,7 +138,7 @@ export default async function JungResonancesPage() {
                     <p className="text-xs uppercase tracking-[0.3em] text-accent-gold font-semibold mb-4">
                         Virtual Collection
                     </p>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-semibold leading-[1.1] mb-6 max-w-3xl">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-semibold leading-[1.1] mb-6 max-w-3xl">
                         Jung Resonances
                     </h1>
                     <p className="text-lg text-stone-300 max-w-3xl leading-relaxed mb-8">
@@ -154,7 +154,7 @@ export default async function JungResonancesPage() {
                     {/* Stats strip */}
                     <div className="flex flex-wrap gap-8 sm:gap-12 text-sm">
                         <div>
-                            <div className="text-3xl font-bold text-accent-gold tabular-nums">
+                            <div className="text-3xl font-semibold text-accent-gold tabular-nums">
                                 {DATA.matched_count}
                             </div>
                             <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">
@@ -162,7 +162,7 @@ export default async function JungResonancesPage() {
                             </div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-accent-gold tabular-nums">
+                            <div className="text-3xl font-semibold text-accent-gold tabular-nums">
                                 {ustcCount}
                             </div>
                             <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">
@@ -170,7 +170,7 @@ export default async function JungResonancesPage() {
                             </div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-accent-gold tabular-nums">
+                            <div className="text-3xl font-semibold text-accent-gold tabular-nums">
                                 {fuzzyCount}
                             </div>
                             <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">
@@ -178,7 +178,7 @@ export default async function JungResonancesPage() {
                             </div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-accent-gold tabular-nums">
+                            <div className="text-3xl font-semibold text-accent-gold tabular-nums">
                                 {Math.round((DATA.matched_count / Math.max(DATA.jung_count, 1)) * 100)}%
                             </div>
                             <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">
@@ -278,7 +278,7 @@ function ResonanceCard({ match }: { match: FlatMatch }) {
                         )}
                     </div>
 
-                    <h2 className="text-lg sm:text-xl text-primary font-display leading-snug mb-1">
+                    <h2 className="text-lg sm:text-xl text-primary font-serif leading-snug mb-1">
                         <Link
                             href={`/catalog/${bph.ubn}`}
                             className="hover:text-accent-rust transition-colors"

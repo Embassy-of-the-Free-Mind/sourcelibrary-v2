@@ -126,7 +126,6 @@ scripts/split-book-v2.mjs	const url = p.archived_photo || p.photo_original || p.
 scripts/split-book-v2.mjs	const url = page.archived_photo || page.photo_original || page.photo;
 scripts/split-book-v2.mjs	photo_original: page.archived_photo || page.photo_original || page.photo,
 scripts/split-pecha.mjs	const src = page.archived_photo || page.display_photo || page.photo;
-scripts/split-pecha.mjs	photo_original: page.archived_photo || page.photo,
 scripts/thumbnails/backfill-covers.mjs	return page.cropped_photo || page.archived_photo || page.photo;
 scripts/tmp-recitation-retry.mjs	const imageUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
 scripts/tmp-split-book-v2.mjs	const imageUrl = page.archived_photo || page.photo_original || page.photo;

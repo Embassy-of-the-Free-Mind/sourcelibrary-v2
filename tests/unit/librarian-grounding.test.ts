@@ -144,14 +144,128 @@ describe('quotes', () => {
     const quote = '> La virtud es un medio entre dos vicios, uno que peca por exceso y otro por defecto.\n> — [Página 12](https://sourcelibrary.org/es/book/ethica-aristoteles?page=12)';
     const { out } = ground(`Aristóteles trata la virtud como un término medio:\n\n${quote}\n\n### Siguiente`);
     expect(out).toBe('Aristóteles trata la virtud como un término medio.\n\n### Siguiente');
-    // A list item lead-in, and a lead-in this pass already edited (unquoted), both get the stop.
-    expect(ground(`* **Ética:** el texto dice:\n${quote}`).out).toBe('* **Ética:** el texto dice.\n');
+    // A lead-in this pass already edited (unquoted) gets the stop in the same edit.
     const edited = ground(`He called it "a furnace that never once went out at night" and wrote:\n\n${quote}`).out;
     expect(edited).toBe('He called it a furnace that never once went out at night and wrote.\n\n');
     // A kept quote leaves its lead-in alone.
     const kept = 'Monconys wrote:\n\n> "which is two feet square, in which with 6 sous of local coal one bakes 280 pounds of bread in 24 hours"\n> — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51)';
     expect(ground(kept).out).toBe(kept);
   });
+  describe('a removed quotation takes its announcement with it (v3#249)', () => {
+    const INVENTED_1 = '> "For the spirit, which is the most subtle of all things, is easily consumed by the heat of the mind\'s perpetual motion."\n> — *[Three Books on Life](https://sourcelibrary.org/book/three-books-on-life-ficino)*, [Page 43](https://sourcelibrary.org/book/three-books-on-life-ficino?page=43)';
+    const INVENTED_2 = '> "Saturn, who is the author of contemplation, and the most remote of all planets, is also the cause of the most profound thought."';
+    const REAL = '> "which is two feet square, in which with 6 sous of local coal one bakes 280 pounds of bread in 24 hours"\n> — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51)';
+
+    it('pins the live shape: thread 6af70498c205a9be6ed8c6bb, 2026-11-13, "Quote him."', () => {
+      // The answer as it streamed, rebuilt from the stored message and its grounding trace:
+      // the prose is the stored text, and the two blockquotes are the trace's first 120
+      // characters of each, closed off. Both were on no page and were removed; what the
+      // reader got was the sentence that introduced each one, followed by the next heading.
+      const opening = 'Marsilio Ficino, the Florentine philosopher and physician, transformed the medieval understanding of melancholy by linking it to the divine frenzy of genius and the influence of the planet Saturn.';
+      const answer = 'Marsilio Ficino, the leading figure of the Florentine Platonic Academy, redefined melancholy in his seminal work *De Vita Libri Tres* (*Three Books on Life*, 1489). He argued that melancholy was not merely a disease, but a unique temperament shared by all great thinkers, philosophers, and poets.';
+      const saturn = 'Ficino believed that while Saturn could be a "malefic" planet causing depression and stagnation, it was also the source of divine wisdom. He taught that by using specific "celestial medicines"—such as music, fragrances, and diet—scholars could "capture" the positive aspects of Saturn while mitigating the dark effects of melancholy.';
+      const text = [
+        opening,
+        '',
+        answer,
+        '',
+        '### The Melancholy of Scholars',
+        'In the first book of *De Vita*, titled *De sanitate tuenda* (On Preserving Health), Ficino explains why scholars are particularly prone to this condition.',
+        '',
+        INVENTED_1,
+        '',
+        '### The Divine Influence of Saturn',
+        saturn,
+        '',
+        'He describes the dual nature of this temperament.',
+        INVENTED_2,
+        '',
+        '### Remedies for the Melancholic',
+        'To combat the "black bile," Ficino recommended:',
+        '*   **Music and Sound:** Melancholics should listen to harmonious music to lift the spirit.',
+      ].join('\n');
+      const { out, report } = ground(text, {
+        question: 'What did Marsilio Ficino say about melancholy? Quote him.',
+        openingEnd: opening.length,
+        // The search result named the book, so "Three Books" is a count the model was given.
+        extraSupport: 'Books found:\n- "Three Books on Life" by Marsilio Ficino',
+      });
+      expect(out).toBe([
+        answer,
+        '',
+        '### The Divine Influence of Saturn',
+        saturn,
+        '',
+        '### Remedies for the Melancholic',
+        'To combat the "black bile," Ficino recommended:',
+        '*   **Music and Sound:** Melancholics should listen to harmonious music to lift the spirit.',
+      ].join('\n'));
+      expect(report).toMatchObject({ blockquotesRemoved: 2, leadInsRemoved: 2, headingsRemoved: 1, openingRemoved: true });
+    });
+
+    it('removes "he writes:" and a short colon line with no verb, keeping the sentences before them', () => {
+      expect(ground(`Ficino treats melancholy as a matter of the body. In the third chapter of the first book, he writes:\n\n${INVENTED_2}\n\nAfter.`).out)
+        .toBe('Ficino treats melancholy as a matter of the body.\n\nAfter.');
+      expect(ground(`Ficino treats melancholy as a matter of the body.\n\nIn his own words:\n\n${INVENTED_2}\n\nAfter.`).out)
+        .toBe('Ficino treats melancholy as a matter of the body.\n\nAfter.');
+      // A link to the BOOK does not make the lead-in a cited claim; "as follows" needs no verb of saying.
+      expect(ground(`Before.\n\nAs he writes in the third book of *[De vita](https://sourcelibrary.org/book/three-books-on-life-ficino)*:\n\n${INVENTED_2}\n\nAfter.`).out)
+        .toBe('Before.\n\nAfter.');
+      expect(ground(`Before.\n\nIn the 1609 edition the Latin text is rendered as follows:\n\n${INVENTED_2}\n\nAfter.`).out)
+        .toBe('Before.\n\nAfter.');
+      // A list item that is nothing but the announcement goes whole.
+      expect(ground(`* **Ética:** el texto dice:\n${INVENTED_2}`).out).toBe('');
+    });
+
+    it('keeps a sentence that reports what was said, cites a page, or still introduces a kept quote (negative twins)', () => {
+      // Reports the content: only the colon changes.
+      expect(ground(`Ficino says that scholars are prone to black bile:\n\n${INVENTED_2}\n\nAfter.`).out)
+        .toBe('Ficino says that scholars are prone to black bile.\n\nAfter.');
+      // States something about the text, ends in a full stop: untouched.
+      const states = `He describes the furnace as a tower with three chambers.\n\n${INVENTED_2}\n\nAfter.`;
+      expect(ground(states).out).toBe('He describes the furnace as a tower with three chambers.\n\nAfter.');
+      // Cites its own page: the sentence stands without the quote.
+      const cited = 'Monconys describes the oven — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
+      expect(ground(`${cited}\n\n${INVENTED_2}\n\nAfter.`).out).toBe(`${cited}\n\nAfter.`);
+      // Two quotes under one lead-in, one of them real: the lead-in still introduces it.
+      expect(ground(`Monconys writes:\n\n${INVENTED_2}\n\n${REAL}`).out).toBe(`Monconys writes:\n\n${REAL}`);
+      // A long sentence with clauses of its own is never removed whole: the colon becomes a full stop.
+      const long = 'Ficino trained as a physician under his father, who served the Medici household in Florence for many years; he turned to Plato only later, and in the third chapter of the first book he writes';
+      expect(ground(`${long}:\n\n${INVENTED_2}\n\nAfter.`).out).toBe(`${long}.\n\nAfter.`);
+      // "title" the noun is not a verb of saying.
+      const noun = 'This is the title page of the first edition.';
+      expect(ground(`${noun}\n\n${INVENTED_2}\n\nAfter.`).out).toBe(`${noun}\n\nAfter.`);
+      // A closing suggestion is not judged, but the colon that pointed at a removed quote still goes.
+      expect(ground(`You might compare what the second book has to offer:\n\n${INVENTED_2}\n\nAfter.`).out)
+        .toBe('You might compare what the second book has to offer.\n\nAfter.');
+      // A heading between the paragraph and the quote: the paragraph did not introduce it.
+      expect(ground(`Monconys writes of the oven.\n\n### The passage\n\n${INVENTED_2}\n\n### Next\nAfter.`).out).toBe('Monconys writes of the oven.\n\n### Next\nAfter.');
+    });
+
+    it('removes a heading only when everything under it was removed', () => {
+      const kept = `### Scholars\nHe writes:\n\n${INVENTED_2}\n\nThis paragraph stays where it is.\n\n### Next\nMore.`;
+      expect(ground(kept).out).toBe('### Scholars\nThis paragraph stays where it is.\n\n### Next\nMore.');
+      // A heading the model itself left empty is not this pass's business.
+      const empty = '### Empty\n\n### Next\nMore.';
+      expect(ground(empty).out).toBe(empty);
+      // The last section of the answer.
+      expect(ground(`Before.\n\n### Scholars\nHe writes:\n\n${INVENTED_2}`).out).toBe('Before.\n\n');
+    });
+
+    it('removes the opening only when the answer starts over on the same subject', () => {
+      const opening = 'The Emerald Tablet is the short Hermetic text that alchemists treated as the summary of their art.';
+      const restart = 'The Emerald Tablet, or *Tabula Smaragdina*, is the foundational text of Western alchemy, and the library holds it in several printings from the sixteenth and seventeenth centuries, in Latin and in German, with commentary.';
+      const carriesOn = 'Its thirteen sentences were printed many times in the sixteenth and seventeenth centuries, and the library holds several of those printings, in Latin and in German, most of them with a commentary alongside.';
+      expect(ground(`${opening}\n\n${restart}`, { openingEnd: opening.length }).out).toBe(restart);
+      // Negative twins: the answer carries on from the opening; no opening was recorded; the rest is too short to be the answer.
+      expect(ground(`${opening}\n\n${carriesOn}`, { openingEnd: opening.length }).out).toBe(`${opening}\n\n${carriesOn}`);
+      expect(ground(`${opening}\n\n${restart}`).out).toBe(`${opening}\n\n${restart}`);
+      expect(ground(`${opening}\n\nThe Emerald Tablet is short.`, { openingEnd: opening.length }).out).toBe(`${opening}\n\nThe Emerald Tablet is short.`);
+      // It does not depend on the support text having loaded.
+      expect(ground(`${opening}\n\n${restart}`, { openingEnd: opening.length, supportLoaded: false }).out).toBe(restart);
+    });
+  });
+
   it('keeps a requested rewrite, unquoted, instead of removing it (2026-11-08 Chemical Wedding)', () => {
     // The live shape: the reader pasted the bird song and asked for it in modern English;
     // the model's version is on no page, so the old pass deleted it three turns running.

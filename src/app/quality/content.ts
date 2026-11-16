@@ -5,7 +5,7 @@
 // experiment write-up in scripts/eval/experiments/.
 
 /** ISO date the prose on /quality was last checked against the data. */
-export const PROSE_AS_OF = '2026-11-02';
+export const PROSE_AS_OF = '2026-11-13';
 
 export type Finding = { title: string; text: string; n: string; date: string; record: { label: string; href: string } };
 

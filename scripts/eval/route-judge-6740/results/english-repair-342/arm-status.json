@@ -1,0 +1,34 @@
+{
+ "A": {
+  "pages": 200,
+  "calls": 0,
+  "returned": 200,
+  "failed": 0,
+  "chatter": 0,
+  "not_run": 0
+ },
+ "B": {
+  "pages": 200,
+  "calls": 197,
+  "returned": 197,
+  "failed": 0,
+  "chatter": 0,
+  "not_run": 3
+ },
+ "C": {
+  "pages": 200,
+  "calls": 200,
+  "returned": 199,
+  "failed": 1,
+  "chatter": 0,
+  "not_run": 0
+ },
+ "D": {
+  "pages": 200,
+  "calls": 200,
+  "returned": 199,
+  "failed": 1,
+  "chatter": 0,
+  "not_run": 0
+ }
+}

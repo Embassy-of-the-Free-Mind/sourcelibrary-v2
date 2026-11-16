@@ -1,0 +1,16 @@
+<warning>Handwritten semi-cursive Hebrew (Sephardic-style). The whole leaf is badly faded and stained, and worm damage runs along the top, bottom and gutter edges. The faint brown writing in two columns cannot be read reliably. It may be strongly faded ink on this side or show-through from the other side of the leaf; at this resolution I cannot confirm which way the letters face. Only the pencil foliation mark at the upper left is clearly ink on this side.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>62</page-num>
+<meta>Pencil number "62" at the upper left corner, written by a later hand (probably modern foliation). The leaf has worm holes and tunnels along its edges, a torn upper right corner, and a strip of tape or a tab along the left edge.</meta>
+
+<unclear>about 45 lines of very faded Hebrew cursive (left column), not transcribed</unclear>
+
+<column-break/>
+
+<unclear>about 50 lines of very faded Hebrew cursive (right column), not transcribed</unclear>
+
+<vocab>Hebrew manuscript, semi-cursive script, foliation, worm damage, faded ink</vocab>

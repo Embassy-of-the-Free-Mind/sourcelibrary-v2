@@ -2,10 +2,11 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import AcademicAccessForm from '@/components/researchers/AcademicAccessForm';
 import type { Metadata } from 'next';
+import { BOOK_CORPUS_STATS } from '@/lib/public-stats';
 
 export const metadata: Metadata = {
   title: 'For Researchers | Source Library',
-  description: 'Source Library provides free access to 17,000+ historical texts with AI translations and OCR transcriptions. Apply for API access, bulk data, and corpus downloads.',
+  description: `Source Library provides free access to ${BOOK_CORPUS_STATS.books} historical texts with AI translations and OCR transcriptions. Apply for API access, bulk data, and corpus downloads.`,
   alternates: {
     canonical: '/for-researchers',
   },
@@ -47,7 +48,7 @@ export default function ForResearchersPage() {
         </h2>
 
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library holds over 17,000 digitized books spanning the 15th&ndash;19th centuries,
+          Source Library holds {BOOK_CORPUS_STATS.books} digitized books spanning the 15th&ndash;19th centuries,
           drawn from 50+ institutional partners including Internet Archive, Gallica,
           the Bavarian State Library, the Embassy of the Free Mind, and others.
           Subjects range from alchemy, natural philosophy, and theology to
@@ -55,7 +56,7 @@ export default function ForResearchersPage() {
         </p>
 
         <div className="grid md:grid-cols-3 gap-4 mb-16">
-          <StatCard number="17,000+" label="Digitized books" />
+          <StatCard number={BOOK_CORPUS_STATS.books} label="Digitized books" />
           <StatCard number="30+" label="Languages" />
           <StatCard number="4M+" label="Pages translated" />
         </div>

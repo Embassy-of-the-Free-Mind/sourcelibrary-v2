@@ -8,6 +8,7 @@ import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-
 import { withApiAuth, isSiteBrowserRequest, type ApiIdentity } from '@/lib/api-auth';
 import { inProcessCaller } from '@/lib/inprocess-caller';
 import { resolveKeptEdition } from '@/lib/kept-edition';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
 import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
@@ -179,6 +180,13 @@ export const GET = withApiAuth(async (
         { _id: new ObjectId(bookId) },
         { projection: TEXT_BOOK_PROJECTION }
       );
+    }
+    // Neither an id nor an _id: the slug from a book URL, current or renamed.
+    // Every link we hand out is /book/<slug>, so an assistant holding only the
+    // link asks for the text by slug. Runs on a miss only, so a call by id
+    // costs what it did. Readability is still decided below, on the book found.
+    if (!book) {
+      book = ((await findBookByIdOrSlug(db, bookId, TEXT_BOOK_PROJECTION))?.book ?? null) as typeof book;
     }
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });

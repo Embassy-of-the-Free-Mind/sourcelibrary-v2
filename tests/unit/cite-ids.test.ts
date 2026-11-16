@@ -29,14 +29,14 @@ describe('CiteIds', () => {
 describe('CiteIdStream', () => {
   it('writes the page link after a title the model already linked', () => {
     const { text, stats } = run(ids(), ['"Music is a spirit" — *[De vita](https://sourcelibrary.org/book/de-vita-ficino)*, [P2].']);
-    expect(text).toBe('"Music is a spirit" — *[De vita](https://sourcelibrary.org/book/de-vita-ficino)*, [Page 20](https://sourcelibrary.org/book/de-vita-ficino?page=20).');
+    expect(text).toBe('"Music is a spirit" — *[De vita](https://sourcelibrary.org/book/de-vita-ficino)*, [Page 20](https://sourcelibrary.org/book/de-vita-ficino/page-number/20).');
     expect(findPageLinks(text).map(l => [l.slug, l.page])).toEqual([['de-vita-ficino', 20]]);
     expect(stats).toEqual({ rendered: 1, dropped: 0 });
   });
 
   it('names the book when the paragraph has not', () => {
     const { text } = run(ids(), ['Saturn rules melancholy [P3].']);
-    expect(text).toBe('Saturn rules melancholy *[Picatrix](https://sourcelibrary.org/book/picatrix)*, [Page 323](https://sourcelibrary.org/book/picatrix?page=323).');
+    expect(text).toBe('Saturn rules melancholy *[Picatrix](https://sourcelibrary.org/book/picatrix)*, [Page 323](https://sourcelibrary.org/book/picatrix/page-number/323).');
   });
 
   it('survives a token split across chunks', () => {
@@ -71,14 +71,14 @@ describe('CiteIdStream', () => {
   it('uses the locale prefix and word', () => {
     const c = new CiteIds('https://sourcelibrary.org/es', 'Página');
     c.tag({ bookId: 'b2', slug: 'picatrix', title: 'Picatrix', page: 3 });
-    expect(run(c, ['Dice [P1].']).text).toBe('Dice *[Picatrix](https://sourcelibrary.org/es/book/picatrix)*, [Página 3](https://sourcelibrary.org/es/book/picatrix?page=3).');
+    expect(run(c, ['Dice [P1].']).text).toBe('Dice *[Picatrix](https://sourcelibrary.org/es/book/picatrix)*, [Página 3](https://sourcelibrary.org/es/book/picatrix/page-number/3).');
   });
 });
 
 describe('CiteIdStream separators', () => {
   it('joins adjacent IDs: a comma within a book, a semicolon between books', () => {
     const { text } = run(ids(), ['Claim [P1][P2][P3].']);
-    expect(text).toBe('Claim *[De vita libri tres](https://sourcelibrary.org/book/de-vita-ficino)*, [Page 19](https://sourcelibrary.org/book/de-vita-ficino?page=19), [Page 20](https://sourcelibrary.org/book/de-vita-ficino?page=20); *[Picatrix](https://sourcelibrary.org/book/picatrix)*, [Page 323](https://sourcelibrary.org/book/picatrix?page=323).');
+    expect(text).toBe('Claim *[De vita libri tres](https://sourcelibrary.org/book/de-vita-ficino)*, [Page 19](https://sourcelibrary.org/book/de-vita-ficino/page-number/19), [Page 20](https://sourcelibrary.org/book/de-vita-ficino/page-number/20); *[Picatrix](https://sourcelibrary.org/book/picatrix)*, [Page 323](https://sourcelibrary.org/book/picatrix/page-number/323).');
   });
 
   it('names the book again after a link to another page', () => {

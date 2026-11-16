@@ -70,6 +70,7 @@ src/data/*
 !src/data/ocr-benchmark-evidence.json
 !src/data/ocr-read-surface-6740.json
 !src/data/ocr-pareto.json
+!src/data/test-set-264.json
 !src/data/translation-pareto.json
 !src/data/pareto-sample-audit.json
 !src/data/model-roster.json

@@ -1,0 +1,54 @@
+[
+  {
+    "book_id": "69942aa9045dfc482ad77d13",
+    "slot": 1,
+    "title": "Opera Omnia I (Delarue-Lommatzsch)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 1834 Latin edition of Origen (the Lommatzsch reprint of the De la Rue text) sits correctly in the europeanlibraries collection.",
+    "rights_flag": null,
+    "structure_note": "The running head reads 'ORIGENIS IN MATTHAEUM' (Matthew commentary, series §60), which is odd under a title of 'Vol. 1'. In the Lommatzsch edition the Matthew commentary falls in a later volume, and the published date of 1834 fits that. One leaf cannot confirm this. With printed_repeats of 620 out of 1081 numbered pages, page numbers repeat on most numbered leaves: either pagination restarts (several volumes or parts in one scan) or the OCR misreads page numbers. This page is an example of the second: <page-num>312 where the leaf prints 342. Also, structure.pages_translated = 0 while the pages_translated field says 1300 and this page has a translation, so the counter is unreliable (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 807,
+        "right_page": "yes",
+        "printed_marker": "342",
+        "layout": "single column, running head, footnotes below a rule; dark band across the top and a shadow over the right-hand line ends; ink stroke in the right margin",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<page-num>312</page-num>", "image": "342", "problem": "printed page number misread", "severity": "moderate", "class": "O11" },
+          { "ocr": "<meta>catchword: \"60. Quoniam\"</meta>", "image": "no catchword on the leaf; '60. Quoniam' opens a paragraph mid-page", "problem": "invented catchword", "severity": "minor", "class": "O11" },
+          { "ocr": "et poquidem obliviscitur", "image": "et po-[steriora, under the shadow] | quidem obliviscitur", "problem": "word lost in the shadowed line end and the stub fused with the next word", "severity": "minor" },
+          { "ocr": "jam ad virtutem propinquat, nienter dicitur", "image": "propinquat, [conve-] | nienter dicitur", "problem": "first half of 'convenienter' lost at the edge", "severity": "minor" },
+          { "ocr": "„nox⁴) promovet, dies autem appa-quavit.“", "image": "„nox ⁴) promovit, dies autem ap[pro-] | quavit.“", "problem": "'promovit' printed as 'promovet'; 'appropinquavit' garbled", "severity": "minor" },
+          { "ocr": "et quae diei sunt meditantidi", "image": "meditanti[bus] (end hidden by shadow)", "problem": "garbled word end", "severity": "minor" },
+          { "ocr": "sperans per abstinentiam jusmodi", "image": "abstinenti[am e-] | jusmodi", "problem": "'ejusmodi' clipped at the edge", "severity": "minor" },
+          { "ocr": "Dominum suscipere in sum", "image": "suscipere i[n se-, hidden] | sum.", "problem": "garbled across the shadowed line break", "severity": "minor" },
+          { "ocr": "„non⁵) sumus noctis, neque tenebrarum.“", "image": "„non ⁶) sumus noctis", "problem": "footnote anchor 6 read as 5, so 1 Thess. 5:5 is keyed to the variant note; anchor 5 (for 'Instat') is missing from the body", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "„non⁵) sumus noctis", "english": "\"we are⁵) not of the night, nor of darkness.\"", "problem": "inherits the wrong anchor: footnote 5 (the 'dies autem instat' variant) is keyed to the Thessalonians quotation, and footnotes 5 and 6 point to the wrong places", "severity": "minor" },
+          { "source": "²) Edd. Merlini: in se ipso.", "english": "<note>original: \"in se ipso\", a spelling variant</note>", "problem": "'in se ipso' against 'in semetipso' is a different form (the intensive -met is dropped), not a spelling variant", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "The opening <meta> says the page continues 'the quotation from Luke 12:35-36 on girded loins, burning lamps, and servants waiting for their master'. That is not on this leaf, and the <summary> repeats 'the lamp of Luke 12:35'. Plausible, but it cannot be checked from this page.", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "a difference only in word order", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"in se ipso\", a spelling variant", "verdict": "wrong", "helpful": true }
+          ],
+          "missing": [
+            { "english": "M. and R. in the text: \"but the day presses on\"; R., however, in the notes: \"Manuscripts etc.\"", "why": "The sigla M. and R. (Merlin's edition and De la Rue's edition) are never explained, so the variant notes mean nothing to a general reader." },
+            { "english": "Merlin's editions: whose lamp is thus lit", "why": "Nothing says who Merlin is: Jacques Merlin, an early 16th-century editor of Origen." },
+            { "english": "\"Into it\" is missing in the text of the editions of M. and R.", "why": "The source prints „ci“ (a misprint for 'ei'). The English silently resolves it, so the reader cannot tell which word the note is about." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean 19th-century edition, correctly shelved. The OCR loses or garbles several line ends under the scan's right-edge shadow, misreads the page number and invents a catchword. The translation restores the garbled words sensibly (\"forgets the things that are behind\", \"fittingly\"). Only minor apparatus slips remain: a wrong footnote anchor and a mislabelled variant note. The 'Vol. 1' title on a Matthew-commentary leaf, together with the heavy page-number repeats, deserves a catalogue check."
+  }
+]

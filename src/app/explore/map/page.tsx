@@ -101,7 +101,9 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Map · Explore | Source Library',
   description:
-    'Interactive map of 10,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.',
+    // Books placed on the map (distinct ids in system_config.map_data), not the
+    // library total: 47,615 measured 2026-11-13. The page body shows the live count.
+    'Interactive map of 45,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.',
   openGraph: {
     title: 'Map · Explore | Source Library',
     description:

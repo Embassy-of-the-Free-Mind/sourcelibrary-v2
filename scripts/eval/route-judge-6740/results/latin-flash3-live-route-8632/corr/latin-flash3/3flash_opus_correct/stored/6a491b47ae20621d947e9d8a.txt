@@ -1,0 +1,36 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>25</page-num>
+<header>ANDEGAVENSIS.</header>
+<sig>B</sig>
+<meta>catchword: gerit</meta>
+
+renititur, & excursus aquæ non da-
+tur, præ spiritu vas implente & si-
+mul aere incumbente. Si vero quis
+vas sensim inclinarit, aut fundum
+perforauerit, spiritus de vase exibit:
+egresso autem spiritu, procedit etiam
+aqua foras. Sic sane in hydrope; nos
+autem iuxta partitionem à nobis tra-
+ditam, curationem duplicem, vni-
+uersalem & particularem institui-
+mus. Vniuersalis indicatio erit, spi-
+ritus impetum coercere, eum vide-
+licet coagulando, cuiusmodi insen-
+sibiliter foras detruditur, facultate
+expultrice cooperante : coagulato
+vero spiritu, aquæ sunt hauriendæ.
+Hæc autem pluribusmodis fiunt, vt
+in maiori mundo videre est, vbi com-
+pescitur ventus adueniente pluvia,
+atque ardoris Sole sedatur, coagula-
+tur frigoris rigore, aut contrarieta-
+te sublata. In microcosmo pluvia
+concitatur diaphoreticis; eiusmodi
+vi pollet sulphur hydropicum su-
+pracitatum, cuius, & calor solis vices
+
+<vocab>hydrope, curationem, Vniuersalis, coagulando, expultrice, microcosmo, diaphoreticis, sulphur hydropicum</vocab>

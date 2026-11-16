@@ -34,14 +34,14 @@ type Entry = {
 };
 
 const ENTRIES: Entry[] = [
-  { who: 'Pindar', year: -498, when: '498 BCE', lane: 'reach', claim: 'Neither by ships nor by land can the road to the Hyperboreans be found.', href: '/book/the-odes-of-pindar-sandys?page=347' },
-  { who: 'Herodotus, after Aristeas', year: -440, when: '5th century BCE', lane: 'steppe', claim: 'Past the Scythians to the Issedones, then the one-eyed Arimaspians, the griffins, and last the Hyperboreans by the sea.', href: '/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=235' },
+  { who: 'Pindar', year: -498, when: '498 BCE', lane: 'reach', claim: 'Neither by ships nor by land can the road to the Hyperboreans be found.', href: '/book/pindari-olympia-pythia-nemea-isthmia-estienne?page=322' },
+  { who: 'Herodotus, after Aristeas', year: -440, when: '5th century BCE', lane: 'steppe', claim: 'Past the Scythians to the Issedones, then the one-eyed Arimaspians, the griffins, and last the Hyperboreans by the sea.', href: '/book/erodotou-logoi-ennea-oiper-epikalountai-mousai-herodoti-libr?page=170' },
   { who: 'Hellanicus', year: -430, when: '5th century BCE', lane: 'celts', claim: 'The Hyperboreans live beyond the Alps of Italy.', href: '/book/argonautica-editio-princeps-lascaris-rhodius?page=159' },
   { who: 'Heraclides of Pontus', year: -350, when: '4th century BCE', lane: 'celts', claim: 'The Gauls who sacked Rome in 390 BCE were an army from the country of the Hyperboreans.', href: '/book/histoire-des-celtes-pelloutier?page=68' },
-  { who: 'Hecataeus of Abdera', year: -300, when: 'c. 300 BCE', lane: 'celts', claim: 'An island in the ocean opposite the land of the Celts, no smaller than Sicily, with a round temple.' },
+  { who: 'Hecataeus of Abdera', year: -300, when: 'c. 300 BCE', lane: 'celts', claim: 'An island in the ocean opposite the land of the Celts, no smaller than Sicily, with a round temple.', href: '/book/bibliotheca-historica-siculus?page=123' },
   { who: 'Apollonius of Rhodes', year: -250, when: '3rd century BCE', lane: 'celts', claim: 'The Celts say the amber in the Eridanus is the tears Apollo shed among the Hyperboreans.', href: '/book/apollonii-rhodii-argonautica-estienne?page=210' },
-  { who: 'Pliny the Elder', year: 75, when: '1st century CE', lane: 'reach', claim: 'Behind the Rhipaean mountains, where the sun rises and sets once a year.' },
-  { who: 'Pausanias', year: 160, when: '2nd century CE', lane: 'steppe', claim: 'The offerings pass from the Hyperboreans to the Arimaspians, the Issedonians and the Scythians, then to Sinope.', href: '/book/pausanias-description-of-greece-vol-1-frazer?page=148' },
+  { who: 'Pliny the Elder', year: 75, when: '1st century CE', lane: 'reach', claim: 'Behind the Rhipaean mountains, where the sun rises and sets once a year.', href: '/book/historia-naturalis-ed-johannes-andreas-bishop-of-aleria-plinius-secundus?page=108' },
+  { who: 'Pausanias', year: 160, when: '2nd century CE', lane: 'steppe', claim: 'The offerings pass from the Hyperboreans to the Arimaspians, the Issedonians and the Scythians, then to Sinope.', href: '/book/accurata-graeciae-descriptio-greek-latin-pausanias?page=46' },
   { who: 'Philipp Clüver', year: 1616, when: '1616', lane: 'baltic', claim: 'The amber river Eridanus was the Radaune, which reaches the sea at Danzig.', href: '/book/germaniae-antiquae-libri-tres-cluver?page=886' },
   { who: 'Olof Rudbeck', year: 1679, when: '1679–1702', lane: 'sweden', claim: 'Sweden was both Atlantis and Hyperborea; the Hyperboreans were the nobly born Swedes.', href: '/book/hymni-epigrammata-et-fragmenta-callimachus?page=563' },
   { who: 'Christoph Hartknoch', year: 1684, when: '1684', lane: 'baltic', claim: 'Diodorus’s amber island Basilia was Samland. He does not claim the Hyperboreans for Prussia.', href: '/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=36' },

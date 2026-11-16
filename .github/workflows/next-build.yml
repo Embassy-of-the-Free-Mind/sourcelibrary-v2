@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   next-build:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,6 @@ jobs:
         if: steps.inputs.outputs.build == 'yes'
         with:
           node-version: 22
-          cache: npm
 
       - if: steps.inputs.outputs.build == 'yes'
         run: npm ci

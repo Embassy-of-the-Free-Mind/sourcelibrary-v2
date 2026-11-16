@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import {
   normalizeLanguageToken, parseLanguageField, languageFamily, sameLanguageFamily,
   LANGUAGES, languageCode, toLanguageCodes, languageName, codeFamily, sameLanguage,
-  toBcp47, fromLocale, displayLabel, isLanguageCode,
+  toBcp47, fromLocale, displayLabel, isLanguageCode, foldBareLanguageCode,
 } from '@/lib/language-normalize';
 import * as twin from '../../scripts/lib/language-normalize.mjs';
 // The inventory copies (design doc, first table) that export what they hold.
@@ -258,6 +258,45 @@ describe('code API: TS/mjs parity', () => {
     }
     for (const codes of [['grc', 'lat'], ['heb', 'arc', 'jrb'], ['lat'], []]) {
       for (const loc of ['en', 'es']) expect(twin.displayLabel(codes, loc)).toBe(displayLabel(codes, loc));
+    }
+  });
+});
+
+describe('foldBareLanguageCode: a stored code becomes its name, nothing else moves (v2#8628)', () => {
+  // Every code-shaped `books.language` value in production on 2026-11-13, before the fold.
+  const FOLDED: Record<string, string> = {
+    de: 'German', ger: 'German', 'de-DE': 'German', la: 'Latin', lat: 'Latin', fr: 'French', fre: 'French',
+    it: 'Italian', ita: 'Italian', en: 'English', eng: 'English', ENG: 'English', grc: 'Greek', gre: 'Greek',
+    ar: 'Arabic', nl: 'Dutch', he: 'Hebrew', heb: 'Hebrew', tr: 'Turkish', es: 'Spanish', ru: 'Russian',
+    cs: 'Czech', lv: 'Latvian', hrv: 'Croatian', slv: 'Slovenian', per: 'Persian', arc: 'Aramaic',
+    syc: 'Syriac', ota: 'Ottoman Turkish', yid: 'Yiddish',
+    // historical stages keep their own names
+    gmh: 'Middle High German', frm: 'Middle French', dum: 'Middle Dutch', enm: 'Middle English',
+  };
+  // Placeholders, codes the table lacks, the ambiguous `el`, title-cased values (a name is written
+  // that way: `Mon` and `San` are languages, `mon` and `san` the codes of two others), names, compounds.
+  const LEFT = ['und', 'mul', 'zxx', 'nds', 'peo', 'roh', 'roa', 'qhe', 'el', 'An', 'Ne', 'Am', 'Ga', 'Dz', 'Lb', 'Qu', 'Den', 'Mon', 'San', 'Frm', 'Yid',
+    'German', 'Latin', 'Mam', 'Lao', 'Latin-German', 'Hebrew and Aramaic', 'N/A', 'Unknown', ''];
+
+  it('folds exactly the unambiguous codes', () => {
+    for (const [code, name] of Object.entries(FOLDED)) expect(foldBareLanguageCode(code), code).toBe(name);
+    expect(foldBareLanguageCode('  de ')).toBe('German');
+  });
+
+  it('returns everything else unchanged, including non-strings', () => {
+    for (const v of LEFT) expect(foldBareLanguageCode(v), JSON.stringify(v)).toBe(v);
+    expect(foldBareLanguageCode(null)).toBeNull();
+    expect(foldBareLanguageCode(undefined)).toBeUndefined();
+  });
+
+  it('is idempotent and never folds a table NAME', () => {
+    for (const r of LANGUAGES) expect(foldBareLanguageCode(r.name), r.name).toBe(r.name);
+    for (const name of Object.values(FOLDED)) expect(foldBareLanguageCode(name)).toBe(name);
+  });
+
+  it('TS and mjs agree on every production value and every code', () => {
+    for (const v of [...ALL_VALUES, ...Object.keys(FOLDED), ...LEFT, ...CODES, ...LANGUAGES.map((r) => r.iso1), ...LANGUAGES.flatMap((r) => r.marc)]) {
+      expect(twin.foldBareLanguageCode(v), JSON.stringify(v)).toBe(foldBareLanguageCode(v));
     }
   });
 });

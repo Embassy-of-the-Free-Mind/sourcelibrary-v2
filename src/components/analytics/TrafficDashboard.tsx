@@ -162,7 +162,7 @@ export default function TrafficDashboard() {
             ] as const).map(([label, n]) => (
               <div key={label} className="p-4 rounded-xl" style={card}>
                 <div className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
-                <div className="text-3xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>{n.toLocaleString('en-US')}</div>
+                <div className="text-3xl font-semibold mt-1" style={{ color: 'var(--text-primary)' }}>{n.toLocaleString('en-US')}</div>
                 <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>pageviews</div>
               </div>
             ))}
@@ -260,7 +260,7 @@ export default function TrafficDashboard() {
                   onClick={() => toggleFilter('referrer', r.referrer)} />
               ))}
             </ListCard>
-            <ListCard title="Traffic sources" hint="pageviews · click to filter">
+            <ListCard title="Traffic sources" hint="pageviews, not arrivals · click to filter">
               {data.topReferrers.length === 0 ? <Empty /> : data.topReferrers.map((r, i) => (
                 <Row key={i} label={r.referrer} count={r.count} unit="views"
                   active={filters.referrer === r.referrer}
@@ -297,7 +297,7 @@ function SummaryCard({ icon, label, value, delta, hint }: {
         <span className="text-sm font-medium uppercase" style={{ color: 'var(--text-muted)' }}>{label}</span>
       </div>
       <div className="flex items-baseline gap-3">
-        <div className="text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>{value.toLocaleString('en-US')}</div>
+        <div className="text-4xl font-semibold" style={{ color: 'var(--text-primary)' }}>{value.toLocaleString('en-US')}</div>
         <span className="text-sm font-medium" style={{ color }}>{delta.text}</span>
       </div>
       {hint && <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{hint}</p>}
@@ -388,7 +388,7 @@ function BotSection({ bots, bin }: { bots: TrafficDashboardData['bots']; bin: Tr
               <span className="w-2.5 h-2.5 rounded-full" style={{ background: BOT_GROUP_META[g].color }} />
               {BOT_GROUP_META[g].label}
             </div>
-            <div className="text-2xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>
+            <div className="text-2xl font-semibold mt-1" style={{ color: 'var(--text-primary)' }}>
               {bots.totals[g].toLocaleString('en-US')}
             </div>
             <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{BOT_GROUP_META[g].note}</div>

@@ -211,8 +211,8 @@ export function ocrField(text, { run, now = new Date(), imageUrl = null, imageSh
 }
 
 /** One page through the one writer (#7058): revision with the whole prior field, CAS on the prior text. */
-export async function writeLanePage(db, pageId, field, { run }) {
-  return writePageText(db, pageId, 'ocr', field, { by: `${field.pipeline || LANE} (scripts/workers/gpu-print-lane.mjs)`, reason: REVISION_REASON, run_id: run });
+export async function writeLanePage(db, pageId, field, { run, reason = REVISION_REASON }) {
+  return writePageText(db, pageId, 'ocr', field, { by: `${field.pipeline || LANE} (scripts/workers/gpu-print-lane.mjs)`, reason, run_id: run });
 }
 
 /**

@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: (q) Bern-</meta>
+
+# Elenchus
+
+## *Clarissimorum Virorum, qui Leobergâ orti & superius memorati sunt.*
+
+### Philosophi & Poetæ celebriores.
+
+(a) *M. Casparus Suevus Scholæ Leor. Rector & Instaurator.*
+(b) *M. Laurentius Ludovicus Gymnasii Gorlicens. Rector.*
+(c) *M. Nicolaus Gerstmannus Facult. Philosoph. in Academ. Lipsiensi Decanus.*
+
+*Ejusdem Facult. Matricula nominat plures ex Leorinis Familiis, Reusneris, Wirthiis, aliis Magistros & Baccal. Primo Acad. illius seculo creatos.*
+
+(d) *Nicolaus Reusnerus ICt. P. L. Com. Palat. Cæsar. in Argent. & Jenen. Acad. Antecessor.*
+(e) *Elias Reusnerus Med. Lic. Hist. & Poet. in Acad. Jen. Profess.*
+(f) *Hieronymus Arconatus Poeta, Sacr. Cæs. Majest. ab Ep. Bellicis.*
+(g) *Valentinus Neukirch Poet. in Acad. Regiomont.*
+
+### Medici.
+
+(h) *Georgius Wirth. I. Med. D. Ludovici Regis Hungar. Archiater.*
+*Georg. Wirth. II. Med. D. Pract. Viennæ. Georgius Wirth. III. Med. D. Caroli V. Imperat. & Philippi Hispan. Regis Medicus.*
+(i) *Johannes Langius Med. D. IV. Com. & Elect. Palatin. Archiater, Autor Epist. Medicinal.*
+(k) *Caspar Hoffmannus M. D. Elector. Brandenb. Archiater.*
+(l) *Balthasar Gitlerus Med. D. & Prof. in Acad. Lips.*
+(m) *Johannes Zeidlerus Med. Doct. & Prof. ibid.*
+(n) *Georgius Bejerus Med. Doct. Duc. Sax. Archiater & Physicus Martisburg.*
+(o) *Hieronymus Reusnerus Med. D. Phys. Imperial. Nördlingæ.*
+*Bartholomæus Reusnerus Med. & Physicus Zittavien. Pater Bartholomæi Reusneri ICti & Ordin. Witteberg.*
+(p) *Tobias Koberus Med. D. P. L. Physicus Patriæ.*
+
+<vocab>Elenchus, Leoberga, Reusnerus, Wirth, Medici, Philosophi, Poetae, Academia, Archiater, Physicus</vocab>

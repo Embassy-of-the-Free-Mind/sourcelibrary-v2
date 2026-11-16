@@ -124,7 +124,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
         >
           ← Back to catalogue entry
         </a>
-        <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif leading-tight mb-1">
           Edit catalogue entry
         </h1>
         <p className="text-sm text-muted mb-6">

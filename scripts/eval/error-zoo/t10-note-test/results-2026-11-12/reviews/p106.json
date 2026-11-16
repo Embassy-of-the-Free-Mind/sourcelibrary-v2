@@ -1,0 +1,104 @@
+[
+  {
+    "book_id": "69b525ce6be6046083032ac7",
+    "slot": 1,
+    "title": "Architecture, peinture et sculpture de la maison de ville d'Amsterdam, représentée en CIX figures en taille-douce ...",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1719 French description of the Amsterdam Town Hall's plates. The image and text match that. No tradition or collection is recorded to check it against.",
+    "rights_flag": null,
+    "structure_note": "Each record is a two-page opening: the OCR joins two printed pages with '---', and the image is an unsplit spread. On this record the text is printed pp. 18–19 (Planches LXXIII–LXXXIV), but the image is the next opening, pp. 20–21 (Planches LXXXV–CIII). The OCR ends with the catchword 'Chien;', and the image's p.20 begins 'Chien; c'est pourquoi le Sculpteur a placé ici un Loup'. That points to an image/text offset of one opening (I1), not a misread numeral. The 4 printed_backsteps and 2 repeats may come from this offset or from misread leaf numbers on plate pages. Only 16 of 169 records carry a printed number. The counts disagree on translation: structure pages_translated 0, but pages_translated_field 127.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "no",
+        "printed_marker": "\"20\" and \"21\" (page numbers), signature \"F\" at the foot of p.21, catchwords \"PLAN-\" (p.20) and \"un\" (p.21)",
+        "layout": "unsplit two-page opening, two columns per page, centred PLANCHE headings, running head split across the spread",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>18</page-num> … ### PLANCHE LXXIII. … Voici une Statuë dont nous n'avons pas\nencore parlé",
+            "image": "pages 20–21: 'Chien; c'eſt pourquoi le Sculpteur a placé ici un Loup', PLANCHE LXXXV, LXXXVI & LXXXVII … PLANCHE CIII",
+            "problem": "The transcription is of the previous opening (pp. 18–19, Planches LXXIII–LXXXIV). None of its text is on this image.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "il ne\ns'enfuit pas qu'elles ne puiſſent auſſi en reſ-\nſentir",
+            "image": "not on this image; the sense requires 's'enſuit'",
+            "problem": "Probable long-s misread ('s'enfuit' for 's'ensuit'). It cannot be checked against this image. The translation reads it correctly.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(image pp. 20–21) PLANCHE LXXXV. Les Trophées repréſentez ſur ce Piédeſtal …",
+            "english": "### PLATE LXXIII. Here is a Statue of which we have not yet spoken …",
+            "problem": "The English renders the transcription faithfully, but the transcription belongs to the previous opening, so nothing on this image is translated. As a translation of the OCR alone it would score about 5.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "source": "les Anciens im-\nmoloient à ce Dieu le Cheval, le Loup, & le\nChien;",
+            "english": "The Ancients sacrificed to this God the Horse, the Wolf, and the",
+            "problem": "The OCR puts the catchword 'Chien;' into the body, and the English drops it at the seam, ending on 'and the'. The next opening begins 'Chien;', so a reader going on gets the word there.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The scan beside the text is the next opening (printed pp. 20–21), not the pages the text and translation give (pp. 18–19).",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "Raw '<column-break/>' appears twice in the translation's reading text.",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "'<header>OF THE TOWN HALL OF AMSTERDAM.</header>' sits in the middle of the sentence 'The Festoons represented in this Plate … serve as accompaniment'.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "turned into Stags: that is, given horns, the traditional sign",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"Semer\"",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "original: \"Parques,\" the three goddesses who spin, measure an",
+              "verdict": "ok",
+              "helpful": false
+            }
+          ],
+          "missing": [
+            {
+              "english": "that Goddess who was the Daughter of Jupiter and Diana",
+              "why": "Mythology makes Venus the daughter of Dione, not of Diana. The source has the slip (or a variant) and the English repeats it without comment, a few lines after presenting Diana as a virgin huntress. A reader is left confused."
+            },
+            {
+              "english": "named Saturn from a Latin word meaning *To Sow*",
+              "why": "The Latin word behind the etymology (serere, satum) is never given, so the pun is lost. The note gives only the French 'Semer'."
+            },
+            {
+              "english": "the Chamber of the Extraordinary Aldermen",
+              "why": "This is a Dutch civic office (the buitengewone schepenen), and a general reader cannot tell what 'Extraordinary' means here."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text and its English are a careful, faithful rendering of pp. 18–19, but this record's image is the next opening, pp. 20–21, so a reader sees a scan that does not match the text beside it. Raw <column-break/> tags also leak into the English."
+  }
+]

@@ -53,8 +53,9 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // showing the literal "<note>original: …" markup.
   // Metered reader (#4357): a page past the free sample carries no excerpt of
   // its text — 200 characters a page, over every page, is a scrape of the
-  // book's opening lines. Those pages are noindex, so no search snippet is
-  // lost. Reading rooms are exempt, as on the page itself.
+  // book's opening lines. The leaf names its book as canonical, so the
+  // snippet that matters is the book's own. Reading rooms are exempt, as on
+  // the page itself.
   const excerptPage = gateLeafText(page, (book as { pages_count?: number }).pages_count,
     meteredReaderEnabled() && !(ctx?.id || ctx?.isEmbedded));
   const textContent = stripEditorialWrappers(excerptPage.translation?.data || excerptPage.ocr?.data || '')

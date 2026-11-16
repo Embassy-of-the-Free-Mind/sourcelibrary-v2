@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
-import { withAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 
 // GET /api/experiments/ocr-quality/[id] - Get experiment status and progress
-export const GET = withAuth(async (request, session, context) => {
+export const GET = withInnerCircleAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
 

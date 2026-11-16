@@ -84,6 +84,20 @@ describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashi
       expect(classifyPaths([f]).reasons.map((r: { reason: string }) => r.reason).join(' ')).toMatch(/crons/);
   });
 
+  it('a crontab snapshot hold carries the "merging does not install this" note; other holds do not (#6323)', () => {
+    for (const f of ['scripts/workers/crontab.production', 'infrastructure/gex45-crontab']) {
+      const notes = classifyPaths([f]).reasons.map((r: { note?: string }) => r.note).filter(Boolean);
+      expect(notes.join(' ')).toMatch(/does not install/);
+      expect(notes.join(' ')).toMatch(/crontab -l \| grep "\^\[\^#\]"/);
+    }
+    expect(classifyPaths(['vercel.json']).reasons.some((r: { note?: string }) => r.note)).toBe(false);
+  });
+
+  it('the lane table and the tool that writes it into a crontab hold: a merged row becomes a running cron (#70)', () => {
+    for (const f of ['infrastructure/lanes.tsv', 'scripts/workers/lanes-crontab.mjs'])
+      expect(classifyPaths([f]).reasons.map((r: { reason: string }) => r.reason).join(' ')).toMatch(/crons/);
+  });
+
   it('a readable diff of harmless paths is AUTO', () => {
     expect(classifyPR(5991, fakeGh(() => '')).result.tier).toBe('AUTO');
   });

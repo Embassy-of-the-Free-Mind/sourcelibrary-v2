@@ -11,6 +11,42 @@ export interface BookLookupResult {
   matchedBySlug: boolean;
 }
 
+/** A string with the shape of a `books.id`: a 24-hex ObjectId string, or a UUID (85 early books). */
+const ID_SHAPED = /^(?:[a-f0-9]{24}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/i;
+
+/** True when the string already has the shape of a book id, so it needs no lookup to become one. */
+export function isBookIdShaped(ref: string): boolean {
+  return ID_SHAPED.test(ref);
+}
+
+/**
+ * The `books.id` behind whatever a caller used to name a book: the id itself,
+ * or the slug from a book URL (`/book/<slug>`), current or renamed.
+ *
+ * Why: every link we hand out is `/book/<slug>`, so an assistant that has only
+ * the link passes the slug as `book_id`. Routes that filter `pages.book_id` by
+ * the caller's string then find nothing, and report "Book not found" or, worse,
+ * an empty result that reads as "the book does not say that" (30 days to
+ * 2026-11-12: 25 of the 76 distinct ids the connector answered "Book not
+ * found" for were visible, readable books).
+ *
+ * An id-shaped string is returned as it came, with no query, so the usual call
+ * costs nothing. Anything else is one indexed lookup on `slug`, then on
+ * `slug_aliases`. A string that matches no book also comes back unchanged, so
+ * the caller's own not-found path answers exactly as it did before.
+ *
+ * This resolves a NAME only. It says nothing about whether the book may be
+ * read: the caller still runs its own visibility and tenant checks on the book
+ * it then loads.
+ */
+export async function resolveBookRef(db: Db, ref: string): Promise<string> {
+  if (!ref || ID_SHAPED.test(ref)) return ref;
+  const opts = { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 };
+  const books = db.collection('books');
+  const found = (await books.findOne({ slug: ref }, opts)) ?? (await books.findOne({ slug_aliases: ref }, opts));
+  return typeof found?.id === 'string' && found.id ? found.id : ref;
+}
+
 /**
  * Find a book by slug, id, or _id. Returns null if not found.
  *

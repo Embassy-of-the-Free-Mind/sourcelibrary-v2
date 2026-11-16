@@ -23,6 +23,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — scripts-side module, no types
 import { LANES, EXEMPT, PAUSE_KEYS, DEAD_PAUSE_NAMES, HOLD_MARKER_TEST, LANE_STEPS, registeredFiles, CRONTAB_SNAPSHOTS, OFF_REPO_CRON, QUOTA_METERS, CRON_ROWS, RETIRED_PATTERNS, judgeCronLine } from '../../scripts/lib/lanes.mjs';
+// @ts-expect-error — scripts-side module, no types
+import { parseTable, TABLE_PATH, OFF } from '../../scripts/workers/lanes-crontab.mjs';
 
 type Lane = {
   name: string; serves: string; files: string[]; budget: string; respectsHold: string | false; pause: string | null; reason?: string;
@@ -73,10 +75,16 @@ function writersReachable(file: string, seen = new Set<string>()): string[] {
   return out;
 }
 
-/** The live (uncommented) lines of every box's crontab snapshot. */
+/**
+ * The live (uncommented) lines of every box's crontab snapshot, and the rows of the lane table (#70): a lane that
+ * moves from a hand-kept crontab into infrastructure/lanes.tsv stays under every check below.
+ */
 function cronLines(): { box: string; line: string }[] {
-  return (CRONTAB_SNAPSHOTS as { box: string; file: string }[]).flatMap(({ box, file }) =>
+  const snapshots = (CRONTAB_SNAPSHOTS as { box: string; file: string }[]).flatMap(({ box, file }) =>
     read(file).split('\n').filter((l) => l.trim() && !l.trim().startsWith('#') && !/^[A-Z_]+=/.test(l.trim())).map((line) => ({ box, line })));
+  const table = (parseTable(read(TABLE_PATH)).rows as { box: string; schedule: string; command: string }[])
+    .filter((r) => r.box !== OFF).map((r) => ({ box: r.box, line: `${r.schedule} ${r.command}` }));
+  return [...snapshots, ...table];
 }
 
 /** Everything a schedule runs: crontab snapshots (uncommented lines), scheduler WORKERS, vercel crons, cron-caller targets. */

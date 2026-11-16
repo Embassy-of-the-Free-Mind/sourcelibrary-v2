@@ -92,7 +92,7 @@ export default function QuoteBlock({ quotes, bgUrl, imageCredit, framing }: { qu
             </button>
           )}
         </div>
-        <p key={`${i}-${showOriginal}`} className="text-2xl sm:text-3xl text-white font-display leading-snug animate-fade-in-up" style={{ textShadow: '0 1px 12px rgba(0,0,0,0.5)' }} lang={showOriginal && q.language ? undefined : 'en'}>
+        <p key={`${i}-${showOriginal}`} className="text-2xl sm:text-3xl text-white font-serif leading-snug animate-fade-in-up" style={{ textShadow: '0 1px 12px rgba(0,0,0,0.5)' }} lang={showOriginal && q.language ? undefined : 'en'}>
           &ldquo;{text}&rdquo;
         </p>
         <Link href={q.href} className="inline-block text-sm text-white/70 hover:text-white transition-colors mt-5">{attribution}</Link>

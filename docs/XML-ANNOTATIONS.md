@@ -236,7 +236,7 @@ page.translation.data → strip all tags → clean text for sharing
 
 ### 1. Batch Translation Drops Tags (CRITICAL)
 
-**File**: `src/app/api/books/[id]/batch-translate-async/route.ts`
+**File**: `src/app/api/books/[id]/batch-translate-async/route.ts` (retired 2026-11-12, v2#8590; pages it wrote remain)
 
 The batch translation prompt is simpler than the worker prompt and does NOT instruct tag preservation. Books translated via Batch API may lack `<note>`, `<margin>`, `<term>`, `<summary>`, `<keywords>` tags that worker-translated books have.
 

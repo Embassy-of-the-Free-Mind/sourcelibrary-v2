@@ -1,0 +1,45 @@
+<scan-quality>poor</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>The text on this page is mirrored and appears to be bleed-through or an offset impression from the preceding page. It has been transcribed by mentally reversing the characters.</warning>
+
+->XI.<-
+
+Gratia vero gratum
+facientis donatio ad id implendum legitime con-
+sueta, digne et dubio ac nimium.
+
+->XII.<-
+
+Hoc est, ut Augustinus ait, et gratia in hunc in-
+tendit: quia non per legem iustificamur, sed per gratiam. Nam-
+que et si lex in hunc usum non fuisset ad iusti-
+ficandum posita, tunc certe legatus non duceretur
+nisi ad hoc ut hunc usum duceret.
+
+->XIII.<-
+
+Et Hieronymus: non est per hunc usum res quae
+donum est. Vnde gratia dicitur gratuita.
+
+->XIV.<-
+
+Quod si ista per hunc usum constitueretur,
+quod non est: gratia iam non esset gratia. Iudi-
+cium converteret in gratiam; quod nunquam
+gratitudinis inveniret.
+
+->XV.<-
+
+Quemadmodum bis in hunc usum recantant
+his lineis melodiam congruentis. Donatori obsequium
+dum ob praestitum gratiae de isto, quo
+effectum omnem re verificationis habet. Non
+certio autem ad donum a Deo
+toto consequendum exigit
+cordibus.
+
+## FINIS
+
+<vocab>gratia, iustificamur, Augustinus, Hieronymus, donum, gratitudo, melodiam</vocab>

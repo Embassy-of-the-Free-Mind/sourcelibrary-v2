@@ -8,8 +8,10 @@ export const dynamic = 'force-dynamic';
 // fetch to the Hetzner monitoring endpoint (or falls back to DB).
 
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
-export async function GET() {
+// Backfill figures are for staff: an editor sign-in or the cron bearer (ops #17).
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
 
@@ -44,4 +46,4 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
   }
-}
+}, { minRole: 'editor' });

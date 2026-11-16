@@ -1,0 +1,105 @@
+[
+  {
+    "book_id": "6a3c640439b4508b04e237f1",
+    "slot": 1,
+    "title": "御定佩文韻府·卷二十六之九 (vol 435)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Siku Quanshu manuscript copy of the Peiwen yunfu (Qing imperial phrase dictionary). It is a Chinese reference work in the 'universallibrary' collection. Nothing is wrong with the shelf.",
+    "rights_flag": null,
+    "structure_note": "Only 8 of 131 records carry a printed number. This leaf shows the block-heart title 欽定四庫全書 / 卷二十六之九, and its folio number falls outside the frame. With so few numbered pages, the 3 backsteps and 2 repeats are more likely misread or misplaced block-heart numerals than a scan splice. The structure count gives pages_translated 0 against a field value of 126, so one of the two counters is wrong (E2). The record count and page numbering are otherwise consistent: 131 records and 131 distinct page numbers.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "printed_marker": "欽定四庫全書 … 卷二十六之九 (block heart; no folio number visible)",
+        "layout": "Single half-folio of vertical text in a ruled frame with 16 columns. The block heart at the right edge carries the collection title and juan. The new headword 相繆 is set in large characters in the second-to-last columns, and repeated headwords are abbreviated as 丨丨.",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "晉陽秋祖逖劉琨俱以雄豪著名",
+            "english": "In the *Annals of Jin Yang*: \"Zu Ti and Liu Kun were both famous for their heroic spirit.",
+            "problem": "晉陽秋 is Sun Sheng's Jin chunqiu: 陽 replaces 春 to avoid a taboo name. The title means 'Annals of Jin', and 'Jin Yang' suggests a place or a person that is not there.",
+            "severity": "moderate"
+          },
+          {
+            "source": "江淹詩契濶承華內丨丨踰歲年",
+            "english": "Sharing hardship within the Chenghua palace, we were **intimately bound** for more than a year.",
+            "problem": "踰歲年 means 'for years on end', not 'more than a year'. The change is small.",
+            "severity": "minor"
+          },
+          {
+            "source": "演之以業尚見知",
+            "english": "Yanzhi became known for his scholarly attainments.",
+            "problem": "業尚 means his conduct and aspirations. 'Scholarly attainments' narrows the meaning slightly.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The <meta> asserts that the previous page's content was the Shijing 'mulberry bark … window and door' line (鴟鴞). That cannot be seen on this leaf, although it is plausible for the entry 綢繆.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "Zhaoyao and Sheti are star names. The \"two cycles\" are those",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "The \"canons and proclamations\" are sections of the Classic of",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Zu Ti and Liu Kun were Western Jin generals, remembered for th",
+              "verdict": "unsupported",
+              "helpful": false
+            },
+            {
+              "quote": "A rhapsody by Cao Zhi.",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "Master Zhu is Zhu Xi, the Song dynasty Neo-Confucian philosop",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "An allusion to the Classic of Poetry, where gifts of jade are",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "Original: 相繆 (xiangmou), \"mutually entwined\".",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "Sharing hardship within the Chenghua palace",
+              "why": "Chenghua (承華) was the crown prince's palace. Without that, the line's courtly setting is lost."
+            },
+            {
+              "english": "In the *Annals of Jin Yang*",
+              "why": "The title is a taboo substitution for 'Annals of Jin' (Jin chunqiu). Without a note, the reader takes 'Jin Yang' for a place or an author."
+            },
+            {
+              "english": "like bundled thorns, my feelings are **tightly bound**",
+              "why": "'Bundled thorns' (束楚) echoes the Shijing's binding images of marriage and loyalty, and the simile is opaque without that."
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches the leaf character for character, including the 丨丨 abbreviations and the new headword 相繆. The translation is faithful, apart from a mistranslated book title (晉陽秋) and small slips. The notes are accurate but several identify works and allusions the page does not carry."
+  }
+]

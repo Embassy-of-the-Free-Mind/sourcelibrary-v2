@@ -1,0 +1,51 @@
+[
+  {
+    "book_id": "69b51e67cf111105c429c037",
+    "slot": 1,
+    "title": "Confessio catholica. 2,3",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The leaf is Johann Gerhard's Confessio catholica: a 17th-century Lutheran polemic against Bellarmine, in Latin, which matches the record. No tradition or collection is set, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "printed_backsteps 113 and printed_repeats 111 out of 859 printed numbers is high. One page cannot show the cause. Misread numerals, or 'page-num' taken from signatures, are more likely than a broken scan order, but the book should get a catchword check. The structure count gives pages_translated 0, but the book field gives 581: one of the two counts is wrong (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "printed_marker": "93 (signature \"M 3\", catchword \"di-\")",
+        "layout": "single column, running head over a rule, chapter heading in large capitals, a drop initial T, roman and italic mixed, signature and catchword at the foot, show-through from the verso",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Exthesis:", "image": "Ἔκθεσις (Greek, ekthesis)", "problem": "the Greek section label is transliterated into a non-word, so the English note then quotes a word that is not printed", "severity": "moderate", "class": "O10" },
+          { "ocr": "nullam discrimen", "image": "nullum diſcrimen", "problem": "case ending misread", "severity": "minor" },
+          { "ocr": "in Baptismo culpam omnem dimitti et nullam poenam", "image": "in Baptiſmo & culpam omnem dimitti & nullam pœnam", "problem": "the first '&' of the et…et pair is dropped", "severity": "minor" },
+          { "ocr": "operum satisfactorum genera", "image": "operum ſatisfacto-riorum genera", "problem": "word shortened across the line break", "severity": "minor" },
+          { "ocr": "Adjejunium", "image": "Ad jeju-nium", "problem": "two words run together", "severity": "minor" },
+          { "ocr": "per flagella effunditur.", "image": "per flagella effun- [catchword] di-", "problem": "the split word is completed ('-ditur.') with letters that are not on this leaf, and the catchword 'di-' is not tagged", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "verbum Graecum <unclear>ὑπωπιάζω</unclear>", "english": "the Greek word <unclear>I strike under the eye</unclear>", "problem": "the Greek word that the sentence is about is replaced by an English gloss, so 'the Greek word' names no word", "severity": "moderate" },
+          { "source": "Exthesis", "english": "Exposition <note>original: \"Exthesis\"</note>", "problem": "the note gives the OCR's misreading as the original. The page prints Greek Ἔκθεσις", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "a raw <unclear> tag wraps English words in the reader text ('<unclear>I strike under the eye</unclear>')", "severity": "minor", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"Exthesis\"", "verdict": "wrong", "helpful": false },
+            { "quote": "original: \"per disciplinas h.e. per flagella\"; \"discipline", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "where the Greek word <unclear>I strike under the eye</unclear>, as Theophylact notes", "why": "the Greek word (hypōpiazō, 1 Cor 9:27) is lost, and nothing says it is the word Paul uses, so the argument about its meaning cannot be followed" },
+            { "english": "three kinds of satisfactory works", "why": "'satisfactory' is the technical term for works that make satisfaction (temporal penalty paid for sin), not the everyday sense of the word" },
+            { "english": "Coton, book 4 of the *Institutions*, chapter 3", "why": "Pierre Coton, the Jesuit, and his Institution catholique are not identified; a reader cannot tell who is being answered" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean 17th-century print with good OCR and a faithful translation. The only things a reader meets are the Greek 'Ἔκθεσις' turned into 'Exthesis' (and footnoted as the original) and a Greek word replaced by an English gloss. Nothing is serious."
+  }
+]

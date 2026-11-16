@@ -1,0 +1,77 @@
+[
+  {
+    "book_id": "69c834666c6f3cc53c84e53b",
+    "slot": 1,
+    "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1613 German Lutheran New Year's sermon in blackletter (running head 'Newe Jares Predigt') with marginal Scripture references. It is what the catalogue says it is. The packet gives no tradition or collection to test it against.",
+    "rights_flag": null,
+    "structure_note": "Record 39 pairs the image of one leaf with the text of the leaf before it. The strip of the facing verso at the left edge of the image shows line-ends ('…hlet', '/ es', 'die-', 'auff', 'gun-', 'mli-', 'esen/', 'gros-', 'ehr-', 'sind', 'nach', 'iret', 'der', 'nnd', 'der', 'tige', 'en-', 'enn', 'ret-', 'dts', 'der') that match the OCR's 'fehlet / es', 'præsidiret', 'der allmechtige', 'reichet', 'wirdts'. The OCR's catchword 'wird' is also the first word of the image. So the record is one leaf away from its image (I1); one page cannot show whether the offset runs through the whole book. with_printed_number 0 fits a book with no printed page numbers (none on this leaf). structure.pages_translated is 0 while the book field says 57, a counting mismatch.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "no",
+        "printed_marker": "ſie",
+        "layout": "single column of blackletter, running head 'Newe Jares Predigt' above a rule, Scripture references in the outer margin, catchword at the foot; a strip of the facing verso at the left edge",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "vielen dingen die geschehen sollen / aber es fehlet bißweilen vmb einen gutten Paurenschrit",
+            "image": "wird dirs ſagen / laß dir Noham predigen / der wird dirs verkündigen. Da der liechte Stern des Göttlichen geſetzes …",
+            "problem": "None of the transcription is on this image. The transcription is the previous leaf (the facing verso, whose line-ends show in the left strip). The image's text (Noah, the Flood, the Syrians, Moabites, Assyrians, Jeremiah, Nebuchadnezzar, the Romans) is not transcribed anywhere in this record.",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "<header>Geistlich Prognosticon.</header>",
+            "image": "Newe Jares Predigt",
+            "problem": "This running head does not match the image's head, which follows from the wrong leaf",
+            "severity": "moderate",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "frage nur die erste Welt / die wird",
+            "english": "Just ask the first world, which",
+            "problem": "The translation follows the transcription closely (I found no fidelity errors between OCR and English), but neither is the text of the leaf shown beside it. A reader reading against the scan gets another page's text.",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "other": [
+          {
+            "note": "The text panel belongs to the previous leaf. The scan shows the next leaf (it opens 'wird dirs ſagen', the transcription's catchword).",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "The running head is translated as the first line of the text: 'Spiritual Prognostication.'",
+            "severity": "minor"
+          },
+          {
+            "note": "The translation payload carries <summary> and <keywords> blocks. If the renderer does not move them out of the text, they show in the reading flow. I cannot confirm this from the payload alone.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"vmb einen gutten Paurenschrit\", meaning by a wide", "verdict": "ok", "helpful": true },
+            { "quote": "prognostication, forecast", "verdict": "ok", "helpful": true },
+            { "quote": "influence", "verdict": "ok", "helpful": true },
+            { "quote": "calculation", "verdict": "ok", "helpful": true },
+            { "quote": "presides over", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "Just ask the first world, which", "why": "'the first world' means the world before the Flood (the next leaf goes on with Noah). A general reader may not see this without a short gloss." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The book is on the right shelf and the translation follows its transcription well, with sound glosses. But on page 39 the image is one leaf ahead of the text (the transcription is the facing verso), so a reader comparing scan and text sees a different page."
+  }
+]

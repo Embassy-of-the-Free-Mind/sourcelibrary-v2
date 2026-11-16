@@ -25,7 +25,47 @@ export const SNAPSHOT_TYPE = 'archive-progress';
 export const ALARM_ID = 'archive-progress-alarm';
 export const QUIET_HOURS = 6;
 
-/** Per-provider sums: books, pages, archived (counter or ledger), remaining (books not yet complete). */
+/** The goal the progress report counts toward (Derek, 2026-11-12, #58): books with every page archived. */
+export const ARCHIVED_BOOKS_TARGET = 100_000;
+
+/** The hold wave-import.mjs writes on a catalogue-only book (#7343). Releasing it means the book is wanted. */
+export const CATALOGUE_ONLY_HOLD = 'manifest-only-lazy-pages';
+
+/**
+ * ARCHIVE SCOPE (#58). A catalogue-only book nobody has asked for is OUT of scope: it is still
+ * manifest-only, still on its import hold, not visible, and has no page archived. The lanes do not
+ * draw it (laneSelectionTiers) and it is not work remaining (measureByProvider). It comes back into
+ * scope by itself when its hold is released for reading (pipeline-hold.mjs), when it is published,
+ * or when a run names it with --book. A book a lane already started is finished, never left half
+ * copied.
+ *
+ * Why: on 2026-11-12 the lanes copied ~500,000 pages a day, nearly all from the 387,235 untouched
+ * catalogue-only books (83.2M pages, about $14 a month per million, for ever), while 148,423 books
+ * were already fully archived against a goal of 100,000 and translation ran at ~21,000 pages a day.
+ *
+ * Two forms of ONE rule: a find() filter and an aggregation expression.
+ * tests/integration/archive-progress.test.ts fails if they disagree on any book.
+ */
+export const CATALOGUE_ONLY_UNWANTED_FILTER = Object.freeze({
+  'pages_state.state': { $in: [...LAZY_STATES] },
+  'pipeline_auto.hold.reason': CATALOGUE_ONLY_HOLD,
+  visible: { $ne: true },
+  'archive_metadata.manifest_ledger.n_done': { $not: { $gt: 0 } },
+});
+export const CATALOGUE_ONLY_UNWANTED_EXPR = Object.freeze({ $and: [
+  { $in: ['$pages_state.state', [...LAZY_STATES]] },
+  { $eq: ['$pipeline_auto.hold.reason', CATALOGUE_ONLY_HOLD] },
+  { $ne: ['$visible', true] },
+  { $not: [{ $gt: [{ $ifNull: ['$archive_metadata.manifest_ledger.n_done', 0] }, 0] }] },
+] });
+
+const ROW_FIELDS = Object.freeze(['books', 'pages', 'archived', 'remaining', 'lazy_books', 'books_done', 'catalogue_only_books', 'catalogue_only_pages']);
+
+/**
+ * Per-provider sums: books, pages, archived (counter or ledger), remaining (pages owed by IN-SCOPE
+ * books not yet complete), books_done (every page archived, or closed as complete), and the
+ * catalogue-only books left out of scope with the pages they declare.
+ */
 export async function measureByProvider(db) {
   const lazy = { $in: ['$pages_state.state', [...LAZY_STATES]] };
   const total = { $cond: [lazy, { $ifNull: ['$archive_metadata.manifest_ledger.canvases', '$pages_count'] }, '$pages_count'] };
@@ -33,17 +73,27 @@ export async function measureByProvider(db) {
   const finished = { $in: [{ $ifNull: ['$archive_status', ''] }, ['archive_complete', 'archive_complete_with_gaps']] };
   const rows = await db.collection('books').aggregate([
     { $match: { pages_count: { $gt: 0 } } },
-    { $project: { p: { $ifNull: ['$image_source.provider', 'none'] }, total, archived, finished, lazy } },
+    { $project: { p: { $ifNull: ['$image_source.provider', 'none'] }, total, archived, finished, lazy, unwanted: CATALOGUE_ONLY_UNWANTED_EXPR } },
     { $group: {
       _id: '$p',
       books: { $sum: 1 },
       pages: { $sum: '$total' },
       archived: { $sum: '$archived' },
-      remaining: { $sum: { $cond: ['$finished', 0, { $max: [0, { $subtract: ['$total', '$archived'] }] }] } },
+      remaining: { $sum: { $cond: [{ $or: ['$finished', '$unwanted'] }, 0, { $max: [0, { $subtract: ['$total', '$archived'] }] }] } },
       lazy_books: { $sum: { $cond: ['$lazy', 1, 0] } },
+      books_done: { $sum: { $cond: [{ $or: ['$finished', { $gte: ['$archived', '$total'] }] }, 1, 0] } },
+      catalogue_only_books: { $sum: { $cond: ['$unwanted', 1, 0] } },
+      catalogue_only_pages: { $sum: { $cond: ['$unwanted', '$total', 0] } },
     } },
   ], { maxTimeMS: 240_000, allowDiskUse: true }).toArray();
-  return Object.fromEntries(rows.map(r => [r._id, { books: r.books, pages: r.pages, archived: r.archived, remaining: r.remaining, lazy_books: r.lazy_books }]));
+  return Object.fromEntries(rows.map(r => [r._id, Object.fromEntries(ROW_FIELDS.map(f => [f, r[f]]))]));
+}
+
+/** Books with every page archived, summed over a snapshot's providers; null for a snapshot taken before #58. */
+export function archivedBooksTotal(byProvider) {
+  const rows = Object.values(byProvider ?? {});
+  if (!rows.some(r => r.books_done != null)) return null;
+  return rows.reduce((s, r) => s + (r.books_done || 0), 0);
 }
 
 /** provider → lane name from the lane table; unlisted providers group under `other:<provider>`. */
@@ -58,8 +108,8 @@ export function byLane(byProvider, laneOf) {
   const out = {};
   for (const [p, v] of Object.entries(byProvider ?? {})) {
     const k = laneOf(p);
-    const o = (out[k] ??= { books: 0, pages: 0, archived: 0, remaining: 0, lazy_books: 0, providers: [] });
-    for (const f of ['books', 'pages', 'archived', 'remaining', 'lazy_books']) o[f] += v[f] || 0;
+    const o = (out[k] ??= { ...Object.fromEntries(ROW_FIELDS.map(f => [f, 0])), providers: [] });
+    for (const f of ROW_FIELDS) o[f] += v[f] || 0;
     o.providers.push(p);
   }
   return out;

@@ -40,4 +40,4 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

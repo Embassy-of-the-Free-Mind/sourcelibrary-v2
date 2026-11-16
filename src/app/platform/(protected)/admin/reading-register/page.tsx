@@ -38,7 +38,7 @@ const num = (n: number | null | undefined) => (n ?? 0).toLocaleString('en-US');
 const C = {
   card: { background: '#161b22', border: '1px solid #30363d', borderRadius: 8, padding: '16px 18px' } as const,
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12 } as const,
-  big: { fontSize: 30, fontWeight: 700, color: '#e6edf3', lineHeight: 1.1 } as const,
+  big: { fontSize: 30, fontWeight: 600, color: '#e6edf3', lineHeight: 1.1 } as const,
   label: { fontSize: 12, color: '#8b949e', marginTop: 4, textTransform: 'uppercase', letterSpacing: 0.4 } as const,
   sub: { fontSize: 12, color: '#6e7681', marginTop: 2 } as const,
   h2: { fontSize: 16, fontWeight: 600, color: '#e6edf3', margin: '30px 0 4px' } as const,
@@ -117,7 +117,7 @@ export default async function ReadingRegisterPage() {
   if (!s) {
     return (
       <div>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#e6edf3' }}>Reading Register</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 600, color: '#e6edf3' }}>Reading Register</h1>
         <p style={{ color: '#8b949e', marginTop: 12 }}>
           No snapshot yet. Run <code style={{ color: '#e6edf3' }}>node scripts/analytics/snapshot-reading-register.mjs</code> to populate it
           (it also runs daily on the Hetzner cron).
@@ -139,7 +139,7 @@ export default async function ReadingRegisterPage() {
   return (
     <div style={{ maxWidth: 1100 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#e6edf3', margin: 0 }}>Reading Register</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 600, color: '#e6edf3', margin: 0 }}>Reading Register</h1>
         <span style={{ fontSize: 12, color: ageH !== null && ageH > 30 ? '#d29922' : '#6e7681' }}>
           snapshot {gen ? gen.toISOString().slice(0, 16).replace('T', ' ') + ' UTC' : 'unknown'}
           {ageH !== null ? ` · ${ageH}h ago` : ''} · {win}-day window{s.logsSince ? ` · logs since ${s.logsSince}` : ''}

@@ -493,6 +493,12 @@ export function withholdUpdate(page, reason, now = new Date()) {
   // when it was written, how long it was) survives on the page itself and the
   // audit can reconcile it without opening `page_revisions`.
   delete obj.data;
+  // `text` is the annotation-layer parser's copy of the same words (#5942: the
+  // book's words without the notes). It IS the text, so it goes too, or every
+  // withheld page keeps its English in `translation_withheld.text` and ships it
+  // in the reader's flight payload (v2#8518: 470 pages / 188 books). `text_from`
+  // is only a fingerprint (parser version, data hash, count) and stays.
+  delete obj.text;
   return {
     $set: {
       translation_withheld: { ...obj, reason, withheld_at: now, chars: text.length },

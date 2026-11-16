@@ -61,11 +61,11 @@ export interface PageLink {
   url: string;
   slug: string;
   page: number;
-  /** `/es` or ''. */
+  /** `/es`, `/zh` or ''. */
   locale: string;
 }
 
-const PAGE_LINK = /\[((?:[^[\]\\\n]|\\.)*)\]\((https:\/\/sourcelibrary\.org(\/es)?\/book\/([a-z0-9-]+)(?:\/page-number\/|\?page=)(\d+))\)/g;
+const PAGE_LINK = /\[((?:[^[\]\\\n]|\\.)*)\]\((https:\/\/sourcelibrary\.org(\/(?:es|zh))?\/book\/([a-z0-9-]+)(?:\/page-number\/|\?page=)(\d+))\)/g;
 
 /** Markdown links to a specific book page (`/page-number/N` or `?page=N`). */
 export function findPageLinks(text: string): PageLink[] {
@@ -113,12 +113,11 @@ function shortTitle(t: string): string {
   return `${cut.slice(0, cut.lastIndexOf(' ') > 30 ? cut.lastIndexOf(' ') : 70)}…`;
 }
 
-/** The link moved to `to`: same URL shape and locale, the page number in its label updated. */
+/** The link moved to `to`: the /page-number/ form, same locale, the page number in its label updated. */
 export function repointLink(s: string, link: PageLink, to: GroundingPage): string {
   const sameBook = to.bookSlug === link.slug;
-  const url = link.url.includes('?page=')
-    ? `https://sourcelibrary.org${link.locale}/book/${to.bookSlug}?page=${to.page}`
-    : `https://sourcelibrary.org${link.locale}/book/${to.bookSlug}/page-number/${to.page}`;
+  // Always the /page-number/ form, whichever form the link came in (v3#250).
+  const url = `https://sourcelibrary.org${link.locale}/book/${to.bookSlug}/page-number/${to.page}`;
   let label = link.label.replace(new RegExp(`(^|\\D)${link.page}(?!\\d)`), `$1${to.page}`);
   if (label === link.label && !label.includes(String(to.page))) label = `${label}, p. ${to.page}`;
   let out = `${s.slice(0, link.start)}[${label}](${url})${s.slice(link.end)}`;

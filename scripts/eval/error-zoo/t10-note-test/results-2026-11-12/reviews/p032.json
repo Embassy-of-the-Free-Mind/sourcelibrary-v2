@@ -1,0 +1,58 @@
+[
+  {
+    "book_id": "6953ab4577f38f6761bd6c6f",
+    "slot": 1,
+    "title": "Picatrix Fragment, Steganographia, Paracelsus & Chemical Secrets",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "The catalogue calls this a Latin occult/chemical miscellany (Picatrix, Trithemius, Paracelsus). This leaf is a German Protestant devotional or polemical text (Nicodemus, Christ's flesh and blood, false prophets who 'bring his body down into the bread'). It may be one item in a composite codex (the banner shows Vat. Reg.lat.1344), but neither the title nor language=Latin describes it. The collections metadata is empty.",
+    "rights_flag": "The licence stamp is part of the scan: a footer reads \"Copyright © Biblioteca Apostolica Vaticana / https://digi.vatlib.it/view/MSS_Reg.lat.1344/0123 / powered by AMLAD·NTT DATA\", and a diagonal watermark reads \"Biblioteca Apostolica Vaticana ... ALL RIGHTS RESERVED ©\". The manuscript is early modern. The digital image is a Vatican Library copyright reproduction.",
+    "structure_note": "There are 314 records, all with OCR. structure.pages_translated is 0 but the book field says 272, so the two counts disagree. 155 pages carry a printed number, with 44 backsteps and 34 repeats. In a composite manuscript, that fits separately foliated items bound together, plus misread hand numerals. It is probably not a scan splice, but I cannot confirm that from one leaf. This leaf's '60' matches the OCR <page-num>.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 123,
+        "right_page": "yes",
+        "printed_marker": "60",
+        "layout": "single column of German cursive inside a ruled frame. The facing leaf's edge and a few line-ends show at the left. There is a short mark or catchword below the bottom rule at the right. Vatican copyright banner and watermark.",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Die ursachin diser Gebur wast wundertlichwol das\nverstehn.", "image": "Si Celestia dixero Vobis, wast wundert ihr wol dabo / verstehn", "problem": "The image has a Latin quotation from John 3:12 ('Si coelestia dixero vobis', 'if I tell you of heavenly things'). The OCR replaces it with an invented German clause about 'the cause of this birth'.", "severity": "serious", "class": "O6" },
+          { "ocr": "Wer so in Christo Christus, und wir in ihm", "image": "Aber so in uns Christus, und wir in ihm", "problem": "'in uns' ('in us') is misread as 'in Christo', and 'Aber' as 'Wer'. The translation recovers the sense ('If Christ is in us').", "severity": "moderate" },
+          { "ocr": "Wer in Christo und wir in ihm,", "image": "Aber in uns, und wir in ihm,", "problem": "The same misread again. This time it carries into the English as 'If he is in Christ'.", "severity": "moderate" },
+          { "ocr": "Worttauff\ndar.", "image": "Worttauff / Erd,", "problem": "'Erd' ('earth') is misread as 'dar', so 'his Word on earth' is lost.", "severity": "moderate" },
+          { "ocr": "unsere Neue Natur siehet ihn", "image": "unsere Neue Creatur siehet ihn", "problem": "'Creatur' is normalised to 'Natur', which loses the Pauline 'new creature' (2 Cor 5:17).", "severity": "moderate" },
+          { "ocr": "Und Jesas ihn beweist d. Mitteller", "image": "Dan(d) Ich hab ihn versp(e)rt(?) d Mittel(e)r", "problem": "Hard to read, but the image does not show 'Jesas … beweist'. The translation then names Jesus as the subject.", "severity": "moderate" },
+          { "ocr": "Bartos/", "image": "a large display word, possibly 'Martes' or a gospel attribution such as 'Marcus'; illegible to me", "problem": "The OCR gives a reading that makes no sense, with no <unclear> marker.", "severity": "minor" },
+          { "ocr": "darmit kommen wir durch uns", "image": "darumb können wir durch uns", "problem": "'können' ('can') is misread as 'kommen'. The translation's 'by our own power' covers it.", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "Die ursachin diser Gebur wast wundertlichwol das\nverstehn.", "english": "The cause of this birth was a wondrous thing to understand.", "problem": "This faithfully translates the invented OCR clause. The leaf has the Latin John 3:12 quotation ('If I have told you heavenly things…'), so the reader gets a sentence that is not on the page.", "severity": "serious", "class": "O6" },
+          { "source": "Wer in Christo und wir in ihm,", "english": "If he is in Christ and we in him,", "problem": "Carries the misread forward. The image says 'if [Christ is] in us and we in him'.", "severity": "moderate" },
+          { "source": "Also haben wir sein Worttauff\ndar.", "english": "Thus we have his Word on it: there is Christ also.", "problem": "The image reads 'his Word on earth, there is Christ also'. The English turns this into an idiom ('his Word on it').", "severity": "moderate" },
+          { "source": "Und Jesas ihn beweist d. Mitteller", "english": "And Jesus shows him that the Mediator", "problem": "'Jesus' is supplied from the misread 'Jesas'. The image does not seem to name Jesus here.", "severity": "moderate" },
+          { "source": "Wie die in d. Rauch gebeist gleichwol muge sag:", "english": "Just as those who are steeped in the smoke may nonetheless say:", "problem": "Confident English over an uncertain reading, with no uncertainty marker. The image line looks closer to 'in d Steinen gebruckt'. I read it with low confidence.", "severity": "moderate" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"Nicodemo pharisaisthe-rung\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"logica Rhetorica\"", "verdict": "ok", "helpful": false },
+            { "quote": "original Latin: \"ecce hic est Christus\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Johannes Baptista\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Mitteller\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Bartos/ At that same time, he says, false prophets will arise.", "why": "'Bartos' is left as an unexplained word. A reader cannot tell whether it is a speaker, a source attribution or a gospel reference (Matt 24 / Mark 13)." },
+            { "english": "Was the Lord right, then, to keep silent at such Pharisaic questioning by Nicodemus?", "why": "The passage depends on John 3 (Nicodemus and the new birth from above). A short note would anchor the argument that follows." },
+            { "english": "Just as those who are steeped in the smoke may nonetheless say: there is Christ.", "why": "The sentence makes no sense as English. The reader needs to know that the reading is uncertain or what it alludes to." },
+            { "english": "who with earthly arts such as logic and rhetoric will try to master Christ in his sacraments", "why": "This is the Reformation-era Eucharist controversy (bread and body). The polemical target is not explained." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf matches its OCR and the folio '60' matches. But a Latin John 3:12 quotation is replaced by an invented German clause, which is translated as a sentence the page does not contain, and several other cursive misreads carry into the English. The page is a German theological text under a Latin occult-miscellany title, and the scan has a Vatican copyright banner burned in."
+  }
+]

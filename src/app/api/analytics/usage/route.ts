@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 import { supabase } from '@/lib/supabase';
 
 export const maxDuration = 30;
@@ -14,7 +14,7 @@ const CACHE_TTL_MS = 60 * 1000; // 1 minute (Supabase queries are fast)
 // the honest answer is "not measurable", not a plausible stale total.
 const MAX_SNAPSHOT_AGE_MS = 2 * 24 * 60 * 60 * 1000;
 
-export const GET = withAuth(async (request: NextRequest, session) => {
+export const GET = withInnerCircleAuth(async (request: NextRequest, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '30', 10);        

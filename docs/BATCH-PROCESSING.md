@@ -1,5 +1,7 @@
 # Batch Processing with Gemini Batch API
 
+> **RETIRED 2026-11-12 (v2#8590).** The `batch-ocr-async`, `batch-translate-async` and `batch-ocr-multi` routes this page describes are deleted, and the paid Gemini Batch API is no longer a route for page work. A hand request now queues the book for the router: the lane its router cell names reads it (`.claude/docs/routing.md`; lanes in `.claude/docs/book-process.md`). Kept as history.
+
 All batch OCR and translation jobs use Google's Gemini Batch API for **50% cost savings**. Results are typically ready within 2-24 hours.
 
 ## Two Approaches

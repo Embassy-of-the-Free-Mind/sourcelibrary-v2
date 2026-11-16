@@ -457,6 +457,8 @@ export interface ReaderStrings {
 
   /** Share panel. */
   share: {
+    /** The phone's own share sheet (navigator.share), offered first where it exists (#76). */
+    shareNative: string;
     copyLink: string;
     copyLinkWithReference: string;
     postTo: string;
@@ -1089,6 +1091,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copied: 'Copied',
     },
     share: {
+      shareNative: 'Share this page',
       copyLink: 'Copy link to this page',
       copyLinkWithReference: 'Copy link with reference',
       postTo: 'Post to',
@@ -1601,6 +1604,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copied: 'Copiado',
     },
     share: {
+      shareNative: 'Compartir esta página',
       copyLink: 'Copiar el enlace a esta página',
       copyLinkWithReference: 'Copiar el enlace con la referencia',
       postTo: 'Publicar en',
@@ -2140,6 +2144,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copied: 'Exscriptum',
     },
     share: {
+      shareNative: 'Hanc paginam communica',
       copyLink: 'Nexum ad hanc paginam exscribe',
       copyLinkWithReference: 'Nexum cum citatione exscribe',
       postTo: 'Publica in',
@@ -2659,6 +2664,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copied: 'Gekopieerd',
     },
     share: {
+      shareNative: 'Deze pagina delen',
       copyLink: 'Link naar deze pagina kopiëren',
       copyLinkWithReference: 'Link met bronvermelding kopiëren',
       postTo: 'Delen op',
@@ -3173,6 +3179,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copied: '已复制',
     },
     share: {
+      shareNative: '分享本页',
       copyLink: '复制本页链接',
       copyLinkWithReference: '复制带引用信息的链接',
       postTo: '分享到',

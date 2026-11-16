@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>Japanese</language>
+<script>handwritten</script>
+<page-type>diagram</page-type>
+<warning>Handwritten Japanese kanji (brush, semi-cursive). Only short colour labels and four gate captions; parts of the neighbouring drawings on the scroll are visible at the left and right edges.</warning>
+
+<margin>第二南門空蔵并青色</margin>
+
+<margin>第一東門香蔵并白色</margin>
+
+<image-desc size="large" type="diagram" significance="high">Ink line drawing of a square ritual mandala platform made of nested squares. At the centre is an eight-petalled lotus inside a square with small radiating vajra-like motifs at its corners. Around it are bands of lotus blossoms on cloud-like bases, flowers, and diagonal vajra or sword-shaped implements. At each of the four gates are ritual implements: vajras, bells, vases, swords, wheels and offering stands. Outside the corners there are small offering tables and crescent/disc motifs. Colour labels are written at various points.</image-desc>
+
+<insert>赤</insert> <insert>録</insert> <insert>青</insert> <insert>録色</insert> <insert>赤</insert> <insert>赤</insert> <insert>白</insert> <insert>青</insert> <insert>青</insert> <insert>赤</insert> <insert>黄</insert> <insert>録色</insert> <insert>青</insert> <insert>録</insert> <insert>白</insert>
+
+<margin>第四北門水蔵并録色</margin>
+
+<margin>第三<unclear>恵</unclear>蔵并赤色</margin>
+
+<vocab>mandala, 曼荼羅, 南門, 東門, 北門, 空蔵, 香蔵, 水蔵, 青色, 白色, 録色, 赤色, 黄, lotus, vajra, ritual implements, colour correspondences</vocab>

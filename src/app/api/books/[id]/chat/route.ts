@@ -323,7 +323,7 @@ This helps readers verify and explore further.`;
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 // GET /api/books/[id]/chat - Get initial greeting with summary (no auth needed, just returns greeting)
 export async function GET(

@@ -156,7 +156,7 @@ export default async function CatalogHistoryPage({ params }: Props) {
         >
           ← Back to {displayTitle}
         </a>
-        <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif leading-tight mb-1">
           Revision history
         </h1>
         <p className="text-sm text-muted mb-6">UBN {work.ubn}</p>

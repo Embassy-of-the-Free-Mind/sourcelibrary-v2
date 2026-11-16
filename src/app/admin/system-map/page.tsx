@@ -719,7 +719,7 @@ const serviceData: Record<string, ServiceInfo> = {
       'health-check (hourly): Monitors MongoDB latency, zombie jobs, email alerts.',
       'daily-pipeline-report (6 AM UTC): Daily snapshot of books, pages, costs. Writes to pipeline_health_daily.',
       'social-reset (daily midnight UTC): Resets daily post counter.',
-      'Archived routes (in _archived/, NOT active): post-import-pipeline, enrich-books, process-batches, submit-batch-ocr, sync-page-counts, sync-gallery-images, archive-ocr. All replaced by Hetzner workers.',
+      'Archived routes (in _archived/, NOT active): post-import-pipeline, enrich-books, process-batches, sync-page-counts, sync-gallery-images, archive-ocr. All replaced by Hetzner workers.',
     ],
     gotchas: [
       'social-post, social-reset, and daily-pipeline-report are also triggered from Hetzner via cron-caller.mjs as a redundancy measure.',
@@ -738,7 +738,7 @@ const serviceData: Record<string, ServiceInfo> = {
     summary: 'Operational scripts for analysis, batch processing, enrichment, maintenance, and imports. Run manually via `set -a; source .env.production.local; set +a; node scripts/whatever.mjs`. Plus ~42 untracked _tmp-* scratch scripts at the project root.',
     details: [
       'Analysis (~49 scripts): Pipeline stats, OCR backlog checks, duplicate detection, data quality audits, processing candidate identification. Examples: pipeline-stats.mjs, check-ocr-backlog.mjs.',
-      'Batch processing (~33): Direct Gemini API calls for bulk OCR, translation, re-OCR. Examples: realtime-ocr.mjs (Tier 3 keys, high RPS), submit-translations.mjs, retranslate-stale.mjs.',
+      'Batch processing (~33): Direct Gemini API calls for bulk OCR, translation, re-OCR. Examples: realtime-ocr.mjs (Tier 3 keys, high RPS), retranslate-stale.mjs.',
       'Enrichment (~38): Catalog enrichment from USTC/BPH databases, entity extraction, collection assignment, language normalization, work ID assignment. Examples: enrich-from-catalogs.mjs, assign-collections.mjs, search-translation-evidence.mjs.',
       'Maintenance (~49): Fix stuck jobs, correct page counts, repair covers, create MongoDB indexes, clean up Gemini batch artifacts. Examples: fix-conflicting-visibility.mjs, fix-covers.mjs, create-critical-indexes.mjs.',
       'Import (~12): Bulk collection imports from specific archives. Examples: import-kloss-collection.mjs, import-laurenziana.mjs, import-getty-alchemy.mjs.',

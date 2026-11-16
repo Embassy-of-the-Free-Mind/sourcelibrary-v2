@@ -1,0 +1,35 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<columns>2</columns>
+<warning>Handwritten regular script (kaishu) Chinese manuscript; two-page opening transcribed as two columns, left leaf first. Faint show-through from the reverse of the left leaf is visible in its text area and is not transcribed. Brown stains appear on the painted skies.</warning>
+
+## 五都滅亡彗星册赤占
+
+<image-desc size="large" type="illustration" significance="high">A painted landscape in ink and colour. In the upper left of a pale grey sky is a red disc. A long red tail streaks from it up to the right. On the right a tall grey rock cliff rises, with dark trees and foliage on top. Below are a dark leafy tree and small blue, green and grey mountain peaks along the bottom edge. Brown stains mark the sky.</image-desc>
+
+朱文公曰
+五都滅亡彗星册赤此歲星之
+精流而為変者
+宋志曰
+赤彗主滅五都
+
+<column-break/>
+
+## 照明星占
+
+<image-desc size="large" type="illustration" significance="high">A painted landscape in ink and colour. In the upper right of a grey sky is a white star drawn as a disc ringed with white petal-shaped rays. On the left is a rocky outcrop with dark trees and a bare-branched tree. Beside it, a building with tiered roofs stands on wooden stilts against a green hill. Blue, grey and green peaks are on the right. Brown stains mark the sky.</image-desc>
+
+朱文公曰
+照明如太白而光芒不行占以
+為起覇而或為起徳
+宋志曰
+照明狀如太白光芒不行體大
+白色而有角如三足上有九彗見
+則兵大起天下有喪多變而大人凶
+晋書曰
+照明如太白光芒不行以為起霸
+起徳之兆
+
+<vocab>彗星, 赤彗, 照明星, 朱文公, 宋志, 晋書, 歲星, 太白, 五都, 占, 兆, 霸, 徳</vocab>

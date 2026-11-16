@@ -1,0 +1,43 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<header>CHRONICON</header>
+
+| Anni mundi. | Anni Salutis | Añ. Pōti. | | Imperatorum Occidēt. |
+| :--- | :--- | :--- | :--- | :--- |
+| | | | nolle auream ferre coronā in ea vrbe/ in qua | |
+| | | | Christus spineā tulisset. | |
+| | | | ¶ Ponti. 167. Pascalis scđs an. 18. mē. 5. | |
+| | 1100 | 1 | ¶ Gotofredus morit̃: post quē Hierosolymis | 43 |
+| | | | regnauit Balduinus eius frater an. 18. in quib⁹ | |
+| | | | Aegyptios ter ī prælio supauit/ & Caliphā eo | |
+| | | | rum regem tandem interemit. | |
+| | | | ¶ Syracusis terremotu cōcussis eccl'ia maxima | |
+| | | | corruit: & populi multitudinē oppressit. | |
+| 6300 | 1101 | 2 | ¶ Cōrad⁹ Hērici īpatoris fili⁹: Florētię morit̃. | 44 |
+| | 1102 | 3 | ¶ Hēricus coronā īperij a Paschale sumpsit: & | 45 |
+| | | | nō multo post illū cū multis eccl'iæ pręlatis ca | |
+| | | | pit & in carcere recludit. vnde parū post libera | |
+| | 1103 | 4 | tus euasit. | 46 |
+| | 1104 | 5 | ¶ Bernardus monach⁹ Clareualēsis: vita & do | 47 |
+| | | | ctrina insignis habetur. | |
+| | 1105 | 6 | ¶ Florētiæ concilium celebratur eporum. 340. | 48 |
+| | 1106 | 7 | | 49 |
+| | 1107 | 8 | | 50 |
+| | | | | ¶ Imperatorū. 18. |
+| | | | | Henricus. 5. an. 20. |
+| | 1108 | 9 | ¶ Henricus pximi Henrici fili⁹ fuit: & cū īpe | 1 |
+| | | | riū assumpsisset Hēricū patrē nephando scele | |
+| | | | ra carcere macerauit vsq; ad mortē. | |
+| | 1109 | 10 | ¶ Francis post Philippū regnauit Ludouicus | 2 |
+| | 1110 | 11 | annis. 22. | 3 |
+| 6310 | 1111 | 12 | ¶ Henricus Italiā ingressus Romā venit: qua | 4 |
+| | | | ī vrbe cū benigne & sūmo honore fuisset rece | |
+| | | | ptus paternū volēs imitari exēplū/ Pascalē Ro | |
+| | | | manorū pontificē/ & vniuersos eccl'iæ pręla | |
+| | | | tos per fraudē intercepit/ & eorū bona ī suorū | |
+| | 1112 | 13 | prędam conuertit. | 5 |
+| | 1113 | 14 | | 6 |
+| | 1114 | 15 | ¶ In agro hemyliano & Flaminto Idib⁹ Iunij | 7 |
+| | | | sanguis pluit. | |
+
+<vocab>Gotofredus, Balduinus, Hierosolymis, Paschalis, Henricus, Bernardus Clareualensis, Florentia, Roma, Ludouicus</vocab>

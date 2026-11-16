@@ -1,0 +1,98 @@
+[
+  {
+    "book_id": "69dfdea38e5ccd1c891f0c17",
+    "slot": 1,
+    "title": "Codex Mendoza",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A colonial Aztec pictorial manuscript (c. 1541) with Nahuatl glosses and Spanish commentary. The leaf and strip match that. No tradition or collection is set, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "pages_translated is 0 in the structure counts but 140 in the book field, so the two counts disagree. The 16 backsteps and 26 repeats fit a manuscript with two foliation systems (here \"7\" at top centre and \"11/2\" at top right) and with blank versos. They do not point to a splice. Only 151 of 188 pages have OCR, which fits a codex with many blank or near-blank leaves.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 32,
+        "right_page": "yes",
+        "printed_marker": "7 (top centre); 11/2 (top right, in pencil)",
+        "layout": "blank leaf showing only show-through (faint lines of text and a drawing of a figure in a circle from the other side); a narrow strip of the facing pictorial page at the left edge, with six burning-temple conquest glyphs, cut-off glosses, a reclining figure and an eagle; a measuring rule at the right",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "tepeyacac",
+            "image": "the leaf itself is blank (show-through only); \"tepeyacac\", \"ocnilom\", \"tecaloo\" etc. are glosses on the facing page's strip at the left edge",
+            "problem": "all of the transcribed content comes from the neighbouring page's strip, not from this leaf",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "Pictograph of a hill with a nose/point on top.",
+            "image": "a tilted temple with a brown roof, red flames and smoke scrolls (the conquest glyph); the place-glyphs proper are cut off at the edge",
+            "problem": "the burning-temple conquest glyphs are described as hill (tepetl) place-glyphs; this misidentification runs through all six image-descs",
+            "severity": "moderate",
+            "class": "O14"
+          },
+          {
+            "ocr": "tecaloo.pi",
+            "image": "tecaloo. pu (the 'pu' abbreviation follows each gloss)",
+            "problem": "the suffix 'pu' is misread as 'pi' (also in \"havlom.pi\")",
+            "severity": "minor"
+          },
+          {
+            "ocr": "havlom.pi",
+            "image": "a cut-off gloss that looks more like \"tlaolan\"/\"ẜhaolan\" than \"havlom\"; low confidence at this size",
+            "problem": "likely misread of a partly cropped name",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Pictograph of a hill with a nose/point on top.",
+            "english": "Pictograph of a hill with a nose or point on top.",
+            "problem": "The English renders the OCR's misreading faithfully, but six editorial notes now tell the reader that these are hill place-glyphs. The image shows burning temples, the Codex's sign for a conquered town, and they sit on the facing page.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "(whole page)",
+            "english": "This page shows a column of six place-glyphs, each a hill sign topped by an identifying element, labeled with Nahuatl town names beginning with Tepeyacac. It continues the codex's listing of towns.",
+            "problem": "The summary describes a blank leaf as a page of hill place-glyphs. Its content belongs to the neighbouring page and is misidentified as well.",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "other": [
+          {
+            "note": "A blank leaf (show-through only) is given a full transcription and translation of the facing page's edge strip, so the reader is shown content this page does not carry",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "note": "The image descriptions are recast as <note> apparatus in the reading text, and a <warning> block appears in the translation",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "A vertical column of six Aztec pictographic place-glyphs (<t", "verdict": "wrong", "helpful": false },
+            { "quote": "town, city-state", "verdict": "ok", "helpful": true },
+            { "quote": "hill, mountain", "verdict": "ok", "helpful": false },
+            { "quote": "Pictograph of a hill with a nose or point on top.", "verdict": "wrong", "helpful": false },
+            { "quote": "Pictograph of a hill with a small object on top.", "verdict": "wrong", "helpful": false },
+            { "quote": "Pictograph of a hill with a structure on top.", "verdict": "wrong", "helpful": false },
+            { "quote": "Pictograph of a hill with a structure on top.", "verdict": "wrong", "helpful": false },
+            { "quote": "Pictograph of a hill with a plant-like element on top.", "verdict": "wrong", "helpful": false },
+            { "quote": "Pictograph of a hill with a structure on top, with an eagle f", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Tecaloo.pi", "why": "The '.pi' (on the image 'pu', an abbreviation used after each town name) is left unexplained, so a general reader cannot tell what the suffix means." },
+            { "english": "Auh hom", "why": "This is left as if it were a town name. A general reader cannot tell what it is, and it is probably a cropped or misread gloss." },
+            { "english": "Tepeyacac", "why": "Nothing tells the reader that these labels belong to the facing page, or that the glyphs mark towns the Aztecs conquered." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This leaf is a blank page with show-through, but the record transcribes and translates the facing page's cut-off strip of burning-temple conquest glyphs and calls them hill place-glyphs, so a reader is shown wrong content on a page that should be marked blank. The structure counts also disagree on how many pages are translated (0 vs 140)."
+  }
+]

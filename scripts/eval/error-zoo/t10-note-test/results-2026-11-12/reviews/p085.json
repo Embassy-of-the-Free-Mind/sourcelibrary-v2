@@ -1,0 +1,55 @@
+[
+  {
+    "book_id": "69b3e596c94a4ff7cce22d4f",
+    "slot": 1,
+    "title": "Collection of magical and other treatises ascribed to Hermes Trismegistus",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Arabic manuscript of a Hermetic lapidary and talisman text (stones engraved with zodiacal and planetary images, sayings of Hermes and 'Fontas'). It matches the title. The tradition and collections fields are empty.",
+    "rights_flag": null,
+    "structure_note": "The structure count pages_translated is 0, but the book field pages_translated is 163, so one of the two counters is wrong (E2). On a manuscript, 20 printed backsteps and 12 repeats out of 63 'printed numbers' most likely come from misread folio marks or catchwords rather than a real disorder of leaves. This page carries no folio number, only a catchword. 3 pages have no OCR.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "printed_marker": "catchword \"الدم\" at the foot (no folio number visible; a small pencil scribble at the top right is illegible)",
+        "layout": "single column of naskh with red rubrics (الحجر الثاني/الثالث/الرابع); three inset line drawings beside short lines (ram, seated woman with child, balance); cipher letters with red glosses in the last paragraph; catchword at the foot; edge of the facing leaf visible at left",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "من اخذ حجر الحما المحكّه", "image": "من اخذ حجرا احمر المحكه (apparently 'a red stone')", "problem": "the stone's description is read as a name, 'al-ḥamā', and the translation carries it as a term", "severity": "moderate", "class": "O6" },
+          { "ocr": "في يدها صبي تعلمه", "image": "appears to read تحمله ('carrying him'), which fits the drawing of a woman holding a child", "problem": "'teaching' for 'carrying' changes the description of the Venus image", "severity": "moderate", "class": "O6" },
+          { "ocr": "ماتت في المكان", "image": "ماتت على المكان", "problem": "wrong preposition; no change of sense", "severity": "minor" },
+          { "ocr": "سلم من كريهها", "image": "سلم من مكروهها", "problem": "wrong word form; same sense", "severity": "minor" },
+          { "ocr": "<margin>\nالدم\n</margin>", "image": "catchword الدم at the foot, which continues 'شي من'", "problem": "the catchword is tagged as a marginal note (O11)", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "حجر الحما", "english": "the stone of <term>al-ḥamā</term>", "problem": "carries the OCR misread forward as a named stone; the image seems to read 'a red stone'", "severity": "moderate", "class": "O6" },
+          { "source": "صبي تعلمه", "english": "a child whom she is teaching", "problem": "follows the misread تعلمه; the image and the drawing suggest 'carrying'", "severity": "moderate", "class": "O6" }
+        ],
+        "other": [
+          { "note": "The drawings' <image-desc> are turned into <note> elements, so a description of a picture reads as editorial apparatus in the text flow", "severity": "minor", "class": "D1" },
+          { "note": "The OCR <warning> says text at the left margin is cut off by the binding; the leaf's text block is whole, and the strip at the left is the facing leaf", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "continues from previous page: the first stone of Fontas", "verdict": "ok", "helpful": false },
+            { "quote": "A line drawing of a ram, the sign Aries, facing right in a ga", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"ḥajar al-ʿuqāb\"", "verdict": "ok", "helpful": false },
+            { "quote": "attendant spirits, jinn followers", "verdict": "ok", "helpful": true },
+            { "quote": "Two drawings: the upper one shows a seated woman with long ha", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "a black stone called <unclear>adkh-m-a-h-h</unclear>", "why": "the name is written in cipher (talismanic) characters with red Arabic letters above them, and the English does not say so; the reader sees an unexplained string" },
+            { "english": "Fontas said", "why": "an unidentified authority named alongside Hermes; a reader cannot tell who or what 'Fontas' is, or that the form is uncertain" },
+            { "english": "the stone of <term>al-ḥamā</term>", "why": "a term left in transliteration with no gloss (and probably a misread)" },
+            { "english": "the eagle stone", "why": "a general reader does not know the eagle stone (aetites), the stone traditionally tied to protecting pregnancy, which the passage depends on" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf, and its transcription and translation are largely sound. Two moderate misreads ('al-ḥamā' for what seems to be 'a red stone', 'teaching' for 'carrying') pass into the English. The notes are accurate but mostly decorative, and the cipher name and 'Fontas' are left without notes."
+  }
+]

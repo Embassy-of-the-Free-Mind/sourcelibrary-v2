@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>216</page-num>
+<warning>Handwritten square/semi-square Oriental Hebrew hand, partially vocalized; vowel points not reproduced. The marginal glosses are in a smaller, more cursive hand and are only partly legible. The right edge shows text from the facing page, which is not transcribed.</warning>
+<meta>Pencil foliation "216" at top left; pencil note "6:1" (chapter mark) at lower left beside the final line. Text corresponds to 1 Chronicles 5:18–6:3.</meta>
+
+<margin>למודי</margin>
+<gloss>בני</gloss> מנשה מן חיל אנשים נשאי מגן וחרב ודרכי קשת <unclear>ולמודי</unclear>
+מלחמה ארבעים וארבעה אלף ושבע מאות וששים יצאי
+צבא׃ ויעשו מלחמה עם ההגריאים ויטור ונפיש ונודב׃
+ויעזרו עליהם וינתנו בידם ההגריאים וכל שעמהם
+
+<margin><unclear>י״ע קבוץ אחר נמצא מושמן</unclear></margin>
+כי לאלהים זעקו במלחמה ונעתור להם כי בטחו בו׃ <gloss>וישבו</gloss>
+מקניהם גמליהם חמשים אלף וצאן מאתים וחמשים
+אלף וחמורים אלפים ונפש אדם מאה אלף׃ כי חללים
+רבים נפלו כי מהאלהים המלחמה וישבו תחתיהם עד
+הגלה׃ ובני חצי שבט מנשה ישבו בארץ מבשן עד <gloss>בעל</gloss>
+חרמון ושניר והר חרמון המה רבו׃ ואלה ראשי <gloss>בית</gloss>
+אבותם ועפר וישעי ואליאל ועזריאל וירמיה והודויה
+ויחדיאל אנשים גבורי חיל אנשי שמות ראשים לבית
+אבותם׃ וימעלו באלהי אבתיהם ויזנו אחרי אלהי
+
+<margin><unclear>י״ע ומאהר ומנאה</unclear></margin>
+עמי הארץ אשר השמיד אלהים מפניהם׃ ויער אלהי
+ישראל את רוח פול מלך אשור ואת רוח תלגת פלנסר
+
+<margin><unclear>י״ע ודרה בורד</unclear></margin>
+מלך אשור ויגלם לראובני ולגדי ולחצי שבט מנשה
+ויביאם לחלח וחבור והרא ונהר גוזן עד היום הזה׃
+
+<margin>6:1</margin>
+בני לוי גרשון קהת ומררי׃ ובני קהת עמרם יצהר
+
+<vocab>Chronicles, Reuben, Gad, half-tribe of Manasseh, Hagrites (הגריאים), Jetur, Naphish, Nodab, Bashan, Baal Hermon, Senir, Pul, Tiglath-pileser (תלגת פלנסר), Assyria, Halah, Habor, Hara, river Gozan, Levi, Gershon, Kohath, Merari, Amram, Izhar</vocab>

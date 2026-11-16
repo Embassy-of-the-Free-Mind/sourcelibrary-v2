@@ -1,0 +1,31 @@
+{
+ "about": "Defect rates per 1,000 words by route, Opus judge, from paired-score.json (#8632 decision 2).",
+ "cells": {
+  "latin-flash3": {
+   "3flash": {
+    "n": 30,
+    "words": 8430,
+    "misleads_per_1k": 3.2,
+    "wrong_text_per_1k": 1.78,
+    "fidelity_mean": 4.07,
+    "accept": "21/30"
+   },
+   "3flash>agy-flash-low": {
+    "n": 29,
+    "words": 7886,
+    "misleads_per_1k": 1.14,
+    "wrong_text_per_1k": 0.38,
+    "fidelity_mean": 4.45,
+    "accept": "26/29"
+   },
+   "3flash>opus-correct": {
+    "n": 30,
+    "words": 8641,
+    "misleads_per_1k": 1.04,
+    "wrong_text_per_1k": 0.23,
+    "fidelity_mean": 4.47,
+    "accept": "27/30"
+   }
+  }
+ }
+}

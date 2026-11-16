@@ -1,0 +1,21 @@
+# lanes.tsv: which box runs each cron lane (#70). Tab-separated, four columns, one lane a row.
+#
+# scripts/workers/lanes-crontab.mjs writes the rows for a box into one marked block of that box's crontab
+# ("# BEGIN lanes" to "# END lanes") and leaves every other line alone. To MOVE a lane, change its box cell in a
+# pull request. Read "Moving a lane between boxes" in scripts/workers/JOB-HOSTS.md first: a lane keeps its book
+# claims and its page ledger on one box's disk, so its ledger folder moves with it.
+#
+#   lane      a name, unique: lower-case letters, digits and hyphens. It appears in the crontab as "# lane: <name>".
+#   box       main | cloudlayer | l7a | gex45, or off (the lane runs nowhere).
+#   schedule  five cron fields separated by single spaces (the boxes' clocks are UTC), or an @word such as @hourly.
+#   command   the rest of the cron line, exactly as cron should run it, percent signs escaped as in a crontab (\%).
+#             No tabs. It must carry what it needs (PATH, cd, flock, timeout, log redirect): the boxes' crontabs
+#             do not set the same variables, and the checkout is /root/sourcelibrary on main and gex45 but
+#             /data/scratch/sl/sourcelibrary on cloudlayer and l7a.
+#
+# A malformed table changes no crontab. The same command may not appear in two rows.
+# This table starts with no lanes: each family of lanes is migrated from the hand-kept crontabs in its own pull request.
+#
+# Example (a comment, not a lane):
+# example-hourly	gex45	20 * * * *	cd /root/sourcelibrary && flock -n /tmp/example.lock node scripts/example.mjs >> /var/log/sourcelibrary/example.log 2>&1
+lane	box	schedule	command

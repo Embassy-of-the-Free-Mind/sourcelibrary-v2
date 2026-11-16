@@ -140,7 +140,7 @@ export const POST = withAuth(async (request: NextRequest) => {
     console.error('Error creating prompt:', error);
     return NextResponse.json({ error: 'Failed to create prompt' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // Helper function to seed default prompts
 async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {

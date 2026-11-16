@@ -1,0 +1,116 @@
+[
+  {
+    "book_id": "69dfdea38e5ccd1c891f0c17",
+    "slot": 1,
+    "title": "Codex Mendoza",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A colonial Mexican pictorial manuscript with Nahuatl glosses in Spanish hand. Its date (1541) is plausible. Calling the language \"Nahuatl\" undersells it, because the codex's commentary is Spanish and its main content is pictographic.",
+    "rights_flag": null,
+    "structure_note": "The structure block says pages_translated is 0, but pages_translated_field says 140, so one of these instruments is wrong (E2). Only 96 of 188 records have a printed number, with 16 backsteps and 26 repeats. This leaf carries two numbering systems: \"7\" at the top centre and \"11/2\" at the top right. Mixed foliation schemes and blank versos most likely explain the backsteps and repeats, not a splice. The count of 151 pages with OCR against 188 records fits the many blank leaves. The worse problem is that blank leaves like this one were OCR'd from the neighbouring page's strip.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 32,
+        "right_page": "yes",
+        "printed_marker": "7; 11/2",
+        "layout": "blank verso showing faint text and a circular figure drawing through from the other side; a strip of the facing leaf at the left edge holds conquest (burning-temple) glyphs with glosses; a ruler at the right",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<page-type>text</page-type>",
+            "image": "the leaf itself is blank except for \"7\" and \"11/2\"; the only ink is show-through",
+            "problem": "a blank verso is tagged as a text page",
+            "severity": "moderate",
+            "class": "O16"
+          },
+          {
+            "ocr": "<margin>\ntepeyacac\n</margin>",
+            "image": "\"tepeyacac\" and the other five glosses sit only in the strip of the FACING leaf at the left edge of the frame",
+            "problem": "the whole transcription comes from the neighbouring leaf's edge strip, not from this leaf, so none of it is this page's text",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "Each consisting of a stylized hill (tepetl) with a specific iconographic element on top",
+            "image": "the visible glyphs are tilted temples with flames and smoke scrolls on stepped platforms (the conquest sign); the hill place-signs are cut off at the left, and a reclining human figure above the last glyph is not mentioned",
+            "problem": "the image description misidentifies what is visible",
+            "severity": "moderate",
+            "class": "O14"
+          },
+          {
+            "ocr": "tecaloo.pi",
+            "image": "tecalco.pu° (appears to read)",
+            "problem": "\"tecalco\" misread as \"tecaloo\", and the pueblo abbreviation \"pu°\" misread as \".pi\" (also in \"havlom.pi\")",
+            "severity": "minor"
+          },
+          {
+            "ocr": "ocnilom",
+            "image": "the gloss is partly cut at the gutter; it probably reads \"ocuilan\"",
+            "problem": "a probable u→n and a→o misreading; low confidence at this resolution",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "<page-type>text</page-type> … <margin>\ntepeyacac\n</margin>",
+            "english": "This page shows a column of six Aztec place-glyphs, each a hill sign topped with a symbol that spells a town name",
+            "problem": "a blank leaf is presented as carrying six place-glyphs and a list of towns; the content belongs to the facing leaf, so it is not a translation of this page",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "source": "<meta>11/2</meta>",
+            "english": "This page continues the list of conquered towns from the previous page.",
+            "problem": "a continuity claim for a blank verso; the town list is the previous page itself, seen at the edge of the frame",
+            "severity": "moderate",
+            "class": "T15"
+          },
+          {
+            "source": "ocnilom",
+            "english": "The gloss probably corresponds to Ocuilan, listed on the previous page.",
+            "problem": "asserts what the previous page lists, which this record does not carry",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "auh hom",
+            "english": "The gloss is uncertain; \"auh\" is a common Nahuatl conjunction meaning \"and.\"",
+            "problem": "the gloss is a place name cut off at the gutter; offering the conjunction \"auh\" invites a false reading",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "A blank verso is given a full apparatus of glyph descriptions, glosses, a summary and keywords, as if it carried content. It is a translation of a blank as if it were prose.",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "note": "The summary and keywords (\"Tepeyacac, Ocuilan, Tecalco, Miquiyetlan, conquered towns\") are derived from the neighbouring leaf's content and attached to a blank page.",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "A vertical column of six Aztec pictographic place-glyphs run", "verdict": "wrong", "helpful": false },
+            { "quote": "town, city-state; literally \"water-hill\"", "verdict": "ok", "helpful": true },
+            { "quote": "hill, mountain", "verdict": "ok", "helpful": false },
+            { "quote": "A pictograph of a hill with a nose or point on top. The name", "verdict": "unsupported", "helpful": false },
+            { "quote": "A pictograph of a hill with a small object on top. The gloss", "verdict": "unsupported", "helpful": false },
+            { "quote": "A pictograph of a hill with a structure on top. The gloss pr", "verdict": "ok", "helpful": true },
+            { "quote": "A pictograph of a hill with a structure on top. The reading", "verdict": "ok", "helpful": false },
+            { "quote": "A pictograph of a hill with a plant-like element on top. The", "verdict": "unsupported", "helpful": false },
+            { "quote": "A pictograph of a hill with a structure on top and an eagle", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": []
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This record's leaf is a blank verso (\"7\", \"11/2\"), but its OCR and English transcribe and annotate the strip of the facing leaf at the edge of the frame, so the reader is shown a list of towns that is not on this page. The notes add speculation about the previous page and describe the glyphs wrongly."
+  }
+]

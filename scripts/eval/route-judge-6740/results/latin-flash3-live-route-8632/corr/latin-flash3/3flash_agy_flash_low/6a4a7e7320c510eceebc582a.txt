@@ -1,0 +1,5 @@
+<scan-quality>poor</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>blank</page-type>
+<warning>show-through from the other side only</warning>

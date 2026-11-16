@@ -154,7 +154,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
     >
       <div className={`${style.bgColor} px-6 py-5`}>
         <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-          <h2 className={`text-2xl sm:text-3xl font-bold ${style.accentColor} font-display group-hover:underline decoration-2 underline-offset-4`}>
+          <h2 className={`text-2xl sm:text-3xl font-bold ${style.accentColor} font-serif group-hover:underline decoration-2 underline-offset-4`}>
             {tradition.name}
           </h2>
           <span className="text-sm text-stone-500 italic">
@@ -236,7 +236,7 @@ export default async function ContemplativeTraditionsPage() {
             Curated Collection
           </p>
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-[1.1] max-w-4xl font-display"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-[1.1] max-w-4xl font-serif"
           >
             The Contemplative<br />Traditions
           </h1>
@@ -249,19 +249,19 @@ export default async function ContemplativeTraditionsPage() {
           {/* Stats */}
           <div className="flex flex-wrap gap-6 sm:gap-10">
             <div>
-              <div className="text-3xl font-bold text-accent-gold">{totalBooks}</div>
+              <div className="text-3xl font-semibold text-accent-gold">{totalBooks}</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Texts</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-accent-gold">{allLanguages.length}</div>
+              <div className="text-3xl font-semibold text-accent-gold">{allLanguages.length}</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Languages</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-accent-gold">3,000+</div>
+              <div className="text-3xl font-semibold text-accent-gold">3,000+</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Years</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-accent-gold">{traditionsWithBooks.length}</div>
+              <div className="text-3xl font-semibold text-accent-gold">{traditionsWithBooks.length}</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Traditions</div>
             </div>
           </div>

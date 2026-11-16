@@ -25,7 +25,7 @@
  */
 
 import { withMongo } from '../lib/mongo.mjs';
-import { measureAllStages, computeStageDeltas, findStalled } from '../lib/stage-coverage.mjs';
+import { measureAllStages, computeStageDeltas, findStalled, buildAlertPushes, formatSummaryLine } from '../lib/stage-coverage.mjs';
 import { getTodaySpendUsd, readDailyBudgetUsd } from '../lib/spend-guard.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -122,16 +122,11 @@ await withMongo(async (db) => {
   }
 
   // ── Alerts: push only what someone would act on ──
-  const alerts = [];
-  const broken = stages.filter((s) => s.status === 'probe_broken').map((s) => s.stage);
-  if (stalled.length) alerts.push(`STALLED (queue>0, no progress since last snapshot): ${stalled.join(', ')}`);
-  if (broken.length) alerts.push(`PROBE BROKEN (do not trust these rows): ${broken.join(', ')}`);
+  // A broken probe (the instrument) and a stalled stage (the pipeline) go out
+  // as separate pushes and are never counted together (#359).
   const collectorAgeMs = collectorLastRun?.timestamp ? Date.now() - new Date(collectorLastRun.timestamp).getTime() : Infinity;
-  if (collectorAgeMs > 2 * 3600 * 1000) alerts.push(`Batch collector last ran ${collectorLastRun?.timestamp ? Math.round(collectorAgeMs / 3600000) + 'h ago' : 'NEVER'} (cron is every 30min)`);
-  if (typeof agingUncollected === 'number' && agingUncollected > 0) alerts.push(`${agingUncollected} paid batch job(s) uncollected >24h — Gemini discards output at ~2 days`);
-  if (alerts.length) {
-    await pushNtfy('Pipeline line: ' + (stalled.length + broken.length + (agingUncollected || 0)) + ' issue(s)',
-      alerts.join('\n') + '\n\nsourcelibrary.org/platform/admin/line', 'high');
+  for (const push of buildAlertPushes({ stages, stalled, collectorAgeHours: collectorAgeMs / 3600000, agingUncollected })) {
+    await pushNtfy(push.title, push.body, push.priority);
   }
 
   // One-line human summary — this is what the cron log shows.
@@ -139,14 +134,5 @@ await withMongo(async (db) => {
   // warning-page count) but only the log line landed; it referenced two
   // undeclared names and threw a ReferenceError here every night from
   // 2026-08-08 until #4702. If the sensors are built, add them to `doc` first.
-  const pct = (s) =>
-    s.status !== 'ok' ? 'BROKEN' : s.total ? `${((100 * s.covered) / s.total).toFixed(1)}%` : '—';
-  const parts = stages.map((s) => `${s.stage} ${pct(s)}`);
-  
-  console.log(
-    `[stage-coverage] ${parts.join(' | ')} | stalled: ${stalled.length ? stalled.join(',') : 'none'}` +
-      `${broken.length ? ` | PROBE BROKEN: ${broken.join(',')}` : ''}` +
-      ` | dial: ${doc.dial.paused ? 'PAUSED' : 'running'} budget=$${doc.dial.daily_budget_usd ?? 'unset'}` +
-      ` spend=$${doc.spend_today_usd.toFixed(2)} | ${doc.duration_ms}ms${DRY_RUN ? ' (dry-run)' : ''}`,
-  );
+  console.log(formatSummaryLine(doc, { dryRun: DRY_RUN }));
 }, { timeoutMs: 30 * 60_000, socketTimeoutMs: 15 * 60_000 });

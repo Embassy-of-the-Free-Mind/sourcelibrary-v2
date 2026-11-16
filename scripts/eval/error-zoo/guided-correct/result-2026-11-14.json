@@ -1,0 +1,688 @@
+{
+ "summary": {
+  "A": {
+   "outcome corrected": 35,
+   "finding fixed": 15,
+   "decoy refused": 35,
+   "finding uncheckable": 18,
+   "finding changed otherwise": 1,
+   "finding still there": 1,
+   "mean changed share": 0.067
+  },
+  "B": {
+   "outcome corrected": 35,
+   "finding fixed": 16,
+   "decoy refused": 35,
+   "finding uncheckable": 18,
+   "finding changed otherwise": 1,
+   "mean changed share": 0.061
+  }
+ },
+ "rows": [
+  {
+   "page_id": "69b51ec8768235dc65998ad6",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.049,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.049,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69bd9eedf6d63c919747d903",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.256,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.269,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481cd1",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.055,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.048,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69bd9fb2f6d63c9197481d77",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.017,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.023,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69bda116f6d63c919748e138",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.006,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.006,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69c823066c6f3cc53c84aed7",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.295,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.238,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69c84a7cacfba68303020746",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.023,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.027,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69e0138d93b116d24238b14c",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.147,
+    "findings": [
+     "changed otherwise"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.113,
+    "findings": [
+     "changed otherwise"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f33b0e876dd827cbc586a1",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.147,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.133,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6672b0f4e4a53c70f0a26",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.081,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.065,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6681f8b8e4d6b41815b6d",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.018,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.018,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba7",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.009,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.009,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6682f8b8e4d6b41815ba8",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.022,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.019,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f68bdb05ebe79c516d6428",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.086,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.116,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f69ea36b70293ff4a3f753",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.05,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.042,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6af22f58c4b99a4bce6ba",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.071,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.072,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6af29f58c4b99a4bce6cb",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.026,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.044,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6af58f58c4b99a4bce746",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.096,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.099,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6b6f113e0cab6b64bf1f9",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.075,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.009,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6f83b6662642ee90b40eb",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.018,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.019,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f6f8756662642ee90b4191",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.012,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.012,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f71d8fbe92de21c8316124",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.019,
+    "findings": [
+     "still there"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.019,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f71e22be92de21c83162d0",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.012,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.011,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f725cf56d1205ea1c291a1",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.023,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.014,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f725fb56d1205ea1c29244",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.055,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.052,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f728f1d17421b7412a6abc",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.015,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.017,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f72930d17421b7412a6bac",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.055,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.048,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f72961d17421b7412a6c5c",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.105,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.1,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f7358c5873545c995dc864",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.024,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.017,
+    "findings": [
+     "fixed"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f7676390139e9166c2222f",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.032,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.015,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "69f771ca6028036f8e239393",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.373,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.336,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "6a267ed26c1f37c9c4f3cc41",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.016,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.016,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8743",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.022,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.023,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8749",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.021,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.019,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  },
+  {
+   "page_id": "6a26beb30e247ebad6de8750",
+   "A": {
+    "outcome": "corrected",
+    "changed_share": 0.029,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   },
+   "B": {
+    "outcome": "corrected",
+    "changed_share": 0.026,
+    "findings": [
+     "uncheckable"
+    ],
+    "decoy_applied": false
+   }
+  }
+ ]
+}

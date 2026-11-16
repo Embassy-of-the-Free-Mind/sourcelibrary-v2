@@ -1,0 +1,49 @@
+[
+  {
+    "book_id": "6a26c11faad44c98627bf8cb",
+    "slot": 1,
+    "title": "Pegasus Firmamenti. Sive introductio brevis in veterum sapientiam, quae olim ab Aegyptiis & Persis Magia, hodie vero a Venerabili Fraternitate Roseae crucis Pansophia recte vocatur",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is assigned. The leaf is 1619 Latin Rosicrucian/pansophic devotional prose on the 'Light of Grace', which matches the title and author. Nothing is misplaced.",
+    "rights_flag": null,
+    "structure_note": "The structure counts say pages_translated 0, but the book field says 93 and this page is translated, so one of the two instruments is wrong. Only 2 of 94 pages have a printed number, and this leaf shows none, so the single backstep is most likely a misread numeral, not a real disorder.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 75,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single column of roman type; one marginal note in italic in the outer (right) margin, '1. Gradus DEI instinctus.'; the last word 'tanum' is set alone at the foot as the end of a split word",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "filij uestri & filiæ uestræ", "image": "filij veſtri & filiæ veſtræ", "problem": "the printed v is turned into u all through the page (uestri, uocati, diuinitus, Dauid); this is a normalisation the wrong way, but the meaning is unchanged", "severity": "minor", "class": "O8" },
+          { "ocr": "in Ecclesia, sivè in Republica diuinitus", "image": "in Eccleſiâ,ſive in Republicâ divinitus", "problem": "the circumflex ablative marks are dropped here and in 'adepta' (image 'adeptâ')", "severity": "minor" },
+          { "ocr": "Templum Ierosolymi-", "image": "Templum Jeroſolymi-", "problem": "the printed J is normalised to I", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Ita Simeon Spiritus\nDEI instinctu Templum Ierosolymi-\ntanum", "english": "Thus Simeon, by the prompting of the Spirit of GOD, came into the Temple of Jerusalem", "problem": "The verb is not on this page; the sentence goes on to the next leaf. 'came into' is a bridge the translator supplied. It is probably right (it matches Luke 2:27), but it is not in the source.", "severity": "moderate", "class": "T6" },
+          { "source": "bunt filij uestri & filiæ uestræ.", "english": "your sons and your daughters.", "problem": "The fragment '-bunt' (the end of 'prophetabunt' from the previous page) is left out of the English. Only the <meta> recovers it.", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "The <meta> asserts what the previous page holds ('the quotation from Joel 2 and Acts 2 ...'). This is plausible from 'bunt filij uestri & filiæ uestræ', but it cannot be checked from this leaf.", "severity": "minor", "class": "T15" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "Wisdom", "verdict": "ok", "helpful": false },
+            { "quote": "Wisdom of Solomon 7:27, a book of the Greek Old Testament co", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"DEI instinctus\"", "verdict": "ok", "helpful": false },
+            { "quote": "Psalm 85:8 in modern numbering; Hirsch follows the Latin Vu", "verdict": "ok", "helpful": true },
+            { "quote": "Luke 2:27, where Simeon comes \"by the Spirit\" into the Templ", "verdict": "unsupported", "helpful": true }
+          ],
+          "missing": [
+            { "english": "the most deceptive and plausible subtleties of Reason, which seeks to be wise beyond measure, may not be mixed in with the Light of Grace", "why": "'Light of Grace' set against Reason is a technical term of the pansophic and Paracelsian scheme (lumen gratiae versus lumen naturae). A general reader is not told it is a term of art." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is read and translated well. The only problems are a v→u normalisation in the OCR and a verb the translator supplied at the page seam. The notes are accurate; the Luke reference is true but goes beyond what the page names."
+  }
+]

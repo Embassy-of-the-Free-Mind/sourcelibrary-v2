@@ -124,6 +124,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { checkR2Ceiling, CEILING_EXIT } from '../lib/r2-storage-ceiling.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import dotenv from 'dotenv';
@@ -933,6 +934,14 @@ async function main() {
   if (MODE === 'audit') {
     await audit();
     return;
+  }
+  // The standing R2 storage budget (scripts/lib/r2-storage-ceiling.mjs). A dry run writes
+  // nothing and a --book-id one-off is a human's call, so only the sweep path asks.
+  // rearchive-fullres-waves.sh treats exit CEILING_EXIT as a budget pause, not a crash.
+  if (!DRY_RUN && !BOOK_ID) {
+    const ceiling = await checkR2Ceiling(db);
+    console.log(ceiling.reason);
+    if (!ceiling.ok) { await mongo.close(); process.exit(CEILING_EXIT); }
   }
 
   const projection = { id: 1, slug: 1, title: 1, 'image_source.provider': 1, image_resolution_upgraded_at: 1 };

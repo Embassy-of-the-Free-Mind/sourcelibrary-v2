@@ -2,7 +2,7 @@
 // current record and this list is a dated snapshot of it (AS_OF). Update a row when its issue moves,
 // and the date with it. Figures are copied from the issue or the merged write-up it links.
 
-export const AS_OF = '6 October 2026';
+export const AS_OF = '13 November 2026';
 
 export type Status = 'running' | 'defect' | 'planned';
 
@@ -56,12 +56,6 @@ export const GROUPS: IssueGroup[] = [
         detail: 'Catchwords and words split across a page break failed at 10 of 12 breaks checked.',
         status: 'defect',
       },
-      {
-        n: 5842,
-        title: 'Old links to split pages land on the wrong leaf',
-        detail: 'A link to a two-page spread that has since been split should open its first leaf, not the book’s first page.',
-        status: 'defect',
-      },
     ],
   },
   {
@@ -102,12 +96,6 @@ export const GROUPS: IssueGroup[] = [
         status: 'planned',
       },
       {
-        n: 5313,
-        title: 'A garbled-page detector',
-        detail: 'A cheap per-page score so the reader’s warning reaches garbled pages the transcription did not flag.',
-        status: 'planned',
-      },
-      {
         n: 5730,
         title: 'Our own transcription models, trained on pages already corrected',
         detail: 'Latin long-s, Tibetan, Syriac, Persian and Chinese.',
@@ -126,13 +114,13 @@ export const GROUPS: IssueGroup[] = [
     title: 'Translation and notes',
     issues: [
       {
-        n: 5700,
+        n: 6184,
         title: 'Reversed meaning cannot yet be screened across the library',
         detail: 'Latin shows 11 reversed statements per 100 pages, most of them double negatives. Three detectors that work without a published translation all failed (#5748). Only the strongest model catches these reliably.',
         status: 'defect',
       },
       {
-        n: 5700,
+        n: 5698,
         title: 'Notes that cite an “original” the page does not contain',
         detail: 'About 173,000 pages. An automatic cleanup failed its precision check when read by eye, so it was not applied.',
         status: 'defect',
@@ -152,39 +140,9 @@ export const GROUPS: IssueGroup[] = [
     ],
   },
   {
-    id: 'tengyur',
-    title: 'The Tibetan Tengyur',
-    issues: [
-      {
-        n: 5829,
-        title: 'The stored draft on a random sample of 150 pages',
-        detail: 'Reviewers judged 75% of pages to need only light editing, 23% real work and 1% a specialist. They found about 38 reversed statements or wrong agents per 100 pages. Pramāṇa is the weakest section. The reviewers were AI models, not people.',
-        status: 'running',
-      },
-      {
-        n: 5797,
-        title: 'The weak sections, read by eye',
-        detail: 'The 84000 reference covers 8 texts, none from Madhyamaka or Pramāṇa, so those sections need another check.',
-        status: 'running',
-      },
-    ],
-  },
-  {
     id: 'measurement',
     title: 'Measurement and publication',
     issues: [
-      {
-        n: 5873,
-        title: 'More reference pages for the languages that switched engines',
-        detail: 'Persian, Hebrew, Arabic, Pali, Chinese and Sanskrit are being topped up to 30 books each, so the decision to translate them on the stronger engine rests on enough pages.',
-        status: 'running',
-      },
-      {
-        n: 6012,
-        title: 'Typed texts for Latin and German',
-        detail: 'Latin is 37% of translated pages and German 11%, and both have few reference pages. Human-typed editions from the Deutsches Textarchiv, CAMENA and EEBO-TCP are being matched to our books for internal measurement, with each source’s licence recorded.',
-        status: 'running',
-      },
       {
         n: 5406,
         title: 'Readers of the source languages check the judges',
@@ -198,21 +156,9 @@ export const GROUPS: IssueGroup[] = [
         status: 'planned',
       },
       {
-        n: 5762,
-        title: 'The human ceiling',
-        detail: 'How far two published translators, or two human transcribers, differ on our own scales. The first figures are in the paper.',
-        status: 'running',
-      },
-      {
         n: 5531,
         title: 'A downloadable quality dataset',
         detail: 'One bundle behind the paper, split by licence, deposited on Zenodo.',
-        status: 'planned',
-      },
-      {
-        n: 5576,
-        title: 'What an error rate looks like',
-        detail: 'Real pages at 0.5, 2, 5, 10 and 20% character error, with what each level still lets a reader do.',
         status: 'planned',
       },
       {
@@ -225,10 +171,11 @@ export const GROUPS: IssueGroup[] = [
   },
 ];
 
-/** Changes already in production that came out of the October 2026 measurements. */
+/** Changes already in production that came out of the October 2026 measurements and the open list above. */
 export const SHIPPED: { pr: number; text: string }[] = [
   { pr: 5740, text: 'Greek, Hebrew, Arabic, Persian, Sanskrit, Pali and Chinese are translated on the stronger engine (the mid-tier model) instead of the lightest model.' },
   { pr: 5761, text: 'Greek manuscripts, Greek print before 1600 and Latin incunabula are not translated until their transcription is redone.' },
   { pr: 5767, text: '277,832 translated pages cleaned: decorative-initial notes moved to the page-information panel and broken markup repaired, with a revision kept for every page.' },
+  { pr: 6445, text: 'A link to a two-page spread that has since been split opens its first leaf, not the book’s first page.' },
   { pr: 5877, text: 'A written rule for how much evidence is enough before changing an engine, spending on re-reading, changing a prompt or adding a gate.' },
 ];

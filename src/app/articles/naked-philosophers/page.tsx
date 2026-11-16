@@ -58,7 +58,7 @@ export default function NakedPhilosophersPage() {
           from, and how far it travelled, told through the books that carried it.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The word, and the men</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">The word, and the men</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           <em>Gymnosophist</em> is a Greek coinage, <em>gymnós</em> (&ldquo;naked&rdquo;) plus{' '}
@@ -102,7 +102,7 @@ export default function NakedPhilosophersPage() {
           everything inessential, the living rebuke to a world-conqueror who owned everything and understood little.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The one who burned, and the one who refused</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">The one who burned, and the one who refused</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Two sages became a moral diptych the tradition never tired of. The first was{' '}
@@ -131,7 +131,7 @@ export default function NakedPhilosophersPage() {
           tradition&rsquo;s central argument about what wisdom is worth.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The sages in their own voice</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">The sages in their own voice</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The encounter did not stay in the Greek libraries. All through the Middle Ages the{' '}
@@ -185,7 +185,7 @@ export default function NakedPhilosophersPage() {
           not stop retelling them.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The Renaissance meets India again</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">The Renaissance meets India again</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           For most of European history the gymnosophists were a literary memory: sages glimpsed only through
@@ -227,7 +227,7 @@ export default function NakedPhilosophersPage() {
           a lens: to see India at all was to see gymnosophists.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">A chain of ancient wisdom</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">A chain of ancient wisdom</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           By then the naked philosophers had acquired a second career, deep inside Renaissance esotericism. Hermetic
@@ -259,7 +259,7 @@ export default function NakedPhilosophersPage() {
           naked sage of the distant East, wherever the East happened to be drawn.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">Ancestors of the Rosy Cross</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">Ancestors of the Rosy Cross</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The figure&rsquo;s last great transformation belongs to{' '}
@@ -305,7 +305,7 @@ export default function NakedPhilosophersPage() {
           family tree.
         </p>
 
-        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">One idea, three thousand miles, nineteen centuries</h2>
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-serif">One idea, three thousand miles, nineteen centuries</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Follow the gymnosophists across the library and you watch a single image mutate without ever quite

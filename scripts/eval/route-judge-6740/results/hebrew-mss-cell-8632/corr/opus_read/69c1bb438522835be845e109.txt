@@ -1,0 +1,37 @@
+<warning>Handwritten Ashkenazic cursive Hebrew. Some words are uncertain and are marked unclear. The partial text along the left edge belongs to the facing page and is not transcribed.</warning>
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+
+וע״ג <unclear>ונלת</unclear> לך כו׳ ועוד משל ע״ז מהרה״ג החסיד <unclear>מהרל״צ</unclear> זצ״ל <unclear>מקאזמירזשטשוב</unclear> : ״
+
+(עא) י והנה לימוד התורה שאחר התפלה גו׳ בבחי׳ תשובה מעומקא
+
+דלבא ע״ד נמשך בחי׳ הרפואה שלימה לכל <unclear>הענין</unclear> חולי הנ״ל ,
+
+וכמו מאלו שרפא אותן והעבירן מדרך רעה לדרך טובה ואמרו אז כי ה׳
+
+הוא האלקי׳ <unclear>שגדול</unclear> למעלה ואין עוד דכתיב כי אני ה׳ אלקיך ולכן <unclear>מיגון</unclear>
+
+<unclear>שבעת</unclear> עומדים <unclear>ב״ת א״י</unclear> לעמוד שם ; וכל בבחי׳ התפלה גו׳ שהוא ה׳
+
+התשובה <unclear>שבו והכפר</unclear> אומרים כל <unclear>דנעלה</unclear> כי ה׳ הוא האלקי׳ ואחר התפלה
+
+גו׳ יכול להיות דבוק לאלקות ע״י לימוד התורה דביקות נפלא ואין <unclear>כוחו</unclear>
+
+עד שבחי׳ של תורה מחיה דגוף הנשמה כו׳ בעודו חי על האדמה ,
+
+ואמנם בבחי׳ תשובה גו׳ יש כמה מדריגות הא׳ הוא בחי׳ תשובה
+
+שהוא מתחרט למה עשה כזאת וכזאת <unclear>ונפחד</unclear> <unclear>מאחרונות</unclear> ית׳ ומקבל
+
+ע״ע להיות בבחי׳ סור מרע ועשה טוב ; אמנם יש בחי׳ תשובה שהתחרטה פועל
+
+בו כל כך עד <unclear>שטולו</unclear> כ״כ הכחות ; וכמו שאמרו שענין תשובה
+
+אמיתית הוא כמשל מי שהולך לרחוק בנהר והתחיל לטבוע <unclear>ברוב</unclear> שמתחרט
+
+מאד
+
+<vocab>תשובה, תפלה, לימוד התורה, דביקות, רפואה שלימה, סור מרע ועשה טוב, מדריגות, אלקות, נשמה</vocab>

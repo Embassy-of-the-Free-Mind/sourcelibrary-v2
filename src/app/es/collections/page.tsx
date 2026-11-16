@@ -91,7 +91,7 @@ export default async function EsCollectionsPage() {
       <ConditionalSiteHeader variant="light" />
 
       <div className="max-w-[1500px] mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-4xl sm:text-5xl font-display text-primary mb-3">Colecciones</h1>
+        <h1 className="text-4xl sm:text-5xl font-serif text-primary mb-3">Colecciones</h1>
         <p className="text-muted max-w-2xl leading-relaxed">
           La biblioteca, ordenada por tradiciones. Primero las colecciones que ya contienen libros con edición en
           español; debajo, el resto de la biblioteca, en su lengua original y con traducción al inglés en muchos casos.
@@ -111,7 +111,7 @@ export default async function EsCollectionsPage() {
             </div>
             <div className="p-6 sm:p-8 flex flex-col justify-center">
               <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">Leer en español</p>
-              <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanish.name}</h2>
+              <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanish.name}</h2>
               <p className="text-muted leading-relaxed mb-4">
                 Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.
               </p>
@@ -124,7 +124,7 @@ export default async function EsCollectionsPage() {
       {withSpanish.length > 0 && (
         <section className="max-w-[1500px] mx-auto px-6 pb-14">
           <div className="flex items-baseline justify-between gap-4 mb-4">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary">Colecciones con libros en español</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary">Colecciones con libros en español</h2>
             <span className="text-sm text-muted whitespace-nowrap">{nf(withSpanish.length)}</span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -135,7 +135,7 @@ export default async function EsCollectionsPage() {
 
       <section className="max-w-[1500px] mx-auto px-6 pb-20">
         <div className="flex items-baseline justify-between gap-4 mb-2">
-          <h2 className="text-2xl sm:text-3xl font-display text-primary">El resto de la biblioteca</h2>
+          <h2 className="text-2xl sm:text-3xl font-serif text-primary">El resto de la biblioteca</h2>
           <span className="text-sm text-muted whitespace-nowrap">{nf(englishOnly.length)}</span>
         </div>
         <p className="text-sm text-muted mb-4 max-w-2xl">

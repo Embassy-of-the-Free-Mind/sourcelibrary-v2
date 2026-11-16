@@ -353,16 +353,18 @@ describe('Latin re-read (#7263)', () => {
   });
   it('latin-first runs the finishing steps (#8482), then the priority tiers, the correction and the rest, on one pool', () => {
     const s = latinFirstSteps({ home: '/root/.agy-milo', root: '/r', date: '2026-11-03', maxPages: 3000, concurrency: 6, apply: true }).slice(2);
-    expect(s.map((x) => x.step)).toEqual(['latin-priority', 'german-french-correct', 'latin-rest']);
+    expect(s.map((x) => x.step)).toEqual(['latin-priority', 'german-french-reread', 'latin-rest']);
     expect(s[0].args).toEqual(expect.arrayContaining(['--reread-per-call=4', '--reread-languages=Latin', '--reread-tiers=readers,period', '--out=/r/cli-ocr-reread/2026-11-03', '--agy-home=/root/.agy-milo', '--apply']));
-    expect(s[1].args).toEqual(expect.arrayContaining(['correct', '--out=/r/cli-ocr-correct/2026-11-03', '--max-pages=3000']));
-    expect(s[1].args.some((a) => a.startsWith('--reread'))).toBe(false);
+    // German/French are re-read at 4 a call (#7853), on every language the correction took: no --reread-languages
+    expect(s[1].args).toEqual(expect.arrayContaining(['correct', '--reread-per-call=4', '--out=/r/cli-ocr-reread/2026-11-03', '--max-pages=3000']));
+    expect(s[1].args.some((a) => a.startsWith('--reread-languages'))).toBe(false);
     expect(s[2].args).toContain('--reread-tiers=rest');
   });
-  it('the crontab audit reads a latin-first line as the Latin re-read and the correction', () => {
+  it('the crontab audit reads a latin-first line as the Latin and German/French re-read', () => {
     const served = servedByCrontab('35 * * * * f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; node $f latin-first --agy-home=/root/.agy-milo --max-pages=3000 --apply');
     expect(served).toContainEqual({ lane: 'reread', cell: 'latin-lite/print', route: 'agy-flash-low@4-read' });
-    expect(served.some((x) => x.lane === 'correct' && x.cell === 'german-lite/print')).toBe(true);
+    expect(served).toContainEqual(expect.objectContaining({ lane: 'reread', cell: 'french-lite/print', route: 'agy-flash-low@4-read' }));
+    expect(served.some((x) => x.lane === 'correct')).toBe(false);
   });
   it('stale selects the lane\'s pages with a stale flag, never a human edit, and the reader takes the run\'s per-call', () => {
     const q = staleLanePages('b', 'agy-reread-lite-7853');

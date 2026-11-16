@@ -1,0 +1,32 @@
+{
+  "question": "route",
+  "issue": 225,
+  "stage": "ocr",
+  "languages": [
+    "ta",
+    "pi",
+    "sa"
+  ],
+  "about": "#225 (job indic-ocr-tests-225; Derek 2026-11-13 'yes' to both). Cell tamil (router tamil-lite/print): agy alone (the router's current answer, 9/10 on #6553) against the Internet Archive's own OCR corrected by agy, and a Surya 2 draft on gex45 corrected by agy; 40 books, one page each, about half Kovilur Andavar Library and half University of Toronto. Cell series (router english-gpu-7263/print, romanized Pali/Sanskrit/Prakrit text editions of the PTS and HOS volumes imported under #225): the bound route gpu2>agy-flash-low+diff (LightOnOCR + Surya 2 drafts and their word diff, agy reconciles; d-diff.mjs arm D) against agy alone; 24 books, one page each with dense diacritics. The judge counts every dropped or wrong diacritic as a defect (packet judge_note). Every agy call on one account (AGY_HOME=/root/.agy-james), gemini-3.8-flash-low, one page a call.",
+  "baseline": "agy",
+  "arms": [
+    "agy",
+    "ia>agy",
+    "surya>agy",
+    "gpu2>agy"
+  ],
+  "batch": {
+    "pages_per_call": 1,
+    "tested": null
+  },
+  "noise_floor": {
+    "repeat_kind": "repeat",
+    "from": null
+  },
+  "feeds": "route",
+  "router_evidence": [
+    "tamil-lite",
+    "romanized-indic-series-225"
+  ],
+  "waive": {}
+}

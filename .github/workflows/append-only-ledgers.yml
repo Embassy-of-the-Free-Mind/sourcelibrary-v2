@@ -22,10 +22,12 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 jobs:
   audit:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4

@@ -1,0 +1,71 @@
+[
+  {
+    "book_id": "6a3ced8e4701a906f10e15a3",
+    "slot": 1,
+    "title": "幾何論約·卷一~卷二 (vol 1)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Du Zhigeng's Chinese compendium of Euclid in a Siku Quanshu manuscript copy (the block heart reads 欽定四庫全書, 卷二). It belongs in a general/universal library collection of Chinese mathematical texts.",
+    "rights_flag": null,
+    "structure_note": "The structure count pages_translated = 0 contradicts pages_translated_field = 107, and this page is translated, so the count looks like an instrument error (E2) and not missing translations. 107 of 112 pages have OCR. Siku leaves carry only 卷 numbers in the block heart and no folio numbers on the face, so only 6 pages have a printed number and the 2 backsteps and 2 repeats most likely come from juan markers or misread furniture, not from a scan splice. Published is 'Unknown', but the copy is from the Qianlong-era Siku Quanshu.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 94,
+        "right_page": "yes",
+        "printed_marker": "none visible (block heart: \"欽定四庫全書\" … \"卷二\"; no leaf number)",
+        "layout": "single half-leaf, nine vertical ruled columns read right to left, in a manuscript copyist's hand; block-heart title and juan number in the right margin; no diagram",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "引増",
+            "image": "引增",
+            "problem": "The OCR prints the Japanese shinjitai form 増 for the 增 written on the leaf, in all four places it occurs. Meaning is unchanged.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(block-heart furniture not transcribed)",
+            "image": "欽定四庫全書 … 卷二",
+            "problem": "The OCR leaves out the block-heart title and juan marker. This is harmless for the reading text but loses the locator.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The <meta> speculates that the opening 上方形 is 'presumably naming the square of the figure as a whole'. This is not on the page. It most likely completes 'square on [line X]' from the previous page, and the English just renders it as 'square.' The meta goes to the metadata box, not the reading text.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "A <term>qingzhe xing</term> <gloss>gnomon, literally \"chime-",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "gnomon, literally \"chime-stone bent figure,\" named after the",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Letter equivalents used here: 丙 C, 辛 H, 巳 Q, 丁 D, 壬 I,",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "The source writes \"半兀線\" in the second instance, a copying sl",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page is the right leaf. The transcription is accurate apart from a variant character form, and the translation of the end of Elements II.5 and the opening of II.6 is faithful. Its notes are correct and useful: the gloss on 磬折形 and the 半兀 copying slip both check against the image. The only flag is a book-level count mismatch (pages_translated 0 vs 107)."
+  }
+]

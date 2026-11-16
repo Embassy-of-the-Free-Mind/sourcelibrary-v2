@@ -935,7 +935,7 @@ async function autoBind({ OUT, dir, RT, ref, table, stamp, sha }) {
     sh('git', ['-C', wt, 'add', RT, 'scripts/lib/ocr-routing-table.json', 'scripts/lib/translation-routing-table.json', '.claude/docs/routing.md', 'scripts/eval/ocr-routing/README.md']);
     sh('git', ['-C', wt, 'commit', '-s', '-q', '-m', `router(#8283): bind ${name}\n\n${plan.moved.length} cell(s) move; made by lane-judge-sampler.mjs rebuild.`]);
     sh('git', ['-C', wt, 'push', '-q', '-f', '-u', 'origin', branch]);
-    const body = bindPrBody({ plan, mismatches, sha, name }), repo = ['--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2'];
+    const body = bindPrBody({ plan, mismatches, sha, name }), repo = ['--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v3'];
     const existing = sh('gh', ['pr', 'list', ...repo, '--head', branch, '--state', 'open', '--json', 'number', '--jq', '.[0].number']).trim();
     if (existing) sh('gh', ['pr', 'edit', existing, ...repo, '--title', `router(#8283): bind ${name}`, '--body', body]);
     else sh('gh', ['pr', 'create', ...repo, '--base', 'main', '--head', branch, '--label', 'tier:auto', '--title', `router(#8283): bind ${name}`, '--body', body]);
@@ -976,8 +976,8 @@ async function weeklyPr() {
     const body = [`Weekly snapshot of the lane-judge sampler store (#7611): the export as \`${EVIDENCE_PATH}\`${added.length ? ` and new rules.json evidence entries (${added.join(', ')})` : ''}. Made by \`lane-judge-sampler.mjs weekly-pr\`; the box rebuilds the table nightly either way (ops_reports \`router-table:lane-judge\`).`, '',
       '| cell | route | accepted | 95% CI (by book) | wrong text | books |', '|---|---|---|---|---|---|', ...lines, '',
       'Out of scope: the routing tables (the nightly auto-bind moves them, #8283); no page text changes.', '', 'Part of #7611', '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
-    const existing = sh('gh', ['pr', 'list', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--head', branch, '--json', 'number', '--jq', '.[0].number']).trim();
-    if (!existing) sh('gh', ['pr', 'create', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--base', 'main', '--head', branch, '--title', `eval(#7611): lane-judge sampler weekly snapshot ${stamp}`, '--body', body]);
+    const existing = sh('gh', ['pr', 'list', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v3', '--head', branch, '--json', 'number', '--jq', '.[0].number']).trim();
+    if (!existing) sh('gh', ['pr', 'create', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v3', '--base', 'main', '--head', branch, '--title', `eval(#7611): lane-judge sampler weekly snapshot ${stamp}`, '--body', body]);
     console.log(`weekly-pr: ${existing ? `updated #${existing}` : 'opened'} ${branch}`);
     return branch;
   });

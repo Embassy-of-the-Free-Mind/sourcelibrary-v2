@@ -1,0 +1,40 @@
+[
+  {
+    "book_id": "6a3c6ba639b4508b04e44d09",
+    "slot": 1,
+    "title": "天原發微·卷四下 (vol 7)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A half-leaf of the Siku Quanshu manuscript copy (block-heart 欽定四庫全書 / 卷四下) of Bao Yunlong's Song-Yuan cosmology with Bao Ning's '寧按' comments. It belongs in the general universallibrary collection. 'published: Unknown' could be filled in (Siku copy, 18th c.).",
+    "rights_flag": null,
+    "structure_note": "structure.pages_translated is 0, but pages_translated_field is 74 and this page carries a full translation. That looks like a counter defect (E2), not missing translations. Only 9 of 74 pages have a printed number, which fits Siku leaves, where the block-heart folio number is often cropped out of the scan, as it is here. No backsteps or repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 72,
+        "right_page": "yes",
+        "printed_marker": "卷四下",
+        "layout": "single half-leaf of a ruled Siku Quanshu manuscript, vertical columns read right to left: a block-heart strip at the right edge (欽定四庫全書 partly cut off at top, 卷四下), first a column of double-line small commentary (寧按…), then 7 large-character columns",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "Introduction to the Study of the Changes", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "River Diagram", "why": "The River Diagram (Hetu) and Luo Writing (Luoshu) are the two numerical diagrams the whole page argues about. A general reader is never told what they are." },
+            { "english": "Cai Jiufeng says", "why": "Who is quoted is unexplained: Cai Shen (Jiufeng), Zhu Xi's disciple and an authority on the Luoshu numbers." },
+            { "english": "Ning notes", "why": "Nothing tells the reader that 'Ning' is the commentator Bao Ning, whose remarks sit in small type, rather than the author." },
+            { "english": "The number of the substance is ten, and the number of the function is nine", "why": "'substance' and 'function' render the technical pair ti/yong. Without a gloss the sentence reads as ordinary English." },
+            { "english": "the phases generate one another", "why": "'the phases' and the generating/overcoming cycles of the Five Phases are assumed knowledge and are not explained." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean page: the transcription matches the leaf character for character, and the translation is faithful, including the tripling arithmetic. The one gloss is correct. The only defects are book-level bookkeeping (pages_translated count 0) and missing orientation notes for a general reader."
+  }
+]

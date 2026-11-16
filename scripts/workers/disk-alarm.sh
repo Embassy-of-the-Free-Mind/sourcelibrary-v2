@@ -15,7 +15,7 @@
 # DISK_ALARM_MOUNT=/ restricts it to one mount (the old behaviour).
 #
 # After the steward (2026-10-29, #6223): disk-steward.sh runs hourly and archives idle folders to R2 until a disk
-# is back at 75%. So the 85% page means "the steward tried and could not", never "a disk is filling": a mount the
+# is back at 70% (75% until #393). So the 85% page means "the steward tried and could not", never "a disk is filling": a mount the
 # steward manages pages at `high` only when its last run (within STEWARD_FRESH_MIN) ended at or above the limit,
 # and the page names what it could not archive and why; or when the steward has not completed a run for that
 # long (it is broken, which is worth a page by itself). `critical` (95%) still pages at once: jobs die there.
@@ -39,6 +39,103 @@ now=$(date -u +%FT%TZ); epoch=$(date +%s)
 case "$(hostname)" in clawdbot) DEF_BOX=Hetzner ;; earthai-live) DEF_BOX=cloudlayer ;; earthai-l7a) DEF_BOX=l7a ;; *) DEF_BOX=$(hostname) ;; esac
 BOX=${DISK_ALARM_BOX:-$DEF_BOX}  # gex45-1 runs this too (#5660)
 
+# What grew (#367). The "written in the last 6 h" line below counts only files over 20 MB, and a Claude Code transcript
+# folder grows as thousands of small appends: on 2026-11-15 main's root held 17 GB of them, 15.5 GB written in two days,
+# and four pages in two days named nothing. So from SNAP_PCT up, a run keeps `du` of the mount to depth GROW_DEPTH (8 s
+# warm on main's root at depth 4; at most one snapshot an hour, gzipped, GROW_WINDOW_H hours kept), and the page names
+# the three folders that grew most since the oldest snapshot in the window: 15 minutes is too short to see a
+# 7-GB-a-day folder. A byte counts in the deepest folder listed (a folder's own growth is its total less its listed
+# children's), so /root and /root/.claude do not crowd out /root/.claude/projects/<job folder>.
+# Prints "over N h: path +X GB; ..." or nothing (no snapshot old enough yet, du timed out, nothing grew 100 MB).
+GROW_DEPTH=${DISK_ALARM_GROW_DEPTH:-4}
+SNAP_PCT=${DISK_ALARM_SNAP_PCT:-75}
+GROW_WINDOW_H=${DISK_ALARM_GROW_WINDOW_H:-6}
+SNAP_EVERY_MIN=${DISK_ALARM_SNAP_EVERY_MIN:-55}
+grew_since_last() {  # $1 mount, $2 snapshot prefix ($2.<epoch>.gz)
+  local cur rc base newest f t
+  cur=$(mktemp)
+  timeout 150 nice ionice -c3 du -xk --max-depth="$GROW_DEPTH" "$1" 2>/dev/null > "$cur"; rc=$?
+  # du exits 1 when a file vanishes under it, which a busy disk always has; only a timeout means no reading.
+  [ $rc -ne 124 ] && [ -s "$cur" ] || { rm -f "$cur"; return 0; }
+  for f in "$2".*.gz; do  # drop snapshots older than the window
+    [ -f "$f" ] || continue; t=${f%.gz}; t=${t##*.}
+    [ $((epoch - t)) -gt $((GROW_WINDOW_H * 3600 + 900)) ] && rm -f "$f"
+  done
+  base=$(ls "$2".*.gz 2>/dev/null | sort | head -1); newest=$(ls "$2".*.gz 2>/dev/null | sort | tail -1)
+  if [ -n "$base" ]; then
+    t=${base%.gz}; t=${t##*.}
+    zcat "$base" | python3 -c '
+import os, sys
+def load(lines):
+    d = {}
+    for l in lines:
+        k, _, path = l.rstrip("\n").partition("\t")
+        if k.isdigit(): d[path] = int(k)
+    return d
+old, new = load(sys.stdin), load(open(sys.argv[1], errors="replace"))
+root, hours = sys.argv[2].rstrip("/") or "/", float(sys.argv[3])
+grow = {p: new[p] - old.get(p, 0) for p in new}
+own = dict(grow)
+for p, g in grow.items():
+    if p != root and os.path.dirname(p) in own: own[os.path.dirname(p)] -= g
+top = sorted(((g, p) for p, g in own.items() if g >= 102400), reverse=True)[:3]  # 100 MB or more
+if top: print(f"over {hours:.1f} h: " + "; ".join(f"{p} +{g / 1048576:.1f} GB" for g, p in top))
+' "$cur" "$1" "$(awk -v s=$((epoch - t)) 'BEGIN{printf "%.1f", s/3600}')"
+  fi
+  t=${newest%.gz}; t=${t##*.}
+  if [ -z "$newest" ] || [ $((epoch - t)) -ge $((SNAP_EVERY_MIN * 60)) ]; then gzip -c "$cur" > "$2.$epoch.gz"; fi
+  rm -f "$cur"
+}
+
+# Who owns a path (#393). A page that names /root/jobs/zh-shi-ji-8053 still leaves the reader to find out whose it is,
+# and whether the steward can act on it. So every path a page names carries its owner: the job (its brief's Lands:
+# issue; still running or done), the lane whose crontab line names the folder, the CI runner, or the steward step that
+# keeps the folder in check. JOBS_DIR / CLAUDE_JOBS_DIR are overridable for the tests.
+JOBS_DIR=${DISK_ALARM_JOBS_DIR:-/root/jobs}
+CLAUDE_JOBS_DIR=${DISK_ALARM_CLAUDE_JOBS_DIR:-/root/claude-jobs}
+CRONTAB_TEXT=${DISK_ALARM_CRONTAB_TEXT-$(crontab -l 2>/dev/null)}
+job_owner() {  # $1 job name: "job X (#N, running|done)" when a brief exists, else nothing
+  local b="$CLAUDE_JOBS_DIR/$1.brief.txt" lands st=running
+  [ -f "$b" ] || return 0
+  lands=$(sed -n 's/^Lands: *//p' "$b" | head -1 | awk '{print $1}')
+  [ -f "$CLAUDE_JOBS_DIR/$1.done" ] && st=done
+  echo "job $1${lands:+ ($lands, $st)}"
+}
+owner_of() {  # $1 path: one short phrase, or nothing when no rule knows the path
+  local p=$1 n o
+  case "$p" in
+    "$JOBS_DIR"/*)
+      n=${p#"$JOBS_DIR"/}; n=${n%%/*}
+      o=$(job_owner "$n")
+      if [ -z "$o" ] && printf '%s\n' "$CRONTAB_TEXT" | grep -v '^ *#' | grep -q -- "$JOBS_DIR/$n\b"; then o="lane $n (crontab); its day folders are archived by the steward"; fi
+      # Neither: a running process that names it (the GPU queue runs chunks as /root/gpu-queue/running/<name>-cNNN.sh).
+      [ -z "$o" ] && o=$(pgrep -af -- "$n" 2>/dev/null | grep -v -e disk-alarm -e pgrep | awk 'NR == 1 { w = $NF; sub(".*/", "", w); print "process " w " (pid " $1 ")" }')
+      echo "${o:-job folder $n, no brief, lane or process names it}" ;;
+    /root/worktrees/*|/root/sourcelibrary/.claude/worktrees/*)
+      n=${p#*/worktrees/}; n=${n%%/*}; o=$(job_owner "${n#job-}"); echo "${o:-worktree $n}" ;;
+    /root/.claude*/projects/*)
+      n=${p#*/projects/}; n=${n%%/*}; o=""
+      case "$n" in -root-worktrees-job-*) o=$(job_owner "${n#-root-worktrees-job-}") ;; -root-jobs-*) o=$(job_owner "${n#-root-jobs-}") ;; esac
+      echo "Claude transcripts${o:+ of $o} (steward step 1g)" ;;
+    /home/gha/runner-*) n=${p#/home/gha/}; echo "CI ${n%%/*} (steward step 1f resets its checkout)" ;;
+    /home/gha*) echo "CI runner account" ;;
+    /tmp|/tmp/*) echo "/tmp (steward steps 1e, 1h)" ;;
+    /root/.agy-*|/root/.gemini*|/root/agy-history-aside*) echo "agy CLI (steward steps 1a-1d)" ;;
+    /root/.cache/huggingface*) echo "HF cache (steward step 2)" ;;
+  esac
+}
+with_owners() {  # stdin: text; every absolute path in it gets " [owner]" after it
+  local line out w o
+  while IFS= read -r line; do
+    out=""
+    for w in $line; do
+      out="$out${out:+ }$w"
+      case "$w" in /*) o=$(owner_of "${w%%[;:,]}"); [ -n "$o" ] && out="$out [$o]" ;; esac
+    done
+    printf '%s\n' "$out"
+  done
+}
+
 check() {
   local MOUNT=$1 st=$STATE
   # / keeps the original state file so an upgrade does not re-page; other mounts get their own.
@@ -58,6 +155,9 @@ check() {
   prev=${prev:-ok}; last_paged=${last_paged:-0}
   free=$(df -h --output=avail "$MOUNT" 2>/dev/null | tail -1 | tr -d ' ')
   echo "$now $MOUNT used=${used:-?}% free=${free:-?} level=$level prev=$prev limit=$PCT_LIMIT%/$PCT_CRIT%"
+  # Folder sizes for "what grew since the last run" (#367), from SNAP_PCT up so the snapshot exists when a page needs it.
+  local grown=""
+  [ -n "$used" ] && [ "$used" -ge "$SNAP_PCT" ] && grown=$(grew_since_last "$MOUNT" "$st.sizes")
 
   [ "$level" != "$prev" ] && page=change
   [ "$level" = critical ] && [ "$prev" = critical ] && [ $((epoch - last_paged)) -ge "$REPEAT_SEC" ] && page=repeat
@@ -68,7 +168,7 @@ check() {
   if [ -f "$STEWARD_STATE" ]; then
     sw_ts=$(awk '$1 == "ts" {print $2}' "$STEWARD_STATE")
     sw_pct=$(awk -v m="$MOUNT" '$1 == "mount" && $2 == m {print $3}' "$STEWARD_STATE")
-    sw_stuck=$(awk -v m="$MOUNT" '$1 == "stuck" && $2 == m {$1 = ""; $2 = ""; sub(/^  /, ""); print}' "$STEWARD_STATE")
+    sw_stuck=$(awk -v m="$MOUNT" '$1 == "stuck" && $2 == m {$1 = ""; $2 = ""; sub(/^  /, ""); print}' "$STEWARD_STATE" | sed "s|;/|; /|g" | with_owners)
     sw_age=$(( (epoch - ${sw_ts:-0}) / 60 ))
   fi
   if [ -n "$sw_pct" ]; then
@@ -84,7 +184,7 @@ check() {
 
   if [ "$MOUNT" = / ]; then
     what="Root disk"
-    runbook="Runbook #6223: /root/bin/disk-steward.sh (hourly) archives idle folders to R2 above 75% and trims the HF cache; what it keeps, and why, is in its log."
+    runbook="Runbook #6223: /root/bin/disk-steward.sh (hourly) archives idle folders to R2 above 70% and trims the HF cache; what it keeps, and why, is in its log."
   else
     what="Disk $MOUNT"
     runbook="Largest: $(timeout 120 du -xsh "$MOUNT"/* 2>/dev/null | sort -rh | head -3 | awk '{printf "%s %s; ", $2, $1}')"
@@ -100,7 +200,10 @@ check() {
       | awk '{ n = split($2, p, "/"); d = ""; for (i = 2; i <= n && i <= 4; i++) d = d "/" p[i]; s[d] += $1; c[d]++ }
              END { for (d in s) printf "%d %s %d\n", s[d], d, c[d] }' \
       | sort -rn | head -3 | awk '{ printf "%s%s %.1f GB (%d files)", (NR > 1 ? "; " : ""), $2, $1 / 1073741824, $3 }')
+    grew=$(printf '%s' "$grew" | with_owners)
+    grown=$(printf '%s' "$grown" | with_owners)
     [ -n "$grew" ] && grew=" Written in the last 6 h: ${grew}."
+    [ -n "$grown" ] && grew=" Grew ${grown}.${grew}"
   fi
   case "$level" in
     critical) title="$BOX $MOUNT ${used}% full — jobs about to die"; prio=urgent; msg="$what at ${used}% (${free} free). Jobs die silently when it fills.${grew} ${runbook}" ;;
@@ -116,4 +219,5 @@ check() {
   fi
 }
 
+[ -n "${DISK_ALARM_LIB:-}" ] && return 0 2>/dev/null  # tests source the functions
 for m in $MOUNTS; do check "$m"; done

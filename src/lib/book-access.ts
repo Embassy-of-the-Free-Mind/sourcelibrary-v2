@@ -99,7 +99,7 @@ const DELETED_KEEPER_RE = /\bdedup\b[^]*?\bkeeper ([0-9a-f]{24})\b/i;
 
 /**
  * The visible keeper of a duplicate that was DELETED (not just hidden), looked up by
- * the slug the dead URL carries. The #2209 artwork dedup moved 1,483 byte-identical
+ * the slug (or id) the dead URL carries. The #2209 artwork dedup moved 1,483 byte-identical
  * Commons twins to `deleted_books`, and search engines and other sites still send
  * readers to their old URLs, which 404'd. The keeper id is only in the reason text.
  * Rights-related deletions never redirect.
@@ -107,8 +107,14 @@ const DELETED_KEEPER_RE = /\bdedup\b[^]*?\bkeeper ([0-9a-f]{24})\b/i;
 export async function findDeletedDuplicateKeeper(db: Db, slugs: string[]): Promise<DuplicateKeeper | null> {
   const safe = slugs.filter(s => SAFE_SLUG_RE.test(s));
   if (safe.length === 0) return null;
+  // A dead link carries the twin's slug or, from older links, its id (#102).
+  // Both fields are indexed on deleted_books.
+  const ids = safe.filter(s => /^[0-9a-f]{24}$/.test(s));
   const rows = await db.collection('deleted_books')
-    .find({ slug: { $in: safe } }, { projection: { _id: 0, deleted_reason: 1 }, maxTimeMS: 3000 })
+    .find(
+      ids.length ? { $or: [{ slug: { $in: safe } }, { id: { $in: ids } }] } : { slug: { $in: safe } },
+      { projection: { _id: 0, deleted_reason: 1 }, maxTimeMS: 3000 },
+    )
     .limit(5)
     .toArray();
   for (const row of rows) {
@@ -160,6 +166,21 @@ export async function isBookReadable(book: BookLike | null | undefined, request:
   if (!book) return false;
   if (!isHiddenBook(book)) return true;
   return canReadHiddenBook(request);
+}
+
+/**
+ * isBookReadable for a route that holds a page and so only the book's id
+ * (revision history, edition text). A book that is not found passes: there is
+ * nothing to withhold, and the caller's own lookup decides the 404.
+ */
+export async function isBookIdReadable(db: Db, bookId: unknown, request: Request): Promise<boolean> {
+  if (typeof bookId !== 'string' || !bookId) return true;
+  const book = await db.collection('books').findOne(
+    { $or: [{ id: bookId }, { slug: bookId }] },
+    { projection: { _id: 0, id: 1, visible: 1 }, maxTimeMS: 3000 },
+  );
+  if (!book) return true;
+  return isBookReadable(book, request);
 }
 
 /**

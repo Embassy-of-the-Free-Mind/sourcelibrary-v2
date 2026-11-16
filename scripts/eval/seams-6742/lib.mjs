@@ -12,6 +12,10 @@ import { claudeBlocked, noteLimitHit, waitWhileBlocked } from '../../lib/model-l
 // it and failed every call in 2 s with "unknown option"; /usr/bin/claude is the current one there.
 export const CLI = [process.env.CLAUDE_BIN, '/root/.local/bin/claude', '/usr/bin/claude', 'claude'].filter(Boolean)
   .find((b) => (b === 'claude' || fs.existsSync(b)) && /--restricted/.test(spawnSync(b, ['--help'], { encoding: 'utf8', timeout: 30e3 }).stdout || '')) || 'claude';
+// The seal's flags. A CLI without --restricted (the Mac's 2.1.236, v3#104) is sealed with the lean flags instead:
+// no user or project settings (so no hooks or plugins), no skills. With `--tools ""` and --strict-mcp-config the call
+// has no tool either way.
+export const SEAL_ARGS = /--restricted/.test(spawnSync(CLI, ['--help'], { encoding: 'utf8', timeout: 30e3 }).stdout || '') ? ['--restricted'] : ['--setting-sources', 'local', '--disable-slash-commands'];
 const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 
@@ -23,7 +27,7 @@ export function claudeCall(prompt, model = 'opus') {
   const cwd = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'seams-6742-'));
   return new Promise((resolve) => {
     const t0 = Date.now();
-    const child = spawn(CLI, ['-p', '--model', model, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn(CLI, ['-p', '--model', model, ...SEAL_ARGS, '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });

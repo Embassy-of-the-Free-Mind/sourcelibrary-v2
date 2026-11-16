@@ -5,7 +5,7 @@ import { ADMIN_SECTIONS, UNLISTED_ADMIN_PAGES, adminMenuLinks, adminSectionsFor 
 
 /** The page file a link opens, under src/app (route groups like (protected) are not in the URL). */
 function pageExists(href: string): boolean {
-  const seg = href.replace(/^\//, '');
+  const seg = href.replace(/#.*$/, '').replace(/^\//, '');
   return [
     join('src/app', seg, 'page.tsx'),
     join('src/app/platform/(protected)', seg.replace(/^platform\//, ''), 'page.tsx'),
@@ -43,6 +43,15 @@ describe('admin links', () => {
     expect(labels()).not.toContain('Spend');
     expect(labels(true)).toContain('Spend');
     expect(adminSectionsFor({ role: 'superadmin', canSeeSpend: false }).flatMap((s) => s.links.map((l) => l.label))).not.toContain('Spend');
+  });
+
+  it('the Quality group holds the loop in order, and the loop strip links only to pages in it (#244)', async () => {
+    const { QUALITY_LOOP } = await import('@/lib/admin-links');
+    const quality = ADMIN_SECTIONS.find((s) => s.label === 'Quality')!.links.map((l) => l.href);
+    expect(quality.slice(0, 4)).toEqual(['/admin/quality', '/quality', QUALITY_LOOP[1].href, '/admin/router']);
+    expect(QUALITY_LOOP.map((s) => s.href).filter((h) => !quality.includes(h))).toEqual([]);
+    // the two super-admin quality pages nothing linked to are in the menu now
+    expect(quality).toEqual(expect.arrayContaining(['/platform/admin/quality-methods', '/platform/admin/ocr-evidence/read-surface']));
   });
 
   it('a reader sees nothing', () => {

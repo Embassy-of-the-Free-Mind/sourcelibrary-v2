@@ -1,0 +1,48 @@
+[
+  {
+    "book_id": "6a4c16fe0af972fc7bae75ff",
+    "slot": 1,
+    "title": "Panegyris Solennis. De Armorum Ac Literarum Harmonia: In Actu Introductionis Collegii, Scholaeque Stargardiensis Novi Professoris, & Rectoris, Publice Habita A Georgio Hegenwald, I.D. Comite Palatino Caesareo",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1677 Latin school oration from Stargard on arms and letters, printed in roman type with long s. It is a genuine early modern primary source. No tradition or collection is assigned, so there is no shelf to contradict.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree about translation. The book record says pages_translated 20, but structure.pages_translated is 0, even though this page carries a full translation. The structure count looks stale or broken; the page itself is fine. with_printed_number 1 of 29 is what you would expect from an unpaginated quarto pamphlet that has only catchwords and signatures. No backsteps or repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "sua, tuta, farta tectaque relicta sacraria", "image": "ſua, tuta, ſarta tectaque relicta ſacraria", "problem": "long s read as f: the idiom is 'sarta tecta' (in good repair). The translation renders the right sense, 'safe and sound'", "severity": "minor" },
+          { "ocr": "quae singularis ac beneficia fuit divina dispensatio", "image": "quæ ſingularis ac benefi[smudged]a fuit divina diſpenſatio", "problem": "the word is smudged on the leaf. The grammar wants the adjective 'benefica' (agreeing with dispensatio), and the translation's 'beneficent' assumes that reading. 'beneficia' is a noun and does not construe here", "severity": "minor" },
+          { "ocr": "liceat mihi cum Jurisconsultis sic loqui", "image": "liceat mihi cum JCTis ſic loqui", "problem": "abbreviation expanded without a mark (likewise 'DNN.' → 'Dominorum' and 'Dn. M.' → 'Dominum Magistrum'). The expansions are correct but the transcription is not diplomatic", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "Campana absque pistillo, seu tintinabulo", "english": "a Bell without a clapper or a little bell without its tongue", "problem": "'without its tongue' is added; the source has only 'or a little bell'. Harmless amplification", "severity": "minor" },
+          { "source": "<meta>continues from previous page: \"Thus, thus, your Lily-bearing Scepter, which you brandish, not only under terror and...\"</meta>", "english": "continues from previous page: \"Thus, thus, your Lily-bearing Scepter...", "problem": "the continuity meta quotes the previous page's English, which cannot be checked from this leaf (a T15 form). The summary's 'French scepter' rests on that page too", "severity": "minor" }
+        ],
+        "other": [],
+        "printed_marker": "catchword \"cum\" (a faint signature mark may sit at the foot, centre, but I cannot read it)",
+        "layout": "single column of roman type with long s and ligatures, catchword at the bottom right, no marginalia or ornaments",
+        "notes_audit": {
+          "items": [
+            { "quote": "A reference to Daniel 2, where Nebuchadnezzar's dream shows", "verdict": "ok", "helpful": true },
+            { "quote": "An echo of Cicero's maxim \"inter arma silent leges,\" \"amid ar", "verdict": "ok", "helpful": true },
+            { "quote": "Zoilus was an ancient Greek critic notorious for his carping", "verdict": "ok", "helpful": true },
+            { "quote": "to live as brothers, or hold property jointly", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Literaria Palaestra,\" that is, the school itself,", "verdict": "ok", "helpful": true },
+            { "quote": "Bellona was the Roman goddess of war.", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "the provident care of the Lord PATRONS", "why": "a general reader does not know who the school's 'Patrons' are (the civic or ducal authorities who governed and funded the Stargard college)" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean page. The transcription is accurate apart from one long-s slip ('farta' for 'sarta') and unmarked abbreviation expansions, and the translation is faithful. Its notes are correct and mostly useful. The only oddity is the stale structure.pages_translated count of 0."
+  }
+]

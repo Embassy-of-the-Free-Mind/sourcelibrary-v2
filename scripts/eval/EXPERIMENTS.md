@@ -138,6 +138,23 @@ Replayed over the eight draw dates 2026-10-19 → 2027-01-25, the old filter put
 The new filter puts 0 there. It draws the same books, and every other book keeps the same run. Month 0's draw is in the
 ops repo and was not re-checked here.
 
+**Design change, 2026-11-13 (v3#154): the packet and the score follow what the reader is served on English books.**
+On an English leaf of an English edition the reader, `/quote`, `/text` and the exports serve the transcription; a stored
+translation there is a model's rewording that nobody is shown (#7100). Until now `draw.mjs` handed reviewers that stored text
+and `score.mjs` counted findings in it. In sprint round 7 (2026-11-13, public frame) 3 of the 10 drawn books were English
+editions, and 7 serious findings on one of them were all in the stored rewording: the round read 5 of 30 pages with a serious
+error, where the text readers meet gave 2 of 30. From this date:
+- `exposureOf()` labels such a page `rewrite_not_served` (in `draw-log.json`).
+- `draw.mjs` leaves the stored translation out of the packet for that page, with a one-line `translation_note`. The reviewer
+  reads the transcription against the image, as for any page; `REVIEWER.md` is unchanged.
+- `score.mjs` and `register.mjs` set aside `tr_errors` on such a page. Findings in the transcription (`ocr_errors`), `other`
+  and a wrong leaf still count, and the page still counts as served. `report.json` `not_served` says how much was set aside.
+
+Rows before this date are not rescored: their draw logs record no `rewrite_not_served` page, so the scorer returns them as
+they were. The frame is unchanged. It still admits a book by its stored translations (`pages_translated >= 3`), so English
+editions enter it only where the old rewording exists (2,297 of 25,940 frame books on 2026-11-13) and an English book
+without one cannot be drawn. That is a property of the frame this change does not touch.
+
 ## Monthly page integrity draw (#8040): do a reader's image, text, English and number line up?
 
 One entry for the series, one row per run (newest first), appended by `scripts/audit/page-integrity-draw.mjs --land`, first of the month on gex45. Design and labels: `2026-11-04-page-integrity-draw-8040.md`. 200 random visible books, one served page each, a fresh seed, 38 planted controls, every flag asked again blind. measure = judged: AI reviewers, images opened, no human reference. A rate is k/n (95% Wilson). A row says whether its positives have been read by eye; until they have, it is the judge's count. The 2026-11-04 row judged the stored English with the model's notes still in it; later rows judge the words a reader gets.
@@ -159,6 +176,2475 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-11 | 103 | 86.1 (78.2–92.8) | 0.6 | 16 (8.6–24.6) | 11.5 | 14.6 | 9.6 | 87.7 / 71.1 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-11-01, all model arms sampled (#5274 wave 2) |
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
+
+## 2026-11-14 · Is the error zoo's critical rule too harsh, and does softening it make two judges agree? (#244)
+
+**Question.** Derek: some severity calls have looked too harsh. The calibration set (#6420, `calibration-report-2026-11-12.md`) found the same rubric read by Opus and Gemini on identical frozen text agrees at κ 0.51, while each model re-reading its own pages agrees at 0.84–0.86. Does a softer critical rule close that gap, and is a yes/no page flag the right instrument at all?
+
+**Frame.** The 104 calibration packets in blocks A and B (52 random, 52 top-decile risk), each read once by `opus-rubric` and `gem-rubric`; the retest pairs (Opus 15, Gemini 30). No new reads: every variant re-scores the stored reviews.
+
+**Method.** `scripts/eval/error-zoo/calib-variants.py`, using calib-score.py's loaders and its critical definition (a `serious` finding, or right_page `no`). Variants: V1 drops findings the reader marked `sure:false`; V2 demotes an OCR-pane finding whose own explanation calls the misreading a non-word or meaningless (translation-pane "fluent over garble" stays critical, since the reader cannot see it); V3 both; V4 two or more criticals. The weighted score is MQM-style: critical 25, major or moderate 5, minor 0, per 1,000 words of the page's OCR text, under V3 rules.
+
+**Results.**
+
+| rule | Opus critical pages | Gemini critical pages | Opus vs Gemini κ | Opus re-read κ | Gemini re-read κ |
+|---|---|---|---|---|---|
+| V0 current | 69% | 53% | 0.51 | 0.86 | 0.84 |
+| V1 sure only | 62% | 53% | 0.55 | 0.86 | 0.84 |
+| V2 non-words demoted | 68% | 53% | 0.53 | 1.00 | 0.84 |
+| V3 both | 61% | 53% | 0.57 | 1.00 | 0.84 |
+| V4 two or more (V3) | 48% | 46% | 0.54 | 0.86 | 0.73 |
+
+Weighted score per 1,000 words, Spearman between readers: Opus vs Gemini 0.74; Opus re-read 0.94; Gemini re-read 0.82. On the 52 random pages Opus gives 153 weighted points per 1,000 words and Gemini 94.
+
+- **The sure flag is one-sided.** Opus marked 135 of its 415 serious findings unsure; Gemini marked none of its 271. A sure-only rule therefore softens one reader only.
+- **The "one letter" cases are real but rare.** The narrow non-word rule catches 16 of 686 serious spans. About five are truly self-flagging (GOtt read as "GOBt", Rijn as "Aju", with the English correct). In the rest the English built on the non-word ("perversiam" rendered "perversity", reversing the sense), which is critical by any standard.
+- **Consensus.** Both readers call 18 of 52 random pages critical under V3; Opus alone calls 24 and Gemini 21.
+- **The gap is level, not noise.** Each reader repeats itself closely; the two differ in how much they count. A softer rule trims the level a little and leaves the disagreement.
+
+**Caveats.** 104 pages, 15 and 30 retest pairs; the non-word rule is a keyword match on the reader's own explanation, and its 16 spans were read by eye in the output, not against the image. The weighted score's per-page level depends on a short denominator for sparse pages.
+
+**What it means.** For the quality map and /quality: report a weighted defect rate per 1,000 words, put each reader family on one anchored scale (pooled-defects.py already does this against the served-grades scale), and show the spread between readers as part of the uncertainty. Do not publish a share of pages with a critical error; it is the least reliable number here. For the judge: when a single critical decides an action (containment, repair), confirm it with the other family; Opus's unsure criticals are the first candidates.
+
+## 2026-11-14 · Cross-family second read of the 2026-11-13 corrections (v3#199)
+
+PRIOR ART: `scripts/eval/correction-pass-7818/lib.mjs` `judgeAgy` (the judge prompt and agy call, imported unchanged),
+`scripts/eval/route-judge-6740/results/fix-scripts-199/audit.mjs` (the better/same/worse rule the #199 wave audits used,
+restated in `sr.mjs` `rel()`). `scripts/eval/error-zoo/second-read.mjs` does not fit: it confirms one flagged text and
+does not compare a written text with the text it replaced.
+
+**Why.** On 2026-11-13 the fix-latin, fix-euro, fix-cjk and fix-scripts jobs wrote 1,255 corrected transcriptions of
+pages our checks had measured as bad. Only Claude models judged them (Opus and Fable judging each other), and the Opus
+judge favours Opus manuscript readings (#7263). Each job also left corrections its writer refused under the 40%
+shared-words floor. Derek approved "defaults" on 2026-11-13: write those through the by-eye path once a cross-family
+read confirms them.
+
+**How.** `scripts/eval/route-judge-6740/results/second-read-199/sr.mjs`:
+`prep` → `judge` (3 shards over two agy logins) → `confirm` → `judge` → `score` → `revert` → `eye`.
+Every written page's stored text, and the text it replaced (its run's `page_revisions` row), is judged blind against the
+page image. Each text is a separate call, in shuffled order, under a random id. For every refused correction, the
+correction and the stored text are judged the same way. Manuscripts were queued first. Controls: 12 wrong-page texts
+(another book's written text on this image) and 12 repeats.
+
+A page is reverted only when round 1 rates it worse AND a fresh second call on both texts rates it worse again.
+A refused correction is written only when both calls accept it, round 1 does not rate it worse than the stored text,
+and its book is not held at write time.
+
+### Written pages (1,255; better / same / worse in round 1; worse confirmed by round 2)
+
+| job | form | pages | better | same | worse | confirmed worse |
+|---|---|---:|---:|---:|---:|---:|
+| fix-latin | print | 243 | 142 | 85 | 16 | 3 |
+| fix-latin | ms | 106 | 80 | 24 | 1 | 0 |
+| fix-euro | print | 121 | 63 | 53 | 5 | 1 |
+| fix-euro | ms | 49 | 27 | 17 | 5 | 1 |
+| fix-cjk | print | 11 | 7 | 4 | 0 | 0 |
+| fix-cjk | ms | 26 | 11 | 13 | 2 | 2 |
+| fix-scripts | print | 472 | 268 | 187 | 17 | 6 |
+| fix-scripts | ms | 227 | 161 | 57 | 9 | 2 |
+| **all** | | **1,255** | **759** | **440** | **55** | **15** |
+
+By corrector: Opus print 267/197/24 (6 confirmed), Opus ms 132/76/11 (3), Fable print 213/132/14 (4), Fable ms
+147/35/6 (2). One fix-latin manuscript page (`69b3e5cf304c1c6b3950a4a6`) has no verdict after two tries.
+
+**The judge's noise.** A single "worse" call is mostly noise. Of the 55, the second call rated 18 better and 22 the same.
+In the repeat controls, 1 of 12 flipped accept. All 12 wrong-page controls were refused (accept false, fidelity 1).
+
+**Reverted (15 pages, 9 runs)** with `scripts/maintenance/revert-run.mjs --run-id <run> --page-ids-file=…  --apply`.
+Each revert runs as `revert:<run>`, so it can itself be undone. Page ids are in `reverted.json`. Every one of these pages
+already carried `translation_stale` from its correction run, so the English is re-translated from the restored text.
+The judge's reasons include
+silently expanded legal and bibliographic abbreviations (fix-latin w4), swapped or inverted table columns (Arabic ms,
+Greek print), an opening read as two columns of one page, omitted printed marginal glosses, a misread foliation, and
+Dunhuang variants normalised to the Taishō text.
+
+### Guard-refused corrections (213)
+
+| job | form | refused | accepted r1 | accepted both |
+|---|---|---:|---:|---:|
+| fix-latin | ms | 98 | 48 | 39 |
+| fix-latin | print | 13 | 8 | 7 |
+| fix-cjk | print | 15 | 5 | 5 |
+| fix-scripts | ms | 73 | 31 | 25 |
+| fix-scripts | print | 14 | 9 | 8 |
+
+71 were written as run `second-read-199-eye-ocr` (`cli-ocr.mjs apply --by-eye`, `--mark-stale=second-read-199`). The
+Gemini verdict is recorded in the page's `ocr` provenance as `by_eye` (`by-eye.jsonl`; page ids in
+`written-refused-page-ids.json`). Not written (`refused-left.json`): 111 not accepted in round 1, 17 not accepted
+by the confirm call, 10 in held books, 1 rated worse than the stored text, 1 unjudged, 2 refused by the writer's
+foreign-script guard (`695696f91479a63c1108d6ea`, `69937973b0a84a5763964f8a`). Two fix-cjk refusals had no text
+(cli exit 1) and were not in the set.
+
+Of the 111 corrections not accepted in round 1, the judge still rated 51 better than the stored text, 43 the same and
+17 worse; only 6 of those stored texts were accepted. These pages are bad in both versions. They need a fresh read,
+not this correction.
+
+### Notes
+
+- The default agy login answered 429 RESOURCE_EXHAUSTED ("Resets in 82h") on the first call while `/quota` read
+  100%. All judging ran on the `.agy-james` and `.agy-milo` logins: 2,786 + 174 + 211 calls, no paid API.
+- The fix-scripts refused reads and their prompt files were on gex45. Helper jobs `xfer-refused-199` and
+  `xfer-prompts-199` exported them through private ops-repo branches, deleted after use.
+- The judge is a Gemini Flash tier reading one text at a time. A "same" on a long manuscript page can hide offsetting
+  errors, and the fidelity scale is coarse (1–5).
+
+## 2026-11-14 · Does attaching the page image to the translation call lower serious errors in the English? Latin, German, French (#106)
+
+**Who reads this.** Derek deciding whether the live Latin, German and French agy translation lanes send the page image with the text; the router table (three held slice cells).
+
+**Design** (pre-registered on #106 before any model call; `scripts/eval/image-translate-106/results/preregistration.md`). One seeded interior page from each of 120 visible books on the live agy route, 40 a language, v2#7611 books left out. Arms, all `gemini-3.8-flash-low` through agy with the production translation prompt over the stored OCR, **one page a call**: T text only; T2 the same call again (the arm noise floor); I the same call with the page image attached. The stored English (S, mostly Flash-Lite) was judged too, for the write decision only. Judge: Opus, sealed `claude -p`, blind (opaque ids), the image opened on every call (511/511), severity-weighted defects per 1,000 words, misreads carried into the English, claims about the leaf. Rule (from #106): I is better when (a) the T−I gap in serious defects per 1,000 words exceeds the T−T2 gap, (b) the paired by-page 95% CI of T−I is above 0, (c) I makes no more false leaf claims. 360 arm calls + planted rows on agy (`AGY_HOME=/root/.agy-milo`), 511 judge calls.
+
+**Controls — all pass, round valid.** Wrong-page: 12/12 rejected (fidelity 1). Judge plants (one wrong number or negation in an English output): 8/9 caught, read by hand (the heuristic matcher said 6/9; two were caught on the planted span and missed by the tail test; the Horace "will not" plant was graded cosmetic, a real miss) — `results/judge-plants-by-hand.json`. Repeats: 10 outputs judged twice, 0 accept flips, serious count off by 1 on one. paired-arm.mjs R1–R5 ok. German has no repeat pair of its own (the 10 fell on Latin and French); the judge noise floor is pooled.
+
+**Result, serious defects per 1,000 English words (misleads + wrong text):**
+
+| | T text | T2 text again | I image | S stored | T−I paired 95% CI | T−T2 | rule |
+|---|---|---|---|---|---|---|---|
+| Latin | 3.52 | 3.15 | 2.72 | 5.55 | 0.80 (−0.09–1.66) | 0.37 | a yes, b no → not shown |
+| German | 3.57 | 3.83 | 2.77 | 6.39 | 0.80 (−0.17–1.91) | −0.27 | a yes, b no → not shown |
+| French | 5.40 | 4.79 | 4.53 | 6.62 | 0.88 (0.06–1.77) | 0.62 | a, b, c yes → **I better** |
+| all 120 | 4.10 | 3.86 | 3.28 | 6.19 | 0.81 (0.28–1.34) | 0.24 | a, b, c yes → **I better** |
+
+Accepted pages T / T2 / I: Latin 26/29/29 of 40, German 27/26/30, French 24/26/29, all 77/81/88 of 120. Stored English accepted 45/96 (24 pages had none).
+
+**The mechanism.** Planted OCR misreads (a word changed in the transcription, the image unchanged): I repaired 12/12, T 1/12 (10 carried). Real misread spots the judge found on the shared pages: T carried 119 of 188 into the English, I 76; of T's 119, I repaired 31, T2 3. By language, carried T→I: Latin 35→25, German 19→8, French 65→43. False claims about the leaf: 24 pages each for T and I (T2 28).
+
+**Cost** (agy tokens; one call a page in every arm, so calls per usable page fall with acceptance):
+
+| | tokens/page | calls/usable page | tokens/usable page |
+|---|---|---|---|
+| T | 13,350 | 1.56 | 20,805 |
+| T2 | 13,431 | 1.48 | 19,898 |
+| I | 15,659 (+17%) | 1.36 | 21,353 |
+
+v2#8358 measured +58% tokens for the image arm on its pages; here, one ordinary page a call, it is +17%.
+
+**By eye (step 8; `scripts/eval/image-translate-106/results/by-eye.md`).** Five pages where I and T differ, seeded: I as good or better on 5/5, strictly better on 3 (a concession "even though excommunicated" T lost; two Hebrew words the OCR dropped that I restored from the scan; "Sicambrians" where T wrote "the French"). On 2/5 the judge put a one-sided defect that belongs to both arms or neither: page-level judge noise of that size is why the rule is on rates over 40 pages.
+
+**Pages written (step 9).** For each drawn page, the best judged read (accepted, fewest serious defects, ties to T first) replaced the stored English only where it beat it: 66 pages written through `cli-translate.mjs apply` with provenance, run `image-translate-106-20261114024226` (revision rows kept; undo `scripts/maintenance/revert-run.mjs --run-id image-translate-106-20261114024226`). By arm: T 28, T2 17, I 21. 22 of the 66 had no English before. 30 kept the stored English, 23 had no accepted fresh read, 1 was refused by the absorbs-neighbour door (69b51de7efd8df28f2dacee2 p.439). book_checks: 66 rows, method `image-translate-106` v1 (`scripts/eval/methods/image-translate-106.md`).
+
+**What else this run showed.**
+- The stored English is much worse than any fresh read (6.19 serious per 1,000 words against 3.3–4.1; accepted 45/96). On these pages re-reading at all is worth more than the image.
+- Side finding: book 6a49241ea45b99e46af9762d p.6 carried an invented Acts 20 passage; fixed and closed as #328. Its sample page was not written here.
+- Run notes: the default agy pool was blocked by a stale local stop file (`/root/.model-limits/agy-gemini-3.8-flash-low.json`), left in place; the milo pool was used. 11 judge calls first failed with exit 127 (the pace-guard wrapper found an empty claude path) and were retried; no verdict was lost.
+
+**Limits.** One page a call; the live lane sends 4. Whether the gain holds at 4 a call (four images in one call) is untested. n=40 a language: the pre-registration said a per-language test could see only a large effect (about 0.7 serious defects a page); the observed per-language gains are 0.3–0.4 a page, so Latin and German not passing (b) is a power limit, not evidence of no effect. One judge (Opus, a different family from the Gemini arms); no second judge family.
+
+### Replicated?
+
+No. The pooled result is one draw, one judge. A held-out draw at 4 pages a call is the replication the lane change would need.
+
+<details><summary>paired-arm.mjs skeleton tables (Opus)</summary>
+
+**Latin, judge opus.**
+
+| arm | accept | by-book 95% | wrong text | fidelity | control |
+|---|---|---|---|---|---|
+| agy-text | 26/40 | 0.5–0.8 | 7/40 | 3.98 | pass |
+| agy-text-again | 29/40 | 0.575–0.85 | 3/40 | 4.13 | pass |
+| agy-image | 29/40 | 0.6–0.85 | 5/40 | 4.03 | pass |
+| stored | 15/27 | 0.37–0.741 | 5/27 | 3.56 | pass |
+
+- agy-text -> agy-text-again: on 40 shared pages better 13/40, worse 7/40; accept gained 5, lost 2 (sign test p 0.45).
+- agy-text -> agy-image: on 40 shared pages better 10/40, worse 7/40; accept gained 6, lost 3 (sign test p 0.51).
+- agy-text -> stored: on 27 shared pages better 1/27, worse 13/27; accept gained 1, lost 5 (sign test p 0.22).
+- Noise floor: the same arm judged twice flips accept on 0/4 pages.
+
+**German, judge opus.**
+
+| arm | accept | by-book 95% | wrong text | fidelity | control |
+|---|---|---|---|---|---|
+| agy-text | 27/40 | 0.525–0.825 | 5/40 | 3.92 | pass |
+| agy-text-again | 26/40 | 0.5–0.8 | 3/40 | 3.92 | pass |
+| agy-image | 30/40 | 0.6–0.875 | 3/40 | 4.08 | pass |
+| stored | 9/30 | 0.133–0.467 | 9/30 | 3.43 | pass |
+
+- agy-text -> agy-text-again: on 40 shared pages better 4/40, worse 4/40; accept gained 3, lost 4 (sign test p 1).
+- agy-text -> agy-image: on 40 shared pages better 9/40, worse 3/40; accept gained 5, lost 2 (sign test p 0.45).
+- agy-text -> stored: on 30 shared pages better 1/30, worse 12/30; accept gained 1, lost 11 (sign test p 0.01).
+- Noise floor: NONE MEASURED.
+
+**French, judge opus.**
+
+| arm | accept | by-book 95% | wrong text | fidelity | control |
+|---|---|---|---|---|---|
+| agy-text | 24/40 | 0.45–0.75 | 8/40 | 4 | pass |
+| agy-text-again | 26/40 | 0.5–0.8 | 7/40 | 4.05 | pass |
+| agy-image | 29/40 | 0.575–0.85 | 5/40 | 4.2 | pass |
+| stored | 21/39 | 0.385–0.692 | 11/39 | 3.72 | pass |
+
+- agy-text -> agy-text-again: on 40 shared pages better 7/40, worse 5/40; accept gained 2, lost 0 (sign test p 0.5).
+- agy-text -> agy-image: on 40 shared pages better 11/40, worse 4/40; accept gained 5, lost 0 (sign test p 0.06).
+- agy-text -> stored: on 39 shared pages better 4/39, worse 13/39; accept gained 1, lost 4 (sign test p 0.38).
+- Noise floor: the same arm judged twice flips accept on 0/6 pages.
+
+</details>
+
+## 2026-11-14 · Where does Gemini 4 Hydrogen sit beside the engines already scored on the sealed panels? (#218)
+
+- **Question.** Hydrogen is new on agy. On the wave-2 panels, where 38 engines are already scored against typed references,
+  is it level with Gemini 3.8 Flash (CLI), Gemini 4 Argon low (CLI) and each set's leader?
+- **Answer.** Hydrogen low is level with 3.8 Flash on Latin, English, other Latin-script and Greek. It is ahead of 3.8 Flash on
+  Syriac (paired interval excludes zero) and wins more Chinese manuscript pages (121 to 59), though that median gap's
+  interval reaches zero. It is not distinguishable from any set's leader except on Syriac,
+  where it is far behind, and on Armenian, which has only 5 pages. Medium buys nothing measurable over low.
+
+### Design
+
+- **Pages.** `/root/engine-wave2-6011/sets.json`, eight sets. Each Hydrogen tier had **661 pages** to read: the pages wave 2
+  read, not the 919 in the eight sets, because wave 1 had already read the rest.
+- **Arms.**
+  - `gemini-4-hydrogen-low` and `gemini-4-hydrogen-medium` through agy, on `AGY_HOME=/root/.agy-james` (the one-night
+    exception; times in the paired-run file).
+  - The same request as "Gemini 3.8 Flash (CLI)" and "Gemini 4 Argon low (CLI)": the same prompt and the same image
+    handling, one page per call (`build-requests.py`).
+  - Low read all 661 pages. Medium read the sets in the order latin, latin-script-other, english, greek and stopped at the
+    call budget, 73 of Greek's 127 pages in. **Medium never reached chinese-print, chinese-manuscript, armenian or syriac, or
+    the rest of Greek.**
+- **Scorer.** Unchanged: `benchmark-score.mjs`, and for Syriac the PAGE-XML ground-truth scorer
+  (`syriac-score-h.py`, the #224 copy).
+- **Rules.** As in #6523:
+  - A failed read is counted and not scored.
+  - An unaligned read is scored as a 100% error.
+  - Engines are compared on shared pages only.
+  - Accuracy = 1 − median CER, with a page-bootstrap interval (B = 2,000).
+- **Tool-denial stubs.** On 14 low reads and 7 medium reads, agy denied the model's `read_file` call, and the model wrote
+  "Unable to read image…" instead of a transcription.
+  - `blank-toolfail.py` marks these as failed reads before import. Without it, `import-cli-arm.py` would score them as text.
+  - They were not re-run, because the call budget was used up.
+- **Recitation cuts.** 2 low reads were cut short by the recitation filter (an EEBO page and an Armenian page). They are
+  scored as partial reads, as `import-cli-arm` scores a filter cut.
+
+### Result by set, Hydrogen low (accuracy, shared pages)
+
+The paired column, Hydrogen vs 3.8 CLI, gives the pages where Hydrogen's CER is lower or higher, and the median CER
+difference with its interval. A negative difference means Hydrogen is better.
+
+| set | shared / set | Hydrogen low [95% CI] | n | failed | 3.8 Flash CLI [CI], n | Hydrogen vs 3.8 CLI: pages better / worse, median ΔCER [CI] | Argon low CLI, n | set leader [CI] |
+|---|---|---|---|---|---|---|---|---|
+| latin | 145/158 | 0.942 [0.932, 0.951] | 136 | 9 | 0.938 [0.925, 0.950], 137 | 58 / 31, 0 [−0.001, 0] | — | Gemini 3 Flash 0.947 [0.937, 0.955] |
+| english | 43/44 | 0.968 [0.957, 0.973] | 42 | 1 | 0.967 [0.957, 0.973], 42 | 17 / 8, 0 [−0.001, 0] | — | Sonnet 0.968 [0.957, 0.972] |
+| latin-script-other | 23/23 | 0.998 [0.996, 1.000] | 20 | 3 | 0.998 [0.996, 0.999], 16 | 5 / 5, 0 | — | Gemini 3 Flash 0.998 [0.996, 1.000] |
+| greek | 86/127 | 0.936 [0.923, 0.950] | 85 | 1 | 0.934 [0.919, 0.952], 75 | 44 / 17, −0.001 [−0.005, 0] | 0.922, 67 (H 25 / 34) | Gemini 3.7 Flash CLI 0.935 [0.922, 0.948] |
+| chinese-manuscript | 245/503 | 0.810 [0.789, 0.827] | 245 | 0 | 0.797 [0.769, 0.820], 229 | 121 / 59, −0.005 [−0.006, 0] | 0.817, 63 (H 19 / 26) | PaddleOCR-VL 1.6 0.820 [0.797, 0.836] |
+| chinese-print | 19/19 | 0.753 [0.636, 0.855] | 19 | 0 | 0.827, 11 (5 / 4) | — | 0.843, 12 (H 2 / 5) | Gemini 3 Flash 0.753 [0.636, 0.886] |
+| armenian | 5/5 | 0.973 [0.752, 0.995] | 5 | 0 | 0.983, 4 (2 / 2) | — | — | Gemini 3 Flash 0.993 [0.961, 0.996] |
+| syriac | 40/40 | 0.332 [0.314, 0.354] | 40 | 0 | 0.282 [0.221, 0.316], 40 | 31 / 9, −0.057 [−0.100, −0.035] | 0.358, 40 (H 18 / 22) | Sophro (default seg) 0.624 [0.432, 0.732] |
+
+No read was unaligned. On Chinese print and Armenian, the 3.8 CLI and Argon figures cover only 4–12 pages each, so their
+headline accuracies are not on the same pages as Hydrogen's. Read only the paired counts there. The Syriac leader is a
+trained HTR model, and every Gemini engine is far behind it.
+
+### Hydrogen medium (the sets it reached)
+
+| set | Hydrogen medium [95% CI] | n | failed | vs 3.8 CLI: pages better / worse | vs Hydrogen low: pages better / worse |
+|---|---|---|---|---|---|
+| latin | 0.938 [0.930, 0.949] | 142 | 3 | 54 / 31 | 33 / 32 |
+| english | 0.968 [0.957, 0.973] | 41 | 2 | 16 / 7 | 10 / 4 |
+| latin-script-other | 0.998 [0.996, 1.000] | 22 | 1 | 6 / 5 | — |
+| greek (73 of 127 read) | 0.927 [0.913, 0.942] | 49 | 0 | 27 / 10 | 16 / 26, ΔCER +0.002 [0, 0.003] |
+
+On Greek, medium is slightly worse than low on the same 49 pages. A medium call costs about 6 times a low call in quota
+(0.0064 vs 0.001 of a weekly point, from the smoke) and takes 2–3 times as long. On these panels it is not worth that.
+
+### By eye (read by the job session with the page image open)
+
+The three worst Hydrogen-low pages by CER are not misreads:
+- An EEBO page cut by the recitation filter after three lines.
+- A Kircher index page and a Chinese manuscript page where every engine scores about 0.50: the reference covers a
+  different span from the page.
+
+Notes: `scripts/eval/results/hydrogen-panels-218/by-eye/by-eye.md`.
+
+### Artifacts
+
+All in `scripts/eval/results/hydrogen-panels-218/panels/`:
+- `H4L/` and `H4M/`: `panel.json`, `perpage.json` and `table.txt` for each tier.
+- The outputs and meter JSONL for both tiers.
+- `requests-manifest.json`.
+- The raw agy records, gzipped.
+- `quota-*.json`, the `/quota` reads.
+
+## 2026-11-14 · Can Gemini 4 Hydrogen on agy read German and Latin print as well as the Opus route? (#218)
+
+**Why.** About 770K German pages are routed to an Opus correction. Hydrogen is new on agy. If it reads these pages as
+well as Opus, the work can move to the agy subscription. A 9-page smoke put a low call at 19 s and a medium call at 29 s.
+
+**Account.** Every call ran on `AGY_HOME=/root/.agy-james`, with the Flash-low rule lifted for this job only (Derek,
+2026-11-13). The rule was lifted at 2026-11-14 00:21:44 UTC and restored at 02:33:26 UTC, with an `at` restore job as a
+backstop. Calls: 1,700 of the 1,700 allowed (A 269, C 351, E 121, panels 959). Estimated weekly quota: 1,161 low calls ×
+0.001 + 539 medium × 0.0064 = 4.6 points, under the 5-point cap. `/quota` read 99.7% before and 94% after, but the bulk
+Flash-low lanes share this login, so that drop is not Hydrogen's alone. $0 of paid API.
+
+### Tokens and time per page (from each read's `usage`, stages A, C, E)
+
+| tier | input | output | thinking | median seconds |
+|---|---|---|---|---|
+| low, fresh read | ~10.8K | 1.6–2.4K | 1.0–1.3K | 17–25 |
+| low, correction of a draft | ~11.6K | ~1.4K | ~1.0K | 12 |
+| medium, fresh read | ~10.8K | 3.9–6.2K | 3.2–5.2K | 42–67 |
+
+There were 0 failed reads in A, C and E. On the panels, 14 low reads and 7 medium reads were tool-denial stubs (see the
+panels file).
+
+### A. The judged paired run (router cells)
+
+**Design.** `paired-arm-judge` with `judge.mjs`. The 90 pages are the router tests' sample, one page per book, 30 per cell
+(`draw --from`). Four Hydrogen arms: `<draft>>hydrogen-low` (a correction of the stored draft) and `hydrogen-low` /
+`hydrogen-medium` (a fresh read of the image, `--fresh`, `CANDIDATE_READS=off`), one page a call. The judge is blind Opus
+through `claude -p`: one output per call, image attached, wrong-page controls and repeat pairs included. `paired-arm.mjs
+check` exited 0. **The baselines were not re-read.** The stored draft, `<draft>>agy-flash-low` and `<draft>>opus-correct`
+keep the verdicts the same judge gave them on the same pages. For the German cells those verdicts were given on **26
+October** (`router-tests-2026-10-26`); for Latin, on 12 November (`latin-flash3-live-route-8632`). They pair by page at
+score time (`merged/`). Since the draw, 2 de-lite pages have been overwritten by an agy correction (`agy-correct-lite-7558`).
+They are left out of the corrector arm. Their fresh reads stay in, because a fresh read never sees the draft. That needed a
+3-line fix in `judge.mjs packet`.
+
+**Precision, stated before judging (`recipe.json`).** With 30 pages a cell, a gap under about 6 pages is inside the Wilson
+intervals. This run can show that Hydrogen is far better, far worse, or in the same band. It cannot rank two routes that
+are two or three pages apart.
+
+| cell | route | accept | Wilson 95% | wrong-text pages | weighted defects /1k words | wrong text /1k | paired vs Opus correction (Hydrogen better / Opus better) |
+|---|---|---|---|---|---|---|---|
+| de-lite | draft>hydrogen-low | 23/28 | 0.64–0.92 | 2 | 3.27 | 0.27 | 0 / 13 |
+| de-lite | **hydrogen-low** | **29/30** | 0.83–0.99 | 1 | 1.79 | 0.13 | 1 / 10 |
+| de-lite | hydrogen-medium | 27/30 | 0.74–0.96 | 3 | 2.00 | 0.50 | 1 / 10 |
+| de-lite | stored lite draft | 20/30 | 0.49–0.81 | 5 | 8.11 | 1.08 | 0 / 21 |
+| de-lite | draft>agy-flash-low | 28/30 | 0.79–0.98 | 2 | 3.78 | 0.54 | 0 / 14 |
+| de-lite | draft>opus-correct (live) | 28/30 | 0.79–0.98 | 1 | 1.37 | 0.14 | — |
+| de-flash3 | draft>hydrogen-low | 27/30 | 0.74–0.96 | 1 | 1.42 | 0.10 | 2 / 15 |
+| de-flash3 | **hydrogen-low** | **28/29** | 0.83–0.99 | 1 | 0.76 | 0.11 | 3 / 11 |
+| de-flash3 | hydrogen-medium | 28/29 | 0.83–0.99 | 1 | 0.77 | 0.11 | 4 / 13 |
+| de-flash3 | stored 3 Flash draft | 27/30 | 0.74–0.96 | 0 | 1.63 | 0 | 0 / 16 |
+| de-flash3 | draft>agy-flash-low | 26/30 | 0.70–0.95 | 1 | 1.72 | 0.10 | 3 / 14 |
+| de-flash3 | draft>opus-correct (live) | 29/29 | 0.88–1.00 | 0 | 0 | 0 | — |
+| latin-flash3 | draft>hydrogen-low | 24/29 | 0.66–0.92 | 1 | 1.90 | 0.13 | 1 / 8 |
+| latin-flash3 | hydrogen-low | 26/29 | 0.74–0.96 | 1 | 1.30 | 0.13 | 6 / 5 |
+| latin-flash3 | **hydrogen-medium** | **27/29** | 0.78–0.98 | 0 | 0.51 | 0 | 6 / 6 |
+| latin-flash3 | stored 3 Flash draft | 21/30 | 0.52–0.83 | 4 | 8.54 | 1.78 | 0 / 14 |
+| latin-flash3 | draft>agy-flash-low | 26/29 | 0.74–0.96 | 2 | 2.41 | 0.38 | 3 / 8 |
+| latin-flash3 | draft>opus-correct (HOLD cell's best) | 28/30 | 0.79–0.98 | 1 | 1.29 | 0.12 | — |
+
+All wrong-page controls passed. Repeat flips: de-lite 1 of 3, de-flash3 0 of 3, latin-flash3 0 of 9. The paired column
+compares the judge's fidelity scores on the same page. It is the better test of a small gap, and in the German cells it
+favours Opus.
+
+**Against §10.3's rule** (wrong text no worse than the live route's, within 0.15 per 1,000 words): Hydrogen low's fresh
+read passes in all three cells (0.13 vs 0.14; 0.11 vs 0; 0.13 vs 0.12), and so does Hydrogen medium in de-flash3 and
+latin-flash3. Hydrogen medium in de-lite fails it (0.50 vs 0.14). The Hydrogen corrector fails in de-lite (0.27). It passes
+in de-flash3 (0.10 vs 0) and latin-flash3 (0.13 vs 0.12), but it is the weakest Hydrogen arm on accepts in every cell. These
+rates come from ~30 pages; one wrong-text page moves them by about 0.1.
+
+### C. The measured-bad pages
+
+**Design.** The committed repair-queue snapshot (`scripts/eval/error-zoo/repair-queue-2026-11-12.json`). The labels are not
+on a box this job can read, so the snapshot was used rather than a rebuild, and no #7809 German holds were added. From the
+snapshot: the kept rows with status `queued`, `needs-second-read` or `not-confirmed` (151 pages). 90 of them had been
+re-read since the snapshot; for those, the text served now is one more arm (`served-now`). On top of that, a seeded sample
+of 48 pages from the no-route cells of a locally rebuilt queue, one page per book. 199 pages in all. Hydrogen low read all
+199. Hydrogen medium read the 151 snapshot pages. The check is the #224 blind audit unchanged (AUDITOR.md, sealed `claude -p
+--restricted`, X/Y order drawn by hash), with 20 identical-text controls, plus the finding check (`finding-check.py`).
+
+| arm | finding fixed | new serious error | did not read | identical-text control |
+|---|---|---|---|---|
+| Hydrogen low | 130 / 199 | 3 / 199 | 0 | — |
+| Hydrogen medium | 101 / 151 | 0 / 151 | 0 | — |
+| served now (re-read since the finding) | 51 / 90 | 0 / 90 | — | — |
+| control (stored vs itself) | — | — | — | 20 / 20 "same" |
+
+The finding check agrees with the audit on most rows: the named finding was gone in 22 of 31 low rows, 22 of 28 medium
+rows and 19 of 27 served rows, and was still present in 2 served rows.
+The 3 new serious errors under low: `69af0bfaf2e68add0cf2216b` (Latin 1648, an omission),
+`69f33bab876dd827cbc590e0` (Korean 1646, jumbled order) and `69942e5cd607f8e57e4b8cd4` (Greek 1561, invented wording). For
+comparison, #224's DeepSeek read fixed 17 and added 94 new serious errors on the same 151 pages.
+
+Per router cell (full table, and the one by language and half-century: `scripts/eval/results/hydrogen-panels-218/measured-bad/tables.md`):
+
+| router cell | pages | route today | H-low fixed · new | H-medium fixed · new | served-now fixed |
+|---|---|---|---|---|---|
+| latin-lite/print | 86 | agy-flash-low@4-read | 66 · 1 | 69 · 0 | 34 of 49 re-read |
+| german-lite/print | 36 | lite>opus | 17 · 0 | 17 · 0 | 12 of 29 |
+| german-flash3/print | 19 | 3flash>opus | 5 · 0 | 6 · 0 | 4 of 11 |
+| french-lite/print | 8 | agy-flash-low@4-read | 8 · 0 | 8 · 0 | 1 of 1 |
+| german-lite/unknown | 2 | lite>agy-flash-low | 1 · 0 | 1 · 0 | not re-read |
+| 48 sampled pages in 26 no-route cells | 48 | none | 33 · 2 | not read | — |
+
+In the no-route cells, Hydrogen low removed the named finding in 33 of 48 pages, including Greek, Hebrew, Egyptian,
+Armenian, Arabic, Ge'ez, Nahuatl, Mixtec and Sanskrit. The 2 new serious errors were the Korean and the Greek pages above.
+There are 1–6 pages per cell, so this is a pointer, not a cell result.
+
+By language and half-century, the largest rows: Latin 1450–99, 47 pages: low fixed 41, medium 43, 0 new. German 1600–49, 15
+pages: low 5, medium 2. German 1750–99, 14 pages: low 2, medium 3. German pages fix least often; many German findings are
+layout (a cut-off facing page, marginalia placement) rather than misreads.
+
+**Pages where Hydrogen beats what is served**: `scripts/eval/results/hydrogen-panels-218/measured-bad/hydrogen-beats-served.json`.
+That is 86 pages where low removed the finding and the served text has not (78 unchanged since the finding, 8 re-read
+without the fix). Nothing was written; applying them is a separate step.
+
+### E. The same book check, on the same pages
+
+`paired-fifths-check` v2 rows whose 10 pages still hold the judged text: 0 German Flash-Lite books were eligible, so the job
+took 6 German 3 Flash and 6 Latin 3 Flash books (seeded, from 15 of 29 eligible among 259 v2 rows). Hydrogen low read each
+book's 10 deterministic pages fresh (120 calls), and the unchanged P5 prompt judged each facing pair with Hydrogen's
+transcriptions in place of the stored ones. Only the transcription verdicts and break findings are used. Nothing was
+written to `book_checks`.
+
+| cell | pages accepted: stored → H-low | serious-defect pages | serious defects | break defects (of 30 breaks) |
+|---|---|---|---|---|
+| de-flash3 (6 books) | 50 → 55 of 60 | 10 → 5 | 57 → 16 | 2 → 1 |
+| latin-flash3 (6 books) | 51 → 54 of 60 | 9 → 6 | 45 → 21 | 1 → 0 |
+
+The whole gain is in the two books the stored row marked `fix`: *Aureum Vellus* went from 0/10 to 5/10 accepted, and the
+Guido of Arezzo / *Liber Alchimiae* volume from 1/10 to 5/10. The other 10 books were clean before and after, except
+*Fama remissa*, where Hydrogen added one serious defect (10/10 → 9/10). Per book: `scripts/eval/results/hydrogen-panels-218/book-check/tables.md`.
+
+### D. By eye (read by the job session with the page image open, 2026-11-14)
+
+Notes on 12 pages are in `scripts/eval/results/hydrogen-panels-218/by-eye/by-eye.md`. The errors that matter:
+- **De-flash3, an eye-skip.** A 1590s fraktur page lost a whole line between two lines that both end in "drauff". The
+  judge's wrong_text there is right.
+- **Latin, long s.** "ſine agente" was read as "fine agente": a real word, but the wrong sense.
+- **Fraktur S read as G** in a catchword.
+- **Quiet normalisation.** "stoltze" became "stolze", and the printer's "posthune" became "posthume".
+
+On the other side, Hydrogen keeps abbreviations as printed where the Opus correction expanded them silently, and it reads
+only the leaf in front of it where the stored text had invented the cut-off facing column.
+
+### Decision, per cell
+
+- **german-lite: test next.** The fresh read is level with the live Opus correction on accepts (29/30 vs 28/30) and on the
+  wrong-text rate (0.13 vs 0.14). Opus wins the paired fidelity comparison 10 to 1. To switch, we need a confirmation draw
+  on fresh books that holds Hydrogen low within the margin and narrows the paired gap, and Derek has to allow a
+  Hydrogen lane on the agy logins.
+- **german-flash3: keep Opus.** Opus is 29/29 with no defects. Hydrogen's 28/29 passes the margin, but Opus wins paired
+  11 to 3, and the stored 3 Flash draft already serves 27/30. The case to change would be Opus capacity, not quality.
+- **latin-flash3: test next (cell on HOLD).** Hydrogen medium 27/29 with no wrong text is the best measured arm in a cell
+  that has no route. Hydrogen low is level with Opus on paired pages (6/5). A confirmation draw is the step that could
+  give the cell an agy route, if a Hydrogen lane is allowed.
+
+## 2026-11-14 · Detection to correction: does the corrector do better when told what the audit found, and does the fix reach the reader? (#244)
+
+**Question.** Derek: test the loop from detection to correction, and find improvements that make individual books better, for example by using the detected errors. Every repair route so far (#7809 pilot, #8632, v3#199) corrects blind: the findings choose the page, the corrector never sees them.
+
+**Part 1: guided correction.** The #7809 pilot set: 35 German print pages in 23 books, each with audit findings, corrected twice by Opus (`correct.mjs`, one page a call, fresh, from the same frozen draft, nothing written). A: blind. B: the page's findings as "reports that may be wrong; check each against the image", plus one planted false report in random position. 15 decoys are plausible modernisations (`heylet` reported as `heilet`), 20 visual non-words (`gewaltig` as `gcwaltig`). Scored with no model (`scripts/eval/error-zoo/guided-correct/score.py`, finding-check's rules).
+
+| | blind (A) | guided (B) |
+|---|---|---|
+| checkable findings fixed | 15 of 17 | 16 of 17 |
+| still there / changed otherwise | 1 / 1 | 0 / 1 |
+| decoys applied | 0 of 35 | 0 of 35 |
+| share of the text changed | 6.7% | 6.1% |
+
+The two arms' texts differ by a median of 1.2% per page. 18 findings carry no quotable misread and cannot be checked without a judge.
+
+**Part 2: does the fix reach the reader?** Read-only checks, 2026-11-14:
+
+- **The transcription loop works.** v3#199 (2026-11-13): 1,255 measured-bad pages corrected; a Gemini judge reading blind against the image found 759 better, 440 the same, 15 confirmed worse (reverted). #8632: 30 / 6 / 2 by Opus, the 2 reverted.
+- **The English is not redone.** Corrected pages are marked `translation_stale` and keep serving the English made from the old transcription (not withheld: `withhold-stale-translations` withheld 0 on its last run). Of the 36 kept #8632 pages, 36 still serve the old English two days later. The lane that re-translates them (`cli-translate-lane.mjs stale`, gex45 hourly) wrote 0 pages today. **Correction, same day (#342):** the reason first given here, that every pool was spent or held back for the finish-a-book queue under the #8482 order, was wrong. The pools read 85% to 100% left; the lane picked the fullest pool each hour and every call was refused by a limit stop stored on 2026-11-12, after Google had restarted that pool's week (#343, PR #344). The stop was moved aside at about 08:57 UTC. With the pools open the lane writes 1,000 to 3,000 pages a run. Its own log counts 821 books with stale pages on one route.
+- **The repairs aim at the smaller problem.** On the weekly audit's random served pages (1,344), 421 have a serious finding: 20 in the transcription only, 212 in both, 160 in the English only, 68 other (wrong leaf etc.). So 372 of 421 (88%) carry a serious error in the English, and the repair queue takes transcription findings only. 7611 (2026-11-02) found only 17% of transcription errors leave the English wrong.
+
+**Caveats.** One language, print, one corrector (Opus) near its ceiling: blind Opus already fixes almost every checkable finding, so this set cannot show a gain. A weaker corrector (agy Flash, the live route for most cells) misses more and might gain more from the findings; untested. No repeat of A was run, so the 1.2% A–B difference has no noise floor beside it.
+
+**What it means.** Feeding findings to Opus is safe (no decoy taken) but not worth building for Opus. The changes that make books better are downstream. (1) Keep the stale lane running so corrected pages get new English; no pool-order decision is needed (see the correction above). (2) Repair the English directly where the audit found a serious translation error, the 88%. (3) Re-audit a sample after the English is redone, so the loop ends on what the reader sees.
+
+## 2026-11-14 · Which second pass makes a served English page better, and what does it do to pages that were fine? (#342)
+
+**Question.** Readers read the English. On the weekly audit's random served pages, 372 of the 421 pages with a serious finding have it in the English. Every repair lane so far fixes transcriptions only. Before building an English repair lane: which kind of second pass lowers serious defects, and does it harm clean pages?
+
+**Pages.** The weekly Opus audit's random served pages (`spare-audit` on main, 4,375 rows; its random stratum is a superset of the 1,344-page pool of the 244 entry). One page per book, non-English, live OCR and English byte-equal to what the audit read, not withheld or stale. 50 **en_only** (a serious finding in the English only), 50 **both** (in the transcription and the English), 100 **clean** (no serious finding). Drawn by `scripts/eval/english-repair-342/draw.mjs`; pool by `pool.py`. 23 languages, Latin 103, Chinese 24, German 18, Greek 13.
+
+**Sizing, written before judging** (`recipe.json` `decision_rule`). An arm counts as an English repair pass if, on the flagged pages (en_only + both), its serious defects per 1,000 words are at least one third below A with the by-book 95% interval excluding 0, and on clean pages it adds no more than 0.5 per 1,000 words over A (upper bound). Why: flagged pages are about 31% of served pages, so a one-third cut there is about 0.3 per 1,000 words over all pages, and a pass that runs on every page must not add more than that on the 69% that are clean. About 60 pages are needed per comparison to see the cut and about 100 to see the clean-page bound, so the set has 100 flagged and 100 clean pages.
+
+**Arms.** All on the live English route's model, agy `gemini-3.8-flash-low`, one page a call, page image attached, nothing written.
+- **A**: the stored English (no call).
+- **B**: a fresh translation of the current transcription (`cli-translate.mjs read`, kept reads off).
+- **C**: guided repair. The stored English plus the audit's findings for the page, framed as "reports that may be wrong; check each against the page image". One planted false report per page sits in a seeded random position (a number reported as another, a statement reported as negated, a name reported as misspelt; `repair.mjs decoyFor`). On clean pages the reports are the audit's minor findings (median 3), plus the decoy.
+- **D**: blind review. The same prompt as C with no reports: check the English against the page sentence by sentence and correct only what is wrong.
+
+**Judge.** Opus (`claude -p --model opus`, route-judge `judgePrompt`), one text a call, blind to arm (hashed ids), against the page image and the stored transcription. 12 wrong-page controls (each arm's text judged against another book's page) and 12 same-arm repeats. Opus is another family from every arm. `paired-arm.mjs check` passes R1–R5. 870 judge calls for 819 verdicts: 51 calls failed with exit 127 while Claude Code updated itself on the box (11:26Z) and were re-run. All on this box's Claude login, 47% → 52% of its weekly limit.
+
+**Controls and noise.** 12 of 12 wrong-page controls were refused. On the 12 repeats, 0 of 12 accept verdicts flipped, and the serious-defect count was 43 then 38 (about 0.5 per 1,000 words). Every difference below is several times that.
+
+### Serious defects (misleads + wrong_text) per 1,000 words, each arm against A on the same pages
+
+By-book bootstrap 95% interval of the difference (one page a book). Scorer: `scripts/eval/english-repair-342/score.py`.
+
+| group | A | B re-translate | C guided | D blind |
+|---|---|---|---|---|
+| en_only (50) | 8.41 | 4.21 (−4.2 [−5.5, −3.1]) | 2.66 (−5.7 [−7.1, −4.7]) | 4.89 (−3.5 [−4.8, −2.4]) |
+| both (50) | 14.00 | 10.86 (−3.1 [−4.6, −1.8]) | 6.08 vs 13.54 (−7.5 [−9.8, −5.4]) | 8.96 vs 13.54 (−4.6 [−6.2, −3.1]) |
+| **flagged (100)** | 11.43 | 7.83 (**−31%**, [−4.6, −2.7]) | 4.54 vs 11.18 (**−59%**, [−8.0, −5.4]) | 7.11 vs 11.18 (**−36%**, [−5.1, −3.1]) |
+| **clean (100)** | 5.17 | 2.96 vs 5.02 (−2.1 [−2.9, −1.3]) | 1.94 (−3.2 [−4.1, −2.5]) | 3.01 (−2.2 [−3.1, −1.4]) |
+
+wrong_text alone, flagged: A 5.1, B 3.6, C 1.4, D 2.8. Clean: A 0.84, B 0.33, C 0.31, D 0.45.
+
+C vs D directly: −2.6 per 1,000 words on flagged pages [−3.7, −1.6], −1.1 on clean pages [−1.6, −0.5].
+
+**Is B just the newer model?** 174 of the 200 stored pages were translated by older models (3.1 Flash-Lite, 3 Flash), 26 by the live 3.8 Flash-low. On those 26 pages: B 4.57→4.14 [−1.32, +0.47], which is no change. C 4.57→0.99 [−4.98, −2.36]. D 4.57→3.41 [−2.19, −0.16]. B's gain is the model upgrade, while C and D still improve pages the live model already wrote.
+
+### Harm on clean pages, the audit's findings, decoys, refusals
+
+| | B | C | D |
+|---|---|---|---|
+| clean pages made worse (more serious defects than A) | 17 / 97 | 4 / 100 | 12 / 100 |
+| clean pages made better | 48 / 97 | 63 / 100 | 52 / 100 |
+| serious defects added on clean pages (per page beyond A, summed) | 20 | 4 | 15 |
+| clean pages with a new wrong_text | 5 | 4 | 7 |
+| audit's serious English findings whose quoted error is gone (of 157 found in A) | 153 * | 148 | 115 |
+| flagged pages accepted by the judge (A: 1 / 100) | 29 / 100 | 65 / 99 | 32 / 99 |
+| calls / texts returned / pages | 197 / 197 / 200 † | 200 / 199 / 200 | 200 / 199 / 200 |
+
+\* B rewrites the whole page, so the quoted words go away whether or not the error does. Read B's row as an upper bound.
+† 3 pages were not sent: `cli-translate` refused them as illegible-source.
+
+**Decoys in C.** In 196 placed decoys the string check finds the planted text 8 times (6 on flagged pages, 2 on clean). By eye, 5 of the 37 passages C reworded also carry the false report in other words (for example "Many were happy to be his companions" became "nobody was happy", and "cost: 40 mon" became "42"). That is about 13 of 196 (≈ 7%) false reports acted on (`decoy-rewritten-by-eye.txt`). The judge read those texts, so C's rate above already includes the errors the decoys caused. A real report list carries fewer false reports than one in every page.
+
+### What this means for an English repair lane
+
+- **D, blind review, passes the rule**: −36% on flagged pages, clear of 0, and lower on clean pages too. It needs no detector, so it can run on every page. Its cost is 12 of 100 clean pages made worse (7 with a new wrong_text), against 52 made better. One agy Flash-low call a page.
+- **C, guided repair, is the strongest arm** (−59% on flagged pages, and better than D on both groups), but it needs an audit's findings for the page, and those findings were written by Opus, the same family as this judge. Part of C's lead may be the judge agreeing with what an earlier Opus read saw. D has no such link. C fits pages a spot check or the weekly audit has already read: its output is the repair for those pages' findings.
+- **B, a re-roll, is not a repair pass.** It fails the one-third bar (−31%), gives nothing on pages already on the live model, and harms the most clean pages (17 of 97).
+
+**Before a lane writes anything:** open D's 12 worse clean pages by eye (`score.json` → per-page judged rows in `verdicts-opus.jsonl.gz`), and judge D against A on a smaller set with a second family. These numbers come from one judge.
+
+**Pages where an arm beat A with no new serious error** (`score.json` `beat_A`: fewer serious defects than A, judge fidelity not lower, no serious defect on a quote A did not have; for B, no more wrong_text than A; C pages are kept only where the decoy's sentence came through unchanged). B 113, C 92, D 73; 115 distinct pages for C or D. A follow-up can apply them through the existing writer (`writePageTranslation`, with the arm's provenance). For C, re-run without the decoy rather than apply these texts.
+
+**Judge strictness.** On pages the audit called clean, A still has 5.2 serious defects per 1,000 words (23 of 100 with a wrong_text). The route judge counts `misleads` more readily than the audit counts "serious", so compare rates within this test, not against the audit's 2.7–3.3.
+
+**Checks (#8069).** Arm A's 200 verdicts (the served English, judged against the image) are recorded in `book_checks` under the new method `paired-arm-stored-english` v1 (`scripts/eval/methods/`). They are 200 rows, one a book, with `reader_warning: false`, `selection: picked`, and no page changed since the judge read it (`record-checks.mjs`; 108 fix, 66 caveat, 26 show). Arms B–D were never served and are not recorded.
+
+**Files.** `scripts/eval/english-repair-342/` (pool, draw, repair, packet, score, record-checks, recipe). Results: `scripts/eval/route-judge-6740/results/english-repair-342/` (key, recipe, paired-score, score with `beat_A`, verdicts and the packet with every arm's text, gzipped, arm status, decoy by-eye notes). Scratch: `/mnt/HC_Volume_105839809/jobs/english-repair-342/` on main.
+
+## 2026-11-13 · Does the seam pass help French and Italian too? (v3#104)
+<!-- PRIOR ART: 2026-11-08-seam-pass-stage-8399.md (the stage, the #7118 seam judge, the planted defects, the rule's
+clauses and the noise floor are reused unchanged; this asks the same question on two more cells). Harness:
+scripts/eval/seam-prevent-7118/seam-fr-it-104.mjs. -->
+
+**Answer for Derek.** French: turn it on. The pass fixes most of the broken page breaks at the start of each 4-page call
+(15 → 6 in 72) and makes no page worse. Italian: leave it off. The stored Italian had no broken block start in the
+sample, and the one real edit the pass made there broke a correct join.
+
+### What ran
+- **Pre-registered** on v3#104 (comment 6847449929) before any model call. This run followed it.
+- **Sample** (seed 104, Mongo reads only). Visible French/Italian books routed to `french-cli-agy4` / `italian-cli-agy4`,
+  pages translated by agy `gemini-3.8-flash-low` through `cli-translate.mjs`. Each block is one whole stored production
+  call of 2 to 4 pages, all prose, with eligible English on the page before. French: 72 blocks from 44 books (at most 2
+  a book). Italian: only 7 books hold a usable multi-page call. 14 primary blocks plus 13 from a deeper stratum gives 27
+  (18 of them in 3 books). The draw was re-checked byte for byte against the committed one before the stage ran.
+- **Arms.** A = the stored English. S = the built stage (`seamStage`, edit-before on), one agy Flash-low call per block
+  at the turn into it: 99 calls on the `.agy-milo` pool, all answered, 0 stale blocks. L = S with the page before
+  locked (reported only). Nothing was written to a page.
+- **Seam judge.** The #7118 prompt on Opus 5.5, blind version names, both orders, at the block start (S) and at one
+  seeded turn inside each block (T). 198 joins, 396 calls, all parsed. Each call also carried a copy of A and a planted
+  defect.
+- **Page judge.** route-judge-6740, Opus with the image open, one page a call, on every page S changed (21 pages,
+  13 books), A and S each, plus 6 wrong-page controls a language and 3 repeats of A. paired-arm.mjs `check` passed (R1
+  waived as pre-registered: up to four changed pages a book).
+- **By eye.** Five joins, both scans (below), recorded as `seam-fr-it-104-by-eye` book_checks rows (reader_warning false).
+- **Cost.** About 460 Opus calls on the subscription (list price $19.78 for the seam judge), 99 agy calls. $0 paid.
+
+### Results (per 100 joins; S = block start, T = inside a block, lane = 0.75 T + 0.25 S)
+
+| cell | arm | S | T | lane | new leaks |
+|---|---|---|---|---|---|
+| French (72 blocks, 44 books) | A stored | 15/72 (20.8) | 6/72 | 11.5 | — |
+| | S pass | 6/72 (8.3) | 6/72 | 8.3 | 0 |
+| | L locked | 14/72 (19.4) | 6/72 | 11.1 | 0 |
+| Italian (27 blocks, 7 books) | A stored | 0/27 | 2/27 | 5.6 | — |
+| | S pass | 0/27 | 2/27 | 5.6 | 0 |
+
+French S against A: 9 better, 0 worse, sign p = 0.002, from 8 books. Δ −12.5 per 100 [−20.8, −5.6], against the 1.7
+floor. Lane Δ −3.1 [−5.2, −1.4]. Most of the gain again comes from editing the page before the block: locked, S falls
+by only 1 (L against A: 1 better, 0 worse). Of the 33 French block starts that open mid-sentence, A breaks 8 and S breaks 2.
+
+**Page judge, pages the pass changed** (Opus, image open):
+
+| cell | pages (books) | accept A | accept S | gained / lost | wrong text A / S / new in S | wrong-page accepted | repeat flips |
+|---|---|---|---|---|---|---|---|
+| French | 18 (11) | 14/18 | 15/18 | 2 / 1 | 1 / 1 / 0 | 0/6 | 0/3 |
+| Italian | 3 (2) | 2/3 | 1/3 | 0 / 1 | 0 / 1 / 1 | 0/6 | 1/3 |
+
+**Controls.** Same text twice: French 144/144, Italian 54/54 (≥ 95%). Planted defects caught: 143/144 and 52/52 (≥ 80%).
+No wrong-page control accepted. Neither language is void.
+
+**What the stage did.** French: 72 turns, 19 labelled broken by the pass (5 catchword, 5 omission, 4 broken_syntax,
+3 duplication, 2 other). It changed 12. It edited the page before on 10 and the first page on 8. The span and size guards
+refused 6, and 1 came back with no repair. Italian: 27 turns, 4 labelled broken (3 broken_syntax, 1 catchword) where the seam judge found
+none. It changed 2 and refused 2.
+
+### The rule (pre-registered, per language)
+| clause | French | Italian |
+|---|---|---|
+| 1. fewer broken block starts (Δ < −1.7, lane not up, sign p < 0.05, ≥ 3 books) | pass (−12.5, p 0.002, 8 books) | fail (0 → 0) |
+| 2. no new leak | pass (0) | pass (0) |
+| 3. pages not worse (accept S ≥ A − max(2, flips), no new wrong text) | pass (15 vs 14, 0 new) | fail (1 new wrong text) |
+| 4. controls | pass | pass |
+| **verdict** | **pass** | **fail** |
+
+Italian is a fail, not "cannot decide": clause 1 fails on the size of the change, not on the sign test or the book
+count, and clause 3 fails too. The primary 14-block stratum gives the same picture (0/14 broken at S in every arm).
+
+### Five joins opened by eye (both scans)
+1. **Italian, *L'Idea de' Pittori* pp.25|26, where the pass made it worse.** p.25 ends "& ori-" with the catchword
+   "gine,"; p.26 opens "gine, e luogo proprio". It is one word, *origine*, split across the leaf. The stored English
+   ("intellect and origin, / and the proper place") is right. The pass read the split as a doubled catchword. It cut
+   "and origin" from p.25 and wrote "is the origin and proper place" on p.26, a verb the source does not have. The page
+   judge's wrong-text call on S is right. This is a failure mode of the pass's prompt: a hyphenated word whose second half
+   is also the catchword.
+2. **French, *L'escole des filles* pp.151|152, the French page that lost acceptance.** The catchword "prie" is printed
+   at the foot of p.151 and again at the head of p.152. A renders it twice ("I beg you." / "I ask,"), and S removes the
+   doubled "I ask,". The repair is correct. The lost acceptance on p.151 comes from a defect at its head that is
+   byte-identical in A and S, so it is judge variance, not the pass.
+3. **French, *Collection des Anciens Alchimistes Grecs* III pp.129|130, a major break.** "du Scoliaste de Pin-" /
+   "dare (p. 81)". A gives "Scholiast of Pin..." / "(p. 81)" and never names Pindar. S gives "Pin-" / "dar (p. 81)".
+   The repair is correct.
+4. **French, Huygens *Œuvres* XXI pp.793|794 (bilingual), a page that gained acceptance.** The Latin p.793 ends "nec
+   ſuperat;", and the French facing page opens "périeure —", the end of *supérieure*. A renders it as a stray "rior,"
+   and S deletes it. Better, but "superior" is lost in both. The gain in acceptance is within noise: the same two
+   defects are flagged in A and S.
+5. **French, *Correspondance de Christophe Plantin* pp.268|269, an edit at a join both seam-judge orders called ok.**
+   "…qui ont sceu et bien esprouvé le contraire" / "de leurs calumniations": one sentence. A closes it early ("the
+   contrary." / "of their slanders.") and S joins it ("the contrary" / "to their slanders."). The repair is correct,
+   and the judge had missed this break. Separately, the stored English of p.268 renders the carried-over footnote word
+   "latine." as a heading, "A note regarding the Latin text:". The pass does not touch it. It is recorded as a
+   `misleads` defect on the page: the rest of the note is the leaf's text, so the page was not withheld.
+
+So the judges' calls held on all five. The one Italian edit is a real regression. The French edits are repairs, one
+of them partial.
+
+### Limits
+- One stored read per block. There is no second production read here, so the noise floor is v2#8399's Latin/German swing
+  (S 1.7). French's gap (12.5) is seven times that.
+- Italian rests on 7 books, and the stored Italian blocks were nearly clean at the block start. That says the Italian
+  @4 English rarely breaks there, not that the pass would work on Italian that did.
+- The page judge saw 21 changed pages. "No new wrong text" in French is 0/18, which bounds the rate below about 17% (95%).
+- `defect-rate.py` was not run. It reads its own fixed corpus and has no input for an outside packet. The same per-route
+  rates (misleads and wrong text per 1,000 words, mean fidelity) are in `defect-rates.json`, computed from this run's
+  verdicts. French A and S are equal on both (1.96 and 0.15). Italian S has 0.77 wrong text against 0. The pre-registered
+  page clause (3) is the test that decides.
+
+### Written after the rule passed
+The 9 French joins the seam judge scored better (stored broken, pass sound; 0 scored worse) were written to the served
+pages through `scripts/lib/seam-pass.mjs` applySeamPass (health check, neighbour gate, one revision row per page) under run
+`seam-fr-it-104-20261113130231`: 13 pages in 8 books, 9 of 9 joins, none skipped. The other 5 joins the pass changed (3 French
+the judge scored sound both ways, 2 Italian) stay as stored. Manifest and the rows written:
+`scripts/eval/results/seam-fr-it-104/apply/`; undo with `seam-repair.mjs undo --out=<a dir holding that manifest.jsonl>`.
+
+## 2026-11-13 · Is the Surya 2 lane's first batch good enough to switch on for the 761 hidden Sanskrit print books? (v3 #95)
+
+**No, not as a bare first read.** It invents nothing on the pages it would write, keeps every block and column in
+order, and gets every word identifiable on half the pages. On the other half, at least one word comes out as a
+different word, mostly on old-style type.
+
+**Who reads this.** Derek, deciding the Sanskrit print route and the Surya licence question. The licence question
+waits on whether the reads are good.
+
+### What ran
+- Lane `/root/jobs/gpu-print-sa-95` (`gpu-print-lane.mjs --lang sa`), the real lane dir. Frame 761 books / 249,656 pages
+  with no text (2026-11-13 12:40Z). Plan `--limit 30 --max-pages 12`: 30 books, 360 pages spread through each book.
+- GPU: gex45 RTX PRO 4000, vLLM 0.31.0, surya-ocr 0.22.1, weights `datalab-to/surya-ocr-2@3b3d4cdf88d6928b0acdc75181b13206ea67c4a3`
+  (the #7243 snapshot), util 0.6, MTP on. Run `su-20261113T135002Z`: 360 reads, 0 errors, in 30.8 min of serving
+  (200 in 17.7 min, 160 in 13.1 min), **about 700 pages/h including image download**. That is well below the
+  2,535 pages/h the 50-page #7243 run logged.
+- Dry `apply`: 242 would-write, 20 textless, 14 `not_devanagari`, 84 `book_not_devanagari` (7 books), 0
+  `index_columns`, 0 `loop_guard`, 0 errors. Every planned page ended in an outcome (242+20+14+84 = 360).
+- **Nothing was applied.** No page, hold, visibility or router pointer changed.
+
+### By eye
+Four Opus readers in one session, each image opened at full resolution with zoomed crops (3–6 per page). Short pages
+were proofread whole; dense pages got a ≥15-line stretch plus a structural check of the whole page. Two `word_line`
+calls were re-checked by the session itself against crops: Nyāyabindu p.53 (हेतुः→केतुः, सपक्षे→सपते, ऽयमर्थः→अयमर्थः)
+and Ānandāśrama 23 p.16 (…कत्वदृष्टि…→…कत्वहृष्टि…). Both held.
+
+**Draw.** One would-write page per book, seeded (20261113) from the 23 books with would-write pages, plus 7 hard pages
+chosen by hand: two-column dictionary (Abhidhānarājendra 551, 1238), small or faded type (Mūlakalpa 167,
+Ānandalaharī 122), a table (Vaikhānasa 28), dense commentary (Īśāvāsya 41), and a verse page (Puruṣārthacintāmaṇi 464).
+
+| category | pages |
+|---|---|
+| clean | 0 |
+| isolated wrong characters only | 15 |
+| a wrong or missing word or line | 15 |
+| unusable | 0 |
+| invented or wrong leaf | 0 |
+
+**Typical errors, leaf → read:**
+- हेतुः → केतुः, six times on one logic page (Nyāyabindu p.53). The text's central term becomes another real word.
+- मन्त्रब्राह्मणयोर्वेद… → मग्नब्राह्मणयोर्वेद… (Ānandāśrama 23 p.16); …कत्वदृष्टि… → …कत्वहृष्टि… (same page).
+- यवमध्यादुपरि → यवमध्यादधः रि, twice (Abhidhānarājendra 1238). "Above" becomes "below".
+
+Other patterns: superscript footnote markers dropped on every page that has them; repha lost (माषपर्णी→माषपणी);
+old-style अ read as ग्रा; avagraha ऽ read as अ; the margin line numbers of verse editions read into the text. On
+clean modern type (Brahmasūtrabhāṣya, Taittirīya, Bhaktimañjarī, Haṭhayogapradīpikā) the read is 1–2 wrong characters
+a page. No leaf in the 30 carried Vedic accents. The one Vedic sign seen, ꣳ in इदꣳ, came out as a visarga.
+
+<details><summary>All 30 pages</summary>
+
+| book | page | set | category | wrong chars / words / lines (in lines proofread) | image opened | note |
+|---|---|---|---|---|---|---|
+| Abhidhnarjendra : koa (vol. 5) `6af634152a3ff91f6674a054` | 413 | random | wrong/missing word or line | 13 / 0 / 0 (24) | yes, 2 crops | Abhidhanarajendra dictionary page, two columns. Proofread the left column from the top through 'विधेयम्' (24 lines): 13 char errors, e.g. ग्ग->ग्न, ऽद्य->ऽथ, verse number ३४५->३४६, होंति->होति, लिप्तं->लितं. Structure check: both columns are complete and in or |
+| Bhaktimañjarī `6af635361046991b0516db89` | 115 | random | isolated wrong characters | 1 / 0 / 0 (25) | yes, 5 crops | Bhaktimanjari, verses 51-56 in large type with one footnote. The read is almost perfect: one घ->ध. It also drops the superscript footnote marker over समुदय and a stray anusvara in the footnote. |
+| Hahayogapradpik `6af636911046991b05177611` | 133 | random | isolated wrong characters | 1 / 0 / 0 (29) | yes, 3 crops | Hathayogapradipika with a Hindi bhashatika: Sanskrit mula verses 9-11 and Hindi commentary. The OCR correctly normalizes the old प्र glyph that looks like म. The only slip is an added virama, plus the footnote reference after दृष्टि is dropped. An excellent re |
+| Mrkaeyapurnam `6af638051046991b0517f350` | 156 | random | isolated wrong characters | 10 / 0 / 0 (24) | yes, 3 crops | Markandeya Purana, verses 67-78 in single-column shloka layout. All lines are present. About 10 conjunct and matra errors (समुत्पत्स्यति->समुत्पत्यति twice, सुभ्रूः->सुम्भूः, ततस्तौ->ततस्ती, श्राद्धं->श्राङ्, उपकारी->उपकारौ), but every word can still be recogn |
+| Prthviraja vijaya. A Sanskrit epic wit `6af639081046991b05185ea7` | 44 | random | wrong/missing word or line | 9 / 1 / 0 (20) | yes, 3 crops | Prthvirajavijaya, verses 8-10 with Jonaraja's commentary and printed lacuna dashes. The first word of the page is replaced (उपप्लवं->उपस्वयं) and म्ल->स्न recurs. Other errors: ध->भ twice, ड्ड/द्ध->इ, missing repha in र्भूमेः, अङ्कं->अङ्गं. The Arabic margin l |
+| Suśrutasaṃhitā (vol. Vol. 3 1899) `6af63aa81046991b0518eda6` | 97 | random | isolated wrong characters | 8 / 0 / 0 (31) | yes, 5 crops | Sushruta Samhita, Chikitsasthana 5.53-54, with Hindi translation and two notes. Complete and in order. The repha in माषपर्णी is dropped three times, तृप्ति->तृति, plus the two examples. The superscript note numbers in the verse are omitted. |
+| Vidhna-prijtah. Edited by Trprasanna V `6af63cbf1046991b0519ce84` | 71 | random | isolated wrong characters | 8 / 0 / 0 (22) | yes, 3 crops | Vidhana-parijata, quoted Shaunakiya verses on eclipse birth rites. All lines are present. Errors: पत्नीं->पतीं, शुचौ->शुची, सीसेन->सीमेन, the asterisk note-mark is dropped, plus the two examples. Doubled-y spellings (सूर्य्य) are normalized, which is not count |
+| nandalahar `6af63d741046991b051a10a7` | 31 | random | isolated wrong characters | 5 / 0 / 0 (23) | yes, 3 crops | Chandrika commentary prose, single column. A very good read with 5 single-character slips (तस्माद्वल्ली->तस्माद्बल्ली, the print's misprinted श्रघणात्->श्रधणात्, सोऽकामयत->सोऽकामयत्, and the two examples). |
+| Abhidhnarjendra : koa (vol. 5) `6af634152a3ff91f6674a054` | 1238 | hard | wrong/missing word or line | 15 / 2 / 0 (36) | yes, 3 crops | Abhidhanarajendra s.v. बंधण. Proofread the top of the left column, the gathas 96-100 and about 11 lines of the right column. Errors: पल्योपम->पत्योपम on every occurrence, वक्तव्याः->वक्रव्याः, अणागार->अण्णार, and two verse numbers shifted down by one. In the r |
+| Purusharthacintamanih `6af639131046991b051860c1` | 464 | hard | isolated wrong characters | 5 / 0 / 0 (31) | yes, 3 crops | Purusharthacintamani (Grahananirnaya), 30 lines of eclipse-pacification mantras. Complete and in order. Errors: आचार्यै->आचार्ये and the footnote °र्यु मैत्रै read as यु मैत्रे, plus the two examples. The superscript footnote marker over कुर्यु is dropped. The |
+| Anandasrama Sanskrit series (vol. 23 ( `6af634f71046991b0516c562` | 16 | random | wrong/missing word or line | 14 / 7 / 0 (32) | yes, 4 crops | Introduction (bhūmikā) to the Vaiyāsikanyāyamālā: three verses, prose and footnotes, all present and in order. The OCR keeps misreading the same ligatures: दृ as हृ (so दृश्य becomes हृदय and दृष्टि becomes हृष्टि), न्त्र as ग्न (मन्त्र to मग्न, तन्त्र to तन्न |
+| Brahmasutrabhasyam (vol. 3) `6af635921046991b051704ab` | 600 | random | isolated wrong characters | 2 / 0 / 0 (24) | yes, 3 crops | Brahmasūtrabhāṣya page 564 with the Candrikā and Prakāśa commentaries. A near-perfect read: both commentary blocks and the verse are complete. There are two isolated character slips, one of them a faint visarga. |
+| Iavasyopanisad `6af636c51046991b051788e9` | 9 | random | wrong/missing word or line | 11 / 6 / 0 (33) | yes, 3 crops | First page of the Īśāvāsyopaniṣad with Nārāyaṇa's Prakāśikā. The structure is complete and in order. In the smaller commentary type several words are replaced: भ्राम्यतः becomes आभ्यतः twice, भ्रमस्वरूपम् becomes भ्रमत्परतन्त्रम् and ग्रहणम् becomes अहं जगम्.  |
+| Mulakalpa (vol. 3) `6af6380d1046991b0517f962` | 34 | random | wrong/missing word or line | 18 / 2 / 0 (29) | yes, 3 crops | A Mūlakalpa (Mañjuśrīmūlakalpa) chapter page. Every line is present. The page number reads ५६१ (the leaf looks like ५६२). There are many character errors: मु read as ग्रु, द्विप read as द्विष, an extra च्छ, the faded आर्यमञ्जुश्रियमूलमन्त्रं read as अयिमञ्जुश् |
+| Purusharthacintamanih `6af639131046991b051860c1` | 1 | random | wrong/missing word or line | 5 / 2 / 0 (5) | yes, 3 crops | Printed cover of Ānandāśrama series no. 55, the Puruṣārthacintāmaṇi. The title is correct. The series line has ग्र read as प्र and the author line has भट्ट read as मद्. The worn price line at the foot is garbled into different words. The barcode label is right |
+| Taittiryopaniadbhyam `6af63abd1046991b0518f449` | 314 | random | isolated wrong characters | 2 / 0 / 0 (29) | yes, 3 crops | Taittirīyopaniṣadbhāṣya page 214: the bhāṣya above the rule and the commentary below. Clean apart from प्न read as प्र, twice. The footnote mark after न; is dropped. |
+| Vkyavritti `6af63ce31046991b0519dcb1` | 31 | random | isolated wrong characters | 6 / 0 / 0 (32) | yes, 3 crops | Vākyavṛtti page 23: verses 29 and 30 with commentary, complete and in order. There are a few isolated conjunct and character slips: ह्र read as ह्ल twice, घ read as व, रा read as ग्रा, and र read as ग्र in तद्रहित. |
+| vlayanagrahyastram `6af63daa1046991b051a1d00` | 301 | random | wrong/missing word or line | 22 / 3 / 0 (26) | yes, 4 crops | Vaikhānasa-gṛhyasūtra book 3, page 261 (cremation rite). All lines are present and in order. The worn type gives a high density of conjunct errors: जुहु read as जुडु, क्षिप्त as चिप्त, अनवेक्षमाणो as अनवेच्छमाणो, श्लक्ष्णं as श्वक्षा and स्थापयित्वा as स्रापयि |
+| Iavasyopanisad `6af636c51046991b051788e9` | 41 | hard | isolated wrong characters | 9 / 0 / 0 (34) | yes, 4 crops | Īśāvāsyopaniṣad page 11: the Prakāśikā plus a footnote block. Both blocks are complete and in reading order. The OCR inserts a blank line between every line of the text, which is layout only. The errors are isolated character slips (ग्न read as ग्र, ग्र read a |
+| vlayanagrahyastram `6af63daa1046991b051a1d00` | 28 | hard | wrong/missing word or line | 10 / 1 / 0 (52) | yes, 4 crops | Two-column table of contents (page [16]) of the Vaikhānasa-gṛhyasūtra. The columns are read in the right order (left then right), with no interleaving and nothing dropped. The errors are ordinal endings ी read as ौ (षष्ठौ, सप्तमौ, अष्टमौ), स्वप्न read as स्त्र |
+| Atharvavediya Dantyosthavidhih `6af635211046991b0516d075` | 20 | random | isolated wrong characters | 7 / 0 / 0 (26) | yes, 4 crops | Dantyoṣṭhavidhi p.2: Sanskrit verses with Hindi commentary and footnotes. All text present and in order; a few dropped anusvāras/conjunct parts (हमनें→हमने), and the four superscript footnote markers (2-5) in the verses are dropped (counted in wrong_chars). |
+| Br̥hannighaṇṭuratnākara (vol. vol. 4) `6af635d81046991b05172ec4` | 1 | random | wrong/missing word or line | 0 / 0 / 3 (3) | yes, 1 crops | Cloth cover with a small printed label. The three label lines are read exactly right but the whole block is duplicated in the OCR (3 extra lines). |
+| Kalavivekah `6af636f11046991b05179cf7` | 537 | random | wrong/missing word or line | 7 / 2 / 0 (23) | yes, 4 crops | Kālaviveka p.443, verse quotations with prose and six footnotes. Two words garbled, उपोष्या→उपोष्णा, and the in-text footnote signs are mostly dropped or turned into ॥/ऽ (‡→॥, §→ऽऽं); footnotes themselves are read correctly. |
+| Nyayabinduprakaranam `6af638591046991b05181705` | 53 | random | wrong/missing word or line | 16 / 12 / 0 (21) | yes, 6 crops | Nyāyabindu-ṭīkā p.20 (logic). Layout and order fine, but the key term हेतु is read as केतु every time (6x), हि→किं, ग्रहण→ग्रक्षण, and every avagraha ऽ is output as अ (~11x, counted as chars); verse number ९→१. Usable only by a reader who knows the text; borde |
+| Rukmini kalyanam. With an English intr `6af639711046991b05187dfd` | 139 | random | isolated wrong characters | 6 / 0 / 0 (20) | yes, 3 crops | Rukmiṇīkalyāṇa canto 7, verses 27-31. All lines present; a few character slips, page number ११७→१९७, and a stray ॥ picked up from show-through at the start of line 2. |
+| Upadeamtam `6af63c431046991b05199efc` | 47 | random | wrong/missing word or line | 3 / 3 / 0 (29) | yes, 3 crops | Upadeśāmṛta p.31: Sanskrit ślokas with Hindi gloss. Clean apart from the old-style अ read as ग्रा in two verses, क्रोधाग्नि→कोषाग्नि, किं→कि, and two verse numbers shifted (३७→३८, ३८→३९). |
+| Vyavahra-blabha (vol. 1) `6af63d011046991b0519ec6b` | 75 | random | isolated wrong characters | 3 / 0 / 0 (27) | yes, 5 crops | Vedāntadarśana commentary 1.2.15-16, dense prose. Very good read: three slips (one conjunct, two dropped rephas), avagrahas all kept. |
+| Abhidhnarjendra : koa (vol. 5) `6af634152a3ff91f6674a054` | 551 | hard | wrong/missing word or line | 8 / 2 / 0 (16) | yes, 5 crops | Abhidhānarājendra p.434, two dense columns. Proofread the first 16 lines of the left column; checked structure of both: columns kept separate and in order, nothing dropped. Recurring loss of the second ऽ in ऽऽ, a few garbled words on worn type (also नास्त्येवै |
+| Mulakalpa (vol. 3) `6af6380d1046991b0517f962` | 167 | hard | wrong/missing word or line | 10 / 2 / 0 (28) | yes, 4 crops | Mañjuśrīmūlakalpa p.666, ritual prose. All lines present including the faded bottom; scattered character errors (चिन्तामणि→चिन्तागणि, वृद्धि→दृढि, जीवापयति→जीवाप्यति) and a couple of wrong words in the faded lines (कर्मकारेण→कर्मकाली). No invented text: the fa |
+| nandalahar `6af63d741046991b051a10a7` | 122 | hard | isolated wrong characters | 3 / 0 / 0 (23) | yes, 5 crops | Ānandalaharī commentary p.100. Excellent read; the characters clipped at the gutter edge are completed sensibly (ब्रह्मवि-, आकाशादेव, शिव-), which is a mild reconstruction but not invention. One printer's misprint silently corrected, ळ→ल. |
+
+</details>
+
+### The rejects (every image opened)
+- **`not_devanagari`, 14 pages: 13 right, 1 wrong.** Covers, barcodes, Google boilerplate, an English imprint and a
+  bilingual title page. The wrong one is the Vākyavṛtti wrapper (`6af63ce31046991b0519dcb1` p.1): it is Devanagari,
+  but the read is "UNIVERSITY OF TORONTO" six times.
+- **Invented text on a rejected page:** Atharvavedīya Dantyoṣṭhavidhi p.16 (`6af635211046991b0516d075`, page id in the
+  lane ledger) is a blank verso with faint show-through, read as fluent English prose that is not on it ("The County
+  of Charles … Connecticut Region", repeated). The script gate caught it, the blank-page check did not. Not written.
+- **Refused books, 7: 5 right, 2 wrong.** All 7 are print.
+  - Wrong: Abhidhānarājendra vol. 4 (`6af634bf1046991b0516a67d`). Every text leaf is scanned upside down, and the
+    read is Ethiopic/Latin/Hebrew garbage. Refusing it was the right outcome, but it needs rotating, not another
+    route.
+  - Wrong: Bibliotheca Buddhica (Śikṣāsamuccaya, `6af635581046991b0516ebf3`). The Devanagari main text reads well;
+    long English footnotes push the share under 50%.
+  - Right: Makowski's Pañcatantra (German), the Gheraṇḍa Saṃhitā (English), Ballantyne's Sāṅkhya (English
+    commentary), Garbe's Sāṃkhya-pravacana-bhāṣya (Roman only), Böhtlingk's Chāndogya (German after the text). Their
+    Devanagari pages read cleanly and are lost by refusing the whole book.
+- **Textless, 20: all right.** These are blank leaves, covers and mirror-image show-through.
+
+### Not measured
+- Per-character CER against a reference. These are counts by eye, over stretches of 3–52 lines.
+- Whether an agy correction pass on top fixes the glyph confusions. That is the obvious next arm and is out of scope
+  here: no Gemini this week.
+
+## 2026-11-13 — Sanskrit manuscripts: script from the leaf, Opus or Sonnet? (#254)
+
+**Question.** #95 found that the stored transcription (gemini-3.1-flash-lite) of a hidden Sanskrit manuscript can be used when the leaf is Devanagari and cannot when it is Śāradā (0 of 36 judged pages usable). The stored tag (`ai_metadata.script`) was wrong on 3 of 11 books. Two questions follow: which script is on each of the 726 books waiting for translation, and can Sonnet make that call instead of Opus?
+
+**Frame.** Hidden books with language Sanskrit at rung `transcribed`, either waiting for translation or held `sarada-ocr-invented-95`: 726 books, 24,654 pages. Frame order is a seeded shuffle (20261113).
+
+**Method.** For each book, three evenly spaced leaves from the middle third (2,117 leaves; 48 short books have one or two). Images come from R2, at most 1,568 px. The tagger sees only the images, under the book id, and the instructions in `scripts/eval/sa-script-tags-254/tag.mjs`. It sees no title, no identifier, no stored tag and no transcription. Calls are `claude -p` on the subscription, 8 books per call, with Read as the only tool. Opus (`claude-opus-5-5`) tagged all 726 books. Sonnet tagged the first 100 in frame order plus the 17 key books with the same images and the same prompt. The pass rule was fixed in the brief before the run: at least 97 of 100 on script, and no keyed Śāradā book called Devanagari.
+
+**Results.**
+
+| | Opus | Sonnet |
+|---|---|---|
+| key books, script (13 Śāradā, 4 Devanagari, by eye on #95) | **17 / 17** | 12 / 17 |
+| key books, kind | 12 / 17 (both keyed prints and 3 MSS called "lithograph") | 13 / 17 |
+| keyed Śāradā called Devanagari | 0 | **4** |
+| first 100, script agrees with Opus | – | **83 / 100** |
+| first 100, kind agrees with Opus | – | 92 / 100 |
+
+Opus → Sonnet on script, first 100: Śāradā→Śāradā 77, Śāradā→Devanagari 13, Śāradā→unclear 4, Devanagari→Devanagari 5, unclear→unclear 1. Every disagreement is Sonnet moving a Śāradā book toward Devanagari or unclear. Sonnet usually marked those calls unsure, and often wrote "Śāradā not excluded" in its note.
+
+Opus over the frame: Śāradā 617 (500 manuscript, 117 "lithograph"; 142 unsure), Devanagari 78 (49 manuscript, 19 print, 10 "lithograph"; 15 unsure), mixed 7, unclear 6, Gurmukhi 4, Perso-Arabic 4, no text 4, Latin 3, Newar 2, Kannada 1.
+
+**What it does not show.** The key holds 17 books and one reader. Opus's 17/17 bounds its Śāradā/Devanagari error at roughly 1 in 6 or better (95%), not at 1%. The 142 unsure Śāradā calls were not looked at again. The kind call is weak: "lithograph" was wrong on 5 of the 17 key books, so `book_class.class` is left unchanged where Opus said lithograph. Agreement between Opus and Sonnet is agreement, not accuracy. Only the 17 key books are accuracy.
+
+**Taken.** The tags are written to `books.book_class` (`script`, `kind`, evidence, version `script-tags-254-v1`; the replaced value is in `sweep_log`). 633 books are newly held `sarada-unread-254`, and 9 keep `sarada-ocr-invented-95`. Per-book rows: `scripts/eval/sa-script-tags-254/tags.tsv`; tables: `compare.json`. Cost: 91 Opus calls (notional $56 API-equivalent, $0 cash) and 15 Sonnet calls (notional $4).
+
+## 2026-11-13 · Reverting the agy reads that never saw their page image, and checking the mixed shapes by eye (v3#149)
+
+### What was done
+
+**Rebuilding the list.** The read records (`.meta.json`, with `tool_calls`) are also kept in R2 by `keepRead()` (`candidate-reads/<book>/<page>/ocr/<content hash>.json`). So the list was rebuilt from there, not from four boxes. For every `page_revisions` row written by an agy `cli-ocr-*` run (run ids 2026-10-26 to 2026-11-13, 531,530 rows), the kept read at the row's `next_hash` was fetched and its `tool_calls` classified as in the issue. If no read was kept at that hash, the page's kept reads were listed and the latest agy read before the write was taken. Plain reads only (`mode` not `correct`). A row counts as live when the page's stored `ocr` still hashes to what the run wrote.
+
+| shape (plain agy reads) | rows | live | not live |
+|---|---|---|---|
+| A: one page, image opened, a denied read last | 740 | 709 | 31 |
+| B: one page, no allowed image read | 334 | 322 | 12 |
+| C: one page, denied, then opened last | 57 | 54 | 3 |
+| D: block, fewer opens than pages | 26 | 26 | 0 |
+
+A+B live: **1,030 pages, 306 books, 438 runs**. Of those, 977 are from 28 Oct on (the issue's ~981) and 53 from 27 Oct, which the issue's box records no longer held. No agy `cli-ocr` row before 27 Oct has either shape (26 Oct: 739 rows, all correction mode).
+
+**Not live (left alone).** 46 rows:
+- 30 already reverted on 2026-11-12 (`wrong-page-149`).
+- 10 in the Kant book `695434691479a63c11089287`, reverted by eye at 12:25Z by a laptop session, then re-read by Opus.
+- 6 superseded by a later agy read on 30 Oct and 4 Nov. None was changed by a `fix-*` run.
+
+**Not classifiable.** 631 pages have a written agy read with no kept read in R2, so their shape is unknown and they were not touched.
+
+### The revert (first two shapes, by predicate)
+
+`revertRun(db, runId, { apply: true, pageIds, by: 'job repair-149 2026-11-13: revert reads that never saw their page image (#149)' })` for each of the 438 runs, newest first. Every page was restorable and none had changed since its run. Afterwards `recountBook` (reason `repair-149: recount after reverting …`) ran on the 306 books.
+
+- 921 pages now have no text: 755 with no `ocr` field, 166 with an empty `ocr` stub.
+- 109 hold the earlier text that the bad read replaced.
+- 0 still hold a bad read's hash.
+- `pages_ocr` dropped by 921 in total across the 306 books.
+
+**Translations.** 179 of the 1,030 pages carried English. For 95 of them (29 books), `translation.engine.input.source_text_hash` equals the bad read's hash. Those were withheld with `withhold-stale-translations.mjs --book=<id> --by-eye-pages=<pages> --evidence=… --issue=149 --apply`:
+- In the dry run the tool took exactly those 95 pages and nothing else.
+- The withheld text is snapshotted in `page_revisions`, and the Supabase mirror was synced.
+- The other 84 translations predate their bad read: 77 have no source hash and a date before the read, and 7 have a source hash that differs. They were made from the earlier text the revert put back, so they stay; 2 of them were already withheld.
+
+Holds: 13 of the 29 books were already held (`scans-only-publish-7270`). The other 16 were held with `hold-pipeline-books.mjs --reason wrong-page-149` and released after the revert.
+
+### The mixed shapes, by eye
+
+80 pages, the 54 C and 26 D that are live. One Opus reader per 5 pages, sealed `claude -p --model opus --restricted --tools Read Write`, given only the scan and the stored text. A verdict was kept only if the transcript shows the page's image being read. 80 of 80 were kept. Images: R2 copy, then the source, then the site's image proxy (e-rara answers 403 to this box).
+
+| shape | wrong-leaf | invented | sense-error | omission | minor | fine |
+|---|---|---|---|---|---|---|
+| C (54) | 20 | 0 | 9 | 1 | 13 | 11 |
+| D (26) | 13 | 1 | 0 | 0 | 5 | 7 |
+
+Nearly all wrong-leaf verdicts are replies about the image ("could not be accessed", "page 3 image unavailable"), and one is a blank leaf transcribed as text. The invented page (`69b1d9ecd3979b7aedf4d96d` p.555) is its own leaf with an accurate main text and a margin note made up from the facing page's edge. It was kept, not reverted.
+
+- The 33 wrong-leaf pages were reverted the same way (22 runs, 17 books): 27 now have no text, 6 hold earlier text.
+- Their 5 translations predate the bad reads, so none was withheld.
+- Verdicts are recorded as 47 `book_checks` rows: method `lane-spot-check`, run `repair-149-mixed-shapes-2026-11-13`, selection `picked`. Results: fix 17, caveat 9, show 21.
+
+### Totals
+
+- Reverted: 1,063 pages, 447 runs. 948 now have no text; 115 hold earlier text.
+- Translations withheld: 95.
+
+### Undo
+
+Each revert is itself a writer run, `revert:<run id>`. 23 of the 447 run ids were also reverted on 2026-11-12 for other pages, so undo with this job's page ids only:
+
+```
+node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id revert:<run id> --page-ids-file=<file holding the JSON array for that run below> --apply
+```
+
+The withheld English comes back with `scripts/maintenance/restore-withheld-translation.mjs`.
+
+<details><summary>Run id → page ids reverted by this job (447 runs, 1,064 run×page pairs)</summary>
+
+```json
+{"cli-ocr-20261027013754":["6ad8544bd38af690a9a96a44"],"cli-ocr-20261027030745":["6a94b14b281341c253e70a86","6a94b14b281341c253e70a89","6a94b14b281341c253e70a8c","6a94b14b281341c253e70a94","6a94b14b281341c253e70a9f","6a94b14b281341c253e70ac2"],"cli-ocr-20261027032051":["6ad8544bd38af690a9a96ac3","6ad8544bd38af690a9a96acd","6ad8544bd38af690a9a96acf"],"cli-ocr-20261027052833":["6a94b177281341c253e70b86","6a94b177281341c253e70b9f","6a94b177281341c253e70bb0","6a94b177281341c253e70bb5","6a94b177281341c253e70bc9","6a94b177281341c253e70bcb","6a94b177281341c253e70bd4","6a94b177281341c253e70bdc","6a94b177281341c253e70be2","6a94b177281341c253e70be7","6a94b177281341c253e70c01","6a94b177281341c253e70c08","6a94b177281341c253e70c0e"],"cli-ocr-20261027055957":["6a94b196281341c253e70c26","6a94b196281341c253e70c47","6a94b196281341c253e70c4e","6a94b196281341c253e70c4f","6a94b196281341c253e70c61","6a94b196281341c253e70c88"],"cli-ocr-20261027061353":["6a94b1c3281341c253e70da5","6a94b1c3281341c253e70dc3","6a94b1c3281341c253e70dd1"],"cli-ocr-20261027074817":["6a94b1d7281341c253e70dfb","6a94b1d7281341c253e70e5f"],"cli-ocr-20261027081517":["6a94b1e5281341c253e71164"],"cli-ocr-20261027181510":["6ac7cdf2089105c952beb891"],"cli-ocr-20261027185356-3838983":["6ac7cdc5089105c952beb81b"],"cli-ocr-20261027221546-228497":["6aa1d51877169abff1622358","6aa1d51877169abff1622404","6aa1d51877169abff1622405"],"cli-ocr-20261027224803-8471":["6ac7c46c3032362d2d62a1ac"],"cli-ocr-20261027225341-22021":["6ac7c43b30f22b5af0b54983"],"cli-ocr-20261027225354-22604":["6ac7c41930f22b5af0b54928"],"cli-ocr-20261028005505-262090":["6ac7bc1930f22b5af0b5339c"],"cli-ocr-20261028011734":["6a1d6828385d464c6b6dc4c1","6a1d6852385d464c6b6dc4c5","6a1d687d385d464c6b6dc4c9","6a1d68ea385d464c6b6dc4d3","6a1d6915385d464c6b6dc4d7","6a1d6930385d464c6b6dc4d9","6a1d6acd385d464c6b6dc4fd","6a1d6b2c385d464c6b6dc505","6a1d6b70385d464c6b6dc50b","6a1d6d18385d464c6b6dc531","6a1d6db8385d464c6b6dc53f","6a1d6dce385d464c6b6dc541","6a1d6ffd385d464c6b6dc573","6a1d7014385d464c6b6dc575","6a1d7044385d464c6b6dc579","6a1d70b4385d464c6b6dc583","6a1d72af385d464c6b6dc5af","6a1d72f0385d464c6b6dc5b5","6a1d7305385d464c6b6dc5b7","6a1d7459385d464c6b6dc5d5","6a1d74c6385d464c6b6dc5df","6a1d74f6385d464c6b6dc5e3","6a1d7582385d464c6b6dc5ef","6a1d7662385d464c6b6dc603","6a1d76a0385d464c6b6dc60b"],"cli-ocr-20261028013704-445160":["6a42ba075207af7c42f69980","6a42ba075207af7c42f69b38","6a42ba075207af7c42f69b39","6a42ba075207af7c42f69b95","6a42ba075207af7c42f69b97","6a42ba075207af7c42f69bf6","6a42ba075207af7c42f69c09","6a42ba075207af7c42f69c0a","6a42ba075207af7c42f69c0c","6a42ba075207af7c42f69c24"],"cli-ocr-20261028023901":["6a8ee23d90f5a0e4155eb00d","6a8ee23d90f5a0e4155eb04e","6a8ee23d90f5a0e4155eb06e"],"cli-ocr-20261028043158-650229":["6ac7b96430f22b5af0b52ca8"],"cli-ocr-20261028043932":["6a94b1f3281341c253e71280","6a94b1f3281341c253e71282","6a94b1f3281341c253e7131d"],"cli-ocr-20261028045837-715363":["6ac7b8ce30f22b5af0b52b54"],"cli-ocr-20261028050332-726893":["6ac7b8af30f22b5af0b52b0c"],"cli-ocr-20261028052525-779657":["6ac7b754b693f8f459116690"],"cli-ocr-20261028135552-1718215":["69aec6aca1e0be599604f20d","69aec6aca1e0be599604f23c","69aec6aca1e0be599604f278","69aec6aca1e0be599604f281","69aec6aca1e0be599604f28e"],"cli-ocr-20261029001545-2564529":["6ac7b27aac0a787a1139b582"],"cli-ocr-20261029003706":["69aec6aca1e0be599604f373","69aec6aca1e0be599604f386"],"cli-ocr-20261029010729-2933635":["6a94b1f3281341c253e71322"],"cli-ocr-20261029022536":["69aec0111c1aee1ee9d550d3","69aec0111c1aee1ee9d550dd"],"cli-ocr-20261029030855":["69aec696a1e0be599604f09c","69aec696a1e0be599604f120"],"cli-ocr-20261029052953-3331914":["69937a42b0a84a5763967cae","69937a42b0a84a5763967cb3","69937a42b0a84a5763967cb7","69937a42b0a84a5763967cb9","69937a42b0a84a5763967cd0","69937a42b0a84a5763967cd2","69937a42b0a84a5763967cd4","69937a42b0a84a5763967cd6","69937a42b0a84a5763967cf4","69937a42b0a84a5763967cf7","69937a42b0a84a5763967cf9","69937a42b0a84a5763967d0d","69937a42b0a84a5763967d30","69937a42b0a84a5763967d37","69937a42b0a84a5763967d3d","69937a42b0a84a5763967d4e","69937a42b0a84a5763967d6e","69937a42b0a84a5763967d70","69937a42b0a84a5763967d91","69937a42b0a84a5763967d9b","69937a42b0a84a5763967def"],"cli-ocr-20261029181847-495796":["69bed2806e375f0fb686f326","69bed2806e375f0fb686f327","69bed2806e375f0fb686f328","69bed2806e375f0fb686f32f","69bed2806e375f0fb686f330","69bed2806e375f0fb686f333","69bed2806e375f0fb686f334","69bed2806e375f0fb686f335","69bed2806e375f0fb686f33a","69bed2806e375f0fb686f33b","69bed2806e375f0fb686f33d","69bed2806e375f0fb686f342","69bed2806e375f0fb686f34b"],"cli-ocr-20261029181915-496315":["69bed3ad6e375f0fb686f72c","69bed3ad6e375f0fb686f730"],"cli-ocr-20261029183709-516423":["69de9bc01ac4c04c63e41ad8","69de9bc01ac4c04c63e41b99","69de9bc01ac4c04c63e41c01","69de9bc01ac4c04c63e41c27"],"cli-ocr-20261029184721-526731":["6ad92bd0b48e2f84908024c1","6ad92bd0b48e2f84908024c2","6ad92bd0b48e2f84908024c6","6ad92bd0b48e2f84908024d2"],"cli-ocr-20261029185436-533980":["69bd9c1f46b01553e33c0082"],"cli-ocr-20261029185938-539978":["69bd9c2f46b01553e33c0418","69bd9c2f46b01553e33c043f","69bd9c2f46b01553e33c047e","69bd9c2f46b01553e33c052c","69bd9c2f46b01553e33c054a","69bd9c2f46b01553e33c0622","69bd9c2f46b01553e33c0624"],"cli-ocr-20261029190324-544260":["69bd9c2f46b01553e33c047e"],"cli-ocr-20261029190755-549098":["69bd9c2746b01553e33c0229","69bd9c2746b01553e33c0231"],"cli-ocr-20261030001939-699612":["6aa1d3c977169abff161e5ec"],"cli-ocr-20261030220934":["6aa1d3c977169abff161e5d2","6aa1d3c977169abff161e5dc","6aa1d3c977169abff161e624","6aa1d3c977169abff161e6c1","6aa1d3c977169abff161e705","6aa1d3c977169abff161e706","6aa1d3c977169abff161e708","6aa1d3c977169abff161e70a","6aa1d3c977169abff161e72c","6aa1d3c977169abff161e73d","6aa1d3c977169abff161e73e"],"cli-ocr-20261031012542-4000490":["6ac80aff80031cf17c88b201"],"cli-ocr-20261031013057-4012136":["6ac7cc26089105c952beb383"],"cli-ocr-20261101233026-2420485":["6a4a3f339edae40468f8ba94"],"cli-ocr-20261101234247-2430591":["6a4a3f6a9edae40468f8e73c"],"cli-ocr-20261102000551-2452222":["6a4a40069edae40468f96648"],"cli-ocr-20261102000727-2453741":["6a4a57c99050f0b4342e0ba3","6a4a57c99050f0b4342e0ba6","6a4a57c99050f0b4342e0ba7"],"cli-ocr-20261102000819-2454711":["6a4a57c29050f0b4342e042b"],"cli-ocr-20261102001204-2458264":["6a4a58169050f0b4342e4f39","6a4a58169050f0b4342e4f3c"],"cli-ocr-20261102013213-2502417":["6a4a59529050f0b4342f65a8","6a4a59529050f0b4342f65af","6a4a59529050f0b4342f65bd","6a4a59529050f0b4342f65c1","6a4a59529050f0b4342f65c8"],"cli-ocr-20261102020743-2530149":["6a4a5b919050f0b4343119bf"],"cli-ocr-20261102021641-2538295":["6a4a5bd09050f0b43431552a"],"cli-ocr-20261102033604-2576484":["6a5046be78825bd7fdd7f232"],"cli-ocr-20261102064941-2698547":["6ac4fbee4ba7223afef717f5"],"cli-ocr-20261102074420-2747420":["6ac4fd294ba7223afef78793"],"cli-ocr-20261102074827-2750905":["6ac4fd394ba7223afef79970"],"cli-ocr-20261102112302-3012217":["6ac500ff4ba7223afef99229","6ac500ff4ba7223afef9922d"],"cli-ocr-20261102113114-995409":["69af0cf0ca8f47eb1206ae83","69af0cf0ca8f47eb1206ae84","69af0cf0ca8f47eb1206ae89","69af0cf0ca8f47eb1206ae8c","69af0cf0ca8f47eb1206ae98"],"cli-ocr-20261102122327-3180225":["6ac502824ba7223afefa33b7","6ac502824ba7223afefa33b8"],"cli-ocr-20261102135133-3339322":["6ac508064ba7223afefe03a6","6ac508064ba7223afefe03a8","6ac508064ba7223afefe03ab","6ac508064ba7223afefe03ad","6ac508064ba7223afefe03b7","6ac508064ba7223afefe03b9","6ac508064ba7223afefe03bc"],"cli-ocr-20261102135202-3340188":["6ac507f34ba7223afefdfb3d"],"cli-ocr-20261102135513-3348240":["6ac507fc4ba7223afefe0221","6ac507fc4ba7223afefe0231"],"cli-ocr-20261102135813-3355145":["6ac5084a4ba7223afefe4e87"],"cli-ocr-20261102141017-3375662":["6ac5085a4ba7223afefe61f5"],"cli-ocr-20261102144250-3429759":["6ac508b84ba7223afefe9317"],"cli-ocr-20261102152251-3506322":["6ac50a894ba7223afe003eb7","6ac50a894ba7223afe003eb8","6ac50a894ba7223afe003eb9","6ac50a894ba7223afe003eba","6ac50a894ba7223afe003ebb","6ac50a894ba7223afe003ebc","6ac50a894ba7223afe003ebd","6ac50a894ba7223afe003ebe","6ac50a894ba7223afe003ebf","6ac50a894ba7223afe003ec0"],"cli-ocr-20261102153036-3525995":["6ac50abc4ba7223afe004d8e","6ac50abc4ba7223afe004d90"],"cli-ocr-20261102153825-3542997":["6ac50ab94ba7223afe004b71","6ac50ab94ba7223afe004b75"],"cli-ocr-20261102174933-3801757":["6ac50d634ba7223afe0213f9"],"cli-ocr-20261102180016-3829988":["6ac50d664ba7223afe021479","6ac50d664ba7223afe021483"],"cli-ocr-20261102180301-3835258":["6ac50de74ba7223afe025485","6ac50de74ba7223afe025488"],"cli-ocr-20261102184052-3902601":["6ac50edc4ba7223afe0313c0","6ac50edc4ba7223afe0313c1","6ac50edc4ba7223afe0313c2","6ac50edc4ba7223afe0313c3","6ac50edc4ba7223afe0313c4"],"cli-ocr-20261102184409-3910757":["6ac50ecf4ba7223afe030d09","6ac50ecf4ba7223afe030d0b"],"cli-ocr-20261102185445-3938208":["6ac50f224ba7223afe033784","6ac50f224ba7223afe033785","6ac50f224ba7223afe033786","6ac50f224ba7223afe033788","6ac50f224ba7223afe03378a"],"cli-ocr-20261102185507-3939418":["6ac50f254ba7223afe0337c2","6ac50f254ba7223afe0337c3","6ac50f254ba7223afe0337c5","6ac50f254ba7223afe0337c6","6ac50f254ba7223afe0337c7","6ac50f254ba7223afe0337c8"],"cli-ocr-20261102185819-3947863":["6ac50f244ba7223afe0337a2"],"cli-ocr-20261102191053-3976782":["6ac50f5e4ba7223afe036cc1","6ac50f5e4ba7223afe036cc4","6ac50f5e4ba7223afe036cc6"],"cli-ocr-20261102191954-3991620":["6ac50fa14ba7223afe03db51"],"cli-ocr-20261102211302-4094472":["6ac510d84ba7223afe050ccf"],"cli-ocr-20261102213222-4124981":["6ac511424ba7223afe056f2b"],"cli-ocr-20261102214128-4138969":["6ac511744ba7223afe059250","6ac511744ba7223afe059251","6ac511744ba7223afe059255","6ac511744ba7223afe05925a"],"cli-ocr-20261102215357-4161117":["6ac512534ba7223afe05b82f","6ac512534ba7223afe05b830"],"cli-ocr-20261102234905-147525":["6ad16f2d8a1d9e8cc75bbe80","6ad16f2d8a1d9e8cc75bbe83","6ad16f2d8a1d9e8cc75bbe84","6ad16f2d8a1d9e8cc75bbe85","6ad16f2d8a1d9e8cc75bbe93"],"cli-ocr-20261103000612-181204":["6ad82e3f8ddfc5d0064a4005","6ad82e3f8ddfc5d0064a4008","6ad82e3f8ddfc5d0064a400d","6ad82e3f8ddfc5d0064a4012","6ad82e3f8ddfc5d0064a4014","6ad82e3f8ddfc5d0064a4018","6ad82e3f8ddfc5d0064a401a","6ad82e3f8ddfc5d0064a401c","6ad82e3f8ddfc5d0064a4020","6ad82e3f8ddfc5d0064a4021","6ad82e3f8ddfc5d0064a4024"],"cli-ocr-20261103033205-477746":["6ac500984ba7223afef949ee"],"cli-ocr-20261103040513-525079":["6ac5036d4ba7223afefaef80","6ac5036d4ba7223afefaef81"],"cli-ocr-20261103140708-1263747":["6992469fbc722ec0ee80f57b"],"cli-ocr-20261103143907-1330793":["6958e850538549809db8213e","6958e850538549809db821ba"],"cli-ocr-20261103144942-1353678":["69af0d35067c0c26ee26d4ca","69af0d35067c0c26ee26d4d3"],"cli-ocr-20261103145433-1362837":["69af0da3067c0c26ee26d819","69af0da3067c0c26ee26d835","69af0da3067c0c26ee26d857"],"cli-ocr-20261103150436-1379158":["69bd9e346120d54bd037bf5b"],"cli-ocr-20261103155109-1480192":["69b51e88768235dc6599517f"],"cli-ocr-20261103163118-1535711":["69af0d35067c0c26ee26d51a"],"cli-ocr-20261103163607-1540503":["69afd0c2775a23a98ee938b3"],"cli-ocr-20261103182127-1724874":["6958e850538549809db82247","6958e850538549809db8225b"],"cli-ocr-20261103183115-1739183":["69dbca101040d1d5e20a9049"],"cli-ocr-20261103200956-1909137":["69de988c1b234a773e438bfb"],"cli-ocr-20261103202937-1960083":["69ae9cde0cfd89c490b7170b","69ae9cde0cfd89c490b71746"],"cli-ocr-20261103203151-3653499":["69e96123390d3ed634590d58"],"cli-ocr-20261103203512-3663331":["69de10195cedf736edb8527c","69de10195cedf736edb8527d"],"cli-ocr-20261103203730-1994775":["69b51d21f23ccdcced30637f"],"cli-ocr-20261103210121-3829394":["69b3009ee28f56bd749424d0"],"cli-ocr-20261103210530-3852545":["69dbc46e56c1abd5f7337a69"],"cli-ocr-20261103212537-3944886":["69d14ae81c2a66dc094b4986"],"cli-ocr-20261103213054-3956401":["69ee4f206dd925d126f4302e"],"cli-ocr-20261103213848-4034472":["69b51e2cefd8df28f2db2198"],"cli-ocr-20261103214401-2301210":["69b51e88768235dc6599522b"],"cli-ocr-20261103214853-4124195":["69ac9bdedc7bbeb9206214eb"],"cli-ocr-20261103220040-17632":["69f52fa33c1f0a3a99444cad"],"cli-ocr-20261103220712-2408510":["69de988c1b234a773e438c09","69de988c1b234a773e438c19","69de988c1b234a773e438c2b"],"cli-ocr-20261103221214-2422867":["6958e850538549809db822a5"],"cli-ocr-20261103221927-149608":["69dea5da4d19ec2e9ba77852"],"cli-ocr-20261103222053-168607":["69f6c7388a55192f1700f973"],"cli-ocr-20261103223306-231052":["69dbcb181040d1d5e20b1fc0"],"cli-ocr-20261103223945-273855":["69bd9d386120d54bd03740b3","69bd9d386120d54bd0374134"],"cli-ocr-20261103225645-355264":["69e8b12c2ff2a8dc09e757e3"],"cli-ocr-20261103233815-2557783":["69b51e88768235dc65995265"],"cli-ocr-20261103234237-625747":["69af42f13bd5f6f35ab8a406"],"cli-ocr-20261103234553-2577172":["69de988c1b234a773e438c37","69de988c1b234a773e438c51"],"cli-ocr-20261103234925-2586317":["69b51e809a81ef7feb3d6733"],"cli-ocr-20261104000440-2628733":["6ac503d64ba7223afefb52b7"],"cli-ocr-20261104001252-823231":["69dbc9831040d1d5e20a3cfe","69dbc9831040d1d5e20a3d00"],"cli-ocr-20261104001502-2654131":["6ac503e64ba7223afefb6717","6ac503e64ba7223afefb6718"],"cli-ocr-20261104002704-2687781":["69aebe65a103e42dc9414154"],"cli-ocr-20261104002809-898483":["69af0cfc067c0c26ee26cd9a"],"cli-ocr-20261104003335-2705760":["6ac5041b4ba7223afefb9b82","6ac5041b4ba7223afefb9b83"],"cli-ocr-20261104004047-2726835":["6ac504254ba7223afefb9cd5"],"cli-ocr-20261104004436-1011876":["69aeaaaa2eebe4c57e9adaf0"],"cli-ocr-20261104011255-2798873":["69af0cbe067c0c26ee26c70b"],"cli-ocr-20261104012101-1247143":["69f5098b75d35069a25ba2e8"],"cli-ocr-20261104012337-1253889":["69f33efc876dd827cbc60cd7"],"cli-ocr-20261104013739-1350837":["69dbc8e31040d1d5e209d399"],"cli-ocr-20261104014201-2874518":["6958e96f813ea03889c333b0"],"cli-ocr-20261104014219-1381352":["6a08528e15c643eb1af4d2b3"],"cli-ocr-20261104015332-2908916":["698fb93e6b95eeda7d2d3882"],"cli-ocr-20261104015620-1472807":["69dbcb591040d1d5e20b6063"],"cli-ocr-20261104022016-2990827":["69dbccd20f8c5edf20f4e178"],"cli-ocr-20261104023457-3033010":["69af0cbe067c0c26ee26c729"],"cli-ocr-20261104023523-3033852":["6ac504fe4ba7223afefc2c2d"],"cli-ocr-20261104024601-1726928":["69dbcb3a1040d1d5e20b43d7"],"cli-ocr-20261104024620-1728416":["69dbcb4c1040d1d5e20b5804"],"cli-ocr-20261104034703-3170655":["69dbc86d1040d1d5e2099815"],"cli-ocr-20261104050029-3336301":["69af0cbe067c0c26ee26c752","69af0cbe067c0c26ee26c755","69af0cbe067c0c26ee26c757","69af0cbe067c0c26ee26c75d","69af0cbe067c0c26ee26c763","69af0cbe067c0c26ee26c766"],"cli-ocr-20261104052511-3407171":["6ac505b64ba7223afefc8f06"],"cli-ocr-20261104053303-3430949":["6ac505ce4ba7223afefc9b88"],"cli-ocr-20261104061232-3541965":["69aebe65a103e42dc9414209"],"cli-ocr-20261104062824-3579679":["69dbc86d1040d1d5e209987a"],"cli-ocr-20261104083632-3942447":["69dbca101040d1d5e20a909b"],"cli-ocr-20261104084835-3973316":["69b64e8e18b87551bfc8a1cd"],"cli-ocr-20261104090909-4037136":["6ac507004ba7223afefd780f"],"cli-ocr-20261104103459-169019":["69af0cbe067c0c26ee26c83b"],"cli-ocr-20261104105121-229903":["69b64e8e18b87551bfc8a1df"],"cli-ocr-20261104111642-4099849":["69e8b25c2ff2a8dc09e7784b"],"cli-ocr-20261104111748-4103069":["69bd95726a23f5594be170ad"],"cli-ocr-20261104113508-389050":["6ac509834ba7223afeff4e86","6ac509834ba7223afeff4e88"],"cli-ocr-20261104113511-3784804":["6a91e0db051d1f3e8eaa1882"],"cli-ocr-20261104114109-414533":["69af0cbe067c0c26ee26c877"],"cli-ocr-20261104123247-442987":["69a6825dd5bf106c72bb8ba3"],"cli-ocr-20261104125145-668901":["6a9f3f9783c3b522416e40e4"],"cli-ocr-20261104125329-679473":["6ac50a934ba7223afe004613"],"cli-ocr-20261104131456-733588":["69af0cbe067c0c26ee26c8d3"],"cli-ocr-20261104132439-758826":["6ac50b964ba7223afe00c963","6ac50b964ba7223afe00c964"],"cli-ocr-20261104134301-813608":["69b64e8e18b87551bfc8a23a"],"cli-ocr-20261104140327-871148":["6ac50dba4ba7223afe0221d0","6ac50dba4ba7223afe0221d2"],"cli-ocr-20261104145122-997547":["6ac50e484ba7223afe02a198"],"cli-ocr-20261104151556-1048714":["69af0f70a01158dc01f77c89"],"cli-ocr-20261104160829-1161008":["69b64e8e18b87551bfc8a2bf"],"cli-ocr-20261104161137-1166636":["69af0cbe067c0c26ee26c930"],"cli-ocr-20261104190311-1639593":["69af0cbe067c0c26ee26c9b8","69af0cbe067c0c26ee26c9bd"],"cli-ocr-20261104193725-1748857":["69aebc3b9d616e7d167cf70e"],"cli-ocr-20261104210011-1980101":["6a10093ff717292950968838"],"cli-ocr-20261104213052-2070488":["69aebe705e312cf82457c910"],"cli-ocr-20261104214028-2096881":["69ae8f154cc1ca54f8f13e8b","69ae8f154cc1ca54f8f13e95"],"cli-ocr-20261104215135-2127574":["69aeaad767e6731bc1365398"],"cli-ocr-20261104220301-2195429":["69aea304803d5b811fc125ec"],"cli-ocr-20261104234321-2502655":["69aebe705e312cf82457c926","69aebe705e312cf82457c93b"],"cli-ocr-20261105011215-2737896":["69b6a35d080b19f98fd19fd1"],"cli-ocr-20261105011726-2750415":["69aebe705e312cf82457c946"],"cli-ocr-20261105015145-2843381":["69aeaad767e6731bc1365404","69aeaad767e6731bc1365407","69aeaad767e6731bc136542a"],"cli-ocr-20261105025730-3014286":["69a5f6bd1cf742c360414200"],"cli-ocr-20261105032847-3082482":["69aeaad767e6731bc136542c","69aeaad767e6731bc1365430","69aeaad767e6731bc1365436","69aeaad767e6731bc1365439","69aeaad767e6731bc136543b","69aeaad767e6731bc1365454"],"cli-ocr-20261105040030-3141249":["69aebb8e6e076d07213e9380","69aebb8e6e076d07213e9386","69aebb8e6e076d07213e9390"],"cli-ocr-20261105045837-3264431":["69aebb886e076d07213e8bb4"],"cli-ocr-20261105050851-3286115":["69aec0841f4011b58bb53632"],"cli-ocr-20261105052347-3313530":["69aec0861f4011b58bb538a6"],"cli-ocr-20261105053633-3339186":["69aebf5403964e18fa462e20"],"cli-ocr-20261105060601-3402980":["69aec60b3b6ebce5e0eea330"],"cli-ocr-20261105070747-3534062":["69a5f6bd1cf742c360414292"],"cli-ocr-20261105073915-3586696":["69aebf5403964e18fa462e3d"],"cli-ocr-20261105093406-3813143":["69aebe1c7dd4a7474d1f2888","69aebe1c7dd4a7474d1f2889"],"cli-ocr-20261105094015-3825655":["69aec0861f4011b58bb5390b"],"cli-ocr-20261105094403-3833610":["69aec60b3b6ebce5e0eea36f"],"cli-ocr-20261105111342-4007831":["69aebb8e6e076d07213e9411"],"cli-ocr-20261105112259-4027621":["69aec0841f4011b58bb536b8"],"cli-ocr-20261105113400-4053803":["69aec0861f4011b58bb53928","69aec0861f4011b58bb53929"],"cli-ocr-20261105114800-4084324":["69aebc736e076d07213eb983"],"cli-ocr-20261105115400-4095763":["69aebe1c7dd4a7474d1f28c8"],"cli-ocr-20261105123245-4177725":["69aebe8cc0472fef6455b214"],"cli-ocr-20261105133145-109117":["69aebb8e6e076d07213e9434","69aebb8e6e076d07213e943b"],"cli-ocr-20261105133532-116725":["69aec0111c1aee1ee9d5528f"],"cli-ocr-20261105133740-120653":["69aec0861f4011b58bb53949"],"cli-ocr-20261105135627-146057":["69aea33f82533ec74af81111"],"cli-ocr-20261106071357-2679846":["69b51e8e768235dc65995db3"],"cli-ocr-20261106112324-1102771":["6aed15b0a9e39de981042b02","6aed15b0a9e39de981042b3d"],"cli-ocr-20261106231441-1604372":["69aebb8e6e076d07213e945c","69aebb8e6e076d07213e946e"],"cli-ocr-20261106232122-1619092":["69aec0861f4011b58bb5396a"],"cli-ocr-20261106233159-1643655":["69aebe1c7dd4a7474d1f2908","69aebe1c7dd4a7474d1f290e","69aebe1c7dd4a7474d1f291a"],"cli-ocr-20261106234902-1674638":["69aea33f82533ec74af81128","69aea33f82533ec74af81137","69aea33f82533ec74af8113a","69aea33f82533ec74af8113b","69aea33f82533ec74af81143","69aea33f82533ec74af81144"],"cli-ocr-20261107000656-1699565":["69aebf312030b4750cd41304","69aebf312030b4750cd41305"],"cli-ocr-20261107003644-1757157":["69aebb8e6e076d07213e949c","69aebb8e6e076d07213e949f"],"cli-ocr-20261107004323-1768792":["69aec0861f4011b58bb53991"],"cli-ocr-20261107005125-1784862":["69aec0841f4011b58bb53740"],"cli-ocr-20261107010216-1806027":["69aebb8e6e076d07213e94b7"],"cli-ocr-20261107011232-1826833":["69aec60b3b6ebce5e0eea420"],"cli-ocr-20261107013654-1877976":["69aea33f82533ec74af81152","69aea33f82533ec74af81155"],"cli-ocr-20261107031251-2062675":["69aec0861f4011b58bb53a0d"],"cli-ocr-20261107032011-2077999":["69aebc7c7888322b3dac675d","69aebc7c7888322b3dac6760","69aebc7c7888322b3dac6765"],"cli-ocr-20261107032922-2094738":["69aebe1c7dd4a7474d1f294b","69aebe1c7dd4a7474d1f2951"],"cli-ocr-20261107034307-2127604":["69aec6aca1e0be599604f283"],"cli-ocr-20261107034330-2128085":["69aebf312030b4750cd41332"],"cli-ocr-20261107040013-2159491":["69aebe8cc0472fef6455b2a9"],"cli-ocr-20261107041017-2184443":["69ae8ee96c4fe8889bb4828d"],"cli-ocr-20261107043631-2240286":["69aea5663f91570550877842"],"cli-ocr-20261107053322-2355997":["69aea5663f91570550877861"],"cli-ocr-20261107060405-2415554":["69aebc7c7888322b3dac676e","69aebc7c7888322b3dac6786"],"cli-ocr-20261107060629-2419995":["69aebf312030b4750cd41336","69aebf312030b4750cd41350","69aebf312030b4750cd41354"],"cli-ocr-20261107062102-2445655":["69af4f75364e8eb52c2b7401"],"cli-ocr-20261107063730-2480729":["69ae8ee96c4fe8889bb482e6","69ae8ee96c4fe8889bb48305","69ae8ee96c4fe8889bb4830a","69ae8ee96c4fe8889bb4831e"],"cli-ocr-20261107071030-2545803":["6990521d8d19cbc90d9d541e"],"cli-ocr-20261107074842-2627199":["69aec0141c1aee1ee9d5545e"],"cli-ocr-20261107075545-2639115":["69aea5663f9157055087789f","69aea5663f915705508778a4"],"cli-ocr-20261107080620-2657466":["69aebf312030b4750cd41364","69aebf312030b4750cd41368","69aebf312030b4750cd4136c","69aebf312030b4750cd4136d","69aebf312030b4750cd41375","69aebf312030b4750cd41378","69aebf312030b4750cd4137a","69aebf312030b4750cd4137f"],"cli-ocr-20261107080711-2658588":["69aebc7c7888322b3dac6797","69aebc7c7888322b3dac679e"],"cli-ocr-20261107081448-2672196":["69af4f75364e8eb52c2b7436","69af4f75364e8eb52c2b7455"],"cli-ocr-20261107083609-2712485":["69ae8ee96c4fe8889bb483da"],"cli-ocr-20261107094711-2842418":["69aebf312030b4750cd413a1"],"cli-ocr-20261107094945-2847890":["69aea5663f915705508778cb"],"cli-ocr-20261107095535-2858688":["69af4f75364e8eb52c2b74b1"],"cli-ocr-20261107102432-2916966":["69ae8ee96c4fe8889bb483fe","69ae8ee96c4fe8889bb483ff","69ae8ee96c4fe8889bb48478","69ae8ee96c4fe8889bb4847b"],"cli-ocr-20261107120520-3122535":["69aebf312030b4750cd413ac","69aebf312030b4750cd413ad"],"cli-ocr-20261107121359-3140578":["69af4f75364e8eb52c2b755b","69af4f75364e8eb52c2b7568"],"cli-ocr-20261107121750-3148217":["69ae8ee96c4fe8889bb484a4"],"cli-ocr-20261107122118-3154878":["6a94b1df281341c253e70fa0","6a94b1df281341c253e70fa7"],"cli-ocr-20261107135324-3340592":["69aebc7c7888322b3dac6825","69aebc7c7888322b3dac682b"],"cli-ocr-20261107135619-3345321":["69aea5663f915705508778fc","69aea5663f9157055087790e","69aea5663f91570550877917","69aea5663f9157055087791d"],"cli-ocr-20261107140713-3361966":["6aa35e2ce213def30d6caede"],"cli-ocr-20261107142753-3395183":["69aebf312030b4750cd413da","69aebf312030b4750cd413dd","69aebf312030b4750cd413e1","69aebf312030b4750cd413e4"],"cli-ocr-20261107152337-3493473":["69aead2866bcc9447837c8ea"],"cli-ocr-20261107153155-3503741":["69aebe8cc0472fef6455b3d3","69aebe8cc0472fef6455b3d5"],"cli-ocr-20261107153530-3506456":["69aebc750b218b96da727f93"],"cli-ocr-20261107153641-3508121":["69af4f75364e8eb52c2b7584","69af4f75364e8eb52c2b7589","69af4f75364e8eb52c2b7592","69af4f75364e8eb52c2b75a7"],"cli-ocr-20261107154001-3512915":["69aec0141c1aee1ee9d5550e","69aec0141c1aee1ee9d55513","69aec0141c1aee1ee9d55521"],"cli-ocr-20261107154300-3519995":["69ae8ee96c4fe8889bb484c9","69ae8ee96c4fe8889bb484cc","69ae8ee96c4fe8889bb484ce"],"cli-ocr-20261107160005-3541752":["69aea5663f91570550877924","69aea5663f91570550877945","69aea5663f91570550877949"],"cli-ocr-20261107160114-3543230":["69aebc7c7888322b3dac683b","69aebc7c7888322b3dac6844","69aebc7c7888322b3dac6848","69aebc7c7888322b3dac684e","69aebc7c7888322b3dac684f"],"cli-ocr-20261107161731-3560087":["69aebf312030b4750cd41405","69aebf312030b4750cd4140a","69aebf312030b4750cd4140c","69aebf312030b4750cd4140f","69aebf312030b4750cd41410","69aebf312030b4750cd41413","69aebf312030b4750cd41414","69aebf312030b4750cd41418","69aebf312030b4750cd4141b","69aebf312030b4750cd4141d","69aebf312030b4750cd4141e","69aebf312030b4750cd41421","69aebf312030b4750cd41422","69aebf312030b4750cd41423"],"cli-ocr-20261107163302-3585940":["69aec0141c1aee1ee9d5554e","69aec0141c1aee1ee9d55551"],"cli-ocr-20261107171207-3649362":["6a26d267f5273a8d907a4a1d"],"cli-ocr-20261107172832-3676206":["69af4f75364e8eb52c2b75c1","69af4f75364e8eb52c2b75c9","69af4f75364e8eb52c2b75ca"],"cli-ocr-20261107172911-3678163":["69aebc7c7888322b3dac687b"],"cli-ocr-20261107173049-3681486":["69aec0141c1aee1ee9d55565","69aec0141c1aee1ee9d55566","69aec0141c1aee1ee9d55577","69aec0141c1aee1ee9d5557a"],"cli-ocr-20261107173355-3690268":["69aebf312030b4750cd41427","69aebf312030b4750cd41428","69aebf312030b4750cd4142a","69aebf312030b4750cd4142d","69aebf312030b4750cd4142e","69aebf312030b4750cd4142f","69aebf312030b4750cd41433","69aebf312030b4750cd41438","69aebf312030b4750cd4143c","69aebf312030b4750cd4143d","69aebf312030b4750cd4143f","69aebf312030b4750cd41440","69aebf312030b4750cd41441","69aebf312030b4750cd41442","69aebf312030b4750cd41447","69aebf312030b4750cd4144b"],"cli-ocr-20261107173612-3696169":["69aea5663f91570550877955","69aea5663f91570550877969","69aea5663f9157055087796c"],"cli-ocr-20261107173713-3698466":["69ae8ee96c4fe8889bb484d6","69ae8ee96c4fe8889bb484d7","69ae8ee96c4fe8889bb484da","69ae8ee96c4fe8889bb484de","69ae8ee96c4fe8889bb484e1","69ae8ee96c4fe8889bb484e6","69ae8ee96c4fe8889bb484e9","69ae8ee96c4fe8889bb484eb","69ae8ee96c4fe8889bb484ed","69ae8ee96c4fe8889bb484f1","69ae8ee96c4fe8889bb484f5","69ae8ee96c4fe8889bb484f6"],"cli-ocr-20261107181210-3758807":["6a243e210f0e4f405e633029","6a243e210f0e4f405e63302b","6a243e210f0e4f405e63303c"],"cli-ocr-20261107181236-3759547":["6958e915d3a892833481500d","6958e915d3a8928334815093"],"cli-ocr-20261107182931-3785412":["6a2679786c1f37c9c4f2ba1d"],"cli-ocr-20261107183212-3791535":["6a2679746c1f37c9c4f2b8b7"],"cli-ocr-20261107183425-3797628":["6a267c926c1f37c9c4f364d9"],"cli-ocr-20261107184423-3813847":["69aec0141c1aee1ee9d5558f","69aec0141c1aee1ee9d55599"],"cli-ocr-20261107190719-3851623":["69aebe8cc0472fef6455b460"],"cli-ocr-20261107191820-3868758":["69aebc7c7888322b3dac688e"],"cli-ocr-20261107192403-3878088":["69af4f75364e8eb52c2b75d8","69af4f75364e8eb52c2b75db","69af4f75364e8eb52c2b75e4","69af4f75364e8eb52c2b75e8","69af4f75364e8eb52c2b75f6","69af4f75364e8eb52c2b75f8"],"cli-ocr-20261107193456-3898735":["69aea5663f9157055087797a","69aea5663f91570550877981","69aea5663f91570550877983","69aea5663f9157055087798d","69aea5663f91570550877992","69aea5663f91570550877997","69aea5663f91570550877998"],"cli-ocr-20261107193704-3902294":["69aebf312030b4750cd4144d","69aebf312030b4750cd4144f","69aebf312030b4750cd41458","69aebf312030b4750cd4145a","69aebf312030b4750cd41463","69aebf312030b4750cd41465","69aebf312030b4750cd4146a","69aebf312030b4750cd4146c","69aebf312030b4750cd41471","69aebf312030b4750cd41472","69aebf312030b4750cd41473"],"cli-ocr-20261107194554-3918542":["6a26b85c61b3857ed05a5c92","6a26b85c61b3857ed05a5c95"],"cli-ocr-20261107194604-3918769":["69b51d62261c58d636649fc0"],"cli-ocr-20261107195103-3926485":["6a267d296c1f37c9c4f38d4d"],"cli-ocr-20261107195407-3931039":["6a267cfc6c1f37c9c4f37be4","6a267cfc6c1f37c9c4f37be6","6a267cfc6c1f37c9c4f37bec"],"cli-ocr-20261107201817-3964138":["6a26ba5661b3857ed05af000"],"cli-ocr-20261107203120-3987257":["6a26bb0361b3857ed05b14c8"],"cli-ocr-20261107204954-4017287":["69ae8ee96c4fe8889bb48520","69ae8ee96c4fe8889bb48524","69ae8ee96c4fe8889bb48526","69ae8ee96c4fe8889bb48534","69ae8ee96c4fe8889bb48543","69ae8ee96c4fe8889bb48545"],"cli-ocr-20261107211917-4069119":["69af4f75364e8eb52c2b7604","69af4f75364e8eb52c2b7608","69af4f75364e8eb52c2b760c","69af4f75364e8eb52c2b760f","69af4f75364e8eb52c2b7612"],"cli-ocr-20261107212534-4078806":["69aebc7c7888322b3dac68ac","69aebc7c7888322b3dac68af"],"cli-ocr-20261107212624-4080013":["69aebf312030b4750cd41479","69aebf312030b4750cd4147a","69aebf312030b4750cd4147c","69aebf312030b4750cd4147d","69aebf312030b4750cd41480","69aebf312030b4750cd41481","69aebf312030b4750cd41485","69aebf312030b4750cd41486","69aebf312030b4750cd4148e","69aebf312030b4750cd41493","69aebf312030b4750cd41495","69aebf312030b4750cd41497","69aebf312030b4750cd4149a"],"cli-ocr-20261107213045-4092873":["69aea5663f9157055087799c","69aea5663f9157055087799f","69aea5663f915705508779a4","69aea5663f915705508779ac","69aea5663f915705508779ae","69aea5663f915705508779b3"],"cli-ocr-20261107213425-4098371":["69ae8ee96c4fe8889bb48547","69ae8ee96c4fe8889bb4854b","69ae8ee96c4fe8889bb4854c","69ae8ee96c4fe8889bb4854e","69ae8ee96c4fe8889bb4854f","69ae8ee96c4fe8889bb48554","69ae8ee96c4fe8889bb48561"],"cli-ocr-20261107214117-4108583":["6a26bcdbd6b178e5aad86668","6a26bcdbd6b178e5aad86669"],"cli-ocr-20261107214851-4118533":["69dbcb211040d1d5e20b2ace"],"cli-ocr-20261107215010-4121412":["6a26c1080e247ebad6df3273"],"cli-ocr-20261107215807-4132785":["6a26c0890e247ebad6df1bf5"],"cli-ocr-20261107222717-4173629":["6a26c2a5aad44c98627c5456","6a26c2a5aad44c98627c5457","6a26c2a5aad44c98627c545b"],"cli-ocr-20261107223904-1633":["6a26c355aad44c98627c9a1e","6a26c355aad44c98627c9a1f","6a26c355aad44c98627c9a21","6a26c355aad44c98627c9a27"],"cli-ocr-20261107223919-1920":["6a26c349aad44c98627c91ec"],"cli-ocr-20261107225431-31379":["69aebe8cc0472fef6455b4b9","69aebe8cc0472fef6455b4bd"],"cli-ocr-20261107230008-41453":["69ae8ee96c4fe8889bb48570","69ae8ee96c4fe8889bb48577","69ae8ee96c4fe8889bb48586"],"cli-ocr-20261107231751-67229":["69aebc7c7888322b3dac68e1"],"cli-ocr-20261107231838-68545":["69af0a25dc4c98c65a3d5148"],"cli-ocr-20261107232354-76046":["6a26c387aad44c98627ca2bb","6a26c387aad44c98627ca2be","6a26c387aad44c98627ca2ca"],"cli-ocr-20261107232909-84316":["69aebf312030b4750cd4149e","69aebf312030b4750cd4149f","69aebf312030b4750cd414a0","69aebf312030b4750cd414a1","69aebf312030b4750cd414a4","69aebf312030b4750cd414a9","69aebf312030b4750cd414ab","69aebf312030b4750cd414ac","69aebf312030b4750cd414b1","69aebf312030b4750cd414b2","69aebf312030b4750cd414b9","69aebf312030b4750cd414bd","69aebf312030b4750cd414c1"],"cli-ocr-20261107233030-86735":["69af4f75364e8eb52c2b7621","69af4f75364e8eb52c2b762d","69af4f75364e8eb52c2b763b","69af4f75364e8eb52c2b7641","69af4f75364e8eb52c2b7647"],"cli-ocr-20261107233401-94801":["6a26c509aad44c98627d428c","6a26c509aad44c98627d428d"],"cli-ocr-20261107234018-104678":["69aea5663f915705508779cb"],"cli-ocr-20261107234832-120458":["6a26c55caad44c98627d6340","6a26c55caad44c98627d6342","6a26c55caad44c98627d6345"],"cli-ocr-20261107235923-139244":["6a26c355aad44c98627c9a35","6a26c355aad44c98627c9a37","6a26c355aad44c98627c9a3e","6a26c355aad44c98627c9a4b"],"cli-ocr-20261108000509-147515":["6a26c409aad44c98627ccfe1"],"cli-ocr-20261108002751-181250":["69b51e6e9a81ef7feb3d4d3f"],"cli-ocr-20261108002954-185108":["6a26c6ebaad44c98627e34df"],"cli-ocr-20261108003351-192262":["69aebc736e076d07213ebe8b","69aebc736e076d07213ebe8e"],"cli-ocr-20261108004449-210006":["69aebe8cc0472fef6455b4dc"],"cli-ocr-20261108005250-225581":["69ee93a0f2c6312502f6a370"],"cli-ocr-20261108011228-255889":["69aebc7c7888322b3dac6901"],"cli-ocr-20261108011816-264325":["69aea5663f915705508779ec","69aea5663f915705508779fb","69aea5663f915705508779fc","69aea5663f91570550877a11"],"cli-ocr-20261108012127-269894":["6a26c7d0aad44c98627e7730"],"cli-ocr-20261108012921-282524":["69aebf312030b4750cd414cc","69aebf312030b4750cd414cd","69aebf312030b4750cd414cf","69aebf312030b4750cd414d0","69aebf312030b4750cd414d5","69aebf312030b4750cd414d9","69aebf312030b4750cd414da","69aebf312030b4750cd414de","69aebf312030b4750cd414e3","69aebf312030b4750cd414e5","69aebf312030b4750cd414ea"],"cli-ocr-20261108013216-290268":["6a26c7dcaad44c98627e80a8"],"cli-ocr-20261108013944-302555":["6a26c803aad44c98627e91d8"],"cli-ocr-20261108014602-312391":["69aebc736e076d07213ebe9d"],"cli-ocr-20261108020005-336503":["6a26c97a5ac5aecc53ce0e4b"],"cli-ocr-20261108023633-399711":["6a26c9b25ac5aecc53ce2768","6a26c9b25ac5aecc53ce277e","6a26c9b25ac5aecc53ce2783"],"cli-ocr-20261108023808-402553":["6a26c938aad44c98627f09a7"],"cli-ocr-20261108030130-447771":["6a26c9a65ac5aecc53ce23d1","6a26c9a65ac5aecc53ce23d7"],"cli-ocr-20261108031853-479321":["6a26cbc45ac5aecc53cecf03"],"cli-ocr-20261108031901-479696":["69aebc7c7888322b3dac6944"],"cli-ocr-20261108032933-499443":["6a26ca455ac5aecc53ce5b85","6a26ca455ac5aecc53ce5b8b"],"cli-ocr-20261108033600-513347":["6a26cc145ac5aecc53cee36b"],"cli-ocr-20261108033828-520086":["69aea5663f91570550877a13","69aea5663f91570550877a17","69aea5663f91570550877a18","69aea5663f91570550877a1a","69aea5663f91570550877a1f","69aea5663f91570550877a2f","69aea5663f91570550877a30","69aea5663f91570550877a31","69aea5663f91570550877a33","69aea5663f91570550877a35","69aea5663f91570550877a36"],"cli-ocr-20261108034406-532405":["6a26cc355ac5aecc53cee77c"],"cli-ocr-20261108034449-533629":["6a26cbf85ac5aecc53ceda61"],"cli-ocr-20261108034553-535328":["69aebf312030b4750cd414ec","69aebf312030b4750cd414f4","69aebf312030b4750cd414fb","69aebf312030b4750cd414fd","69aebf312030b4750cd41502"],"cli-ocr-20261108035442-550131":["6a26cc0f5ac5aecc53cee13c"],"cli-ocr-20261108044713-627430":["6a26cd0c5ac5aecc53cf2d7b"],"cli-ocr-20261108044713-627438":["6a26cd365ac5aecc53cf3d9b"],"cli-ocr-20261108050602-659234":["6a26cd655ac5aecc53cf5032"],"cli-ocr-20261108051811-677555":["69aea5663f91570550877a3c","69aea5663f91570550877a40","69aea5663f91570550877a41","69aea5663f91570550877a43","69aea5663f91570550877a47","69aea5663f91570550877a48","69aea5663f91570550877a49","69aea5663f91570550877a4a","69aea5663f91570550877a4c","69aea5663f91570550877a4d","69aea5663f91570550877a4e","69aea5663f91570550877a4f","69aea5663f91570550877a51","69aea5663f91570550877a54","69aea5663f91570550877a55","69aea5663f91570550877a56","69aea5663f91570550877a58","69aea5663f91570550877a5b","69aea5663f91570550877a5f"],"cli-ocr-20261108053331-704958":["69b0106ae485bbb15c6b51d3"],"cli-ocr-20261108054009-717143":["69aebf312030b4750cd41514","69aebf312030b4750cd4151b","69aebf312030b4750cd4151c","69aebf312030b4750cd4151f","69aebf312030b4750cd41520","69aebf312030b4750cd41525","69aebf312030b4750cd41528","69aebf312030b4750cd4152a","69aebf312030b4750cd4153a","69aebf312030b4750cd4153b"],"cli-ocr-20261108054305-723040":["6a26ce0f5ac5aecc53cf88d7"],"cli-ocr-20261108055948-749507":["6a26cee692451d470ac2b407"],"cli-ocr-20261108062025-780495":["6a26d005b7b5dbd596683b04"],"cli-ocr-20261108062845-796709":["6a26cf699aa67024da7ba6b2","6a26cf699aa67024da7ba6b3"],"cli-ocr-20261108063058-805182":["6a26d034b7b5dbd596684311","6a26d034b7b5dbd596684328","6a26d034b7b5dbd59668432b","6a26d034b7b5dbd59668432d"],"cli-ocr-20261108063408-810444":["6a26d00fb7b5dbd596683cc4"],"cli-ocr-20261108063418-811004":["6a26cdc35ac5aecc53cf632c"],"cli-ocr-20261108064845-833842":["69aea5663f91570550877a62","69aea5663f91570550877a63","69aea5663f91570550877a64","69aea5663f91570550877a65","69aea5663f91570550877a66","69aea5663f91570550877a68","69aea5663f91570550877a69","69aea5663f91570550877a6c","69aea5663f91570550877a72","69aea5663f91570550877a76","69aea5663f91570550877a77","69aea5663f91570550877a7a","69aea5663f91570550877a7d","69aea5663f91570550877a7e","69aea5663f91570550877a80","69aea5663f91570550877a82","69aea5663f91570550877a84","69aea5663f91570550877a87","69aea5663f91570550877a89"],"cli-ocr-20261108065536-843448":["69aebf312030b4750cd41547","69aebf312030b4750cd4154a","69aebf312030b4750cd4154b","69aebf312030b4750cd41552","69aebf312030b4750cd41555","69aebf312030b4750cd41556","69aebf312030b4750cd41558","69aebf312030b4750cd4155d"],"cli-ocr-20261108072102-875818":["6a26d294f5273a8d907a5601","6a26d294f5273a8d907a5607"],"cli-ocr-20261108073823-905045":["6a26d373f5273a8d907a9873"],"cli-ocr-20261108075414-928436":["69dbc8231040d1d5e2097453"],"cli-ocr-20261108083458-986127":["6a26d5acf5273a8d907b0836"],"cli-ocr-20261108084407-1002815":["69aea5663f91570550877a90","69aea5663f91570550877a91","69aea5663f91570550877a97","69aea5663f91570550877a9a","69aea5663f91570550877aa1","69aea5663f91570550877aae","69aea5663f91570550877ab0"],"cli-ocr-20261108085654-1023976":["6a26d63bf5273a8d907b2d62"],"cli-ocr-20261108090007-1029237":["6a26d5def5273a8d907b0fbd"],"cli-ocr-20261108090404-1035595":["69aebc7c7888322b3dac69a0","69aebc7c7888322b3dac69a5"],"cli-ocr-20261108090936-1044360":["6a26d679f5273a8d907b43d6"],"cli-ocr-20261108090941-1044535":["6a26d682f5273a8d907b477b"],"cli-ocr-20261108091740-1055247":["6a26d658f5273a8d907b332c"],"cli-ocr-20261108091840-1056558":["69aebf312030b4750cd41565","69aebf312030b4750cd41568","69aebf312030b4750cd4156c","69aebf312030b4750cd41572","69aebf312030b4750cd41574","69aebf312030b4750cd4157c","69aebf312030b4750cd4157e","69aebf312030b4750cd41586","69aebf312030b4750cd41587"],"cli-ocr-20261108093054-1078502":["6a26d7226be3d771538b9ba7"],"cli-ocr-20261108095319-1110981":["6a26d6f2efb0687b170eb809","6a26d6f2efb0687b170eb80b","6a26d6f2efb0687b170eb827"],"cli-ocr-20261108101211-1134527":["6a26d7616be3d771538bba84","6a26d7616be3d771538bba8e"],"cli-ocr-20261108102438-1150743":["6a26d7726be3d771538bc186","6a26d7726be3d771538bc187"],"cli-ocr-20261108103703-1176194":["69aebc7c7888322b3dac69e6","69aebc7c7888322b3dac69e7"],"cli-ocr-20261108103927-1180839":["6a26d6c2f5273a8d907b609f"],"cli-ocr-20261108104127-1184064":["69aebf312030b4750cd4158d","69aebf312030b4750cd41591","69aebf312030b4750cd41592","69aebf312030b4750cd41593","69aebf312030b4750cd41594","69aebf312030b4750cd4159f","69aebf312030b4750cd415a1","69aebf312030b4750cd415a9","69aebf312030b4750cd415ae"],"cli-ocr-20261108105524-1205918":["6a26d8866be3d771538c31d9"],"cli-ocr-20261108110413-1219925":["6a26d96fb93c5428e7452c95"],"cli-ocr-20261108111226-1232372":["6a26da22863cf28d8f64c994","6a26da22863cf28d8f64c999"],"cli-ocr-20261108113356-1265433":["6a26dab105d7c1d9b10885f7"],"cli-ocr-20261108113614-1268487":["6a26da9a05d7c1d9b1087e4c","6a26da9a05d7c1d9b1087e4f"],"cli-ocr-20261108121632-1317210":["69aebf312030b4750cd415bb","69aebf312030b4750cd415c5"],"cli-ocr-20261108121921-1320643":["69aebc7c7888322b3dac69fa","69aebc7c7888322b3dac69ff","69aebc7c7888322b3dac6a02","69aebc7c7888322b3dac6a0b","69aebc7c7888322b3dac6a0e","69aebc7c7888322b3dac6a11"],"cli-ocr-20261108122125-1324198":["6a26db2905d7c1d9b108b800"],"cli-ocr-20261108124221-1360017":["6a26db7a05d7c1d9b108d437","6a26db7a05d7c1d9b108d439","6a26db7a05d7c1d9b108d43d"],"cli-ocr-20261108142151-1513159":["69aebc7c7888322b3dac6a3e","69aebc7c7888322b3dac6a47"],"cli-ocr-20261108144131-1545564":["6a42553b343d756d34e397fd","6a42553b343d756d34e39807"],"cli-ocr-20261108145328-1559833":["6a425e1bdfbbb4d07aa6393d"],"cli-ocr-20261108150154-1570251":["6a426466dfbbb4d07aa6976e"],"cli-ocr-20261108150545-1574733":["6a426544dfbbb4d07aa6b1d1"],"cli-ocr-20261108152603-1604145":["6a42646edfbbb4d07aa69ac6"],"cli-ocr-20261108152609-1604331":["6a42657cdfbbb4d07aa6b557","6a42657cdfbbb4d07aa6b55a"],"cli-ocr-20261108155710-1644482":["6a426466dfbbb4d07aa69781"],"cli-ocr-20261108161734-1669076":["6a42736128e9db2e39c15a1b"],"cli-ocr-20261108162413-1677602":["6a4274ae28e9db2e39c17882"],"cli-ocr-20261108165616-1720139":["6a4913a2ac0c339f55337f27"],"cli-ocr-20261108172436-1750773":["6a492252a45b99e46af92c47","6a492252a45b99e46af92c49"],"cli-ocr-20261108175721-1793178":["6a492b3e337a56e8828ac0a9"],"cli-ocr-20261108181714-1818940":["6a4939a1cc2a757713a3ec8a"],"cli-ocr-20261108182839-1833974":["6a493c042c29dd4dd17c404d"],"cli-ocr-20261108194457-1937611":["69dbc79b1040d1d5e2092df1"],"cli-ocr-20261108195630-1953200":["6a4942863c715f5afcd52c86"],"cli-ocr-20261108200438-1964599":["69dbca701040d1d5e20ac44c"],"cli-ocr-20261108202140-1987978":["6a495080b9cd91959af3b8ad","6a495080b9cd91959af3b8b1"],"cli-ocr-20261108210606-2046476":["6a905127ee2696c623560177"],"cli-ocr-20261108211007-2052018":["6a905226ee2696c623566383"],"cli-ocr-20261108213408-2084117":["69b51ec5768235dc65998a2f"],"cli-ocr-20261108220012-2125044":["6a9053ccdbce5358e41f6217","6a9053ccdbce5358e41f6219"],"cli-ocr-20261108220757-2135342":["6a905550ce61c4a7de1450d1","6a905550ce61c4a7de1450d4"],"cli-ocr-20261108220822-2135875":["6a9058d7785d9b40577f41bd"],"cli-ocr-20261108221055-2139919":["6a90553a449f7f109b986904","6a90553a449f7f109b98690b","6a90553a449f7f109b986910"],"cli-ocr-20261108222848-2161839":["6a9059777f6818cc17cd9d83"],"cli-ocr-20261108225205-2195176":["6a91e12f051d1f3e8eaa3580"],"cli-ocr-20261108230606-2213415":["6a9059137f6818cc17cd7dc2","6a9059137f6818cc17cd7dcf","6a9059137f6818cc17cd7dd5","6a9059137f6818cc17cd7dd6","6a9059137f6818cc17cd7dd9"],"cli-ocr-20261108230607-2213466":["6a93fce82bb66652f9fca4da"],"cli-ocr-20261108231423-2224232":["6a9059137f6818cc17cd7ecb","6a9059137f6818cc17cd7ee1","6a9059137f6818cc17cd7ee2"],"cli-ocr-20261108231800-2229020":["6a9403701cd9a117d3088827","6a9403701cd9a117d308882b"],"cli-ocr-20261108235225-2273045":["69dbcb6a1040d1d5e20b6807"],"cli-ocr-20261109000558-2291032":["6a91e190051d1f3e8eaa584f","6a91e190051d1f3e8eaa5853"],"cli-ocr-20261109002719-2321424":["6aa1d18277169abff161982f","6aa1d18277169abff1619835","6aa1d18277169abff1619836","6aa1d18277169abff1619837","6aa1d18277169abff1619838","6aa1d18277169abff1619839","6aa1d18277169abff161983b","6aa1d18277169abff1619848","6aa1d18277169abff161984a","6aa1d18277169abff161984d","6aa1d18277169abff161984f","6aa1d18277169abff1619851"],"cli-ocr-20261109004048-2337516":["6a26cb0c5ac5aecc53ce93d0"],"cli-ocr-20261109004147-2338511":["6a26c9d15ac5aecc53ce3576"],"cli-ocr-20261109012503-2393444":["69de98cb1b234a773e4395e4","69de98cb1b234a773e4395ec"],"cli-ocr-20261109015911-2465604":["69b51ececf111105c42a449d"],"cli-ocr-20261109020014-2468975":["6a49394e1bbf4176e1e9743f"],"cli-ocr-20261109020602-2481963":["6a495080b9cd91959af3b853"],"cli-ocr-20261109020815-2487584":["6a494349d2cbca6a18208831"],"cli-ocr-20261109020949-2491571":["6a493e473c715f5afcd51f78","6a493e473c715f5afcd51f93"],"cli-ocr-20261109021117-2495663":["6a940511a4ad12cb35ec7972"],"cli-ocr-20261109021726-2507323":["6a9405621cd9a117d3089a02","6a9405621cd9a117d3089a14"],"cli-ocr-20261109022021-2513222":["6ac4fbee4ba7223afef71807","6ac4fbee4ba7223afef7180e"],"cli-ocr-20261109022611-2525386":["6a26cc9e5ac5aecc53cf0d79","6a26cc9e5ac5aecc53cf0d88","6a26cc9e5ac5aecc53cf0d8f"],"cli-ocr-20261109022709-2527119":["6a91e190051d1f3e8eaa5871","6a91e190051d1f3e8eaa5873","6a91e190051d1f3e8eaa5874","6a91e190051d1f3e8eaa5877","6a91e190051d1f3e8eaa587b"],"cli-ocr-20261109024050-2555248":["6a26c4d5aad44c98627d27e0","6a26c4d5aad44c98627d27e3","6a26c4d5aad44c98627d27e5"],"cli-ocr-20261109032117-2632678":["6a94b1df281341c253e70fdb"],"cli-ocr-20261109035815-2716217":["6a91e0e4051d1f3e8eaa1a7e","6a91e0e4051d1f3e8eaa1a7f"],"cli-ocr-20261109040800-2741602":["69af10ff266659b71a322bc2"],"cli-ocr-20261109043812-2809052":["6ac507fc4ba7223afefe0235","6ac507fc4ba7223afefe023a","6ac507fc4ba7223afefe023d","6ac507fc4ba7223afefe0248","6ac507fc4ba7223afefe0249"],"cli-ocr-20261109044003-2813912":["6ac50ece4ba7223afe030a2e","6ac50ece4ba7223afe030a37"],"cli-ocr-20261109061956-3001980":["69b6b9ac8566c8381462c265"],"cli-ocr-20261109070412-3074324":["6a4a583f9050f0b4342e7af1","6a4a583f9050f0b4342e7b00"],"cli-ocr-20261109070722-3080711":["6a4a40069edae40468f96666","6a4a40069edae40468f96672"],"cli-ocr-20261109075711-3199133":["6ac511424ba7223afe056f4c","6ac511424ba7223afe056f5d"],"cli-ocr-20261109075730-3199972":["69b6ca0231b7f0d07f50a4e6"],"cli-ocr-20261109080232-3212448":["69b1d9ecd3979b7aedf4db9a","69b1d9ecd3979b7aedf4db9e","69b1d9ecd3979b7aedf4db9f"],"cli-ocr-20261109080627-3222325":["6a4a58e59050f0b4342f0384","6a4a58e59050f0b4342f038b"],"cli-ocr-20261109081217-3237571":["69af0bfaf2e68add0cf22004"],"cli-ocr-20261109081703-3247446":["6a4a5a529050f0b434302bb1"],"cli-ocr-20261109085617-3313400":["6ac4f9c54ba7223afef6b20a"],"cli-ocr-20261109093226-3393211":["6ac508b34ba7223afefe8dd7","6ac508b34ba7223afefe8ddb"],"cli-ocr-20261109094743-3429287":["6ac50dd44ba7223afe023749"],"cli-ocr-20261109100334-3467012":["6ac50f9c4ba7223afe03d59e","6ac50f9c4ba7223afe03d5b0"],"cli-ocr-20261109111615-3596795":["6a4a57ff9050f0b4342e3b15","6a4a57ff9050f0b4342e3b18"],"cli-ocr-20261109111732-3599759":["6a4a3f409edae40468f8c21a","6a4a3f409edae40468f8c224"],"cli-ocr-20261109111846-3602378":["6a4a3f6a9edae40468f8e744","6a4a3f6a9edae40468f8e749"],"cli-ocr-20261109114315-3669554":["6ac500614ba7223afef92452"],"cli-ocr-20261109121357-3749069":["69af0da19f13b61d0a6c5ef7"],"cli-ocr-20261109121357-3749084":["6ac508284ba7223afefe2e88"],"cli-ocr-20261109121643-3755507":["69af0bfaf2e68add0cf220d7"]}
+```
+</details>
+
+## 2026-11-13 · Does a reader who asks for an author's words get a quotation that is on a page? (v3#249)
+
+**Who it is for.** A reader who types "What did Ficino say about melancholy? Quote him." On 2026-11-13 that first turn ran one `search`, got title pages and prefaces, and quoted from memory. Both quotations were on no page read and were removed; the answer arrived with none.
+
+**Design.**
+- 12 quote-request questions, one per tradition, written before any run (`questions.json`, frozen). The first is the live turn; the others use the phrasings the detector is meant to catch ("quote him", "in his own words", "the exact words", "what did X say").
+- The production agent in-process against production data, first message of a thread, no history. Answer model `gemini-3-flash-preview`, the production model, under Derek's 2026-11-13 authorisation of up to 60 paid test turns for v3#249.
+- **Arms:** A = quote requests off (the turn as it ran before). B = quote requests on: the prompt lines, and the first round must call `find_passages`, `get_book_page` or `read_nearby_pages`. After the run, B was narrowed to `find_passages` alone on a first message and run once more on the first 10 questions (below).
+- Each question twice per arm, interleaved, so 24 turns an arm. Both arms run the same grounding pass (the one in PR #262), so the difference is the routing alone.
+- **What is counted:** a blockquote left in the answer the reader sees, after the grounding pass has removed every quotation it could not find on a page the turn read. No judge read the answers.
+
+**Decision rule, written while the run was in progress and before any result was read.** B goes on by default if all three hold: turns with at least one kept blockquote, B ≥ A; turns that lost a blockquote, B ≤ A; median time to done, B no more than 5 s slower than A. With 24 turns an arm, a difference of fewer than about 5 turns is inside what two runs of the same arm can differ by, so a small gap in either direction is reported as no difference.
+
+**What this does not show.**
+- That a kept quotation is the BEST passage for the question, or that the answer is better overall. It shows the words are on a page the turn read.
+- Anything about first messages that are not quote requests: by the detector's pattern those are 97% of first messages (858 of 881 in the 30 days to 2026-11-13).
+
+**Result: the headline did not move, because the old routing did not fail on this set.**
+
+| | A: as before (n=24) | B: first design (n=24) | B as shipped (n=10) |
+|---|---:|---:|---:|
+| turns with at least one kept blockquote | 24 | 24 | 10 |
+| turns that lost a blockquote | 0 | 1 | 0 |
+| blockquotes kept, total | 49 | 55 | 23 |
+| turns with an unsupported inline quote (marks removed) | 7 | 3 | 0 |
+| first round called `find_passages` | 15 | 24 | 10 |
+| first round was `search` alone (the live failure's shape) | 1 | 0 | 0 |
+| first-round page reads by a made-up book id that found nothing | 0 | 21 of 22 | 0 |
+| answer opened twice (opening removed by the grounding pass) | 4 | 0 | 0 |
+| time to done, median | 14.4 s | 12.7 s | 13.4 s |
+| first text, median | 7.2 s | 7.8 s | 9.3 s |
+| output tokens a turn | 1,102 | 3,685 | 900 |
+| answer-model cost a turn | $0.0162 | $0.0228 | $0.0136 |
+
+- **By the decision rule:** kept, B = A; lost a blockquote, 1 against 0, inside the noise the rule names; time, B is not slower. The rule passes, and it passes because nothing differs, not because B won.
+- **The live failure did not reproduce.** In arm A the one `search`-only first round (Paracelsus, repeat 1) still ended with two kept quotations. Production's own record agrees it is uncommon: of the 7 quote-request first turns in the last 30 days that carry a grounding trace, 6 kept a quotation and 1, the Ficino turn, did not. A set of 12 questions cannot measure a failure that rare, and this one did not.
+- **The unsupported-inline-quote gap is not evidence either.** A's own two repeats gave 5 and 2 turns of 12; the arms differ by less than A differs from itself.
+- **The first design of B was wrong and the run caught it.** It let the first round call `get_book_page` and `read_nearby_pages` as well. With no tool result yet the model had no book id, so it made one up: 22 such reads over 24 turns, 21 found nothing, and the other read the Poimandres for a question about the Emerald Tablet. That is also where B's 3.3 times the output tokens went. B as shipped allows `find_passages` alone on a thread's first message; the confirmation run (the first 10 questions, once each) has no failed read and fewer output tokens than A.
+- **A prompt clause was dropped.** B's lines asked for one edition when several editions of a work came back (finding 5 of the issue). Answers citing more than one book: 22 of 24 in A, 21 of 24 in B. The clause did nothing and is not in the shipped lines.
+- **What a reader loses:** the opening sentences that stream while the search runs. A quote request now shows search steps until the answer starts, about 2 s later than before by the median of 10 turns.
+
+**Why it is adopted anyway.** The issue asks that a quote request read pages before it quotes. This makes that true on every turn instead of 15 in 24, it costs nothing measurable, and one environment variable turns it off. It is a guarantee about the first step, with no measured gain in what the reader ends up with.
+
+**Spend.** 59 Librarian turns on `gemini-3-flash-preview` (1 smoke, 48, 10) of the 60 authorised: $1.09 in answer-model tokens by the harness's count, plus 55 `find_passages` re-ranks at about $0.011, about $0.60. No billing read.
+
+**Replicated?** No. One run; A and B interleaved, B-as-shipped run afterwards and not interleaved.
+
+**Artifact.** `scripts/eval/librarian-quote-requests-249/results/run1.jsonl` (A and the first B), `results/run2-b2.jsonl` (B as shipped). `run.ts --out=<file> --summary` reprints the per-arm counts.
+
+## 2026-11-13 · Tamil print and romanized Pali/Sanskrit: which OCR route for the #225 Indian shelves? (#225)
+
+**Who reads this.** The session that opens an OCR lane for the ~2,800 printed Tamil books (~500K pages) and the 121
+series volumes imported under #225, all hidden and held `indic-print-2026-11`.
+
+**Design.** Route question; one page per book; one output a call; blind Opus route judge (`judge.mjs judgePrompt`,
+claude-opus-5-5 via `claude -p`, page image attached). Every agy call on one account, gemini-3.8-flash-low.
+`paired-arm.mjs check` passed R1–R5 before the first judge call (5 arms, wrong-page control per arm, 12 repeat rows).
+188 Opus verdicts, ~170 agy calls, $0 (subscriptions; gex45 GPU already rented).
+
+- **tamil** (cell `tamil-lite`): 40 books of campaign `indic-tamil-print-2026-11`, 20 Kovilur Andavar Library, 20
+  University of Toronto (drawn from the 133 imported), spread 1845–1928, one middle-third text page each, chosen with
+  the image open. Arms: `agy` (reads the image alone, the router's current answer), `ia>agy` (the Internet Archive's own
+  OCR of the leaf as draft, agy corrects), `surya>agy` (Surya 2 on the gex45 GPU drafts, agy corrects). Baseline agy.
+  Draw: `indic-cells-225/draw.mjs` (seed in `draw-tamil-*.json`).
+- **series** (slice cell `romanized-indic-series-225`): 24 PTS / HOS text-edition volumes of campaign
+  `indic-translation-series-2026-11` whose pages are mainly romanized Pali or Sanskrit, one diacritic-dense page each
+  (`series-census.json`, `series-choice.json`). Arms: `gpu2>agy` (the bound English print route: LightOnOCR + Surya 2
+  drafts and their word diff, agy reconciles) and `agy` alone. The judge note made every dropped or wrong diacritic a
+  defect (ā→a, ṃ→m, ṣ→s, ç→c): a stricter scale than english-gpu-7263's.
+
+Score files: `results/indic-ocr-cells-225/paired-score.json` (paired-arm.mjs), `score.json` and `defect-rates.json`
+(`indic-cells-225/score-file.py`), router copy `estimator/router-table/evidence/by-script/indic-ocr-cells-225--score.json`.
+
+### Invented text first
+
+No arm invented a passage (fluent Tamil or Sanskrit not on the leaf). Smaller fills the judge marked:
+
+- **O1, unmarked fills.** `surya>agy` 6af70f112922fe47457b1ef4 (Kovilur, 1856, p. 13): words under a library stamp
+  guessed, 4 spans. `ia>agy` 6af6fdf42922fe474579314b: 2 invented words. `ia>agy` 6af720cf2922fe47457d4a53: cut-off
+  line ends filled silently.
+- **O2, foreign tokens glued inside Tamil words.** agy adds them: agy 7/40 pages, ia>agy 7/39, surya>agy 3/40; 0/40
+  Surya drafts and 0 IA drafts carry them. 15 of 17 are on Toronto pages (e.g. 6af7213e2922fe47457d7bf7, *Veṅkaik
+  kōvai* 1875 p. 28: "feed" inside a Tamil word in all three arms). `reread-lane-gate` `foreignScriptReason` does not
+  catch Latin glued to Tamil, so **a guard is needed before any Tamil agy lane**.
+
+### tamil, judge opus
+
+| arm | accept (Wilson 95%) | by-book 95% | wrong text | misleads /1k words | wrong text /1k | fidelity | control |
+|---|---|---|---|---|---|---|---|
+| agy | 15/40 (0.24–0.53) | 0.225–0.525 | 22/40 | 18.7 | 10.1 | 3.48 | pass |
+| ia>agy | 15/39 (0.25–0.54) | 0.231–0.538 | 16/39 | 15.4 | 6.9 | 3.62 | pass |
+| surya>agy | 13/40 (0.20–0.48) | 0.175–0.475 | 19/40 | 15.2 | 6.4 | 3.73 | pass |
+
+- agy → ia>agy: on 39 shared pages better 9/39, worse 3/39; accept gained 5, lost 4 (sign test p 1).
+- agy → surya>agy: on 40 shared pages better 14/40, worse 5/40; accept gained 5, lost 7 (sign test p 0.77).
+- Noise floor: the same arm judged twice flips accept on 1/6 pages.
+- ia>agy has 39 pages: one page came back empty from agy (Gemini filter cut, 6af721422922fe47457d7caf).
+- Surya split by library: Kovilur 8/20 accepted (wrong text 7), Toronto 5/20 (wrong text 12).
+- Words are whitespace tokens of the judged text (Tamil agglutinates, so per-1k rates compare arms with each other,
+  not with Latin-script cells; `non-latin-text-operations.md`).
+
+**Reading.** All three arms accept about 0.37 of pages and about half carry wrong text. A draft lowers the defect rate
+per 1,000 words a little (wrong text 10.1 → 6.4–6.9) and the per-page fidelity is higher with a draft, but accept does
+not separate and the paired gains and losses cancel. The #6553 9/10 for agy does not replicate on these 1845–1928
+prints: 15/40 here.
+
+### series, judge opus
+
+| arm | accept (Wilson 95%) | by-book 95% | wrong text | misleads /1k words | wrong text /1k | fidelity | control |
+|---|---|---|---|---|---|---|---|
+| gpu2>agy | 11/24 (0.28–0.65) | 0.25–0.667 | 1/24 | 14.2 | 0.15 | 3.75 | pass |
+| agy | 5/24 (0.09–0.40) | 0.042–0.375 | 1/24 | 21.1 | 0.15 | 3.58 | pass |
+
+- agy → gpu2>agy: on 24 shared pages better 7/24, worse 4/24; accept gained 7, lost 1 (sign test p 0.07).
+- Noise floor: the same arm judged twice flips accept on 0/6 pages.
+
+**Reading.** Wrong text is rare in both arms (1/24); the defects are diacritics. agy alone both drops printed marks
+(pāṇinaṃ → m) and *adds* marks the page does not print, silently normalising the edition's spelling toward the
+textbook form (dānam → dānaṃ, upādarūpānaŋ → upād-, uggaha-minittañ "corrected" to nimitta). The GPU drafts anchor the
+corrector to what is printed: the gpu2>agy finals carry more diacritics than the LightOnOCR draft alone (drafts run
+~20% shorter than finals), and the misleads rate is a third lower. Example: 6af6f8defbe7a128b56245e9 (*The Mahāvaṃsa*,
+PTS 1908, p. 186): gpu2>agy accepted, agy alone rejected for dropped ṃ and shortened ī.
+
+### Recommendation
+
+- **Tamil:** no route clears. Do not open a Tamil agy lane at 500K pages yet; the books stay held. Next: (1) a
+  foreign-token guard for Latin glued inside Tamil words, (2) a test of a stronger corrector (Opus over the Surya or IA
+  draft), which is the arm this run did not have. A Tamil profile for `surya-print-lane.mjs` was not built: Surya was
+  run raw for this test, and a lane profile waits on an arm worth building it for.
+- **Series:** the romanized volumes can stay on the English print route `gpu2>agy-flash-low+diff`. They route by their
+  language field (13/24 drawn are labelled English, 11 Pali, which this run did not route), so the evidence is a held
+  slice cell, `romanized-indic-series-225`, kept out of english-gpu-7263 so it does not move the English cell.
+- **Catalogue note:** `fournewyorkboys00davigoog` sits in campaign `indic-translation-series-2026-11` but is not a
+  series volume (`series-census.json`).
+
+### Writes
+
+The best accepted read of each judged page was written as its OCR text with provenance (`ocr.source`, engine, route,
+evidence `route-judge:indic-ocr-cells-225`, content hash): 29 pages via `indic-cells-225/write-best.mjs` (run
+`indic-ocr-cells-225-2026-11-13`, undo with `revert-run.mjs`) and 6 via `cli-ocr.mjs apply`; p. 100 of one series book
+skipped by the cli-ocr script guard (Devanagari). 35 of 64 judged pages now have OCR (`writes.json`). All 64 books
+stay `visible: false`, held `indic-print-2026-11`.
+
+### Replicated?
+
+Partly. Tamil agy replicates the #6553 cell at 4× the pages and does not reproduce its 9/10. One judge family only
+(Opus); a Gemini second judge was not run because no decision rests on a single close margin: the Tamil arms do not
+separate, and the series margin (7 gained, 1 lost) is above a 0/6 noise floor.
+
+## 2026-11-13 · One count of what the library holds, by language and century, plus judge verdicts, withheld pages and real re-reads (#278)
+
+PRIOR ART: `scripts/audit/model-usage-snapshot.mjs` (exact pages per engine, but a two-hour walk of all 35M page documents, with no language, century or visibility cut); `2026-11-02-stock-by-engine-7933.md` (a one-off `$sample` engine census of live pages); `2026-10-02-corpus-page-profile-5643.md` (one page per book: script and typeface); `scripts/audit/archive-coverage.mjs` (the three archive tiers); `scripts/audit/ocr-revision-provenance.mjs` (page_revisions by source, 2026-08, when the store held 190K rows). None of them prints the table or the three totals in one run. This one is `scripts/audit/holdings-count.mjs`.
+
+- **Question.** How many books and pages does the library hold, in which edition languages and centuries, with OCR text, an English translation and an archived image, live and hidden? How many page-level judge verdicts are recorded, how many pages have their English withheld, and how many `page_revisions` rows are a real second read of the same image?
+- **Design.** Read-only, production `bookstore`, secondary-preferred, every aggregation under `maxTimeMS` (exit 2 rather than a partial table). The table sums the stored visible-page counters (`pages_count`, `pages_ocr`, `pages_translated`, `pages_archived`; `page-counts.md`) per book, grouped by `books.language` (the edition's language) and the century of the numeric `books.year` ("unknown" when there is none; `published` is never parsed). Groups: **live** = `visible: true && pages_count > 0`; **hidden** = not live, with pages, not a not-acquired record; **not acquired** = held `manifest-only-lazy-pages` / `acquisition-wave-2026-10b`. "Archived" is the RECORD tier only (an `archived_photo` on the page doc), never FILE or MASTER. The engine split is a seeded page-uniform sample (6,000 OCR pages), because a full walk takes about two hours; families come from the `engine` block or the Archive's `ocr.ia` record, and anything else is "no engine block", never inferred from `ocr.model`. Run time 9 minutes.
+- **Positive controls** (`--control`, all passed). One book, *Miscellaneorum Centuria Prima* (`2950c384-…`, Latin, 1400s, live), recounted from its page documents with the `page-counts.mjs` predicates: pages 198 = 198, OCR 198 = 198, English 185 = 185, archived 198 = 198, canonical recount 198 = 198; book_checks rows 1 = 1 and pages read 10 = 10; withheld now 1 = 1, record only 0 = 0; revision rows 263 = 263, READ-labelled 24 = 24. Lane-judge rows were checked on a book that has them (`6a05f0bf…`): 17 = 17, item rows 17 = 17. Cross-checks: the live book count (71,313) equals `homepage_stats.totalBooks` written at 13:35Z the same day; live + hidden pages held (33.46M) sit 1.7M under the 35.17M page documents, a difference that includes soft-hidden and repeat-capture pages, which no counter counts.
+- **Findings.**
+  1. **The record count is not the library.** 593,122 book records, but 413,974 are catalogue records from the October acquisition waves with no pages fetched: their 88.3M "pages" are manifest leaf counts. The library a reader can open is 71,313 books and 17.64M pages; another 82,835 hidden books hold 15.82M fetched pages.
+  2. **About half the live pages have text.** 8.55M of 17.64M live pages carry OCR text and 5.57M carry English. Latin books without a numeric year (23,773 live books, 5.31M pages) are the largest untranscribed block: 4% of their pages have OCR.
+  3. **Most text has no engine record.** 60.2% of sampled live OCR pages and 76.2% of live English pages carry no engine block: they were written before the September 2026 provenance writers. Where an engine block exists, PaddleOCR (Chinese) dominates OCR (19.3% of live pages).
+  4. **Verdicts.** book_checks holds 2,660 rows covering 10,873 page reads (October and November 2026, all by a model reader); lane_judge_verdicts holds 10,990 page verdicts plus 370 controls. 537 lane-judge test rows are copies of book_checks reads, so the two stores hold **21,326 distinct page verdicts**. The 9,370 test rows carry `judged_at: null`, so their month is not recorded.
+  5. **Withheld English.** 195,081 pages in 4,867 books have a withheld record and no English now. Another 246,065 pages carry the record with English restored (an archive, not a state). 2,257 of the withholding books are under no pipeline hold. Decision holds cover 75,868 books, 42,428 of them live.
+  6. **Re-reads.** Of 8.70M `page_revisions` rows, 3.67M are notes-layer translation backfill. On OCR, 2.27M rows carry a READ label (1.98M with the superseded text), 89K a MOVE label (shift repairs) and 804K a cleanup or guard label (`longs-pass-5924` alone is 485K f→ſ rewrites). Where both the old and the current read recorded their image (195,365 rows), 99.0% name the same image URL. The "about 40% read different images" of 2026-07-30 describes the store as it was then, dominated by the erara shift repair.
+- **What it does not say.** The page counters are what is stored. Their drift is measured by `page-count-audit.mjs`; on the control book they were exact. Engine shares are a sample with the n per row printed. The image check compares URLs, and a different URL can still be the same leaf.
+- **Corrected figures in the repo (same PR):** `.claude/docs/invariants/visibility-and-stats.md` § Corpus counts (2026-09-17: 114,695 docs / 41,919 readable); `.claude/docs/paper-corpus-certification-4916.md` §4 and evidence row C1 (2026-09-18: 114,745 / 41,919 / 21.6M / 6.77M / 5.07M); `.claude/docs/invariants/page-revisions-corpus.md` (109,953 pairs, now one dated re-measurement line).
+- *Replicated?* Run twice the same afternoon (16:53Z and 17:24Z). Live figures were identical; hidden books grew by 630 while an importer ran.
+- **Artifact.** The full output is below. JSON with every cell: `node --env-file=… scripts/audit/holdings-count.mjs --json=<path>`.
+
+## Output (2026-11-13T17:24Z run)
+
+# holdings-count (#278) — production bookstore, read 2026-11-13T17:24:24.208Z → 2026-11-13T17:33:21.217Z (537 s; table 40 s)
+Filters: live = visible: true && pages_count > 0 · hidden = not live, pages_count > 0, hold reason not in [manifest-only-lazy-pages, acquisition-wave-2026-10b] · not acquired = those hold reasons · language = books.language (edition) · century = numeric books.year, "unknown" if none.
+Page counts are the stored visible-page counters (page_number > 0, not a repeat capture): pages_count, pages_ocr, pages_translated (blank leaves out), pages_archived (RECORD tier: archived_photo present).
+
+## Totals by group
+| group | books | pages held | books w/ OCR | OCR pages | books w/ English | English pages | books w/ archived | archived pages (RECORD) |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| live | 71,313 | 17,642,341 | 50,182 | 8,549,263 | 26,510 | 5,571,818 | 68,234 | 14,791,120 |
+| hidden | 82,835 | 15,816,452 | 28,664 | 1,601,253 | 2,501 | 318,219 | 68,088 | 10,518,346 |
+| not acquired | 413,974 | 88,308,254 | 34 | 486 | 8 | 397 | 1,904 | 170,802 |
+| no pages | 25,000 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **all** | 593,122 | 121,767,047 | 78,880 | 10,151,002 | 29,019 | 5,890,434 | 138,226 | 25,480,268 |
+Cross-check: live + hidden pages held = 33,458,793 against 35,172,591 page documents (estimatedDocumentCount). The difference includes soft-hidden (page_number ≤ 0) and repeat-capture pages, which no counter counts, and pages of not-acquired records; it is not broken down here.
+
+## Language × century — live beside hidden (not-acquired catalogue records excluded; languages under 200,000 live+hidden pages folded into one row)
+| language | century | live books | live pages | live OCR | live English | live archived | hidden books | hidden pages | hidden OCR | hidden English | hidden archived |
+|---|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| Latin | 0100s | 1 | 32 | 25 | 25 | 32 | 0 | 0 | 0 | 0 | 0 |
+| Latin | 0400s | 1 | 162 | 162 | 155 | 162 | 0 | 0 | 0 | 0 | 0 |
+| Latin | 0700s | 0 | 0 | 0 | 0 | 0 | 1 | 6 | 0 | 0 | 6 |
+| Latin | 0800s | 9 | 1,809 | 1,797 | 1,649 | 1,809 | 0 | 0 | 0 | 0 | 0 |
+| Latin | 0900s | 5 | 988 | 988 | 942 | 988 | 0 | 0 | 0 | 0 | 0 |
+| Latin | 1000s | 19 | 3,304 | 3,123 | 3,002 | 3,304 | 1 | 16 | 0 | 0 | 16 |
+| Latin | 1100s | 47 | 8,567 | 8,044 | 7,766 | 8,567 | 1 | 286 | 91 | 0 | 286 |
+| Latin | 1200s | 68 | 12,952 | 12,616 | 11,977 | 12,944 | 9 | 3,110 | 844 | 414 | 3,100 |
+| Latin | 1300s | 82 | 19,427 | 18,647 | 17,512 | 19,427 | 4 | 990 | 312 | 1 | 990 |
+| Latin | 1400s | 1,365 | 323,959 | 301,662 | 289,069 | 323,292 | 602 | 204,626 | 46,743 | 5,534 | 202,194 |
+| Latin | 1500s | 2,901 | 934,922 | 699,323 | 663,996 | 911,745 | 3,139 | 824,276 | 109,328 | 39,382 | 777,436 |
+| Latin | 1600s | 2,474 | 737,941 | 520,751 | 480,541 | 735,589 | 4,300 | 1,140,686 | 149,154 | 28,656 | 1,058,139 |
+| Latin | 1700s | 806 | 271,980 | 193,735 | 171,758 | 269,822 | 1,308 | 302,573 | 48,300 | 8,866 | 272,436 |
+| Latin | 1800s | 320 | 155,926 | 140,520 | 134,162 | 155,884 | 125 | 54,462 | 11,880 | 2,255 | 53,916 |
+| Latin | 1900s | 96 | 41,846 | 38,581 | 37,555 | 41,829 | 64 | 26,362 | 10,835 | 7,098 | 25,048 |
+| Latin | 2000s | 1 | 466 | 466 | 434 | 466 | 0 | 0 | 0 | 0 | 0 |
+| Latin | unknown | 23,773 | 5,309,460 | 231,303 | 93,575 | 3,277,488 | 12,531 | 4,510,652 | 228,526 | 2,431 | 3,682,319 |
+| Chinese | 0100s | 1 | 188 | 188 | 188 | 188 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 0200s | 1 | 100 | 100 | 90 | 100 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 0300s | 1 | 116 | 116 | 115 | 116 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 0400s | 1 | 86 | 86 | 86 | 86 | 1 | 30 | 25 | 0 | 30 |
+| Chinese | 0500s | 2 | 257 | 257 | 257 | 257 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 0600s | 4 | 145 | 145 | 142 | 145 | 2 | 1,010 | 998 | 25 | 1,010 |
+| Chinese | 0800s | 7 | 385 | 383 | 364 | 385 | 1 | 1 | 1 | 0 | 1 |
+| Chinese | 0900s | 16 | 739 | 739 | 733 | 739 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 1000s | 9 | 1,305 | 1,265 | 822 | 1,305 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 1100s | 21 | 4,967 | 4,851 | 2,622 | 4,967 | 1 | 467 | 464 | 0 | 467 |
+| Chinese | 1200s | 12 | 1,170 | 1,170 | 1,162 | 1,170 | 4 | 433 | 425 | 104 | 432 |
+| Chinese | 1300s | 16 | 2,087 | 2,051 | 1,195 | 2,087 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | 1400s | 14 | 3,788 | 2,814 | 1,803 | 3,788 | 1 | 124 | 123 | 0 | 124 |
+| Chinese | 1500s | 131 | 26,500 | 25,246 | 17,581 | 26,024 | 4 | 6,259 | 3,795 | 249 | 6,259 |
+| Chinese | 1600s | 361 | 42,246 | 36,436 | 31,786 | 42,194 | 21 | 26,540 | 9,170 | 788 | 25,502 |
+| Chinese | 1700s | 804 | 126,835 | 115,369 | 51,188 | 126,835 | 18,074 | 2,655,997 | 106,944 | 244 | 2,035,692 |
+| Chinese | 1800s | 158 | 23,006 | 18,971 | 17,622 | 23,006 | 2 | 102 | 0 | 0 | 0 |
+| Chinese | 1900s | 15 | 5,451 | 5,018 | 4,724 | 5,451 | 18 | 7,003 | 1,753 | 1,521 | 4,532 |
+| Chinese | 2000s | 0 | 0 | 0 | 0 | 0 | 2 | 701 | 25 | 25 | 341 |
+| Chinese | BCE | 1 | 98 | 98 | 98 | 98 | 0 | 0 | 0 | 0 | 0 |
+| Chinese | unknown | 11,578 | 1,756,441 | 1,565,519 | 231,897 | 1,755,635 | 64 | 22,319 | 11,725 | 384 | 17,279 |
+| German | 1300s | 3 | 552 | 408 | 326 | 552 | 2 | 83 | 83 | 79 | 83 |
+| German | 1400s | 356 | 109,747 | 17,078 | 12,614 | 105,161 | 149 | 6,223 | 3,068 | 1,963 | 6,124 |
+| German | 1500s | 2,776 | 589,727 | 145,326 | 55,773 | 405,110 | 753 | 27,828 | 4,706 | 3,550 | 22,386 |
+| German | 1600s | 1,461 | 321,245 | 152,034 | 118,890 | 290,046 | 583 | 35,926 | 10,371 | 3,839 | 34,220 |
+| German | 1700s | 2,617 | 822,276 | 392,783 | 280,570 | 723,267 | 738 | 64,771 | 27,588 | 17,710 | 60,880 |
+| German | 1800s | 381 | 137,870 | 103,530 | 85,613 | 133,883 | 513 | 65,607 | 42,043 | 26,154 | 61,327 |
+| German | 1900s | 155 | 50,901 | 36,902 | 29,926 | 50,901 | 28 | 9,015 | 3,634 | 3,199 | 6,739 |
+| German | 2000s | 0 | 0 | 0 | 0 | 0 | 1 | 114 | 0 | 0 | 0 |
+| German | unknown | 978 | 228,426 | 61,296 | 8,585 | 198,376 | 494 | 131,223 | 8,628 | 360 | 109,619 |
+| Greek | 0100s | 2 | 888 | 846 | 801 | 888 | 0 | 0 | 0 | 0 | 0 |
+| Greek | 0300s | 0 | 0 | 0 | 0 | 0 | 2 | 2,249 | 574 | 507 | 2,249 |
+| Greek | 0500s | 1 | 5 | 5 | 5 | 5 | 0 | 0 | 0 | 0 | 0 |
+| Greek | 0600s | 1 | 470 | 470 | 459 | 470 | 0 | 0 | 0 | 0 | 0 |
+| Greek | 0800s | 9 | 4,301 | 3,523 | 3,069 | 4,301 | 0 | 0 | 0 | 0 | 0 |
+| Greek | 0900s | 27 | 10,871 | 10,017 | 8,703 | 10,871 | 1 | 348 | 348 | 348 | 348 |
+| Greek | 1000s | 22 | 6,729 | 6,671 | 6,134 | 6,729 | 0 | 0 | 0 | 0 | 0 |
+| Greek | 1100s | 20 | 7,015 | 6,488 | 6,230 | 7,015 | 1 | 61 | 61 | 0 | 61 |
+| Greek | 1200s | 21 | 10,814 | 10,557 | 9,828 | 10,814 | 1 | 113 | 112 | 0 | 113 |
+| Greek | 1300s | 62 | 22,946 | 22,025 | 20,275 | 22,946 | 1 | 237 | 25 | 0 | 237 |
+| Greek | 1400s | 125 | 52,969 | 50,090 | 46,861 | 52,969 | 7 | 3,270 | 530 | 7 | 3,270 |
+| Greek | 1500s | 236 | 111,139 | 103,234 | 98,387 | 111,134 | 76 | 29,482 | 6,152 | 5,032 | 21,994 |
+| Greek | 1600s | 67 | 34,717 | 33,749 | 32,462 | 34,717 | 33 | 15,206 | 384 | 0 | 12,364 |
+| Greek | 1700s | 43 | 20,573 | 8,033 | 7,280 | 20,573 | 3 | 43 | 43 | 0 | 38 |
+| Greek | 1800s | 272 | 149,525 | 126,332 | 115,845 | 149,525 | 16 | 8,909 | 4,827 | 4,365 | 8,909 |
+| Greek | 1900s | 193 | 82,905 | 71,842 | 68,107 | 82,905 | 36 | 15,041 | 9,953 | 8,816 | 13,391 |
+| Greek | 2000s | 0 | 0 | 0 | 0 | 0 | 5 | 1,225 | 1,209 | 1,158 | 1,225 |
+| Greek | BCE | 5 | 2,364 | 2,324 | 2,260 | 2,364 | 2 | 3 | 3 | 1 | 3 |
+| Greek | unknown | 380 | 153,206 | 7,689 | 5,818 | 44,467 | 2,902 | 1,473,121 | 8,098 | 412 | 250,464 |
+| English | 0100s | 1 | 400 | 400 | 0 | 400 | 0 | 0 | 0 | 0 | 0 |
+| English | 0200s | 2 | 941 | 940 | 940 | 941 | 0 | 0 | 0 | 0 | 0 |
+| English | 0400s | 1 | 320 | 289 | 192 | 320 | 0 | 0 | 0 | 0 | 0 |
+| English | 0800s | 1 | 417 | 417 | 417 | 417 | 1 | 259 | 25 | 25 | 259 |
+| English | 0900s | 2 | 692 | 692 | 642 | 692 | 0 | 0 | 0 | 0 | 0 |
+| English | 1000s | 1 | 302 | 302 | 274 | 302 | 0 | 0 | 0 | 0 | 0 |
+| English | 1100s | 1 | 262 | 262 | 233 | 262 | 1 | 183 | 168 | 0 | 183 |
+| English | 1200s | 1 | 140 | 140 | 140 | 140 | 0 | 0 | 0 | 0 | 0 |
+| English | 1300s | 0 | 0 | 0 | 0 | 0 | 1 | 205 | 198 | 196 | 205 |
+| English | 1400s | 10 | 1,709 | 1,705 | 1,526 | 1,709 | 3 | 1,043 | 51 | 26 | 1,043 |
+| English | 1500s | 88 | 32,916 | 17,387 | 14,346 | 29,387 | 27 | 6,687 | 397 | 301 | 6,679 |
+| English | 1600s | 326 | 107,459 | 90,635 | 77,201 | 107,215 | 16 | 4,740 | 4,150 | 2,872 | 4,740 |
+| English | 1700s | 293 | 106,788 | 92,047 | 73,436 | 105,030 | 10 | 2,190 | 185 | 38 | 2,188 |
+| English | 1800s | 1,586 | 522,507 | 493,513 | 280,419 | 517,566 | 241 | 87,348 | 14,700 | 4,464 | 23,012 |
+| English | 1900s | 1,907 | 507,800 | 462,395 | 208,448 | 507,190 | 362 | 122,054 | 43,267 | 28,881 | 70,633 |
+| English | 2000s | 0 | 0 | 0 | 0 | 0 | 20 | 6,547 | 5,021 | 4,679 | 6,041 |
+| English | BCE | 1 | 40 | 40 | 40 | 40 | 2 | 248 | 232 | 0 | 248 |
+| English | unknown | 1,009 | 401,208 | 169,375 | 25,552 | 398,743 | 247 | 90,140 | 32,418 | 2,378 | 70,702 |
+| Sanskrit | 0000s | 1 | 64 | 64 | 64 | 64 | 0 | 0 | 0 | 0 | 0 |
+| Sanskrit | 0100s | 0 | 0 | 0 | 0 | 0 | 1 | 4 | 4 | 0 | 4 |
+| Sanskrit | 0400s | 0 | 0 | 0 | 0 | 0 | 1 | 330 | 0 | 0 | 330 |
+| Sanskrit | 0500s | 3 | 164 | 164 | 164 | 164 | 0 | 0 | 0 | 0 | 0 |
+| Sanskrit | 0600s | 3 | 2,548 | 66 | 42 | 2,548 | 1 | 432 | 24 | 0 | 432 |
+| Sanskrit | 0700s | 0 | 0 | 0 | 0 | 0 | 1 | 11 | 11 | 0 | 11 |
+| Sanskrit | 0800s | 3 | 406 | 406 | 397 | 406 | 2 | 549 | 51 | 26 | 549 |
+| Sanskrit | 0900s | 3 | 979 | 979 | 786 | 979 | 2 | 819 | 510 | 486 | 819 |
+| Sanskrit | 1000s | 3 | 565 | 565 | 418 | 565 | 1 | 100 | 100 | 100 | 100 |
+| Sanskrit | 1100s | 4 | 1,923 | 1,918 | 1,632 | 1,923 | 5 | 1,792 | 278 | 55 | 1,792 |
+| Sanskrit | 1200s | 0 | 0 | 0 | 0 | 0 | 7 | 2,916 | 2,571 | 696 | 2,916 |
+| Sanskrit | 1300s | 3 | 575 | 574 | 574 | 575 | 2 | 8 | 0 | 0 | 8 |
+| Sanskrit | 1400s | 6 | 495 | 495 | 489 | 495 | 8 | 1,628 | 839 | 722 | 1,527 |
+| Sanskrit | 1500s | 20 | 2,616 | 2,613 | 2,465 | 2,616 | 11 | 218 | 9 | 0 | 17 |
+| Sanskrit | 1600s | 16 | 2,575 | 2,575 | 2,568 | 2,575 | 11 | 1,548 | 345 | 250 | 784 |
+| Sanskrit | 1700s | 14 | 1,734 | 1,734 | 1,732 | 1,734 | 19 | 1,681 | 423 | 228 | 765 |
+| Sanskrit | 1800s | 203 | 62,333 | 38,182 | 35,712 | 40,588 | 850 | 313,440 | 1,880 | 930 | 4,629 |
+| Sanskrit | 1900s | 121 | 39,596 | 34,727 | 33,475 | 37,795 | 1,489 | 479,609 | 25,764 | 22,419 | 45,591 |
+| Sanskrit | 2000s | 0 | 0 | 0 | 0 | 0 | 41 | 13,486 | 1,972 | 970 | 13,486 |
+| Sanskrit | BCE | 0 | 0 | 0 | 0 | 0 | 3 | 1,467 | 95 | 0 | 1,467 |
+| Sanskrit | unknown | 106 | 10,417 | 2,385 | 2,161 | 7,351 | 8,381 | 241,888 | 46,146 | 2,099 | 177,909 |
+| Tibetan | 0700s | 1 | 236 | 226 | 226 | 236 | 0 | 0 | 0 | 0 | 0 |
+| Tibetan | 1100s | 1 | 170 | 166 | 160 | 170 | 0 | 0 | 0 | 0 | 0 |
+| Tibetan | 1200s | 5 | 1,462 | 1,326 | 1,213 | 1,462 | 1 | 402 | 0 | 0 | 0 |
+| Tibetan | 1300s | 0 | 0 | 0 | 0 | 0 | 1 | 208 | 205 | 0 | 208 |
+| Tibetan | 1400s | 4 | 2,536 | 2,258 | 2,239 | 2,536 | 0 | 0 | 0 | 0 | 0 |
+| Tibetan | 1500s | 3 | 2,391 | 2,169 | 2,142 | 2,391 | 2 | 1,338 | 1,249 | 1,241 | 1,338 |
+| Tibetan | 1600s | 2 | 1,092 | 1,034 | 1,016 | 1,092 | 0 | 0 | 0 | 0 | 0 |
+| Tibetan | 1700s | 1,547 | 344,920 | 332,707 | 235,657 | 344,920 | 3 | 993 | 917 | 909 | 993 |
+| Tibetan | 1800s | 3 | 2,365 | 2,335 | 2,299 | 2,365 | 1 | 128 | 120 | 0 | 128 |
+| Tibetan | 1900s | 216 | 129,581 | 129,150 | 128,763 | 129,581 | 10 | 14,056 | 11,780 | 1,420 | 13,558 |
+| Tibetan | 2000s | 0 | 0 | 0 | 0 | 0 | 3 | 23,865 | 22,726 | 0 | 23,322 |
+| Tibetan | unknown | 4 | 502 | 57 | 51 | 502 | 528 | 401,273 | 367,567 | 0 | 400,191 |
+| French | 1100s | 1 | 193 | 193 | 183 | 193 | 0 | 0 | 0 | 0 | 0 |
+| French | 1200s | 1 | 75 | 75 | 68 | 75 | 0 | 0 | 0 | 0 | 0 |
+| French | 1300s | 10 | 2,206 | 1,841 | 1,704 | 2,206 | 1 | 10 | 0 | 0 | 10 |
+| French | 1400s | 45 | 10,096 | 7,395 | 6,747 | 8,835 | 2 | 245 | 53 | 47 | 245 |
+| French | 1500s | 809 | 339,470 | 57,088 | 30,604 | 192,508 | 104 | 31,159 | 4,548 | 328 | 21,085 |
+| French | 1600s | 265 | 99,936 | 68,829 | 65,525 | 99,538 | 23 | 5,773 | 2,410 | 1,125 | 4,415 |
+| French | 1700s | 454 | 159,741 | 99,646 | 84,242 | 157,024 | 283 | 13,700 | 7,355 | 4,955 | 13,634 |
+| French | 1800s | 253 | 108,264 | 81,065 | 70,016 | 107,349 | 290 | 19,902 | 9,994 | 6,874 | 18,574 |
+| French | 1900s | 79 | 33,690 | 30,952 | 28,415 | 33,690 | 23 | 9,189 | 4,334 | 4,142 | 8,921 |
+| French | unknown | 102 | 38,112 | 7,478 | 3,246 | 35,958 | 100 | 25,532 | 1,227 | 492 | 18,333 |
+| Tamil | 1600s | 0 | 0 | 0 | 0 | 0 | 1 | 16 | 0 | 0 | 0 |
+| Tamil | 1700s | 0 | 0 | 0 | 0 | 0 | 5 | 1,827 | 0 | 0 | 0 |
+| Tamil | 1800s | 10 | 3,465 | 3,257 | 3,165 | 3,273 | 889 | 185,858 | 0 | 0 | 3,112 |
+| Tamil | 1900s | 6 | 1,175 | 296 | 294 | 1,175 | 1,770 | 382,865 | 1,990 | 1,990 | 22,744 |
+| Tamil | unknown | 0 | 0 | 0 | 0 | 0 | 2 | 561 | 0 | 0 | 334 |
+| Unknown | 0400s | 0 | 0 | 0 | 0 | 0 | 176 | 352 | 0 | 0 | 352 |
+| Unknown | 0800s | 0 | 0 | 0 | 0 | 0 | 1 | 64 | 62 | 0 | 64 |
+| Unknown | 0900s | 0 | 0 | 0 | 0 | 0 | 1 | 7 | 7 | 0 | 7 |
+| Unknown | 1200s | 0 | 0 | 0 | 0 | 0 | 25 | 977 | 4 | 0 | 555 |
+| Unknown | 1300s | 0 | 0 | 0 | 0 | 0 | 6 | 686 | 42 | 0 | 552 |
+| Unknown | 1400s | 0 | 0 | 0 | 0 | 0 | 64 | 36,696 | 38 | 0 | 2,484 |
+| Unknown | 1500s | 1 | 342 | 0 | 0 | 342 | 457 | 300,080 | 75 | 0 | 11,000 |
+| Unknown | 1600s | 8 | 840 | 154 | 139 | 840 | 51 | 4,997 | 245 | 135 | 4,732 |
+| Unknown | 1700s | 22 | 3,084 | 196 | 174 | 3,084 | 125 | 2,283 | 358 | 86 | 2,267 |
+| Unknown | 1800s | 16 | 4,217 | 5 | 5 | 4,217 | 121 | 2,614 | 300 | 0 | 2,013 |
+| Unknown | 1900s | 1 | 43 | 0 | 0 | 43 | 227 | 3,901 | 776 | 574 | 3,302 |
+| Unknown | 2000s | 0 | 0 | 0 | 0 | 0 | 1 | 194 | 41 | 0 | 194 |
+| Unknown | BCE | 0 | 0 | 0 | 0 | 0 | 2 | 5 | 5 | 0 | 5 |
+| Unknown | unknown | 7 | 523 | 21 | 19 | 523 | 4,126 | 133,770 | 10,997 | 0 | 102,448 |
+| Italian | 1200s | 1 | 1,118 | 1,118 | 1,095 | 1,118 | 0 | 0 | 0 | 0 | 0 |
+| Italian | 1300s | 7 | 2,194 | 2,189 | 2,117 | 2,194 | 0 | 0 | 0 | 0 | 0 |
+| Italian | 1400s | 61 | 17,447 | 15,488 | 14,402 | 17,221 | 5 | 1,675 | 609 | 569 | 1,111 |
+| Italian | 1500s | 561 | 191,807 | 95,570 | 90,690 | 159,563 | 115 | 39,712 | 5,262 | 5,005 | 36,739 |
+| Italian | 1600s | 152 | 44,799 | 18,930 | 16,961 | 44,697 | 7 | 1,406 | 321 | 213 | 1,090 |
+| Italian | 1700s | 101 | 28,341 | 8,439 | 6,794 | 28,247 | 6 | 1,510 | 93 | 15 | 1,510 |
+| Italian | 1800s | 66 | 21,700 | 16,472 | 13,416 | 20,280 | 7 | 2,507 | 296 | 26 | 751 |
+| Italian | 1900s | 22 | 6,702 | 6,069 | 4,485 | 6,702 | 6 | 2,136 | 1,813 | 1,801 | 2,014 |
+| Italian | unknown | 73 | 23,720 | 3,310 | 1,005 | 22,456 | 31 | 9,126 | 281 | 32 | 6,861 |
+| und | 1400s | 0 | 0 | 0 | 0 | 0 | 4 | 1,114 | 0 | 0 | 16 |
+| und | 1500s | 11 | 256 | 222 | 214 | 240 | 23 | 6,991 | 391 | 309 | 752 |
+| und | 1600s | 23 | 496 | 437 | 352 | 432 | 43 | 13,562 | 1,347 | 456 | 5,361 |
+| und | 1700s | 0 | 0 | 0 | 0 | 0 | 137 | 19,038 | 4,383 | 0 | 15,315 |
+| und | unknown | 0 | 0 | 0 | 0 | 0 | 1,019 | 303,961 | 0 | 0 | 82,320 |
+| Hebrew | 1000s | 2 | 352 | 2 | 2 | 352 | 0 | 0 | 0 | 0 | 0 |
+| Hebrew | 1100s | 3 | 586 | 569 | 557 | 586 | 0 | 0 | 0 | 0 | 0 |
+| Hebrew | 1200s | 6 | 4,245 | 158 | 152 | 2,373 | 1 | 165 | 73 | 0 | 165 |
+| Hebrew | 1300s | 70 | 27,945 | 4,210 | 3,919 | 17,739 | 0 | 0 | 0 | 0 | 0 |
+| Hebrew | 1400s | 114 | 44,454 | 5,124 | 4,361 | 32,296 | 1 | 41 | 41 | 0 | 41 |
+| Hebrew | 1500s | 124 | 47,192 | 11,699 | 10,589 | 31,700 | 3 | 461 | 92 | 0 | 453 |
+| Hebrew | 1600s | 79 | 21,643 | 10,733 | 9,777 | 20,951 | 1 | 29 | 29 | 16 | 29 |
+| Hebrew | 1700s | 62 | 15,383 | 9,598 | 8,070 | 14,774 | 1 | 88 | 49 | 0 | 88 |
+| Hebrew | 1800s | 59 | 19,719 | 16,858 | 12,750 | 19,279 | 1 | 324 | 48 | 0 | 324 |
+| Hebrew | 1900s | 12 | 5,249 | 4,756 | 4,367 | 5,249 | 3 | 3,262 | 2,748 | 2,710 | 2,752 |
+| Hebrew | unknown | 387 | 129,148 | 1,821 | 340 | 98,543 | 70 | 12,115 | 298 | 0 | 1,427 |
+| Arabic | 0500s | 0 | 0 | 0 | 0 | 0 | 1 | 493 | 492 | 491 | 493 |
+| Arabic | 0600s | 1 | 64 | 64 | 64 | 64 | 3 | 18 | 18 | 0 | 18 |
+| Arabic | 0700s | 3 | 149 | 149 | 138 | 149 | 1 | 3 | 3 | 0 | 3 |
+| Arabic | 0800s | 2 | 517 | 517 | 513 | 517 | 9 | 56 | 53 | 0 | 56 |
+| Arabic | 0900s | 12 | 1,583 | 1,203 | 1,073 | 1,583 | 30 | 1,985 | 1,173 | 915 | 1,985 |
+| Arabic | 1000s | 14 | 4,866 | 3,790 | 3,701 | 4,864 | 47 | 236 | 232 | 0 | 236 |
+| Arabic | 1100s | 8 | 1,736 | 1,157 | 1,105 | 1,736 | 68 | 629 | 489 | 184 | 629 |
+| Arabic | 1200s | 17 | 4,719 | 3,010 | 2,925 | 4,719 | 94 | 2,000 | 1,308 | 567 | 1,600 |
+| Arabic | 1300s | 15 | 4,471 | 2,837 | 2,724 | 4,471 | 15 | 399 | 397 | 357 | 399 |
+| Arabic | 1400s | 24 | 7,335 | 3,335 | 3,041 | 7,334 | 1 | 61 | 61 | 60 | 61 |
+| Arabic | 1500s | 25 | 11,637 | 4,172 | 4,050 | 11,637 | 1 | 4 | 3 | 0 | 4 |
+| Arabic | 1600s | 39 | 14,368 | 3,367 | 2,902 | 14,368 | 0 | 0 | 0 | 0 | 0 |
+| Arabic | 1700s | 42 | 12,668 | 3,651 | 3,527 | 12,666 | 2 | 10 | 7 | 0 | 10 |
+| Arabic | 1800s | 113 | 23,596 | 21,324 | 19,612 | 23,088 | 12 | 3,936 | 83 | 0 | 1,354 |
+| Arabic | 1900s | 26 | 6,522 | 5,712 | 5,535 | 6,522 | 15 | 5,251 | 3,858 | 3,633 | 4,669 |
+| Arabic | 2000s | 0 | 0 | 0 | 0 | 0 | 5 | 1,737 | 1,725 | 1,664 | 1,737 |
+| Arabic | unknown | 78 | 22,130 | 3,590 | 3,061 | 22,124 | 2,511 | 83,448 | 11,461 | 643 | 46,708 |
+| (other languages: 605 values) | 0100s | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| (other languages: 605 values) | 0300s | 4 | 490 | 469 | 94 | 490 | 13 | 1,119 | 429 | 0 | 1,119 |
+| (other languages: 605 values) | 0500s | 6 | 2,037 | 2,037 | 213 | 2,037 | 5 | 2,402 | 2,000 | 1,278 | 2,402 |
+| (other languages: 605 values) | 0600s | 2 | 192 | 192 | 190 | 192 | 3 | 1,173 | 1,170 | 0 | 1,173 |
+| (other languages: 605 values) | 0700s | 11 | 1,303 | 1,303 | 613 | 1,303 | 13 | 587 | 143 | 0 | 587 |
+| (other languages: 605 values) | 0800s | 2 | 788 | 788 | 24 | 788 | 13 | 485 | 446 | 0 | 485 |
+| (other languages: 605 values) | 0900s | 7 | 1,505 | 1,505 | 967 | 1,505 | 30 | 135 | 58 | 25 | 135 |
+| (other languages: 605 values) | 1000s | 13 | 2,516 | 2,044 | 1,289 | 2,516 | 160 | 709 | 68 | 43 | 610 |
+| (other languages: 605 values) | 1100s | 28 | 5,578 | 4,181 | 3,249 | 5,525 | 184 | 967 | 69 | 67 | 745 |
+| (other languages: 605 values) | 1200s | 36 | 11,218 | 4,834 | 2,131 | 10,530 | 327 | 1,500 | 196 | 138 | 1,500 |
+| (other languages: 605 values) | 1300s | 60 | 17,656 | 14,466 | 10,473 | 17,656 | 58 | 1,189 | 50 | 0 | 1,189 |
+| (other languages: 605 values) | 1400s | 97 | 28,746 | 20,968 | 17,962 | 27,846 | 22 | 7,844 | 256 | 19 | 7,844 |
+| (other languages: 605 values) | 1500s | 248 | 82,879 | 34,622 | 29,642 | 68,428 | 231 | 60,610 | 1,300 | 874 | 48,993 |
+| (other languages: 605 values) | 1600s | 640 | 165,849 | 113,974 | 104,770 | 165,594 | 90 | 14,788 | 2,496 | 1,269 | 14,589 |
+| (other languages: 605 values) | 1700s | 531 | 128,253 | 89,871 | 78,277 | 127,600 | 205 | 103,632 | 3,418 | 1,615 | 102,447 |
+| (other languages: 605 values) | 1800s | 796 | 266,264 | 213,643 | 179,357 | 265,751 | 367 | 69,191 | 8,324 | 2,864 | 26,481 |
+| (other languages: 605 values) | 1900s | 419 | 146,850 | 126,685 | 103,116 | 146,252 | 259 | 65,174 | 21,380 | 15,105 | 31,376 |
+| (other languages: 605 values) | 2000s | 0 | 0 | 0 | 0 | 0 | 15 | 4,682 | 2,700 | 1,725 | 3,970 |
+| (other languages: 605 values) | BCE | 513 | 6,348 | 6,148 | 6,134 | 456 | 7 | 14 | 11 | 0 | 14 |
+| (other languages: 605 values) | unknown | 535 | 149,561 | 46,161 | 34,720 | 149,043 | 8,715 | 292,537 | 12,042 | 895 | 149,818 |
+
+Engine frame: 78,882 books with pages_count > 0 and OCR or English, 18,976,378 pages_count; 11,264 page draws.
+
+## OCR text by engine family (sample)
+Seeded page-uniform sample (seed 278): 6,000 pages. Share of sampled pages; "≈ pages" = share × the exact counter of that row. 95% margin on a share p is about ±1.3 points at the top line, wider per row (n shown).
+| rows | n | no engine block | paddleocr | bdrc (tibetan) | gemini flash-lite | gemini 3.7+/4 | internet archive | lightonocr | gemini flash/pro (≤3) | claude | kraken | ndlkotenocr | typed e-text |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| group: hidden | 907 | 48.8% (≈ 782,089) | 6.5% (≈ 104,161) | 26.6% (≈ 425,471) | 13.6% (≈ 217,149) | 1.3% (≈ 21,185) | 1.5% (≈ 24,716) | 0.2% (≈ 3,531) | 0.4% (≈ 7,062) | 0.7% (≈ 10,593) | 0.1% (≈ 1,765) | 0.2% (≈ 3,531) | – |
+| group: live | 5,093 | 60.2% (≈ 5,143,323) | 19.3% (≈ 1,651,772) | 2.9% (≈ 250,116) | 4.2% (≈ 362,584) | 5.8% (≈ 498,553) | 3.6% (≈ 308,868) | 1.4% (≈ 115,825) | 1.2% (≈ 99,039) | 0.8% (≈ 72,181) | 0.4% (≈ 36,930) | 0.0% (≈ 3,357) | 0.1% (≈ 6,715) |
+| live · Latin | 1,342 | 84.6% (≈ 1,836,757) | – | – | 5.1% (≈ 111,662) | 9.3% (≈ 202,286) | – | – | 0.5% (≈ 11,328) | 0.4% (≈ 9,710) | – | – | – |
+| live · Chinese | 1,051 | 4.9% (≈ 88,109) | 93.0% (≈ 1,655,436) | – | 0.5% (≈ 8,472) | 0.1% (≈ 1,694) | – | – | – | 1.5% (≈ 27,111) | – | – | – |
+| live · English | 786 | 62.7% (≈ 834,549) | – | – | 4.7% (≈ 62,634) | 0.1% (≈ 1,693) | 23.0% (≈ 306,396) | 8.8% (≈ 116,803) | 0.3% (≈ 3,386) | 0.4% (≈ 5,078) | – | – | – |
+| live · German | 528 | 67.4% (≈ 613,127) | – | – | 8.1% (≈ 74,057) | 23.9% (≈ 217,006) | 0.4% (≈ 3,445) | – | – | 0.2% (≈ 1,722) | – | – | – |
+| live · Greek | 268 | 79.5% (≈ 368,693) | – | – | 2.2% (≈ 10,386) | 0.4% (≈ 1,731) | – | – | 17.5% (≈ 81,355) | 0.4% (≈ 1,731) | – | – | – |
+| live · Tibetan | 267 | 40.4% (≈ 190,690) | – | 55.8% (≈ 263,082) | – | 3.7% (≈ 17,656) | – | – | – | – | – | – | – |
+| live · French | 208 | 83.2% (≈ 294,900) | – | – | 7.7% (≈ 27,274) | 9.1% (≈ 32,388) | – | – | – | – | – | – | – |
+| live · Italian | 86 | 90.7% (≈ 151,996) | – | – | 3.5% (≈ 5,846) | 5.8% (≈ 9,743) | – | – | – | – | – | – | – |
+| live · Dutch | 73 | 95.9% (≈ 130,809) | – | – | 4.1% (≈ 5,606) | – | – | – | – | – | – | – | – |
+| live · Russian | 63 | 93.7% (≈ 97,782) | – | – | 3.2% (≈ 3,315) | 3.2% (≈ 3,315) | – | – | – | – | – | – | – |
+| live · Sanskrit | 57 | 89.5% (≈ 78,242) | – | – | 7.0% (≈ 6,137) | – | – | – | 3.5% (≈ 3,068) | – | – | – | – |
+| live · Hebrew | 48 | 97.9% (≈ 64,163) | – | – | 2.1% (≈ 1,365) | – | – | – | – | – | – | – | – |
+| live · Arabic | 44 | 88.6% (≈ 51,301) | – | – | 2.3% (≈ 1,315) | 4.5% (≈ 2,631) | – | – | – | 4.5% (≈ 2,631) | – | – | – |
+| live · 1400s | 246 | 87.0% (≈ 372,684) | 0.8% (≈ 3,483) | – | 1.6% (≈ 6,966) | 10.2% (≈ 43,538) | – | – | – | 0.4% (≈ 1,742) | – | – | – |
+| live · 1500s | 718 | 79.2% (≈ 949,922) | 1.4% (≈ 16,695) | 0.3% (≈ 3,339) | 2.6% (≈ 31,720) | 14.1% (≈ 168,615) | – | – | 1.8% (≈ 21,703) | 0.6% (≈ 6,678) | – | – | – |
+| live · 1600s | 638 | 80.9% (≈ 852,159) | 3.1% (≈ 33,029) | – | 6.9% (≈ 72,665) | 7.5% (≈ 79,271) | – | – | 0.9% (≈ 9,909) | 0.5% (≈ 4,954) | – | – | 0.2% (≈ 1,651) |
+| live · 1700s | 783 | 60.0% (≈ 809,030) | 6.8% (≈ 91,231) | 18.8% (≈ 253,037) | 5.5% (≈ 74,018) | 8.0% (≈ 108,444) | 0.3% (≈ 3,443) | – | 0.5% (≈ 6,885) | 0.1% (≈ 1,721) | – | – | – |
+| live · 1800s | 782 | 74.3% (≈ 948,031) | 1.2% (≈ 14,686) | – | 7.2% (≈ 91,376) | 2.4% (≈ 31,003) | 5.6% (≈ 71,796) | 4.5% (≈ 57,110) | 3.3% (≈ 42,425) | 0.3% (≈ 3,263) | 1.0% (≈ 13,054) | 0.3% (≈ 3,263) | – |
+| live · 1900s | 544 | 74.1% (≈ 706,054) | 0.2% (≈ 1,752) | – | 5.1% (≈ 49,056) | 1.5% (≈ 14,016) | 9.6% (≈ 91,104) | 6.3% (≈ 59,568) | 1.7% (≈ 15,768) | 0.2% (≈ 1,752) | 1.5% (≈ 14,016) | – | – |
+| live · unknown | 1,268 | 17.6% (≈ 369,323) | 69.4% (≈ 1,457,417) | – | 1.4% (≈ 29,811) | 2.4% (≈ 51,341) | 6.8% (≈ 142,429) | – | 0.1% (≈ 1,656) | 2.3% (≈ 48,029) | – | – | – |
+
+## English translation by engine family (same sampled pages)
+Seeded page-uniform sample (seed 278): 3,485 pages. Share of sampled pages; "≈ pages" = share × the exact counter of that row. 95% margin on a share p is about ±1.7 points at the top line, wider per row (n shown).
+| rows | n | no engine block | gemini 3.7+/4 | gemini flash/pro (≤3) | gemini flash-lite | claude | same-language-copy/1 |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| group: live | 3,330 | 76.1% (≈ 4,241,609) | 7.7% (≈ 430,017) | 7.4% (≈ 411,612) | 7.1% (≈ 398,226) | 1.4% (≈ 78,641) | 0.2% (≈ 11,713) |
+| group: hidden | 155 | 95.5% (≈ 303,848) | – | 1.3% (≈ 4,106) | 2.6% (≈ 8,212) | – | 0.6% (≈ 2,053) |
+| live · Latin | 1,170 | 81.6% (≈ 1,562,378) | 7.7% (≈ 147,240) | 0.1% (≈ 1,636) | 10.3% (≈ 197,956) | 0.2% (≈ 3,272) | 0.1% (≈ 1,636) |
+| live · English | 412 | 97.6% (≈ 667,209) | 0.2% (≈ 1,660) | – | 0.5% (≈ 3,319) | 0.2% (≈ 1,660) | 1.5% (≈ 9,958) |
+| live · German | 352 | 84.7% (≈ 501,433) | 1.4% (≈ 8,413) | 0.6% (≈ 3,365) | 12.2% (≈ 72,354) | 1.1% (≈ 6,731) | – |
+| live · Greek | 251 | 92.0% (≈ 398,060) | 1.6% (≈ 6,893) | 2.8% (≈ 12,062) | 3.6% (≈ 15,509) | – | – |
+| live · Chinese | 221 | 10.9% (≈ 39,581) | 39.8% (≈ 145,130) | 37.1% (≈ 135,235) | 4.5% (≈ 16,492) | 7.7% (≈ 28,037) | – |
+| live · Tibetan | 204 | – | 20.6% (≈ 76,952) | 72.5% (≈ 271,164) | – | 6.9% (≈ 25,651) | – |
+| live · French | 172 | 87.8% (≈ 255,251) | 4.7% (≈ 13,523) | – | 7.0% (≈ 20,285) | 0.6% (≈ 1,690) | – |
+| live · Italian | 78 | 96.2% (≈ 145,159) | 2.6% (≈ 3,871) | – | 1.3% (≈ 1,935) | – | – |
+| live · Dutch | 72 | 91.7% (≈ 117,614) | 4.2% (≈ 5,346) | – | 4.2% (≈ 5,346) | – | – |
+| live · Russian | 58 | 87.9% (≈ 86,662) | 6.9% (≈ 6,797) | – | 5.2% (≈ 5,098) | – | – |
+| live · Sanskrit | 52 | 82.7% (≈ 68,369) | – | 3.8% (≈ 3,180) | 13.5% (≈ 11,130) | – | – |
+| live · Arabic | 42 | 92.9% (≈ 50,116) | 4.8% (≈ 2,570) | – | – | 2.4% (≈ 1,285) | – |
+| live · 1400s | 234 | 93.2% (≈ 373,687) | 6.0% (≈ 23,998) | – | 0.9% (≈ 3,428) | – | – |
+| live · 1500s | 621 | 87.6% (≈ 893,946) | 5.6% (≈ 57,515) | 0.5% (≈ 4,930) | 6.0% (≈ 60,801) | 0.3% (≈ 3,287) | – |
+| live · 1600s | 574 | 84.1% (≈ 795,090) | 6.4% (≈ 60,908) | 1.0% (≈ 9,877) | 8.2% (≈ 77,369) | 0.2% (≈ 1,646) | – |
+| live · 1700s | 561 | 64.2% (≈ 643,447) | 9.8% (≈ 98,304) | 15.9% (≈ 159,074) | 7.3% (≈ 73,281) | 2.9% (≈ 28,598) | – |
+| live · 1800s | 600 | 88.3% (≈ 856,827) | 3.3% (≈ 32,333) | 0.7% (≈ 6,467) | 6.8% (≈ 66,283) | – | 0.8% (≈ 8,083) |
+| live · 1900s | 377 | 76.1% (≈ 500,316) | 3.2% (≈ 20,919) | 15.4% (≈ 101,109) | 5.0% (≈ 33,122) | – | 0.3% (≈ 1,743) |
+| live · unknown | 271 | 13.3% (≈ 54,469) | 28.4% (≈ 116,503) | 30.6% (≈ 125,581) | 17.3% (≈ 71,112) | 10.0% (≈ 40,852) | 0.4% (≈ 1,513) |
+
+## Total 1 — judge verdicts recorded per page
+book_checks: 2,660 book-level rows covering 10,873 page reads (one row = one book read by one method in one run; pages_read listed per row).
+| method | rows | pages read | 2026-10 | 2026-11 |
+|---|--:|--:|--:|--:|
+| ocr-convergence | 412 | 3,820 | 3,820 | 0 |
+| paired-fifths-check | 303 | 2,976 | 0 | 2,976 |
+| judged-pages | 255 | 1,070 | 1,070 | 0 |
+| shelf-overview | 212 | 848 | 656 | 192 |
+| lane-spot-check | 281 | 393 | 50 | 343 |
+| fortnightly-spot-check | 95 | 285 | 255 | 30 |
+| leak-off-leaf-5309 | 213 | 233 | 0 | 233 |
+| leak-repair-5026 | 170 | 220 | 0 | 220 |
+| fix-feed-8255 | 50 | 210 | 0 | 210 |
+| served-audit | 200 | 200 | 200 | 0 |
+| euro-gpu-agy-cell-6871 | 181 | 181 | 0 | 181 |
+| curation-check | 107 | 125 | 125 | 0 |
+| hide-broken-text | 22 | 78 | 78 | 0 |
+| lane-paired-retranslation-check | 60 | 60 | 0 | 60 |
+| plate-reread-check | 10 | 47 | 0 | 47 |
+| gpu-print-6871 | 12 | 30 | 0 | 30 |
+| leak-strip-5026 | 30 | 30 | 0 | 30 |
+| stub-books-8181-by-eye | 29 | 30 | 0 | 30 |
+| retranslation-gate | 7 | 21 | 21 | 0 |
+| seam-fr-it-104-by-eye | 5 | 10 | 0 | 10 |
+| kangyur-finish-8482-by-eye | 6 | 6 | 0 | 6 |
+Pages read by reader kind: model 10,873
+
+lane_judge_verdicts: 11,360 rows (one row = one judged page or control). Page verdicts (kind = item): 10,990; controls (wrong_page / planted / draft): 370.
+Of the page verdicts, 537 are test rows whose instrument is `book_checks:<method>`: copies of book_checks reads, already counted above. **Page verdicts across both stores, each counted once: 21,326** (book_checks pages read + lane_judge item rows − the copies). Test rows carry judged_at: null, so their month is "not recorded".
+| origin · instrument · kind | 2026-10 | 2026-11 | not recorded | total |
+|---|--:|--:|--:|--:|
+| test · route-judge-6740 judgePrompt · item | 0 | 0 | 4,994 | 4,994 |
+| test · step-t-7568 (flash-reread-5924/T-TASK.md, blind X/Y/Z with the image) · item | 0 | 0 | 3,225 | 3,225 |
+| live · route-judge-6740 judgePrompt · item | 1,139 | 383 | 0 | 1,522 |
+| test · route-judge-6740 judgePrompt (translation, scan and no transcription: zh-ocr-gap-translation-5274 prompt) · item | 0 | 0 | 360 | 360 |
+| live · route-judge-6740 judgePrompt (judgeAbsolute through confirm.mjs judge) · item | 0 | 352 | 0 | 352 |
+| test · route-judge-6740 judgePrompt · wrong_page | 0 | 0 | 234 | 234 |
+| test · book_checks:leak-off-leaf-5309@1 · item | 0 | 0 | 233 | 233 |
+| test · book_checks:euro-gpu-agy-cell-6871@1 · item | 0 | 0 | 181 | 181 |
+| test · book_checks:lane-paired-retranslation-check@1 · item | 0 | 0 | 60 | 60 |
+| live · route-judge-6740 judgePrompt · wrong_page | 28 | 16 | 0 | 44 |
+| live · route-judge-6740 judgePrompt · draft | 38 | 0 | 0 | 38 |
+| test · book_checks:gpu-print-6871@1 · item | 0 | 0 | 30 | 30 |
+| test · book_checks:stub-books-8181-by-eye@1 · item | 0 | 0 | 30 | 30 |
+| live · route-judge-6740 judgePrompt · planted | 18 | 4 | 0 | 22 |
+| test · route-judge-6740 judgePrompt · planted | 0 | 0 | 20 | 20 |
+| live · route-judge-6740 judgePrompt (judgeAbsolute through confirm.mjs judge) · wrong_page | 0 | 12 | 0 | 12 |
+| test · book_checks:kangyur-finish-8482-by-eye@1 · item | 0 | 0 | 3 | 3 |
+
+## Total 2 — English withheld, and books held
+Withheld now (translation_withheld record AND no English text on the page): **195,081 pages in 4,867 books**. Record only (English repaired and back): 246,065 pages. 2,257 of the withholding books are not under a pipeline hold.
+| reason | withheld now | record only |
+|---|--:|--:|
+| unverified_script_ocr | 89,381 | 85,690 |
+| stale_after_reocr | 57,056 | 126,923 |
+| source_loop | 35,501 | 18,035 |
+| ocr_unreadable | 7,196 | 14,922 |
+| invented_by_eye | 3,960 | 381 |
+| blank_source | 867 | 0 |
+| leaked-reasoning-6117 | 660 | 9 |
+| gemini-ocr-tibetan-4523 | 460 | 0 |
+| shifted-block-5426 | 0 | 1 |
+| echo_shift_block | 0 | 104 |
+
+Pipeline holds: 76,126 books held by decision (42,428 of them live) across 133 reasons; 413,976 not-acquired catalogue records (manifest-only-lazy-pages 408,981, acquisition-wave-2026-10b 4,995). Top decision reasons: zh-shi-ji-8053 17,907 · acquisition-wave-2026-10-images-only 13,822 · scans-only-publish-7176 13,394 · paddle-zh-5600-ocr-only 6,254 · scans-only-publish-7270 5,619 · gpu-backlog-5660 3,185 · indic-print-2026-11 2,772 · warehouse-promotion-5470 2,435.
+The `contained` label is on GitHub issues: `gh issue list --label contained --state all`.
+
+## Total 3 — page_revisions: which rows are a real second read
+All rows: 8,701,598. Field `ocr`: READ 2,274,540 (with superseded text 1,982,513) · MOVE 89,180 · OTHER 804,166. Field `translation`: READ-labelled 968,560 · MOVE 82,221 · OTHER 812,154. Other fields: 3,670,777.
+READ = batch_api, ai, pipeline_preview, realtime_api_sequential, batch_api_recovery, mineru, paddle, kraken, ia_djvu, bdrc, ndl-koten, reocr_cli, lightonocr. MOVE = /^(shift-repair|text-permutation|revert-|spread-split|ia-ocr-repair|ai-repair-sync|reocr-contamination-repair)|-undo$/.
+| field | source | class | rows | with superseded text |
+|---|---|---|--:|--:|
+| translation.text | notes-layer-backfill-5942 | other | 3,669,685 | 11,014 |
+| translation | ai | read | 958,101 | 958,075 |
+| ocr | batch_api | read | 923,150 | 923,149 |
+| ocr | reocr_cli | read | 566,436 | 274,410 |
+| ocr | longs-pass-5924 | other | 485,475 | 485,475 |
+| ocr | ai | read | 336,513 | 336,513 |
+| translation | cleanup-a2-5700 | other | 277,833 | 277,833 |
+| translation | empty | other | 212,593 | 0 |
+| translation | cleanup-termdef-5901 | other | 207,380 | 207,380 |
+| ocr | empty | other | 194,356 | 0 |
+| ocr | bdrc | read | 186,361 | 186,361 |
+| ocr | ia_djvu | read | 166,713 | 166,713 |
+| ocr | pipeline_preview | read | 83,529 | 83,529 |
+| translation | cleanup-markup-5700 | other | 72,880 | 72,880 |
+| ocr | shift-repair-erara-2026-07 | move | 56,413 | 56,413 |
+| translation | shift-repair-erara-2026-07 | move | 55,272 | 55,272 |
+| ocr | loop-guard-refused-2026-09 | other | 37,601 | 37,601 |
+| ocr | blank-guard-refused-2026-08 | other | 29,691 | 29,691 |
+| ocr | paddle-zh-guarded-6871 | other | 23,953 | 0 |
+| translation | tengyur-draft-repairs-5497 | other | 17,556 | 17,556 |
+| ocr | shift-repair-segments-7949 | move | 13,320 | 13,320 |
+| ocr | shift-repair-clef-5803 | move | 12,533 | 12,533 |
+| translation | health-gate-refused | other | 11,580 | 11,579 |
+| translation | shift-repair-clef-5803 | move | 11,550 | 11,550 |
+| ocr | withhold-gemini-ocr-tibetan-4523 | other | 11,104 | 11,104 |
+| translation | batch_api | read | 10,446 | 10,367 |
+| ocr | paddle | read | 10,240 | 10,240 |
+| ocr | unknown | other | 9,785 | 2,067 |
+| translation | shift-repair-segments-7949 | move | 9,501 | 9,501 |
+| ocr | strip-proquest-6056 | other | 7,485 | 7,485 |
+| ocr | shift-repair-bulkjp2-2026-08 | move | 2,638 | 2,638 |
+| translation | fix-stray-hangul-5734 | other | 2,618 | 2,618 |
+| translation | shift-repair-bulkjp2-2026-08 | move | 2,386 | 2,386 |
+| translation | maintenance | other | 2,224 | 2,224 |
+| ocr | cbeta-xml-p5 | other | 1,585 | 1,585 |
+| translation | unknown | other | 1,460 | 160 |
+| ocr | label-skqs-margin-garble-8053 | other | 1,360 | 1,360 |
+| ocr | null | other | 1,263 | 1,263 |
+| translation | skip | other | 1,260 | 1,260 |
+| ocr | text-permutation-5803 | move | 1,136 | 1,136 |
+| translation | text-permutation-5803 | move | 1,127 | 1,127 |
+| null | null | other | 1,092 | 0 |
+| translation | null | other | 1,026 | 1,026 |
+(54 smaller field × source rows in the JSON.)
+
+Same image? OCR READ rows whose superseded read recorded its image (engine.input.image_url), against the image the page's current read recorded:
+| source | same image URL | different image URL | current read records no image | page missing |
+|---|--:|--:|--:|--:|
+| pipeline_preview | 4,524 | 0 | 489 | 0 |
+| batch_api | 91,088 | 1,016 | 47 | 0 |
+| paddle | 10,100 | 0 | 140 | 0 |
+| reocr_cli | 84,266 | 949 | 1 | 0 |
+| ai | 2,575 | 11 | 1,141 | 0 |
+| lightonocr | 836 | 0 | 90 | 0 |
+
+## 2026-11-13 · Does any route on the menu read Hebrew manuscripts well enough to repair the `fix` books? (#8632)
+
+**Why.** fix-feed-8255 found 49 `fix` books (Hebrew, Armenian, Japanese, Korean) with no repair route. Hebrew manuscript is the largest cell, with 14.6K pages waiting and evidence of only n = 3–4 a route. Derek approved an Opus route test on 2026-11-13. The pre-registration was posted before any model call: v2#8632 comment 6853369726.
+
+**Design.** One page per book over every book in the frame with an eligible page: visible Hebrew books, not held, stored OCR by `gemini-3-flash-preview`, interior, 300 or more characters, manuscript under the router's own script rule. That gives 44 pages from 44 books; n cannot be raised without breaking one page per book. Four arms on the same pages:
+- `3flash`: the stored text (baseline).
+- `3flash>opus-correct`: `correct.mjs`, the cell's live route `3flash>opus`.
+- `opus-read`: `claude-ocr.mjs --reread`, one page a call, stage `opus-img@1`.
+- `3flash>agy-flash-low`: agy 3.8 Flash-low correcting the stored text.
+
+The judge was Opus through `claude -p`: blind, one output a call, the image open. There were 2 wrong-page controls an arm and 8 repeats; `paired-arm.mjs check` passed R1–R5 before the first judge call. On manuscripts the Opus judge fails its self-preference check (rules.json `judge_validity`, DBG 0.43), so Gemini 3.8 Flash-low through agy (the same judgePrompt and image) judged both Opus arms with their controls and repeats. The floor was invented or wrong-leaf text (O1, O2, I1, I2, I6, T14): 3 or more such pages of 44 block an arm.
+
+**Opus judge** (`paired-score.json`):
+
+| arm | accept | by-book 95% | wrong text | invented / wrong-leaf pages | fidelity | misleads / 1k words | control |
+|---|---|---|---|---|---|---|---|
+| 3flash (stored) | 0/44 | 0–0 | 44/44 | 36/44 | 1.82 | 8.64 | pass |
+| 3flash>opus-correct | 13/29 | 0.28–0.62 | 13/29 | 2 | 3.34 | 5.15 | pass |
+| opus-read | 20/44 | 0.32–0.59 | 16/44 | 2 | 3.20 | 5.31 | pass |
+| 3flash>agy-flash-low | 0/41 | 0–0 | 41/41 | 32/41 | 1.95 | 7.58 | pass |
+
+- `3flash>opus-correct` answered CONTAIN on 15 of 44 pages: it judged the stored text invented and wrote nothing. As the lane would serve the cell, that is **13/44**, because the stored text stays on those 15 pages.
+- Against the stored text on shared pages: opus-read better on 36/44 and worse on 1, accepts +20; the correction better on 23/29 and worse on 0, accepts +13; agy better on 6/41 and worse on 3, accepts +0.
+- Noise floor: 0 of 8 repeat pairs flip accept.
+
+**Gemini second judge** (the Opus arms only):
+
+| arm | accept | by-book 95% | wrong text | fidelity | control |
+|---|---|---|---|---|---|
+| 3flash>opus-correct | 10/28 | 0.18–0.54 | 18/28 | 3.29 | pass |
+| opus-read | 9/44 | 0.09–0.34 | 35/44 | 2.66 | pass |
+
+- Noise floor: 1 of 4 repeat pairs flips accept.
+- 1 item came back unparsed and is not counted.
+- The two judges disagree a lot. Gemini rejects 12 of the 20 opus-read pages the Opus judge accepts. That is the self-preference gap the calibration predicted, or Gemini Flash-low being a weaker Hebrew-cursive reader, or both; this run cannot tell which.
+
+**Decision, by the table's own rule.** `build.py` with this evidence: **HOLD (hard floor: no rated route clears it)**.
+- agy first: `3flash>agy-flash-low` fails the floor (32 invented pages of 41).
+- An Opus route needs the second judge to clear P(acc ≥ 0.8) ≥ 0.9, which is 39/44. Gemini gave 9/44 and 10/28.
+- No route moves. `bound_route` stays undecided ("no live route or agy route may run").
+
+**What was written (brief step 4).** 11 judged pages, 6 from the correction and 5 from opus-read. Each cleared the floor, was accepted by the Opus judge with no invented or wrong-leaf defect and a fidelity above the stored text's, and was not rejected by Gemini.
+- They were written through `cli-ocr.mjs apply`, all guards on, with by-eye rows from the judge, under runs `hebrew-mss-cell-8632-opusread-ocr` and `hebrew-mss-cell-8632-opuscorrect-ocr`.
+- The before-snapshot was committed first (`before-snapshot.json`, `step4-selection.json`). Undo: `revert-run.mjs --run-id <run>`.
+
+**Containment.** On 35 of the sampled pages the Opus judge found the stored 3 Flash text invented or in the wrong script (for example a Syriac Serto text over a Hebrew cursive draft, and Spanish words on a leaf with only show-through).
+- Held: those 35 books, reason `hebrew-mss-invented-8632`, released by issue 8632.
+- Withheld: the English on those 35 pages only (`--by-eye-pages`).
+- Labelled `contained` on v2#8632.
+
+At 36/44 the stored text of this cell is probably wrong on most of its 14.4K pages. Withholding the rest is a cell-wide decision, raised on the issue.
+
+### Replicated?
+
+A second judge family, yes. It disagrees with the Opus judge on the Opus arms and holds the cell. The agy and stored-text arms were not judged by Gemini: they already fail the floor on the Opus judge, and that judge is valid on Gemini-written text. No held-out draw: the frame is exhausted at one page a book.
+
+## 2026-11-13 · Does an agy route read Latin and Greek 3 Flash pages well enough to give these cells a route? (#8632)
+
+**Why.** Of 2,646 flagged pages in the 2026-11-12 repair queue, 1,891 sit in cells where the router binds no route
+(`2026-11-12-audit-policy-replay-8632.md`). The biggest are `latin-flash3/unknown` (522 flagged; part of 1.3M served
+Latin pages, including the most-read books) and `greek-flash3/*` (484 + 104 flagged, 419K pages). A tested route would let
+those findings be repaired on the subscription CLIs. Pre-registered before any model call: v2#8632 comment 6848364669.
+
+**Design.** `judge.mjs draw`, seeded: one page per book, books in hash order, each page at a hash-chosen spot inside a
+block of 4 consecutive scans. Frame: visible books, not held, stored OCR by `gemini-3-flash-preview`, interior,
+300 or more characters, script type by `script-type.mjs`. n = 50 (Latin unknown) and 40 (each other cell).
+Four arms on the same pages:
+- `3flash`: the stored text (baseline).
+- `3flash>agy-flash-low`: agy Gemini 3.8 Flash-low correcting the stored text, one page a call.
+- `agy-flash-low@4`: a fresh agy Flash-low read of the 4-scan block, live prompt; only the drawn page is judged.
+- `3flash>opus-correct`: the bar only, on the first 30 pages of each cell. Never a candidate, never written.
+
+The judge was Opus through `claude -p`: blind, one output a call, image open. There were 2 wrong-page controls an arm
+and cell, and 12 repeats. `paired-arm.mjs check` passed R1–R5 before the first judge call; 638 verdicts. The floor
+was invented or wrong-leaf text (O1, O2, I1, I2, I6, T14). The adoption rule was the table's own (`build.py`):
+I would propose a route only if the build picked an agy arm that cleared the floor and did not lose more accepts
+than it gained against the stored text.
+
+**latin-flash3/unknown** (n 50; Opus bar on 30):
+
+| arm | accept | by-book 95% | wrong text | floor pages | misleads / wrong text per 1k words | control |
+|---|---|---|---|---|---|---|
+| 3flash (stored) | 33/50 | 0.52–0.78 | 15/50 | 5 | 3.73 / 2.73 | pass |
+| 3flash>agy-flash-low | 37/50 | 0.62–0.86 | 12/50 | 4 | 2.09 / 2.43 | pass |
+| agy-flash-low@4 | 34/50 | 0.54–0.80 | 12/50 | 3 | 2.51 / 2.05 | pass |
+| 3flash>opus-correct | 28/30 | 0.83–1 | 1/30 | 0 | 1.26 / 0.32 | pass |
+
+- Against the stored text: correction +7/−3 accepts (p 0.34); read@4 +6/−5 (p 1); Opus +6/−0 (p 0.03).
+- Noise floor: 0 of 3 repeat pairs flip.
+
+**latin-flash3/print** (n 40):
+
+| arm | accept | by-book 95% | wrong text | floor pages | misleads / wrong text per 1k words | control |
+|---|---|---|---|---|---|---|
+| 3flash (stored) | 30/40 | 0.60–0.88 | 6/40 | 1 | 2.71 / 1.15 | pass |
+| 3flash>agy-flash-low | 33/38 | 0.76–0.97 | 1/38 | 0 | 1.42 / 0.09 | pass |
+| agy-flash-low@4 | 30/40 | 0.60–0.88 | 5/40 | 1 | 1.90 / 0.48 | pass |
+| 3flash>opus-correct | 29/30 | 0.90–1 | 1/30 | 0 | 0.48 / 0.12 | pass |
+
+- Against the stored text: correction +5/−2 (p 0.45); read@4 +5/−5 (p 1); Opus +6/−0 (p 0.03).
+- Noise floor: 0 of 3.
+
+**greek-flash3/print** (n 40):
+
+| arm | accept | by-book 95% | wrong text | floor pages | misleads / wrong text per 1k words | control |
+|---|---|---|---|---|---|---|
+| 3flash (stored) | 19/40 | 0.33–0.63 | 17/40 | 1 | 5.04 / 4.84 | pass |
+| 3flash>agy-flash-low | 24/40 | 0.45–0.75 | 14/40 | 1 | 4.44 / 4.64 | pass |
+| agy-flash-low@4 | 24/40 | 0.45–0.75 | 12/40 | 2 | 4.23 / 3.95 | pass |
+| 3flash>opus-correct | 29/30 | 0.90–1 | 0/30 | 0 | 0.62 / 0 | pass |
+
+- Against the stored text: correction +6/−1 (p 0.13); read@4 +8/−3 (p 0.23); Opus +15/−0 (p < 0.001).
+- Noise floor: 0 of 3. The common wrong-text class in every Gemini arm is O6 (misread words, 12–13 of 40 pages): accents, breathings and ligatures.
+
+**greek-flash3/unknown** (n 40; mostly abbreviated Greek manuscript hands that carry no manuscript tag):
+
+| arm | accept | by-book 95% | wrong text | floor pages | misleads / wrong text per 1k words | control |
+|---|---|---|---|---|---|---|
+| 3flash (stored) | 16/40 | 0.25–0.55 | 20/40 | 8 | 6.15 / 5.55 | pass |
+| 3flash>agy-flash-low | 13/40 | 0.18–0.48 | 21/40 | 7 | 4.79 / 5.45 | pass |
+| agy-flash-low@4 | 19/39 | 0.33–0.64 | 16/39 | 7 | 5.29 / 4.89 | pass |
+| 3flash>opus-correct | 25/28 | 0.75–1 | 1/28 | 1 | 0.92 / 0.25 | pass |
+
+- Against the stored text: correction +1/−4 (p 0.38); read@4 +4/−1 (p 0.38); Opus +13/−0 (p < 0.001).
+- Noise floor: 1 of 3 repeat pairs flips.
+- On manuscripts the Opus judge fails its self-preference check (rules.json `judge_validity`; the Hebrew test's second judge cut Opus accepts by more than half), so the Opus bar here is an upper bound. The judge is valid on the Gemini arms.
+
+**As served.** A correction that refuses or fails leaves the stored text in place. Counted that way, accepts are
+33/50 for the Latin unknown correction and 32/40 for the print one, and 29/40 for the Latin print read@4
+(`as-served.json`).
+
+**Decision, by the table's own rule.** `rules.json` gained this evidence (keyed by the draw cells), and `greek-flash3`
+gained the `3flash>opus` and `3flash>agy-flash-low` routes. `build.py` was run on the committed `defect-rates.json`
+(2026-11-06); the result is committed as `2026-11-13-flash3-8632` (current.json not moved).
+- latin-flash3/unknown: HOLD. The hard floor blocks `agy-flash-low@4-read`, `3flash` and `3flash>agy-flash-low`. On main today the cell switches to the unmeasured agy default; this evidence removes that.
+- latin-flash3/print: the build switches to `pero>agy-flash-low@4`. That rests on 43/46 lane defect verdicts, NOT on this test, and the live `3flash>opus` has no defect verdicts. No tested arm was picked, so I propose nothing. Regenerating the defect rates (scratch build b) keeps `3flash>opus` instead: only the Opus bar passes once it is rated.
+- greek-flash3/print and /unknown: held by a person (#6694). The floor blocks the read@4 in print and all three Gemini arms in unknown. Opus correction is the only arm that reads Greek well; whether to pay for it on 419K pages is Derek's question on #6694, not this test's.
+- **What n can show.** n = 40 detects a net 20-point difference on the discordant pages; the gates are 5 points. No agy arm comes close to separating, and the Greek gaps to the Opus bar (29/30 against 24/40) are large enough that more n would not change the answer.
+
+**What was written (useful pages).** 22 judged pages, each from an arm that cleared the floor in its cell, accepted with
+no invented or wrong-leaf defect, fidelity above the stored text's, and best among the agy arms. They went through
+`cli-ocr.mjs apply` with by-eye rows and `--mark-stale`, so their English is re-translated by the agy lane.
+- `ct-flash3-8632-latin-flash3-agy-flash-low-4-ocr`: 13 pages.
+- `ct-flash3-8632-latin-flash3-3flash-agy-flash-low-ocr`: 3 pages.
+- `ct-flash3-8632-greek-flash3-3flash-agy-flash-low-ocr`: 6 pages; a seventh was refused by the change-size guard.
+
+The before-snapshot (`before-snapshot.json`) and selection were committed first. Undo: `revert-run.mjs --run-id <run>`.
+
+**Containment.** The judge flagged 17 stored pages with wrong-text classes that may mean another text. One (Latin print,
+a wrong-leaf page) was already replaced by a write above. On six, the judge's note says most of the page is not the
+leaf's text: guessed or filler Latin and Greek over abbreviated hands. Those six were contained (`contained.tsv`).
+- Held: 6 books, reason `flash3-invented-8632`, released when v2#8632 closes.
+- Withheld: the English on those 6 pages only (`--by-eye-pages`, `page_revisions` snapshots).
+
+The other ten have a few invented spans (marginal headings, one added line, metrical schemes) on an otherwise right page.
+That is a finding, not a containment. The repair the six still need is an Opus read, which no route binds today.
+
+### Replicated?
+
+No. One judge family. For the agy arms that is enough: they are judged by a model of another family, and none
+separates from the stored text. The Opus bar on Greek manuscripts would need a second judge (Gemini, as in the Hebrew test)
+before it could be adopted.
+
+## 2026-11-13 · Are the stored `fix` verdicts right, and at which stage do the defects enter? (v2#8255, v2#8518)
+
+**Who reads this.** Whoever decides the repair route for Hebrew, Armenian, Japanese and Korean, and whoever next asks
+whether a `fix` verdict can be acted on without a second look.
+
+**Frame.** 469 visible books whose latest image-opened `book_checks` verdict was `fix` on 2026-11-13 (157 already held).
+Read in the order of fix share by language; this entry covers the first 50. The books come from 9 check methods
+(paired-fifths-check 12, curation-check 11, served-audit 11, shelf-overview 6, and five others), so this is a check of
+`fix` verdicts in general, not of one method.
+
+**Method.** `scripts/eval/fix-feed-8255/packet.mjs` builds a packet per book: up to 4 pages the earlier check flagged
+and 2 pages it had not read (ordered by a hash, so unselected), each with the image, the stored transcription and the
+stored English. An Opus subagent follows `READER.md`: open every image, confirm or reject the earlier finding, and name
+the stage of each serious error. Selection is `picked`. The flagged pages are biased toward defects by construction;
+the 2 extra pages a book are the only unselected ones. One reader, not calibrated against a second family.
+
+### Result
+
+| | books | confirmed | flagged page not confirmed, another page serious | no longer a fix |
+|---|---|---|---|---|
+| all | 50 | 46 | 3 | 1 |
+
+By flagged page (113): 107 confirmed (104 serious, 3 minor), 5 repaired since the check, 1 not found. A `fix` verdict
+was wrong about the book in at most 4 of 50 (8%), and in 3 of those 4 the cause is a repair made after the check, not
+a wrong reading. The #8518 stop bar was 20%.
+
+| language | books | pages read | serious | extra pages serious | book stage (reader) |
+|---|---|---|---|---|---|
+| Hebrew | 24 | 105 | 92 | 40 of 47 | OCR 9, mixed 8, invented 7 |
+| Japanese | 10 | 36 | 27 | 10 of 18 | OCR 3, mixed 3, translation 3, none 1 |
+| Armenian | 5 | 24 | 19 | 5 of 10 | OCR 2, mixed 1, invented 1, wrong leaf 1 |
+| Korean | 11 | 45 | 36 | 14 of 22 | OCR 5, mixed 4, invented 2 |
+
+Serious errors by stage: OCR 281, translation 85, page unit 4. By kind: misread 129, text with no basis on the leaf
+(confabulation, recitation, illegible fill, show-through) 105, omission 51, mistranslation 33, layout 20. The extra
+pages are the finding that matters for repair: 69 of 97 unselected pages (71%) were serious, so in these books the
+defect is the read, not the page. 2 extra pages a book is too few for a book rate.
+
+### Where the findings went
+
+- `book_checks`: 50 rows, method `fix-feed-8255`, run `fix-feed-8255-2026-11-13`; evidence `scripts/eval/fix-feed-8255/results/verdicts.jsonl.gz`.
+- Containment (`containment-on-finding.md`): 32 pages in 17 books whose stored text or English is not the leaf's, where
+  the reader was confident with the image open. English withheld; 9 books newly held. Pages the reader marked with
+  medium confidence (16) are findings only; 6 more were already withheld.
+- Repair queue: `repair-queue.mjs` over these labels gives 151 pages with a serious OCR finding: 78 `no-route`, 73
+  `deferred` (book held), 0 `queued`. Cells: `hebrew-flash3/unknown` 49, `korean-lite/manuscript` 26, `hebrew-lite/print`
+  13, `armenian-lite/manuscript` 10, and 10 smaller ones
+  (`scripts/eval/fix-feed-8255/results/repair-queue-fixfeed-2026-11-13.json`). None binds a route in
+  `2026-11-01-validated-7263`.
+
+### Limits
+
+- One model family read these pages. `repair-queue.mjs` asks for two families before `queued`; none of these has a Gemini read.
+- The reader rated its own reading of the script `partly` for most Hebrew cursive, Armenian erkatagir and old Korean.
+  Its confident findings are of the visible kind (a blank leaf with text, a loop, a known verse where the leaf has
+  another text), which is why only those were contained.
+- The full repair queue was not rebuilt here: the weekly spare-audit labels live on gex45-1, and a queue built on this
+  box would drop them.
+
+### Next
+
+419 `fix` books are not read (Sanskrit, Arabic, Persian, Greek, Chinese, Russian, Dutch, Italian, Latin, English,
+French, Spanish, German, Tibetan). The repair for the four languages here waits on a route decision for
+their cells, not on more diagnosis.
+
+## 2026-11-13 · Does a Claude correction against the image beat the stored text on measured-bad non-Latin pages? (v3#199)
+
+PRIOR ART: `scripts/eval/error-zoo/repair-pilot/` (the last repair attempt, which stopped before bulk) and the
+`paired-arm-judge` recipe over `scripts/eval/route-judge-6740/judge.mjs` + `paired-arm.mjs`. No new tool was
+built. The correction is `scripts/batch/ocr-convergence/correct.mjs`, the write is `scripts/batch/cli-ocr.mjs apply`,
+the audit rows go through `recordPageVerdicts`, and containment uses `hold-pipeline-books.mjs` +
+`withhold-stale-translations.mjs`. The three job-scratch drivers (`jd.mjs`, `audit.mjs`, `report.mjs`) are kept as
+the record in `scripts/eval/route-judge-6740/results/fix-scripts-199/`.
+
+**Who it is for.** Readers of Greek, Arabic, Hebrew, Sanskrit, Armenian, Persian and Ge'ez books whose pages our
+checks had read against the scan and marked serious (v2#8632). Until this run nothing had repaired them.
+
+### Worklist
+887 pages in 217 books had been flagged serious on served, unchanged text. Before ordering by
+`book-check-priority.mjs`, these were dropped: held books, human-edited pages, `cell-test-flash3` writes, the first 50
+fix-verdict books (being checked by fix-feed-8255), and 29 hieroglyphic/Demotic/Maya pages.
+
+### Cell test (pre-registered on #199)
+Greek × 3-Flash draft × script unknown, 30 pages, one per book. No model judged its own correction.
+
+| | stored | Opus (Fable judge) | Fable (Opus judge) |
+|---|---|---|---|
+| accepted | 4/30 by each judge | 16/28 | 26/29 |
+| mean fidelity | 2.73 / 2.90 | 3.71 | 4.48 |
+| better / same / worse | | 20 / 8 / 0 | 26 / 3 / 0 |
+| accepts gained / lost | | 12 / 0 | 22 / 0 |
+| wrong-page controls refused | 2/2, 2/2 | 2/2 | 2/2 |
+
+Noise floor: across 5 repeated judgments per judge, no accept flipped. Both arms passed (at most 2 worse, gains greater
+than losses). Fable was the stronger corrector here even under the Opus judge, which leans toward Opus (#7263). The bulk
+used Fable until Derek stopped all Fable calls at 10:53Z, and Opus after that.
+
+### Bulk (waves of ≤150, `--concurrency=3`)
+| run | corrector | written | audit judge | better/same/worse |
+|---|---|---:|---|---|
+| fix-scripts-test-ocr | 9 Opus, 16 Fable | 25 | (the test) | |
+| fix-scripts-w1-ocr | Opus | 113 | Fable | 8/2/0 |
+| fix-scripts-w2-ocr | Fable | 97 | Opus | 10/0/0 |
+| fix-scripts-w3-ocr | Fable | 126 | Opus | 9/1/0 |
+| fix-scripts-w4-ocr | Fable | 55 | Opus | 10/0/0 |
+| fix-scripts-w5-ocr | Fable | 31 | Opus | 10/0/0 |
+| fix-scripts-w6-ocr | Fable | 41 | Opus | 9/1/0 |
+| fix-scripts-w7-ocr | Opus | 129 | Opus (same family) | 10/0/0 |
+| fix-scripts-w8-ocr | Opus | 82 | Opus (same family) | 9/1/0 |
+
+Not written: 30 UNCHANGED, 37 CONTAIN, and 87 refused by the writer's guards (84 under 40% shared words). No guard was
+weakened. Six books were held, and English was withheld on the pages confirmed by eye (13 images opened). One kind of
+error recurred: a stored "transcription" of a Greek catena manuscript (Theophylact, Bodleian Auct. E.1.6) writes out
+the full biblical text, here Galatians 1:1–24 and Hebrews 9:2–5, where the leaf has only lemmata and commentary.
+
+### What it does not settle
+- 97 manuscript pages corrected by Opus (`ms-opus-awaiting-recheck.jsonl`) were checked only by a Claude judge. The
+  Opus judge favours Opus manuscript readings by about 43 points (#7263). The 130 Fable manuscript pages are also
+  Claude-checked only. Both need a Gemini second read after the pools reset (`gemini-second-read-page-ids.txt`, 699 ids).
+- The English on every written page is marked stale (`fix-scripts-199`) and waits for the agy lane. Claude did not translate.
+
+## 2026-11-13 · Does an Opus or Fable correction beat the stored text on Latin pages flagged bad? (#199)
+
+**Design (pre-registered on #199 before any model call).** Arms: the stored text; an Opus correction; a Fable correction (`scripts/batch/ocr-convergence/correct.mjs`, one page a call). Pages: 30 pages from 30 books, the largest cell of the worklist (Latin × 3 Flash × script unknown), taken in `book-check-priority.mjs` order. Judges, blind, reading each text against the page image: Fable judged the stored text and the Opus arm, and Opus judged the stored text and the Fable arm. **No model judged its own correction.** Controls: 2 wrong-page items per arm per judge; 5 stored texts judged twice by each judge. Pass rule for a corrector: judged worse than stored on at most 2 pages, and more accepts gained than lost. `paired-arm.mjs check` passed R1–R5 before judging.
+
+**Result.** 136 verdicts, none unparsed.
+
+| arm | judged by | accepted | mean fidelity (1–5) | `wrong_text` defects | better / same / worse than stored | accepts gained / lost | pass |
+|---|---|---:|---:|---:|---|---|---|
+| stored | Fable | 4 of 30 | 2.90 | 131 | | | |
+| stored | Opus | 5 of 30 | 3.23 | 57 | | | |
+| Opus correction | Fable | 23 of 30 | 4.23 | 33 | 26 / 4 / **0** | 19 / 0 | pass |
+| Fable correction | Opus | 27 of 30 | 4.57 | 2 | 27 / 3 / **0** | 22 / 0 | pass |
+
+- All 8 wrong-page controls were rejected at fidelity 1. The noise floor was 0 accept flips in 5 repeats per judge.
+- **The flags were right:** the stored text was accepted on only 4–5 of the 30 flagged pages.
+- **Ranking the two correctors:** this test cannot do it. Fable is the harsher judge of the stored arm, which both judges read (2.90 against 3.23; 131 wrong-text defects against 57). The gap between the arms (23 against 27 accepts) falls inside that difference between judges.
+
+**Bulk (same tool, waves of ≤150 pages, priority order).** Each wave's audit drew 10 random writes and judged them blind against the image with the other model family. The judgments are recorded as book checks under method `lane-spot-check`.
+
+| run | corrector | written | audit judge | better / same / worse |
+|---|---|---:|---|---|
+| fix-latin-test-ocr | Opus 17, Fable 11 | 28 | (the test above) | |
+| fix-latin-w1-ocr | Opus | 93 | Fable | 9 / 1 / 0 |
+| fix-latin-w2-ocr | Fable | 92 | Opus | 10 / 0 / 0 |
+| fix-latin-w3-ocr | Opus | 64 | Fable | 6 / 2 / 0 (8 of 10 judged: a Cloudflare 403 failed 2, and the Fable stop came before they could be re-asked) |
+| fix-latin-w4-ocr | Fable | 64 | Opus | 10 / 0 / 0 |
+| fix-latin-w2b-ocr | Opus | 3 | not sampled | |
+| fix-latin-eye-ocr | Opus 2, Fable 3 | 5 | written after opening the image | |
+
+349 distinct pages were written. The writer's guard refused 111 pages whose correction shares under 40% of its words with the stored text (plus 1 repetition loop). Correctors answered CONTAIN on 6 pages and UNCHANGED on 9. The refusals were not forced. Of the 20 images opened by eye, 2 pages were invented text and are contained (books held); 9 refused pages were right-leaf but garbled and were written by eye.
+
+**What it means for the lane.** The 40% shared-words guard is the binding limit on these pages: about a third of the flagged pages hold stored text that is wrong-leaf or invented, so a correction cannot be checked against it by overlap. Manuscript pages corrected by Opus (51 in `opus-manuscript-awaiting-recheck.jsonl`) need a cross-family re-check, because the Opus judge favours Opus manuscript readings (#7263). `gemini-second-read-page-ids.jsonl` (167 pages) lists the refused, CONTAIN and Opus-manuscript pages for a Gemini read after the pools reset.
+
+**Files.** `scripts/eval/route-judge-6740/results/fix-latin-199/`: the test's key, verdicts, recipe, score and pass rule; `audit-w1…w4/` (the `evidence_path` of the lane-spot-check rows); `written-page-ids.jsonl` (the ledger: every write and its run); `refused-pages.jsonl`, `contain-pages.jsonl`, `unchanged-or-unanswered.jsonl`; and the scratch runners `pj.mjs` (judge runner), `audit.mjs` (wave audit) and `tally.mjs`. Every run can be reverted with `node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id <run> --apply`.
+
+## 2026-11-13 · Does an Opus or Fable correction repair the pages our checks marked serious, in Chinese and Korean? (v3#199)
+
+**Design.** route question; arms stored, opus, fable; baseline stored; judges fable, opus; one page per book; 1 page(s) a call. Score file: `scripts/eval/route-judge-6740/results/fix-cjk-199/paired-score.json` (paired-arm.mjs).
+
+**cjk-flagged, judge fable.**
+
+| arm | accept | by-book 95% | wrong text | fidelity | control |
+|---|---|---|---|---|---|
+| stored | 2/25 | 0–0.2 | 23/25 | 2.96 | pass |
+| opus | 21/25 | 0.68–0.96 | 4/25 | 4.28 | pass |
+| fable | 1/1 | 1–1 | 0/1 | 5 | FAIL (0) |
+
+- stored -> opus: on 25 shared pages better 20/25, worse 0/25; accept gained 19, lost 0 (sign test p 0).
+- stored -> fable: on 1 shared pages better 0/1, worse 0/1; accept gained 0, lost 0 (sign test p —).
+- Noise floor: the same arm judged twice flips accept on 0/5 pages.
+
+**cjk-flagged, judge opus.**
+
+| arm | accept | by-book 95% | wrong text | fidelity | control |
+|---|---|---|---|---|---|
+| stored | 2/25 | 0–0.2 | 18/25 | 3 | pass |
+| opus | 1/1 | 1–1 | 0/1 | 5 | FAIL (0) |
+| fable | 21/25 | 0.68–0.96 | 2/25 | 4.48 | pass |
+
+- stored -> opus: on 1 shared pages better 0/1, worse 0/1; accept gained 0, lost 0 (sign test p —).
+- stored -> fable: on 25 shared pages better 22/25, worse 0/25; accept gained 19, lost 0 (sign test p 0).
+- Noise floor: the same arm judged twice flips accept on 0/5 pages.
+
+**Reading the tables.** Each corrector was judged by the other model only (no model judged its own correction), so the `opus` row under judge opus and the `fable` row under judge fable hold just the wrong-page controls and one stray item, and their `FAIL (0)` is an empty cell, not a failed control. All 8 wrong-page controls (2 per arm per judge that judged it, plus the stored arm's) were rejected at fidelity 1. `paired-arm.mjs` counts Fable better on 22/25; the pre-registered rule (better = higher fidelity, or accept gained with fidelity not lower; `fix-score.json`) counts 23/25. Neither count has a worse page.
+
+**Pages.** The slice was every page in a Chinese, Japanese or Korean book that a check had marked serious on served, unchanged text, after the brief's drops (held books, human edits, changed text, the first 50 fix-verdict books): 56 pages in 25 books, none Japanese. The largest cell had 7 books, so the test took one page per book from all 25 (pre-registered on the issue before any model call). By group, with no page worse in any: Gemini 3 Flash drafts 10 pages (Opus better 9, Fable 10), Paddle-read Siku fair copy 10 (8, 9), Flash-Lite 4 (3, 4), Opus-stored 1 (both answered UNCHANGED).
+
+**Noise floor.** 5 stored texts judged twice: Fable 0 accept flips and 0 fidelity changes; Opus 0 accept flips, fidelity moved by 1 point on 3 of 5.
+
+**What was written.** Each test page got its better-judged correction (13 Opus, 8 Fable; 2 refused by the writer's 40% shared-words floor, 1 unchanged, 1 kept because neither was judged better). The other 31 pages went through the Opus corrector in one wave: 16 written, 1 unchanged, 1 CONTAIN, 12 refused by the floor, 1 refused for letters outside the book's scripts (7 katakana reading marks). Every written page is marked `translation_stale` for lane `fix-cjk-199`; no translation was made.
+
+**Wave audit.** 10 random writes of the 16, judged blind by Fable beside the text each replaced: 10 better, 0 worse; 4 of 4 wrong-page controls rejected (`audit-w1/`). Recorded as `book_checks` rows, method `lane-spot-check`, run `fix-cjk-w1-audit`.
+
+**The guard refusals are the open half.** 15 of 56 pages (27%) were refused although the stored text is that leaf's text: short brush labels on mandala drawings (Pelliot chinois 2012, 8 pages), printed hexagram tables (斷易天機, 5 pages), and pages whose stored text is mostly a description of the paintings (天文圖註祥異賦, 2 pages). On such pages a right correction rewrites most of the words, so the floor that catches wrong-leaf text also stops the repair. Five images were opened; the corrections matched. They were not forced. The corrected texts are in `refused-reads/` and the list in `refused.json` (which also carries the CONTAIN page and one UNCHANGED page, both marked `cli exit 1`).
+
+**Contained.** Pelliot chinois 2012 p16: the served text was a neat table of the thirty-six initials; the leaf is an upside-down cursive working sheet. Book held (`by-eye-invented-pages-199`), page withheld.
+
+### Limits
+
+- One mixed set, n = 25, no cell above 10 pages: it supports "a Claude correction of an audit-flagged Chinese page is better than the served text", not a router row.
+- Both judges are Claude models; no Gemini or agy read was possible on the day. 24 written pages drawn from manuscript cells (`ms-awaiting-recheck.json`) await a cross-family re-check; the Opus judge favours Opus manuscript readings (#7263), which here could only have helped the Fable arm and the stored text.
+- 8 of the 25 Opus corrections were reused from kept reads of the #7263 printed-Chinese runs (same image, stored draft and prompt), not new calls.
+- The plain correction prompt was used, without the 丨 ditto-mark instruction of #5274, on the Siku dictionary pages.
+- The pages are the flagged ones, so the stored arm's 2/25 accept is selection, not a corpus rate.
+
+### Replicated?
+
+No. The wave audit (10/10 better, a different draw, same judge family) agrees with it. The owed replication is a Gemini second read of `second-read-page-ids.json` (37 pages) after the pools reset.
+
+Files: `scripts/eval/route-judge-6740/results/fix-cjk-199/` (packet, key, verdicts, scores, worklist, written pages with run ids). Revert: `scripts/maintenance/revert-run.mjs --run-id fix-cjk-test-ocr --apply`, and the same with `fix-cjk-w1-ocr`.
+
+## 2026-11-13 · Is Fable 5.2 a better reader of manuscript pages than Opus 5.5?
+
+**Decision this informs.** Which model reads handwritten pages, and whether Fable is worth a router cell for them.
+
+**Design (posted on #92 before any score, issuecomment-6846882395).** Arms: FABLE = `claude-fable-5-2 --effort high`, OPUS2 = `claude-opus-5-5 --effort medium`, OPUSX = `claude-opus-5-5 --effort xhigh`. All three use the October diplomatic prompt and the sealed one-image runner, through subscription `claude -p`. Every row's `modelUsage` named the requested model (Set A 428 rows, Set B 112; none wrong). The rule for "Fable reads better" has three parts:
+- the paired FABLE − OPUS2 gap is negative under both d1-vs-d1 and mean-of-two-draws;
+- its 95% interval, resampled by work, excludes 0;
+- the gap is larger than either arm's own d1 − d2 spread.
+
+The smallest gap the test can detect at this n is about 2–2.5 points.
+
+### Sets
+- **Set A**, 75 scored pages in 52 works with expert references (October's 76, minus one). The excluded page is `rasam|BULAC_MS_ARA_417_0069`: this box's copy of its image is a truncated 65,536-byte JPEG, which shows grey below a strip of paper. October read the full file on main. The fault was found by eye, and it is the only bad file of the 76. The four strata are Bentham English (20), CREMMA medieval Latin (18), HTRomance early modern French (20) and RASAM Arabic (17).
+- **Set B**, 39 of our own manuscript pages (October's 40). They were scored against KEY-O, KEY-G and KEY-F, which models built, so this set is **DIRECTIONAL**. Page `699067ef…:260` was dropped because no key can judge it: KEY-G and KEY-F carry another leaf's text, and KEY-O is all `[?]` (see by eye). Twelve of our R2 images no longer match their October hashes, so the October request images were used, not fresh fetches.
+
+### Set A results (mean page CER %, 95% CI by work)
+
+| arm | d1 | d2 | failed (d1/d2) | s/page | output tok | list $/page |
+|---|---|---|---|---|---|---|
+| FABLE | 6.9 [5.2, 9.1] | 7.0 [5.2, 9.2] | 0 / 0 | 34 | 3,470 | 0.103 |
+| OPUS2 | 9.4 [6.8, 12.5] | 9.5 [6.8, 13.0] | 2 / 3 restarted | 19 | 1,815 | 0.070 |
+| OPUSX | 9.3 [6.6, 12.7] | 10.1 [5.6, 15.1] (36 pages) | 0 / 0 | 62 | 5,690–6,145 | 0.147–0.158 |
+| stored Opus (Oct, default effort) | 9.9 [7.2, 12.9] | — | 1 restarted | 23 | — | 0.072 |
+| stored Gemini 3.1 Pro (Oct) | 14.1 [9.6, 19.2] | — | 3 restarted | 152 | — | — |
+
+- **Seconds** come from the CLI's `duration_ms`, which excludes the pace guard's wait for a slot. They are taken from d2 rows, n = 75. Many d1 rows lack the field, and their wall time includes slot waits of up to 40 minutes.
+- **List price** is the CLI's `total_cost_usd`. The arms ran on the subscription, so no money was spent.
+- **"Failed = 1.0" column:** FABLE 6.9 / 7.0, OPUS2 11.8 / 13.2, OPUSX 9.3.
+
+Paired differences, on pages both arms read:
+
+| pair | gap (pts) | n |
+|---|---|---|
+| **FABLE − OPUS2, d1** | **−3.2 [−5.1, −1.7]** | 73 |
+| FABLE − OPUS2, d2 | −3.4 [−5.5, −1.7] | 72 |
+| **FABLE − OPUS2, mean of two draws** | **−2.8 [−4.3, −1.5]** | 71 |
+| FABLE − OPUSX, d1 | −2.4 [−3.8, −1.2] | 75 |
+| FABLE − OPUSX, mean of two (OPUSX d2 partial) | −2.5 [−4.4, −0.8] | 36 |
+| OPUSX − OPUS2, d1 | −1.1 [−2.2, −0.2] | 73 |
+| OPUS2 − stored Opus, d1 / d2 | −0.3 [−1.7, +1.0] / 0.0 [−1.4, +1.4] | 72 |
+| FABLE − stored Pro, d1 | −7.1 [−10.3, −4.2] | 72 |
+
+**Draw-to-draw spread (d1 − d2):**
+- FABLE: −0.0 [−0.4, +0.3], mean |page change| 0.8 points;
+- OPUS2: +0.1 [−0.7, +1.1], mean |page change| 1.7;
+- OPUSX: +0.2 [−1.7, +1.6], 36 pages.
+
+The FABLE − OPUS2 gap is about 3 points against a spread near 0, so it passes the rule on all three parts. Fable is also the more stable reader of the two.
+
+**By stratum (FABLE − OPUS2, mean of two draws):**
+- Bentham English: −0.2 [−0.5, −0.1] (n 20);
+- CREMMA Latin: −6.5 [−11.9, −2.1] (n 14);
+- HTRomance French: −0.6 [−1.3, −0.0] (n 20);
+- RASAM Arabic: −5.2 [−7.7, −2.9] (n 17).
+
+The lead rests on two strata, not one.
+
+**Best-of-two (ORACLE, not achievable without a reference):** FABLE 6.5, OPUS2 9.5, OPUSX 8.8.
+
+### Set B results (DIRECTIONAL, model-built keys)
+
+| pair | KEY-O | KEY-G | KEY-F |
+|---|---|---|---|
+| FABLE − OPUS2 | +1.3 [−0.0, +2.8] (36) | −0.7 [−2.0, +0.3] (36) | 0.0 [−1.6, +1.7] (35) |
+| FABLE − OPUSX | −0.1 [−1.4, +0.9] (30) | −1.0 [−2.4, +0.1] (30) | −0.9 [−2.3, +0.2] (30) |
+
+All the readers come out level. The keys cannot rank a reader that reads more than the models that built them. On both Hebrew pages checked by eye, Fable's read was better than every key. OPUSX Set B stopped at 32 of 40 pages, when the account hit its weekly limit.
+
+### By eye (`results/fable-mss-92/byeye-setA.md`)
+Kind of evidence: Opus 5.5 reading each page image against the reads. This is one model's judgment, not a reference.
+- **The five largest FABLE − OPUS2 page gaps** all favour Fable, and all are CREMMA Latin pages. The gap is mostly real reading. Opus left whole lines as `[?]` on two pages, and Opus's misreads were in places Fable read correctly. Part of the gap is an artefact:
+  - Opus expanded abbreviations against the diplomatic prompt;
+  - Opus padded abbreviated words with `[?]`;
+  - on one page Opus skipped whole lines.
+- **Recitation and invention.** No Fable read is longer than 1.3× its reference, and there are no recited famous passages. But Fable filled hard spots with fluent, on-topic Latin that is not on the page in three draws on three pages (Vat. Pal. lat. 373 3r d1 and 4r d2, CCCC 165 p.29 d2). On 4r d2 it wrote "Gregorius" where the page names Bradwardine. In each case the other draw read the spot correctly. Two draws disagreeing is the visible tell, and a single-draw CER hides it.
+- **Fable declined nothing.** It returned two empty reads. One was the truncated image (empty is correct there). The other was a timeout on an ordinary page, re-run and read well.
+- **Set B Hebrew.** Fable read both pages faithfully, and better than the keys. While checking these, the *served* transcription of both pages turned out not to be the leaf's text: a fluent Zohar passage, and a list of zodiac signs. This was contained in the same run (#270: books held, English withheld by eye, label `contained`).
+
+### Caveats
+- OPUSX has one full draw on Set A and 36 pages of a second, and 32 of 40 pages on Set B. The run stopped at team@ 85% weekly, as the brief required.
+- **Infra failures re-run, not scored.** The re-runs recovered these errors: Cloudflare 403s at auth, the CLI not yet knowing the id `claude-fable-5-2`, pace-guard refusals, and 900 s timeouts that were slot waits. The scorer counts any such error still standing as "not run", never as a failed read (`INFRA` in `score-92.py`).
+- Two H318 pages were excluded, as in October.
+
+### Reads (kept in scratch, archived to R2 with it)
+- `$JOB_SCRATCH` = `/data/scratch/sl/jobs/fable-ocr-mss-92`:
+  - `setA/out/{FABLE,OPUS2,OPUSX}-d{1,2}.jsonl(.gz)`
+  - `setB/out/{FABLE,OPUS2,OPUSX}-d1.jsonl(.gz)`
+  - by-eye packets in `byeye/`
+- The design text is `design.md`.
+- Scores: `results/fable-mss-92/score-set{A,B}.{json,txt}`. They hold numbers only, with no reference text.
+- Reproduce: `python3 scripts/eval/fable-mss-92/score-92.py --set setA --root $JOB_SCRATCH --json out.json`
+
+## 2026-11-13 · Fable 5.2 against Opus 5.5 at xhigh on the frontier pages (#93)
+
+PRIOR ART: `2026-11-12-fable-translation-hard-tail-72.md` (stage 1: the 40 pages where Opus scored lowest in
+v2#6545, one Opus judge; Fable against Opus-xhigh +0.17 [-0.05, +0.40], not settled), the v2#6545 panels
+(`2026-10-12-pro-opus-correction-hardest-languages-6545.md`; those books are left out of this draw), the judge
+instrument `scripts/eval/route-judge-6740/` (judge.mjs prompt and parser, paired-arm.mjs check and score). Scripts:
+`scripts/eval/fable-frontier-93/` (draw, requests, packet, judge-run, score; corr-extract and corr-read for the
+correction check, not yet run). Arms through `scripts/eval/pro-translate-6545/claude-arm.py --lane`.
+
+### Question
+
+Readers: Derek, deciding whether a Fable translation route is worth registering beside the Opus route, and the router
+table. Stage 1 left two things open: whether Fable's lead over Opus survives Opus at xhigh effort on ordinary hard
+pages (not the 40 Opus did worst on), and whether a second judge agrees. The design and decision rule were posted on
+#93 before any output was judged (issuecomment-6846942472; copy in the results directory, `design-posted-on-93.md`).
+
+### Design
+
+- **Pages.** 103 pages, one per book, from visible books with pages (`visible: true && pages_count > 0`), each with a
+  real OCR text and a stored English translation, v2#6545 books excluded: Persian 7 (all the pool had), Sanskrit,
+  Classical Chinese, Greek, Hebrew 24 each. All 103 have no first-translation evidence either way (`ft_class: none`),
+  so 0 pages "could not be told". Separately, 14 pages were marked by eye as carrying a work with a known published
+  English translation (`canonical.json`). They are kept in and flagged, not dropped.
+- **Arms**, all on the production translation prompt as the live lane builds it (Standard Translation v21, text only),
+  through subscription `claude -p`, model confirmed from every reply's `modelUsage`:
+  LIVE (the stored translation), OPUS2 (`claude-opus-5-5 --effort medium`), OPUSX (`claude-opus-5-5 --effort xhigh`),
+  FABLE (`claude-fable-5-2 --effort high`).
+- **Judges.** Blind, one output per call, the page image attached (judge.mjs prompt). Two judges, both Claude-family:
+  Opus 5.5 and Fable 5.2. No Gemini judge in this job.
+- **Controls** (paired-arm.mjs check R1–R5 passed, exit 0): 2 wrong-page controls per arm, 5 repeats per arm (the noise
+  floor), 4 planted meaning errors per arm.
+- **Smallest gap 103 pages can detect** (80% power, two-sided 5%, from the observed paired SD under the Opus judge):
+  0.14 fidelity points, 1.5 severity-weighted defects per 1,000 words.
+
+### Results
+
+Every arm returned text on every page it ran: OPUSX 103/103, FABLE 103/103, OPUS2 29/29 run. No declines, no failures.
+Mean list cost per page (the CLI's own figure): OPUSX $0.196, FABLE $0.168, OPUS2 $0.106. Median output tokens:
+6,856, 5,176 and 2,569.
+
+**Opus judge, all 103 pages** (SW = (misleads + 3 × wrong-text) per 1,000 words):
+
+| arm | fidelity | accept | SW / 1,000 words | pages with wrong text | wrong-page control | planted |
+|---|---|---|---|---|---|---|
+| OPUSX | 3.39 | 52/103 | 8.02 | 40 | 2/2 | 7/8 pooled |
+| FABLE | 3.53 | 54/103 | 7.46 | 42 | 2/2 | |
+
+FABLE − OPUSX, paired by page (bootstrap over pages): fidelity **+0.146 [+0.049, +0.243]**, 20 better / 6 worse;
+SW **−0.57 [−1.62, +0.48]**. Noise floor from 10 repeats: fidelity ±0.4, SW ±2.2. By language (Opus judge, FABLE − OPUSX):
+Greek +0.25 fidelity, −1.7 SW; Persian (n = 7) −5.6 SW; Sanskrit, Chinese and Hebrew within ±0.9 SW.
+Pooled over all words (`study_cells` in score.json): OPUSX 2.91 misleading and 1.55 wrong-text defects per 1,000 words,
+FABLE 2.68 and 1.69. Fable has slightly fewer misleading passages and slightly more wrong text.
+
+**Fable judge, 44 paired pages** (stopped by the brief's 85% weekly limit; the 44 are the first in a fixed page order
+with both arms, not chosen by result):
+
+| arm | fidelity | accept | SW / 1,000 words | pages with wrong text | wrong-page control | planted |
+|---|---|---|---|---|---|---|
+| OPUSX | 2.80 | 8/44 | 23.2 | 36 | 2/2 | 7/7 pooled |
+| FABLE | 2.96 | 11/45 | 16.6 | 35 | 2/2 | |
+
+FABLE − OPUSX: fidelity +0.16 [0.00, +0.32] (8/2); SW **−6.5 [−10.6, −3.0]**.
+
+**The two judges.** Krippendorff's alpha on fidelity 0.86 (89 items judged by both; 64 identical, all 89 within one
+point; accept agrees on 74/89). The Fable judge is far stricter: it counts about three times the defects and flags
+wrong text on four pages in five. **Own-family lean:** on fidelity, none (the Fable judge's FABLE − OPUSX gap minus the
+Opus judge's on the same pages, +0.02 [−0.14, +0.18]). On defects, yes: on the same 44 pages the Opus judge sees
+FABLE − OPUSX = −0.9 per 1,000 words and the Fable judge −6.5. The Fable judge finds more wrong in Opus's text than
+in Fable's. Whether that is a family lean or the stricter judge seeing real defects the Opus judge misses cannot be
+told without a judge outside the family.
+
+**By eye, the five pages where FABLE and OPUSX differ most** (word-level dissimilarity; an Opus reader with the image,
+blind to arm; `byeye.jsonl`): FABLE better on 2, OPUSX on 1, equivalent on 2, no invented or wrong-leaf text in either.
+- Sanskrit (69907e09…): the leaf reads अश्विन्यादि लिखेत्क्रमात् where the OCR is corrupt (रेखामात्र). FABLE reads it as the
+  image has it ("write the lunar mansions in order from Aśvinī"). OPUSX translates the corrupt OCR. Evidence type: a
+  different reading, which the image supports.
+- Sanskrit (69906d53…): the leaf clearly reads मनुदिनांतरिता ("at intervals of fourteen days"), as OPUSX has. FABLE
+  emends it to *anudināntaritā* against the image, twice. Evidence type: a false correction of a right transcription.
+- Sanskrit (69907c49…): FABLE recovers names the image shows (Argalāpura, Amarāvatī, Shah Jahan) and flags them as
+  uncertain. OPUSX leaves those stretches untranslated. Evidence type: coverage.
+- Greek (6a085a78…, a Latin grammar with Greek examples) and Greek (6a3eb56f…, Herculaneum fragments): the same sense.
+  Each is right in one place; the rest is style and notes.
+
+The two Sanskrit pages are the question the correction check asks: Fable departs from the transcription more often,
+sometimes rightly and sometimes not.
+
+### What is not done (scheduled after the 2026-11-17 reset)
+
+- The Fable judge on the other 59 paired pages, and both judges on LIVE and OPUS2.
+- The OPUS2 arm on 74 more pages (paused at 29/103 to give FABLE the account's two slots: question 2, effort against
+  model, has no answer yet).
+- The correction check (#93 question 3): the notes in which an arm says the transcription reads one thing and it
+  translated another, read blind against the image by two readers, with planted false corrections, on these pages
+  and on the stage-1 notes.
+
+### Operations
+
+- The box's pace guard ran at 2 slots for the whole run (the account burned about 3%/h against a budget of 0.2–0.3%/h).
+  A fresh caller's call takes a freed slot before a waiting one polls, so the first FABLE translation waited 40 minutes.
+  The runners' kill timers also counted the queue wait (claude-arm `--timeout`, judge-run now 2 h).
+- The week went from 69% to 85% over the run, shared with the fable-ocr-mss-92 job on the same account.
+
+### Replicated?
+
+Partly: stage 1 (#72), on a different 40 pages, put FABLE − OPUSX at +0.17 [−0.05, +0.40] under the Opus judge;
+here, on 103 pages, +0.15 [+0.05, +0.24]. The two agree, and both are small. A judge outside the Claude family is
+still owed. Gemini 3.1 Pro on stage 1 runs from the fable72-pro-judge timer on 2026-11-15.
+
+Results: `scripts/eval/route-judge-6740/results/fable-frontier-93/` (key, recipe, score.json, paired-score.json,
+verdicts, the arms' outputs gzipped, the by-eye rows). Scratch: `/data/scratch/sl/jobs/fable-frontier-93/w/`.
+
+## 2026-11-13 · Do Opus and Fable corrections improve the pages our checks marked bad, in living European languages? (#199)
+
+PRIOR ART: `scripts/eval/error-zoo/repair-pilot/README.md` (#7809: Opus corrects stored Flash-Lite German print, 35 pages, the same `correct.mjs` tool; 28 of its kept corrections were reused here), `2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md` (the write-audit stop rule) and `2026-10-28-correction-lane-production-accept-de-fr-7263.md` (the correction lane on German and French print). None tested the cells the router leaves unbound (flash3 drafts with unknown script kind, manuscripts, Dutch, Spanish, Italian, English), and none used Fable as corrector or judge.
+
+**Question.** v3#199: 2,208 pages have been marked serious by a check that read the scan, and almost none were repaired. For the slice "books in a living European language in Latin script", is a Claude correction of the stored text (Opus, or Fable) safe to write on cells the router has not tested?
+
+**Worklist.** Label table rebuilt from Mongo `book_checks` and the audit files on the main box, then `repair-queue.mjs`. After the drops the brief names (text changed since the check, held books, human-edited pages, `cell-test-flash3` writes, the books job fix-feed-8255 is checking by eye), 181 pages in 79 books were flagged serious on served, unchanged text. 41 sat in cells the router binds to Opus (German lite/print, German flash3/print), 4 in cells bound to agy (not run: the pools were spent), 136 in untested cells.
+
+**Design (pre-registered on #199 before any model call).** 30 pages, one per book, drawn across the untested cells (17 German flash3/unknown, 13 from nine other cells). Arms: the stored text; an Opus correction; a Fable correction (`scripts/batch/ocr-convergence/correct.mjs`, one page a call, the page image attached). Judging: `route-judge-6740/judge.mjs`'s prompt, blind, against the image, one page a call, three wrong-page controls per arm, five same-arm repeats per judge. No model judged its own correction: Fable judged the Opus arm, Opus judged the Fable arm, both judged the stored text. Pass rule for a corrector: judged worse than the stored text on at most 2 pages, and more accepts gained than lost.
+
+**Result.** Both correctors pass.
+
+| corrector (judge) | pages | worse | better | same | accepts gained | lost | accept, stored to corrected | wrong-text pages, stored to corrected | mean fidelity |
+|---|---:|---:|---:|---:|---:|---:|---|---|---|
+| Opus (Fable) | 30 | 0 | 25 | 5 | 18 | 0 | 10/30 to 28/30 | 20 to 2 | 3.13 to 4.63 |
+| Fable (Opus) | 28 | 0 | 23 | 5 | 18 | 0 | 9/30 to 27/28 | 17 to 0 | 3.27 to 4.64 |
+
+- Controls: all 12 wrong-page items were rejected at fidelity 1. Repeats: 0 of 10 flipped accept.
+- Corrector answers: Opus 29 corrected, 1 UNCHANGED. Fable 24 corrected, 4 UNCHANGED, 2 CONTAIN. Both CONTAIN pages were blank versos whose stored text was invented from show-through; Opus read both as blank.
+- The German flash3/unknown cell alone: Opus 0 worse and 14 better of 17; Fable 0 worse and 13 better of 15.
+- The two correctors could not be told apart, so the bulk used Opus, as pre-registered.
+
+**What was written.** 177 pages went to a corrector; 170 were written, 5 came back UNCHANGED or with no better read, 2 were left to other jobs (a Coptic plate, a mixed Chinese page).
+
+| run id | pages | what | blind audit of 10 random writes (Fable) |
+|---|---:|---|---|
+| `fix-euro-test-ocr` | 24 | the test pages' better-judged read (20 Opus, 4 Fable) | the test itself |
+| `fix-euro-w1-ocr` | 40 | cells the router binds to Opus | 0 worse, 10 better; accept 4/10 to 10/10 |
+| `fix-euro-w2-ocr` | 94 | untested cells, Opus | 0 worse, 7 better, 3 same; accept 1/10 to 6/10 |
+| `fix-euro-eye-ocr` | 12 | guard refusals and CONTAIN pages, each opened against its image | checked by the session, not sampled |
+
+- The writer's guards refused 12 reads: 9 for sharing under 40% of their words with the stored text, 1 for letters outside the book's scripts, and the 2 blank-verso reads (the refusal reason for those two was not kept). None was forced. With the image open, 9 were the right leaf with a garbled stored read (8 manuscript leaves, 1 printed page with Coptic folio numerals), 2 were blank versos carrying invented text, and 1 (a Coptic plate) could not be certified and was not written.
+- Three pages met the containment rule (the two blank versos; one Spanish page carrying the previous leaf's text). Each book was held, the page's English withheld, a checked read written, and the hold released in the same run.
+- Each revert: `node scripts/maintenance/revert-run.mjs --run-id <run id> --apply`.
+
+**Limits.**
+- Every judgment here is by a Claude model. 49 of the written pages are manuscript, and the Opus judge favours Opus manuscript readings by about 43 points (#7263); those pages are listed in `manuscript-pages-awaiting-cross-family-recheck.json` and are not settled by this test.
+- "Better" is not "clean": 4 of wave 2's 10 audited writes were still not accepted after the correction (equal or better than before, none worse).
+- 30 pages over 10 cells is a pooled safety test. It adds no evidence to any single router cell.
+- The pages were chosen because a check had already marked them serious, so the stored-text accept rate (10/30) says nothing about the corpus.
+
+### Replicated?
+
+Partly: two correctors each judged by the other model agree, and two blind wave audits (20 pages) found no write worse than what it replaced. Not replicated across model families; `second-read-page-ids.json` orders the 170 written pages for a Gemini second read after the 2026-11-14 pool reset.
+
+**Artifacts.** `scripts/eval/route-judge-6740/results/fix-euro-199/`: `opus-arm-judged-by-fable/` and `fable-arm-judged-by-opus/` (key, recipe, verdicts, paired score), `defect-rates.json` (the same per-arm rates in the shape the lint reads), `audit-w1/`, `audit-w2/`, the two page lists. The wave audits are also in `book_checks` under method `lane-spot-check`.
+
+## 2026-11-13 · Can the reader's display image be much smaller and still carry the provenance mark?
+
+**Why.** Visible books' display images cost more R2 than their masters (issue figure: ~798 KB/page vs ~619 KB, ~11.8 TB over 14.75M visible archived pages, ~$177/month at $15/TB-month), because the provenance bake writes the display at min(2000px, native) JPEG q85. If the watermark survives a smaller file, most of that is avoidable.
+
+**Design.** Local only: read Mongo and R2, wrote nothing to either. Run on the `main` Hetzner box on 2026-11-12 against `scripts/lib/provenance-mark.mjs`, `reader-display.mjs` and `provenance-logo.mjs` byte-identical to `origin/main` (md5 checked). The mark and the detector are the repo's own `markImage()` / `detectWatermark()`; nothing re-implemented.
+
+- **Sample.** n=40 pages, one per visible book (`visible:true, pages_count>0`, 71,312 books), seed 4406. Half uniform over books, half one book per new (provider x script) cell, so 27 cells appear: internet_archive, e-rara, mdz, harvard, met, heidelberg, bl, bdrc, gallica, bsb, sbb, goettingen, slub, bph, umedia, iiif; Latin, CJK, Tibetan, Syriac, Greek, Cyrillic, Arabic, Egyptian. Interior pages only (15-95% of the book). A page qualified only if the reader actually loads its `display_photo` (`readerServesDisplay`), the display is on R2 under `pages/`, and a separate master exists; skipped on the way: 52 display not on R2, 26 no separate master, 17 display not served, 1 no page doc.
+- **Variants per page.** (a) the current display **as served** by images.sourcelibrary.org with a browser Accept header (40/40 served byte-identical to the R2 object; no Polish, always `image/jpeg`); (b) the writer as it is today (1200px, markImage at q82); (c) **regen**: master -> resize to 2000/1600/1200px -> mark -> encode as JPEG q85/q80/q75, WebP q80/q75, AVIF q50. markImage only emits JPEG, so each rung of its nudge ladder (delta 2,3,4,5,8, +12 on narrow images) was rendered at q100, encoded in the target format, read back, and the rung chosen by markImage's own rule (first rung at z>=10, else strongest that detects). That is what a writer taught to emit WebP/AVIF would store. (d) **transcode**: the served display re-encoded at the same width, no re-mark (the cheap backfill).
+- **Measures.** Bytes; detection z on the stored bytes (repo threshold z>5); z after a JPEG q70 recompress (what a copier does); PSNR on green vs the unmarked raster at the same width; negative controls per page.
+- **Controls.** Unmarked copies: max z 3.04 over all pages and widths. Wrong key: max z 3.2. Both under the z>5 threshold.
+
+**Result.** "x current" is total bytes over total current bytes on the same pages, with a 2,000-draw bootstrap 95% interval. Projection = 11.8 TB x ratio, at $15/TB-month. Detection columns count pages that can carry a mark at all (>=16 textured block pairs).
+
+| variant | n carry | median KB | mean KB | x current (95% CI) | median z | min z | detected z>5 | detected after q70 | PSNR dB | projected TB | $/month |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| current display (as served) | 39 | 430 | 472 | 1.00 | 12.9 | 1.1 | 36/39 | 34/39 | – | 11.8 | $177 |
+| writer today: 1200px JPEG q82 | 39 | 349 | 331 | 0.70 (0.61–0.82) | 12.0 | 0.8 | 37/39 | 37/39 | – | 8.3 | $124 |
+| regen 2000px jpeg q85 (bake recipe) | 40 | 532 | 580 | 1.23 (1.09–1.41) | 12.4 | 0.6 | 38/40 | 38/40 | 39.0 | 14.5 | $218 |
+| regen 2000px jpeg q80 | 40 | 470 | 510 | 1.08 (0.96–1.24) | 12.0 | 0.7 | 38/40 | 37/40 | 38.5 | 12.8 | $192 |
+| regen 2000px jpeg q75 | 40 | 414 | 457 | 0.97 (0.86–1.10) | 12.1 | 0.4 | 38/40 | 37/40 | 37.5 | 11.4 | $171 |
+| regen 2000px webp q80 | 40 | 316 | 351 | 0.74 (0.65–0.85) | 12.3 | 0.2 | 38/40 | 37/40 | 37.1 | 8.8 | $132 |
+| regen 2000px webp q75 | 40 | 255 | 284 | 0.60 (0.53–0.69) | 11.8 | 0.3 | 38/40 | 37/40 | 36.0 | 7.1 | $107 |
+| regen 2000px avif q50 | 40 | 171 | 199 | 0.42 (0.36–0.49) | 11.8 | 0.3 | 38/40 | 38/40 | 35.7 | 5.0 | $75 |
+| regen 1600px jpeg q85 | 39 | 473 | 466 | 0.99 (0.87–1.14) | 12.0 | 0.6 | 37/39 | 37/39 | 38.1 | 11.7 | $175 |
+| regen 1600px jpeg q80 | 39 | 401 | 404 | 0.86 (0.75–0.98) | 12.1 | 0.7 | 37/39 | 36/39 | 37.1 | 10.1 | $151 |
+| regen 1600px jpeg q75 | 39 | 344 | 356 | 0.76 (0.66–0.87) | 11.9 | 0.4 | 37/39 | 36/39 | 36.6 | 8.9 | $134 |
+| regen 1600px webp q80 | 39 | 257 | 286 | 0.61 (0.53–0.70) | 12.2 | 0.2 | 37/39 | 36/39 | 36.9 | 7.2 | $107 |
+| **regen 1600px webp q75** | 39 | 218 | 231 | **0.49 (0.43–0.57)** | 11.6 | 0.3 | 37/39 | 36/39 | 35.8 | **5.8** | **$87** |
+| regen 1600px avif q50 | 39 | 150 | 163 | 0.34 (0.30–0.40) | 11.5 | 0.3 | 37/39 | 37/39 | 35.5 | 4.1 | $61 |
+| regen 1200px jpeg q75 | 39 | 260 | 250 | 0.53 (0.46–0.62) | 12.0 | 0.4 | 37/39 | 36/39 | 35.8 | 6.3 | $94 |
+| regen 1200px webp q75 | 39 | 157 | 172 | 0.36 (0.31–0.43) | 11.5 | 0.3 | 37/39 | 36/39 | 35.6 | 4.3 | $64 |
+| regen 1200px avif q50 | 39 | 102 | 122 | 0.26 (0.22–0.30) | 11.1 | 0.3 | 37/39 | 37/39 | 35.3 | 3.0 | $46 |
+| transcode webp q80 (marked displays only) | 36 | 297 | 336 | 0.66 (0.63–0.70) | 12.6 | 4.7 | 35/36 | 33/36 | – | 7.8 | $117 |
+| transcode webp q75 (marked displays only) | 36 | 236 | 272 | 0.54 (0.50–0.57) | 12.0 | 4.7 | 34/36 | 33/36 | – | 6.3 | $95 |
+| transcode avif q50 (marked displays only) | 36 | 177 | 200 | 0.39 (0.36–0.43) | 11.9 | 4.5 | 33/36 | 33/36 | – | 4.7 | $70 |
+
+(1200px q85/q80 and WebP q80, and JPEG transcodes, are in `summary.json`; they sit on the same line.)
+
+What the numbers say:
+
+1. **The mark is not what keeps the display big.** Median z sits at 11.1–12.4 in every regen variant and detection is the same count in every format at a given width (38/40 at 2000px, 37/39 below). markImage holds z near its target of 10 by choosing its nudge, so a lossier encoder costs nudge, not detection.
+2. **The price is a slightly stronger nudge.** At a fixed nudge (delta 3), median z falls from 9.7 (JPEG q85, 2000px) to 8.4 (WebP q75) and 8.5 (AVIF q50): the encoders smooth about 13% of the signal away. The chosen-delta histogram shifts by about three pages from delta 2 to 3–5; the count needing delta>=8 is 11 of 40 in JPEG and 12 in WebP/AVIF. Whether a delta-8 mark is visible was not tested here (decision default on #4406: no strength-5 redo until a visibility sample).
+3. **Robustness to a copier's q70 recompress is unchanged**: 36–38 of 39–40 detected afterwards in every regen variant.
+4. **2000px buys nothing for the mark** (consistent with the n=33 width test earlier on #4406). Its one real effect in this sample is a Tibetan pecha (2094x324): at 1600 or 1200px wide it is under 256px tall, the 128px grid has fewer than two rows, and the page cannot carry a mark at all (today's 1200px display: z 0).
+5. **Transcoding the current display without the master** is the cheap path but loses detections: WebP q75 0.54x with 34/36 still detected (min z 4.7). Regen from the master keeps its 37/39.
+6. **The two pages that fail everywhere** are an Internet Archive Cyrillic page (master only 900px) and a near-blank IIIF page (87 textured pairs). No width or format rescues them.
+7. **Legibility, by eye on 2 of 40 pages** (native-resolution crops from the saved images, Latin roman and italic, unmarked / JPEG q85 / WebP q75 / AVIF q50 side by side): text equally legible in all four; WebP and AVIF smooth the paper grain slightly. PSNR medians 35.5–39 dB. This is not a reader-quality judgement over the sample.
+
+**Sample vs the issue's baseline.** This sample's current displays average **472 KB**, not 798 KB: 29 of 40 are 1200px or narrower (the forward writer since #8155) and only 11 are 2000px. The pages skipped for "no separate master" (26) and "display not on R2" (52) are where displays equal masters, which are the large ones. The projection therefore applies the sample's *ratio* to the 11.8 TB total; for pages whose display is a master today, regen would save more, so the dollar figures are if anything conservative. Re-measure the TB baseline from the R2 inventory before quoting a saving.
+
+**Code that assumes `.jpg` (would need changing for WebP/AVIF).**
+- `src/lib/page-image-url.ts:172-177` `deriveVariant()` matches `pages/...(\d{4,}|sp...)(-full)?\.jpg$` and builds `.jpg` / `-thumb.jpg`; a `.webp` display would fall through to the `/api/image` proxy (sharp compute per view).
+- `src/app/api/iiif/[id]/manifest/route.ts:438,493,506` declares `format: 'image/jpeg'` for the painted (marked) body.
+- `src/components/pipeline/TranslationEditor.tsx:812-853,1932` derives `-full.jpg` and names downloads `.jpg`.
+- `src/app/api/books/[id]/download/route.ts` (and the tenant copy) packs EPUB images as `images/*.jpg`, `media-type="image/jpeg"`.
+- Several OCR/judge routes send fetched page bytes to the model as `mimeType: 'image/jpeg'` (`batch-ocr-*`, `bulk-ocr-new`, `bulk-reocr`, `experiments/ocr-quality/*`); check which URL each fetches before changing the display format.
+- `markImage()` itself emits JPEG only; a WebP writer needs an output-format option that runs the strength ladder in the target encoding (this script shows the pattern).
+
+**Recommendation.** Do not pick a width for the mark's sake. If the display shrinks, **regenerate from the master as WebP q75 at 1600px, with a floor so the short edge never drops below 256px** (pechas), via a markImage that selects its nudge in WebP. Projected ~5.8 TB, ~$87/month, ~$90/month less than today and ~$130 less than finishing the bake at 2000px JPEG q85. AVIF q50 is a further ~30% smaller ($61) but slow to encode at effort 4 and was not timed; test encode CPU before choosing it. JPEG q75 at 1600px (0.76x, $134) is the no-format-change fallback.
+
+**Risks.** n=40, one page per book; the byte ratio CI is about +/-15%. Legibility checked by eye on 2 pages only, mark visibility at delta>=8 not checked. The baseline TB is the issue's figure, not re-measured. The format change touches the five code sites above, the IIIF contract and EPUB export, and every R2 key consumer that parses `.jpg`. A re-bake is a full rewrite of every display (one-time CPU and Class A writes) and must use the regen path, not transcode, or it drops ~2 of every 36 marks. This writes nothing; the bake on cloudlayer is unaffected.
+
+*Replicated?* No. Artifacts: `scripts/eval/display-reencode-4406/run.mjs`; raw rows and `summary.json` on the `main` box under `/root/jobs/display-reencode-4406/out/` (not committed: per-page evidence stays private).
+
+## 2026-11-13 · DeepSeek V4.1 Flash as an OCR reader on the sealed panels (#224)
+
+- **Question.** DeepSeek's new vision model, `deepseek/deepseek-v4.1-flash-1017` (OpenRouter, 17 October snapshot, image input), costs about $0.04 per million input tokens. Does it read the wave-2 panels as well as the engines we already scored?
+- **Answer: no, on every set but one.** It is below Gemini 3 Flash on Latin, English, other Latin-script, Greek and Armenian; level with it on Chinese print; and on Chinese manuscript it is above Flash-Lite and below Flash and the leader. Its Syriac read is unusable.
+- **The endpoint is not the one the brief named.** The DeepSeek-hosted endpoint is removed from every request by this OpenRouter account's privacy setting ("Paid model training violation (account settings)"), so `--provider=deepseek` returns 404. I did not change the account setting. The run is pinned to **Wafer `wafer/us`** (mxfp4, $0.038/M in, $0.50/M out), the endpoint behind the brief's price, with no fallback. The 11 November lesson applies: the same model on another endpoint can read differently, and this result is Wafer's deployment, not DeepSeek's own.
+
+### Design
+
+- **Pages.** Wave 2's eight most-pages sets (`/root/engine-wave2-6011/sets.json`): Latin 158, early English 44, other Latin-script 23, Greek 127, Chinese manuscript 503, Chinese print 19, Armenian 5, Syriac 40. That is **919 pages**; the brief's "661" is the number of pages each wave-2 engine had to read, because wave 1 had read the rest. DeepSeek read all 919.
+- **Arm.** `openrouter/deepseek/deepseek-v4.1-flash-1017` through `benchmark-run-api.mjs`, unchanged: generic transcription prompt, `temperature: 0`, `max_tokens` 16,000, `reasoning: {enabled: false}`. Wafer accepts reasoning disabled and metered **0 reasoning tokens** on all 919 pages. Every call was served by Wafer.
+- **Bench and scorer.** `cheap-vlm-latin-6011/build-bench.mjs` covers Latin only, so `deepseek-vision-224/build-bench.mjs` is the same builder over all eight sets. Scoring is `benchmark-score.mjs` unchanged, with the references from the repo and the Chinese cohort references unpacked from their bundle (left packed, the scorer silently scores all 432 cohort pages against a proxy engine; wave 2 recorded the same trap). Syriac is scored by `benchmark/syriac-retest/score-syriac-retest.py` against the published PAGE-XML ground truth, fetched from Zenodo (records 18157525 and 14714089) because it was not on this box; only DeepSeek and Flash were re-scored there, the other Syriac engines are the committed cells. `deepseek-vision-224/panel.mjs` is the 6011 panel over eight sets.
+- **Shared pages.** Per set, a page stays where Flash, Flash-Lite and each wave-2 reader that covers at least half the set (Sonnet or Opus, Qwen3-VL 8B, Chandra, Mistral, DeepSeek-OCR) aligned and none failed. For Latin this reproduces the 11 November panel exactly (145 pages; Flash 0.947 [0.937, 0.955]). The new arm is not in the rule: its unaligned read is a scored 100% error, a failed read is counted and not scored (none failed, except one Chinese print page). **Armenian and Syriac use a relaxed rule** (a cell that exists and did not fail is shared) because in both a committed CER of 1 is a real scored result, and the strict rule leaves 0 pages.
+- **Measure.** Accuracy = 1 − median CER, page bootstrap of the median (B = 2,000, seed 6011), paired against Flash on shared pages. One run per arm.
+
+### Probe (stage 1)
+
+- 3 Latin pages (Copernicus, Newton's *Principia*, a botanical preface): Wafer returns the pages' own text, so the image was taken. Not the 11 November Wafer failure.
+- Reasoning disabled accepted; 0 reasoning tokens. About 1,000 input tokens per page (Wafer downsizes the image; GLM on 11 November billed about 5,100) and 650–1,460 output.
+- **Not deterministic at temperature 0:** three reads of one page returned three different texts (same length, 2,053 characters; the checksums differ). One run per arm therefore moves a little on a repeat; it would not close a gap this size.
+
+### Result by set (accuracy = 1 − median CER, shared pages)
+
+| set | n shared | DeepSeek V4.1 Flash [95% CI] | Gemini 3 Flash | Flash-Lite | DeepSeek-OCR | best engine on the set | worse / better vs Flash, median ΔCER [CI] | failed | unaligned |
+|---|---|---|---|---|---|---|---|---|---|
+| Latin | 145 | **0.916** [0.907, 0.928] | 0.947 [0.937, 0.955] | 0.933 | 0.904 | Flash 0.947 | 124 / 12, +0.019 [0.014, 0.025] | 0 | 2 |
+| Early English | 43 | **0.952** [0.940, 0.964] | 0.964 [0.957, 0.972] | 0.947 | 0.937 | Sonnet 0.968 | 29 / 8, +0.003 [0.001, 0.017] | 0 | 0 |
+| Other Latin-script | 23 | **0.989** [0.986, 0.990] | 0.998 | 0.995 | 0.952 | Flash 0.998 | 23 / 0, +0.011 [0.005, 0.012] | 0 | 0 |
+| Greek | 86 | **0.821** [0.742, 0.861] | 0.932 [0.912, 0.941] | 0.885 | 0.525 | agy Flash 3.7 0.935 (Flash 0.932) | 81 / 4, +0.071 [0.042, 0.109] | 0 | 0 |
+| Chinese manuscript | 503 | **0.782** [0.761, 0.799] | 0.798 [0.781, 0.816] | 0.742 | 0.571 | PaddleOCR-VL 0.817 | 248 / 170, 0 [0, 0.005] | 0 | 0 |
+| Chinese print | 19 (18 paired) | **0.725** [0.632, 0.850] | 0.753 [0.636, 0.886] | 0.724 | 0.593 | Flash / Opus 0.753 | 7 / 6, 0 [−0.010, 0.006] | 1 | 0 |
+| Armenian | 5 | **0.975** [0, 0.985] | 0.993 | 0.971 | 0.889 | Flash 0.993 | 5 / 0, +0.018 [0.011, 0.971] | 0 | 2 |
+| Syriac | 40 | **0** [0, 0] | 0.233 [0.146, 0.332] | 0.009 | 0 | Sophro 0.624 | 27 / 1, +0.220 [0.052, 0.310] | 0 | 0 |
+
+Notes on reading the table:
+- The shared set for Greek is 86 of 127 and for Chinese print 19 of 19 because Chinese print has Flash cells on 12 pages; the two sets that shrank do so under the rule above, as in wave 2.
+- **Armenian is 5 pages.** The interval is a bootstrap of 5 numbers and means nothing; two of its five reads are scored at 100% error (mean accuracy 0.587).
+- **Chinese print is 12–19 pages**; the interval spans Flash and the engines above it.
+- "Best engine" is the highest accuracy among engines with a cell on at least 90% of the shared pages, agy (subscription CLI) arms included.
+- Comparators are the committed wave-1/2 outputs re-scored on this bench where they are on this box, and the committed per-page cells otherwise (Flash's EEBO texts, and Syriac); the Latin re-score reproduces wave 2.
+
+**Against the two outcomes in #224.**
+- *Inside or above Flash's interval on Latin:* no (0.916; Flash's lower bound is 0.937).
+- *Above the best engine on a script where Gemini is not the leader:* no. Chinese manuscript is the one such set that DeepSeek reads decently (0.782, upper bound 0.799), and the leader is PaddleOCR-VL / Qwen3-VL at 0.817.
+- *Below Flash-Lite everywhere:* nearly, not exactly. It is below Flash-Lite on Latin, other Latin-script and Greek, level on English, Chinese print and Armenian (n = 5), and **above Flash-Lite on Chinese manuscript** (0.782 [0.761, 0.799] against 0.742 [0.720, 0.761]). That is the only cell where it is a candidate for anything, and Flash already beats it there.
+
+So this is the second outcome: one experiment file, no chart point, no route test.
+
+### What the errors are (by eye, read by the job session with the page image open)
+
+Ten pages: the five with the highest CER across all 919 (all five are Chinese manuscript, CER capped at 1, raw CER 8.8 to 24), and five drawn at random with seed 224. Page images opened for all ten.
+
+| # | page | CER | what it is |
+|---|---|---|---|
+| 1 | `chinese-cohort-5547-e32226-p107` (worst) | 1 (raw 24.5) | Reads the first ten columns roughly right, then collapses to `人 人 人 …` until the 16,000-token cap (12,774 characters for a page of about 250). Looping. |
+| 2 | `chinese-cohort-5547-e25c68-p73` (worst) | 1 (raw 17.7) | Reads the two opening lines correctly (the page quotes the *Zuozhuan* under 斬), then keeps writing *Zuozhuan* from memory, text that is not on the leaf, to the cap. Invented continuation. |
+| 3 | `chinese-cohort-5547-213ec8-p79` (worst) | 1 (raw 17.6) | A dictionary page with large head-words and small notes. Reads part, mixes the column order, loops to the cap. |
+| 4 | `chinese-cohort-5547-9cfca4-p58` (worst) | 1 (raw 15.3) | Starts on the real header (欽定四庫全書 卷四十二), then repeats a made-up sentence about 旄 ("旄 音 毛 又 音 髳 下 云 旄 牛 尾 本 或 作 旄…") that is not on the page. Invented and looping. |
+| 5 | `chinese-ext-2006a1-p13` (worst) | 1 (raw 11.2) | Misreads the running header (欽定四庫全書 as 金 寅 四 月 全 書), then reads the columns with a space between every character and recycles them past the page's end until the cap. |
+| 6 | `ed-6a48d782…-p21` (Latin, random) | 0.161 | A good read of a 1654 pamphlet. Long s read as `f` throughout (`funt`, `pofuit`, `Auftriacæ`), which the reference, in modern spelling, counts as errors; the page number 7 read as 9. The reference window starts with words from the previous leaf, so part of the 0.161 is the reference, not the engine. |
+| 7 | `chinese-15f73d-p10` (random) | 0.352 | A modern typeset page of the *Amitabha Sutra*. The read is correct, punctuation included. The reference window opens with the east-quarter paragraph that is not on this leaf, so the 0.352 is a reference misfit. **A scoring artefact; no engine error.** |
+| 8 | `ed-6a08fd63…-p27` (English, random) | 0.090 | *The Jew of Malta*, a negative-print scan. Mostly right; `sit so sadly` read as `sit to fady`, `sleepe` as `fleepe`, `walke` as `wake`, and a header the reference lacks. |
+| 9 | `chinese-cohort-5547-1ef65d-p130` (random) | 0.142 | An accurate read. It adds the printed header (欽定四庫全書 卷六), which the reference leaves out, and reads 王泌 as 王沿 (a variant). |
+| 10 | `ed-6a90675c…-p9` (Latin, random) | 0.094 | An accurate read of a Latin treatise page. Long s as `f`, `&` where the reference has `et`, hyphenated line ends kept. The reference window starts a sentence before the page. |
+
+What the ten show:
+- **The failure that moves the score is runaway output, not misread letters.** On the three sets where DeepSeek is poor (Chinese manuscript, Greek, Syriac) it keeps generating after the page is read: repetition (`人 人 人`, a repeated sentence), or fluent text from memory that is not on the leaf. The token cap (16,000) was hit on 14 of 127 Greek pages, 6 of 503 Chinese manuscript pages and **22 of 40 Syriac pages** (median 70 s per Syriac page, $4.57 per 1,000). A further 10 reads across the sets were cut short by the endpoint with finish `error` (they are scored as misreads, the shared rule). No refusal on any page.
+- **On Latin and English the reads are faithful and the loss is small and systematic:** long s read as `f` (a real misread, not the reference's modernisation), which is what pulls Latin to 0.916; hyphenation and abbreviations are kept. It does not invent text on those pages.
+- **Three of the five random pages are scoring artefacts of the reference window**, not DeepSeek errors (#6, #7, #10). The 11 November pennies test saw the same on its Latin set; it applies to every engine alike.
+- Not seen in these ten: modernised spelling, a refusal.
+
+### The repair queue (Derek's note, 2026-11-13)
+
+Derek added, inside the same cap: read the 151 kept rows of `error-zoo/repair-queue-2026-11-12.json` (status queued 42, needs-second-read 75, not-confirmed 34; each has a serious OCR finding on text that is unchanged) with the same call, no write, and audit them with the blind Opus instrument of `repair-8632/README.md`.
+
+- **Reads.** The same Wafer call on each page's image (read-only from Mongo; the stored text is untouched). 151 pages, $0.107. 5 hit the token cap and 4 were cut by the endpoint; 1 returned no text.
+- **Audit.** `deepseek-vision-224/repair-audit.mjs` builds the same items as `driver.mjs audit-packets` (stored text against the new read, X/Y drawn per page by hash, no diff hint) and runs the same sealed Opus (`claude -p --model opus --restricted`, `AUDITOR.md`, Read and Write only, image opened per item) in 16 chunks of up to 10: **150 Opus verdicts, well under 400**, so no sampling. The Opus calls are subscription quota, not an API bill (their list value is about $13). The auditor picks the more faithful text and says whether the other would mislead a reader. I map it to Derek's three columns: **finding fixed** = Opus prefers DeepSeek's text and says the stored text would mislead; **new serious error** = Opus prefers the stored text and says DeepSeek's would mislead; **did not read** = no text came back. The rest is `same` or a preference with no serious flag.
+- **This is one judge with no controls.** No wrong-page or planted-change control and no A-vs-A arm ran, and a second judge (Gemini Flash) did not; the #6694 rule wants both. Read it as a screen. It also cannot say whether the *particular* finding on the queue row is the one that was fixed: the queue keeps the finding's class, not its quote, so "fixed" means "the stored text misled and DeepSeek's did not".
+
+| group | n | finding fixed | new serious error | did not read | same / minor |
+|---|---|---|---|---|---|
+| **all** | 151 | 17 / 151 | **94 / 151** | 1 / 151 | 39 / 151 |
+| latin-lite/print | 86 | 10 / 86 | 58 / 86 | 1 / 86 | 17 / 86 |
+| german-lite/print | 36 | 2 / 36 | 17 / 36 | 0 / 36 | 17 / 36 |
+| german-flash3/print | 19 | 0 / 19 | 15 / 19 | 0 / 19 | 4 / 19 |
+| french-lite/print | 8 | 5 / 8 | 3 / 8 | 0 / 8 | 0 / 8 |
+| german-lite/unknown | 2 | 0 / 2 | 1 / 2 | 0 / 2 | 1 / 2 |
+
+By language and half-century of the book (`year` from the book record; groups under 5 pages are shown but say little):
+
+| language, half-century | n | finding fixed | new serious error | did not read | same / minor |
+|---|---|---|---|---|---|
+| Latin 1450–1499 | 47 | 5 | 35 | 1 | 6 |
+| Latin 1500–1549 | 9 | 1 | 4 | 0 | 4 |
+| Latin 1550–1599 | 9 | 2 | 3 | 0 | 4 |
+| Latin 1600–1649 | 8 | 2 | 6 | 0 | 0 |
+| Latin 1650–1699 | 5 | 0 | 5 | 0 | 0 |
+| Latin 1700–1749 | 8 | 0 | 5 | 0 | 3 |
+| German 1450–1499 | 4 | 0 | 4 | 0 | 0 |
+| German 1550–1599 | 7 | 0 | 6 | 0 | 1 |
+| German 1600–1649 | 15 | 0 | 11 | 0 | 4 |
+| German 1650–1699 | 10 | 2 | 4 | 0 | 4 |
+| German 1700–1749 | 5 | 0 | 2 | 0 | 3 |
+| German 1750–1799 | 14 | 0 | 5 | 0 | 9 |
+| German 1800–1899 | 2 | 0 | 1 | 0 | 1 |
+| French 1500–1549 | 1 | 0 | 1 | 0 | 0 |
+| French 1800–1849 | 1 | 0 | 1 | 0 | 0 |
+| French 1850–1899 | 3 | 2 | 1 | 0 | 0 |
+| French 1900–1949 | 3 | 3 | 0 | 0 | 0 |
+
+- **Reading.** On pages already chosen for having a serious OCR finding, DeepSeek's read is the more faithful text on 17 of 151 and the *less* faithful on 94 of 151 (62%). Its fixes cluster in the French books of 1850 on and in a few Latin pages; its worst cells are Latin incunabula (35 of 47), 17th-century German in Fraktur, and the `german-flash3` cell (15 of 19). That matches the panels: this model is not a repair reader for hard early print. Opus's notes on the 94 name wrong words, dropped lines and, in a few, another leaf's text; the 15 pages where DeepSeek was cut or looped are among them.
+- The queue's own rule stands: the stored text on these pages is already known to carry a serious finding, so "new serious error" is DeepSeek being worse than text that is itself flawed, not worse than a clean page.
+
+### Cost and speed
+
+- **OpenRouter billed `usage.cost`, summed from the meter files: $0.540 for the 919 panel pages** (**$0.59 per 1,000 pages** over the mix; **$0.36** per 1,000 Latin, $0.21 Chinese manuscript, $1.33 Greek, $4.57 Syriac, because the cost follows the output, and runaway output is billed). Plus $0.107 for the 151 repair pages and $0.003 for probes: **$0.65 total**, against an estimate of $0.40 and a cap of $3. The estimate used 661 pages and 5,000 input tokens a page; the pages were 919 and Wafer bills about 1,000 input tokens a page.
+- **Median 3.9 s a page** over all 919, at concurrency 4: Chinese manuscript 2.4 s, Latin 6.5 s, Greek 9.8 s, Armenian 17.4 s, Syriac 70.2 s.
+- For comparison, wave 2 measured Sonnet at $16.18 per 1,000 Latin pages, DeepSeek-OCR $0.85 GPU, Qwen3.7-Flash $0.15, GLM-5.3-Flash on Z.AI $1.09 (11 November).
+
+### Caveats and what was not measured
+
+- **Wafer, not DeepSeek's own endpoint** (see the top). On 11 November the same model scored 0.926 on its maker's endpoint and invented text on a cheap one. The DeepSeek-hosted deployment could be better or worse than this; it is untested because the account setting excludes it. Re-running there needs Derek to change that setting (a privacy choice about training on paid prompts), which I did not do.
+- **One run per arm, and the model is not deterministic at temperature 0.** The Syriac and Chinese-manuscript loops would not repeat identically.
+- **Not measured:** reasoning on (only "disabled" was run; the endpoint also lists `reasoning_effort`); a larger `max_tokens` or a stop sequence, which would cut the runaway output and is the first thing to try if anyone wants the Chinese manuscript number; the other quantised endpoints; Armenian beyond 5 pages; any translation use; the page-level repair claim at the finding's own quote.
+- **Greek and Chinese print shared sets are 86 and 19 pages** and Chinese print is a 12-page comparison.
+- **The panel's Syriac is the 40 pages of two manuscripts**; every engine is near 0 there, so "worse than Flash on 27, better on 1" carries the information, not the medians.
+- **No production writes.** No page, book or Mongo write; no change to `src/data/ocr-pareto.json` or a routing table.
+
+**Artifacts:** `scripts/eval/results/deepseek-vision-224/`: `outputs-deepseek-v4-1-flash.jsonl.gz` and `meter-deepseek-v4-1-flash.jsonl` (all 919 reads, every finish reason and route), `scored/` (the full re-score, comparators included, gzipped, plus the Syriac ground-truth score), `panel.json`, `meter-by-set.json`, and `repair-queue/` (reads, meter, the Opus audit result and key, page metadata). Scripts: `deepseek-vision-224/build-bench.mjs`, `panel.mjs`, `fetch-repair-pages.mjs`, `repair-audit.mjs`; the runner and scorer are unchanged.
+
+## 2026-11-12 · Printed Chinese read by Gemini: the Opus correction is the route (decision record, #7263)
+
+PRIOR ART: `2026-11-03-zh-gemini-reocr-cell-7263.md` (recommended gemini>opus over a Paddle re-read, print first) and `2026-11-04-zh-print-correct-pilot-7263.md` (the pilot, which missed its bar). Both were left `undecided`; this entry records what was decided after them. The Siku question that the 11-03 file also raised is carried by `2026-11-04-zh-siku-route-matrix-7263.md`, not here.
+
+**What was decided.** On 2026-11-04 Derek released the bulk run on printed Chinese at one page a call, on the pilot's evidence (on written pages 47/52 accepted, 2/52 wrong-text; the 6 wrong-text pages of the full 60 include 4 where the stored Gemini text was left in place). It runs as `scripts/batch/zh-print-correct-7263/runner.mjs` under the systemd unit `sl-zh-print-bulk-7263`, with a per-wave breaker on apply refusals and a blind Opus check at 1,000 written pages (30 pages, stops under 24/30).
+
+**What happened since.** The runner stopped at its breaker on 2026-11-04 15:14Z (wave 8, apply refused 45 of 100: 37 pages refused by the shared-words guard, 8 by the script guard; 606 pages finished, 340 written). Three of those refused pages were opened against their images on 2026-11-12: the corrections were right and the guard over-fired (two pages), and the "letters outside the book's scripts" were a Hangul scanner footer inside `<warning>` (one page). So the guard kept stored text, it did not let wrong text through. The runner was restarted 2026-11-12 22:00:45Z (job dec-lanes-90, #90); waves 9 and 10 wrote 77 and 91 of 100.
+
+**How to stop:** `touch /mnt/HC_Volume_105839809/jobs/zh-print-bulk-7263/run/STOP` on main.
+
+## 2026-11-12 · Does reading each Tibetan leaf in halves, or at a smaller frame size, change accuracy? (#60; job tib-halfleaf-60 on gex45)
+<!-- PRIOR ART: 2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md (the 95 Kangyur pages, scores and scorer this re-reads); scripts/eval/results/tibetan-nyingma-reference-2026-10-01/README.md (the 81 Nyingma pages and the rKTs Gpb reference); 2026-10-26-yigdzin-vllm029-gex45-parity-6871.md (the vLLM 0.29 worker, its environment and the OMP_NUM_THREADS hang). -->
+
+**Reader:** BDRC/tibetan-ocr @ 50506eb6d8ed8738df86b448f6f6cdc688de29ea (Yigdzin v1), production worker `scripts/gpu/yigdzin-vllm/yig_leaf_worker.py` on vLLM 0.29, gex45 RTX PRO 4000. The processor caps an image at 1,003,520 px; the worker also resizes frames wider than 2,400 px.
+
+**Pages:** the 176 pages already scored on 1 October with `bdrc-yigdzin-v1` and retrieval ≥ 0.05 — 95 Kangyur (EAP310, Derge Kangyur e-text), 45 Nyingma EAP310 (Tshamdrak, rKTs Gpb), 36 Nyingma EAP105 (Drametse, 1,536 × 1,024 frames, Gpb). Each stored frame was fetched once and every arm read the same file. Nothing was written to Mongo, R2 or pages.
+
+### Arms
+- **A** per-leaf read, as production (`--mode partition`, leaves cut by `leafsplit.py`). **A2** the same, run again: the noise floor.
+- **W** whole-frame read (`--mode whole`).
+- **B** EAP310 only: frame downscaled to 1,536 × 1,024 (Lanczos, JPEG q85), then as A.
+- **C** each leaf of A's cut split into left/right halves with 10% overlap, each half read through the worker's `path` rows, joined line by line with the overlap de-duplicated (`halfjoin.py`, 8 tests). When the halves disagree on line count both texts are kept and the page is counted as a mismatch.
+- **C3** thirds. Read in the same card hold although C did not beat A, because it cost minutes; it is reported, not needed for the decision.
+
+### Scoring and controls
+`kanjur_align.py` unchanged. **Positive control:** re-scoring the stored 1 October text reproduced 100/100 stored identities with `etext-index-full.pkl` (median 0.947), 19/100 with `etext-index.pkl` — so the full index is the one used, and is used here. Noise control (`--noise 0.05 --n 50`): Derge 0.968, Gpb 0.972, 50/50 hits each. Shuffle control (A text against the wrong page): Derge 0.257, Gpb 0.164. A against the stored 1 October scores: +0.002 median in every group. A2 against A: median 0.000 [0, 0] in every group (A2 differs on a handful of looping leaves).
+
+Paired differences are page-paired medians with a bootstrap 95% interval (resampled pages). **With 36–95 pages per group, a paired difference under about 0.02 cannot be told from zero.**
+
+### Results (median identity to the printed reference)
+
+| Group | n | Arm | median | IQR | ≥ 0.90 | < 0.70 | paired median vs A [95% CI] | pages with fewer / more lines than A |
+|---|---|---|---|---|---|---|---|---|
+| Kangyur EAP310 | 95 | A | 0.957 | 0.920–0.979 | 77 | 4 | — | — |
+| | | A2 | 0.957 | 0.920–0.979 | 79 | 4 | 0.000 [0.000, 0.000] | 2 / 1 |
+| | | W | 0.942 | 0.915–0.967 | 74 | 4 | −0.009 [−0.012, −0.006] | 44 / 3 |
+| | | B | 0.955 | 0.925–0.979 | 78 | 3 | 0.000 [−0.002, 0.001] | 8 / 0 |
+| | | C all | 0.911 | 0.809–0.963 | 50 | 9 | −0.004 [−0.044, 0.001] | 4 / 42 |
+| | 52 | C clean | 0.960 | 0.938–0.982 | 48 | 1 | +0.006 [0.003, 0.009] | — |
+| | | C3 | 0.666 | 0.524–0.767 | 12 | 51 | −0.260 [−0.292, −0.232] | 0 / 83 |
+| Nyingma EAP310 (Tshamdrak) | 45 | A | 0.928 | 0.842–0.958 | 31 | 6 | — | — |
+| | | A2 | 0.928 | 0.842–0.958 | 31 | 7 | 0.000 [0.000, 0.000] | 0 / 1 |
+| | | W | 0.908 | 0.836–0.956 | 29 | 4 | −0.003 [−0.006, 0.000] | 24 / 1 |
+| | | B | 0.931 | 0.844–0.961 | 32 | 6 | 0.000 [−0.000, 0.000] | 4 / 3 |
+| | | C all | 0.772 | 0.645–0.936 | 13 | 17 | −0.118 [−0.169, −0.007] | 1 / 25 |
+| | 19 | C clean | 0.940 | 0.828–0.968 | 13 | 1 | 0.000 [−0.003, 0.004] | — |
+| | | C3 | 0.561 | 0.461–0.694 | 3 | 34 | −0.304 [−0.370, −0.259] | 0 / 40 |
+| Nyingma EAP105 (Drametse) | 36 | A | 0.772 | 0.687–0.844 | 4 | 11 | — | — |
+| | | A2 | 0.772 | 0.688–0.843 | 4 | 11 | 0.000 [0.000, 0.000] | 0 / 0 |
+| | | W | 0.754 | 0.686–0.855 | 5 | 12 | −0.004 [−0.011, −0.002] | 11 / 0 |
+| | | C all | 0.644 | 0.515–0.698 | 1 | 27 | −0.147 [−0.199, −0.092] | 0 / 29 |
+| | 5 | C clean | 0.807 | 0.744–0.891 | 1 | 1 | −0.008 [−0.028, 0.114] | — |
+| | | C3 | 0.348 | 0.282–0.409 | 0 | 36 | −0.441 [−0.485, −0.381] | 0 / 36 |
+
+"C clean" is the pages where the halves agreed on line count (43/95, 26/45 and 31/36 pages were mismatches). It is a selected subset — the easy pages — so its +0.006 on Kangyur is not evidence that halves help; it is under the 0.02 that can be told from zero anyway. C3 mismatched on 83/95, 40/45 and 36/36.
+
+**Pixels the model actually saw** (median width): EAP310 W 1,227, A 1,739 per leaf, B 1,536, C 1,290 per half of a 2,138 px native half (1.35× A's scale), C3 1,100 of 1,425. So B gives the model only 0.88× A's pixels per leaf: production preprocessing already throws most of a large frame away, which is why shrinking it first costs nothing. EAP105: A 1,536 (native), C 845 native per half — halves give a small frame no extra resolution.
+
+**Speed** (loaded box, model load excluded): A 0.57 s/leaf, C 0.53 s/half, C3 0.71 s/third, B 0.81 s/leaf, W 1.06 s/frame.
+
+**W and the 1 October run.** W reads 0.003–0.009 below A and drops lines on about half the pages. Character similarity of the stored 1 October text to A is 0.9928 and to W 0.9951 (W closer on 83 pages, A on 72, tie 21): the stored run cannot be assigned to one mode from its text; its scores sit with A (+0.002).
+
+**Leaf cut.** On 11/140 EAP310 frames `leafsplit.py` cut 3–4 "leaves", the extra ones being the colour chart or ruler strip (by eye on _249). Every arm reads them as Latin-letter junk.
+
+### By eye (n = 12: the 6 pages where C beat A most, and the 6 where it lost most)
+- **C better:** _95 Kangyur — A invented 12 extra lines on a 7-line repetitive leaf; the halves did not (A2 gave 8, so this is a looping leaf, not resolution). _292 Drametse — A swapped formula clauses on lines 6–7; in C the line end is read from its own half. _220 — A gave 8 lines on a 7-line leaf. _445, _170, _249 — the gain is less junk on chart/ruler strips, not better reading of text.
+- **C worse:** _195, _280, _223 Kangyur — a legible 7-line right half came back as an empty page, and the worker's minimum-token re-decode then forced ~1,600–2,000 syllables of Latin junk; these crops carry much grey background and the colour chart. _367, _152 Drametse — the left half's 7 lines read as 2, line 0 running to 1,140 characters past the cut. _181 Drametse — each half drops a different line, so the join cannot pair them.
+
+The losses are the reader failing on a half-image that no longer looks like a leaf; the gains are mostly loops and strips that a better leaf cut would also fix.
+
+### Answers in the brief's terms
+- **C ≥ A by 0.03 with the interval excluding 0, in any group?** No. C is below A in all three groups (significantly in both Nyingma groups). Half-leaf reading is not a candidate route; no full re-read is costed.
+- **B within 0.02 of A?** Yes (0.000, interval within ±0.002, on both EAP310 groups). Frame size does not limit this reader; larger British Library originals of EAP105 and EAP039 are not worth asking for on this evidence. Caveat: at production preprocessing a large frame gives the model only 1.13× the pixels of a 1,536 px one, so this measures the reader as deployed, not what a reader without the 1 MP cap could do.
+- **Does the EAP105 gap persist?** Yes. EAP310 Nyingma minus EAP105 Nyingma: A 0.156, W 0.154, B (EAP310 at EAP105's frame size) 0.159, C 0.128 (confounded by join failures), C3 0.213. The gap is the manuscripts or the reference, not the reader's resolution.
+
+### Card
+Run as gpu-queue tasks `60-tib-halfleaf` (21:30–22:12Z) and `60-tib-halfleaf-r2` (22:15–22:25Z; the first run's A and W read 0 images because of relative crop paths but exited 0 — the task now marks an arm done only when every image has a read). It waited for `zy-ocr-zh-shi-ji-8053-c007` to finish. Nothing was paused: a pending queue task holds the filler by the filler's own rule, and the filler queued `zy-ocr-euro-fr19-6871-c021` at 22:30:07Z. Card at 2 MiB after.
+
+### Files
+- Scripts: `scripts/eval/tibetan-half-leaf-60/` (`lookup-pages.mjs`, `prep_arms.py`, `halfjoin.py` + `test_halfjoin.py`, `gpu-task.sh`, `assemble.py`, `score.sh`, `summarize.py`).
+- Per-page scores (no text): `scripts/eval/results/tibetan-half-leaf-60/per-page-scores.jsonl`; aggregates `summary.json`.
+- Frames, reads and alignments: `/root/jobs/tib-halfleaf-60/` on gex45 (scratch; archived to R2 after 7 idle days). The 6.9 GB of lossless crops were deleted after scoring.
+
+## 2026-11-12 · Does a note rule prevent T10 without losing glosses? (v3#44, v2#8632 decision 1)
+
+Code and results: `scripts/eval/error-zoo/t10-note-test/` (`draw.mjs`, `translate-arms.sh`, `packets.mjs`,
+`NOTES-ADDENDUM.md`, `score.mjs`, `paired-notes.mjs`; `results-2026-11-12/`). Derek said yes on v2#8632: spare Claude
+quota, no writes. This box's account went from 44% to about 50% of its week.
+
+**Design, fixed before any read.**
+- **Rule (arm B)**, appended to the live translation prompt (DB `Standard Translation` v21) through
+  `--instructions-file`: "a `<note>` may gloss a word or phrase, give the original wording, or mark an interpolated
+  clarification. It never explains a reading, and never adds a date, name or reference that this page lacks." Arm A is
+  the live prompt alone. The rule wording is the one posted as the DECISION; it was not tuned.
+- **Pages.** 40 pages with a serious T10 finding and a fresh label, from the held-out half B of books (the same book id
+  parity as suite 1), one per book, seed 8632. Plus 12 clean pages: weekly audit, random served stratum, no serious
+  finding, at least one note. 16 languages; Latin 19, Chinese 7, Greek 4, French 4.
+- **Translator.** Opus through the Claude CLI (`claude-translate.mjs read`, one page per call, `--fresh`, R2 kept-read
+  copies off). The live route for most cells is Gemini 3.8 Flash through agy, but agy was at its quota on this box
+  during the run (216 quota stops among the last 2,000 calls of the production OCR lanes), so it had nothing spare.
+  104 of 104 reads succeeded; the rule appears in every arm-B prompt and in no arm-A prompt.
+- **Reader.** The weekly audit's Opus reader, sealed per packet, image attached, the frozen brief and calibration
+  addendum, plus one addendum (`NOTES-ADDENDUM.md`): for every note and gloss, a verdict (ok, unsupported, wrong) and
+  whether a reader would miss it, and up to five places where a note is needed and missing. 116 packets, with ids
+  shuffled and arm names absent.
+- **Pass rule.** Serious T10 pages fall on the T10 pages with a sign test p < 0.05; no other class rises beyond the
+  repeat noise; and helpful notes and missing-note findings do not move against the rule beyond that noise.
+
+**Controls.** Wrong-page: 6 of 6 caught (`right_page: "no"`). Repeats: 6 arm-A pages read twice, and the T10 and
+any-serious verdicts agreed on 6 of 6. On repeats, helpful-note counts moved by 0–3 and missing-note counts by 0–1 per
+page.
+
+**Results.** Pages are the 52 with both arms read; k/n are pages.
+
+| | live prompt (A) | + note rule (B) | paired: B worse / B better | p |
+|---|---|---|---|---|
+| serious T10 page, T10 pages | 8/40 | 3/40 | 1 / 6 | 0.125 |
+| T10 finding of any severity (count) | 25 | 11 | | |
+| serious page with any other class | 20/52 | 20/52 | | |
+| notes and glosses (count) | 402 | 268 | | |
+| hedging words in notes | 58 | 1 | | |
+| notes called unsupported | 77 | 24 | 1 / 29 | < 0.0001 |
+| notes called wrong | 35 | 30 | 6 / 9 | 0.61 |
+| helpful correct notes | 214 | 128 | 38 / 4 | < 0.0001 |
+| needed note missing | 98 | 143 | 32 / 6 | < 0.0001 |
+| clean pages: helpful correct notes | 45 | 22 | 11 / 0 | 0.001 |
+| clean pages: needed note missing | 18 | 34 | 10 / 0 | 0.002 |
+
+Classes other than T10 (serious pages, A / B): O6 14/14, T7 7/6, O5 6/5, O1 4/5, O7 2/3, I4 2/2, O12 0/2, the rest 0 or 1.
+No class moved by more than two pages.
+
+**What the reader found.**
+1. **The rule deletes notes by kind, not by truth.** It cut unsupported notes by 70%, and with them the allusion and
+   reference notes a reader needs. Examples of missing-note findings in arm B: the feet of iron in Daniel 2; "Wisdom,
+   chapter 7" (the Book of Wisdom); Cape Comori (Comorin); the River Diagram (Hetu); the sigla M. and R. of two
+   editions. Each of these needs exactly the "name or reference the page lacks" that the rule forbids.
+2. **The residual T10 is a note built on an OCR misread, and the rule does not reach it.** 9 of the 11 serious T10
+   page reads (both arms) carry a serious OCR error on the same page (O6, O1, O5 or O7). A note names the wrong chakra for the plate in both arms. Arm B glosses a misread numeral
+   as a divine name. Arm A explains a misread alchemical sign with "normally stands for fire". These notes are not
+   unsupported by the transcription; they are wrong about the leaf. That is why the reader's "wrong" count barely moved.
+3. **Hedges are a symptom.** The rule removed hedging almost entirely (58 → 1), which is what suite 1's best check
+   flags. A hedge detector run after the rule would see nothing, while T10 remained on 3 of 40 pages.
+
+**Caveats.**
+- **One translator, one judge family.** Opus translated and Opus judged. A shared blind spot would bias both arms
+  equally, but not necessarily the difference. A second family (Gemini through agy) was not available.
+- **The translator is not the live one.** The rule's effect on Gemini 3.8 Flash, which writes most new pages, is
+  untested.
+- **T10 is underpowered at n = 40.** With 7 discordant pages the test could not reach 0.05 unless at most one went the
+  other way. Arm A, a fresh read, already had serious T10 on only 8 of 40 pages that carried T10 in their stored text.
+  That is partly the translator and partly regression to the mean; the stored text was not re-judged here.
+- **The second addendum asks the reader to look at notes.** Both arms got it, so the comparison holds, but its absolute
+  counts are not the weekly audit's.
+
+**Next (DECISIONs on v2#8632).**
+- (a) **A narrower rule**, developed on half A and tested on fresh half-B pages: keep allusion and reference notes; forbid only a
+  note that explains why the text reads as it does (a misread, an "obscure" passage, a corrupt copy) or that names a
+  person, date or work no source line points to. Cost: about 1% of a week's quota.
+- (b) **Route rather than prevent.** The residual T10 rides on OCR misreads. Where the OCR is flagged (garble score, O6
+  risk), the note could be dropped or checked against the image. That needs no prompt change, and the T10 page score
+  from suite 1 (0.787) can aim it.
+
+## 2026-11-12 · OCR prompt v19.2 (scores and tables) is not promoted (decision record, #7263)
+
+PRIOR ART: `2026-11-07-ocr-prompt-v19-2-7263.md` (the test, left `undecided`) and `2026-11-11-ocr-margin-type-8567.md` (a different candidate that its own file calls v19.2-margin, rejected). Job siku-fullres-8283 asked whether to make v19.2 the live default, with "measure first" as its default.
+
+**The measurement exists, and it is the 11-07 test.** v19.2 typed 27/30 Siku score and table pages correctly (v19.1 0/30) and moved no tag on 30 ordinary pages, but one map page was judged worse, and the posted rule counts that page. Long-s handling on 5 Latin print pages was not settled. Job margin-prompt-8567 did **not** measure this candidate: it tested the margin/footnote lines, and that candidate failed too (margin type 77% against a bar of 85%; body-defect pages 18 against 15 of 32).
+
+**Decision.** On 2026-11-11 the decision triage (#8551, comment on #7263) took the default for this file's own DECISION line: keep v19.1 and do not re-run a one-read test. This entry records that, so the 11-07 file stops reading as owed. The reader-side values `table` and `musical-score` (PR #8346) do not depend on the prompt and are not affected.
+
+## 2026-11-12 · Does the live route for Latin 3 Flash pages beat the alternatives? (#8632 decision 2)
+
+**Why.** The repair queue has 470 pages in latin-flash3/unknown with a serious OCR finding and no route. The table's
+latin-flash3/print (692,318 pages waiting) and /unknown (549,086) rows are HOLD because the live route,
+`3flash>opus`, had never been judged for defects, so the rule had no comparator. Derek approved route tests in the two
+largest no-route cells on spare quota, with no writes (2026-11-12).
+
+**Design.** The 30 pages of router-tests-2026-10-26, one per book (`judge.mjs draw --from`), visible Latin books not
+held, stored 3 Flash OCR, interior, 300 or more characters, not handwritten. Three arms:
+- `3flash`, as stored;
+- `3flash>agy-flash-low`, corrected afresh by agy on the james pool with the #5924 template;
+- `3flash>opus-correct`, correct.mjs on Opus, one page a call.
+
+Nothing was kept for a lane or written. The judge was Opus through `claude -p`, blind, one output a call, against the
+image. There were 2 wrong-page controls per arm and 6 same-arm repeats, and `paired-arm.mjs check` passed R1–R5
+before judging. 38 verdicts were reused from 2026-10-26 for unchanged texts, and the rest were judged now. One agy
+correction did not return (29 pages).
+
+| arm | accept | by-book 95% | wrong text | misleading / 1k words | wrong text / 1k | fidelity | control |
+|---|---|---|---|---|---|---|---|
+| 3flash (stored) | 21/30 | 0.533–0.867 | 4/30 | 3.20 | 1.78 | 4.07 | pass |
+| 3flash>agy-flash-low | 26/29 | 0.759–1 | 2/29 | 1.14 | 0.38 | 4.45 | pass |
+| 3flash>opus-correct (live) | 27/30 | 0.8–1 | 2/30 | 1.04 | 0.23 | 4.47 | pass |
+
+- `3flash` → `3flash>agy-flash-low`, on 29 shared pages: 10 better, 2 worse; 6 accepts gained, 0 lost (sign test p 0.03).
+- `3flash` → `3flash>opus-correct`, on 30 shared pages: 12 better, 0 worse; 6 accepts gained, 0 lost (p 0.03).
+- Noise floor: the same output judged twice flipped accept on 0 of 6 pages (mean fidelity difference 0.17).
+
+**Reading.** Either correction removes about two thirds of the misleading errors in stored 3 Flash Latin text. The two
+correctors are within one page of each other, which is inside the noise at n=30. One costs an Opus call a page, the
+other an agy Flash-low call on subscription. The pages were drawn from the cell's frame, not from the flagged pages,
+so this is the cell's rate, not the repair queue's.
+
+### Replicated?
+
+Partly. 3flash and 3flash>agy-flash-low agree with the 2026-10-26 run on the same pages; that run judged no Opus arm.
+No second judge family, and no held-out draw.
+
+**Not done.** Greek (greek-flash3/unknown, 371 flagged pages) was not tested. Its row is held by Derek's decision of
+2026-10-14 (#6694, Greek stays on lane A), so a result there could not move a route without lifting that hold first.
 
 ## 2026-11-12 · Is "serious" a thing we can predict? (#6420)
 
@@ -227,6 +2713,224 @@ leaf" it is most of it: those labels live in a few targeted queues.
 - The OCR-critical target is easier partly because it is rarer and more mechanical; its κ under a second family is
   unmeasured.
 
+## 2026-11-12 · Do the free checks generalise? (#8632, vision note Part 4, suite 1)
+
+Code: `scripts/lib/ocr-english-checks.mjs` (the checks), `scripts/eval/error-zoo/detector-suite.mjs` (the suite),
+`scripts/eval/error-zoo/detector-suite-peek.mjs` (what a check fires on, one half of the books at a time). Result:
+`scripts/eval/error-zoo/detector-suite-2026-11-12.json`. Inputs: `/root/jobs/error-zoo-v2/union/{labels,pages}.jsonl`
+on gex45-1 (labels.mjs + fetch-pages.mjs, 2026-11-12). No Mongo, no model, no spend.
+
+**Frame.**
+- **Positives.** Pages with a serious finding of the class, from any store. The label must be fresh, i.e. the text is
+  unchanged since it was judged.
+- **Negatives.** The weekly audit's random served stratum, with no serious finding of any class and a fresh label:
+  921 pages.
+- **Precision.** Taken at the class's rate in that random stratum.
+- **Thresholds.** Fixed in the script before the first run.
+- **One fix round, on half A only.** After run 1 I read the number check's false flags on half A, the books with even
+  id parity, and fixed three things:
+  - dotted Roman dates (M.D.LXXXIII);
+  - Hebrew letter numerals;
+  - chapter:verse references inside notes ("Genesis 9:27" on a Targum page).
+
+  Half B is the held-out read. The other checks were not changed.
+
+**Results.** All rows below are half B, the held-out half, with 95% Wilson intervals. Half A agrees within those
+intervals on every row.
+
+| check | class | pages | recall | false flags on clean | precision at random rate | AUC |
+|---|---|---|---|---|---|---|
+| hedging word in a note | T10 | 341 | 0.45 [0.39, 0.50] | 0.065 [0.045, 0.092] | 0.24 | 0.69 |
+| hedge, or a number in a note the source lacks | T10 | 341 | 0.54 | 0.16 | 0.14 | 0.69 |
+| number in the English the source lacks | O7 | 283 | 0.37 [0.31, 0.43] | 0.10 [0.08, 0.14] | 0.10 | 0.64 |
+| same, notes included | O7 | 283 | 0.48 | 0.21 | 0.07 | 0.65 |
+| English over an `<unclear>` span | T7 | 488 | 0.07 [0.05, 0.09] | 0.014 | 0.28 (A: 0.51) | 0.53 |
+| sentence-count shortfall vs language median | T9 | 110 | 0.29 | 0.18 | 0.03 | 0.55 |
+| same | O5 | 137 | 0.24 | 0.18 | 0.05 | 0.50 |
+| source negations minus English negations ≥ 2 | T8 | 244 | 0.12 | 0.10 | 0.06 | 0.50 |
+
+**Span level: does the quoted error itself carry the signal?** Only the weekly audit's findings quote spans; the book
+check findings do not.
+
+| class | specimens with a quoted bad span | what the span carries |
+|---|---|---|
+| T10 | 118 | in a note: 106; contains a hedge: 16 (14%) |
+| O7 | 135 | contains a digit: 82 (61%) |
+| T8 | 170 scored | English has fewer negations: 28; more: 25 (31% in all); same nonzero count: 25; no negation on either side: 92 (54%) |
+
+**What this says about generalising.**
+1. **These checks mark risky pages, not errors.** A translator that hedges in its notes, or adds numbers, tends to
+   make T10 and O7 errors elsewhere on the page. The errors themselves mostly do not carry the tell. So dropping
+   hedged notes at write time, the fix the taxonomy proposes for T10, would remove at most 14% of the quoted T10
+   errors. T10 errors are confident notes.
+2. **A negation check cannot be T8's fix.** At page level it is at chance. Even a perfectly aligned sentence-level
+   check could see at most 31% of specimens, and most T8 findings are role swaps and wrong nouns ("given him over to
+   hunger" for "to the executioner"). T8 needs a source-grounded reader or prevention.
+3. **English over `<unclear>` is rare.** The translator mostly honours contract (c). T7 sits on text the OCR did *not*
+   mark: only 7% of T7 pages have an unmarked `<unclear>` span. So an uncertainty floor driven by OCR tags will not
+   reach T7. The garble-score floor is still untested here: it needs the corpus lexicon, which is not on this box.
+4. **Sentence counts per page are too coarse** for 5–20% losses. A paragraph-aligned version is possible, but this
+   result gives no reason to expect it to work.
+
+**Caveats.**
+- The negatives are "no serious finding" from one Opus reader. Some will carry errors the reader missed, which pushes
+  the false-flag rate up.
+- The positives mix stores whose readers' thresholds differ (Part 2 of the vision note).
+- CJK, Greek and Tibetan dominate the T8 and O7 specimens. The numeral parsers cover Greek keraia, CJK, Hebrew and
+  Roman numerals. Tibetan numerals are not parsed, so a Tibetan page with digits flags.
+
+## Same day · Do they lift the predictor?
+
+Script: `scripts/eval/error-zoo/pair-features.mjs` (the eight scores per page), then `pair-feature-lift.py` (the
+audit-only model of `instrument-leakage.py`, GroupKFold(5) by book, with and without them). Result:
+`scripts/eval/error-zoo/pair-feature-lift-2026-11-12.md`. The table is scored on the weekly audit's 1,340 random
+served rows, with a 400-draw book bootstrap of the AUC difference.
+
+| target | base | existing | + pair scores | difference [95%] |
+|---|---|---|---|---|
+| any serious | 31.4% | 0.751 | 0.754 | +0.003 [−0.005, +0.012] |
+| serious OCR-stage or wrong leaf | 18.3% | 0.830 | 0.827 | −0.003 [−0.010, +0.004] |
+| serious translation-stage | 28.6% | 0.750 | 0.755 | +0.005 [−0.004, +0.014] |
+| T10 page | 4.4% | 0.733 | 0.787 | **+0.054 [+0.023, +0.088]** |
+| O7 page | 3.2% | 0.752 | 0.764 | +0.012 [−0.012, +0.040] |
+| T8 page | 5.5% | 0.620 | 0.629 | +0.009 [−0.010, +0.029] |
+
+- **Only T10 gains.** The general audit targets do not move, so the weekly risk pool stays as it is. The scores help
+  only a score aimed at T10.
+- **Correction to the vision note's Part 2 shorthand.** A serious translation-stage finding is already predicted at
+  0.750 from the existing features. That is mostly because English errors sit on pages with OCR damage: T7 amplifies
+  O6. What stays unpredictable is the English error on clean OCR. T8, the class that defines it, scores 0.62.
+
+## 2026-11-12 · Does Fable 5.2 translate the hardest pages better than Opus? (#72)
+
+PRIOR ART: `2026-10-12-pro-opus-correction-hardest-languages-6545.md` (the pages, references, prompt, judge prompt and harness; Fable 5.1 was a judge there, never a translator), `2026-10-23-whish147-stability-recall.md` (Fable 5.1 as an OCR reader: level with Opus, far slower). Scripts: `scripts/eval/pro-translate-6545/` (`select-pages.py` is new; `build-packet.py`, `claude-arm.py` and `score.py` gained options). Numbers: `scripts/eval/results/pro-translate-6545/r1f72/scores.json`. Design posted before any judging: #72.
+
+### Question
+
+**Decision it changes:** is a Fable translation route worth registering for the hard tail, where Opus is the best route we have? Fable had never been run as a translator here, and every earlier Fable number was 5.1.
+
+### Design
+
+- **Pages (50).** From the 131 v2#6545 pages both judges scored. Per language, the 8 pages where the stored Opus translation scored lowest (**hard**, 40 pages), plus 2 random pages where both judges gave it a 5 (**ceiling**, 10 pages). Opus had scored 5 from both judges on 78 of the 131, so the whole set would mostly measure a ceiling.
+- **Arms.** All got the identical one-page prompt v2#6545 sent, through `claude -p --sealed` on the subscription, tools off.
+
+  | id | what |
+  |---|---|
+  | **FABLE** | `claude-fable-5-2`, effort high (its default) |
+  | **OPUS2** | Opus 5.5, effort medium (its default), run fresh. The comparison arm |
+  | **OPUSX** | Opus 5.5, effort xhigh. Separates a better model from the same model trying harder |
+  | **OPUS** | the stored v2#6545 Opus run of 12 Oct, re-judged here |
+  | **C38S** | the stored 3.8 Flash run, re-judged here |
+
+- **Why a fresh Opus arm.** The hard pages were picked because the *stored* Opus draw scored low. Any fresh run scores higher on such pages by regression alone, so Fable is compared with OPUS2 and never with OPUS.
+- **Judge.** Opus, blind, the v2#6545 prompt and rubric unchanged, 3 items a call, one round. No Gemini judge yet: all three Gemini pools stood at 90–100% of their week on 2026-11-12.
+- **Controls.** 15 planted meaning errors (3 per language), 20 repeated items for test–retest, `OPUS2 − OPUS` as the run-to-run noise of an Opus arm, and `OPUS2 − C38S` as a positive control (v2#6545 measured about +0.5).
+- **Rules fixed in #72 before judging.** Valid round: at least 12 of 15 plants located and `OPUS2 − C38S` clear of zero. *Fable better:* `FABLE − OPUS2` on the hard 40 at least +0.3, interval clear of zero, and larger than `|OPUS2 − OPUS|` on the ceiling pages; then a Gemini Pro judge confirms. *No clear gain:* upper end below +0.4; stop.
+
+### Result
+
+**The round is valid.** The judge located 14 of 15 plants (negation 8 of 8, number 3 of 3, dropped clause 3 of 4). `OPUS2 − C38S` on the hard pages is +0.75 [+0.45, +1.03]. Test–retest alpha 0.79 [0.62, 0.91]: of 100 repeated scores, 81 were identical, 19 moved by one point, none by two.
+
+**Fidelity, Opus judge** (95% interval by page):
+
+| stratum | n | C38S | OPUS (stored) | OPUS2 | OPUSX | FABLE |
+|---|---|---|---|---|---|---|
+| hard | 40 | 3.53 [3.23, 3.78] | 4.13 [3.90, 4.35] | 4.28 [4.05, 4.50] | 4.48 [4.25, 4.68] | **4.65 [4.45, 4.83]** |
+| ceiling | 10 | 4.3 | 4.8 | 4.5 | 4.6 | 4.8 |
+
+**Paired differences on the hard 40:**
+
+| pair | mean [95%] | pages better / worse |
+|---|---|---|
+| **FABLE − OPUS2** | **+0.38 [+0.18, +0.58]** | 15 / 2 |
+| OPUSX − OPUS2 (effort alone) | +0.20 [−0.05, +0.45] | 12 / 5 |
+| FABLE − OPUSX | +0.17 [−0.05, +0.40] | 12 / 6 |
+| OPUS2 − OPUS (fresh against stored) | +0.15 [0.00, +0.33] | 9 / 3 |
+| OPUS2 − C38S (positive control) | +0.75 [+0.45, +1.03] | 23 / 2 |
+
+- **The "Fable better" rule is met under this judge.** +0.38 is above +0.3, its interval excludes zero, and it is above the 0.30 that `OPUS2 − OPUS` moved on the ceiling pages (−0.30 [−0.7, +0.1], 10 pages). The margin over that last bar is thin.
+- **About half the gap is effort.** Opus at xhigh gains +0.20 over Opus at medium. Fable over Opus-xhigh is +0.17 with an interval that includes zero. Per page, Fable's score minus the better of the two Opus scores is +0.02 [−0.14, +0.18]: Fable lands where the better of two Opus draws lands, and does it in one draw.
+- **The gain is fewer slips, not a different kind of translation.** Over all 50 pages, `FABLE − OPUS2` is +2 on 2 pages, +1 on 18, 0 on 26 and −1 on 4.
+
+**What the judge found, all 50 pages:**
+
+| arm | pages scored 5 | pages scored ≤ 3 | pages with an omission | major accuracy spans | minor accuracy spans | fills over unreadable source | reversals |
+|---|---|---|---|---|---|---|---|
+| C38S | 9 | 20 | 11 | 49 | 97 | 30 | 10 |
+| OPUS (stored) | 20 | 6 | 8 | 7 | 52 | 3 | 2 |
+| OPUS2 | 22 | 4 | 10 | 4 | 52 | 0 | 0 |
+| OPUSX | 29 | 3 | 2 | 2 | 32 | 1 | 1 |
+| FABLE | **36** | 2 | 2 | **0** | **25** | **6** | 0 |
+
+- Fable has half the minor errors of Opus at default effort, no major one, and omits on 2 pages where Opus omits on 10. Opus at xhigh closes the omission gap completely (2 pages).
+- **Fable fills in more.** The judge typed 6 passages of Fable's as plausible content written over garbled source, against 0 for OPUS2 and 1 for OPUSX. See "Fable overrules the transcription" below.
+
+**By language** (`FABLE − OPUS2`, 10 pages each, so read as a direction only): Hebrew +0.7 [+0.3, +1.1], Sanskrit +0.5 [+0.2, +0.8], Greek +0.4 [0.0, +0.8], Chinese +0.2 [−0.3, +0.8], Persian 0.0 [−0.3, +0.3].
+
+**Is it recall of famous texts?** Not visibly. On the 22 pages whose reference is flagged canonical the gap is +0.27 [0.00, +0.55]; on the other 28 it is +0.43 [+0.18, +0.68].
+
+**Speed and cost per page:**
+
+| arm | seconds (median) | output tokens (mean) | list price (the CLI's figure, mean) | calls per page |
+|---|---|---|---|---|
+| OPUS2 | 24 | 3,033 | $0.13 | 1.18 |
+| OPUSX | 52 | 7,001 | $0.20 | 1.08 |
+| FABLE | 42 | 5,177 | $0.16 | 1.00 |
+
+- No arm declined a page and no call hit a limit. Fable needed no second call on any page.
+- For text translation Fable cost about 1.3 times Opus at default effort and less than Opus at xhigh. The 8× of the Whish 147 test was for reading images.
+- On the subscription the run moved team@ from 29% to 32% of the week and its Fable bar from 0% to 4%. That reading was taken after the translation calls and includes the laptop session that ran the test (also on Fable), so it is an upper bound, not a per-page rate.
+
+### Fable overrules the transcription
+
+Counted by a pattern over the `<note>` text (notes that say the transcription, OCR or printed text reads one thing and the sense or the received text another):
+
+| arm | such notes | pages with one |
+|---|---|---|
+| C38S | 0 | 0 |
+| OPUS2 | 38 | 17 |
+| OPUSX | 31 | 19 |
+| FABLE | 48 | 24 |
+
+Both Claude models do this and both flag it. Fable does it on more pages, and it cuts both ways:
+
+- **Where the OCR is wrong, it is the gain.** On a badly garbled page of *Sha'arei Orah* (Hebrew) Fable recovered Isaiah 48:11, Psalm 118:27 and the contrast of "luminaries" and "lights of fire" where OPUS2 left the passages as untranslated Hebrew: FABLE 4, OPUS2 2. On a heavily garbled Gregory Nazianzen page (Greek) Fable and OPUSX both restored the known text to the end of the page, where OPUS2 stopped a sentence short: 5, 5 and 4.
+- **Where the edition simply differs, it is an error.** On a Rumi ghazal (Nicholson's edition) the page reads خوبی, "fair", and Nicholson's own translation has "foul and fair". Fable changed it to خونی and wrote "from filth and from blood", with a note saying so. It replaced what this page says with a reading it expected. The judge took a point off.
+- The fidelity score here is against the transcription and a published translation, never against the page image. So this test cannot say how often Fable's corrections match the leaf. That needs an image-grounded check before a route.
+
+### Read against the source
+
+*Evidence type: the source text and both translations read by the session, not the page image. The session that ran this test is itself Fable 5.2, so these checks are not independent of the arm.*
+
+1. **Liaozhai, tale 曾友于 (Chinese): FABLE 5, OPUS2 3.** The source has 仁義各以杖出 and 仁義奔告友于. Fable keeps both brothers each time. OPUS2 writes "Xiao, Ren and Yi each came out with a staff" (Xiao has just been struck) and "Ren ran to tell Youyu" (Yi dropped). OPUS2 also adds a note calling the buried woman "Cheng's mother, a concubine"; the judge says she is the half-brothers' mother, and Fable's "their mother's burial" does not commit to the error. Confirmed for the two name readings; the kinship point rests on the judge.
+2. **Rumi, Divan-i Shams (Persian): FABLE 4, OPUS2 5.** The emendation above. Confirmed against the source line and the reference.
+3. **Zhuangzi 德充符 (Chinese): FABLE 4, OPUS2 5.** Fable renders 不見己 as "they no longer saw themselves in her". The judge says this edition's margin gloss and Legge take it as the mother no longer seeing them. The session recalls Fable's reading from a modern translation but did not check that, so it is recorded as the judge scored it: a reading that goes against the page's own commentary.
+
+The 18 one-point gains are mostly single slips in OPUS2 that Fable does not make: sigla dropped from a Greek New Testament apparatus, the glossed verse misnumbered in the Mitākṣarā, a Pāṇinian term glossed wrongly in Sāyaṇa, "above all" for "before all these" in Socrates Scholasticus. These are the judge's findings, read but not re-derived by the session.
+
+### Threats and limits
+
+- **One judge, and it is Claude-family.** v2#6545's family rule gives a Claude-made arm to the Gemini Pro judge. An Opus judge might lean toward Opus text or toward a sibling model's text; neither is measured. The verdict above is "under the Opus judge" until the Pro round is in.
+- **Every page has a published English translation**, because the method needs a reference. A model that knows the work can restore a garbled line from memory, and this judge rewards that: on a garbled Gītā leaf it credited the 3.8 Flash arm for rendering the verses "from the standard text". The canonical split shows no concentration, but nothing here measures works with no translation, which is where the library most needs a better translator.
+- **n.** 40 hard pages detect a gap of about 0.4. Fable against Opus-xhigh (+0.17, paired SD about 0.7) would need about 70 hard pages, and the v2#6545 panels hold only 53 pages below a perfect score, so settling it needs new pages.
+- **Effort names are not comparable across models.** "Fable at high" and "Opus at xhigh" are two settings, not one scale.
+- `OPUS2` ran sealed with effort stated; the stored `OPUS` ran on 12 Oct on another box with that box's defaults. `OPUS2 − OPUS` therefore mixes run-to-run noise, regression on the selected pages, and settings.
+- 10 pages per language: the language column is a direction, not a result.
+- AI judge against one published translation: fidelity as the judge reads source and reference, not measured accuracy (eval-design §2).
+
+### Routing
+
+- **No change.** The rule fixed in #72 sends a "Fable better" result to a cross-family judge before anything is registered.
+- **Next, already designed:** Gemini 3.1 Pro judges the same items (`$W/judge/r1f72/pro/req.jsonl`) on the dereklomas@ pool after it resets on 2026-11-15, inside the 40-a-day Pro cap: the 40 hard items first.
+- **If the Pro judge agrees,** the open question is not Fable against Opus-medium but Fable against Opus-xhigh, and whether Fable's corrections of the transcription match the page image. Both need pages of our own with no published translation.
+- **What this already suggests for the Opus lane:** raising Opus to xhigh removed the omissions (10 pages to 2) for 1.6 times the list price. That is a prompt-free change to the existing route and deserves its own paired test.
+
+*Measure:* judged against a human reference, one Opus judge. *Grade:* moderate-to-weak: one judge, 40 pages, controls passed, positive control seen. *Replicated?* No. First run of Fable as a translator.
+
+*Cost:* $0. `claude -p` on the subscription (l7a, team@): 150 translation calls and 29 judge calls. No Gemini call, no API key, no database write.
+
+*Files:* `scripts/eval/results/pro-translate-6545/r1f72/` (`key.json`: labels → arms, plants, strata; `scores.json`). The arm outputs are kept on l7a in `/root/jobs/fable-translate/w/arms/{FABLE,OPUS2,OPUSX}.jsonl`; the judge packet quotes published translations and stays on the box.
+
 ## 2026-11-12 · Calibration set: two model families on identical text (#6420, Derek's decision 1)
 
 **Who reads this.** Anyone quoting a serious-error rate, choosing a judge, or deciding whether the risk score needs more work.
@@ -281,6 +2985,61 @@ Aiming works: block A random vs top decile, Opus 17/36 vs 27/36, Gemini 11/36 vs
   week mid-run and the pace guard refused further calls.
 - One e-text control; the false-alarm line rests on one page.
 - No human judgment yet. Derek's sitting (36 pages, prefilled spans) is ready: https://claude.ai/artifact/LXu4ekUd61X1NS17Rr689E.
+
+## 2026-11-12 · Is a Claude subscription read good enough for the bath books? (conceptual-histories#11)
+
+**Who it is for.** The bath article in JDerekLomas/conceptual-histories needs these readable texts: Olga's bath-house in the Primary Chronicle, and Aristides' winter river at Smyrna. agy was out of quota until about 2026-11-15. On 2026-11-12 Derek directed Sonnet/Opus subscription reads for these books. This run is the cell test the brief asked for.
+
+**Design.**
+- Books (all hidden):
+  - Primary Chronicle `6af5f8cdd9ec0ea7635aa87f`
+  - Aristides `6adf8f02bf12d2ef205aea68`
+  - Oczko `6af5f8cf2d7bc14fc2a45495`
+  - Schwenckfeld `6adeb2e1a765b2fd7a094890`
+  - Bacci `6adedf3cbf12d2ef2054684b`
+  - Montaigne `6adecd6fbf12d2ef2053737e`
+  - De balneis 1553 `6adee2a1bf12d2ef20548f71`
+- Pages read: 222 in all.
+- Draw:
+  - 30 pages, 4 per book, except 6 from Aristides and 4 from the Chronicle.
+  - A page qualified if its OCR came from claude-opus-5-5, had 300+ characters of body, had an English translation, and was not blank or a title page.
+  - Pages were ordered by a seeded hash.
+  - Oczko scan 6 was excluded because its title is a hand correction, not a model read.
+- Judge: Opus, one output a call, blind arm names. The judge saw the page image together with the OCR (or, for translation items, the OCR plus the English).
+- Controls: 14 wrong-page controls and 10 same-arm repeats.
+- Files:
+  - score: `scripts/eval/route-judge-6740/results/bath-reads-opus-cli-2026-11-12/paired-score.json`
+  - also there: verdicts, key and recipe
+  - packet not kept (R2: ids only)
+
+| cell | arm | accept | wrong text | fidelity (mean) |
+|---|---|---|---|---|
+| OCR Latin (2 books) | opus-cli-ocr | 8/8 | 0/8 | 4.75 |
+| OCR Greek | opus-cli-ocr | 6/6 | 0/6 | 4.83 |
+| OCR French | opus-cli-ocr | 4/4 | 0/4 | 5 |
+| OCR German | opus-cli-ocr | 4/4 | 0/4 | 5 |
+| OCR Church Slavonic | opus-cli-ocr | 4/4 | 0/4 | 4.75 |
+| OCR Polish | opus-cli-ocr | 3/4 | 1/4 | 4.75 |
+| EN Latin (2 books) | opus-cli-tr | 8/8 | 0/8 | 4.5 |
+| EN Greek | opus-cli-tr | 6/6 | 0/6 | 4.83 |
+| EN French | opus-cli-tr | 4/4 | 0/4 | 4.25 |
+| EN German | opus-cli-tr | 4/4 | 0/4 | 4.5 |
+| EN Church Slavonic | opus-cli-tr | 4/4 | 0/4 | 4 |
+| EN Polish | opus-cli-tr | 4/4 | 0/4 | 4.25 |
+
+- **Controls.** All 14 wrong-page controls were rejected.
+- **Noise floor.** Same-arm repeats: 0/10 accept flips.
+- **By eye.** Separately, 3 pages a book were checked by eye against the image. No invented text was found. The small slips found:
+  - Chronicle 102 drops "нъ" in родинъ, twice.
+  - Montaigne 172: the English adds "to cool it".
+  - De balneis 285: the English gives "effeminate" for *mollissimam*.
+- **Hand fixes.** Two Oczko pages were fixed by hand: scan 6 (the title) and scan 20 (the wrong-text page). Both fixes were written revision-first.
+
+**Recipe rules waived.** R1: the brief fixed 30 pages over seven named books (4–8 per language cell, from 1–2 books). These are not 30 independent pages.
+
+### Replicated?
+
+No. One judge family (Opus), and the judge is the same model family as the reader. A held-out draw from other books in these languages would be needed before any router cell moves.
 
 ## 2026-11-12 · Does a bandit beat "top decile + random"? (#8632)
 
@@ -590,6 +3349,26 @@ findings with no class at all). All were classed, cheaply, in three passes (`cla
 - The model is not deployed and scores nothing live. `preds.jsonl` holds out-of-book scores for the labelled pages only.
 - CPU on gex45-1 was kept to four threads at nice 10; no GPU, no paid API; the classification pass used the job's
   Claude quota (about 60 haiku calls, 40 findings each).
+
+## 2026-11-11 · Can a cheap screen find the pages a member found wrong?
+
+**Who it is for.** QA chooses which pages an expensive reader (Opus, a volunteer) checks. A screen that ranks likely-defective pages first would raise defects found per read. Emanuel Almeida's 459-line report (7 Nov) gives, for the first time, defects a person found on the page.
+
+**Labelled set.** `scripts/eval/defect-detectors/snapshot.mjs` (Mongo read-only): every page the findings name in an O/T/D class (184), plus pages −9, +7, −13 in the same book that no finding names (541 controls), with neighbours. Metric `run.mjs`: AUC per taxonomy class, reported vs same-book controls, 95% interval from a bootstrap over BOOKS.
+
+**Arms.** (1) Clef 27B on Workers AI, eight one-line noul questions per page. (2) Clef, six questions written from `.claude/docs/page-error-taxonomy.md` with its own examples (no member examples). (3) A sentence-level Clef run whose questions carried the member's own examples — leaked, kept only as a record (`clef-zoo-leaky-sentence.jsonl`), not scored. (4) Seven model-free rules in `scripts/eval/defect-detectors/detectors.mjs`, reusing `sourceLanguageCount`, `boundarySignals`, `englishSource`, `translationReasoningLeak`.
+
+**Result** (`results/defect-detectors-2026-11-11/unchanged/table.md`, pages not rewritten since 2026-10-10: 102 reported, 513 controls). Every detector on its own target class: T11 parallel 0.31, O6 long-s 0.44, O6 negation 0.56, T15 seam 0.46, T10 hedged notes 0.49, T12 English source 0.56; Clef-zoo on T11 0.17, O6 0.23, T10 0.49; Clef-plain 0.45–0.60. Classes with 3–4 pages show wide intervals and nothing beyond them.
+
+**Interval caveat (added at review, 2026-11-12).** The intervals in `results/defect-detectors-2026-11-11/` were drawn with a hand-rolled LCG that loses its low bits in double arithmetic (#5373, `tests/unit/paired-stats-prng.test.ts`), which can give a bootstrap interval the wrong width. `run.mjs` now takes its stream from `makeRng` in `scripts/eval/lib/paired-stats.mjs`. The point AUCs do not depend on the generator. The intervals were not re-drawn (the snapshot holds page text and stays on the box), so read their edges as approximate; the next run of `run.mjs` replaces them.
+
+**Correction.** In conversation on 2026-11-11 Clef-zoo was reported at 0.88 on T11. That figure used controls from all books. Bilingual books are a minority of the controls, so the screen was rewarded for recognising a parallel edition at all. With same-book controls it is below chance.
+
+**Why nothing ranks.** (a) The defects are local: one misread letter or inverted clause on a full page. A page-level question and page-level counts dilute them. (b) Controls are not clean. The member read the passages his research needed, not every page; the taxonomy finds O6 in 43 of 78 books, so unreported neighbours carry the same defects at a similar rate, and AUC is pulled to 0.5 whatever the screen. (c) 82 of 184 reported pages were re-OCRed or re-translated after the report (`--unchanged-since` drops them).
+
+**Cost.** Clef: 7.9M input tokens over all runs, ≈ $1.90 at list price (the account did not return 429, so it is likely billed, not on the free tier). Rules: $0.
+
+**Next.** Verified negatives first: Opus (subscription) reads image + OCR + English for the controls and marks each clean or defective by class; then `run.mjs` is re-run with no change. Until then the set measures recall (does the QA reader catch the member's defects?) — the 80 regression rows — not screens.
 
 ## 2026-11-11 · The pennies test: do the cheapest Chinese vision models read Latin print as well as Gemini Flash? (#6011)
 
@@ -57732,7 +60511,7 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   text: the gate's per-book offset was locally wrong — every one is "text one leaf behind", the
   Oxyrhynchus volumes worst; 2 already written), **5 image-side** (the text matches the source
   leaf; the archived R2 image is the neighbouring leaf — the #3368 bulk-JP2 leaf offset,
-  `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`; the TEXT is right; 2 written), 2 unclear.
+  `.claude/handoffs/archive/2026-07-27-bulk-jp2-leaf-offset.md`; the TEXT is right; 2 written), 2 unclear.
   Mechanism for the text-side class: the reference pages are the book's FIRST 25 (the preview
   sample), so the offset is calibrated at the front and drifts by the interior; an 86% vote
   (`--min-offset-share` 0.60 passes it) was locally wrong. **A repair must classify first —

@@ -1,0 +1,25 @@
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>107</page-num>
+<warning>Handwritten square/semi-cursive Hebrew hand. The leaf is badly damaged. A large rectangular hole in the centre shows torn fragments of other leaves underneath. The parchment is water-stained and much of the ink is faded, so most of the text cannot be read with confidence.</warning>
+
+השמים <unclear>[illegible — 5-6 words]</unclear>
+וכשהם <unclear>נעים</unclear> <unclear>ומולדים</unclear> <unclear>[illegible — 2-3 words]</unclear>
+<unclear>ומשרתיהם</unclear> <unclear>[illegible — 3-4 words]</unclear>
+<unclear>[illegible — 1 line, mostly lost at the edge of the hole]</unclear>
+
+<image-desc size="medium" type="decorative" significance="low">A large rectangular hole in the centre of the leaf shows torn fragments of underlying leaves. Some Hebrew script is visible on these fragments. It is not part of this leaf's text.</image-desc>
+
+<unclear>[illegible — 1 line, fragmentary]</unclear>
+<unclear>[illegible — 1 line, fragmentary]</unclear>
+<unclear>[illegible — 2 words]</unclear> ועם עשק <unclear>לפניך</unclear>
+<unclear>[illegible — 1 line, fragmentary]</unclear>
+<unclear>[illegible — 1-2 words]</unclear> <unclear>שוה</unclear> <unclear>[illegible — 3-4 words]</unclear>
+<unclear>עממה</unclear> <unclear>[illegible — 1 word]</unclear> <unclear>ומעלה</unclear> <unclear>[illegible — 2-3 words]</unclear>
+<unclear>[illegible — 1 word]</unclear> <unclear>ומודה</unclear> <unclear>[illegible — 2-3 words]</unclear>
+<unclear>[illegible — 4-5 words]</unclear>
+<unclear>[illegible — 2 words]</unclear>
+
+<vocab>עשק</vocab>

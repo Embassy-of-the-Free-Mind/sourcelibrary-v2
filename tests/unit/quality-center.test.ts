@@ -8,7 +8,7 @@ import { digest, render, unfitRows, dropReason, OUT as DIGEST } from '../../scri
 import { FOOTER_NAV_COLUMNS, visibleFooterNavColumns } from '@/lib/footer-nav';
 import { FOOTER_STRINGS } from '@/lib/i18n';
 // @ts-expect-error -- plain ESM script, no types
-import { checkFreshness, readDates } from '../../scripts/audit/quality-center-freshness.mjs';
+import { checkFreshness, readDates, listedIssues, closedFindings } from '../../scripts/audit/quality-center-freshness.mjs';
 // @ts-expect-error -- plain ESM script, no types
 import { classify, synthesize } from '../../scripts/analytics/quality-feedback-themes.mjs';
 
@@ -68,6 +68,20 @@ describe('canon status', () => {
     if (tibetan) expect(typedPages(tibetan)).toBeGreaterThan(0);
     const t = { ocr_engines: [['esukhia-derge-tengyur', 10], ['gemini-3-flash-preview', 5], ['cbeta-xml-p5@x', 2]] } as never;
     expect(typedPages(t)).toBe(12);
+  });
+});
+
+describe('open-work list issue check', () => {
+  it('reads every row number once, and flags only the closed ones', () => {
+    const text = "  {\n        n: 5803,\n        title: 'a',\n      },\n      {\n        n: 5698,\n      },\n      {\n        n: 5803,\n";
+    expect(listedIssues(text)).toEqual([5803, 5698]);
+    const f = closedFindings({ 5803: 'open', 5698: 'closed' });
+    expect(f).toHaveLength(1);
+    expect(f[0]).toMatch(/v2#5698 is closed/);
+  });
+  it('finds the rows of the real list', () => {
+    const real = fs.readFileSync(path.join(process.cwd(), 'src/app/research/quality/open/issues.ts'), 'utf8');
+    expect(listedIssues(real).length).toBeGreaterThan(5);
   });
 });
 

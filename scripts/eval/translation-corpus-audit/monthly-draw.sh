@@ -15,6 +15,12 @@
 # means the draw already ran — exit 0 without drawing again (a re-draw would change the sample mid-month).
 set -euo pipefail
 
+# RETIRED 2026-11-15 (v3#381, #8405): one interior page a book never sees a page break. The translation corpus is read by
+# the daily paired-fifths lane on cloudlayer (scripts/audit/paired-fifths-daily.sh), whose uniform stratum covers every
+# language x print/manuscript cell, Chinese included. The cron line stays harmless until a session on main removes it.
+# TCA_RUN_RETIRED=1 runs the old draw by hand.
+if [ "${TCA_RUN_RETIRED:-0}" != 1 ]; then echo "$(date -u +%FT%TZ) monthly-draw.sh is retired (v3#381): the daily paired-fifths lane reads the corpus; nothing drawn"; exit 0; fi
+
 REPO=/root/sourcelibrary                 # auto-pull checkout: code + node_modules + .env, read-only here
 WORK=/root/tca-work                      # our own clone; branches are made here
 SLUG=Embassy-of-the-Free-Mind/sourcelibrary-v2

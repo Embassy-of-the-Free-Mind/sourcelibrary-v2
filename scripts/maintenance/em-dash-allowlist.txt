@@ -54,8 +54,6 @@ src/app/api/admin/translation-failures/route.ts 5  # rewritten in a #6215 copy P
 src/app/api/admin/work-merges/batch/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/authority/author/search/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/beta/subscribe/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/api/books/[id]/batch-ocr-async/route.ts 1  # OCR prompt sent to a model
-src/app/api/books/[id]/batch-ocr-multi/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/books/[id]/download/route.ts 6  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/books/[id]/editions/front-matter/route.ts 12  # introduction prompt sent to a model
 src/app/api/books/[id]/ensure-cover/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -101,8 +99,6 @@ src/app/api/review/translation-check/summary/route.ts 1  # rewritten in a #6215 
 src/app/api/search/ai-expand/route.ts 11  # prompt sent to a model
 src/app/api/share-findings/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/stripe/purchase/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/api/[tenant]/books/[id]/batch-ocr-async/route.ts 1  # OCR prompt sent to a model
-src/app/api/[tenant]/books/[id]/batch-ocr-multi/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/[tenant]/books/[id]/download/route.ts 6  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/[tenant]/books/[id]/editions/front-matter/route.ts 12  # introduction prompt sent to a model
 src/app/api/[tenant]/books/[id]/index/route.ts 2  # quote list fed into the index prompt

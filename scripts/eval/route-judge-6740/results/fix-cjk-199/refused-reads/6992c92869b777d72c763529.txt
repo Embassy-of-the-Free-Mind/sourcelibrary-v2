@@ -1,0 +1,33 @@
+<scan-quality>fair</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>106</page-num>
+<warning>Strong show-through of text from the other side of the leaf; some small interlinear characters are hard to read.</warning>
+
+乾上兌下 六親 ○ 壬戌土 壬申金 壬午火 丁丑土 丁卯木 丁巳火 飛壬申金
+
+<gloss>春凶 夏平 秋凶 冬吉</gloss>
+
+# 天澤履
+
+● 世 ● ∶ 應 ● 三月卦
+
+艮土五世 <gloss>內卦伏藏</gloss> ○ 兄弟 子孫 父母 兄弟 官鬼 父母 伏<gloss>丙</gloss>子水
+
+---
+
+**評曰** <gloss>履者禮也</gloss>
+
+如履虎尾不<unclear>示</unclear>其心兢兢戒懼視之若氷安中慮危憂中望喜眇而能視跛而履<gloss>能</gloss>
+
+<image-desc size="large" type="woodcut" significance="high">Woodcut illustration: on the left, a standing figure beneath a large parasol, with a hat drawn floating beside them; in the centre, a tall brick-like block labelled "千里"; on the right, a robed official standing before a doorway with a banner pole; a broken document labelled "文書" lies on the ground in the foreground.</image-desc>
+<insert>千里</insert> <insert>文書</insert>
+
+此卦是子路出行卜得之後遇虎拔其尾也
+
+**解曰** 笠子<gloss>乃成<unclear>五</unclear>也</gloss> 文書破<gloss>用去損也</gloss> 女子<gloss>乃好也</gloss> 在傘<gloss>有所庇蓋也</gloss> 旗官人邊坐<gloss>也 門旗</gloss>埃上有千里字<gloss>乃坐鎮千里侯伯之任也</gloss>
+
+<margin>○ 如履虎尾之課 安中防危之象</margin>
+
+<vocab>天澤履, 乾上兌下, 艮土五世, 六親, 伏藏, 世應, 子路, 如履虎尾, 千里, 侯伯</vocab>

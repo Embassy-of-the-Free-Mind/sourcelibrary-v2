@@ -149,7 +149,7 @@ export default async function FeaturedCollections() {
         <div className="flex items-end justify-between mb-8">
           <div>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic font-display"
+              className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic font-serif"
             >
               Collections
             </h2>
@@ -189,7 +189,7 @@ export default async function FeaturedCollections() {
 
                   {/* Title */}
                   <h3
-                    className="text-base sm:text-xl md:text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-display"
+                    className="text-base sm:text-xl md:text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-serif"
                   >
                     {coll.shortTitle || coll.title.split(':')[0]}
                   </h3>

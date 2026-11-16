@@ -1,0 +1,7146 @@
+{
+ "source": "scripts/eval/error-zoo/zoo-stats.py + zoo-all.py over /root/jobs/error-zoo-v2 on gex45 (#6420, #244); aggregates only, no page text",
+ "built": "2026-11-11",
+ "n_pages": 10935,
+ "n_uniform": 1344,
+ "uniform_books": 1218,
+ "uniform_serious": 421,
+ "sources": {
+  "book_checks (19 QA methods)": 10118,
+  "weekly audit (Opus, spare lane)": 1920,
+  "lane judge, served arm": 68
+ },
+ "heat_uniform": {
+  "langs": [
+   "Latin",
+   "German",
+   "Chinese",
+   "Greek",
+   "French",
+   "Italian"
+  ],
+  "bins": [
+   "before 1450",
+   "1450–99",
+   "1500–49",
+   "1550–99",
+   "1600–49",
+   "1650–99",
+   "1700–49",
+   "1750–99",
+   "1800–49",
+   "1850 on"
+  ],
+  "cells": [
+   {
+    "lang": "Chinese",
+    "bin": "before 1450",
+    "pages": 6,
+    "serious": 0,
+    "findings": 29,
+    "by": {
+     "minor": 24,
+     "moderate": 5,
+     "serious": 0
+    },
+    "mean_sev": 1.172
+   },
+   {
+    "lang": "Latin",
+    "bin": "1550–99",
+    "pages": 86,
+    "serious": 24,
+    "findings": 621,
+    "by": {
+     "minor": 386,
+     "moderate": 187,
+     "serious": 48
+    },
+    "mean_sev": 1.456
+   },
+   {
+    "lang": "Greek",
+    "bin": "1550–99",
+    "pages": 6,
+    "serious": 4,
+    "findings": 61,
+    "by": {
+     "minor": 21,
+     "moderate": 26,
+     "serious": 14
+    },
+    "mean_sev": 1.885
+   },
+   {
+    "lang": "Latin",
+    "bin": "1500–49",
+    "pages": 62,
+    "serious": 20,
+    "findings": 513,
+    "by": {
+     "minor": 286,
+     "moderate": 179,
+     "serious": 48
+    },
+    "mean_sev": 1.536
+   },
+   {
+    "lang": "Italian",
+    "bin": "1500–49",
+    "pages": 9,
+    "serious": 1,
+    "findings": 50,
+    "by": {
+     "minor": 39,
+     "moderate": 10,
+     "serious": 1
+    },
+    "mean_sev": 1.24
+   },
+   {
+    "lang": "Greek",
+    "bin": "1850 on",
+    "pages": 28,
+    "serious": 12,
+    "findings": 161,
+    "by": {
+     "minor": 86,
+     "moderate": 53,
+     "serious": 22
+    },
+    "mean_sev": 1.602
+   },
+   {
+    "lang": "German",
+    "bin": "1750–99",
+    "pages": 25,
+    "serious": 3,
+    "findings": 163,
+    "by": {
+     "minor": 123,
+     "moderate": 36,
+     "serious": 4
+    },
+    "mean_sev": 1.27
+   },
+   {
+    "lang": "German",
+    "bin": "1650–99",
+    "pages": 24,
+    "serious": 6,
+    "findings": 175,
+    "by": {
+     "minor": 127,
+     "moderate": 39,
+     "serious": 9
+    },
+    "mean_sev": 1.326
+   },
+   {
+    "lang": "Latin",
+    "bin": "1650–99",
+    "pages": 114,
+    "serious": 20,
+    "findings": 822,
+    "by": {
+     "minor": 541,
+     "moderate": 244,
+     "serious": 37
+    },
+    "mean_sev": 1.387
+   },
+   {
+    "lang": "German",
+    "bin": "1700–49",
+    "pages": 25,
+    "serious": 4,
+    "findings": 172,
+    "by": {
+     "minor": 125,
+     "moderate": 35,
+     "serious": 12
+    },
+    "mean_sev": 1.343
+   },
+   {
+    "lang": "Latin",
+    "bin": "1600–49",
+    "pages": 78,
+    "serious": 11,
+    "findings": 530,
+    "by": {
+     "minor": 359,
+     "moderate": 151,
+     "serious": 20
+    },
+    "mean_sev": 1.36
+   },
+   {
+    "lang": "Latin",
+    "bin": "1700–49",
+    "pages": 48,
+    "serious": 16,
+    "findings": 391,
+    "by": {
+     "minor": 231,
+     "moderate": 115,
+     "serious": 45
+    },
+    "mean_sev": 1.524
+   },
+   {
+    "lang": "Latin",
+    "bin": "before 1450",
+    "pages": 21,
+    "serious": 14,
+    "findings": 260,
+    "by": {
+     "minor": 73,
+     "moderate": 116,
+     "serious": 71
+    },
+    "mean_sev": 1.992
+   },
+   {
+    "lang": "Latin",
+    "bin": "1450–99",
+    "pages": 71,
+    "serious": 47,
+    "findings": 903,
+    "by": {
+     "minor": 331,
+     "moderate": 393,
+     "serious": 179
+    },
+    "mean_sev": 1.832
+   },
+   {
+    "lang": "Latin",
+    "bin": "1850 on",
+    "pages": 11,
+    "serious": 3,
+    "findings": 66,
+    "by": {
+     "minor": 38,
+     "moderate": 23,
+     "serious": 5
+    },
+    "mean_sev": 1.5
+   },
+   {
+    "lang": "German",
+    "bin": "1550–99",
+    "pages": 26,
+    "serious": 3,
+    "findings": 190,
+    "by": {
+     "minor": 137,
+     "moderate": 48,
+     "serious": 5
+    },
+    "mean_sev": 1.305
+   },
+   {
+    "lang": "French",
+    "bin": "1850 on",
+    "pages": 18,
+    "serious": 4,
+    "findings": 94,
+    "by": {
+     "minor": 66,
+     "moderate": 19,
+     "serious": 9
+    },
+    "mean_sev": 1.394
+   },
+   {
+    "lang": "German",
+    "bin": "1600–49",
+    "pages": 42,
+    "serious": 10,
+    "findings": 315,
+    "by": {
+     "minor": 217,
+     "moderate": 78,
+     "serious": 20
+    },
+    "mean_sev": 1.375
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1750–99",
+    "pages": 22,
+    "serious": 9,
+    "findings": 140,
+    "by": {
+     "minor": 65,
+     "moderate": 53,
+     "serious": 22
+    },
+    "mean_sev": 1.693
+   },
+   {
+    "lang": "French",
+    "bin": "1750–99",
+    "pages": 8,
+    "serious": 0,
+    "findings": 37,
+    "by": {
+     "minor": 34,
+     "moderate": 3,
+     "serious": 0
+    },
+    "mean_sev": 1.081
+   },
+   {
+    "lang": "Greek",
+    "bin": "1500–49",
+    "pages": 6,
+    "serious": 6,
+    "findings": 100,
+    "by": {
+     "minor": 16,
+     "moderate": 48,
+     "serious": 36
+    },
+    "mean_sev": 2.2
+   },
+   {
+    "lang": "Greek",
+    "bin": "before 1450",
+    "pages": 4,
+    "serious": 3,
+    "findings": 52,
+    "by": {
+     "minor": 8,
+     "moderate": 20,
+     "serious": 24
+    },
+    "mean_sev": 2.308
+   },
+   {
+    "lang": "French",
+    "bin": "1700–49",
+    "pages": 7,
+    "serious": 1,
+    "findings": 45,
+    "by": {
+     "minor": 33,
+     "moderate": 10,
+     "serious": 2
+    },
+    "mean_sev": 1.311
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1600–49",
+    "pages": 25,
+    "serious": 6,
+    "findings": 182,
+    "by": {
+     "minor": 86,
+     "moderate": 81,
+     "serious": 15
+    },
+    "mean_sev": 1.61
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1850 on",
+    "pages": 2,
+    "serious": 1,
+    "findings": 10,
+    "by": {
+     "minor": 4,
+     "moderate": 2,
+     "serious": 4
+    },
+    "mean_sev": 2.0
+   },
+   {
+    "lang": "Latin",
+    "bin": "1750–99",
+    "pages": 12,
+    "serious": 3,
+    "findings": 85,
+    "by": {
+     "minor": 52,
+     "moderate": 24,
+     "serious": 9
+    },
+    "mean_sev": 1.494
+   },
+   {
+    "lang": "German",
+    "bin": "1850 on",
+    "pages": 17,
+    "serious": 2,
+    "findings": 88,
+    "by": {
+     "minor": 64,
+     "moderate": 22,
+     "serious": 2
+    },
+    "mean_sev": 1.295
+   },
+   {
+    "lang": "Greek",
+    "bin": "1450–99",
+    "pages": 11,
+    "serious": 10,
+    "findings": 145,
+    "by": {
+     "minor": 32,
+     "moderate": 63,
+     "serious": 50
+    },
+    "mean_sev": 2.124
+   },
+   {
+    "lang": "Italian",
+    "bin": "1550–99",
+    "pages": 20,
+    "serious": 5,
+    "findings": 130,
+    "by": {
+     "minor": 86,
+     "moderate": 36,
+     "serious": 8
+    },
+    "mean_sev": 1.4
+   },
+   {
+    "lang": "German",
+    "bin": "1500–49",
+    "pages": 6,
+    "serious": 0,
+    "findings": 47,
+    "by": {
+     "minor": 36,
+     "moderate": 11,
+     "serious": 0
+    },
+    "mean_sev": 1.234
+   },
+   {
+    "lang": "French",
+    "bin": "1650–99",
+    "pages": 7,
+    "serious": 1,
+    "findings": 34,
+    "by": {
+     "minor": 27,
+     "moderate": 5,
+     "serious": 2
+    },
+    "mean_sev": 1.265
+   },
+   {
+    "lang": "Italian",
+    "bin": "1650–99",
+    "pages": 6,
+    "serious": 3,
+    "findings": 46,
+    "by": {
+     "minor": 28,
+     "moderate": 15,
+     "serious": 3
+    },
+    "mean_sev": 1.457
+   },
+   {
+    "lang": "Italian",
+    "bin": "1850 on",
+    "pages": 3,
+    "serious": 0,
+    "findings": 16,
+    "by": {
+     "minor": 12,
+     "moderate": 4,
+     "serious": 0
+    },
+    "mean_sev": 1.25
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1800–49",
+    "pages": 5,
+    "serious": 1,
+    "findings": 24,
+    "by": {
+     "minor": 14,
+     "moderate": 9,
+     "serious": 1
+    },
+    "mean_sev": 1.458
+   },
+   {
+    "lang": "French",
+    "bin": "1800–49",
+    "pages": 8,
+    "serious": 2,
+    "findings": 39,
+    "by": {
+     "minor": 27,
+     "moderate": 9,
+     "serious": 3
+    },
+    "mean_sev": 1.385
+   },
+   {
+    "lang": "Italian",
+    "bin": "1600–49",
+    "pages": 3,
+    "serious": 0,
+    "findings": 15,
+    "by": {
+     "minor": 9,
+     "moderate": 6,
+     "serious": 0
+    },
+    "mean_sev": 1.4
+   },
+   {
+    "lang": "Greek",
+    "bin": "1650–99",
+    "pages": 1,
+    "serious": 1,
+    "findings": 23,
+    "by": {
+     "minor": 2,
+     "moderate": 13,
+     "serious": 8
+    },
+    "mean_sev": 2.261
+   },
+   {
+    "lang": "Greek",
+    "bin": "1800–49",
+    "pages": 5,
+    "serious": 2,
+    "findings": 48,
+    "by": {
+     "minor": 17,
+     "moderate": 27,
+     "serious": 4
+    },
+    "mean_sev": 1.729
+   },
+   {
+    "lang": "Greek",
+    "bin": "1700–49",
+    "pages": 1,
+    "serious": 0,
+    "findings": 5,
+    "by": {
+     "minor": 5,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": 1.0
+   },
+   {
+    "lang": "Italian",
+    "bin": "1700–49",
+    "pages": 1,
+    "serious": 0,
+    "findings": 10,
+    "by": {
+     "minor": 3,
+     "moderate": 7,
+     "serious": 0
+    },
+    "mean_sev": 1.7
+   },
+   {
+    "lang": "German",
+    "bin": "1800–49",
+    "pages": 14,
+    "serious": 4,
+    "findings": 62,
+    "by": {
+     "minor": 43,
+     "moderate": 15,
+     "serious": 4
+    },
+    "mean_sev": 1.371
+   },
+   {
+    "lang": "Latin",
+    "bin": "1800–49",
+    "pages": 6,
+    "serious": 3,
+    "findings": 42,
+    "by": {
+     "minor": 26,
+     "moderate": 13,
+     "serious": 3
+    },
+    "mean_sev": 1.452
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1700–49",
+    "pages": 4,
+    "serious": 3,
+    "findings": 42,
+    "by": {
+     "minor": 10,
+     "moderate": 19,
+     "serious": 13
+    },
+    "mean_sev": 2.071
+   },
+   {
+    "lang": "French",
+    "bin": "1450–99",
+    "pages": 1,
+    "serious": 0,
+    "findings": 10,
+    "by": {
+     "minor": 8,
+     "moderate": 2,
+     "serious": 0
+    },
+    "mean_sev": 1.2
+   },
+   {
+    "lang": "French",
+    "bin": "1500–49",
+    "pages": 1,
+    "serious": 1,
+    "findings": 13,
+    "by": {
+     "minor": 6,
+     "moderate": 5,
+     "serious": 2
+    },
+    "mean_sev": 1.692
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1550–99",
+    "pages": 7,
+    "serious": 4,
+    "findings": 76,
+    "by": {
+     "minor": 33,
+     "moderate": 30,
+     "serious": 13
+    },
+    "mean_sev": 1.737
+   },
+   {
+    "lang": "French",
+    "bin": "1600–49",
+    "pages": 3,
+    "serious": 0,
+    "findings": 18,
+    "by": {
+     "minor": 13,
+     "moderate": 5,
+     "serious": 0
+    },
+    "mean_sev": 1.278
+   },
+   {
+    "lang": "Italian",
+    "bin": "1450–99",
+    "pages": 3,
+    "serious": 1,
+    "findings": 29,
+    "by": {
+     "minor": 7,
+     "moderate": 18,
+     "serious": 4
+    },
+    "mean_sev": 1.897
+   },
+   {
+    "lang": "Italian",
+    "bin": "1800–49",
+    "pages": 2,
+    "serious": 1,
+    "findings": 4,
+    "by": {
+     "minor": 2,
+     "moderate": 0,
+     "serious": 2
+    },
+    "mean_sev": 2.0
+   },
+   {
+    "lang": "Greek",
+    "bin": "1600–49",
+    "pages": 1,
+    "serious": 0,
+    "findings": 4,
+    "by": {
+     "minor": 4,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": 1.0
+   },
+   {
+    "lang": "German",
+    "bin": "1450–99",
+    "pages": 3,
+    "serious": 0,
+    "findings": 26,
+    "by": {
+     "minor": 19,
+     "moderate": 7,
+     "serious": 0
+    },
+    "mean_sev": 1.269
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1650–99",
+    "pages": 1,
+    "serious": 1,
+    "findings": 6,
+    "by": {
+     "minor": 3,
+     "moderate": 1,
+     "serious": 2
+    },
+    "mean_sev": 1.833
+   },
+   {
+    "lang": "French",
+    "bin": "1550–99",
+    "pages": 2,
+    "serious": 0,
+    "findings": 11,
+    "by": {
+     "minor": 9,
+     "moderate": 2,
+     "serious": 0
+    },
+    "mean_sev": 1.182
+   },
+   {
+    "lang": "Italian",
+    "bin": "1750–99",
+    "pages": 1,
+    "serious": 0,
+    "findings": 5,
+    "by": {
+     "minor": 4,
+     "moderate": 1,
+     "serious": 0
+    },
+    "mean_sev": 1.2
+   }
+  ]
+ },
+ "heat_all": {
+  "langs": [
+   "Latin",
+   "Greek",
+   "German",
+   "English",
+   "Chinese",
+   "French",
+   "Tibetan",
+   "Arabic",
+   "Italian",
+   "Hebrew",
+   "Sanskrit",
+   "Dutch",
+   "Korean",
+   "Spanish"
+  ],
+  "bins": [
+   "before 1450",
+   "1450–99",
+   "1500–49",
+   "1550–99",
+   "1600–49",
+   "1650–99",
+   "1700–49",
+   "1750–99",
+   "1800–49",
+   "1850 on"
+  ],
+  "cells": [
+   {
+    "lang": "Arabic",
+    "bin": "before 1450",
+    "pages": 130,
+    "serious": 107,
+    "findings": 885,
+    "by": {
+     "minor": 45,
+     "moderate": 52,
+     "serious": 788
+    },
+    "mean_sev": 2.84
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1850 on",
+    "pages": 49,
+    "serious": 31,
+    "findings": 176,
+    "by": {
+     "minor": 31,
+     "moderate": 24,
+     "serious": 121
+    },
+    "mean_sev": 2.511
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1800–49",
+    "pages": 9,
+    "serious": 3,
+    "findings": 20,
+    "by": {
+     "minor": 4,
+     "moderate": 6,
+     "serious": 10
+    },
+    "mean_sev": 2.3
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1750–99",
+    "pages": 233,
+    "serious": 69,
+    "findings": 221,
+    "by": {
+     "minor": 66,
+     "moderate": 57,
+     "serious": 98
+    },
+    "mean_sev": 2.145
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1750–99",
+    "pages": 38,
+    "serious": 38,
+    "findings": 188,
+    "by": {
+     "minor": 2,
+     "moderate": 4,
+     "serious": 182
+    },
+    "mean_sev": 2.957
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1500–49",
+    "pages": 5,
+    "serious": 1,
+    "findings": 15,
+    "by": {
+     "minor": 2,
+     "moderate": 7,
+     "serious": 6
+    },
+    "mean_sev": 2.267
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1700–49",
+    "pages": 21,
+    "serious": 14,
+    "findings": 77,
+    "by": {
+     "minor": 17,
+     "moderate": 27,
+     "serious": 33
+    },
+    "mean_sev": 2.208
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "1850 on",
+    "pages": 120,
+    "serious": 48,
+    "findings": 272,
+    "by": {
+     "minor": 43,
+     "moderate": 23,
+     "serious": 206
+    },
+    "mean_sev": 2.599
+   },
+   {
+    "lang": "Tibetan",
+    "bin": "1850 on",
+    "pages": 169,
+    "serious": 17,
+    "findings": 77,
+    "by": {
+     "minor": 39,
+     "moderate": 18,
+     "serious": 20
+    },
+    "mean_sev": 1.753
+   },
+   {
+    "lang": "Tibetan",
+    "bin": "1700–49",
+    "pages": 178,
+    "serious": 46,
+    "findings": 680,
+    "by": {
+     "minor": 289,
+     "moderate": 266,
+     "serious": 125
+    },
+    "mean_sev": 1.759
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1550–99",
+    "pages": 70,
+    "serious": 42,
+    "findings": 201,
+    "by": {
+     "minor": 46,
+     "moderate": 59,
+     "serious": 96
+    },
+    "mean_sev": 2.249
+   },
+   {
+    "lang": "Chinese",
+    "bin": "before 1450",
+    "pages": 43,
+    "serious": 18,
+    "findings": 130,
+    "by": {
+     "minor": 31,
+     "moderate": 23,
+     "serious": 76
+    },
+    "mean_sev": 2.346
+   },
+   {
+    "lang": "Greek",
+    "bin": "before 1450",
+    "pages": 230,
+    "serious": 196,
+    "findings": 898,
+    "by": {
+     "minor": 46,
+     "moderate": 59,
+     "serious": 793
+    },
+    "mean_sev": 2.832
+   },
+   {
+    "lang": "Greek",
+    "bin": "1450–99",
+    "pages": 133,
+    "serious": 106,
+    "findings": 327,
+    "by": {
+     "minor": 46,
+     "moderate": 87,
+     "serious": 194
+    },
+    "mean_sev": 2.453
+   },
+   {
+    "lang": "Latin",
+    "bin": "1800–49",
+    "pages": 37,
+    "serious": 4,
+    "findings": 43,
+    "by": {
+     "minor": 26,
+     "moderate": 13,
+     "serious": 4
+    },
+    "mean_sev": 1.488
+   },
+   {
+    "lang": "Latin",
+    "bin": "before 1450",
+    "pages": 378,
+    "serious": 342,
+    "findings": 2869,
+    "by": {
+     "minor": 73,
+     "moderate": 116,
+     "serious": 2680
+    },
+    "mean_sev": 2.909
+   },
+   {
+    "lang": "Korean",
+    "bin": "1750–99",
+    "pages": 35,
+    "serious": 25,
+    "findings": 95,
+    "by": {
+     "minor": 10,
+     "moderate": 17,
+     "serious": 68
+    },
+    "mean_sev": 2.611
+   },
+   {
+    "lang": "Korean",
+    "bin": "1800–49",
+    "pages": 22,
+    "serious": 16,
+    "findings": 117,
+    "by": {
+     "minor": 16,
+     "moderate": 41,
+     "serious": 60
+    },
+    "mean_sev": 2.376
+   },
+   {
+    "lang": "Korean",
+    "bin": "1650–99",
+    "pages": 12,
+    "serious": 11,
+    "findings": 29,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 29
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Latin",
+    "bin": "1450–99",
+    "pages": 550,
+    "serious": 378,
+    "findings": 2842,
+    "by": {
+     "minor": 504,
+     "moderate": 622,
+     "serious": 1716
+    },
+    "mean_sev": 2.426
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "before 1450",
+    "pages": 9,
+    "serious": 9,
+    "findings": 17,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 17
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1550–99",
+    "pages": 21,
+    "serious": 21,
+    "findings": 149,
+    "by": {
+     "minor": 5,
+     "moderate": 11,
+     "serious": 133
+    },
+    "mean_sev": 2.859
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1750–99",
+    "pages": 5,
+    "serious": 1,
+    "findings": 1,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 1
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "1800–49",
+    "pages": 28,
+    "serious": 18,
+    "findings": 110,
+    "by": {
+     "minor": 5,
+     "moderate": 14,
+     "serious": 91
+    },
+    "mean_sev": 2.782
+   },
+   {
+    "lang": "English",
+    "bin": "1850 on",
+    "pages": 461,
+    "serious": 151,
+    "findings": 447,
+    "by": {
+     "minor": 5,
+     "moderate": 9,
+     "serious": 433
+    },
+    "mean_sev": 2.957
+   },
+   {
+    "lang": "Latin",
+    "bin": "1650–99",
+    "pages": 524,
+    "serious": 187,
+    "findings": 1556,
+    "by": {
+     "minor": 716,
+     "moderate": 352,
+     "serious": 488
+    },
+    "mean_sev": 1.853
+   },
+   {
+    "lang": "Latin",
+    "bin": "1550–99",
+    "pages": 496,
+    "serious": 171,
+    "findings": 1148,
+    "by": {
+     "minor": 568,
+     "moderate": 271,
+     "serious": 309
+    },
+    "mean_sev": 1.774
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1850 on",
+    "pages": 44,
+    "serious": 25,
+    "findings": 212,
+    "by": {
+     "minor": 41,
+     "moderate": 68,
+     "serious": 103
+    },
+    "mean_sev": 2.292
+   },
+   {
+    "lang": "German",
+    "bin": "1600–49",
+    "pages": 173,
+    "serious": 54,
+    "findings": 489,
+    "by": {
+     "minor": 284,
+     "moderate": 109,
+     "serious": 96
+    },
+    "mean_sev": 1.616
+   },
+   {
+    "lang": "Latin",
+    "bin": "1600–49",
+    "pages": 538,
+    "serious": 151,
+    "findings": 1058,
+    "by": {
+     "minor": 498,
+     "moderate": 200,
+     "serious": 360
+    },
+    "mean_sev": 1.87
+   },
+   {
+    "lang": "Latin",
+    "bin": "1500–49",
+    "pages": 351,
+    "serious": 121,
+    "findings": 729,
+    "by": {
+     "minor": 317,
+     "moderate": 195,
+     "serious": 217
+    },
+    "mean_sev": 1.863
+   },
+   {
+    "lang": "Latin",
+    "bin": "1700–49",
+    "pages": 219,
+    "serious": 65,
+    "findings": 684,
+    "by": {
+     "minor": 340,
+     "moderate": 191,
+     "serious": 153
+    },
+    "mean_sev": 1.727
+   },
+   {
+    "lang": "Greek",
+    "bin": "1550–99",
+    "pages": 282,
+    "serious": 178,
+    "findings": 585,
+    "by": {
+     "minor": 122,
+     "moderate": 198,
+     "serious": 265
+    },
+    "mean_sev": 2.244
+   },
+   {
+    "lang": "Greek",
+    "bin": "1500–49",
+    "pages": 205,
+    "serious": 142,
+    "findings": 546,
+    "by": {
+     "minor": 89,
+     "moderate": 149,
+     "serious": 308
+    },
+    "mean_sev": 2.401
+   },
+   {
+    "lang": "German",
+    "bin": "1700–49",
+    "pages": 178,
+    "serious": 51,
+    "findings": 351,
+    "by": {
+     "minor": 197,
+     "moderate": 73,
+     "serious": 81
+    },
+    "mean_sev": 1.67
+   },
+   {
+    "lang": "German",
+    "bin": "1750–99",
+    "pages": 360,
+    "serious": 83,
+    "findings": 578,
+    "by": {
+     "minor": 292,
+     "moderate": 118,
+     "serious": 168
+    },
+    "mean_sev": 1.785
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1600–49",
+    "pages": 164,
+    "serious": 91,
+    "findings": 385,
+    "by": {
+     "minor": 96,
+     "moderate": 96,
+     "serious": 193
+    },
+    "mean_sev": 2.252
+   },
+   {
+    "lang": "Greek",
+    "bin": "1850 on",
+    "pages": 551,
+    "serious": 148,
+    "findings": 1007,
+    "by": {
+     "minor": 329,
+     "moderate": 250,
+     "serious": 428
+    },
+    "mean_sev": 2.098
+   },
+   {
+    "lang": "Greek",
+    "bin": "1600–49",
+    "pages": 59,
+    "serious": 25,
+    "findings": 89,
+    "by": {
+     "minor": 17,
+     "moderate": 9,
+     "serious": 63
+    },
+    "mean_sev": 2.517
+   },
+   {
+    "lang": "German",
+    "bin": "1650–99",
+    "pages": 168,
+    "serious": 53,
+    "findings": 447,
+    "by": {
+     "minor": 194,
+     "moderate": 87,
+     "serious": 166
+    },
+    "mean_sev": 1.937
+   },
+   {
+    "lang": "German",
+    "bin": "1550–99",
+    "pages": 145,
+    "serious": 44,
+    "findings": 483,
+    "by": {
+     "minor": 222,
+     "moderate": 94,
+     "serious": 167
+    },
+    "mean_sev": 1.886
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1700–49",
+    "pages": 26,
+    "serious": 6,
+    "findings": 88,
+    "by": {
+     "minor": 54,
+     "moderate": 28,
+     "serious": 6
+    },
+    "mean_sev": 1.455
+   },
+   {
+    "lang": "German",
+    "bin": "1800–49",
+    "pages": 61,
+    "serious": 5,
+    "findings": 86,
+    "by": {
+     "minor": 57,
+     "moderate": 24,
+     "serious": 5
+    },
+    "mean_sev": 1.395
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "before 1450",
+    "pages": 51,
+    "serious": 49,
+    "findings": 392,
+    "by": {
+     "minor": 3,
+     "moderate": 0,
+     "serious": 389
+    },
+    "mean_sev": 2.985
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1850 on",
+    "pages": 12,
+    "serious": 5,
+    "findings": 42,
+    "by": {
+     "minor": 17,
+     "moderate": 13,
+     "serious": 12
+    },
+    "mean_sev": 1.881
+   },
+   {
+    "lang": "Italian",
+    "bin": "1850 on",
+    "pages": 17,
+    "serious": 2,
+    "findings": 25,
+    "by": {
+     "minor": 12,
+     "moderate": 4,
+     "serious": 9
+    },
+    "mean_sev": 1.88
+   },
+   {
+    "lang": "Italian",
+    "bin": "1600–49",
+    "pages": 29,
+    "serious": 3,
+    "findings": 24,
+    "by": {
+     "minor": 11,
+     "moderate": 8,
+     "serious": 5
+    },
+    "mean_sev": 1.75
+   },
+   {
+    "lang": "Latin",
+    "bin": "1750–99",
+    "pages": 68,
+    "serious": 39,
+    "findings": 189,
+    "by": {
+     "minor": 52,
+     "moderate": 24,
+     "serious": 113
+    },
+    "mean_sev": 2.323
+   },
+   {
+    "lang": "Latin",
+    "bin": "1850 on",
+    "pages": 67,
+    "serious": 8,
+    "findings": 74,
+    "by": {
+     "minor": 38,
+     "moderate": 23,
+     "serious": 13
+    },
+    "mean_sev": 1.662
+   },
+   {
+    "lang": "Greek",
+    "bin": "1800–49",
+    "pages": 149,
+    "serious": 45,
+    "findings": 151,
+    "by": {
+     "minor": 50,
+     "moderate": 50,
+     "serious": 51
+    },
+    "mean_sev": 2.007
+   },
+   {
+    "lang": "German",
+    "bin": "before 1450",
+    "pages": 21,
+    "serious": 18,
+    "findings": 139,
+    "by": {
+     "minor": 5,
+     "moderate": 4,
+     "serious": 130
+    },
+    "mean_sev": 2.899
+   },
+   {
+    "lang": "German",
+    "bin": "1850 on",
+    "pages": 100,
+    "serious": 22,
+    "findings": 122,
+    "by": {
+     "minor": 67,
+     "moderate": 24,
+     "serious": 31
+    },
+    "mean_sev": 1.705
+   },
+   {
+    "lang": "German",
+    "bin": "1500–49",
+    "pages": 46,
+    "serious": 12,
+    "findings": 155,
+    "by": {
+     "minor": 83,
+     "moderate": 43,
+     "serious": 29
+    },
+    "mean_sev": 1.652
+   },
+   {
+    "lang": "German",
+    "bin": "1450–99",
+    "pages": 26,
+    "serious": 13,
+    "findings": 97,
+    "by": {
+     "minor": 19,
+     "moderate": 7,
+     "serious": 71
+    },
+    "mean_sev": 2.536
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1650–99",
+    "pages": 21,
+    "serious": 14,
+    "findings": 40,
+    "by": {
+     "minor": 7,
+     "moderate": 15,
+     "serious": 18
+    },
+    "mean_sev": 2.275
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1650–99",
+    "pages": 24,
+    "serious": 19,
+    "findings": 137,
+    "by": {
+     "minor": 13,
+     "moderate": 15,
+     "serious": 109
+    },
+    "mean_sev": 2.701
+   },
+   {
+    "lang": "Italian",
+    "bin": "1450–99",
+    "pages": 17,
+    "serious": 3,
+    "findings": 37,
+    "by": {
+     "minor": 7,
+     "moderate": 18,
+     "serious": 12
+    },
+    "mean_sev": 2.135
+   },
+   {
+    "lang": "French",
+    "bin": "1850 on",
+    "pages": 110,
+    "serious": 29,
+    "findings": 148,
+    "by": {
+     "minor": 67,
+     "moderate": 21,
+     "serious": 60
+    },
+    "mean_sev": 1.953
+   },
+   {
+    "lang": "French",
+    "bin": "before 1450",
+    "pages": 1,
+    "serious": 1,
+    "findings": 1,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 1
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Korean",
+    "bin": "1850 on",
+    "pages": 17,
+    "serious": 11,
+    "findings": 77,
+    "by": {
+     "minor": 11,
+     "moderate": 15,
+     "serious": 51
+    },
+    "mean_sev": 2.519
+   },
+   {
+    "lang": "Korean",
+    "bin": "1600–49",
+    "pages": 12,
+    "serious": 11,
+    "findings": 134,
+    "by": {
+     "minor": 5,
+     "moderate": 5,
+     "serious": 124
+    },
+    "mean_sev": 2.888
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1700–49",
+    "pages": 20,
+    "serious": 9,
+    "findings": 65,
+    "by": {
+     "minor": 13,
+     "moderate": 29,
+     "serious": 23
+    },
+    "mean_sev": 2.154
+   },
+   {
+    "lang": "Greek",
+    "bin": "1650–99",
+    "pages": 26,
+    "serious": 10,
+    "findings": 53,
+    "by": {
+     "minor": 17,
+     "moderate": 19,
+     "serious": 17
+    },
+    "mean_sev": 2.0
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "1750–99",
+    "pages": 1,
+    "serious": 1,
+    "findings": 3,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 3
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "French",
+    "bin": "1450–99",
+    "pages": 2,
+    "serious": 1,
+    "findings": 12,
+    "by": {
+     "minor": 8,
+     "moderate": 2,
+     "serious": 2
+    },
+    "mean_sev": 1.5
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1650–99",
+    "pages": 42,
+    "serious": 26,
+    "findings": 128,
+    "by": {
+     "minor": 42,
+     "moderate": 11,
+     "serious": 75
+    },
+    "mean_sev": 2.258
+   },
+   {
+    "lang": "English",
+    "bin": "1700–49",
+    "pages": 3,
+    "serious": 0,
+    "findings": 0,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": null
+   },
+   {
+    "lang": "Italian",
+    "bin": "1500–49",
+    "pages": 35,
+    "serious": 10,
+    "findings": 86,
+    "by": {
+     "minor": 44,
+     "moderate": 11,
+     "serious": 31
+    },
+    "mean_sev": 1.849
+   },
+   {
+    "lang": "English",
+    "bin": "1750–99",
+    "pages": 37,
+    "serious": 12,
+    "findings": 35,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 35
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Korean",
+    "bin": "1700–49",
+    "pages": 3,
+    "serious": 2,
+    "findings": 13,
+    "by": {
+     "minor": 2,
+     "moderate": 7,
+     "serious": 4
+    },
+    "mean_sev": 2.154
+   },
+   {
+    "lang": "Korean",
+    "bin": "1550–99",
+    "pages": 1,
+    "serious": 0,
+    "findings": 0,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": null
+   },
+   {
+    "lang": "French",
+    "bin": "1600–49",
+    "pages": 29,
+    "serious": 9,
+    "findings": 30,
+    "by": {
+     "minor": 13,
+     "moderate": 5,
+     "serious": 12
+    },
+    "mean_sev": 1.967
+   },
+   {
+    "lang": "English",
+    "bin": "1800–49",
+    "pages": 52,
+    "serious": 17,
+    "findings": 55,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 55
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1800–49",
+    "pages": 17,
+    "serious": 4,
+    "findings": 33,
+    "by": {
+     "minor": 18,
+     "moderate": 11,
+     "serious": 4
+    },
+    "mean_sev": 1.576
+   },
+   {
+    "lang": "Greek",
+    "bin": "1700–49",
+    "pages": 19,
+    "serious": 14,
+    "findings": 33,
+    "by": {
+     "minor": 8,
+     "moderate": 8,
+     "serious": 17
+    },
+    "mean_sev": 2.273
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1700–49",
+    "pages": 16,
+    "serious": 2,
+    "findings": 3,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 3
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "French",
+    "bin": "1750–99",
+    "pages": 63,
+    "serious": 11,
+    "findings": 58,
+    "by": {
+     "minor": 34,
+     "moderate": 3,
+     "serious": 21
+    },
+    "mean_sev": 1.776
+   },
+   {
+    "lang": "French",
+    "bin": "1800–49",
+    "pages": 68,
+    "serious": 11,
+    "findings": 57,
+    "by": {
+     "minor": 28,
+     "moderate": 9,
+     "serious": 20
+    },
+    "mean_sev": 1.86
+   },
+   {
+    "lang": "French",
+    "bin": "1650–99",
+    "pages": 35,
+    "serious": 4,
+    "findings": 37,
+    "by": {
+     "minor": 27,
+     "moderate": 5,
+     "serious": 5
+    },
+    "mean_sev": 1.405
+   },
+   {
+    "lang": "French",
+    "bin": "1550–99",
+    "pages": 43,
+    "serious": 9,
+    "findings": 28,
+    "by": {
+     "minor": 9,
+     "moderate": 2,
+     "serious": 17
+    },
+    "mean_sev": 2.286
+   },
+   {
+    "lang": "Italian",
+    "bin": "1550–99",
+    "pages": 39,
+    "serious": 11,
+    "findings": 142,
+    "by": {
+     "minor": 86,
+     "moderate": 36,
+     "serious": 20
+    },
+    "mean_sev": 1.535
+   },
+   {
+    "lang": "English",
+    "bin": "1650–99",
+    "pages": 37,
+    "serious": 7,
+    "findings": 12,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 12
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "English",
+    "bin": "1600–49",
+    "pages": 23,
+    "serious": 7,
+    "findings": 9,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 9
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1550–99",
+    "pages": 9,
+    "serious": 3,
+    "findings": 49,
+    "by": {
+     "minor": 16,
+     "moderate": 8,
+     "serious": 25
+    },
+    "mean_sev": 2.184
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1500–49",
+    "pages": 1,
+    "serious": 1,
+    "findings": 4,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 4
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Italian",
+    "bin": "1750–99",
+    "pages": 8,
+    "serious": 4,
+    "findings": 10,
+    "by": {
+     "minor": 4,
+     "moderate": 1,
+     "serious": 5
+    },
+    "mean_sev": 2.1
+   },
+   {
+    "lang": "French",
+    "bin": "1700–49",
+    "pages": 28,
+    "serious": 6,
+    "findings": 51,
+    "by": {
+     "minor": 33,
+     "moderate": 10,
+     "serious": 8
+    },
+    "mean_sev": 1.51
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1850 on",
+    "pages": 26,
+    "serious": 1,
+    "findings": 8,
+    "by": {
+     "minor": 5,
+     "moderate": 1,
+     "serious": 2
+    },
+    "mean_sev": 1.625
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1800–49",
+    "pages": 5,
+    "serious": 0,
+    "findings": 0,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": null
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1650–99",
+    "pages": 4,
+    "serious": 2,
+    "findings": 2,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 2
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1750–99",
+    "pages": 3,
+    "serious": 0,
+    "findings": 0,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": null
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1600–49",
+    "pages": 19,
+    "serious": 4,
+    "findings": 10,
+    "by": {
+     "minor": 4,
+     "moderate": 1,
+     "serious": 5
+    },
+    "mean_sev": 2.1
+   },
+   {
+    "lang": "Italian",
+    "bin": "1800–49",
+    "pages": 22,
+    "serious": 4,
+    "findings": 19,
+    "by": {
+     "minor": 4,
+     "moderate": 0,
+     "serious": 15
+    },
+    "mean_sev": 2.579
+   },
+   {
+    "lang": "Italian",
+    "bin": "1650–99",
+    "pages": 11,
+    "serious": 4,
+    "findings": 47,
+    "by": {
+     "minor": 28,
+     "moderate": 15,
+     "serious": 4
+    },
+    "mean_sev": 1.489
+   },
+   {
+    "lang": "Italian",
+    "bin": "1700–49",
+    "pages": 14,
+    "serious": 9,
+    "findings": 62,
+    "by": {
+     "minor": 3,
+     "moderate": 7,
+     "serious": 52
+    },
+    "mean_sev": 2.79
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1450–99",
+    "pages": 3,
+    "serious": 2,
+    "findings": 11,
+    "by": {
+     "minor": 8,
+     "moderate": 1,
+     "serious": 2
+    },
+    "mean_sev": 1.455
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1750–99",
+    "pages": 8,
+    "serious": 2,
+    "findings": 41,
+    "by": {
+     "minor": 27,
+     "moderate": 10,
+     "serious": 4
+    },
+    "mean_sev": 1.439
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1500–49",
+    "pages": 1,
+    "serious": 0,
+    "findings": 0,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": null
+   },
+   {
+    "lang": "Spanish",
+    "bin": "1550–99",
+    "pages": 1,
+    "serious": 1,
+    "findings": 5,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 5
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Italian",
+    "bin": "before 1450",
+    "pages": 10,
+    "serious": 10,
+    "findings": 100,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 100
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "English",
+    "bin": "before 1450",
+    "pages": 10,
+    "serious": 5,
+    "findings": 29,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 29
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "French",
+    "bin": "1500–49",
+    "pages": 11,
+    "serious": 5,
+    "findings": 19,
+    "by": {
+     "minor": 6,
+     "moderate": 5,
+     "serious": 8
+    },
+    "mean_sev": 2.105
+   },
+   {
+    "lang": "English",
+    "bin": "1550–99",
+    "pages": 10,
+    "serious": 4,
+    "findings": 4,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 4
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1700–49",
+    "pages": 11,
+    "serious": 11,
+    "findings": 135,
+    "by": {
+     "minor": 2,
+     "moderate": 10,
+     "serious": 123
+    },
+    "mean_sev": 2.896
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1500–49",
+    "pages": 10,
+    "serious": 7,
+    "findings": 10,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 10
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "1550–99",
+    "pages": 10,
+    "serious": 10,
+    "findings": 35,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 35
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Spanish",
+    "bin": "before 1450",
+    "pages": 10,
+    "serious": 10,
+    "findings": 57,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 57
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1450–99",
+    "pages": 20,
+    "serious": 16,
+    "findings": 152,
+    "by": {
+     "minor": 0,
+     "moderate": 0,
+     "serious": 152
+    },
+    "mean_sev": 3.0
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1600–49",
+    "pages": 15,
+    "serious": 11,
+    "findings": 115,
+    "by": {
+     "minor": 46,
+     "moderate": 13,
+     "serious": 56
+    },
+    "mean_sev": 2.087
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1850 on",
+    "pages": 3,
+    "serious": 1,
+    "findings": 19,
+    "by": {
+     "minor": 13,
+     "moderate": 5,
+     "serious": 1
+    },
+    "mean_sev": 1.368
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "1600–49",
+    "pages": 1,
+    "serious": 1,
+    "findings": 9,
+    "by": {
+     "minor": 2,
+     "moderate": 4,
+     "serious": 3
+    },
+    "mean_sev": 2.111
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1450–99",
+    "pages": 1,
+    "serious": 0,
+    "findings": 8,
+    "by": {
+     "minor": 6,
+     "moderate": 2,
+     "serious": 0
+    },
+    "mean_sev": 1.25
+   },
+   {
+    "lang": "Sanskrit",
+    "bin": "1700–49",
+    "pages": 1,
+    "serious": 1,
+    "findings": 17,
+    "by": {
+     "minor": 4,
+     "moderate": 11,
+     "serious": 2
+    },
+    "mean_sev": 1.882
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1800–49",
+    "pages": 1,
+    "serious": 0,
+    "findings": 5,
+    "by": {
+     "minor": 5,
+     "moderate": 0,
+     "serious": 0
+    },
+    "mean_sev": 1.0
+   },
+   {
+    "lang": "Arabic",
+    "bin": "1550–99",
+    "pages": 2,
+    "serious": 2,
+    "findings": 23,
+    "by": {
+     "minor": 5,
+     "moderate": 10,
+     "serious": 8
+    },
+    "mean_sev": 2.13
+   },
+   {
+    "lang": "Hebrew",
+    "bin": "1600–49",
+    "pages": 2,
+    "serious": 1,
+    "findings": 14,
+    "by": {
+     "minor": 3,
+     "moderate": 7,
+     "serious": 4
+    },
+    "mean_sev": 2.071
+   },
+   {
+    "lang": "Dutch",
+    "bin": "1500–49",
+    "pages": 1,
+    "serious": 1,
+    "findings": 17,
+    "by": {
+     "minor": 4,
+     "moderate": 11,
+     "serious": 2
+    },
+    "mean_sev": 1.882
+   },
+   {
+    "lang": "Chinese",
+    "bin": "1450–99",
+    "pages": 3,
+    "serious": 3,
+    "findings": 26,
+    "by": {
+     "minor": 5,
+     "moderate": 6,
+     "serious": 15
+    },
+    "mean_sev": 2.385
+   }
+  ]
+ },
+ "classes": [
+  {
+   "code": "I1",
+   "lane": "I",
+   "kind": "wrong_leaf",
+   "name": "Image one leaf away from its text",
+   "status": "KNOWN",
+   "sees": "the scan beside the text is the previous (or next) printed page; the OCR's own `<page-num>` disagrees with the folio printed on the image.",
+   "detector": "checkAlignment() (dHash) in page-alignment.mjs; #3368, #4790, #5095, #3280. The <page-num>-vs-image check is cheaper and was not run on these books.",
+   "fix": "the two-sided arbitration in paired-artifacts.md (IIIF leaf vs R2 copy) before any repair; never re-OCR into a misaligned image.",
+   "where": "image ↔ OCR pairing · whole-book offset (cross-page).",
+   "n": 289,
+   "pages": 178,
+   "sev": {
+    "serious": 250,
+    "minor": 28,
+    "moderate": 11
+   }
+  },
+  {
+   "code": "I2",
+   "lane": "I",
+   "kind": "wrong_leaf",
+   "name": "Duplicate scan, back to back",
+   "status": "KNOWN",
+   "sees": "the same leaf twice; the OCR reads it twice.",
+   "detector": "duplicateScan() (bigram Dice ≥ 0.9); #5056 (20/20 confirmed by pixel correlation).",
+   "fix": "soft-hide the duplicate, renumber, recount.",
+   "where": "image · cross-page (N vs N+1).",
+   "n": 14,
+   "pages": 13,
+   "sev": {
+    "serious": 14
+   }
+  },
+  {
+   "code": "I3",
+   "lane": "I",
+   "kind": "layout",
+   "name": "Spread not split",
+   "status": "KNOWN (with two new consequences)",
+   "sees": "two printed pages in one image; the text panel holds one of them (the other page is lost from the record) or both tagged `<columns>2`; the translator sees the facing half and describes it in `<meta>`.",
+   "detector": "image-classifiers-and-splits.md; #2454 (split at detection time), #3593, #4796 (RTL split backwards).",
+   "fix": "split before OCR; where a spread is kept deliberately (Loeb openings), tag it as an opening and transcribe both pages in order.",
+   "where": "image · on-page and cross-page.",
+   "n": 68,
+   "pages": 63,
+   "sev": {
+    "serious": 37,
+    "moderate": 17,
+    "minor": 14
+   }
+  },
+  {
+   "code": "I4",
+   "lane": "I",
+   "kind": "carry_over",
+   "name": "Neighbour strip in the frame, read as content",
+   "status": "NEW · #5131",
+   "sees": "a \"second column\" of half-words (`the / eius / pau / tate / pro`) beside the real text, sometimes \"translated\" into a vertical list of English stubs; or the strip reported as water-damaged, illegible text; or the strip's line-ends transcribed as this page's marginalia and translated; or, worst, the line openings reconstructed into fluent invented Latin.",
+   "detector": "none. <columns>2</columns> on a one-column page is the tell; #3088 (gutter re-crop) is adjacent.",
+   "fix": "crop-time strip detection (a narrow column of ragged line-ends at one edge); an OCR rule that a column whose tokens are mostly fragments is not a column.",
+   "where": "image → OCR (→ translation) · on-page.",
+   "n": 137,
+   "pages": 90,
+   "sev": {
+    "serious": 117,
+    "moderate": 20
+   }
+  },
+  {
+   "code": "I5",
+   "lane": "I",
+   "kind": "layout",
+   "name": "Several leaves in one photograph (pecha boards)",
+   "status": "NEW · #5132",
+   "sees": "three loose Tibetan leaves on a board as one \"page\"; the next image holds their three versos, so page N→N+1 on the site is recto A, B, C then verso A, B, C — not a reading order in principle; the OCR mixes or duplicates the leaves.",
+   "detector": "none. Related to the Yigdzin lower-leaf first-line drop (lesson_positional_omission_invisible_to_order_free_identity, #4523/#4722), which is the same page-unit problem one level down.",
+   "fix": "slice boards into leaves at import (the Breen microfilm imports already \"strip-slice\"); order recto/verso by folio label; until then, hold Tibetan boards out of page-level translation.",
+   "where": "image · cross-page (structural).",
+   "n": 30,
+   "pages": 25,
+   "sev": {
+    "serious": 9,
+    "moderate": 18,
+    "minor": 3
+   }
+  },
+  {
+   "code": "I6",
+   "lane": "I",
+   "kind": "wrong_leaf",
+   "name": "Pages in reverse order (RTL books)",
+   "status": "KNOWN",
+   "sees": "page 16 is the page before page 15; the catchword of 16 opens 15.",
+   "detector": "#4796 (41 books split backwards). catchwordBoundary() in page-integrity.mjs detects it cheaply and was not run here.",
+   "fix": "re-sequence from catchwords; RTL-aware split.",
+   "where": "image/sequence · cross-page.",
+   "n": 14,
+   "pages": 12,
+   "sev": {
+    "serious": 13,
+    "moderate": 1
+   }
+  },
+  {
+   "code": "I7",
+   "lane": "I",
+   "kind": "other",
+   "name": "Catalogue identity or format wrong",
+   "status": "NEW · #5133",
+   "sees": "a \"1561 print\" that is a manuscript; a \"Prognosticon for Leipzig, 1490 [German]\" whose leaves are a Latin Suetonius with commentary; a manuscript in the incunabula. The OCR's own `<script>handwritten</script>` contradicts the record.",
+   "detector": "none for format. <script> tag vs catalogue is a free check. Related: #4043 (drifted values), #4654 (books.language).",
+   "fix": "a format field asserted from the OCR's script tags across the book; fix the four records named in the findings.",
+   "where": "derived (catalogue) · book-wide.",
+   "n": 39,
+   "pages": 37,
+   "sev": {
+    "serious": 19,
+    "moderate": 11,
+    "minor": 9
+   }
+  },
+  {
+   "code": "I9",
+   "lane": "I",
+   "kind": "",
+   "name": "(not in taxonomy doc)",
+   "status": "",
+   "sees": "",
+   "detector": "",
+   "fix": "",
+   "where": "",
+   "n": 1,
+   "pages": 1,
+   "sev": {
+    "serious": 1
+   }
+  },
+  {
+   "code": "O1",
+   "lane": "O",
+   "kind": "confabulation",
+   "name": "Confabulation on an illegible or unfamiliar leaf, in the right language",
+   "status": "KNOWN (#3591), now seen by eye",
+   "sees": "a fluent page in the right language and genre that is not on the leaf: a treatise on divine simplicity where the leaf is a recipe list; the Yom Kippur confession with invented hour markers and an invented catchword; \"On Inflammation\" where the manuscript is about menses; a Euclid built on hallucinated Greek. The translation renders it faithfully and the summary and keywords confirm it, so nothing downstream objects.",
+   "detector": "#3591, #4195 (lacuna marker), #5004; DESCRIBED_PAGE catches only the polite version.",
+   "fix": "a declining-to-read floor in the prompt with a lacuna marker (#4195); a second engine's disagreement as the gate (as for Syriac, #4883); never translate a page whose OCR carries no anchored tokens.",
+   "where": "OCR · on-page, often whole-page.",
+   "n": 1094,
+   "pages": 595,
+   "sev": {
+    "serious": 998,
+    "moderate": 45,
+    "minor": 51
+   }
+  },
+  {
+   "code": "O2",
+   "lane": "O",
+   "kind": "confabulation",
+   "name": "Wrong-script fabrication",
+   "status": "KNOWN",
+   "sees": "Devanagari Sanskrit (\"Homage to Shri Ganesha…\") on a Tibetan biography.",
+   "detector": "#4523 (529 books); Unicode block of the OCR vs the book's script is free and catches it.",
+   "fix": "in flight (#4722 Yigdzin lane, held cohort).",
+   "where": "OCR · on-page.",
+   "n": 25,
+   "pages": 24,
+   "sev": {
+    "serious": 20,
+    "minor": 5
+   }
+  },
+  {
+   "code": "O3",
+   "lane": "O",
+   "kind": "recitation",
+   "name": "Canonical-text substitution",
+   "status": "NEW · #5134",
+   "sees": "for a famous text, lines that are not on the leaf and lines on the leaf that are missing: the OCR (or the translator) recites the remembered standard version. Gurbani lines inserted into a Guru Granth Sahib leaf; the Unetanneh Tokef translated with the printed prayer book's \"drought\" where the manuscript reads \"pestilence\"; a Diogenes Laertius page \"translated\" at five times the OCR's length from memory of Book VII.",
+   "detector": "none. Tell: translation length ≫ OCR length on a well-known text; refrain present on the image and absent from the OCR.",
+   "fix": "for canonical works, a diff against the standard text is the *detector*, not the target; prompt rule that variants are the point; withhold translation where OCR anchors are few.",
+   "where": "OCR and translation · on-page.",
+   "n": 148,
+   "pages": 108,
+   "sev": {
+    "serious": 132,
+    "moderate": 13,
+    "minor": 3
+   }
+  },
+  {
+   "code": "O4",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Block-level repetition",
+   "status": "NEW (the token-level loop is KNOWN) · #5135",
+   "sees": "thousands of lines of `|` or `...`; or the same 40-word dharani seven times; the same paragraph for three different leaves; a stanza twice; \"and the secret of the Shekhinah and the secret of the Shekhinah…\" for 3,500 characters, faithfully translated.",
+   "detector": "type/token ratio < 0.15 (PR #3273) catches the token-level loop only; block-level repeats have a normal ratio. #5004.",
+   "fix": "an identical-block check within one page's OCR (shingles ≥ 20 tokens repeated); refuse to translate a page that fails it.",
+   "where": "OCR (→ translation) · on-page.",
+   "n": 332,
+   "pages": 249,
+   "sev": {
+    "serious": 291,
+    "moderate": 14,
+    "minor": 27
+   }
+  },
+  {
+   "code": "O5",
+   "lane": "O",
+   "kind": "omission",
+   "name": "Silent omission inside the page",
+   "status": "NEW · #5136",
+   "sees": "nothing — that is the point. A clause, a line, 13 lines, half a column, or the last three lines are gone with no marker, and the two sentences either side are fused into one fluent false sentence (\"it has milk within, and it will become copper\"; \"he was called to Toulouse\" where the bishop of Toulouse was summoned to the Curia; Augustus' funeral instructions vanish by homeoteleuton).",
+   "detector": "none for mid-page loss (truncationRatio() measures translation vs OCR, not OCR vs leaf). Free tells: <vocab> tokens absent from the body; line count vs the book's modal line count; translation longer than the OCR (T14).",
+   "fix": "ship the <vocab>-vs-body check; a line-count-per-leaf sanity check per book; a source-grounded judge for the rest.",
+   "where": "OCR → translation · on-page.",
+   "n": 1367,
+   "pages": 933,
+   "sev": {
+    "serious": 891,
+    "minor": 310,
+    "moderate": 166
+   }
+  },
+  {
+   "code": "O6",
+   "lane": "O",
+   "kind": "misread",
+   "name": "Meaning-changing misread, carried into a fluent translation",
+   "status": "NEW as a class · #5137",
+   "sees": "a plausible sentence that is wrong. \"Brother Facius was healed\" (the saint becomes the patient); \"by-laws\" become \"land\" and \"set at liberty\" becomes \"lost\"; \"the soldiers argue with their commanders\" for *become used to obeying*; 隧道葬父 read as \"recommend his father-in-law\"; \"Are they fitting now?\" for *sitting*; sin read as life throughout a page. No uncertainty marker, ever.",
+   "detector": "none possible from text alone; ocr-difficulty-taxonomy.md locates the unstable pages, which is where this lives. #4790 measured the IA band; #1323.",
+   "fix": "the source-grounded fidelity judge (image + OCR + translation) at scale for the flagged pages; per-script prompt exemplars at the known failure points; show the reader the OCR's <unclear> rate.",
+   "where": "OCR → translation · on-page.",
+   "n": 10598,
+   "pages": 4134,
+   "sev": {
+    "serious": 8004,
+    "minor": 1248,
+    "moderate": 1346
+   }
+  },
+  {
+   "code": "O7",
+   "lane": "O",
+   "kind": "misread",
+   "name": "Numerals, dates, doses and units",
+   "status": "NEW · #5138",
+   "sees": "\"190\" soldiers become 150; five years become \"[several]\"; the 7th day before the end of January becomes the 15th; ʒ ij becomes iij in a recipe; every 萬 and 億 rendered \"hundred million\" so the value cannot be recovered; a cyclical ganzhi year resolved to a Gregorian year the source does not fix.",
+   "detector": "none.",
+   "fix": "numerals are a separate check in the judge (every number in the translation must trace to a token in the OCR); a prompt rule for CJK place-value and for cyclical dates (keep the source form, gloss the conversion).",
+   "where": "OCR and translation · on-page.",
+   "n": 1293,
+   "pages": 656,
+   "sev": {
+    "serious": 1084,
+    "minor": 90,
+    "moderate": 119
+   }
+  },
+  {
+   "code": "O8",
+   "lane": "O",
+   "kind": "misread",
+   "name": "Silent normalisation toward the expected",
+   "status": "NEW · #5139",
+   "sees": "the corrupt reading an editor quotes *in order to correct it* silently corrected; variant spellings that an apparatus exists to record replaced by standard ones; a grammar paradigm's cells reordered and the author's forms swapped for textbook forms; transliteration letters differing only by a diacritic conflated (Ȧ/Ā/A); abbreviations expanded without a mark; modern CJK punctuation added inconsistently; stanza closer",
+   "detector": "none; #1323 (20–26% agreement across editions) is the corpus-level symptom.",
+   "fix": "a diplomatic-transcription policy per book (declared once, applied to every page, see O9); prompt rule \"transcribe what is printed, mark expansions\"; for tables, forms are data.",
+   "where": "OCR · on-page.",
+   "n": 1595,
+   "pages": 977,
+   "sev": {
+    "serious": 165,
+    "minor": 1343,
+    "moderate": 87
+   }
+  },
+  {
+   "code": "O9",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Convention flips between adjacent pages",
+   "status": "NEW · #5140",
+   "sees": "nothing on one page; across a break, ſ kept / ſ→s / ſ→f, diplomatic vs fully expanded, line-broken vs reflowed, `^a` vs `$^a$` note keys, a vocalised Syriac page next to an unvocalised one from the same edition. Search and quoting break; a Syriacist takes the vowels as the printer's.",
+   "detector": "none; a per-book ſ-ratio and expansion-ratio by page would show it.",
+   "fix": "one declared convention per book, checked at write time (a page that disagrees with its neighbours' convention is re-run with the book's setting).",
+   "where": "OCR · cross-page.",
+   "n": 196,
+   "pages": 176,
+   "sev": {
+    "serious": 19,
+    "minor": 165,
+    "moderate": 12
+   }
+  },
+  {
+   "code": "O10",
+   "lane": "O",
+   "kind": "omission",
+   "name": "Secondary script on the page dropped or garbled",
+   "status": "NEW · #5141",
+   "sees": "the Greek quotation inside a Latin commentary replaced by garbage or absorbed into the translation; Hebrew in Kircher dropped; a hieroglyphic marginal column neither transcribed nor described; Devanagari dropped; Yoruba tone marks and Hebrew vowel points dropped.",
+   "detector": "none; sourceLanguageCount() in page-integrity.mjs counts languages but not their survival. #4780 (Unicode-aware gate tokenizer) is adjacent.",
+   "fix": "the judge checks each script block separately; a per-page script census (image-side classifier vs OCR Unicode blocks).",
+   "where": "OCR (→ translation) · on-page.",
+   "n": 109,
+   "pages": 79,
+   "sev": {
+    "serious": 86,
+    "moderate": 20,
+    "minor": 3
+   }
+  },
+  {
+   "code": "O11",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Page furniture mis-tagged",
+   "status": "NEW · #5142",
+   "sees": "the running head as the first sentence (or as an `# H1` in the translation, sometimes merged with the facing page's head); the catchword as the page's last word and translated (\"rough, which…\"); a signature `-> Θ <-` in the text; the block-heart (版心) title tagged as catchword or page number, or hallucinated as a different classic (金匱要略 for 欽定四庫全書); an edition banner read as the work's title; `<page-num>` taken from a",
+   "detector": "parseCatchword(), parsePageNum(), pageNumberBreaks() in page-integrity.mjs *consume* these tags; #5059's 45% precision is partly this class. The <page-num>-vs-printed-folio check needs the image.",
+   "fix": "a furniture schema with a place for each element (header, catchword, signature, block-heart, foliation source); prompt exemplars per book type; renderer never promotes a header to a heading.",
+   "where": "OCR (→ display) · on-page; corrupts cross-page detectors.",
+   "n": 822,
+   "pages": 666,
+   "sev": {
+    "serious": 107,
+    "minor": 543,
+    "moderate": 172
+   }
+  },
+  {
+   "code": "O12",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Marginalia and apparatus dropped, merged, or mis-tagged",
+   "status": "NEW · #5143",
+   "sees": "a marginal note dropped, or merged mid-sentence into the body, or moved to the top of the page; body text wrapped in `<margin>` (and so styled as a note); a superscript footnote number at a line-end hyphen wrapped as `<margin>95. ἐπι-</margin>` so the split word is doubled; interlinear small characters detached as margin; a marginal keyword index fused with the body into a table; note key letters drifting N places so",
+   "detector": "none; #2709 (distinguish annotations in the reader), #3825 (closed tag vocabulary).",
+   "fix": "define <margin> as *position*, <note> as *apparatus*, <fn n> for footnote anchors; a write-time check that a <margin> block is not longer than the body; the judge reads margins as a separate block.",
+   "where": "OCR (→ translation, display) · on-page.",
+   "n": 882,
+   "pages": 649,
+   "sev": {
+    "serious": 454,
+    "minor": 261,
+    "moderate": 167
+   }
+  },
+  {
+   "code": "O13",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Later hands read as text",
+   "status": "NEW · #5144",
+   "sees": "words a reader underlined in pencil tagged `<insert>` and the translation asserting they are later additions; a later reader's alchemical doodles flagged `significance=\"high\"` and given a doctrinal meaning; faint annotations spliced into printed sentences with `<unclear>` guesses; a library stamp labelled \"printer's mark\".",
+   "detector": "none.",
+   "fix": "an <annotation hand=\"later\"> tag with no translation; prompt rule that manuscript marks on print are not the text.",
+   "where": "OCR → translation · on-page.",
+   "n": 60,
+   "pages": 50,
+   "sev": {
+    "serious": 14,
+    "minor": 26,
+    "moderate": 20
+   }
+  },
+  {
+   "code": "O14",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Non-linear content described, not transcribed",
+   "status": "NEW · #5145",
+   "sees": "the ~40 Latin labels on a Lullian plate exist only as an `<image-desc>` paraphrase, unsearchable and unquotable; a staff summarised as \"eight diamond-shaped notes\" with clef and accidentals lost, then replaced in the translation by \"[Diagram showing a musical cadence.]\"; an inline alchemical glyph turned into an `<image-desc>` so the sentence loses its noun; a lone mark given a confident English meaning; diagram lett",
+   "detector": "none; music-notation.md says never batch a vision model over scores.",
+   "fix": "labels on plates are text: transcribe them as a list under the description; notation goes to an OMR lane or is marked untranscribed; inline glyphs get a Unicode or <glyph> placeholder that keeps the sentence whole.",
+   "where": "OCR (→ translation) · on-page.",
+   "n": 181,
+   "pages": 158,
+   "sev": {
+    "serious": 95,
+    "minor": 50,
+    "moderate": 36
+   }
+  },
+  {
+   "code": "O15",
+   "lane": "O",
+   "kind": "other",
+   "name": "Reasoning, notes and page descriptions inside the OCR",
+   "status": "KNOWN",
+   "sees": "\"I am transcribing the right-hand page\", \"The image is a photograph of a manuscript page, likely from…\", \"The number 150 is underlined\", process summaries, inside the transcription.",
+   "detector": "ocrReasoningLeak(), DESCRIBED_PAGE (#5055 side-find, 25 pages); the <meta>-wrapped form is not counted.",
+   "fix": "already on the list; extend the regex to <meta> bodies.",
+   "where": "OCR → display · on-page.",
+   "n": 70,
+   "pages": 52,
+   "sev": {
+    "serious": 52,
+    "minor": 9,
+    "moderate": 9
+   }
+  },
+  {
+   "code": "O16",
+   "lane": "O",
+   "kind": "other",
+   "name": "Self-reported tags wrong",
+   "status": "NEW as a page-level class · #5146",
+   "sees": "`<language>French</language>` on a half-Syriac page; \"Greek\" and \"Ancient Greek\" on facing pages; \"Gurmukhi\" (a script) then \"Punjabi\"; `<columns>2` on a one-column page whose second column is the facing page's edge; `<script>` Kurrent on lithographed Latin script; `page_type` illustration on a text page; a rubric number as `<page-num>`. Routing, search filters, this sample's strata, and the `lang=` attribute a scree",
+   "detector": "#4654, #4766 (book-level language); nothing page-level.",
+   "fix": "derive page tags from evidence (Unicode census for language/script; a layout classifier for columns), and make the model's tag a *hint*; never gate behaviour on one page's tag.",
+   "where": "OCR → derived · on-page.",
+   "n": 216,
+   "pages": 200,
+   "sev": {
+    "serious": 47,
+    "moderate": 26,
+    "minor": 143
+   }
+  },
+  {
+   "code": "O17",
+   "lane": "O",
+   "kind": "layout",
+   "name": "Table structure invented or lost",
+   "status": "NEW · #5147",
+   "sees": "a marginal keyword index fused with the body into a row-aligned table; `| X | X |` rows for a single list; a paradigm's cells scrambled; a genealogy grid mis-mapped; an over-long row whose last cell the renderer drops; spanning cells lost; column mismatch in a printed table; prose forced into a `| Right | Left |` table that stops after seven rows.",
+   "detector": "none; a markdown-table lint (ragged rows, duplicate cells, table on a page with no <page-type>table) is free.",
+   "fix": "tables only where the leaf has ruled or aligned columns; a translation never introduces a table the OCR lacks.",
+   "where": "OCR and translation → display · on-page.",
+   "n": 175,
+   "pages": 125,
+   "sev": {
+    "serious": 135,
+    "minor": 25,
+    "moderate": 15
+   }
+  },
+  {
+   "code": "O18",
+   "lane": "O",
+   "kind": "other",
+   "name": "Engine refusal: the page is left empty",
+   "status": "NEW (added 2026-10-06, after the sample) · #4686",
+   "sees": "a scan with no text beside it, so the page cannot be searched, quoted or translated, and nothing says why. The reader cannot tell a page we refused from a page we never reached.",
+   "detector": "ocr.recitation_blocked: true with no ocr.data counts it exactly. #4686; #5581 scores refusals as refusals (CER 1.0) in the benchmark, never as misreads.",
+   "fix": "route the refused page to an engine with no policy layer, not to a retry. Kraken CATMuS-Print read 20 of 20 refused English pages at CER 0.009, with no lines dropped and no invented prose. Its numbers need the O7 repair above, and the result is gated before anything is written (scripts/eval/experiments/2026-10-06-kraken-refused-english-4686.md, …-glm-digit-r",
+   "where": "OCR · on-page, and it clusters: whole runs of a book, because the trigger is the text and not the leaf.",
+   "n": 20,
+   "pages": 19,
+   "sev": {
+    "serious": 19,
+    "moderate": 1
+   }
+  },
+  {
+   "code": "T1",
+   "lane": "T",
+   "kind": "omission",
+   "name": "Translation truncated",
+   "status": "KNOWN",
+   "sees": "the English stops a third of the way down the page, or mid-word (\"with water and s\").",
+   "detector": "truncationRatio(), #5055.",
+   "fix": "",
+   "where": "translation · on-page.",
+   "n": 96,
+   "pages": 88,
+   "sev": {
+    "serious": 96
+   }
+  },
+  {
+   "code": "T2",
+   "lane": "T",
+   "kind": "other",
+   "name": "Echoed source",
+   "status": "KNOWN",
+   "sees": "the original left untranslated (here, one word on one page).",
+   "detector": "echoedSource(), #5058.",
+   "fix": "",
+   "where": "",
+   "n": 44,
+   "pages": 42,
+   "sev": {
+    "serious": 18,
+    "minor": 17,
+    "moderate": 9
+   }
+  },
+  {
+   "code": "T3",
+   "lane": "T",
+   "kind": "layout",
+   "name": "Translation hidden inside a `<meta>` or `<note>` wrapper",
+   "status": "NEW · #5148",
+   "sees": "an empty or near-empty page; the translation exists but the renderer files it under metadata (or styles it as apparatus). `tr_len` far below `ocr_len` with a long `<meta>` is the tell.",
+   "detector": "truncationRatio() would flag it as truncation and a re-translation would be the wrong repair; NotesRenderer.extractMetadata() moves <meta> bodies out of the text.",
+   "fix": "write-time: a <meta> longer than the remaining body is unwrapped, not stored.",
+   "where": "translation → display · on-page.",
+   "n": 42,
+   "pages": 38,
+   "sev": {
+    "serious": 25,
+    "moderate": 13,
+    "minor": 4
+   }
+  },
+  {
+   "code": "T4",
+   "lane": "T",
+   "kind": "carry_over",
+   "name": "In-block drift / tail block shift",
+   "status": "KNOWN",
+   "sees": "page N's last section missing from N and prepended to N+1, so every word is translated somewhere and no completeness check fails.",
+   "detector": "detectBlockDrift(), #5021 (~3% of in-block boundaries).",
+   "fix": "",
+   "where": "",
+   "n": 13,
+   "pages": 13,
+   "sev": {
+    "serious": 13
+   }
+  },
+  {
+   "code": "T5",
+   "lane": "T",
+   "kind": "carry_over",
+   "name": "Continuity leak and lookahead duplication",
+   "status": "KNOWN",
+   "sees": "the next page's opening clause finished at the end of this page and repeated at the start of the next (\"good\" translated twice); the previous page's ending re-translated at the top.",
+   "detector": "translation-page-boundaries.mjs; #5026, #5103, #3918.",
+   "fix": "",
+   "where": "",
+   "n": 378,
+   "pages": 323,
+   "sev": {
+    "serious": 288,
+    "minor": 53,
+    "moderate": 37
+   }
+  },
+  {
+   "code": "T6",
+   "lane": "T",
+   "kind": "layout",
+   "name": "Catchword and split-word seams",
+   "status": "KNOWN (#5103), with new sub-variants",
+   "sees": "at the break, a negation lost (\"nõ | misericordia\" → \"for… Mercy is.\"), \"fœ-|mininam\" read as \"minimam\" and translated \"a minimum [signifier]\", a doubled syllable, a dropped tail, or — new — a *fabricated bridge*: the translator inserts a bracketed verb to close a sentence whose real verb is on the next page, invents an English split word (\"Wo…rds\") to fake a join, or writes \"[...]\" for the continuation half of a wor",
+   "detector": "catchwordBoundary(), parseCatchword(); #5103 (F0 measured 71%→42% device-break defects, flip is Derek's call).",
+   "fix": "the deterministic pre-model join in #5103; prompt rule \"never add words to bridge the break, never write an ellipsis for a word half\".",
+   "where": "OCR → translation · cross-page.",
+   "n": 482,
+   "pages": 418,
+   "sev": {
+    "serious": 115,
+    "moderate": 207,
+    "minor": 160
+   }
+  },
+  {
+   "code": "T7",
+   "lane": "T",
+   "kind": "illegible_fill",
+   "name": "Fluent-over-garble: no uncertainty floor",
+   "status": "NEW · #5149",
+   "sees": "confident English built on OCR gibberish, on lines the OCR itself marked `<unclear>`, on word stubs from a facing-page strip, on a repetition loop, on an isolated glyph — with no uncertainty marker. Or its inverse on Tibetan: the translator refuses to compose and ships a syllable-by-syllable gloss (\"Body, hundred, abandon, again, six, abandon, that, take.\") as the page.",
+   "detector": "none; #5004 is one instance; #4883's withhold-by-default is the policy answer for whole scripts.",
+   "fix": "the translator inherits <unclear> (translate inside the tag or not at all); a translatability gate (share of OCR tokens that are dictionary-plausible for the language) before spending on translation; \"no translation yet\" is a valid output.",
+   "where": "translation · on-page. This is the amplifier for O1, O4, O5, O6: every OCR failure reaches the reader as fluent prose because the translator never declines.",
+   "n": 2410,
+   "pages": 1282,
+   "sev": {
+    "serious": 1950,
+    "moderate": 313,
+    "minor": 147
+   }
+  },
+  {
+   "code": "T8",
+   "lane": "T",
+   "kind": "mistranslation",
+   "name": "Sense inverted or a qualifier dropped, with correct OCR",
+   "status": "NEW · #5150",
+   "sees": "cold and hot drugs reversed; a praeteritio read straight; \"lucis magnæ\" dropped; a negation dropped in Greek; \"each guest fearing for his own life\" becomes \"fearing for the bridegroom's life\"; a hedge removed.",
+   "detector": "none; the seam judges of #4681/#5104 reward fluency and cannot see it.",
+   "fix": "the fidelity judge (#5104's source-grounded design) run on-page, not only at seams; polarity items (negation, comparatives, qualifiers) as explicit checks.",
+   "where": "translation · on-page.",
+   "n": 3220,
+   "pages": 1730,
+   "sev": {
+    "serious": 859,
+    "moderate": 960,
+    "minor": 1401
+   }
+  },
+  {
+   "code": "T9",
+   "lane": "T",
+   "kind": "omission",
+   "name": "Quiet omission below the truncation threshold",
+   "status": "NEW · #5151",
+   "sees": "five lines of the Unetanneh Tokef (the shepherd simile and the verdict) gone between two fluent sentences; an opening clause dropped; footnotes dropped; a Greek passage absorbed; a commentary replaced by a one-line note.",
+   "detector": "truncationRatio() needs a large ratio; these are 5–20% losses.",
+   "fix": "sentence-level alignment (OCR sentence count vs translation sentence count per paragraph) as a cheap screen; the judge for the rest.",
+   "where": "translation · on-page.",
+   "n": 1145,
+   "pages": 817,
+   "sev": {
+    "serious": 517,
+    "moderate": 300,
+    "minor": 328
+   }
+  },
+  {
+   "code": "T10",
+   "lane": "T",
+   "kind": "added_gloss",
+   "name": "Invented scholarship in notes and glosses",
+   "status": "NEW · #5152",
+   "sees": "`<note>` and `<gloss>` that explain an OCR misread with confident, false learning: \"Saint Rotoi <note>likely a reference to a local feast day</note>\" (St Christopher, five years); \"Vishnu <note>the Preserver</note>\" inserted into Gurbani; \"λωθηκαὶ… likely referring to dummy figures or decoys\" (loricati); \"Kupfer\" glossed as counterfeiters; a ratio named the wrong interval; a footnote invented when its text is on the ",
+   "detector": "#2709 (reader distinguishes annotations); #3825 (verbatim original notes). Nothing checks note *content*. The v15 measurement (project_translation_prompt_v15_ab) found interpretive notes fall 36% under a stricter prompt: fewer notes is the direction, not more.",
+   "fix": "notes may gloss, never explain a reading; a note that contains \"likely\", \"possibly\", \"may refer\" on a token the OCR marks <unclear> is dropped at write time; the judge scores notes against the image.",
+   "where": "translation · on-page.",
+   "n": 1647,
+   "pages": 1194,
+   "sev": {
+    "serious": 885,
+    "moderate": 319,
+    "minor": 443
+   }
+  },
+  {
+   "code": "T11",
+   "lane": "T",
+   "kind": "mistranslation",
+   "name": "Parallel edition mishandled",
+   "status": "NEW · #5153",
+   "sees": "in a Greek/Latin Didot, a smooth complete \"translation of the Greek\" that is really Dübner's Latin reconstruction, so the editor's printed lacunae vanish; in a Loeb, a degraded paraphrase of Perrin's facing English presented as the translation; in a Syriac/French edition, one blended English that switches between the Syriac and the French and invents where it follows the Syriac; both columns translated in full, separ",
+   "detector": "#2784 (surface the existing facing English, no re-translation) names the right answer for six Greek editions; sourceLanguageCount() ≥ 2 on most pages of a book is the free detector.",
+   "fix": "a parallel-edition book mode: transcribe both, translate the source column only, and *surface* a printed translation as the edition's own (attributed), never re-translate it.",
+   "where": "translation · on-page.",
+   "n": 73,
+   "pages": 56,
+   "sev": {
+    "serious": 6,
+    "moderate": 44,
+    "minor": 23
+   }
+  },
+  {
+   "code": "T12",
+   "lane": "T",
+   "kind": "mistranslation",
+   "name": "Same-language source rewritten",
+   "status": "NEW · #5154",
+   "sees": "Burton, Taylor, Whinfield, Blavatsky, Browne, Jonson, the Ante-Nicene Fathers \"translated\" from English into abridged, modernised, interpretively drifted English: \"How Abu Hasan Brake Wind\" becomes \"Broke Wind\", \"our pleasure was troubled\" becomes \"ruined\", a Sappho commentary condensed to a summary, citations replaced by generic phrases, scholarly footnotes dropped (see T13). A reader of the translation panel never ",
+   "detector": "this is the deliberate **English modernization** lane (english_modernization prompt), not a routing accident: #4958 and PR #4959 (merged 2026-09-21) gate it to editions before 1820, the year the reader stops showing the panel (englishOcrIsReadingView), after a census found 2,279 English books carrying one and ~1,907 of them hidden. Of the nine books here, th",
+   "fix": "",
+   "where": "translation (routing) · on-page.",
+   "n": 15,
+   "pages": 14,
+   "sev": {
+    "serious": 7,
+    "minor": 5,
+    "moderate": 3
+   }
+  },
+  {
+   "code": "T13",
+   "lane": "T",
+   "kind": "omission",
+   "name": "Apparatus stripped in translation",
+   "status": "NEW · #5155",
+   "sees": "four of seven footnotes gone, the rest condensed into inline notes with the \"L.\" attributions removed; an editor's emendation nullified so the note says nothing; a Greek textual-critical note rendered as meaningless English; note numbers renumbered so the commentary no longer keys to the text; a rubricated book incipit or chapter number lost so the structure is invisible; a marginal siglum moved to line 1.",
+   "detector": "#3825 (verbatim original notes) is the prompt-side rule; nothing measures survival of notes.",
+   "fix": "footnote and rubric counts on OCR vs translation as a write-time check; apparatus is translated verbatim and numbered as printed.",
+   "where": "translation · on-page.",
+   "n": 323,
+   "pages": 242,
+   "sev": {
+    "serious": 61,
+    "moderate": 133,
+    "minor": 129
+   }
+  },
+  {
+   "code": "T14",
+   "lane": "T",
+   "kind": "wrong_leaf",
+   "name": "The two panes come from different reads",
+   "status": "NEW · #5156",
+   "sees": "the translation contains a passage the OCR panel lacks (translated from the image, from memory, or from an earlier OCR revision); a legacy raw-engine OCR with no tags beside an LLM translation that silently corrects it; a translation five times the OCR's length.",
+   "detector": "none; page_revisions carries the provenance (data-provenance.md) but nothing asserts that the served translation was made from the served OCR.",
+   "fix": "store the OCR content_hash the translation was made from (the Syriac-lane standard, feedback_provenance_standard_for_every_writer) and flag pages where it no longer matches.",
+   "where": "translation ↔ OCR provenance · on-page.",
+   "n": 130,
+   "pages": 83,
+   "sev": {
+    "serious": 75,
+    "moderate": 25,
+    "minor": 30
+   }
+  },
+  {
+   "code": "T15",
+   "lane": "T",
+   "kind": "other",
+   "name": "Continuity meta wrong",
+   "status": "NEW · #5157",
+   "sees": "\"continues from previous page\" at the start of a new section; \"after the previous page's Coptic\" on a page with no Coptic anywhere; a meta that summarises the facing half of an unsplit spread; the previous page's English repeated inside the meta.",
+   "detector": "none; the <meta>continues from previous page</meta> collapse noted in the handoff is the display side of the same tag.",
+   "fix": "continuity is a boolean derived from the OCR seam (T6), not free text; drop the sentence.",
+   "where": "translation → display · cross-page.",
+   "n": 218,
+   "pages": 185,
+   "sev": {
+    "serious": 11,
+    "minor": 155,
+    "moderate": 52
+   }
+  },
+  {
+   "code": "T16",
+   "lane": "T",
+   "kind": "layout",
+   "name": "Form imposed or lost",
+   "status": "NEW · #5158",
+   "sees": "manuscript line breaks carried mid-sentence into English prose so it reads as broken verse; verse flattened to prose; running heads as `#` headings and invented \"## PAGE 85\" headings; prose forced into a two-column table; inline quotations turned into blockquotes; invented italics.",
+   "detector": "none.",
+   "fix": "the translation carries the OCR's paragraph structure and nothing else: no headings it did not have, no tables it did not have, no line breaks inside a sentence unless the source is verse.",
+   "where": "translation → display · on-page.",
+   "n": 632,
+   "pages": 498,
+   "sev": {
+    "serious": 34,
+    "minor": 343,
+    "moderate": 255
+   }
+  },
+  {
+   "code": "T17",
+   "lane": "T",
+   "kind": "other",
+   "name": "The model's reasoning or a chat reply stored as the translation",
+   "status": "NEW (2026-10-06) · #6056",
+   "sees": "\"*Wait, the prompt says:* Style: warm museum label\", a checklist of the prompt's own rules, drafts and re-drafts of a line; or a whole page that reads \"Please provide the OCR transcription you would like me to translate\". The translation-side twin of O15.",
+   "detector": "translationReasoningLeak() (scripts/lib/page-integrity.mjs), corpus walk scripts/audit/translation-reasoning-leak.mjs; scripts/eval/experiments/2026-10-06-translation-reasoning-leak-6056.md. A floor: phrase rules.",
+   "fix": "refuse at write time what the rule matches (the page stays untranslated and is retried); a chat reply means the input was empty, so do not send an empty transcription; re-translate the pages already stored.",
+   "where": "translation → display · on-page.",
+   "n": 16,
+   "pages": 16,
+   "sev": {
+    "serious": 15,
+    "moderate": 1
+   }
+  },
+  {
+   "code": "D1",
+   "lane": "D",
+   "kind": "layout",
+   "name": "Markup the renderer does not know, or broken",
+   "status": "NEW as a class (pieces known) · #5159",
+   "sees": "raw `<sig>ff 2</sig>`, `<page-num>27</page-num>`, `<column-break/>`, `<language>Latin</language>` mid-text; pseudo-HTML footnote keys `<a>`, `<b>` that collide with real tags; a split or orphan `<insert>`/`<margin>` (`<margin></margin>` + content + `</margin>`); `$\\ast$`, `->…<-`, `&amp;`; \"[repeated text]\" elision markers; invented bold; an `<image-desc>` or \"A small decorative initial 'E'…\" note in the reading flow",
+   "detector": "#3825 (closed tag vocabulary), #3811, #2709; validateTranslation.ts exists but is not a write gate.",
+   "fix": "validate at write time against the closed vocabulary; strip or convert everything else; a renderer test that feeds it every tag in VALID_XML_TAGS plus the ten forms above.",
+   "where": "display · on-page.",
+   "n": 911,
+   "pages": 701,
+   "sev": {
+    "serious": 20,
+    "moderate": 480,
+    "minor": 411
+   }
+  },
+  {
+   "code": "E1",
+   "lane": "E",
+   "kind": "other",
+   "name": "Poisoned derived metadata",
+   "status": "KNOWN",
+   "sees": "",
+   "detector": "",
+   "fix": "",
+   "where": "",
+   "n": 65,
+   "pages": 55,
+   "sev": {
+    "serious": 11,
+    "moderate": 36,
+    "minor": 18
+   }
+  },
+  {
+   "code": "E2",
+   "lane": "E",
+   "kind": "other",
+   "name": "The instruments lie",
+   "status": "NEW · #5160",
+   "sees": "",
+   "detector": "",
+   "fix": "reading length must strip tags and collapse runs (readingLength() in page-integrity.mjs does; the mirror's field does not); page type from a classifier; format from <script> consensus; every count in this doc is by eye for that reason.",
+   "where": "",
+   "n": 246,
+   "pages": 222,
+   "sev": {
+    "serious": 227,
+    "minor": 10,
+    "moderate": 9
+   }
+  }
+ ],
+ "defects": {
+  "measure": "defects that change the sense per 1,000 words, on the served-grades (7866) scale",
+  "factors": {
+   "weekly": 2.126,
+   "fifths": 0.571
+  },
+  "calibration": {
+   "weekly": {
+    "Chinese": {
+     "own_per_1k": 5.86,
+     "served_grades_per_1k": 8.46
+    },
+    "Latin": {
+     "own_per_1k": 2.98,
+     "served_grades_per_1k": 6.16
+    },
+    "German": {
+     "own_per_1k": 1.33,
+     "served_grades_per_1k": 4
+    },
+    "Tibetan": {
+     "own_per_1k": 0.31,
+     "served_grades_per_1k": 3.63
+    },
+    "Greek": {
+     "own_per_1k": 7.24,
+     "served_grades_per_1k": 19.28
+    }
+   },
+   "fifths": {
+    "Chinese": {
+     "own_per_1k": 29.05,
+     "served_grades_per_1k": 8.46
+    },
+    "Latin": {
+     "own_per_1k": 12.43,
+     "served_grades_per_1k": 6.16
+    },
+    "English": {
+     "own_per_1k": 3.46,
+     "served_grades_per_1k": 0.93
+    },
+    "German": {
+     "own_per_1k": 7.71,
+     "served_grades_per_1k": 4
+    },
+    "Tibetan": {
+     "own_per_1k": 1.16,
+     "served_grades_per_1k": 3.63
+    },
+    "Greek": {
+     "own_per_1k": 19.32,
+     "served_grades_per_1k": 19.28
+    }
+   }
+  },
+  "dropped": {
+   "fifths: no text": 19,
+   "weekly: no language": 5,
+   "weekly: no text": 94
+  },
+  "n_pages": 4120,
+  "n_weekly": 1245,
+  "n_fifths": 2875,
+  "n_books": 1498,
+  "words": 1325833,
+  "per_1k_all": 6.98,
+  "heat": {
+   "langs": [
+    "Latin",
+    "German",
+    "English",
+    "Chinese",
+    "Greek",
+    "French",
+    "Arabic",
+    "Dutch",
+    "Italian",
+    "Hebrew",
+    "Sanskrit",
+    "Armenian",
+    "Russian",
+    "Egyptian hieroglyphs",
+    "Nahuatl-Spanish",
+    "Ge'ez",
+    "Tibetan",
+    "Nahuatl",
+    "Korean",
+    "Spanish",
+    "Persian",
+    "Yucatec Maya",
+    "Maya hieroglyphs",
+    "K'iche' Maya-Spanish",
+    "Maya Hieroglyphic Script",
+    "Old Spanish",
+    "Demotic",
+    "Judeo-Arabic",
+    "Mixtec",
+    "Georgian",
+    "Japanese",
+    "Syriac",
+    "Malay",
+    "Danish",
+    "Polish",
+    "Coptic",
+    "Pali",
+    "Bulgarian",
+    "Bugis"
+   ],
+   "bins": [
+    "before 1450",
+    "1450–99",
+    "1500–49",
+    "1550–99",
+    "1600–49",
+    "1650–99",
+    "1700–49",
+    "1750–99",
+    "1800–49",
+    "1850 on",
+    "date unknown"
+   ],
+   "cells": [
+    {
+     "lang": "French",
+     "bin": "1800–49",
+     "pages": 22,
+     "books": 7,
+     "words": 4901,
+     "weekly_pages": 5,
+     "fifths_pages": 17,
+     "value": 2.5
+    },
+    {
+     "lang": "Arabic",
+     "bin": "date unknown",
+     "pages": 50,
+     "books": 5,
+     "words": 11583,
+     "weekly_pages": 0,
+     "fifths_pages": 50,
+     "value": 6.75
+    },
+    {
+     "lang": "Latin",
+     "bin": "before 1450",
+     "pages": 299,
+     "books": 48,
+     "words": 144634,
+     "weekly_pages": 21,
+     "fifths_pages": 278,
+     "value": 10.76
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "before 1450",
+     "pages": 21,
+     "books": 3,
+     "words": 5416,
+     "weekly_pages": 1,
+     "fifths_pages": 20,
+     "value": 7.53
+    },
+    {
+     "lang": "French",
+     "bin": "1750–99",
+     "pages": 37,
+     "books": 10,
+     "words": 6761,
+     "weekly_pages": 7,
+     "fifths_pages": 30,
+     "value": 1.94
+    },
+    {
+     "lang": "Maya hieroglyphs",
+     "bin": "before 1450",
+     "pages": 10,
+     "books": 1,
+     "words": 1985,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 13.52
+    },
+    {
+     "lang": "German",
+     "bin": "1750–99",
+     "pages": 154,
+     "books": 36,
+     "words": 43406,
+     "weekly_pages": 23,
+     "fifths_pages": 131,
+     "value": 2.08
+    },
+    {
+     "lang": "Latin",
+     "bin": "1550–99",
+     "pages": 216,
+     "books": 86,
+     "words": 54976,
+     "weekly_pages": 79,
+     "fifths_pages": 137,
+     "value": 3.82
+    },
+    {
+     "lang": "Italian",
+     "bin": "1450–99",
+     "pages": 13,
+     "books": 4,
+     "words": 2632,
+     "weekly_pages": 3,
+     "fifths_pages": 10,
+     "value": 4.1
+    },
+    {
+     "lang": "German",
+     "bin": "1650–99",
+     "pages": 61,
+     "books": 25,
+     "words": 15509,
+     "weekly_pages": 22,
+     "fifths_pages": 39,
+     "value": 6.09
+    },
+    {
+     "lang": "Chinese",
+     "bin": "date unknown",
+     "pages": 171,
+     "books": 133,
+     "words": 29416,
+     "weekly_pages": 131,
+     "fifths_pages": 40,
+     "value": 13.07
+    },
+    {
+     "lang": "English",
+     "bin": "1850 on",
+     "pages": 250,
+     "books": 28,
+     "words": 111010,
+     "weekly_pages": 1,
+     "fifths_pages": 249,
+     "value": 1.91
+    },
+    {
+     "lang": "Greek",
+     "bin": "date unknown",
+     "pages": 53,
+     "books": 9,
+     "words": 15915,
+     "weekly_pages": 4,
+     "fifths_pages": 49,
+     "value": 18.98
+    },
+    {
+     "lang": "Latin",
+     "bin": "1450–99",
+     "pages": 250,
+     "books": 79,
+     "words": 95936,
+     "weekly_pages": 62,
+     "fifths_pages": 188,
+     "value": 10.67
+    },
+    {
+     "lang": "Latin",
+     "bin": "1750–99",
+     "pages": 55,
+     "books": 16,
+     "words": 10555,
+     "weekly_pages": 11,
+     "fifths_pages": 44,
+     "value": 7.93
+    },
+    {
+     "lang": "Italian",
+     "bin": "before 1450",
+     "pages": 10,
+     "books": 1,
+     "words": 2337,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 24.19
+    },
+    {
+     "lang": "Latin",
+     "bin": "1500–49",
+     "pages": 120,
+     "books": 64,
+     "words": 47235,
+     "weekly_pages": 60,
+     "fifths_pages": 60,
+     "value": 3.39
+    },
+    {
+     "lang": "German",
+     "bin": "1600–49",
+     "pages": 84,
+     "books": 42,
+     "words": 18494,
+     "weekly_pages": 38,
+     "fifths_pages": 46,
+     "value": 4.28
+    },
+    {
+     "lang": "German",
+     "bin": "1850 on",
+     "pages": 51,
+     "books": 19,
+     "words": 15964,
+     "weekly_pages": 15,
+     "fifths_pages": 36,
+     "value": 1.55
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "1550–99",
+     "pages": 12,
+     "books": 2,
+     "words": 5625,
+     "weekly_pages": 2,
+     "fifths_pages": 10,
+     "value": 11.73
+    },
+    {
+     "lang": "K'iche' Maya-Spanish",
+     "bin": "1700–49",
+     "pages": 10,
+     "books": 1,
+     "words": 6082,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 3.0
+    },
+    {
+     "lang": "Maya Hieroglyphic Script",
+     "bin": "before 1450",
+     "pages": 10,
+     "books": 1,
+     "words": 14643,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 1.52
+    },
+    {
+     "lang": "Old Spanish",
+     "bin": "1850 on",
+     "pages": 10,
+     "books": 1,
+     "words": 8147,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 3.71
+    },
+    {
+     "lang": "Greek",
+     "bin": "1500–49",
+     "pages": 16,
+     "books": 6,
+     "words": 5314,
+     "weekly_pages": 6,
+     "fifths_pages": 10,
+     "value": 25.36
+    },
+    {
+     "lang": "Italian",
+     "bin": "1700–49",
+     "pages": 11,
+     "books": 2,
+     "words": 2410,
+     "weekly_pages": 1,
+     "fifths_pages": 10,
+     "value": 13.27
+    },
+    {
+     "lang": "Arabic",
+     "bin": "before 1450",
+     "pages": 65,
+     "books": 11,
+     "words": 18645,
+     "weekly_pages": 5,
+     "fifths_pages": 60,
+     "value": 22.33
+    },
+    {
+     "lang": "Italian",
+     "bin": "1550–99",
+     "pages": 30,
+     "books": 20,
+     "words": 8346,
+     "weekly_pages": 20,
+     "fifths_pages": 10,
+     "value": 2.79
+    },
+    {
+     "lang": "Armenian",
+     "bin": "1500–49",
+     "pages": 10,
+     "books": 1,
+     "words": 2103,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 10.86
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "1500–49",
+     "pages": 10,
+     "books": 1,
+     "words": 2503,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 22.35
+    },
+    {
+     "lang": "Latin",
+     "bin": "1600–49",
+     "pages": 232,
+     "books": 89,
+     "words": 77157,
+     "weekly_pages": 74,
+     "fifths_pages": 158,
+     "value": 2.77
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "date unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 968,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 33.03
+    },
+    {
+     "lang": "French",
+     "bin": "1850 on",
+     "pages": 52,
+     "books": 19,
+     "words": 12436,
+     "weekly_pages": 16,
+     "fifths_pages": 36,
+     "value": 3.1
+    },
+    {
+     "lang": "Latin",
+     "bin": "1650–99",
+     "pages": 252,
+     "books": 126,
+     "words": 77570,
+     "weekly_pages": 114,
+     "fifths_pages": 138,
+     "value": 3.88
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "1850 on",
+     "pages": 10,
+     "books": 1,
+     "words": 4691,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 15.34
+    },
+    {
+     "lang": "English",
+     "bin": "before 1450",
+     "pages": 10,
+     "books": 1,
+     "words": 1268,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 13.06
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1650–99",
+     "pages": 37,
+     "books": 10,
+     "words": 11925,
+     "weekly_pages": 7,
+     "fifths_pages": 30,
+     "value": 4.77
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "1500–49",
+     "pages": 8,
+     "books": 1,
+     "words": 4132,
+     "weekly_pages": 0,
+     "fifths_pages": 8,
+     "value": 11.75
+    },
+    {
+     "lang": "French",
+     "bin": "1700–49",
+     "pages": 16,
+     "books": 7,
+     "words": 6450,
+     "weekly_pages": 6,
+     "fifths_pages": 10,
+     "value": 1.01
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "1850 on",
+     "pages": 22,
+     "books": 13,
+     "words": 9401,
+     "weekly_pages": 12,
+     "fifths_pages": 10,
+     "value": 0.76
+    },
+    {
+     "lang": "Demotic",
+     "bin": "date unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 2304,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 16.36
+    },
+    {
+     "lang": "Greek",
+     "bin": "1850 on",
+     "pages": 87,
+     "books": 33,
+     "words": 43445,
+     "weekly_pages": 28,
+     "fifths_pages": 59,
+     "value": 5.23
+    },
+    {
+     "lang": "German",
+     "bin": "1550–99",
+     "pages": 45,
+     "books": 27,
+     "words": 10130,
+     "weekly_pages": 25,
+     "fifths_pages": 20,
+     "value": 7.02
+    },
+    {
+     "lang": "French",
+     "bin": "1500–49",
+     "pages": 11,
+     "books": 2,
+     "words": 3031,
+     "weekly_pages": 1,
+     "fifths_pages": 10,
+     "value": 3.29
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "1550–99",
+     "pages": 30,
+     "books": 3,
+     "words": 11315,
+     "weekly_pages": 0,
+     "fifths_pages": 30,
+     "value": 0.76
+    },
+    {
+     "lang": "German",
+     "bin": "1700–49",
+     "pages": 83,
+     "books": 27,
+     "words": 20350,
+     "weekly_pages": 23,
+     "fifths_pages": 60,
+     "value": 3.22
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "1750–99",
+     "pages": 20,
+     "books": 3,
+     "words": 3811,
+     "weekly_pages": 2,
+     "fifths_pages": 18,
+     "value": 22.74
+    },
+    {
+     "lang": "French",
+     "bin": "1650–99",
+     "pages": 27,
+     "books": 9,
+     "words": 6859,
+     "weekly_pages": 7,
+     "fifths_pages": 20,
+     "value": 1.04
+    },
+    {
+     "lang": "Russian",
+     "bin": "1850 on",
+     "pages": 24,
+     "books": 16,
+     "words": 6301,
+     "weekly_pages": 15,
+     "fifths_pages": 9,
+     "value": 1.1
+    },
+    {
+     "lang": "Persian",
+     "bin": "1850 on",
+     "pages": 10,
+     "books": 2,
+     "words": 9913,
+     "weekly_pages": 1,
+     "fifths_pages": 9,
+     "value": 9.47
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "1650–99",
+     "pages": 12,
+     "books": 3,
+     "words": 1789,
+     "weekly_pages": 2,
+     "fifths_pages": 10,
+     "value": 40.02
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "before 1450",
+     "pages": 41,
+     "books": 5,
+     "words": 10055,
+     "weekly_pages": 1,
+     "fifths_pages": 40,
+     "value": 21.58
+    },
+    {
+     "lang": "Greek",
+     "bin": "before 1450",
+     "pages": 54,
+     "books": 9,
+     "words": 15187,
+     "weekly_pages": 4,
+     "fifths_pages": 50,
+     "value": 20.01
+    },
+    {
+     "lang": "English",
+     "bin": "1750–99",
+     "pages": 19,
+     "books": 2,
+     "words": 4914,
+     "weekly_pages": 0,
+     "fifths_pages": 19,
+     "value": 4.3
+    },
+    {
+     "lang": "Judeo-Arabic",
+     "bin": "1450–99",
+     "pages": 10,
+     "books": 1,
+     "words": 4150,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 15.55
+    },
+    {
+     "lang": "Russian",
+     "bin": "1750–99",
+     "pages": 10,
+     "books": 1,
+     "words": 1716,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 3.99
+    },
+    {
+     "lang": "Mixtec",
+     "bin": "1850 on",
+     "pages": 10,
+     "books": 1,
+     "words": 3965,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 4.61
+    },
+    {
+     "lang": "French",
+     "bin": "1600–49",
+     "pages": 23,
+     "books": 5,
+     "words": 4292,
+     "weekly_pages": 3,
+     "fifths_pages": 20,
+     "value": 1.73
+    },
+    {
+     "lang": "Greek",
+     "bin": "1550–99",
+     "pages": 16,
+     "books": 7,
+     "words": 10467,
+     "weekly_pages": 6,
+     "fifths_pages": 10,
+     "value": 5.05
+    },
+    {
+     "lang": "German",
+     "bin": "before 1450",
+     "pages": 9,
+     "books": 1,
+     "words": 3994,
+     "weekly_pages": 0,
+     "fifths_pages": 9,
+     "value": 15.87
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "date unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 1670,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 18.46
+    },
+    {
+     "lang": "English",
+     "bin": "1550–99",
+     "pages": 10,
+     "books": 1,
+     "words": 3789,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 0.6
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "1850 on",
+     "pages": 46,
+     "books": 11,
+     "words": 8970,
+     "weekly_pages": 7,
+     "fifths_pages": 39,
+     "value": 11.11
+    },
+    {
+     "lang": "Arabic",
+     "bin": "1700–49",
+     "pages": 11,
+     "books": 2,
+     "words": 6487,
+     "weekly_pages": 1,
+     "fifths_pages": 10,
+     "value": 12.02
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1450–99",
+     "pages": 22,
+     "books": 4,
+     "words": 3015,
+     "weekly_pages": 2,
+     "fifths_pages": 20,
+     "value": 4.92
+    },
+    {
+     "lang": "Latin",
+     "bin": "1700–49",
+     "pages": 66,
+     "books": 45,
+     "words": 18100,
+     "weekly_pages": 46,
+     "fifths_pages": 20,
+     "value": 5.64
+    },
+    {
+     "lang": "French",
+     "bin": "1550–99",
+     "pages": 41,
+     "books": 6,
+     "words": 10318,
+     "weekly_pages": 2,
+     "fifths_pages": 39,
+     "value": 2.26
+    },
+    {
+     "lang": "Latin",
+     "bin": "date unknown",
+     "pages": 100,
+     "books": 80,
+     "words": 28043,
+     "weekly_pages": 80,
+     "fifths_pages": 20,
+     "value": 6.16
+    },
+    {
+     "lang": "Armenian",
+     "bin": "before 1450",
+     "pages": 31,
+     "books": 4,
+     "words": 10043,
+     "weekly_pages": 1,
+     "fifths_pages": 30,
+     "value": 12.83
+    },
+    {
+     "lang": "Arabic",
+     "bin": "1850 on",
+     "pages": 18,
+     "books": 8,
+     "words": 4599,
+     "weekly_pages": 8,
+     "fifths_pages": 10,
+     "value": 15.91
+    },
+    {
+     "lang": "Arabic",
+     "bin": "1500–49",
+     "pages": 10,
+     "books": 1,
+     "words": 1805,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 4.11
+    },
+    {
+     "lang": "Georgian",
+     "bin": "before 1450",
+     "pages": 6,
+     "books": 1,
+     "words": 1767,
+     "weekly_pages": 0,
+     "fifths_pages": 6,
+     "value": 10.34
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "1550–99",
+     "pages": 10,
+     "books": 1,
+     "words": 2056,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 12.77
+    },
+    {
+     "lang": "German",
+     "bin": "1450–99",
+     "pages": 12,
+     "books": 3,
+     "words": 3921,
+     "weekly_pages": 2,
+     "fifths_pages": 10,
+     "value": 10.05
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "1750–99",
+     "pages": 8,
+     "books": 1,
+     "words": 7131,
+     "weekly_pages": 0,
+     "fifths_pages": 8,
+     "value": 6.57
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "1800–49",
+     "pages": 12,
+     "books": 3,
+     "words": 1198,
+     "weekly_pages": 2,
+     "fifths_pages": 10,
+     "value": 21.13
+    },
+    {
+     "lang": "Spanish",
+     "bin": "before 1450",
+     "pages": 10,
+     "books": 1,
+     "words": 3899,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 8.49
+    },
+    {
+     "lang": "Italian",
+     "bin": "1500–49",
+     "pages": 16,
+     "books": 7,
+     "words": 3785,
+     "weekly_pages": 6,
+     "fifths_pages": 10,
+     "value": 1.51
+    },
+    {
+     "lang": "Arabic",
+     "bin": "1450–99",
+     "pages": 20,
+     "books": 2,
+     "words": 4311,
+     "weekly_pages": 0,
+     "fifths_pages": 20,
+     "value": 20.93
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1600–49",
+     "pages": 15,
+     "books": 6,
+     "words": 15579,
+     "weekly_pages": 5,
+     "fifths_pages": 10,
+     "value": 2.78
+    },
+    {
+     "lang": "English",
+     "bin": "date unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 3392,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 3.53
+    },
+    {
+     "lang": "English",
+     "bin": "1600–49",
+     "pages": 10,
+     "books": 1,
+     "words": 4890,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 0.82
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "1750–99",
+     "pages": 8,
+     "books": 1,
+     "words": 1526,
+     "weekly_pages": 0,
+     "fifths_pages": 8,
+     "value": 10.48
+    },
+    {
+     "lang": "English",
+     "bin": "1650–99",
+     "pages": 20,
+     "books": 2,
+     "words": 8769,
+     "weekly_pages": 0,
+     "fifths_pages": 20,
+     "value": 0.72
+    },
+    {
+     "lang": "Korean",
+     "bin": "1600–49",
+     "pages": 11,
+     "books": 2,
+     "words": 3397,
+     "weekly_pages": 1,
+     "fifths_pages": 10,
+     "value": 20.17
+    },
+    {
+     "lang": "German",
+     "bin": "1800–49",
+     "pages": 24,
+     "books": 14,
+     "words": 5407,
+     "weekly_pages": 14,
+     "fifths_pages": 10,
+     "value": 1.78
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "1550–99",
+     "pages": 10,
+     "books": 1,
+     "words": 1553,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 24.63
+    },
+    {
+     "lang": "Chinese",
+     "bin": "before 1450",
+     "pages": 15,
+     "books": 6,
+     "words": 2487,
+     "weekly_pages": 5,
+     "fifths_pages": 10,
+     "value": 4.36
+    },
+    {
+     "lang": "German",
+     "bin": "1500–49",
+     "pages": 16,
+     "books": 7,
+     "words": 3954,
+     "weekly_pages": 6,
+     "fifths_pages": 10,
+     "value": 2.89
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "1850 on",
+     "pages": 9,
+     "books": 2,
+     "words": 4348,
+     "weekly_pages": 1,
+     "fifths_pages": 8,
+     "value": 5.38
+    },
+    {
+     "lang": "Russian",
+     "bin": "1800–49",
+     "pages": 10,
+     "books": 1,
+     "words": 1487,
+     "weekly_pages": 0,
+     "fifths_pages": 10,
+     "value": 2.3
+    },
+    {
+     "lang": "Spanish",
+     "bin": "1600–49",
+     "pages": 1,
+     "books": 1,
+     "words": 474,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Armenian",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 98,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1700–49",
+     "pages": 11,
+     "books": 11,
+     "words": 6247,
+     "weekly_pages": 11,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1850 on",
+     "pages": 3,
+     "books": 3,
+     "words": 937,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 2.27
+    },
+    {
+     "lang": "Latin",
+     "bin": "1850 on",
+     "pages": 10,
+     "books": 10,
+     "words": 3406,
+     "weekly_pages": 10,
+     "fifths_pages": 0,
+     "value": 2.5
+    },
+    {
+     "lang": "Chinese",
+     "bin": "1750–99",
+     "pages": 20,
+     "books": 20,
+     "words": 2265,
+     "weekly_pages": 20,
+     "fifths_pages": 0,
+     "value": 20.65
+    },
+    {
+     "lang": "Korean",
+     "bin": "1750–99",
+     "pages": 4,
+     "books": 4,
+     "words": 446,
+     "weekly_pages": 4,
+     "fifths_pages": 0,
+     "value": 62.02
+    },
+    {
+     "lang": "Syriac",
+     "bin": "1850 on",
+     "pages": 3,
+     "books": 3,
+     "words": 787,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Danish",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 373,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1550–99",
+     "pages": 3,
+     "books": 3,
+     "words": 1012,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Chinese",
+     "bin": "1600–49",
+     "pages": 24,
+     "books": 20,
+     "words": 3211,
+     "weekly_pages": 24,
+     "fifths_pages": 0,
+     "value": 9.93
+    },
+    {
+     "lang": "Chinese",
+     "bin": "1850 on",
+     "pages": 2,
+     "books": 2,
+     "words": 246,
+     "weekly_pages": 2,
+     "fifths_pages": 0,
+     "value": 34.57
+    },
+    {
+     "lang": "Polish",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 55,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Greek",
+     "bin": "1450–99",
+     "pages": 9,
+     "books": 8,
+     "words": 2958,
+     "weekly_pages": 9,
+     "fifths_pages": 0,
+     "value": 33.78
+    },
+    {
+     "lang": "Korean",
+     "bin": "1700–49",
+     "pages": 1,
+     "books": 1,
+     "words": 147,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Persian",
+     "bin": "1800–49",
+     "pages": 1,
+     "books": 1,
+     "words": 145,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Italian",
+     "bin": "1650–99",
+     "pages": 5,
+     "books": 5,
+     "words": 1071,
+     "weekly_pages": 5,
+     "fifths_pages": 0,
+     "value": 3.97
+    },
+    {
+     "lang": "Italian",
+     "bin": "1850 on",
+     "pages": 3,
+     "books": 3,
+     "words": 632,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Chinese",
+     "bin": "1800–49",
+     "pages": 5,
+     "books": 5,
+     "words": 641,
+     "weekly_pages": 5,
+     "fifths_pages": 0,
+     "value": 3.32
+    },
+    {
+     "lang": "Japanese",
+     "bin": "1700–49",
+     "pages": 1,
+     "books": 1,
+     "words": 396,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 16.11
+    },
+    {
+     "lang": "Korean",
+     "bin": "1800–49",
+     "pages": 4,
+     "books": 4,
+     "words": 857,
+     "weekly_pages": 4,
+     "fifths_pages": 0,
+     "value": 29.78
+    },
+    {
+     "lang": "Korean",
+     "bin": "1850 on",
+     "pages": 3,
+     "books": 3,
+     "words": 343,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 24.8
+    },
+    {
+     "lang": "Italian",
+     "bin": "1600–49",
+     "pages": 3,
+     "books": 3,
+     "words": 724,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "1600–49",
+     "pages": 3,
+     "books": 2,
+     "words": 548,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Greek",
+     "bin": "1650–99",
+     "pages": 1,
+     "books": 1,
+     "words": 444,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 38.31
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1750–99",
+     "pages": 4,
+     "books": 3,
+     "words": 2012,
+     "weekly_pages": 4,
+     "fifths_pages": 0,
+     "value": 3.17
+    },
+    {
+     "lang": "Greek",
+     "bin": "1800–49",
+     "pages": 5,
+     "books": 5,
+     "words": 1501,
+     "weekly_pages": 5,
+     "fifths_pages": 0,
+     "value": 5.67
+    },
+    {
+     "lang": "Greek",
+     "bin": "1700–49",
+     "pages": 1,
+     "books": 1,
+     "words": 89,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Latin",
+     "bin": "1800–49",
+     "pages": 6,
+     "books": 6,
+     "words": 1410,
+     "weekly_pages": 6,
+     "fifths_pages": 0,
+     "value": 4.52
+    },
+    {
+     "lang": "Chinese",
+     "bin": "1700–49",
+     "pages": 3,
+     "books": 3,
+     "words": 741,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 37.32
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "1800–49",
+     "pages": 1,
+     "books": 1,
+     "words": 396,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "1600–49",
+     "pages": 1,
+     "books": 1,
+     "words": 296,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 21.55
+    },
+    {
+     "lang": "French",
+     "bin": "1450–99",
+     "pages": 1,
+     "books": 1,
+     "words": 321,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "German",
+     "bin": "date unknown",
+     "pages": 4,
+     "books": 4,
+     "words": 1065,
+     "weekly_pages": 4,
+     "fifths_pages": 0,
+     "value": 5.99
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "1700–49",
+     "pages": 3,
+     "books": 3,
+     "words": 1310,
+     "weekly_pages": 3,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Armenian",
+     "bin": "1750–99",
+     "pages": 1,
+     "books": 1,
+     "words": 266,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Arabic",
+     "bin": "1800–49",
+     "pages": 1,
+     "books": 1,
+     "words": 206,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 20.64
+    },
+    {
+     "lang": "Chinese",
+     "bin": "1550–99",
+     "pages": 7,
+     "books": 7,
+     "words": 1313,
+     "weekly_pages": 7,
+     "fifths_pages": 0,
+     "value": 21.06
+    },
+    {
+     "lang": "Malay",
+     "bin": "1850 on",
+     "pages": 2,
+     "books": 2,
+     "words": 363,
+     "weekly_pages": 2,
+     "fifths_pages": 0,
+     "value": 17.57
+    },
+    {
+     "lang": "Italian",
+     "bin": "1800–49",
+     "pages": 1,
+     "books": 1,
+     "words": 204,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "1850 on",
+     "pages": 2,
+     "books": 1,
+     "words": 167,
+     "weekly_pages": 2,
+     "fifths_pages": 0,
+     "value": 12.76
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "1850 on",
+     "pages": 2,
+     "books": 2,
+     "words": 540,
+     "weekly_pages": 2,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Coptic",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 237,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Armenian",
+     "bin": "1800–49",
+     "pages": 1,
+     "books": 1,
+     "words": 1045,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "1850 on",
+     "pages": 4,
+     "books": 4,
+     "words": 697,
+     "weekly_pages": 4,
+     "fifths_pages": 0,
+     "value": 21.35
+    },
+    {
+     "lang": "Japanese",
+     "bin": "date unknown",
+     "pages": 1,
+     "books": 1,
+     "words": 121,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Greek",
+     "bin": "1600–49",
+     "pages": 1,
+     "books": 1,
+     "words": 39,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Pali",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 224,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Spanish",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 130,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "1700–49",
+     "pages": 1,
+     "books": 1,
+     "words": 220,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 19.33
+    },
+    {
+     "lang": "Arabic",
+     "bin": "1550–99",
+     "pages": 2,
+     "books": 2,
+     "words": 869,
+     "weekly_pages": 2,
+     "fifths_pages": 0,
+     "value": 19.57
+    },
+    {
+     "lang": "Italian",
+     "bin": "1750–99",
+     "pages": 1,
+     "books": 1,
+     "words": 192,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Bulgarian",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 703,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "1800–49",
+     "pages": 1,
+     "books": 1,
+     "words": 37,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "1600–49",
+     "pages": 2,
+     "books": 2,
+     "words": 995,
+     "weekly_pages": 2,
+     "fifths_pages": 0,
+     "value": 8.55
+    },
+    {
+     "lang": "Spanish",
+     "bin": "1450–99",
+     "pages": 1,
+     "books": 1,
+     "words": 351,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 6.06
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "1500–49",
+     "pages": 1,
+     "books": 1,
+     "words": 320,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 39.87
+    },
+    {
+     "lang": "Bugis",
+     "bin": "1850 on",
+     "pages": 1,
+     "books": 1,
+     "words": 248,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 25.72
+    },
+    {
+     "lang": "Dutch",
+     "bin": "1500–49",
+     "pages": 1,
+     "books": 1,
+     "words": 266,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 15.99
+    },
+    {
+     "lang": "Armenian",
+     "bin": "1650–99",
+     "pages": 1,
+     "books": 1,
+     "words": 284,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "1650–99",
+     "pages": 1,
+     "books": 1,
+     "words": 28,
+     "weekly_pages": 1,
+     "fifths_pages": 0,
+     "value": 379.68
+    }
+   ]
+  },
+  "by_engine": {
+   "langs": [
+    "Latin",
+    "German",
+    "English",
+    "Chinese",
+    "Greek",
+    "French",
+    "Arabic",
+    "Dutch",
+    "Italian",
+    "Hebrew",
+    "Sanskrit",
+    "Armenian",
+    "Russian",
+    "Egyptian hieroglyphs",
+    "Nahuatl-Spanish",
+    "Ge'ez",
+    "Tibetan",
+    "Nahuatl",
+    "Korean",
+    "Spanish",
+    "Persian",
+    "Yucatec Maya",
+    "Maya hieroglyphs",
+    "K'iche' Maya-Spanish",
+    "Maya Hieroglyphic Script",
+    "Old Spanish",
+    "Demotic",
+    "Judeo-Arabic",
+    "Mixtec",
+    "Georgian",
+    "Japanese",
+    "Syriac",
+    "Malay",
+    "Danish",
+    "Polish",
+    "Coptic",
+    "Pali",
+    "Bulgarian",
+    "Bugis"
+   ],
+   "bins": [
+    "Gemini Flash",
+    "Gemini Flash-Lite",
+    "PaddleOCR",
+    "other",
+    "Claude",
+    "unknown",
+    "e-text",
+    "BDRC yigdzin"
+   ],
+   "cells": [
+    {
+     "lang": "French",
+     "bin": "Gemini Flash",
+     "pages": 197,
+     "books": 51,
+     "words": 47401,
+     "value": 1.79
+    },
+    {
+     "lang": "Arabic",
+     "bin": "Gemini Flash",
+     "pages": 122,
+     "books": 22,
+     "words": 35152,
+     "value": 12.57
+    },
+    {
+     "lang": "Latin",
+     "bin": "Gemini Flash",
+     "pages": 1316,
+     "books": 484,
+     "words": 462659,
+     "value": 6.15
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "other",
+     "pages": 32,
+     "books": 5,
+     "words": 6800,
+     "value": 10.7
+    },
+    {
+     "lang": "Maya hieroglyphs",
+     "bin": "Gemini Flash-Lite",
+     "pages": 10,
+     "books": 1,
+     "words": 1985,
+     "value": 13.52
+    },
+    {
+     "lang": "German",
+     "bin": "Gemini Flash",
+     "pages": 436,
+     "books": 140,
+     "words": 118360,
+     "value": 3.97
+    },
+    {
+     "lang": "Latin",
+     "bin": "Gemini Flash-Lite",
+     "pages": 287,
+     "books": 177,
+     "words": 94393,
+     "value": 10.45
+    },
+    {
+     "lang": "Italian",
+     "bin": "Gemini Flash",
+     "pages": 74,
+     "books": 36,
+     "words": 17894,
+     "value": 4.91
+    },
+    {
+     "lang": "Latin",
+     "bin": "Claude",
+     "pages": 3,
+     "books": 2,
+     "words": 1970,
+     "value": 4.06
+    },
+    {
+     "lang": "Chinese",
+     "bin": "Gemini Flash",
+     "pages": 67,
+     "books": 30,
+     "words": 11886,
+     "value": 18.67
+    },
+    {
+     "lang": "English",
+     "bin": "Gemini Flash-Lite",
+     "pages": 91,
+     "books": 16,
+     "words": 44249,
+     "value": 2.01
+    },
+    {
+     "lang": "Greek",
+     "bin": "Gemini Flash",
+     "pages": 211,
+     "books": 72,
+     "words": 86602,
+     "value": 11.22
+    },
+    {
+     "lang": "Chinese",
+     "bin": "PaddleOCR",
+     "pages": 154,
+     "books": 143,
+     "words": 22337,
+     "value": 10.81
+    },
+    {
+     "lang": "German",
+     "bin": "Gemini Flash-Lite",
+     "pages": 100,
+     "books": 65,
+     "words": 21658,
+     "value": 3.83
+    },
+    {
+     "lang": "German",
+     "bin": "Claude",
+     "pages": 5,
+     "books": 4,
+     "words": 1527,
+     "value": 0.0
+    },
+    {
+     "lang": "English",
+     "bin": "other",
+     "pages": 18,
+     "books": 4,
+     "words": 5519,
+     "value": 3.1
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "Gemini Flash",
+     "pages": 91,
+     "books": 19,
+     "words": 23084,
+     "value": 20.68
+    },
+    {
+     "lang": "K'iche' Maya-Spanish",
+     "bin": "Gemini Flash",
+     "pages": 10,
+     "books": 1,
+     "words": 6082,
+     "value": 3.0
+    },
+    {
+     "lang": "Maya Hieroglyphic Script",
+     "bin": "Claude",
+     "pages": 10,
+     "books": 1,
+     "words": 14643,
+     "value": 1.52
+    },
+    {
+     "lang": "Old Spanish",
+     "bin": "Gemini Flash",
+     "pages": 10,
+     "books": 1,
+     "words": 8147,
+     "value": 3.71
+    },
+    {
+     "lang": "Italian",
+     "bin": "Gemini Flash-Lite",
+     "pages": 19,
+     "books": 12,
+     "words": 4439,
+     "value": 10.08
+    },
+    {
+     "lang": "Arabic",
+     "bin": "Gemini Flash-Lite",
+     "pages": 53,
+     "books": 10,
+     "words": 12734,
+     "value": 25.36
+    },
+    {
+     "lang": "Armenian",
+     "bin": "Gemini Flash",
+     "pages": 24,
+     "books": 5,
+     "words": 10977,
+     "value": 7.7
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "Gemini Flash-Lite",
+     "pages": 20,
+     "books": 2,
+     "words": 4056,
+     "value": 23.23
+    },
+    {
+     "lang": "French",
+     "bin": "Gemini Flash-Lite",
+     "pages": 33,
+     "books": 17,
+     "words": 7968,
+     "value": 4.21
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "Gemini Flash-Lite",
+     "pages": 10,
+     "books": 1,
+     "words": 4691,
+     "value": 15.34
+    },
+    {
+     "lang": "English",
+     "bin": "Gemini Flash",
+     "pages": 220,
+     "books": 28,
+     "words": 88264,
+     "value": 1.9
+    },
+    {
+     "lang": "Dutch",
+     "bin": "Gemini Flash-Lite",
+     "pages": 28,
+     "books": 10,
+     "words": 10621,
+     "value": 4.4
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "Gemini Flash",
+     "pages": 16,
+     "books": 2,
+     "words": 11263,
+     "value": 8.47
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "e-text",
+     "pages": 10,
+     "books": 1,
+     "words": 4318,
+     "value": 0.66
+    },
+    {
+     "lang": "Demotic",
+     "bin": "Gemini Flash-Lite",
+     "pages": 10,
+     "books": 1,
+     "words": 2304,
+     "value": 16.36
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "other",
+     "pages": 26,
+     "books": 3,
+     "words": 10245,
+     "value": 0.78
+    },
+    {
+     "lang": "Russian",
+     "bin": "Gemini Flash",
+     "pages": 42,
+     "books": 17,
+     "words": 9213,
+     "value": 1.87
+    },
+    {
+     "lang": "Russian",
+     "bin": "Gemini Flash-Lite",
+     "pages": 2,
+     "books": 2,
+     "words": 291,
+     "value": 0.0
+    },
+    {
+     "lang": "Persian",
+     "bin": "Gemini Flash",
+     "pages": 11,
+     "books": 3,
+     "words": 10058,
+     "value": 9.34
+    },
+    {
+     "lang": "Greek",
+     "bin": "Gemini Flash-Lite",
+     "pages": 30,
+     "books": 11,
+     "words": 7515,
+     "value": 23.19
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "Claude",
+     "pages": 4,
+     "books": 1,
+     "words": 1070,
+     "value": 0.53
+    },
+    {
+     "lang": "Judeo-Arabic",
+     "bin": "Gemini Flash",
+     "pages": 10,
+     "books": 1,
+     "words": 4150,
+     "value": 15.55
+    },
+    {
+     "lang": "Dutch",
+     "bin": "Gemini Flash",
+     "pages": 68,
+     "books": 31,
+     "words": 30372,
+     "value": 2.67
+    },
+    {
+     "lang": "Mixtec",
+     "bin": "Gemini Flash",
+     "pages": 10,
+     "books": 1,
+     "words": 3965,
+     "value": 4.61
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "Gemini Flash",
+     "pages": 77,
+     "books": 15,
+     "words": 13886,
+     "value": 13.57
+    },
+    {
+     "lang": "Armenian",
+     "bin": "Gemini Flash-Lite",
+     "pages": 21,
+     "books": 5,
+     "words": 2862,
+     "value": 23.49
+    },
+    {
+     "lang": "Georgian",
+     "bin": "Gemini Flash",
+     "pages": 2,
+     "books": 1,
+     "words": 408,
+     "value": 15.39
+    },
+    {
+     "lang": "Georgian",
+     "bin": "Gemini Flash-Lite",
+     "pages": 4,
+     "books": 1,
+     "words": 1359,
+     "value": 8.82
+    },
+    {
+     "lang": "Spanish",
+     "bin": "Gemini Flash",
+     "pages": 11,
+     "books": 2,
+     "words": 4250,
+     "value": 8.29
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "Gemini Flash",
+     "pages": 8,
+     "books": 1,
+     "words": 1526,
+     "value": 10.48
+    },
+    {
+     "lang": "Korean",
+     "bin": "Gemini Flash-Lite",
+     "pages": 9,
+     "books": 5,
+     "words": 2415,
+     "value": 31.22
+    },
+    {
+     "lang": "Korean",
+     "bin": "Gemini Flash",
+     "pages": 14,
+     "books": 10,
+     "words": 2774,
+     "value": 19.75
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "Gemini Flash",
+     "pages": 2,
+     "books": 1,
+     "words": 1176,
+     "value": 2.91
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "Gemini Flash-Lite",
+     "pages": 6,
+     "books": 1,
+     "words": 2756,
+     "value": 7.25
+    },
+    {
+     "lang": "Spanish",
+     "bin": "Gemini Flash-Lite",
+     "pages": 1,
+     "books": 1,
+     "words": 474,
+     "value": 0.0
+    },
+    {
+     "lang": "Chinese",
+     "bin": "other",
+     "pages": 6,
+     "books": 5,
+     "words": 1725,
+     "value": 1.23
+    },
+    {
+     "lang": "Chinese",
+     "bin": "Claude",
+     "pages": 15,
+     "books": 15,
+     "words": 4041,
+     "value": 11.58
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "unknown",
+     "pages": 14,
+     "books": 14,
+     "words": 5887,
+     "value": 0.72
+    },
+    {
+     "lang": "Syriac",
+     "bin": "Gemini Flash",
+     "pages": 2,
+     "books": 2,
+     "words": 489,
+     "value": 0.0
+    },
+    {
+     "lang": "Danish",
+     "bin": "Gemini Flash-Lite",
+     "pages": 1,
+     "books": 1,
+     "words": 373,
+     "value": 0.0
+    },
+    {
+     "lang": "Polish",
+     "bin": "Gemini Flash",
+     "pages": 1,
+     "books": 1,
+     "words": 55,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "Gemini Flash-Lite",
+     "pages": 2,
+     "books": 2,
+     "words": 433,
+     "value": 14.73
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "Claude",
+     "pages": 3,
+     "books": 2,
+     "words": 548,
+     "value": 0.0
+    },
+    {
+     "lang": "Syriac",
+     "bin": "Gemini Flash-Lite",
+     "pages": 1,
+     "books": 1,
+     "words": 298,
+     "value": 0.0
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "Gemini Flash-Lite",
+     "pages": 3,
+     "books": 3,
+     "words": 524,
+     "value": 8.12
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "Claude",
+     "pages": 2,
+     "books": 2,
+     "words": 680,
+     "value": 0.0
+    },
+    {
+     "lang": "Arabic",
+     "bin": "Claude",
+     "pages": 2,
+     "books": 1,
+     "words": 619,
+     "value": 0.0
+    },
+    {
+     "lang": "Chinese",
+     "bin": "Gemini Flash-Lite",
+     "pages": 5,
+     "books": 5,
+     "words": 332,
+     "value": 83.34
+    },
+    {
+     "lang": "German",
+     "bin": "other",
+     "pages": 2,
+     "books": 2,
+     "words": 649,
+     "value": 3.28
+    },
+    {
+     "lang": "Malay",
+     "bin": "Gemini Flash",
+     "pages": 2,
+     "books": 2,
+     "words": 363,
+     "value": 17.57
+    },
+    {
+     "lang": "Japanese",
+     "bin": "Gemini Flash",
+     "pages": 3,
+     "books": 2,
+     "words": 288,
+     "value": 7.39
+    },
+    {
+     "lang": "Coptic",
+     "bin": "Gemini Flash",
+     "pages": 1,
+     "books": 1,
+     "words": 237,
+     "value": 0.0
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "Gemini Flash-Lite",
+     "pages": 1,
+     "books": 1,
+     "words": 208,
+     "value": 0.0
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "BDRC yigdzin",
+     "pages": 1,
+     "books": 1,
+     "words": 506,
+     "value": 0.0
+    },
+    {
+     "lang": "Pali",
+     "bin": "Gemini Flash-Lite",
+     "pages": 1,
+     "books": 1,
+     "words": 224,
+     "value": 0.0
+    },
+    {
+     "lang": "Spanish",
+     "bin": "Claude",
+     "pages": 1,
+     "books": 1,
+     "words": 130,
+     "value": 0.0
+    },
+    {
+     "lang": "Greek",
+     "bin": "Claude",
+     "pages": 2,
+     "books": 2,
+     "words": 1242,
+     "value": 0.0
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "Gemini Flash-Lite",
+     "pages": 1,
+     "books": 1,
+     "words": 256,
+     "value": 0.0
+    },
+    {
+     "lang": "Bulgarian",
+     "bin": "Gemini Flash",
+     "pages": 1,
+     "books": 1,
+     "words": 703,
+     "value": 0.0
+    },
+    {
+     "lang": "Bugis",
+     "bin": "Gemini Flash",
+     "pages": 1,
+     "books": 1,
+     "words": 248,
+     "value": 25.72
+    },
+    {
+     "lang": "Japanese",
+     "bin": "other",
+     "pages": 1,
+     "books": 1,
+     "words": 28,
+     "value": 379.68
+    }
+   ]
+  },
+  "engine_totals": {
+   "Gemini Flash": {
+    "pages": 3060,
+    "books": 984,
+    "value": 6.51
+   },
+   "Gemini Flash-Lite": {
+    "pages": 749,
+    "books": 353,
+    "value": 9.7
+   },
+   "PaddleOCR": {
+    "pages": 154,
+    "books": 143,
+    "value": 10.81
+   },
+   "other": {
+    "pages": 85,
+    "books": 20,
+    "value": 4.52
+   },
+   "Claude": {
+    "pages": 47,
+    "books": 31,
+    "value": 2.93
+   },
+   "unknown": {
+    "pages": 14,
+    "books": 14,
+    "value": 0.72
+   },
+   "e-text": {
+    "pages": 10,
+    "books": 1,
+    "value": 0.66
+   },
+   "BDRC yigdzin": {
+    "pages": 1,
+    "books": 1,
+    "value": 0.0
+   }
+  },
+  "by_script": {
+   "langs": [
+    "Latin",
+    "German",
+    "English",
+    "Chinese",
+    "Greek",
+    "French",
+    "Arabic",
+    "Dutch",
+    "Italian",
+    "Hebrew",
+    "Sanskrit",
+    "Armenian",
+    "Russian",
+    "Egyptian hieroglyphs",
+    "Nahuatl-Spanish",
+    "Ge'ez",
+    "Tibetan",
+    "Nahuatl",
+    "Korean",
+    "Spanish",
+    "Persian",
+    "Yucatec Maya",
+    "Maya hieroglyphs",
+    "K'iche' Maya-Spanish",
+    "Maya Hieroglyphic Script",
+    "Old Spanish",
+    "Demotic",
+    "Judeo-Arabic",
+    "Mixtec",
+    "Georgian",
+    "Japanese",
+    "Syriac",
+    "Malay",
+    "Danish",
+    "Polish",
+    "Coptic",
+    "Pali",
+    "Bulgarian",
+    "Bugis"
+   ],
+   "bins": [
+    "print",
+    "manuscript",
+    "mixed",
+    "unknown"
+   ],
+   "cells": [
+    {
+     "lang": "French",
+     "bin": "unknown",
+     "pages": 173,
+     "books": 39,
+     "words": 40592,
+     "value": 1.69
+    },
+    {
+     "lang": "Arabic",
+     "bin": "unknown",
+     "pages": 91,
+     "books": 10,
+     "words": 26845,
+     "value": 12.27
+    },
+    {
+     "lang": "Latin",
+     "bin": "unknown",
+     "pages": 909,
+     "books": 179,
+     "words": 327783,
+     "value": 6.65
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "unknown",
+     "pages": 32,
+     "books": 5,
+     "words": 6800,
+     "value": 10.7
+    },
+    {
+     "lang": "Maya hieroglyphs",
+     "bin": "manuscript",
+     "pages": 10,
+     "books": 1,
+     "words": 1985,
+     "value": 13.52
+    },
+    {
+     "lang": "German",
+     "bin": "unknown",
+     "pages": 336,
+     "books": 77,
+     "words": 92801,
+     "value": 4.49
+    },
+    {
+     "lang": "Latin",
+     "bin": "print",
+     "pages": 487,
+     "books": 398,
+     "words": 148988,
+     "value": 5.21
+    },
+    {
+     "lang": "Italian",
+     "bin": "unknown",
+     "pages": 51,
+     "books": 14,
+     "words": 11558,
+     "value": 6.49
+    },
+    {
+     "lang": "Latin",
+     "bin": "manuscript",
+     "pages": 178,
+     "books": 45,
+     "words": 73781,
+     "value": 11.34
+    },
+    {
+     "lang": "Chinese",
+     "bin": "unknown",
+     "pages": 54,
+     "books": 17,
+     "words": 11460,
+     "value": 17.63
+    },
+    {
+     "lang": "English",
+     "bin": "print",
+     "pages": 159,
+     "books": 19,
+     "words": 71405,
+     "value": 2.15
+    },
+    {
+     "lang": "Greek",
+     "bin": "unknown",
+     "pages": 139,
+     "books": 39,
+     "words": 57404,
+     "value": 10.66
+    },
+    {
+     "lang": "Chinese",
+     "bin": "print",
+     "pages": 34,
+     "books": 33,
+     "words": 5127,
+     "value": 17.15
+    },
+    {
+     "lang": "Chinese",
+     "bin": "manuscript",
+     "pages": 159,
+     "books": 147,
+     "words": 23733,
+     "value": 10.53
+    },
+    {
+     "lang": "German",
+     "bin": "print",
+     "pages": 194,
+     "books": 115,
+     "words": 46661,
+     "value": 2.38
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "unknown",
+     "pages": 90,
+     "books": 18,
+     "words": 22764,
+     "value": 20.41
+    },
+    {
+     "lang": "K'iche' Maya-Spanish",
+     "bin": "manuscript",
+     "pages": 10,
+     "books": 1,
+     "words": 6082,
+     "value": 3.0
+    },
+    {
+     "lang": "Maya Hieroglyphic Script",
+     "bin": "manuscript",
+     "pages": 10,
+     "books": 1,
+     "words": 14643,
+     "value": 1.52
+    },
+    {
+     "lang": "Old Spanish",
+     "bin": "unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 8147,
+     "value": 3.71
+    },
+    {
+     "lang": "Italian",
+     "bin": "manuscript",
+     "pages": 13,
+     "books": 4,
+     "words": 3229,
+     "value": 12.54
+    },
+    {
+     "lang": "Arabic",
+     "bin": "print",
+     "pages": 36,
+     "books": 9,
+     "words": 9164,
+     "value": 8.99
+    },
+    {
+     "lang": "Greek",
+     "bin": "manuscript",
+     "pages": 57,
+     "books": 11,
+     "words": 14352,
+     "value": 26.66
+    },
+    {
+     "lang": "Armenian",
+     "bin": "unknown",
+     "pages": 22,
+     "books": 4,
+     "words": 10488,
+     "value": 7.29
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "mixed",
+     "pages": 5,
+     "books": 2,
+     "words": 864,
+     "value": 25.77
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "manuscript",
+     "pages": 15,
+     "books": 2,
+     "words": 3192,
+     "value": 22.54
+    },
+    {
+     "lang": "French",
+     "bin": "print",
+     "pages": 55,
+     "books": 25,
+     "words": 13686,
+     "value": 3.01
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "print",
+     "pages": 10,
+     "books": 1,
+     "words": 4691,
+     "value": 15.34
+    },
+    {
+     "lang": "English",
+     "bin": "unknown",
+     "pages": 156,
+     "books": 17,
+     "words": 63543,
+     "value": 1.46
+    },
+    {
+     "lang": "Dutch",
+     "bin": "print",
+     "pages": 29,
+     "books": 11,
+     "words": 11021,
+     "value": 4.04
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "manuscript",
+     "pages": 8,
+     "books": 1,
+     "words": 4132,
+     "value": 11.75
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "unknown",
+     "pages": 25,
+     "books": 16,
+     "words": 10711,
+     "value": 0.66
+    },
+    {
+     "lang": "Demotic",
+     "bin": "manuscript",
+     "pages": 10,
+     "books": 1,
+     "words": 2304,
+     "value": 16.36
+    },
+    {
+     "lang": "Latin",
+     "bin": "mixed",
+     "pages": 32,
+     "books": 32,
+     "words": 8470,
+     "value": 5.29
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "manuscript",
+     "pages": 30,
+     "books": 3,
+     "words": 11315,
+     "value": 0.76
+    },
+    {
+     "lang": "Russian",
+     "bin": "print",
+     "pages": 16,
+     "books": 8,
+     "words": 4334,
+     "value": 0.62
+    },
+    {
+     "lang": "Persian",
+     "bin": "manuscript",
+     "pages": 3,
+     "books": 3,
+     "words": 1949,
+     "value": 25.33
+    },
+    {
+     "lang": "Persian",
+     "bin": "print",
+     "pages": 8,
+     "books": 1,
+     "words": 8109,
+     "value": 5.49
+    },
+    {
+     "lang": "Judeo-Arabic",
+     "bin": "unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 4150,
+     "value": 15.55
+    },
+    {
+     "lang": "Russian",
+     "bin": "unknown",
+     "pages": 28,
+     "books": 10,
+     "words": 5170,
+     "value": 2.81
+    },
+    {
+     "lang": "Dutch",
+     "bin": "unknown",
+     "pages": 66,
+     "books": 29,
+     "words": 29706,
+     "value": 2.66
+    },
+    {
+     "lang": "English",
+     "bin": "manuscript",
+     "pages": 12,
+     "books": 3,
+     "words": 2408,
+     "value": 9.96
+    },
+    {
+     "lang": "Mixtec",
+     "bin": "unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 3965,
+     "value": 4.61
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "unknown",
+     "pages": 66,
+     "books": 13,
+     "words": 12583,
+     "value": 12.16
+    },
+    {
+     "lang": "Greek",
+     "bin": "print",
+     "pages": 46,
+     "books": 30,
+     "words": 23574,
+     "value": 6.44
+    },
+    {
+     "lang": "Armenian",
+     "bin": "manuscript",
+     "pages": 21,
+     "books": 3,
+     "words": 2987,
+     "value": 25.18
+    },
+    {
+     "lang": "Arabic",
+     "bin": "manuscript",
+     "pages": 50,
+     "books": 13,
+     "words": 12496,
+     "value": 28.25
+    },
+    {
+     "lang": "Georgian",
+     "bin": "manuscript",
+     "pages": 6,
+     "books": 1,
+     "words": 1767,
+     "value": 10.34
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "unknown",
+     "pages": 8,
+     "books": 1,
+     "words": 7131,
+     "value": 6.57
+    },
+    {
+     "lang": "Spanish",
+     "bin": "unknown",
+     "pages": 10,
+     "books": 1,
+     "words": 3899,
+     "value": 8.49
+    },
+    {
+     "lang": "English",
+     "bin": "mixed",
+     "pages": 2,
+     "books": 2,
+     "words": 676,
+     "value": 5.07
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "manuscript",
+     "pages": 8,
+     "books": 1,
+     "words": 1526,
+     "value": 10.48
+    },
+    {
+     "lang": "Korean",
+     "bin": "manuscript",
+     "pages": 15,
+     "books": 6,
+     "words": 4060,
+     "value": 25.78
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "manuscript",
+     "pages": 10,
+     "books": 1,
+     "words": 1206,
+     "value": 24.14
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "print",
+     "pages": 7,
+     "books": 1,
+     "words": 3728,
+     "value": 5.21
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "mixed",
+     "pages": 1,
+     "books": 1,
+     "words": 204,
+     "value": 19.59
+    },
+    {
+     "lang": "Spanish",
+     "bin": "print",
+     "pages": 3,
+     "books": 3,
+     "words": 955,
+     "value": 2.23
+    },
+    {
+     "lang": "Italian",
+     "bin": "print",
+     "pages": 28,
+     "books": 28,
+     "words": 7426,
+     "value": 2.29
+    },
+    {
+     "lang": "Armenian",
+     "bin": "print",
+     "pages": 2,
+     "books": 2,
+     "words": 364,
+     "value": 0.0
+    },
+    {
+     "lang": "German",
+     "bin": "manuscript",
+     "pages": 8,
+     "books": 8,
+     "words": 1300,
+     "value": 9.81
+    },
+    {
+     "lang": "Korean",
+     "bin": "print",
+     "pages": 8,
+     "books": 8,
+     "words": 1129,
+     "value": 22.61
+    },
+    {
+     "lang": "Syriac",
+     "bin": "print",
+     "pages": 2,
+     "books": 2,
+     "words": 378,
+     "value": 0.0
+    },
+    {
+     "lang": "Danish",
+     "bin": "print",
+     "pages": 1,
+     "books": 1,
+     "words": 373,
+     "value": 0.0
+    },
+    {
+     "lang": "Polish",
+     "bin": "print",
+     "pages": 1,
+     "books": 1,
+     "words": 55,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "print",
+     "pages": 4,
+     "books": 3,
+     "words": 591,
+     "value": 32.4
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "print",
+     "pages": 3,
+     "books": 2,
+     "words": 548,
+     "value": 0.0
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "print",
+     "pages": 4,
+     "books": 4,
+     "words": 621,
+     "value": 17.12
+    },
+    {
+     "lang": "French",
+     "bin": "manuscript",
+     "pages": 2,
+     "books": 2,
+     "words": 1091,
+     "value": 7.8
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "print",
+     "pages": 3,
+     "books": 3,
+     "words": 936,
+     "value": 0.0
+    },
+    {
+     "lang": "Malay",
+     "bin": "manuscript",
+     "pages": 2,
+     "books": 2,
+     "words": 363,
+     "value": 17.57
+    },
+    {
+     "lang": "Greek",
+     "bin": "mixed",
+     "pages": 1,
+     "books": 1,
+     "words": 29,
+     "value": 0.0
+    },
+    {
+     "lang": "German",
+     "bin": "mixed",
+     "pages": 5,
+     "books": 5,
+     "words": 1432,
+     "value": 10.39
+    },
+    {
+     "lang": "Coptic",
+     "bin": "unknown",
+     "pages": 1,
+     "books": 1,
+     "words": 237,
+     "value": 0.0
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "print",
+     "pages": 1,
+     "books": 1,
+     "words": 208,
+     "value": 0.0
+    },
+    {
+     "lang": "Syriac",
+     "bin": "unknown",
+     "pages": 1,
+     "books": 1,
+     "words": 409,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "mixed",
+     "pages": 1,
+     "books": 1,
+     "words": 121,
+     "value": 0.0
+    },
+    {
+     "lang": "Pali",
+     "bin": "print",
+     "pages": 1,
+     "books": 1,
+     "words": 224,
+     "value": 0.0
+    },
+    {
+     "lang": "Italian",
+     "bin": "mixed",
+     "pages": 1,
+     "books": 1,
+     "words": 120,
+     "value": 0.0
+    },
+    {
+     "lang": "Bulgarian",
+     "bin": "print",
+     "pages": 1,
+     "books": 1,
+     "words": 703,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "manuscript",
+     "pages": 1,
+     "books": 1,
+     "words": 37,
+     "value": 0.0
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "manuscript",
+     "pages": 1,
+     "books": 1,
+     "words": 320,
+     "value": 39.87
+    },
+    {
+     "lang": "Bugis",
+     "bin": "manuscript",
+     "pages": 1,
+     "books": 1,
+     "words": 248,
+     "value": 25.72
+    },
+    {
+     "lang": "Dutch",
+     "bin": "manuscript",
+     "pages": 1,
+     "books": 1,
+     "words": 266,
+     "value": 15.99
+    }
+   ]
+  },
+  "script_totals": {
+   "print": {
+    "pages": 1143,
+    "books": 711,
+    "value": 4.55
+   },
+   "manuscript": {
+    "pages": 641,
+    "books": 264,
+    "value": 12.92
+   },
+   "mixed": {
+    "pages": 48,
+    "books": 45,
+    "value": 7.5
+   },
+   "unknown": {
+    "pages": 2288,
+    "books": 494,
+    "value": 6.64
+   }
+  },
+  "by_density": {
+   "langs": [
+    "Latin",
+    "German",
+    "English",
+    "Chinese",
+    "Greek",
+    "French",
+    "Arabic",
+    "Dutch",
+    "Italian",
+    "Hebrew",
+    "Sanskrit",
+    "Armenian",
+    "Russian",
+    "Egyptian hieroglyphs",
+    "Nahuatl-Spanish",
+    "Ge'ez",
+    "Tibetan",
+    "Nahuatl",
+    "Korean",
+    "Spanish",
+    "Persian",
+    "Yucatec Maya",
+    "Maya hieroglyphs",
+    "K'iche' Maya-Spanish",
+    "Maya Hieroglyphic Script",
+    "Old Spanish",
+    "Demotic",
+    "Judeo-Arabic",
+    "Mixtec",
+    "Georgian",
+    "Japanese",
+    "Syriac",
+    "Malay",
+    "Danish",
+    "Polish",
+    "Coptic",
+    "Pali",
+    "Bulgarian",
+    "Bugis"
+   ],
+   "bins": [
+    "under 150 words",
+    "150–300 words",
+    "300–500 words",
+    "500+ words"
+   ],
+   "cells": [
+    {
+     "lang": "French",
+     "bin": "150–300 words",
+     "pages": 142,
+     "books": 38,
+     "words": 30089,
+     "value": 1.99
+    },
+    {
+     "lang": "French",
+     "bin": "under 150 words",
+     "pages": 51,
+     "books": 19,
+     "words": 5081,
+     "value": 2.81
+    },
+    {
+     "lang": "Arabic",
+     "bin": "300–500 words",
+     "pages": 41,
+     "books": 15,
+     "words": 15177,
+     "value": 12.68
+    },
+    {
+     "lang": "Arabic",
+     "bin": "150–300 words",
+     "pages": 86,
+     "books": 16,
+     "words": 18802,
+     "value": 21.18
+    },
+    {
+     "lang": "Arabic",
+     "bin": "under 150 words",
+     "pages": 32,
+     "books": 13,
+     "words": 3467,
+     "value": 16.99
+    },
+    {
+     "lang": "Latin",
+     "bin": "500+ words",
+     "pages": 300,
+     "books": 109,
+     "words": 221843,
+     "value": 6.47
+    },
+    {
+     "lang": "Latin",
+     "bin": "150–300 words",
+     "pages": 639,
+     "books": 309,
+     "words": 142346,
+     "value": 7.19
+    },
+    {
+     "lang": "Latin",
+     "bin": "300–500 words",
+     "pages": 448,
+     "books": 208,
+     "words": 171740,
+     "value": 6.3
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "150–300 words",
+     "pages": 12,
+     "books": 4,
+     "words": 2699,
+     "value": 8.88
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "under 150 words",
+     "pages": 13,
+     "books": 3,
+     "words": 1107,
+     "value": 30.43
+    },
+    {
+     "lang": "Maya hieroglyphs",
+     "bin": "150–300 words",
+     "pages": 8,
+     "books": 1,
+     "words": 1708,
+     "value": 13.37
+    },
+    {
+     "lang": "Maya hieroglyphs",
+     "bin": "under 150 words",
+     "pages": 2,
+     "books": 1,
+     "words": 277,
+     "value": 14.43
+    },
+    {
+     "lang": "German",
+     "bin": "150–300 words",
+     "pages": 327,
+     "books": 125,
+     "words": 71071,
+     "value": 4.19
+    },
+    {
+     "lang": "German",
+     "bin": "under 150 words",
+     "pages": 83,
+     "books": 51,
+     "words": 7200,
+     "value": 5.98
+    },
+    {
+     "lang": "Latin",
+     "bin": "under 150 words",
+     "pages": 219,
+     "books": 146,
+     "words": 23093,
+     "value": 12.94
+    },
+    {
+     "lang": "Italian",
+     "bin": "under 150 words",
+     "pages": 15,
+     "books": 11,
+     "words": 1329,
+     "value": 9.76
+    },
+    {
+     "lang": "Italian",
+     "bin": "150–300 words",
+     "pages": 60,
+     "books": 27,
+     "words": 13454,
+     "value": 5.08
+    },
+    {
+     "lang": "German",
+     "bin": "300–500 words",
+     "pages": 112,
+     "books": 63,
+     "words": 41416,
+     "value": 3.64
+    },
+    {
+     "lang": "Chinese",
+     "bin": "under 150 words",
+     "pages": 143,
+     "books": 116,
+     "words": 15192,
+     "value": 13.14
+    },
+    {
+     "lang": "Chinese",
+     "bin": "300–500 words",
+     "pages": 18,
+     "books": 10,
+     "words": 6447,
+     "value": 16.49
+    },
+    {
+     "lang": "Chinese",
+     "bin": "150–300 words",
+     "pages": 86,
+     "books": 75,
+     "words": 18681,
+     "value": 12.52
+    },
+    {
+     "lang": "English",
+     "bin": "500+ words",
+     "pages": 89,
+     "books": 15,
+     "words": 75694,
+     "value": 1.46
+    },
+    {
+     "lang": "Greek",
+     "bin": "under 150 words",
+     "pages": 23,
+     "books": 16,
+     "words": 2092,
+     "value": 33.44
+    },
+    {
+     "lang": "Greek",
+     "bin": "300–500 words",
+     "pages": 75,
+     "books": 32,
+     "words": 29262,
+     "value": 10.37
+    },
+    {
+     "lang": "Italian",
+     "bin": "300–500 words",
+     "pages": 14,
+     "books": 11,
+     "words": 5320,
+     "value": 7.24
+    },
+    {
+     "lang": "Greek",
+     "bin": "500+ words",
+     "pages": 56,
+     "books": 20,
+     "words": 42456,
+     "value": 6.06
+    },
+    {
+     "lang": "English",
+     "bin": "150–300 words",
+     "pages": 99,
+     "books": 23,
+     "words": 22498,
+     "value": 3.12
+    },
+    {
+     "lang": "English",
+     "bin": "under 150 words",
+     "pages": 49,
+     "books": 18,
+     "words": 4334,
+     "value": 4.48
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "300–500 words",
+     "pages": 17,
+     "books": 5,
+     "words": 6569,
+     "value": 18.02
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "150–300 words",
+     "pages": 48,
+     "books": 10,
+     "words": 10518,
+     "value": 23.91
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "500+ words",
+     "pages": 7,
+     "books": 2,
+     "words": 4047,
+     "value": 5.64
+    },
+    {
+     "lang": "K'iche' Maya-Spanish",
+     "bin": "500+ words",
+     "pages": 10,
+     "books": 1,
+     "words": 6082,
+     "value": 3.0
+    },
+    {
+     "lang": "Maya Hieroglyphic Script",
+     "bin": "500+ words",
+     "pages": 10,
+     "books": 1,
+     "words": 14643,
+     "value": 1.52
+    },
+    {
+     "lang": "Old Spanish",
+     "bin": "500+ words",
+     "pages": 10,
+     "books": 1,
+     "words": 8147,
+     "value": 3.71
+    },
+    {
+     "lang": "Greek",
+     "bin": "150–300 words",
+     "pages": 89,
+     "books": 39,
+     "words": 21549,
+     "value": 23.93
+    },
+    {
+     "lang": "Armenian",
+     "bin": "150–300 words",
+     "pages": 20,
+     "books": 5,
+     "words": 4144,
+     "value": 13.64
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "under 150 words",
+     "pages": 7,
+     "books": 2,
+     "words": 701,
+     "value": 25.25
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "300–500 words",
+     "pages": 5,
+     "books": 2,
+     "words": 1613,
+     "value": 24.07
+    },
+    {
+     "lang": "Nahuatl",
+     "bin": "150–300 words",
+     "pages": 11,
+     "books": 4,
+     "words": 2290,
+     "value": 16.46
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "500+ words",
+     "pages": 17,
+     "books": 3,
+     "words": 13152,
+     "value": 8.34
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 80,
+     "value": 57.1
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "300–500 words",
+     "pages": 5,
+     "books": 2,
+     "words": 2223,
+     "value": 17.47
+    },
+    {
+     "lang": "English",
+     "bin": "300–500 words",
+     "pages": 92,
+     "books": 21,
+     "words": 35506,
+     "value": 2.07
+    },
+    {
+     "lang": "Dutch",
+     "bin": "500+ words",
+     "pages": 24,
+     "books": 9,
+     "words": 24666,
+     "value": 2.22
+    },
+    {
+     "lang": "Dutch",
+     "bin": "300–500 words",
+     "pages": 17,
+     "books": 16,
+     "words": 6579,
+     "value": 2.27
+    },
+    {
+     "lang": "Dutch",
+     "bin": "150–300 words",
+     "pages": 33,
+     "books": 15,
+     "words": 7339,
+     "value": 5.08
+    },
+    {
+     "lang": "Ge'ez",
+     "bin": "150–300 words",
+     "pages": 3,
+     "books": 2,
+     "words": 499,
+     "value": 28.6
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "300–500 words",
+     "pages": 23,
+     "books": 15,
+     "words": 9697,
+     "value": 0.73
+    },
+    {
+     "lang": "Tibetan",
+     "bin": "500+ words",
+     "pages": 2,
+     "books": 2,
+     "words": 1014,
+     "value": 0.0
+    },
+    {
+     "lang": "Demotic",
+     "bin": "150–300 words",
+     "pages": 10,
+     "books": 1,
+     "words": 2304,
+     "value": 16.36
+    },
+    {
+     "lang": "Arabic",
+     "bin": "500+ words",
+     "pages": 18,
+     "books": 9,
+     "words": 11059,
+     "value": 10.41
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "300–500 words",
+     "pages": 25,
+     "books": 3,
+     "words": 9686,
+     "value": 0.83
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "500+ words",
+     "pages": 1,
+     "books": 1,
+     "words": 571,
+     "value": 0.0
+    },
+    {
+     "lang": "Russian",
+     "bin": "150–300 words",
+     "pages": 30,
+     "books": 10,
+     "words": 6165,
+     "value": 2.42
+    },
+    {
+     "lang": "Russian",
+     "bin": "under 150 words",
+     "pages": 8,
+     "books": 4,
+     "words": 859,
+     "value": 2.66
+    },
+    {
+     "lang": "Persian",
+     "bin": "500+ words",
+     "pages": 8,
+     "books": 1,
+     "words": 8970,
+     "value": 5.09
+    },
+    {
+     "lang": "Persian",
+     "bin": "300–500 words",
+     "pages": 2,
+     "books": 2,
+     "words": 943,
+     "value": 51.15
+    },
+    {
+     "lang": "Hebrew",
+     "bin": "under 150 words",
+     "pages": 20,
+     "books": 12,
+     "words": 2158,
+     "value": 39.24
+    },
+    {
+     "lang": "Nahuatl-Spanish",
+     "bin": "150–300 words",
+     "pages": 4,
+     "books": 2,
+     "words": 1058,
+     "value": 0.54
+    },
+    {
+     "lang": "Judeo-Arabic",
+     "bin": "300–500 words",
+     "pages": 7,
+     "books": 1,
+     "words": 2749,
+     "value": 17.86
+    },
+    {
+     "lang": "Judeo-Arabic",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 281,
+     "value": 40.64
+    },
+    {
+     "lang": "Judeo-Arabic",
+     "bin": "500+ words",
+     "pages": 2,
+     "books": 1,
+     "words": 1120,
+     "value": 3.57
+    },
+    {
+     "lang": "Dutch",
+     "bin": "under 150 words",
+     "pages": 22,
+     "books": 8,
+     "words": 2409,
+     "value": 8.57
+    },
+    {
+     "lang": "Mixtec",
+     "bin": "300–500 words",
+     "pages": 7,
+     "books": 1,
+     "words": 2868,
+     "value": 6.37
+    },
+    {
+     "lang": "Mixtec",
+     "bin": "500+ words",
+     "pages": 2,
+     "books": 1,
+     "words": 1053,
+     "value": 0.0
+    },
+    {
+     "lang": "Mixtec",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 44,
+     "value": 0.0
+    },
+    {
+     "lang": "German",
+     "bin": "500+ words",
+     "pages": 21,
+     "books": 11,
+     "words": 22507,
+     "value": 2.83
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "under 150 words",
+     "pages": 30,
+     "books": 11,
+     "words": 2563,
+     "value": 19.74
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "150–300 words",
+     "pages": 46,
+     "books": 13,
+     "words": 9818,
+     "value": 12.44
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "500+ words",
+     "pages": 2,
+     "books": 1,
+     "words": 1358,
+     "value": 7.57
+    },
+    {
+     "lang": "Armenian",
+     "bin": "under 150 words",
+     "pages": 14,
+     "books": 4,
+     "words": 1594,
+     "value": 26.05
+    },
+    {
+     "lang": "Armenian",
+     "bin": "300–500 words",
+     "pages": 3,
+     "books": 1,
+     "words": 1131,
+     "value": 11.61
+    },
+    {
+     "lang": "Armenian",
+     "bin": "500+ words",
+     "pages": 8,
+     "books": 2,
+     "words": 6970,
+     "value": 5.82
+    },
+    {
+     "lang": "Georgian",
+     "bin": "300–500 words",
+     "pages": 2,
+     "books": 1,
+     "words": 656,
+     "value": 11.31
+    },
+    {
+     "lang": "Georgian",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 91,
+     "value": 31.37
+    },
+    {
+     "lang": "Georgian",
+     "bin": "150–300 words",
+     "pages": 2,
+     "books": 1,
+     "words": 471,
+     "value": 12.12
+    },
+    {
+     "lang": "Georgian",
+     "bin": "500+ words",
+     "pages": 1,
+     "books": 1,
+     "words": 549,
+     "value": 4.16
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "300–500 words",
+     "pages": 11,
+     "books": 4,
+     "words": 3988,
+     "value": 6.08
+    },
+    {
+     "lang": "French",
+     "bin": "300–500 words",
+     "pages": 20,
+     "books": 15,
+     "words": 7366,
+     "value": 1.91
+    },
+    {
+     "lang": "French",
+     "bin": "500+ words",
+     "pages": 17,
+     "books": 14,
+     "words": 12833,
+     "value": 2.34
+    },
+    {
+     "lang": "Sanskrit",
+     "bin": "300–500 words",
+     "pages": 2,
+     "books": 1,
+     "words": 671,
+     "value": 14.47
+    },
+    {
+     "lang": "Spanish",
+     "bin": "300–500 words",
+     "pages": 10,
+     "books": 3,
+     "words": 3968,
+     "value": 6.87
+    },
+    {
+     "lang": "Spanish",
+     "bin": "500+ words",
+     "pages": 1,
+     "books": 1,
+     "words": 529,
+     "value": 10.79
+    },
+    {
+     "lang": "Spanish",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 227,
+     "value": 10.06
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "150–300 words",
+     "pages": 8,
+     "books": 3,
+     "words": 1843,
+     "value": 7.74
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "under 150 words",
+     "pages": 2,
+     "books": 1,
+     "words": 223,
+     "value": 7.68
+    },
+    {
+     "lang": "Korean",
+     "bin": "300–500 words",
+     "pages": 7,
+     "books": 2,
+     "words": 2492,
+     "value": 20.93
+    },
+    {
+     "lang": "Korean",
+     "bin": "150–300 words",
+     "pages": 6,
+     "books": 3,
+     "words": 1650,
+     "value": 29.25
+    },
+    {
+     "lang": "Egyptian hieroglyphs",
+     "bin": "500+ words",
+     "pages": 4,
+     "books": 1,
+     "words": 2938,
+     "value": 4.86
+    },
+    {
+     "lang": "Korean",
+     "bin": "under 150 words",
+     "pages": 10,
+     "books": 10,
+     "words": 1047,
+     "value": 28.44
+    },
+    {
+     "lang": "Syriac",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 80,
+     "value": 0.0
+    },
+    {
+     "lang": "Danish",
+     "bin": "300–500 words",
+     "pages": 1,
+     "books": 1,
+     "words": 373,
+     "value": 0.0
+    },
+    {
+     "lang": "Polish",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 55,
+     "value": 0.0
+    },
+    {
+     "lang": "Persian",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 145,
+     "value": 0.0
+    },
+    {
+     "lang": "Russian",
+     "bin": "300–500 words",
+     "pages": 5,
+     "books": 5,
+     "words": 1869,
+     "value": 0.0
+    },
+    {
+     "lang": "Japanese",
+     "bin": "300–500 words",
+     "pages": 1,
+     "books": 1,
+     "words": 396,
+     "value": 16.11
+    },
+    {
+     "lang": "Syriac",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 298,
+     "value": 0.0
+    },
+    {
+     "lang": "Italian",
+     "bin": "500+ words",
+     "pages": 4,
+     "books": 4,
+     "words": 2230,
+     "value": 5.72
+    },
+    {
+     "lang": "Yucatec Maya",
+     "bin": "300–500 words",
+     "pages": 1,
+     "books": 1,
+     "words": 396,
+     "value": 0.0
+    },
+    {
+     "lang": "Malay",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 269,
+     "value": 23.71
+    },
+    {
+     "lang": "Japanese",
+     "bin": "under 150 words",
+     "pages": 5,
+     "books": 4,
+     "words": 353,
+     "value": 36.17
+    },
+    {
+     "lang": "Malay",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 94,
+     "value": 0.0
+    },
+    {
+     "lang": "Russian",
+     "bin": "500+ words",
+     "pages": 1,
+     "books": 1,
+     "words": 611,
+     "value": 0.0
+    },
+    {
+     "lang": "Coptic",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 237,
+     "value": 0.0
+    },
+    {
+     "lang": "Syriac",
+     "bin": "300–500 words",
+     "pages": 1,
+     "books": 1,
+     "words": 409,
+     "value": 0.0
+    },
+    {
+     "lang": "Pali",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 224,
+     "value": 0.0
+    },
+    {
+     "lang": "Spanish",
+     "bin": "under 150 words",
+     "pages": 1,
+     "books": 1,
+     "words": 130,
+     "value": 0.0
+    },
+    {
+     "lang": "Bulgarian",
+     "bin": "500+ words",
+     "pages": 1,
+     "books": 1,
+     "words": 703,
+     "value": 0.0
+    },
+    {
+     "lang": "Bugis",
+     "bin": "150–300 words",
+     "pages": 1,
+     "books": 1,
+     "words": 248,
+     "value": 25.72
+    }
+   ]
+  },
+  "density_totals": {
+   "under 150 words": {
+    "pages": 756,
+    "books": 458,
+    "value": 13.51
+   },
+   "150–300 words": {
+    "pages": 1776,
+    "books": 733,
+    "value": 8.61
+   },
+   "300–500 words": {
+    "pages": 972,
+    "books": 443,
+    "value": 6.58
+   },
+   "500+ words": {
+    "pages": 616,
+    "books": 213,
+    "value": 4.95
+   }
+  },
+  "source": "scripts/eval/error-zoo/pooled-defects.py over /root/jobs/error-zoo-v2 (gex45), 2026-11-13 (fifths severities from page_notes)"
+ }
+}

@@ -8,7 +8,7 @@
   "latin-lite/print": {
    "table": "2026-11-03-latin-v4-7263",
    "set": "2026-11-03",
-   "why": "Derek took the default on 2026-11-03 (#7263): the 835K-page Latin print Flash-Lite queue is re-read at 4 a call (V4, PR #8000: 20/30 accepted against the served 9/30 and the correction's 14/30; English wrong end to end 7/30 against 15/26), then re-translated on latin-cli-agy4. rules.json script_split.planned carries it; the row's rule_alone shows the rule's own pick (agy-flash-low-read, whose pages come from other, easier frames, at four times the quota). Only this cell moves: the rebuild's other changes come from evidence pooled since 11-01 and nobody decided them. The lane: cli-ocr-lane.mjs correct --reread-per-call=4 --reread-languages=Latin."
+   "why": "Derek took the default on 2026-11-03 (#7263): the 835K-page Latin print Flash-Lite queue is re-read at 4 a call (V4, PR #8000: 20/30 accepted against the served 9/30 and the correction's 14/30; English wrong end to end 7/30 against 15/26), then re-translated on latin-cli-agy4. rules.json script_split.planned carries it; the row's rule_alone shows the rule's own pick (agy-flash-low-read, whose pages come from other, easier frames, at four times the quota). Only this cell moves: the rebuild's other changes come from evidence pooled since 11-01 and nobody decided them. The lane: cli-ocr-lane.mjs correct --reread-per-call=4 --reread-languages=Latin. PRODUCTION IS NOW TARGETED (Derek 2026-11-15, #380 \"new books first\"): the route and decision are unchanged, but the gex45 latin-first lines run --quality=flagged, so the re-read reads only pages a book_checks row found an OCR error on (cli-ocr-lane.mjs FLAGGED), not the blanket queue; the pool time goes to first reads and their translation."
   },
   "german-lite/print": {
    "table": "2026-11-01-reread-7853",
@@ -46,6 +46,13 @@
    "set": "2026-11-01",
    "until": "2026-11-14",
    "reason": "#7853 (Derek 2026-11-01, the default taken): read@4 beats the #7558 correction on the stored-lite queue, weighted accept 0.82 against 0.72 (24 lost / 9 gained, Holm p 0.027) and 31 against 50 severity-weighted defects a 1,000 words, at 0.34 agy calls a page against 1.0; it does not reach the Opus bar the table keeps (lite>opus 299/307), and Opus has no capacity for the queue. Re-decide by 11-14 with the correction waiver: the Opus share, or a bar other than Opus for this cell."
+  },
+  {
+   "cell": "german-lite/print",
+   "lane": "reread",
+   "set": "2026-11-13",
+   "until": "2026-11-27",
+   "reason": "Renews the 2026-11-01 #7853 waiver above, which lapses 11-14 with nothing re-decided. Since then Derek has made agy the default for all page work, with Opus an exception that needs evidence (2026-11-06 and 2026-11-11: 'everything on agy'; four routes only: agy, GPU>agy, Opus, GPU>Opus). The cell's decision (keep lite>opus, the Opus bar) predates that rule and Opus has no capacity for the queue, so read@4 keeps running. Before this lapses, move the cell's decision to a build that rates read@4 under the agy-default rule instead of renewing again. Set by laptop session box-health-agy (v3 PR #190 follow-up)."
   },
   {
    "cell": "german-blank/print",

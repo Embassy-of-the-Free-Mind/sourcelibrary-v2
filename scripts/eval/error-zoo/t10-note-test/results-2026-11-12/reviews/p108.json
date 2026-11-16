@@ -1,0 +1,118 @@
+[
+  {
+    "book_id": "6991d8978c1030b12444c035",
+    "slot": 1,
+    "title": "Satchakranirupanacitram (Illustrated Six Chakras)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An illustrated book of chakra plates with Devanagari and English labels. It fits a Sanskrit/tantric-yoga reading, but the record has no tradition and no collections, so there is no shelf to test it against.",
+    "rights_flag": "Undated 20th-century colour-printed plate with English anatomical labels (faint \"EPIGASTRIC PLEXUS\" at the top right). This looks like a modern printed chart book, so check its copyright status against the author's dates and the date of printing.",
+    "structure_note": "The structure counts say pages_translated 0, but book.pages_translated and pages_translated_field say 63, and this page has a translation; the counters disagree (E2). Only 32 of 63 pages carry a printed number, with 6 backsteps and 4 repeats. In a book of plates, that more likely comes from misread or plate numerals than from a scan splice, but one page cannot settle it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "full-page colour plate: a faint blue-grey lotus (about ten petals) around a large tan seed syllable with chandrabindu, two white seated figures inside its loop; faint Devanagari/English labels at the top and a ruled multi-column table at the foot; heavy show-through",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "->**विशुद्ध चक्र**<-",
+            "image": "The faint heading block at the top right carries the English label \"EPIGASTRIC PLEXUS\" (the solar plexus, i.e. Manipura), not the throat chakra. The Devanagari heading above it is too faint to read, but nothing supports Vishuddha.",
+            "problem": "The chakra is misidentified, and the whole page's text and notes are built on that identification",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "# **हं**",
+            "image": "The large syllable is र with chandrabindu (headline, short stem, loop to the right, diagonal tail down-left, the ₹-like form): रँ/रं (raṃ), Manipura's seed syllable",
+            "problem": "Seed syllable misread as Haṃ, the expected bija for Vishuddha",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "| <unclear>तत्व - आकाश</unclear> | देव - सदाशिव | <unclear> |",
+            "image": "The foot table is too faint to read at this resolution. The cells cannot be Vishuddha's attributes (space, Sadashiva, Shakini) if the plate is Manipura (fire, Rudra/Vishnu, Lakini).",
+            "problem": "Table cells filled in from the expected Vishuddha attribute set rather than read; 'देव - सदाशिव' and 'देवी - शाकिनी' are not even marked unclear",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "featuring a sixteen-petaled lotus",
+            "image": "About ten petals are visible, consistent with Manipura",
+            "problem": "Petal count supplied from the expected chakra, not counted",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "<note>This page depicts the Vishuddha or throat chakra, the fifth primary chakra in Hindu tantric tradition.</note>",
+            "image": "No such statement on the leaf",
+            "problem": "Model commentary stored in the transcription as <note>",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "->**विशुद्ध चक्र**<-",
+            "english": "->**The Vishuddha Chakra**<- <note>original: \"विशुद्ध चक्र\"; literally \"the especially pure wheel\"</note>",
+            "problem": "Carries the wrong chakra identification into the English and backs it with a note claiming that this is the original wording. The printed English label \"EPIGASTRIC PLEXUS\" is not rendered at all.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "Within the body of the character are two faint figures, likely representing the deities Sadashiva and Shakini.",
+            "english": "Within the body of the character are two faint seated figures, the deity Sadashiva and the goddess Shakini named in the table below.",
+            "problem": "The OCR's hedge 'likely' is dropped and the identification stated as fact, supported by a table reading that is itself invented",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "<unclear>तत्व - आकाश</unclear>",
+            "english": "<unclear>Element: Space</unclear> <note>original: \"तत्व - आकाश\", <term>tattva</term> <gloss>element</gloss>, <term>ākāśa</term> <gloss>space, ether</gloss></note>",
+            "problem": "A note gives an 'original' for a cell that is illegible on the image and, for this chakra, probably wrong (fire, not space)",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "<detected-images> … sixteen-petaled lotus …",
+            "english": "<note>A detailed diagram of the Vishuddha chakra shows a sixteen-petalled lotus surrounding the central seed syllable \"Haṃ\".",
+            "problem": "Image-detection metadata turned into a reader-facing note that repeats the wrong chakra, petal count and syllable",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "Centering arrows '->**The Vishuddha Chakra**<-' and a <warning> block appear in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "The summary and keywords ('Vishuddha chakra, throat chakra, Haṃ … Sadashiva, Shakini, akasha') repeat the misidentification, so search and indexing inherit it",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"विशुद्ध चक्र\"; literally \"the especially pure wheel\"", "verdict": "wrong", "helpful": false },
+            { "quote": "This page depicts the Vishuddha chakra, the chakra of the th", "verdict": "wrong", "helpful": false },
+            { "quote": "The large central character is the <term>bīja</term> <gloss>", "verdict": "wrong", "helpful": false },
+            { "quote": "seed syllable", "verdict": "ok", "helpful": true },
+            { "quote": "The table at the bottom of the folio, in very faint text, li", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"तत्व - आकाश\", <term>tattva</term>", "verdict": "unsupported", "helpful": false },
+            { "quote": "element", "verdict": "ok", "helpful": false },
+            { "quote": "space, ether", "verdict": "ok", "helpful": false },
+            { "quote": "A detailed diagram of the Vishuddha chakra shows a sixteen-p", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": []
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The plate shows Manipura: the seed syllable is रं, there are about ten petals, and it is labelled \"EPIGASTRIC PLEXUS\". The transcription and translation call it Vishuddha with Haṃ, Sadashiva, Shakini and space, and fill the illegible table with the expected attributes. Confident notes then present that misreading as fact, so an expert would flag it on sight."
+  }
+]

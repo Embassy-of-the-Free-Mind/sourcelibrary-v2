@@ -64,6 +64,21 @@ export function transcriptionBody(data) {
 }
 
 /**
+ * The other direction (#8632): a read that calls the leaf blank, written over a stored transcription that still has
+ * DEFAULT_MIN_BODY characters of body. The 40% shared-word floor in cli-ocr.mjs only applies when the stored text has
+ * at least 40 distinct long words, so a blank read over an index, a short page or an abbreviated page went through.
+ * Measured on gex45's re-read ledger, 2026-11-12: 1,471 written re-reads typed blank, 144 of them over 300+ characters.
+ * In a blind Opus sample of 24 of those (one per book), 6 had erased a real printed page and 18 were right.
+ * Returns a reason to refuse (the page keeps its text and is listed for a by-eye check), or null.
+ */
+export function blankReadOverText(storedData, readData, { minBody = DEFAULT_MIN_BODY } = {}) {
+  if (!/<page-type>\s*blank\s*<\/page-type>/i.test(readData || '')) return null;
+  const was = transcriptionBody(storedData).length, now = transcriptionBody(readData).length;
+  if (was < minBody || now >= minBody) return null;
+  return `a blank read over a stored transcription of ${was} characters: check by eye`;
+}
+
+/**
  * Fraction of pixels meaningfully darker than the page ground.
  * The ground is taken as the 95th brightness percentile so that yellowed or
  * grey scans are not read as covered in ink.

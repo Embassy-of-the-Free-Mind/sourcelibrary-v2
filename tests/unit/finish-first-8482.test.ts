@@ -86,12 +86,12 @@ describe('--finish-first and the finish cohort', () => {
   });
   it('latin-first runs the finishing steps first, then the quality steps, which yield', () => {
     const s = latinFirstSteps({ home: '/root/.agy-milo', root: '/r', date: '2026-11-10', maxPages: 3000, concurrency: 6, apply: true });
-    expect(s.map((x) => x.step)).toEqual(['finish-latin', 'finish-german-french', 'latin-priority', 'german-french-correct', 'latin-rest']);
+    expect(s.map((x) => x.step)).toEqual(['finish-latin', 'finish-german-french', 'latin-priority', 'german-french-reread', 'latin-rest']);
     for (const x of s.slice(0, 2)) { expect(x.args).toContain('--finish-first'); expect(x.args).not.toContain('--yield-to-finish'); }
     for (const x of s.slice(2)) { expect(x.args).toContain('--yield-to-finish'); expect(x.args).not.toContain('--finish-first'); }
     // same day folders as the quality steps: one ledger and one set of claims, so no page is read twice
     expect(s[0].args).toContain('--out=/r/cli-ocr-reread/2026-11-10');
-    expect(s[1].args).toContain('--out=/r/cli-ocr-correct/2026-11-10');
+    expect(s[1].args).toContain('--out=/r/cli-ocr-reread/2026-11-10');
   });
   it('the finish cohort reads idle or CLI-held finish books, and says why not', () => {
     expect(FINISH_READ_BOOKS.visible).toBe(true);

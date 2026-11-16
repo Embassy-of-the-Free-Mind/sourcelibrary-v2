@@ -1,0 +1,60 @@
+<warning>Handwritten Ashkenazi semi-cursive Hebrew. The scan is clear, but the hand is cramped and heavily abbreviated, so many readings are uncertain. Faint reddish-brown show-through from the other side appears between the lines and was not transcribed. Text from the facing page is visible at the right edge and was ignored.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>134</page-num>
+<header><unclear>עש ואשן</unclear></header>
+<meta>Folio number "134" in the upper left corner. Catchword at the foot of the page: שבדברי</meta>
+
+<margin><unclear>רמ"א. נק"ח</unclear></margin>
+
+בהתבוננות בו ו<unclear>כשיה</unclear> כיון שאירע <unclear>נגע</unclear> עליך <unclear>גאותם</unclear> לך ונמצא בגה ומי <unclear>מאסתן</unclear>
+
+ונראה דנקודה והיות גלוי סובב כל בתוך העולם והספות שבכולם עליון כנ"ל וגבן
+
+על <unclear>יאירן היושלו</unclear> כי צרך <unclear>דנגא</unclear> בואו ונחשב חשבון של עולם. כי עולם <unclear>ילפון</unclear> העולם
+
+והספות כנ"ל ואחריו נחשב חשבון ירידת הנשמה ועוה"ב בקול החשוך שבחי' תכלית
+
+הירידה הוא לצורך עלייה והיינו כדי להיות אתכפיא סט"א שבגה <unclear>יסתלק</unclear> <unclear>עראן</unclear> דנקודה
+
+כנ"ל. "(ונבל הנ"ל) ולכן <unclear>יארמ</unclear> <unclear>פ'</unclear> דברכות בשעה שישראל עונין <unclear>אישר</unclear>
+
+הנקודה <unclear>ימנעו</unclear> בראשון. כי בכל כחו הוא על יד <unclear>קריהג</unclear> דרך על כל אשר תמצא ידך
+
+לעשות בכחך כו'. כי <unclear>היגל</unclear> אל הנשמה שהוא בחי' <unclear>חו'</unclear> וחירבה גם כח <unclear>רת</unclear> כחם תבירה
+
+ועל <unclear>יגל</unclear> גה <unclear>יגל</unclear> השפע ולמעלה ועוד <unclear>יגל</unclear> להפוך חשוכא לנהורא שהוא <unclear>דנגא</unclear> על גלוי
+
+כח <unclear>יבחו</unclear> סובב <unclear>היאיר</unclear> בו על ידי <unclear>יגל</unclear> הנ"ל (ועל <unclear>על כל את קלי</unclear>) כי ולכן כי אין <unclear>ימשה</unclear>
+
+נתבונן בשאול כיון שיסתלק <unclear>ימול</unclear> הנ"ל שבחי' סובב <unclear>לא וכל</unclear> ושבת שעין כו'. וגבן הענין
+
+<unclear>אישה</unclear> שהוא <unclear>הישבת</unclear> סובב בהוא בכל כחו על <unclear>יגיפו</unclear> הנ"ל. ולכן יש <unclear>במישה</unclear> כח אותו
+
+בנגד כח הנ"ל ולג' תיבות כי ב' <unclear>יגיני</unclear> הנ"ל הן ול' <unclear>בצוק</unclear> כמ"ש <unclear>הרמ"ג</unclear> בפ' <unclear>בינים</unclear> שם
+
+וגם <unclear>מאתן</unclear> שעל הנקודה <unclear>ימנעו</unclear> בראשון שהוא גלוי <unclear>היגל</unclear> בפניו וראשו הגלוי בתחב
+
+שהוא בחי' ראשון והוא גלוי סובב בהוא וכל גלוי בו על ידי <unclear>[illegible — 2 words]</unclear> גם הנמנע
+
+מעריב שם על כן בהוא <unclear>בבפים</unclear> של התפילה תחלה יה ולכן אנו אומרים הנקודה יה וזאת
+
+שהנקודה את בנו. כי אז* נתקן הדינין <unclear>דבר</unclear> <unclear>[illegible — 1 word]</unclear>. וגם <unclear>בירוש</unclear> על כי נעורה ה' כתה
+
+<unclear>בימנעו</unclear> ובהוד. כי גלוי אם בה הסובב <unclear>כייבע</unclear> על בחי' נמנע הנ"ל
+
+ומעל"ג <unclear>בהונן</unclear> שעשה <unclear>[illegible — 1 word]</unclear> בעצמותם שגן כב נמנע בחי' עין היכל <unclear>ובריש</unclear> <unclear>בנגא</unclear>
+
+(<unclear>דא"ו</unclear>) „ תבנה ותכונן עיר סיחון (הכא אחר שאירע כאן חשבון וחשב חשבונו
+
+של עולם <unclear>[illegible — 2 words]</unclear> כל מבחי' <unclear>[illegible — 1 word]</unclear> ואחרי בחושבנא <unclear>[illegible — 1 word]</unclear> שעה <unclear>[illegible — 1 word]</unclear> או בתיקון חדות
+
+שהוא דבנה לתפילה וגם על אתה תבנה ותכונן עיר סיחון שהוא בחי' התפילה
+
+דהנה אחז"ל סיחון שיחה נאה כו' והוא התפילה שנקראת שיחה כמ"ש ולפני ה' ישפוך
+
+שיחו ואחז"ל (<unclear>בפ' רע"ג</unclear>) אין שיחה אלא תפילה (ומעם שיחה נאה
+
+<vocab>נקודה, גלוי, סובב, ירידת הנשמה, תכלית הירידה, צורך עלייה, אתכפיא, סטרא אחרא, חשוכא לנהורא, חשבון של עולם, סיחון, שיחה נאה, תפילה, אין שיחה אלא תפילה, תבנה ותכונן עיר סיחון</vocab>

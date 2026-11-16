@@ -1812,7 +1812,7 @@ export default function TranslationEditor({
         {/* Rashi script quality warning */}
         {hasRashiScript && (
           <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
-            <span className="font-bold flex-shrink-0">⚠</span>
+            <span className="font-semibold flex-shrink-0">⚠</span>
             <span><span className="font-medium">Rashi script:</span> current AI models struggle with this typeface. OCR and translation quality is low.</span>
           </div>
         )}
@@ -2834,7 +2834,7 @@ export default function TranslationEditor({
       {/* Rashi script quality warning */}
       {hasRashiScript && (
         <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
-          <span className="font-bold flex-shrink-0">⚠</span>
+          <span className="font-semibold flex-shrink-0">⚠</span>
           <span><span className="font-medium">Rashi script:</span> current AI models struggle with this typeface. OCR and translation quality is low.</span>
         </div>
       )}
@@ -3191,11 +3191,11 @@ export default function TranslationEditor({
                 </p>
                 <ol className="space-y-3 text-base" style={{ color: 'var(--text-secondary)' }}>
                   <li className="flex gap-3">
-                    <span className="font-bold" style={{ color: 'var(--accent-sage)' }}>1.</span>
+                    <span className="font-semibold" style={{ color: 'var(--accent-sage)' }}>1.</span>
                     <span><strong>Transcription</strong>: The AI reads the manuscript image and produces the original {book.language || 'text'}, preserving special characters and formatting.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-bold" style={{ color: 'var(--accent-rust)' }}>2.</span>
+                    <span className="font-semibold" style={{ color: 'var(--accent-rust)' }}>2.</span>
                     <span><strong>Translation</strong>: The transcribed text is translated into clear, readable English while maintaining the meaning and style of the original.</span>
                   </li>
                 </ol>

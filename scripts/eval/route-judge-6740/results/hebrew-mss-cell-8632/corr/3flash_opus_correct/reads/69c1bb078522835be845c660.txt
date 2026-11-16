@@ -1,0 +1,81 @@
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<warning>Handwritten Ashkenazi square script (biblical text with vocalization, alternating with Aramaic Targum); Masorah notes in small semi-cursive hand at top, bottom and in the margins, partly hard to read.</warning>
+<meta>Jeremiah 32:36–33:1, Hebrew text alternating verse by verse with Targum Jonathan. Reading order right column first, then left column.</meta>
+
+<margin>על העיר יז' וסימ' כתבים מצור ברעה והנה בטכנות הכשדים וגם איש וצדקיהו מה עשו וכל ובנותי על העיר הזאת <unclear>מותם</unclear> / וכתוב ה' מל' <unclear>בליש</unclear> וסימ' וכתוב בספר וחתום כתוב לך את <unclear>[2 words]</unclear> וכתוב <unclear>עט</unclear> ליהודה אכתוב לו רובי ירמיה</margin>
+
+אתם אמרים נתנה ביד מלך בבל בחרב
+וברעב ובדבר: וכען כדנן אמר יי
+אלהא דישראל על קרתא הדא דאתון אמרין
+אתמסרת ביד מלכא דבבל בחרבא
+ובכפנא ובמותא: הנני מקבצם מכל
+<margin>סימן</margin>
+הארצות אשר הדחתים שם באפי ובחמתי
+ובקצף גדול והשבתים אל המקום הזה
+<margin>ב</margin>
+והשבתים לבטח: האנא מכניש להון מכל
+מכל מדינתא דאגליתינון לתמן ברגזי
+ובחמתי ובתקוף רב ואתיבנון לאתרא
+<margin>ל' בספ' וכל יחזק <unclear>כות</unclear> <unclear>צג</unclear></margin>
+הדין ואשרינון לרוחצן: והיו לי לעם ואני
+אהיה להם לאלהים: ויהון קדמי לעם ואנא
+אהוי להון לאלה: ונתתי להם לב אחד
+<margin>ב' חד מל' ושבתים בספ' בארץ</margin>
+ודרך אחד ליראה אותי כל הימים לטוב
+להם ולבניהם אחריהם: ואתין להון לבא
+חד ואורח חדא למדחל קדמי כל יומיא
+דייטב להון ולבניהון בתריהון: וכרתי
+להם ברית עולם אשר לא אשוב מאחריהם
+<margin>ב</margin>
+להיטיבי אותם ואת יראתי אתן בלבבם
+לבלתי סור מעלי: ואגזר להון קים עלם
+דלא יתוב מימרי מבתריהון לאיטבא להון
+וית דחלתי אתין בלבהון בדיל דלא יסטון
+<margin>ב' וחד ששתי</margin>
+מבתר פלחני: וששתי עליהם להיטיב
+אותם ונטעתים בארץ הזאת באמת
+בכל לבי ובכל נפשי: ויחדי מימרי עליהון
+לאיטבא להון ואקיימינון בארעא הדא
+
+<column-break/>
+
+בקשוט במימרי וברעותי:
+<margin>ו' בטע' בספ'</margin>
+כי כה אמר יהוה כאשר הבאתי אל העם
+הזה את כל הרעה הגדולה הזאת כן
+אנכי מביא עליהם את כל הטובה אשר
+אנכי דבר עליהם: ארי כדנן אמר יי כמא
+דאיתיתי על עמא הדין ית כל בישתא
+רבתא הדא כין אנא מיתי עליהון ית כל
+<margin>ל'</margin>
+טבתא דאנא ממליל עמהון: ונקנה השדה
+בארץ הזאת אשר אתם אמרים שממה
+היא מאין אדם ובהמה נתנה ביד הכשדים:
+ויזדבנון חקלין בארעא הדא דאתון
+אמרין צדיא היא מבלי אנשא ובעירא
+אתמסרת בידא דכסדאי: שדות בכסף
+<margin>ל' <unclear>ומל'</unclear> <unclear>בליש</unclear></margin>
+יקנו וכתוב בספר וחתום והעד עדים
+<margin>ב' <unclear>ומל'</unclear> בעשי</margin>
+בארץ בנימן ובסביבי ירושלם ובערי
+יהודה ובערי ההר ובערי השפלה ובערי
+<margin>אשוב ל'</margin>
+הנגב כי אשיב את שבותם נאם יהוה:
+חקלין בכספא יזבנון ויכתבון בשטרא
+ויחתמון ויסהדון סהדין בארע שבט
+בנימן ובסחרני ירושלם ובקרויא דבית
+יהודה ובקרוי טורא ובקרוי שפילתא
+ובקרוי דרומא ארי אתיב ית גלותהון
+אמר יי: ויהי
+דבר יהוה אל ירמיהו שנית והוא עודנו
+עצור בחצר המטרה לאמר: והוה פתגם
+נבואה מן קדם יי עם ירמיה תנינות
+
+<margin>וחתום ה' מל' <unclear>בליש</unclear> וסימ' חתום תורה בלמודי וכתוב בספר וחתום ביד כל אדם יחתום וחתום בטבעת המלך:</margin>
+<margin>והשבתים ב' חד מל' וחד חס' וסימנה לבטח על <unclear>בתהם</unclear> קדמ' חס' <unclear>[1 word]</unclear> וששתי ב' <unclear>בסים'</unclear> וגלתי בירושלם וששתי בעמי וחד בציון <unclear>[1–2 words]</unclear> ששתי ב'</margin>
+
+<vocab>Jeremiah 32:36–33:1, Targum Jonathan, Masorah parva, Masorah magna, Babylonian exile, restoration, everlasting covenant, Benjamin, Jerusalem, Judah, court of the guard</vocab>

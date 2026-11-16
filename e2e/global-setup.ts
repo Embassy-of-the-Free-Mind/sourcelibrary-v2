@@ -44,7 +44,7 @@ export default async function globalSetup() {
   }
   const ctx = await request.newContext({
     baseURL,
-    extraHTTPHeaders: { 'X-E2E-Test': 'sourcelibrary-warmup' },
+    extraHTTPHeaders: { 'X-E2E-Test': 'sourcelibrary-warmup', ...(process.env.E2E_EDGE_TOKEN ? { 'X-E2E-Edge-Token': process.env.E2E_EDGE_TOKEN } : {}) },
   });
 
   console.log(`Warming up ${ROUTES.length} routes on ${baseURL}...`);

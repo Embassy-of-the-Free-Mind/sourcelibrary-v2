@@ -1,0 +1,40 @@
+<warning>Handwritten Ashkenazi semi-cursive Hebrew. The hand is small and heavily abbreviated, so many readings are tentative. The previous draft was almost entirely invented and has been replaced.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>131</page-num>
+<meta>Pencil folio number "131" and an ink Hebrew foliation at the top left corner. A partial word at the bottom left (catchword?) reads המהוה. Text from the facing leaf is visible at the right edge and is not transcribed.</meta>
+
+<margin><unclear>קכ"ט</unclear></margin>
+
+(קנ"י) והנה אח"כ צ"ל בשניהם והוא בחי' יחוד כי ועד הוא בחילוף אתוון אחד
+כי הנה בכאן בא לומר ענין התהוות ג' עולמות בי"ע ע"י מבחי' מלכות ית'
+המתלבשת בהן ושם כמ"ש מלכותו הוא התלבשות הנ"ל בג' עולמות בי"ע <unclear>[illegible — 2 words]</unclear>
+וזהו לשון כשאמר בלשון הוא על התהוות יש מאין מהויה שבנברא הוא בבחי' יש
+ודבר נפרד בפ"ע והנה שרש הנברא הוא ג"כ <unclear>צלה"מ</unclear> נמ' מהויה שבטל במציאות
+לגבי הפה והאור השופע בו מתחלק <unclear>[illegible — 2 words]</unclear> שהם מאוחדים בה' מאור בהם
+ופי' השם בשם <unclear>[illegible — 3 words]</unclear> המהוה נמ' רק שהוא ומהוה יש מלמעלה אשר
+בבחינה שלמעלה הוא הנברא הוא בבחי' נפרד לגמרי בבחינה שאמרה כי הנה
+המשפיע בו אינו <unclear>[illegible — 3 words]</unclear> לא <unclear>[illegible — 1 word]</unclear> ולא <unclear>[illegible — 1 word]</unclear>
+להעלה <unclear>[illegible — 2 words]</unclear> ומשיג <unclear>[illegible — 2 words]</unclear> בעולם ובטל אצלו ע"י <unclear>[illegible — 2 words]</unclear>
+בהיותם <unclear>[illegible — 1 word]</unclear> אין הפגם גדול כל כך רק שזה עולה וזה <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — 1 word]</unclear> שבין מהות הנברא למהות הפה ואור השופע בו להיות מאין ליש
+ולכן <unclear>[illegible — 3 words]</unclear> . ובאור <unclear>[illegible — 1 word]</unclear> שבא לבאר מהו ההפרש בין כשאמר
+לאצו שבחינה בלשון הוא על התהוות מציאות הנבראים שהם בבחי' נפרדים
+משאר מציאות הנאצלים שהן בבחי' ביטול לגמרי כמו השמש בשמש <unclear>[illegible — 2 words]</unclear>
+ע"י בחינה <unclear>[illegible — 3 words]</unclear> שהוא <unclear>[illegible — 2 words]</unclear> מן החוש לשון ההפרש האחד
+כמו השמש מן השמש וגם <unclear>[illegible — 3 words]</unclear> אפי' שהן בבחי' ביטול <unclear>[illegible — 1 word]</unclear>
+הרי הן <unclear>[illegible — 3 words]</unclear> ועל <unclear>[illegible — 2 words]</unclear> ואור שהם שהוא
+הנברא הוא ג"כ <unclear>צלה"מ</unclear> נמ' מהויה שבטל במציאות כי <unclear>[illegible — 4 words]</unclear>
+בחינה יש מאין מאחר שבחינת <unclear>[illegible — 2 words]</unclear> אלא בטל במציאות לגבי הפה
+והאור השופע בו ג"כ בביטול גמור השמש בשמש <unclear>[illegible — 1 word]</unclear> בביטול הנאצלים
+שהוא כמו השמש בשמש <unclear>[illegible — 3 words]</unclear> גם בי"ע <unclear>[illegible — 1 word]</unclear> העולם <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 2 words]</unclear> בעולם עב"ג מ"מ . ואח"כ הנברא <unclear>[illegible — 3 words]</unclear>
+גם אצלו וגם בבחינה כי <unclear>[illegible — 4 words]</unclear>
+בבחינה שאמרה כי <unclear>[illegible — 4 words]</unclear> המהוה נמ' <unclear>[illegible — 1 word]</unclear> כי אשר
+הנברא ג"כ <unclear>צלה"מ</unclear> ובטל בבחינה
+
+המהוה
+
+<vocab>התהוות יש מאין, עולמות בי"ע, מלכות, נברא, נאצלים, ביטול במציאות, מהוה, אור השופע, השמש בשמש, חילוף אתוון</vocab>

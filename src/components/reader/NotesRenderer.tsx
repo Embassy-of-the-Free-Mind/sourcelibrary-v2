@@ -664,7 +664,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
       {/* Handwritten manuscript notice */}
       {metadata.scriptType && metadata.scriptType !== 'printed' && !metadata.scriptType.toLowerCase().includes('rashi') && (
         <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
-          <span className="font-bold">✍</span>
+          <span className="font-semibold">✍</span>
           <span>
             <span className="font-medium">{metadata.scriptType === 'handwritten' ? strings.handwrittenManuscript : strings.mixedManuscript}</span>
             {`: ${strings.uncertainReadings}`}
@@ -674,7 +674,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
       {/* Rashi script warning */}
       {metadata.scriptType?.toLowerCase().includes('rashi') && (
         <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
-          <span className="font-bold flex-shrink-0">⚠</span>
+          <span className="font-semibold flex-shrink-0">⚠</span>
           <span>
             <span className="font-medium">Rashi script</span>
             {': current AI models struggle with this typeface. OCR and translation quality is low. We are waiting for improved model support.'}
@@ -690,7 +690,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
             aria-expanded={warningOpen}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-left text-xs font-medium hover:bg-amber-100 transition-colors"
           >
-            <span aria-hidden className="font-bold">⚠</span>
+            <span aria-hidden className="font-semibold">⚠</span>
             <span className="flex-shrink-0">Condition note</span>
             {!warningOpen && (
               <span className="ml-1 font-normal text-amber-800/80 truncate">{metadata.warning}</span>
@@ -1138,7 +1138,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
         <div className="mb-3 rounded-lg overflow-hidden border border-stone-200">
           {metadata.scriptType && metadata.scriptType !== 'printed' && !metadata.scriptType.toLowerCase().includes('rashi') && (
             <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
-              <span className="font-bold flex-shrink-0">✍</span>
+              <span className="font-semibold flex-shrink-0">✍</span>
               <span>
                 <span className="font-medium">{metadata.scriptType === 'handwritten' ? readerStrings.handwrittenManuscript : readerStrings.mixedManuscript}</span>
                 {`: ${readerStrings.uncertainReadings}`}
@@ -1147,7 +1147,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           )}
           {metadata.scriptType?.toLowerCase().includes('rashi') && (
             <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
-              <span className="font-bold flex-shrink-0">⚠</span>
+              <span className="font-semibold flex-shrink-0">⚠</span>
               <span>
                 <span className="font-medium">Rashi script</span>
                 {': current AI models struggle with this typeface. OCR and translation quality is low. We are waiting for improved model support.'}
@@ -1156,7 +1156,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           )}
           {metadata.warning && (
             <div className="px-3 py-2 bg-red-50 text-sm text-red-800 flex items-start gap-2">
-              <span className="text-red-600 font-bold flex-shrink-0">⚠</span>
+              <span className="text-red-600 font-semibold flex-shrink-0">⚠</span>
               <span>{metadata.warning}</span>
             </div>
           )}

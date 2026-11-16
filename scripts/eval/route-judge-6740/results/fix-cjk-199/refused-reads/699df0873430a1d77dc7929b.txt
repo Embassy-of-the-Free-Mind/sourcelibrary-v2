@@ -1,0 +1,36 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<columns>2</columns>
+<warning>Handwritten Chinese regular script (kaishu); two-page spread, each page treated as a column</warning>
+
+# 日暈有抱珥占
+
+<image-desc size="large" type="diagram" significance="high">Coloured painting of a solar halo with flanking arcs. A solid red sun sits inside two rings, an inner blue one and an outer green one. On each side stands a group of curved arcs in red, blue and green that open toward the sun: the "bao" (embracing) and "er" (ear) formations. Below is a landscape of a low hill with a bare, twisted tree, clusters of shrubs, tall green and blue rock pillars, and a rocky outcrop on the right topped by a leaning tree.</image-desc>
+
+朱文公曰
+
+其別有抱珥之屬尤主軍兵
+之事
+
+宋志曰
+
+言之屬者非止抱之類
+
+<column-break/>
+
+# 日暈在卯辰巳上占
+
+<image-desc size="large" type="diagram" significance="high">Coloured painting of a solar halo. A solid red sun is circled by a blue ring and a thin yellow outer ring, with a dark blue haze spreading around it. Below is a landscape with a rocky cliff and a large tree on the left, a two-tiered pavilion with blue roofs, pine trees on a hill, a green peak in the middle distance, and blue and green rock pillars on the right.</image-desc>
+
+朱文公曰
+
+日暈卯辰巳方月內多雨
+
+乙巳略例曰
+
+月暈在卯辰巳方天子憂
+民月內多雨
+
+<vocab>日暈, 月暈, 抱珥, 朱文公, 宋志, 乙巳占, 卯辰巳, 天子, 軍兵</vocab>

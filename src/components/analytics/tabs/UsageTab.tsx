@@ -293,7 +293,7 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
               title={`${tier.label}: ${tier.count.toLocaleString('en-US')} books${i > 0 ? ` (${Math.round((tier.count / tiers[0].count) * 100)}% of enrolled)` : ''}`}
             >
               <span className="font-medium mr-2">{tier.label}</span>
-              <span className="font-bold">{tier.count.toLocaleString('en-US')}</span>
+              <span className="font-semibold">{tier.count.toLocaleString('en-US')}</span>
             </div>
           );
         })}
@@ -336,21 +336,21 @@ function BacklogCard({ backlog }: { backlog: NonNullable<UsageStats['backlog']> 
         <div className="p-4 rounded-lg" style={{ background: 'var(--accent-sage)', color: 'white' }}>
           <div className="flex items-center justify-between mb-1">
             <span className="text-sm font-medium">Needs OCR</span>
-            <span className="text-xl font-bold">{formatNumber(backlog.needsOcr)}</span>
+            <span className="text-xl font-semibold">{formatNumber(backlog.needsOcr)}</span>
           </div>
           <div className="text-xs opacity-80">Pages without OCR yet. Largest segment of remaining work.</div>
         </div>
         <div className="p-4 rounded-lg" style={{ background: 'var(--accent-rust)', color: 'white' }}>
           <div className="flex items-center justify-between mb-1">
             <span className="text-sm font-medium">Needs translation</span>
-            <span className="text-xl font-bold">{formatNumber(backlog.needsTranslation)}</span>
+            <span className="text-xl font-semibold">{formatNumber(backlog.needsTranslation)}</span>
           </div>
           <div className="text-xs opacity-80">Pages with OCR but no translation. Highest ROI.</div>
         </div>
         <div className="p-4 rounded-lg" style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}>
           <div className="flex items-center justify-between mb-1">
             <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Old OCR (not in pipeline)</span>
-            <span className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{formatNumber(backlog.oldOcrPages)}</span>
+            <span className="text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>{formatNumber(backlog.oldOcrPages)}</span>
           </div>
           <div className="text-xs" style={{ color: 'var(--text-muted)' }}>OCR'd pages in books not enrolled in auto pipeline.</div>
         </div>
@@ -581,7 +581,7 @@ function CostToComplete({ summary, costStats }: { summary: UsageStats['summary']
             <div className="flex justify-between items-center text-sm"><span style={{ color: 'var(--text-primary)' }}>Translation</span><span className="font-medium" style={{ color: 'var(--text-primary)' }}>{formatCost(translationCostBatch)}</span></div>
             <div className="flex justify-between items-center text-sm pt-2 border-t" style={{ borderColor: 'var(--border-light)' }}>
               <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Total</span>
-              <span className="font-bold text-lg" style={{ color: '#22c55e' }}>{formatCost(totalBatch)}</span>
+              <span className="font-semibold text-lg" style={{ color: '#22c55e' }}>{formatCost(totalBatch)}</span>
             </div>
           </div>
         </div>

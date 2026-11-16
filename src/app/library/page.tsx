@@ -98,7 +98,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
             <ArrowLeft className="w-4 h-4" /> Back to {collectionName || state.collection}
           </Link>
         )}
-        <h1 className="text-2xl md:text-4xl font-display mb-4 md:mb-[26px] text-primary">The Library</h1>
+        <h1 className="text-2xl md:text-4xl font-serif mb-4 md:mb-[26px] text-primary">The Library</h1>
         <CatalogExplorer
           initialState={state}
           initialBooks={list.books as unknown as CatalogRow[]}

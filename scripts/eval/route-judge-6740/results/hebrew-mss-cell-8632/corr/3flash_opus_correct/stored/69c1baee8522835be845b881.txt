@@ -1,0 +1,19 @@
+<language>Hebrew</language>
+<page-type>text</page-type>
+<page-num>101</page-num>
+<warning>The manuscript is severely damaged with a large rectangular hole in the center of the page, causing significant loss of text. The parchment is stained and the ink is faded in several areas.</warning>
+
+השמים כי אם פחדו ורעדו לפניו המה
+וכשהם נסוגים לאחוריהם לפניו יפחדו
+ויעמדו <unclear>מרעדה</unclear> וחיל ורעדה
+
+<image-desc size="medium" type="decorative" significance="low">A large rectangular cutout in the center of the parchment reveals underlying layers of the binding or subsequent pages. Some fragmentary Hebrew characters are visible on the exposed inner layer.</image-desc>
+
+<unclear>הדין</unclear> ועיניו תחזינה ותעפעפנה
+<unclear>לפניו</unclear> וכל גבוריו ועם עשק לפניו
+<unclear>יחילו</unclear> וכל צבא השמים <unclear>יזועו</unclear>
+ועמדו <unclear>מרעדה</unclear> וחיל ורעדה <unclear>לפניו</unclear>
+וגבוריו <unclear>יחילו</unclear> וכל <unclear>גוים</unclear> <unclear>לפניו</unclear> <unclear>יעמדו</unclear>
+<unclear>יעמדו</unclear> <unclear>לפניו</unclear>
+
+<vocab>פחדו, רעדו, חיל, צבא השמים, גבוריו</vocab>

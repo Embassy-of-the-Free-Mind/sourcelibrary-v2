@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   flag:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4

@@ -1,0 +1,49 @@
+[
+  {
+    "book_id": "69b525bf29577f283b57bb89",
+    "slot": 1,
+    "title": "Cæsar Frederiks agtien-jarige reys, na en door Indien, anno 1563 en vervolgens, seer naauwkeurig door hem selfs beschreven. ; Nu aldereerst uyt het Engelsch vertaald. Met nodige konstprinten, en een volkomen register verrĳkt",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection set; the leaf is a 1706 Dutch Fraktur printing of Federici's travels, consistent with the record (title, author, date, language).",
+    "rights_flag": null,
+    "structure_note": "structure.pages_translated is 0 while the book's pages_translated field says 80 (and this page has a translation), so the counts disagree. 4 backsteps and 5 repeats among 63 printed numbers in a 94-record book probably come from unnumbered plates (the title promises 'konstprinten') or misread numerals, not a splice. This page is consistent: running head '19', signature 'B 2'.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "printed_marker": "19; signature \"B 2\"; catchword \"aan\"",
+        "layout": "single column of Fraktur with roman for names, running head with page number, two marginal notes in the outer (right) margin, signature and catchword at the foot",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "gewapende Kusten / of vaartuygen", "image": "gewapende Fusten/ of vaartuygen", "problem": "Fraktur F misread as K, so 'fustas' (galleys) becomes 'coasts'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Ik kwam in mijn reyse by getal ter plaats", "image": "Ik quam in mijn reys by geval ter plaats", "problem": "'geval' (chance) misread as 'getal' (number), and 'quam'/'reys' normalised to 'kwam'/'reyse'; the translation follows the image ('by chance')", "severity": "minor" },
+          { "ocr": "St. Paulus orde", "image": "St. Paulus ordre", "problem": "spelling normalised", "severity": "minor" },
+          { "ocr": "word daar genoemd", "image": "word daar genoemt", "problem": "spelling normalised (also 'ontzien' for printed 'ontsien')", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "gewapende Kusten / of vaartuygen", "english": "<note>The print reads \"Kusten\", most likely a misprint for \"Fusten\".</note>", "problem": "the note blames the print for an OCR misreading: the image clearly reads 'Fusten', so there is no misprint. This is false apparatus about the source, even though the rendering 'fustas' is correct", "severity": "moderate", "class": "T10" },
+          { "source": "een Bazaro, of wagtplaats", "english": "a <term>Bazaro</term> <gloss>market or guard post</gloss>", "problem": "the source's own gloss 'of wagtplaats' (or guard post) is dropped from the body and appears only inside the editorial gloss", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "invented apparatus: a note asserts that 'The print reads \"Kusten\"', which the image beside it shows is false (it reads 'Fusten')", "severity": "moderate", "class": "T10" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The Jesuit College of St. Paul in Goa gave the Jesuits their", "verdict": "unsupported", "helpful": false },
+            { "quote": "original: \"Kaap Comori\", the southern tip of India", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"Zeilan (Ceylon)\"", "verdict": "ok", "helpful": false },
+            { "quote": "market or guard post", "verdict": "ok", "helpful": true },
+            { "quote": "small oared galleys", "verdict": "ok", "helpful": true },
+            { "quote": "The print reads \"Kusten\", most likely a misprint for \"Fuste", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription and translation of this Fraktur page are good. One Fraktur misread ('Kusten' for 'Fusten') is corrected in the English, but a note then blames the print for the misprint, which is false scholarship an expert would catch against the image. The book's translated-page counts disagree."
+  }
+]

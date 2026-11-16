@@ -139,9 +139,11 @@ describe('every writer that reads a model candidate checks whether it finished (
   it('the probe still matches — a check that finds nothing proves nothing', () => {
     const files = textWriters();
     expect(files.length).toBeGreaterThan(8);
-    // The two lanes that actually wrote the #4890 stubs.
+    // The lane that wrote the #4890 stubs and is still live (the batch-ocr-async route, the other, was retired in v2#8590),
     expect(files).toContain('scripts/workers/batch-collector.mjs');
-    expect(files).toContain('src/app/api/books/[id]/batch-ocr-async/route.ts');
+    // The candidate search reaches src/app as well as scripts. No website route writes a raw candidate's text since
+    // batch-save, the last one, was retired (v3#212), so the reach is shown on a reader rather than a writer.
+    expect(candidateReaders()).toContain('src/app/api/identify/route.ts');
   });
 
   it('realtime-translate.mjs is guarded even though it writes through translate-core', () => {

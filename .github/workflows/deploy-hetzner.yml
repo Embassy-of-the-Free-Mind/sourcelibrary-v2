@@ -24,28 +24,32 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 2
 
     steps:
       - name: Pull latest on Hetzner
-        uses: appleboy/ssh-action@v1
-        with:
-          host: 46.224.122.120
-          username: root
-          key: ${{ secrets.HETZNER_SSH_KEY }}
-          # Fail on any command, then prove the box holds the commit that
-          # triggered this run. A 401 on fetch used to fall through to a reset
-          # against the STALE local ref and report green while deploying
-          # nothing (#4579). Ancestry rather than equality, because a later
-          # push can land between trigger and fetch.
-          script: |
-            set -euo pipefail
-            cd /root/sourcelibrary
-            git fetch origin main
-            git reset --hard origin/main
-            if ! git merge-base --is-ancestor "${{ github.sha }}" HEAD; then
-              echo "::error::Hetzner is at $(git rev-parse --short HEAD), which does not contain ${{ github.sha }}"
-              exit 1
-            fi
-            echo "Hetzner at $(git rev-parse --short HEAD), contains ${{ github.sha }}"
+        # Plain ssh, not appleboy/ssh-action: that is a Docker action and the self-hosted
+        # gex45 runners have no Docker (v3 move, 2026-11-12).
+        # Fail on any command, then prove the box holds the commit that
+        # triggered this run. A 401 on fetch used to fall through to a reset
+        # against the STALE local ref and report green while deploying
+        # nothing (#4579). Ancestry rather than equality, because a later
+        # push can land between trigger and fetch.
+        env:
+          SSH_KEY: ${{ secrets.HETZNER_SSH_KEY }}
+          SHA: ${{ github.sha }}
+        run: |
+          key=$(mktemp); trap 'rm -f "$key"' EXIT
+          printf '%s\n' "$SSH_KEY" > "$key"; chmod 600 "$key"
+          ssh -i "$key" -o StrictHostKeyChecking=accept-new -o BatchMode=yes root@46.224.122.120 "SHA=$SHA bash -s" <<'REMOTE'
+          set -euo pipefail
+          cd /root/sourcelibrary
+          git fetch origin main
+          git reset --hard origin/main
+          if ! git merge-base --is-ancestor "$SHA" HEAD; then
+            echo "::error::Hetzner is at $(git rev-parse --short HEAD), which does not contain $SHA"
+            exit 1
+          fi
+          echo "Hetzner at $(git rev-parse --short HEAD), contains $SHA"
+          REMOTE

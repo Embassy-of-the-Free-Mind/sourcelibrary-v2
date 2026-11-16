@@ -44,6 +44,16 @@ import { geminiEngine, translationInput, notRecorded, codeVersion, host } from '
 process.env.SEAM_GUARD = 'off';
 export const NOTE = 'gloss-correction-7458';
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const m = a.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [a, true]; }));
+// A later corrections pass names itself: --note=<revision reason> --issue=<n> --job=<job id> --model=<session model>
+// --prompt-name="<what the pass is>". Without them the #7458 aliveness defaults below apply.
+const RUN = {
+  note: typeof args.note === 'string' ? args.note : NOTE,
+  issue: args.issue ? Number(args.issue) : 7458,
+  issueRepo: typeof args['issue-repo'] === 'string' ? args['issue-repo'] : undefined,
+  job: typeof args.job === 'string' ? args.job : 'aliveness-fixes',
+  model: typeof args.model === 'string' ? args.model : 'claude-opus-5-5',
+  promptName: typeof args['prompt-name'] === 'string' ? args['prompt-name'] : 'Hand correction of glosses and notes against the original (#7458)',
+};
 const SKIP_HOLDS = new Set(String(args['skip-holds'] || '').split(',').map((s) => s.trim()).filter(Boolean));
 
 /** The text writePageTranslation would store for `text` (its sanitizer chain, minus the refusals). */
@@ -98,16 +108,16 @@ async function main() {
 
       const before = new Date();
       const w = await writePageTranslation(db, {
-        page, book, text: next, model: 'claude-opus-5-5', jobId: 'aliveness-fixes', note: `${NOTE}: ${item.claim}`,
-        promptRef: { id: NOTE, name: 'Hand correction of glosses and notes against the original (#7458)', version: '1' },
+        page, book, text: next, model: RUN.model, jobId: RUN.job, note: `${RUN.note}: ${item.claim}`,
+        promptRef: { id: RUN.note, name: RUN.promptName, version: '1' },
         // An Anthropic engine is recordable only as a subscription-CLI read: this is a Claude Code session making
         // span edits by hand, no generation call, so the settings are not-recorded and the prompt is the edit list.
         engine: geminiEngine({
           name: 'anthropic', call_site: 'scripts/maintenance/apply-gloss-corrections.mjs', api: 'cli',
-          cli: { name: 'claude', version: args['cli-version'] || 'unknown' }, model: 'claude-opus-5-5',
-          prompt: { id: NOTE, name: 'Hand correction of glosses and notes against the original (#7458)', version: '1', text: JSON.stringify(item.edits) },
+          cli: { name: 'claude', version: args['cli-version'] || 'unknown' }, model: RUN.model,
+          prompt: { id: RUN.note, name: RUN.promptName, version: '1', text: JSON.stringify(item.edits) },
           generationConfig: notRecorded('span edits written by hand in a Claude Code session; no generation call'),
-          run: { code_version: await codeVersion(), host: host(), job_id: 'aliveness-fixes', issue: 7458, claim: item.claim },
+          run: { code_version: await codeVersion(), host: host(), job_id: RUN.job, issue: RUN.issue, ...(RUN.issueRepo ? { issue_repo: RUN.issueRepo } : {}), claim: item.claim },
           input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at }),
         }),
       });

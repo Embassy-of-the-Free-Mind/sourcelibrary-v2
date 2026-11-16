@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 
 
 // GET - List all jobs (with optional filters)
-export const GET = withAuth(async (request, session) => {
+export const GET = withInnerCircleAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');

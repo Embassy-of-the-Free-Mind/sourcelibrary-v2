@@ -1,0 +1,77 @@
+[
+  {
+    "book_id": "69dfd990220eedf04e13b0cf",
+    "slot": 1,
+    "title": "Dresden Codex (Codex Dresdensis)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Maya screenfold codex, shown here as a colour facsimile leaf, on the open-source/community shelves. The date '1200' is a conventional approximation for a codex usually placed in the 11th–13th c.; acceptable.",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree: pages_translated is 0 while pages_translated_field is 74. Either the counter or the field is stale. with_printed_number 0 is expected, because a codex carries no printed folios. Record 34 is given as codex p. 55 ('leaf 34 of this facsimile'), so record order is not codex page order. That is a plausible facsimile ordering, not a splice, but readers are told only in the header line.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 34,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single tall codex page in two registers divided by a red rule; upper left a glyph block, a three-compartment glyph rectangle and a framed profile head; columns of bar-and-dot numerals and three rows of red-coefficient day signs; lower register of eight columns of glyphs, numerals (red zero shells), day signs and red/black distance numbers at the foot; right edge cuts off the fifth upper column",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "4. Lunar structure: 9714 − 502 = 9212, and 2244 − 502 = 1742, the length of the first section.",
+            "image": "nothing on the leaf gives 502, 9212 or 2244; these come from Förstemann's tables",
+            "problem": "This arithmetic is not read from the leaf, and '9714 − 502 = 9212' plays no part in the check that follows. It is apparatus drawn from outside the page and printed as part of the 'transcription'.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The 'transcription' is not a transcription. It is an English structured reading in the first person, signed in the text ('A structured reading by Claude Opus'), with reasoning shown to the reader: 'I treat these as glyph affixes, not numerals', 'Either I have missed a dot or the scribe left one out', 'I cannot confirm a Kin sign on the forehead'. It is honestly labelled and the hedges are appropriate, but an expert would notice at once that model voice and reasoning sit in the reader text.",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Most of the page is Förstemann's 1906 commentary (group numbers, his expected totals, 'Saturn'/'Mercury'/'Bacab' signs, 'always one day in advance'), not what is on the leaf. It is attributed and marked as unconfirmed, so it is not invented, but a reader cannot easily tell what the leaf shows from what the secondary source says.",
+            "severity": "minor"
+          },
+          {
+            "note": "The English ends with raw <summary> and <keywords> blocks. If the renderer does not move them into metadata, the reader sees them as text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "<term>Kin</term> <gloss>sun, day</gloss>",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "| A (grp 14) | II Muluc | III Oc | IV Chuen |",
+              "why": "The day-sign tables use Yucatec day names (Muluc, Oc, Chuen, Cimi, Manik, Lamat …) and red numeral coefficients, and nothing says that these are the 20 named days of the 260-day count combined with 1–13."
+            },
+            {
+              "english": "Distance numbers (two places: red 20s over black units)",
+              "why": "A general reader is not told what a series total or a distance number is, or that the 177/178/148-day intervals are lunar half-year (eclipse) intervals. The structure the whole page relies on goes unexplained."
+            },
+            {
+              "english": "Förstemann thinks this is probably God D (Itzamna)",
+              "why": "'God D' is the Schellhas letter designation for Maya deities, and nothing explains it."
+            },
+            {
+              "english": "53b: his \"Bacab\" sign.",
+              "why": "'Bacab' (the four sky-bearer deities) is left unexplained."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf matches its record. The numeral and day-sign readings I could check against the image (the eight lower columns and their 7200s/360s places, the red zero shells, the cross-hatched Chicchan, the quartered Lamat, the striped frame around the head) agree with the leaf, and the place-value arithmetic is internally correct. The 'English translation' is a verbatim copy of the English reading. What an expert would flag on sight is the format: a first-person reading by a named model, mixed with Förstemann's commentary, offered as the page's transcription."
+  }
+]

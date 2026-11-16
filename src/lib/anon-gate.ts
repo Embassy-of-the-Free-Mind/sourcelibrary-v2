@@ -9,14 +9,16 @@
  * traffic. The gates here are for the browser UI itself, so same-origin is NOT
  * exempt — the whole point is to meter logged-out humans on the site.
  *
- * Always exempt: signed-in users, verified SEO crawlers, and internal cache
- * warmers (which send `X-Warm-Ping`).
+ * Always exempt: signed-in users, verified SEO crawlers (content routes only;
+ * spend routes pass `allowBotBypass: false`), and internal cache warmers, whose
+ * `X-Warm-Ping` header must carry the server secret (src/lib/warm-ping.ts).
  */
 import { auth } from '@/lib/auth';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { getDb } from '@/lib/mongodb';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 import { clientCountry } from '@/lib/client-ip';
+import { isWarmPing } from '@/lib/warm-ping';
 
 export const SIGNIN_URL = 'https://sourcelibrary.org/auth/signin';
 
@@ -81,7 +83,7 @@ async function hasSession(): Promise<boolean> {
  * a page anyway: it indexes what is already there.
  */
 async function isExempt(request: Request, allowBotBypass = true): Promise<boolean> {
-  if (request.headers.get('x-warm-ping')) return true;              // internal cache warmers
+  if (isWarmPing(request)) return true;                             // internal cache warmers (secret-bearing)
   if (allowBotBypass && isVerifiedBot(request)) return true;        // SEO crawlers
   if (await hasSession()) return true;                              // signed-in users
   return false;

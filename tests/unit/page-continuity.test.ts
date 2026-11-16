@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import fixtures from '../fixtures/page-continuity.json';
+import report30 from '../fixtures/page-continuity-report-30.json';
 
 // Every fixture is REAL, FULL page text captured from production Mongo on
 // 2026-08-05 (see tests/fixtures/page-continuity.json, written by a script that
@@ -374,5 +375,57 @@ describe('pageContinuity — cost', () => {
     const c = pageContinuity(p41.translation, p41.original);
     expect(performance.now() - started).toBeLessThan(250);
     expect(c.hyphen_split_at_end).toBe(false);
+  });
+});
+
+// v3#30: a member's report of pages where both flags said "no" above text that
+// runs on. Full pages captured from production on 2026-11-13, before these
+// assertions were written. Each `it` names the shape; the two controls are
+// report lines where the flag was already right and must stay so.
+describe('pageContinuity — both flags said no where the text runs on (v3#30)', () => {
+  const flags = (p: { translation: string | null; original: string | null }) =>
+    pageContinuity(p.translation ?? p.original, p.original);
+
+  it('reads the body above a printed footnote at the foot', () => {
+    // Phantasms of the Living II p.13: "…relatives and acquaintances" / "^1 Some of these cases…"
+    expect(flags(report30.phantasms_45).continues_on_next).toBe(true);
+  });
+
+  it('cuts at the FIRST footnote when the foot carries two', () => {
+    // Same book, p.20: "…even if it stood" / "^1 This number is derived thus…" /
+    // "^2 Thus it would be…". p.21 opens "alone, would be very great."
+    expect(flags(report30.phantasms_52).continues_on_next).toBe(true);
+  });
+
+  it("finds the translator's opening ellipsis under an untagged running head", () => {
+    // "# ON THE MOTIONS OF THE STAR MARS" / <margin> / "...the hypothesis found"
+    expect(flags(report30.kepler_an_158).continues_from_previous).toBe(true);
+    // "Pratyabhijñā-Hṛdayam [Sutra 12]" / "...Such performance"; a caseless original
+    expect(flags(report30.ksemaraja_38).continues_from_previous).toBe(true);
+    // "LIBER SEXTVS. 57" / "[Right Column - Latin Text]" / "A ...fleeing to our"
+    expect(flags(report30.plotinus_101).continues_from_previous).toBe(true);
+  });
+
+  it('control: a catchword at the foot is not a run-on', () => {
+    // Astronomia nova p.114 ends "…136,409." and the catchword "Sed cum" opens a
+    // new sentence overleaf. The report read the catchword as a broken sentence.
+    expect(flags(report30.kepler_an_158).continues_on_next).toBe(false);
+  });
+
+  it('reads a lowercase Latin opening the translation capitalised', () => {
+    // Latin: "atque omnem prorsus viam…"; English: margin notes, then "Those who say…"
+    expect(flags(report30.plotinus_258).continues_from_previous).toBe(true);
+  });
+
+  it('reads an original that ends on a comma where the translation closed the sentence', () => {
+    // Greek: "…ταῦτ’ ἀκούοντες," above the apparatus; English: "…when they hear this?"
+    expect(flags(report30.burnet_296).continues_on_next).toBe(true);
+    // Latin column: "…aſcendet in mentē,"; English: "…but very few use."
+    expect(flags(report30.plotinus_101).continues_on_next).toBe(true);
+  });
+
+  it('control: a page that ends on a complete sentence in both texts stays clean', () => {
+    // Republic 518b-c: "For they do say that, he said." The argument goes on; the sentence does not.
+    expect(flags(report30.burnet_293).continues_on_next).toBe(false);
   });
 });

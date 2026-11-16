@@ -1,0 +1,64 @@
+[
+  {
+    "book_id": "6955739df63a7571091720cf",
+    "slot": 1,
+    "title": "De institutione musica (15th c. MS)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century Latin manuscript of Boethius on music fits the OPenn/UPenn collections. The 'americana' collection tag looks odd for this text but is harmless.",
+    "rights_flag": null,
+    "structure_note": "The structure count says pages_translated 0, but the book field says 106 and this page has a translation, so one of the counters is wrong (E2). There are 49 'printed numbers' in a manuscript with no folio visible on this leaf, plus 4 backsteps and 2 repeats. These are probably marginal numerals or chapter numbers read as page numbers, not a real disorder.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "ad malleũ .viii. et malleus .viii. põderũ", "image": "ad malleũ ·viiii· et malleus ·viii· põderũ", "problem": "The text says hammer 12 to hammer 9 (the 4:3 fourth), but the transcription reads 12 to 8, which is a 3:2 ratio. That breaks the arithmetic of the proportion.", "severity": "serious", "class": "O7" },
+          { "ocr": ".viii . uero pendẽs ad .vi.", "image": "·viiii· uero pondeñ ad ·vi·", "problem": "9 read as 8 in the 3:2 fifth (9:6)", "severity": "moderate", "class": "O7" },
+          { "ocr": "viii . uero ad .viiii.", "image": "·viiii· uero ad ·viii·", "problem": "The numerals of the tone ratio are swapped. The ratio is the same either way.", "severity": "minor" },
+          { "ocr": "quatuor equorũ põderũ", "image": "cyatos equorũ põderũ", "problem": "'cyathos' (ladlefuls) is misread as 'quatuor' (four), and the translation turns it into 'four cups'", "severity": "moderate", "class": "O6" },
+          { "ocr": "uirga l'erea feritante patiens", "image": "uirga l'erea ferreaue percutiens", "problem": "The transcription is garbled ('ferreaue percutiens'). The translator reconstructed it correctly.", "severity": "moderate" },
+          { "ocr": "uel acu-\ntis uocibus attollendis : quantitatibuſque\nlaxandis", "image": "ul' acu minibus attollendis: grauitatibusque laxandis", "problem": "'acuminibus ... grauitatibusque' (high and low pitches) is read as 'acutis uocibus ... quantitatibus'", "severity": "moderate" },
+          { "ocr": "<unclear>p'aci-\nmen</unclear> ualet attollere l' deprimere quã-\ntitatem", "image": "l' acumen ualet attollere l' deprimere grauitatem", "problem": "'acumen' (high pitch) and 'grauitatem' (low pitch) are lost", "severity": "moderate" },
+          { "ocr": "cãtare\nnam natura quidẽ", "image": "cãtile nam nãliter quidem", "problem": "'cantilenam naturaliter' is split and misread", "severity": "minor" },
+          { "ocr": "magnitudines cor-\nporum", "image": "magnitudines cor- darum (?)", "problem": "Probably 'chordarum' (strings), read as 'corporum'. Low certainty at this resolution.", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "Malleus uero .xii. põderũ ad malleũ .viii. et malleus .viii. põderũ ad malleum .vi. pendẽs . ſecdm̃ Epitritã proportionẽ . diateſſeron conſonantiã iũgebant", "english": "The hammer of 12 weights to the hammer of 8, and the hammer of 8 weights to the hammer weighing 6, joined in the consonance of a fourth", "problem": "This carries over the OCR's 8 for the image's 9. The English then says 12:8 makes a fourth 'according to the epitrite 4:3', which is false: the reader gets a wrong ratio for the fourth.", "severity": "serious", "class": "O7" },
+          { "source": "quatuor equorũ põderũ acetabulis immittens", "english": "he poured liquid into four cups of equal weight", "problem": "'four' comes from the misread 'cyatos'. The image says he poured ladlefuls of equal weight into the cups.", "severity": "moderate" },
+          { "source": "Tantum enim uniuſcuiſqʒ <unclear>p'aci-\nmen</unclear> ualet attollere l' deprimere quãtitatem", "english": "For each person's <unclear>breath</unclear> can raise or lower the quantity", "problem": "'breath' is guessed for an unclear word that the image shows as 'acumen' (high pitch). The sense 'raise the high or lower the low pitch' is lost.", "severity": "moderate" },
+          { "source": "tō symp̄honiarũ tota", "english": "the whole nature of the <term>symphonies</term>", "problem": "'ratio' is rendered as 'nature'", "severity": "minor" },
+          { "source": "magnitudines cor-\nporum / ſonũq; metimur", "english": "by which we measure the sizes of bodies and sounds", "problem": "If the image reads 'chordarum', this should be 'strings', not 'bodies'. Low certainty.", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "A raw <column-break/> tag sits between 'gather the differences' and 'of the voice' in the reader text", "severity": "minor" }
+        ],
+        "confidence": "medium",
+        "printed_marker": "none visible",
+        "layout": "two columns, rubricated chapter headings, blue and red penwork initials, small 'viii' in the left margin, edge of the facing leaf at right",
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"diapason\"", "verdict": "ok", "helpful": false },
+            { "quote": "4:3 ratio", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"diatessaron\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"diapente\"", "verdict": "ok", "helpful": false },
+            { "quote": "9:8 ratio", "verdict": "ok", "helpful": true },
+            { "quote": "consonances", "verdict": "ok", "helpful": true },
+            { "quote": "rule, canon", "verdict": "ok", "helpful": true },
+            { "quote": "continuous", "verdict": "ok", "helpful": true },
+            { "quote": "proceeding by intervals", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"heroum poemata\"; epic verse", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"spiritus humanus\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "as Albinus holds", "why": "A general reader will not know who Albinus is: a Roman writer on music whom Boethius cites, and whose work is lost." }
+          ]
+        }
+      }
+    ],
+    "book_verdict": "The page and its translation are mostly sound, and the notes are good glosses. But a numeral misread (12:8 for 12:9) carried into the English makes the fourth's ratio wrong, and several word misreads (cyathos, acumen, gravitas) weaken the passage on voice limits."
+  }
+]

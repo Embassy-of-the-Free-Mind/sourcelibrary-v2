@@ -1,4 +1,5 @@
 import { getReadDb } from '@/lib/mongodb';
+import { homepageStatsAgeDays, isHomepageStatsStale, HOMEPAGE_STATS_MAX_AGE_DAYS } from '@/lib/library-stats';
 
 export type SiteStats = {
   totalBooks: number;
@@ -9,6 +10,15 @@ export type SiteStats = {
   languageCount: number;
   artworkCount: number;
   illustrationCount: number;
+  /**
+   * When the cache was written (ISO), absent on the hardcoded fallback. The
+   * values are still returned when `stale` is set: the fallback below is older
+   * than any stale cache, so swapping to it would make the page more wrong. A
+   * surface that must not quote an old figure checks `stale` (v2#3647).
+   */
+  asOf?: string;
+  /** Cache older than HOMEPAGE_STATS_MAX_AGE_DAYS (library-stats.ts). */
+  stale?: boolean;
 };
 
 /**
@@ -17,19 +27,19 @@ export type SiteStats = {
  * snapshot, not a live number: if you refresh it, refresh every field from the
  * same day and change the date.
  *
- * As of 2026-10-01: system_config.homepage_stats (written 05:15 UTC) for every
- * field except `readableInEnglish`, which is the ladder's `readable_in_english`
- * view over live books that day (15,101 — system_config.library_dashboard
- * totals.readableLive; the pre-#5286 homepage rule said 16,599).
+ * As of 2026-11-13: every field from system_config.homepage_stats as written
+ * at 06:31 UTC that day. `scripts/audit/corpus-number-consistency.mjs --live`
+ * fails when a field drifts more than 20% from the live value (the 2026-10-01
+ * copy said 42,192 books against 71,313; v2#3647).
  */
 export const SITE_STATS_FALLBACK: Readonly<SiteStats> = Object.freeze({
-  totalBooks: 42192,
-  readableInEnglish: 15101,
-  firstTranslationCount: 5034,
-  authorCount: 7862,
-  languageCount: 117,
-  artworkCount: 15840,
-  illustrationCount: 224964,
+  totalBooks: 71313,
+  readableInEnglish: 24134,
+  firstTranslationCount: 13096,
+  authorCount: 11724,
+  languageCount: 159,
+  artworkCount: 15843,
+  illustrationCount: 236918,
 });
 const FALLBACK = SITE_STATS_FALLBACK;
 
@@ -45,7 +55,12 @@ export async function getSiteStats(): Promise<SiteStats> {
       .collection('system_config')
       .findOne({ _id: 'homepage_stats' } as never, { maxTimeMS: 2000 });
     if (s?.totalBooks) {
+      const age = homepageStatsAgeDays(s.updatedAt);
+      const stale = isHomepageStatsStale(s.updatedAt);
+      if (stale) console.error(`[site-stats] system_config.homepage_stats is ${age?.toFixed(1)} days old (limit ${HOMEPAGE_STATS_MAX_AGE_DAYS}); still served, marked stale. Check the 05:15 prewarm-browse job.`);
       return {
+        ...(age !== null ? { asOf: new Date(s.updatedAt).toISOString() } : {}),
+        stale,
         totalBooks: s.totalBooks,
         // `translatedToEnglish` is the pre-#5286 key, kept as an alias for one release.
         readableInEnglish: s.readableInEnglish ?? s.translatedToEnglish ?? FALLBACK.readableInEnglish,

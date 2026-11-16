@@ -1,0 +1,56 @@
+[
+  {
+    "book_id": "69e96123390d3ed634590b97",
+    "slot": 1,
+    "title": "رحلة ابن بطوطة (Riḥlat Ibn Baṭṭūṭa)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Arabic printed edition of Ibn Battuta's Riḥla, on the Arabic-language shelf. The page is the Delhi section, on Muhammad bin Tughluq's executions.",
+    "rights_flag": null,
+    "structure_note": "The printed page number is (٧٠) at record 378, so the pagination restarts partway through the book. This fits a multi-volume edition bound or scanned together, and it would explain most of the 232 printed_repeats. The 13 backsteps are probably misread numerals or the volume restart, not a splice. The structure count pages_translated = 0 contradicts pages_translated_field = 568 and this page's stored translation, so the count is unreliable (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 378,
+        "right_page": "yes",
+        "printed_marker": "(٧٠)",
+        "layout": "single column of prose under a centred page number and a rule; two centred section headings set between ornamental brackets",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "فلما خاف القاضي جلال", "image": "فلما خالف القاضي جلال", "problem": "The alif of خالف ('rebelled') is dropped, giving خاف ('feared'). The translation's note then blames this OCR slip on the printer.", "severity": "moderate", "class": "O6" },
+          { "ocr": "فقال قلت هذا قبل موته", "image": "فقال هلا قلت هذا قبل موته", "problem": "هلا is dropped, so the Sultan's rebuke ('why did you not say this…') becomes a statement ('you said this…'). The translation follows the image.", "severity": "moderate", "class": "O5" },
+          { "ocr": "وظنوا أنه يغني عنه", "image": "وظنوا انه يعفى عنه", "problem": "يعفى ('pardoned') is misread as يغني. The translation has the right sense.", "severity": "moderate" },
+          { "ocr": "وحاولا الفرار في بهما", "image": "وحاولا الفرار فوشي بهما", "problem": "فوشي ('informed on') is garbled to في", "severity": "minor" },
+          { "ocr": "جيل قلنسوة على رأسه", "image": "جعل قلنسوته على رأسه", "problem": "جعل is misread as جيل, and the possessive is lost", "severity": "minor" },
+          { "ocr": "فإنه وقع خلاف عين الملك", "image": "فلما وقع خلاف عين الملك", "problem": "the conjunction is misread", "severity": "minor" },
+          { "ocr": "أمير بخنت", "image": "أمير بخت", "problem": "an extra letter in the name Bakht", "severity": "minor" },
+          { "ocr": "فكموا بقتله", "image": "فحكموا بقتله", "problem": "a letter is dropped", "severity": "minor" },
+          { "ocr": "فملقا من أيديهما", "image": "فعلقا من أيديهما", "problem": "ع is misread as م", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "فلما خاف القاضي جلال", "english": "<note>The printed text reads \"khāfa\" (feared), most likely an error for \"khālafa\" (rebelled).</note>", "problem": "The note claims a misprint that does not exist. The image prints خالف, so the 'error' is the OCR's. The rendering 'rebelled' is right, but the note gives the source a corruption it does not have.", "severity": "moderate", "class": "T10" }
+        ],
+        "other": [
+          { "note": "An invented textual note: the translation tells the reader the printed text has a misprint (\"khāfa\" for \"khālafa\") that is not on the leaf.", "severity": "moderate", "class": "T10" },
+          { "note": "Centring arrows leak into the English headings: \"-> ❖ Account of his execution of Tughan and his brother ❖ <-\" and \"-> ❖ Account of his execution of the son of the Malik al-Tujjar ❖ <-\".", "severity": "minor", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The printed text reads \"khāfa\" (feared), most likely an error", "verdict": "wrong", "helpful": false },
+            { "quote": "skullcap or cap", "verdict": "ok", "helpful": true },
+            { "quote": "Cambay, the port in Gujarat", "verdict": "ok", "helpful": true },
+            { "quote": "Fergana, in Central Asia", "verdict": "ok", "helpful": true },
+            { "quote": "King of the Merchants, chief of the merchants", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "word reached the Sultan that Sheikh al-Haydari had prayed for Judge Jalal", "why": "The page never names 'the Sultan'. A general reader needs to be told this is Muhammad bin Tughluq, Sultan of Delhi, whose executions the section lists." },
+            { "english": "When the rebellion of Ain al-Mulk broke out, with his rising and his fighting against the Sultan, as we shall relate", "why": "Ain al-Mulk and his revolt are referred to as if already known. A short note (a governor who rose against the Sultan, told later in the book) would orient the reader." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription has several letter-level misreadings, two of which change the meaning. The English follows the image closely and is faithful. But one note invents a printer's error to explain away an OCR slip, and an expert reader would notice that false apparatus, so the page counts as having a defect on sight."
+  }
+]

@@ -120,7 +120,7 @@ function PublishedCard({ col, priority = false }: { col: CuratedCollection; prio
 function ComingSoonCard({ col }: { col: CuratedCollection }) {
   return (
     <div className="p-4 rounded-lg border border-border-light bg-white/60 opacity-70">
-      <h3 className="font-display text-base text-primary/70 leading-snug mb-1">
+      <h3 className="font-serif text-base text-primary/70 leading-snug mb-1">
         {col.name}
       </h3>
       {col.subtitle && (
@@ -141,7 +141,7 @@ export default async function CuratedCollectionsPage() {
       {/* Hero */}
       <div className="bg-warm border-b border-border-light">
         <div className="max-w-[1500px] mx-auto px-6 pt-8 pb-10 sm:pb-12">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-primary font-semibold leading-tight mb-3 font-display">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-primary font-semibold leading-tight mb-3 font-serif">
             Curated Collections
           </h1>
           <p className="text-lg sm:text-xl text-secondary max-w-3xl leading-relaxed">
@@ -166,7 +166,7 @@ export default async function CuratedCollectionsPage() {
         {/* Coming Soon */}
         {upcoming.length > 0 && (
           <div>
-            <h2 className="font-display text-2xl text-primary mb-1">Coming Soon</h2>
+            <h2 className="font-serif text-2xl text-primary mb-1">Coming Soon</h2>
             <p className="text-sm text-muted mb-5">
               These collections are being researched and assembled. Check back soon.
             </p>

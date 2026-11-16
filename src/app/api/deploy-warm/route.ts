@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { warmPingHeaders } from '@/lib/warm-ping';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
@@ -63,7 +64,7 @@ async function warmUrl(
   const t = Date.now();
   try {
     const res = await fetch(`${baseUrl}${path}`, {
-      headers: { 'X-Warm-Ping': '1' },
+      headers: warmPingHeaders(),
       signal: AbortSignal.timeout(timeout),
     });
     const cache = res.headers.get('x-vercel-cache') || res.headers.get('cf-cache-status') || '';

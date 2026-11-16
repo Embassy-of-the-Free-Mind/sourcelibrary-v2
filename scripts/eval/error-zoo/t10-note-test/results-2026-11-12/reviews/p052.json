@@ -1,0 +1,63 @@
+[
+  {
+    "book_id": "6a45298cc6d95bc278fbc8c3",
+    "slot": 1,
+    "title": "Marcianus graecus Z. 299 (=584): Corpus of the Greek Alchemists",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "The text belongs in the Greek alchemical corpus: it is Olympiodorus' commentary quoting Zosimos to Theosebeia, then Agathodaimon, Hermes and magnesia. But the leaf is in a fluent late cursive hand in brown ink, which does not look like the 10th–11th-century minuscule of Marc. gr. 299. This may be a later copy catalogued under the Marcianus. I am an expert-eye reader at this resolution only, so this is a doubt, not a finding (possible I7).",
+    "rights_flag": null,
+    "structure_note": "pages_translated is 0 in the structure counts but 397 in the book field, so one of the two counts is wrong (E2). There are 199 printed numbers with 10 backsteps and 10 repeats. On a foliated manuscript (this leaf carries '169' in pencil, top and foot) that most likely comes from recto-only foliation being read onto versos, or from foliation misreads, not from a scan disorder. I have not confirmed this from one page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 360,
+        "right_page": "yes",
+        "printed_marker": "169",
+        "layout": "single column of cursive Greek on a recto with a wide blank outer margin; pencil foliation '169' top right and at the foot; a strip of the facing verso's text at the left edge (correctly not transcribed)",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "ὅταν δὲ ἐπιμείνας αὐτὴν. τό γε ἐπίγνωσιν καὶ τὸ μόνον", "image": "ὅταν δὲ ἐπιγνῷς σαυτήν· τότε ἐπιγνώσῃ καὶ τὸν μόνον", "problem": "'when you know yourself, then you will know the only true God' is misread as 'persisting in it ... knowledge'; the key self-knowledge clause is lost", "severity": "serious", "class": "O6" },
+          { "ocr": "καὶ ἀγαπῶσα τῆς ὑμετέρας", "image": "καταπτύουσα τῆς ὕλης", "problem": "'spitting on matter' is read as 'loving what is yours', which reverses the sense", "severity": "serious", "class": "O6" },
+          { "ocr": "καθίζου δὲ τοῖς αὐτοῖς ἐν μηδὲ", "image": "καθέζου … τοῖς πάθεσι", "problem": "'sit still also as to the passions' is read as 'these same things in nothing'; the passions are lost", "severity": "serious", "class": "O6" },
+          { "ocr": "ἐν τῷ παν-", "image": "ἓν τὸ πᾶν", "problem": "the motto 'One is the All' is misread, and the next line ('δι' οὗ τὸ πᾶν') becomes 'λόντι πᾶν'", "severity": "serious", "class": "O6" },
+          { "ocr": "τοῦτο γὰρ ἡμῖν δεῖ τὸ πᾶν. οὐ δὲν τὸ πᾶν.", "image": "τοῦτο γὰρ εἰ μὴ ἔχοι τὸ πᾶν, οὐδέν [ἐστι] τὸ πᾶν", "problem": "a conditional ('if it did not hold the all, the all is nothing') is turned into a flat statement", "severity": "serious", "class": "O6" },
+          { "ocr": "ῥύσιμον ἐκ τοῦ αὐτοῦ ἄστρον", "image": "…ζητοῦσα [θεὸν]… (the 'do not wander seeking God' clause)", "problem": "a 'star' is invented where the leaf reads 'seeking'; the reading is uncertain at this resolution", "severity": "moderate" },
+          { "ocr": "τὸ ἅγιον. καὶ οὕτως ἥξει πρὸς τὸ ἅγιον", "image": "τὸ θεῖον· καὶ ὄντως ἥξει … τὸ θεῖον", "problem": "'the divine' is read as 'the holy', and ὄντως as οὕτως", "severity": "moderate" },
+          { "ocr": "ἐνεργοῦσα ἐπὶ τούτῳ καὶ τὸν γνήσιον", "image": "ἐνεργοῦσα ἐπιτεύξῃ τῶν γνησίων καὶ φυσικῶν", "problem": "'you will obtain the genuine and natural [tinctures]' is misread", "severity": "moderate" },
+          { "ocr": "ὡς αὐτὸ αὐτὰ ἔχουσιν", "image": "ὡς πρὸς τὰ θεῖα", "problem": "'with regard to divine things' is misread", "severity": "moderate" },
+          { "ocr": "ὁ γὰρ καπνός ἐστιν ἐξ ἀτμοῦ", "image": "ὁ γὰρ καπνὸς … ἀτμοῦ θερ-|μοῦ καὶ ξηροῦ", "problem": "'θερ-' is dropped, so 'hot and dry vapour' becomes 'from vapour and from the dry'", "severity": "moderate" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "καὶ ἀγαπῶσα τῆς ὑμετέρας (image: καταπτύουσα τῆς ὕλης)", "english": "and loving what is yours", "problem": "it carries the OCR misread, so a reader gets the opposite of 'spitting on matter'", "severity": "serious", "class": "O6" },
+          { "source": "ὅταν δὲ ἐπιμείνας αὐτὴν (image: ὅταν δὲ ἐπιγνῷς σαυτήν)", "english": "And when you have persisted in it, that is, in knowledge", "problem": "'when you know yourself' is lost; the argument of the passage is changed", "severity": "serious", "class": "O6" },
+          { "source": "ἐν τῷ παν-|λόντι πᾶν … οὐ δὲν τὸ πᾶν (image: ἓν τὸ πᾶν … εἰ μὴ ἔχοι τὸ πᾶν, οὐδέν τὸ πᾶν)", "english": "In the all, all.", "problem": "the 'One is the All' motto is unrecognisable, and the conditional becomes the flat claim 'the all is nothing'", "severity": "serious", "class": "O6" },
+          { "source": "ῥύσιμον ἐκ τοῦ αὐτοῦ ἄστρον", "english": "so that no star flows out from it", "problem": "the English is fluent prose built on an invented reading; there is no star on the leaf", "severity": "moderate" },
+          { "source": "καθίζου δὲ τοῖς αὐτοῖς ἐν μηδὲ", "english": "Sit, then, with these same things in nothing", "problem": "the sentence is meaningless and the passions (τοῖς πάθεσι) are lost; it is translated with no uncertainty marker", "severity": "moderate" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"epignosis\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"ouden to pan\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"physikoi\"", "verdict": "ok", "helpful": false },
+            { "quote": "the \"Good Spirit\"", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"akmē\", peak or full strength", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"atmos\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"aithalē\"", "verdict": "ok", "helpful": false },
+            { "quote": "possibly ammoniac", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "<term>magnesia</term>", "why": "In Greek alchemy 'magnesia' is a named substance or stage of the work, not the modern element or mineral. It is left with no gloss." },
+            { "english": "For Hermes too speaks about the smoke", "why": "A general reader needs to know this is Hermes Trismegistus as an alchemical authority." },
+            { "english": "And he says to me", "why": "The speaker and addressee are not identified (Zosimos quoted, writing to Theosebeia), so the quoted instructions are hard to follow." },
+            { "english": "as did Zosimos", "why": "This is Zosimos of Panopolis, the alchemist the passage relies on; one line naming him would help." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A Greek alchemical page (Olympiodorus quoting Zosimos) whose OCR misreads the hand at the points the argument turns on: 'know yourself', 'spitting on matter', 'One is the All'. The fluent English carries those misreads to the reader as sense. Its notes are mostly harmless transliterations. The 10th–11th-century catalogue date looks doubtful for this hand."
+  }
+]

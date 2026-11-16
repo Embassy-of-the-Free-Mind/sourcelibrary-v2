@@ -1,0 +1,104 @@
+{
+ "wave": "1",
+ "judge": "fable",
+ "corrector": "opus",
+ "better": 9,
+ "same": 1,
+ "worse": 0,
+ "missing": 0,
+ "controls": [
+  "accept=false f1",
+  "accept=false f1",
+  "accept=false f1",
+  "accept=false f1"
+ ],
+ "rows": [
+  {
+   "page_id": "6953ab9577f38f6761bd7885",
+   "book_id": "6953ab9577f38f6761bd786e",
+   "page_number": 23,
+   "stored": "r2/wt9",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69906f5b4b3bd4d1fffd0819",
+   "book_id": "69906f5b4b3bd4d1fffd0739",
+   "page_number": 224,
+   "stored": "r3/wt7",
+   "written": "r3/wt3",
+   "rel": "same"
+  },
+  {
+   "page_id": "69905e292fd6a039938a1613",
+   "book_id": "69905e292fd6a039938a15c6",
+   "page_number": 77,
+   "stored": "r3/wt4",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69520f03ab34727b1f044320",
+   "book_id": "69520f03ab34727b1f044317",
+   "page_number": 17,
+   "stored": "r2/wt3",
+   "written": "r3/wt1",
+   "rel": "better"
+  },
+  {
+   "page_id": "69b43d3c06b196d69f66fab8",
+   "book_id": "69b43d3c06b196d69f66f8f7",
+   "page_number": 449,
+   "stored": "r3/wt2",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "699065a2726f64800c10c074",
+   "book_id": "699065a1726f64800c10bff7",
+   "page_number": 125,
+   "stored": "r3/wt2",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69906ed78a353648e1ed0866",
+   "book_id": "69906ed78a353648e1ed085f",
+   "page_number": 7,
+   "stored": "r3/wt1",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69906ecb7d027b8182c0a9fd",
+   "book_id": "69906eca7d027b8182c0a9dc",
+   "page_number": 33,
+   "stored": "r2/wt8",
+   "written": "r3/wt10",
+   "rel": "better"
+  },
+  {
+   "page_id": "6959117fecb01322b3069bc9",
+   "book_id": "31f2d90a-88af-4414-a445-68406caca58d",
+   "page_number": 158,
+   "stored": "r3/wt6",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "6953ab4577f38f6761bd6d9b",
+   "book_id": "6953ab4577f38f6761bd6c6f",
+   "page_number": 300,
+   "stored": "r2/wt11",
+   "written": "r3/wt1",
+   "rel": "better"
+  }
+ ],
+ "recorded": {
+  "apply": true,
+  "rows": 10,
+  "inserted": 10,
+  "already": 0,
+  "failed": []
+ }
+}

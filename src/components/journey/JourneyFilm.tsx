@@ -268,7 +268,7 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
     (async () => {
       const fontsReady = Promise.race([
         Promise.all([
-          `600 40px "Inter"`, `28px "Newsreader"`, `italic 40px "Newsreader"`, `46px ${originalFont}`,
+          `600 40px "Source Sans 3"`, `28px "Newsreader"`, `italic 40px "Newsreader"`, `46px ${originalFont}`,
         ].map(f => document.fonts.load(f).catch(() => []))),
         new Promise(r => setTimeout(r, 3000)),
       ]);
@@ -278,7 +278,7 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         if (disposed) return;
         scene = mod.createJourneyScene(data, imgs, {
           original: originalFont,
-          label: '"Inter", sans-serif',
+          label: '"Source Sans 3", sans-serif',
           body: '"Newsreader", Georgia, serif',
         });
         stage.appendChild(scene.canvas);

@@ -1,0 +1,109 @@
+[
+  {
+    "book_id": "69d5ad0c4dc55b8478ddf60b",
+    "slot": 1,
+    "title": "Book of Enoch (Ge'ez MS)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A three-column Ethiopic parchment manuscript of 1 Enoch (end of the Parables, start of the Astronomical Book), as catalogued. No tradition or collections are given to test it against.",
+    "rights_flag": null,
+    "structure_note": "pages_translated is 0 in the structure counts but 310 in the book field, so the two counters disagree (E2). The image shows pencil foliation, and page record 21 carries folio '9', so about 12 front images (covers or flyleaves) come before it and only rectos are numbered (190 of 398). The 17 backsteps and 14 repeats are most likely misread or verso-assigned folio numerals, not a splice. I cannot confirm that from one page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "printed_marker": "9",
+        "layout": "three columns of Ge'ez script; a rubricated (red) section heading with red numerals in column 3; small red paragraph marks between the columns",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "ኵሉ፡ ውእቱ፡ መንበር፡ ኵሉ፡ ዕለተ፡",
+            "image": "the lower ~12 lines of column 2 read (approximately) 'ወጸራኅኩ፡በቃል፡ዐቢይ ... ወመጽአ፡ኀቤየ፡ወበቃሉ፡ተአምኀኒ፡ወይቤለኒ፡አንተ፡ውእቱ፡ወልደ፡ብእሲ፡ዘተወለድከ፡ለጽድቅ፡ወጽድቅ፡ላዕሌከ፡ኀደረ ... ኢየኀድገከ ... ዓለም፡ወኵሉ፡የሐውር፡ዲበ፡ፍኖትከ፡ወጽድቅ፡ኢየኀድገከ፡ለ'",
+            "problem": "From about line 27, the OCR of column 2 leaves the leaf. Enoch's cry and blessing, the Head of Days coming to him, and the address 'You are the son of man who was born to righteousness...' (1 En 71:11-16) are missing. Invented lines ('ወርኢኩ፡ ኵሎ፡ ምስሌሆሙ፡ በቃለ፡ መዐዛ፡ ይባርኩ...') stand in their place.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "ውእቱ፡ ቀዳሚ፡ ትእዛዝ፡ ፀሐይ፡ በህ",
+            "image": "roughly 'ወዝንቱ፡ትእዛዝ፡ቀዳማዊ፡ዘብርሃናት፡ፀሐይ፡ብርሃን፡ሙፃኡ፡ኆኃተ፡ሰማይ፡እለ፡መንገለ፡ጽባሕ...'",
+            "problem": "The lower half of column 3, after the heading, is largely garbled ('ሰመስ / ኰታ፡ ውፅአታ፡', 'ዘእምጌቤ፡ ሁ፡ ዘንፋሰ፡ ሰላ'), though the hand is legible.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "ሉ፡ ሣልስ፡ ዘርኢኩ፡ ዘነበ፡ እ",
+            "image": "ሉ፡ሣልስ፡ዘሄኖክ፡ወኮነ፡እ",
+            "problem": "'the third [parable] of Enoch. And it came to pass' is misread as 'which I saw'. The next line, 'ምድረ፡ ገጸ፡ ተሐለሰ', is also wrong for 'ምድኅረ፡ተለዐለ'.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "በማእከለ፡ ውኄጥ፡ ወበረድ፡ በ",
+            "image": "በማእከለ፡መስዕ፡ወዐረብ፡",
+            "problem": "'between north and west' misread. The next line's 'ንሣእኩ፡ እኰበ፡ በላእክተ፡' is for 'ነሥኡ፡ አሕባለ፡ መላእክት' (the angels took cords).",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "### መጽሐፈ፡ ስርዓተ፡ ብርሃናት፡ ሰማ",
+            "image": "መጽሐፈ፡ ሚጠተ፡ ብርሃናተ፡ ሰማ (in red)",
+            "problem": "'course' is read as 'order'. The red numerals inside the heading are dropped, and five lines are tagged as heading where only the first two are rubricated.",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ኵሉ፡ ውእቱ፡ መንበር፡ ኵሉ፡ ዕለተ፡ (OCR; image has 1 En 71:11-16 here)",
+            "english": "<unclear>from all that is established upon him, in all that throne, every day</unclear>\n\n<column-break/>\n\nof the world. With you shall be their dwelling, and with you their portion",
+            "problem": "The OCR's omission carries into the English. Enoch's blessing, the Head of Days' approach, and the declaration that Enoch is the Son of Man (the climax of the Parables) are absent. 'With you' then has no antecedent, and nothing marks the gap.",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "ውእቱ፡ ቀዳሚ፡ ትእዛዝ፡ ፀሐይ፡ በህ / ርሃናተ፡ ሰማይ፡ በብርሃናተ፡ ሰመስ ...",
+            "english": "This is the first law of the luminaries: the sun, <unclear>a luminary of heaven, has its going forth in the gates of heaven toward the east",
+            "problem": "The column-3 English is rebuilt from memory of the standard 1 Enoch 72, not from the OCR shown beside it (T14/O3). The note discloses this, and the sense broadly matches the image, but it is still not a translation of this transcription.",
+            "severity": "moderate",
+            "class": "T14"
+          },
+          {
+            "source": "ሉ፡ ሣልስ፡ ዘርኢኩ፡",
+            "english": "This is the third parable that I saw.",
+            "problem": "This follows the OCR misread. The leaf reads 'the third parable of Enoch'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "መጽሐፈ፡ ስርዓተ፡ ብርሃናት፡",
+            "english": "The Book of the Order of the Luminaries of Heaven",
+            "problem": "This follows the OCR misread ስርዓተ. The leaf has ሚጠተ, 'course/revolution'.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "A raw <column-break/> tag appears twice in the English reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "This sentence closes the third of Enoch's \"Parables\" or \"Sim", "verdict": "unsupported", "helpful": true },
+            { "quote": "Here begins 1 Enoch 70, which tells of Enoch being taken up", "verdict": "unsupported", "helpful": false },
+            { "quote": "Here begins 1 Enoch 71.", "verdict": "unsupported", "helpful": false },
+            { "quote": "The Ophanim, \"wheels,\" are a class of angels drawn from the", "verdict": "ok", "helpful": true },
+            { "quote": "The \"Head of Days\" is Enoch's title for God, echoing the \"An", "verdict": "ok", "helpful": true },
+            { "quote": "Here begins the \"Astronomical Book\" (1 Enoch 72-82), an acco", "verdict": "unsupported", "helpful": true },
+            { "quote": "The Ge'ez text in this column is badly garbled in the transc", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "Michael and Gabriel, Raphael and Phanuel", "why": "Phanuel is not a familiar archangel to a general reader and is not explained." },
+            { "english": "before the Lord of Spirits", "why": "The Parables' characteristic title for God is used throughout with no gloss." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf, a genuine 16th-century Ethiopic Enoch, but the OCR drops about 12 lines of column 2, the passage where Enoch is named Son of Man (1 En 71:11-16), and puts invented text in their place. The English silently loses it. The rest of column 3 is translated from the standard text, not from the garbled OCR."
+  }
+]

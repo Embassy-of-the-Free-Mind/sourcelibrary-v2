@@ -1,0 +1,338 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "model",
+  "issue": 93,
+  "stage": "translation",
+  "languages": [
+   "fa",
+   "sa",
+   "lzh",
+   "grc",
+   "he"
+  ],
+  "baseline": "LIVE",
+  "arms": [
+   "LIVE",
+   "OPUS2",
+   "OPUSX",
+   "FABLE"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — rules.json has no translation cell for these languages that a Claude route is rated in; the live route here is gemini-3.8-flash+agy-cli (flash-measured-cli-agy), and LIVE is the stored text, written by several earlier Gemini lanes",
+  "judges": [
+   "opus (claude-opus-5-5, default effort)",
+   "fable (claude-fable-5-2, default effort)"
+  ],
+  "primary_measure": "severity-weighted defects per 1,000 words: (misleads + 3 x wrong_text) / words x 1000 (#8283)",
+  "waive": {}
+ },
+ "judges": {
+  "fable": {
+   "cells": {
+    "frontier": {
+     "routes": {
+      "LIVE": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 103,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      },
+      "OPUS2": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 29,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      },
+      "OPUSX": {
+       "n": 44,
+       "books": 44,
+       "unjudged": 59,
+       "accept": "8/44",
+       "accept_wilson": [
+        0.095,
+        0.32
+       ],
+       "accept_by_book": [
+        0.068,
+        0.295
+       ],
+       "wrong_text_pages": "36/44",
+       "wrong_text_wilson": [
+        0.68,
+        0.905
+       ],
+       "fidelity_mean": 2.8,
+       "counts": true,
+       "words": 34716,
+       "misleads_per_1k": 4.75,
+       "wrong_text_per_1k": 4.84
+      },
+      "FABLE": {
+       "n": 45,
+       "books": 45,
+       "unjudged": 58,
+       "accept": "11/45",
+       "accept_wilson": [
+        0.142,
+        0.387
+       ],
+       "accept_by_book": [
+        0.133,
+        0.378
+       ],
+       "wrong_text_pages": "35/45",
+       "wrong_text_wilson": [
+        0.637,
+        0.875
+       ],
+       "fidelity_mean": 2.96,
+       "counts": true,
+       "words": 36026,
+       "misleads_per_1k": 4.02,
+       "wrong_text_per_1k": 3.33
+      }
+     },
+     "controls": {
+      "LIVE": {
+       "n": 0,
+       "passed": false
+      },
+      "OPUS2": {
+       "n": 0,
+       "passed": false
+      },
+      "OPUSX": {
+       "n": 2,
+       "passed": true
+      },
+      "FABLE": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 4,
+      "accept_flips": "0/4",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0
+     },
+     "against_baseline": {
+      "LIVE -> OPUS2": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "LIVE -> OPUSX": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "LIVE -> FABLE": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      }
+     }
+    }
+   }
+  },
+  "opus": {
+   "cells": {
+    "frontier": {
+     "routes": {
+      "LIVE": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 103,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      },
+      "OPUS2": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 29,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      },
+      "OPUSX": {
+       "n": 103,
+       "books": 103,
+       "unjudged": 0,
+       "accept": "52/103",
+       "accept_wilson": [
+        0.41,
+        0.599
+       ],
+       "accept_by_book": [
+        0.408,
+        0.602
+       ],
+       "wrong_text_pages": "40/103",
+       "wrong_text_wilson": [
+        0.3,
+        0.485
+       ],
+       "fidelity_mean": 3.39,
+       "counts": true,
+       "words": 76951,
+       "misleads_per_1k": 2.56,
+       "wrong_text_per_1k": 1.36
+      },
+      "FABLE": {
+       "n": 103,
+       "books": 103,
+       "unjudged": 0,
+       "accept": "54/103",
+       "accept_wilson": [
+        0.429,
+        0.618
+       ],
+       "accept_by_book": [
+        0.427,
+        0.621
+       ],
+       "wrong_text_pages": "42/103",
+       "wrong_text_wilson": [
+        0.318,
+        0.504
+       ],
+       "fidelity_mean": 3.53,
+       "counts": true,
+       "words": 76991,
+       "misleads_per_1k": 2.35,
+       "wrong_text_per_1k": 1.48
+      }
+     },
+     "controls": {
+      "LIVE": {
+       "n": 0,
+       "passed": false
+      },
+      "OPUS2": {
+       "n": 0,
+       "passed": false
+      },
+      "OPUSX": {
+       "n": 2,
+       "passed": true
+      },
+      "FABLE": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 10,
+      "accept_flips": "0/10",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0.3
+     },
+     "against_baseline": {
+      "LIVE -> OPUS2": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "LIVE -> OPUSX": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "LIVE -> FABLE": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "4 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 4 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "20 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

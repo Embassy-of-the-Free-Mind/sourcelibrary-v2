@@ -1,0 +1,442 @@
+{
+ "set": "w38",
+ "audited": 38,
+ "writes": 38,
+ "read": {
+  "opus": 38,
+  "gemini": 38
+ },
+ "writes_worse": {
+  "opus": 2,
+  "gemini": 6
+ },
+ "writes_better": {
+  "opus": 30,
+  "gemini": 29
+ },
+ "writes_same": {
+  "opus": 6,
+  "gemini": 3
+ },
+ "gate": "STOP",
+ "rows": [
+  {
+   "page_id": "69dbca3a1040d1d5e20aa4b3",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'prouocat uentrem' for printed 'ꝓuocat vrinā' (urinam), drops 'est' and 'strang-' ('contra stranguiriam'), and garbles 'usui medicine competunt' as 'uluimedicime opetunt'.",
+   "gemini_note": "X misreads 'urinam' as 'uentrem' in line 2 and corrupts several critical words including 'usui medicine competunt' and 'stranguiriam'."
+  },
+  {
+   "page_id": "69f6ace578ec39b89ca67051",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both texts match the page word for word; they differ only in italics ('disséquer', 'couleurs') and in how the page number is marked up.",
+   "gemini_note": "Y correctly italicizes 'disséquer' and 'couleurs', which are italicized in the print, whereas X leaves both in regular type."
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b74fb",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y scrambles the number columns (e.g. Saturn as '5 23' and Epiphania put on day 5), drops day 31 and 'Capitisque' from the header; X keeps the right sequence of values (e.g. day 8 '27 38 23 37 12 4 11 34 0 29 8 58 16 38 21 24').",
+   "gemini_note": "Y completely misaligns the table columns, omits 'Capitisque' from the header, sets all zodiac sign headers incorrectly to Capricorn, and drops the 31st row."
+  },
+  {
+   "page_id": "69dbcaa11040d1d5e20ad3bd",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'ex centro mundi non educta' for 'mūdi.n.educta' (point n), and also has 'ubi ipso centro' for 'ubi quaeso centrum' and 'quolibet' for 'quantumlibet'.",
+   "gemini_note": "X omits several critical words and misreads key astronomical terms present on the page, such as omitting 'n.' in 'centro mudi .n. educta' and reading 'p.' as 'non', and 'qso' as 'ipso' instead of 'quaeso'."
+  },
+  {
+   "page_id": "69b631a81c1c21a3738095b3",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "Both give the same Psalm text ('tanquam sponsus procedens ... preceptum domini'); Y just keeps the abbreviations and red initials as printed.",
+   "gemini_note": "Y faithfully transcribes the abbreviations and rubrics ('pcedēs' / 'procedēs', 'abscōdat', 'preceptū dñi', and highlighted initials), whereas X silently expands abbreviations without marking rubricated initials."
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X garbles and repeats the opening argument ('et tunc non est vera potentia' appears three times), loses the 'Dicendum quod essentia anime potest dupliciter capi' line, and mangles column 2; Y follows the printed text closely.",
+   "gemini_note": "X severely hallucinates and corrupts the text, repeating phrases in column 1 and misreading 'superficies' as 'lupicies' and 'ostensiva' as 'omnium' in column 2."
+  },
+  {
+   "page_id": "69dbcaa11040d1d5e20ad395",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Same wording in both, X with abbreviations expanded and Y keeping them ('sphæra stellare fixæ q firmamétú'); Y's 'sequentificuratione' and 'interfecat' are minor misreadings.",
+   "gemini_note": "X correctly transcribes words expanded from abbreviations such as 'stellatum fixarum' and 'planetarum', whereas Y misreads abbreviations as faulty case endings ('stellare fixæ', 'planetæ') and introduces spurious words ('sequentificuratione' with note of catchword)."
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d618",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y misreads the source name 'Xistus' as 'Fistus' and has 'Vrozem' and '.oncenda' for 'Vxorem' and 'ducenda'; X is accurate apart from 'Biogenes' for 'Diogenes'.",
+   "gemini_note": "Y transcribes the initial letter 'U'/'V' as 'Vr' in multiple entries (reading 'Uxorem' as 'Vrorem', 'Uxoris' as 'Vrozis', 'Uxor' as 'Vroz', etc.) and misreads 'ducenda' as '.oncenda'."
+  },
+  {
+   "page_id": "69dbcaa11040d1d5e20ad396",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X leaves many garbled abbreviations ('fecú', 'fcdm', 'eéntia') and drops 'a semetipsis' and 'corpora' ('elementa quæ simplicia'); Y expands the text faithfully.",
+   "gemini_note": "X places the first diagram before the text and omits its labels, omits several words present in the leaf such as 'a semetipsis', 'corpora', and 'secum', and misreads numbers ('ccclxv' instead of 'ccclxv' vs 'ccclxv.diebus' where the image has 'ccclxv.diebus')."
+  },
+  {
+   "page_id": "69dc55e4cb6f7429748b9769",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X changes the heading 'An verus honor acquiratur in curiis' to 'An vero honor ac gratia in curiis?' and garbles 'Ibi laudas', 'Unde', and 'non in honore' ('non ibo').",
+   "gemini_note": "Y accurately transcribes the header ('An verus honor acquiratur in curiis regum et principum') and the final words ('laboris sui fructum non i honore') which X truncates or corrupts, along with correctly reading 'prosequendi', 'deriuatur', and 'laudatrix'."
+  },
+  {
+   "page_id": "69dc55e4cb6f7429748b976a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X garbles the chapter heading into 'rana regum ... recte ac gratia nobilitas' where the leaf reads 'z an a regu ... recte acqrat nobilitas' (Y: 'et an a regum ... acquiratur'), and has 'non facta modernis acta' for 'non satis modernis tacta'.",
+   "gemini_note": "Y correctly transcribes the chapter heading ('et an a regum... recte acqrat nobilitas') and text ('non satis modernis tacta'), whereas X badly corrupts the heading to 'rana regum' and misreads several words."
+  },
+  {
+   "page_id": "69f6ad3e78ec39b89ca67113",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops the 'Passif' and 'Équilibrant' sub-rows of every Principe and invents text from the facing page that is not on this leaf ('permettant de trouver la valeur hiéroglyphique', 'Le Triomphe', 'Maître', 'L'HOMME').",
+   "gemini_note": "Y transcribes text from the facing right-hand page that is cut off in this leaf, while omitting multiple sub-headings in the table's first column."
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3da7",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X leaves out the printed sentences 'Hoc e uenenu quod inocentissi auctores simpliciter dorio appellauere' and 'aspidu naturae halicaccabum itatu aduersa ut radice eius ppius admota soporetur'.",
+   "gemini_note": "X omits a clause in chapter 31 ('Hoc e uenenu quod inocetiffi auctores sipliciter dorio appellauere:') and another clause on aspid venom ('aspidu natæ halicaccabum itatu aduerfa:ut radice eius ppius admota foporet:')."
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b74fa",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "The leaf prints the dominical letter 'd' (Y), not X's 'b'. X also shifts 'Februarij' into the Aduentus row and drops the 'z' before 'a 19 Maij'. The Mercurius digit ('13' in X, '19' in Y) is hard to read.",
+   "gemini_note": "Y gives the Dominical letter as 'd' instead of 'b' (or 'd' error) and misreads Mercurius dates as 'et a 19 Maij' and '19 Septembris' instead of 'z a 19 Maij' and '13 Septembris'."
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00ce",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X leaves out the printed clause 'quia fm eos principium mouens est ania. Et dixerunt tales q magnes' and has 'Et hoc ista fi in aliq' for 'Et hoc ideo. qa si in aliq bn'. Y has its own slips ('Are优化', 'Critias' for 'Trixias').",
+   "gemini_note": "X omits two full printed lines in the second column under 'Quoniam autez et' ('haberet in se animam quia fm eos principium / mouens est anīa. Et dīxerunt tales q magnes')."
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b74f9",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf is blank apart from mirrored show-through. X transcribes that show-through as a title and invents 'Ephemerides anno Ioanne M.CCCC.LXXXXIIII'.",
+   "gemini_note": "The page is blank with mirror-inverted show-through from the recto, which X misidentifies as upside-down printed title-page text."
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa3bc",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y invents 'oriri spasmum' where the leaf reads 'di spom' (X: 'disponi'), and also has 'scoridion' for 'scordion' and 'illo' for 'illius'.",
+   "gemini_note": "Y hallucinates words like 'oriri spasmum' for 'disponi' and misreads 'quare' as 'quod'."
+  },
+  {
+   "page_id": "69f6ace578ec39b89ca67052",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Both texts are complete and agree with the leaf, from 'Voyons d'abord les quatre figures' to 'les dix nombres suivants'. They differ only in layout.",
+   "gemini_note": "Both transcriptions record the text faithfully, differing only in minor layout and markup conventions (such as Y's inclusion of '— 43 —' and image descriptions in X)."
+  },
+  {
+   "page_id": "69b631a81c1c21a373809644",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops the 'ne' printed on the leaf, giving 'Domine in furore tuo arguas me' and reversing the sense; X has 'Domine ne in furore'.",
+   "gemini_note": "Y drops 'neque' ('neq') before 'in ira tua' to an earlier line position and invents a non-existent reading, but more crucially Y misreads 'Dñe' (Domine) as 'omine in furore' while dropping the initial D or misassigning words, and X correctly renders the Latin text without dropping words."
+  },
+  {
+   "page_id": "69dbcc660f8c5edf20f4b315",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X is heavily garbled ('Adut aut scdm accns' for 'Motu aut scdm accns') and drops 'motus autem z operatio differunt quia'. Y skips 'moueat violenter: na celu mouetur naturaliter' but is otherwise much closer to the leaf.",
+   "gemini_note": "X omits 'motus autem et operatio differunt: quia' (col. 1, near bottom) and drops 'movet' before 'autem corpus'."
+  },
+  {
+   "page_id": "69f6ace678ec39b89ca67055",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "Nearly identical; Y matches the italics 'la Loi' and 'la transition' as printed, X has '*Loi*' and '*la transition*'; diagram text equivalent.",
+   "gemini_note": "X correctly follows the original text where only 'Loi' is italicized in 'la Loi des nombres', whereas Y italicizes 'la Loi' and incorrectly shifts the italics in 'la transition'."
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3c5a",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Image reads 'Mox.ccl.M. promontorium phycus' but X has 'Mox.cd.M.', and X also misreads 'gens cisipadum' as 'cisipados' and 'cidamum' as 'cidamus'; Y has smaller slips ('pylli', 'et montibus').",
+   "gemini_note": "X misreads distances such as 'Mox.cd.M.' instead of 'Mox.ccl.M.' and 'ducentorum quinquaginta' instead of 'ducentos qnq̃ginta', and invents words/numbers."
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3c59",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y omits 'Et horū pars quondam nesimi: qui auulsi iis propria fecere gentem uersū ad æthiopas' and the passage 'in promōtorio Mercurii. Itē libera curubisne Apollinis. Mox africæ ipsius alia distinctio', and drops 'longitudo'.",
+   "gemini_note": "Y completely drops a full line of text ('Et horu pars quondam nefimi: qui auulsi iis propria fecere gentem uersu ad æthiopas.') and another line ('in pmōtorio Mercurii. Itē libera curubisne Apollinis. Mox africæ ipsius alia distīctio.')."
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d61b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both have errors (X drops 'admirabilis extitit' and reads 'Sapientissimum' for 'Prudētissimū'), but Y gives the age as '.lxvij.' for printed '.lxxviij.', has 'Vita thaletis' for 'R̃nsa thaletis' and 'iuste agens' for 'iniuste', and is full of garbled forms ('eriste', 'Bu o phozum').",
+   "gemini_note": "Y contains numerous hallucinations, misreadings, and mistakes such as giving Thales' age at death as '.lxvij.' instead of '.lxxviij.' and misreading 'periurium' as 'piuriū' and 'Responsa' as 'Vita'."
+  },
+  {
+   "page_id": "69b631a81c1c21a3738095b2",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Same psalm text in both; the only differences are abbreviation handling ('quor' vs 'quorum', 'oem' vs 'omnem').",
+   "gemini_note": "Both transcriptions record the text faithfully, differing only in abbreviation expansion (e.g. 'manuu'/'firmamētu' vs. 'manuum'/'firmamentum') and hyphens."
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3c58",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops 'multas ab eo' ('urbes multas ab eo conditas') and 'imperauit' ('utriq; mauritaniæ imperauit'), and turns 'gigni ibi' into 'sibi' and 'medico suo' into 'tuo'.",
+   "gemini_note": "Y invents text ('urbes conditas' omitting 'multas ab eo') and misreads numerous words including 'sibi' for 'gigni', 'tuo' for 'suo', and drops the predicate 'imperauit'."
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa3bb",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X garbles this recipe: it has 'pane prius calefacto' and 'pane circa igne' for 'parum prius' and 'parum cere', gets the dosages wrong ('an 3. scrupuli'), drops 'molle', and repeatedly reads 'valet' as 'ut'.",
+   "gemini_note": "X severely misreads abbreviations and words throughout, omitting whole words like 'Recipe' (transcribed as part of 'Item'), 'in quo', 'valet' (transcribed as 'ut'), 'cere', and 'molle', while mistranscribing 'pionie' as 'piome' and pharmaceutical measurement symbols."
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d654",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops 'tis dei preter vasa misit mensam au' ('viuentis dei preter vasa misit mensam auream'), reads 'ex eis.xxx. milia' as 'eis. ccc. milia', and gives the wrong signature 'e iii' for 'c iiij'.",
+   "gemini_note": "X omits a whole line of text in the right column ('tis dei preter vasa misit mensam au') and reads the casualty number as 'ccc. milia' instead of 'xxx. milia'."
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00cc",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Y has 'et hoc impedit eius sepabilitatem' where the leaf reads 'et hoc nō impedit', which reverses the sense; Y also drops 'pmo' before 'metheorox' and contains many garbled forms ('expendet', 'Quentur').",
+   "gemini_note": "X incorrectly transcribes 'dependet' as 'expendet'/'dependeret' and places the column break erroneously in the middle of column 1 while fabricating words at the end of column 2, whereas Y preserves the abbreviations and actual text faithfully."
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d619",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X calls a printed index page 'blank' and loses all of the text; Y transcribes the entries from 'Vite huius mala verbis' through 'finitur tabula', missing only a minor 'Tullius'.",
+   "gemini_note": "X incorrectly marks the printed page as blank, whereas Y accurately transcribes the printed index entries ending with 'finitur tabula'."
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa3e3",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y misreads the plant name 'brauce vrsine' as 'brauce vasine', turns the ounce sign into 'drachmas iiii', gives 'ardorem vesice' for 'vrine' and drops the closing source 'Pandecta'.",
+   "gemini_note": "Y replaces the recipe recipe mark and ingredients in lines 10–12 with errors like 'drachmas iiii' for uncias iiii, drops 'Pandecta', and misreads 'urine' as 'vesice'."
+  },
+  {
+   "page_id": "69dbcc9d0f8c5edf20f4cb4e",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y has many sense-changing misreadings: 'a deo ... iaciamus' for '⁊ deū ... icitamus', 'Ergo rius' for 'Gregorius', 'primum' for 'proximum' and 'placare' for 'propicium'.",
+   "gemini_note": "Y severely corrupts names and words via mechanical misreadings of abbreviations, such as 'Ergo rius quo' for 'Gregorius quando', 'primū' for 'proximum', and 'Ambrosi?' for 'Ambrosius'."
+  },
+  {
+   "page_id": "69b631a81c1c21a3738095b1",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Both give the same text of Psalm 8 and the antiphon 'Benedicta tu'; they differ only in expanding abbreviations ('an' vs 'Antiphona', 'z' vs 'et').",
+   "gemini_note": "Both transcriptions are faithful records, with X keeping early print abbreviations (e.g., 'cōstituisti', 'tuar', 'fruct'') and Y expanding them ('constituisti', 'tuarum', 'fructus')."
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X omits the 4 Oct Jupiter entry '☌ 12', uses ♂ for the opposition sign, gives '☽ ♂ ☿' for '☌ ☉ ☿' on the 19th and splits cells so values no longer line up; Y follows the table closely.",
+   "gemini_note": "Y correctly transcribes the astronomical aspect symbols and column entries (including opposition ☍ vs conjunction ☌, entry on line 4 under Jupiter '☌ 12', and right-hand aspect combinations like '☌ ☉ ☿'), whereas X repeatedly confuses opposition and conjunction with Mars (♂) and misplaces or omits symbols throughout the table."
+  },
+  {
+   "page_id": "69dbcc660f8c5edf20f4b358",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y garbles and drops passages, e.g. it loses 'Causa igitur quare non sentiunt est: quia non est in eis illa proportio' and gives 'calefacit et infrigidat' for 'calescunt et infrigidantur'.",
+   "gemini_note": "Y invents a decorative initial and column break at the top, drops the first word 'et', and contains widespread garbled readings such as 'relfatu', 'bruta', and 'Qui toti'."
+  },
+  {
+   "page_id": "69dc55e4cb6f7429748b9871",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X twice reads 'ꝯmissum' as 'omissum', which reverses the sense of 'commissum', and also has 'fortium' for 'fortiorum' and 'qui inquit' for 'quia inquit'.",
+   "gemini_note": "X misreads 'commissum' as 'omissum' twice and changes 'fortiorum' to 'fortium' and 'ecclesiasticum' to 'ecclesiasticus'."
+  },
+  {
+   "page_id": "69dc55e4cb6f7429748b976b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'p̄ciū' as 'principium' instead of 'precium' and 'qua q̄s' as 'quae abs', and gives the signature as 'b iii' where the leaf has 'd iij'; Y matches the leaf.",
+   "gemini_note": "Y accurately transcribes the text and signature 'd iij', whereas X misreads words (e.g. 'abs ultra' for 'quis vltra', 'quod' for 'quid', 'principium' for 'precium', and 'quam aliquando' for 'quia aliqui') and invents signature 'b iii'."
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00cd",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y garbles column 2: it replaces the words 'est appetitus vin-' with the repeated line 'Accipit ergo ira', gives 'de homo' for 'de domo' and drops 'omni' from 'vel de omni aia'.",
+   "gemini_note": "Y corrupts column 2 lines 17–18 with an erroneous repetition ('et ideo qn fic diffinit ira. Accipit ergo ira dicte, ibi appetitus...'), omitting 'est appetitus vin' found in X and the original text."
+  }
+ ]
+}

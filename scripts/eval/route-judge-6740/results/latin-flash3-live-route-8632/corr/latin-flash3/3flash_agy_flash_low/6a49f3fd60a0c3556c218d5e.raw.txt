@@ -1,0 +1,13 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<vocab>Laurent Rhodomannus, Diodorus Siculus, archaisms, Ciceronian eloquence, Greek</vocab>
+
+# LAURENT. RHODOMANNUS
+
+->Praefat. in Diod. Siculum.<-
+
+*Cacoëthes illorum mihi imitari non placuit, qui meros crepantes Archaismos novum loquendi genus ab inferis resuscitatum prae nitidissimâ Romanae dictionis puritate, tot laboribus & curis per decrepitam hanc mundi senectam à summis ingeniis reparatâ, nobis obtrudunt; & cùm eloquentiâ Ciceronianâ excellere nequeant, antiquariâ saltem novitate, admirationem sui leviter ac stolidè affectant. Quibus ut omnes sanae mentis studiosi τὸ μακρὰν χαίρειν dicant, totus fidelium magistrorum chorus per elegantiores Musas obtestatur atque suadet.*
+<<<END>>>

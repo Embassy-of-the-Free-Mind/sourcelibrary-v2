@@ -108,6 +108,44 @@ export function agyBlocked(model) {
   return future(until) ? { lane: `agy-${model}`, until, reason: `agy ${model} locked by Google until ${until}`, source: 'meter' } : null;
 }
 
+/** An agy quota week, and the fraction of a Gemini bucket under which a reading still counts as spent. */
+export const AGY_WEEK_MS = 7 * 24 * 3600e3;
+export const AGY_STOP_REOPEN = 0.05;
+
+/**
+ * A STOP FROM LAST WEEK DOES NOT BIND THIS WEEK (v3#343). Set aside an agy account's Gemini stops that were written
+ * before the pool's current quota week began, given a fresh /quota reading of that account ({ weekly, weeklyReset,
+ * fiveHour }: agy-pools.mjs parseQuota). `account`: null for the main login, else the AGY_HOME basename.
+ *
+ * Why: a stop lasts until the reset Google quoted in its 429. On 2026-11-14 01:07Z Google restarted the main pool's
+ * week 38 h before that quoted reset. The pool read 100% left, so every lane on gex45 picked it, agyCall refused the
+ * call from the stored stop, and four lanes wrote nothing for 8 hours while it sat full.
+ *
+ * Still "decide from the meters, never from a call" (#7118): the reading is the meter, and no call is made here. Only
+ * a stop older than the week's start (weeklyReset - 7 days) goes, and only when both buckets read open, so a stop
+ * written inside this week binds as before and at most one call can follow a stop dropped wrongly. Claude and GPT
+ * models draw a different pool of the login and are left alone. Returns the file names set aside; never throws.
+ */
+export function dropAgyStopsFromBeforeThisWeek(account, reading, { now = Date.now(), log = console.error } = {}) {
+  const dropped = [];
+  try {
+    const weekStart = Date.parse(reading?.weeklyReset ?? '') - AGY_WEEK_MS;
+    if (!Number.isFinite(weekStart) || weekStart > now) return dropped;
+    if (!(reading.weekly >= AGY_STOP_REOPEN) || (reading.fiveHour != null && !(reading.fiveHour >= AGY_STOP_REOPEN))) return dropped;
+    const mine = account ? `agy_${account.replace(/[^\w.-]/g, '_')}-` : 'agy-';
+    for (const f of fs.readdirSync(STOP_DIR)) {
+      if (!f.startsWith(mine) || !f.endsWith('.json') || /^(claude|gpt)/i.test(f.slice(mine.length))) continue;
+      const s = readJson(path.join(STOP_DIR, f));
+      const at = Date.parse(s?.at ?? '');
+      if (!s || !(Date.parse(s.until) > now) || !Number.isFinite(at) || at >= weekStart) continue;
+      fs.renameSync(path.join(STOP_DIR, f), path.join(STOP_DIR, `${f}.stale-${new Date(now).toISOString().slice(0, 10)}`));
+      dropped.push(f);
+      log(`model-limits: set aside ${f} (written ${s.at}, until ${s.until}): the pool's week restarted ${new Date(weekStart).toISOString()} and reads ${(reading.weekly * 100).toFixed(1)}% left (v3#343)`);
+    }
+  } catch { /* no stop dir, or a read-only home: nothing to set aside */ }
+  return dropped;
+}
+
 /** "Resets in 26h5m13s" (agy's 429 text) → ISO time, or null. */
 export function agyResetFromText(text) {
   const m = /Resets in ((?:\d+h)?(?:\d+m)?(?:\d+s)?)/i.exec(String(text || ''));

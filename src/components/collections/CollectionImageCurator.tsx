@@ -81,7 +81,7 @@ export default function CollectionImageCurator({ slug, onClose }: { slug: string
       <div className="w-full max-w-[1080px] bg-cream border border-border-light shadow-xl">
         <header className="flex items-center justify-between px-6 py-4 border-b border-border-light">
           <div>
-            <h2 className="font-display text-[20px]" style={{ color: '#2b2620' }}>Curate images</h2>
+            <h2 className="font-serif text-[20px]" style={{ color: '#2b2620' }}>Curate images</h2>
             <p className="text-xs" style={{ color: '#8a8170' }}>Drag to order, click the eye to hide. Unpinned images keep their scored position.</p>
           </div>
           <div className="flex items-center gap-2">

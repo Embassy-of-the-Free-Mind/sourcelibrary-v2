@@ -1,0 +1,101 @@
+[
+  {
+    "book_id": "69b3e67c304c1c6b3950b7c3",
+    "slot": 1,
+    "title": "Collection of Kabbalah and Hekhalot texts (MS. Michael 9)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned. The leaf is a medieval Hebrew manuscript of Sefer Yetzirah material, which is consistent with the title.",
+    "rights_flag": null,
+    "structure_note": "pages_translated is 0 in the structure counts but 359 in the book field, so the two disagree. 380 of 388 pages have OCR. A manuscript foliated in pencil on one side of each leaf only (\"8\" here) explains the 21 backsteps and 14 repeats in printed numbers better than a splice does: the OCR picks up folio numbers, facing-leaf numbers or stray marks. I cannot confirm that from one page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "printed_marker": "8",
+        "layout": "single column, 18 lines of Hebrew square script; pencil folio top left; edge of the facing leaf visible at right; ruler at left",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "חזקן ויצב גבול עמין למנין ועד מהם יב",
+            "image": "חקקן חצבן ...ן שקלן והמירן וצר מהם יב (the Sefer Yetzirah formula 'He engraved them, hewed them, ... weighed them, exchanged them, and formed from them twelve')",
+            "problem": "The formula is misread as a different sentence that sounds like a verse ('set the boundaries of the peoples'). The translation and a note build a Deuteronomy allusion on this misreading.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "גדי דלי דגים \" ואלו הן יב חודשים בשנה",
+            "image": "...דלי דגים ״ ניסן אייר סיון תמוז אב אלול תשרי",
+            "problem": "The seven months Nisan through Tishri are written on the leaf but dropped, and 'ואלו הן יב חודשים בשנה', which is not on this line, appears in their place. The page then seems to list only five months.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "זהר ובדו שניהם דיג חולקין על ג וזו היא הכרע",
+            "image": "אחד לבדו עומד ... חולקין על ג׳ וזו חק מכריע (approximately: 'each one stands alone ... and this is the law deciding')",
+            "problem": "A clear line is misread into nonsense ('shone and set apart, both of them'), and 'חק מכריע' becomes 'היא הכרע'.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "מריבה ערכן כמין מלחמה זה לעומת זה ב יחד",
+            "image": "...זה לעומת זה ג׳ אחד",
+            "problem": "'ג׳ אחד' ('three, one') is read as 'ב יחד' ('two together'). The number is wrong.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "והקורקבן ב טורפין ב ידיים ב ידיים ב רגלים",
+            "image": "the third item looks like the same word that opens line 2, not a second 'ידיים'",
+            "problem": "'ב ידיים' appears twice, which looks like a duplication. Low confidence on what the image has instead.",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "חזקן ויצב גבול עמין למנין",
+            "english": "He set the boundaries of the peoples by number, and from them come the twelve",
+            "problem": "Translates the misread OCR. The leaf has the creation formula (engraved, hewed, ... formed), and the note then tells the reader it is Deuteronomy 32:8.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "מרחשון כסליו טבת שבט ואדר",
+            "english": "Marheshvan, Kislev, Tevet, Shevat, and Adar.",
+            "problem": "The note on this line says the scribe dropped the other months. The image lists all twelve: Nisan through Tishri end the line above. This is a false statement about the manuscript.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "זהר ובדו שניהם דיג חולקין על ג וזו היא הכרע",
+            "english": "They shone and set apart, both of them; they divide over three, and this is the decider",
+            "problem": "Fluent English built on a misread line, with a note blaming 'badly corrupted' Hebrew. The leaf is legible and reads differently.",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Two notes tell the reader that the manuscript's Hebrew is corrupt. The leaf is clean and legible; the corruption is in the OCR.",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The Hebrew here is badly corrupted. The passage seems to ech", "verdict": "wrong", "helpful": false },
+            { "quote": "a short form of the divine name", "verdict": "unsupported", "helpful": false },
+            { "quote": "The Hebrew of this passage is also corrupt and partly uninte", "verdict": "wrong", "helpful": false },
+            { "quote": "\"He set the boundaries of the peoples\" echoes Deuteronomy 32", "verdict": "wrong", "helpful": false },
+            { "quote": "These are the twelve signs of the zodiac, Aries through Pisc", "verdict": "ok", "helpful": true },
+            { "quote": "Only five of the twelve Hebrew months are listed here, begin", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": []
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf is a clear Sefer Yetzirah text, but the OCR misreads key lines and drops seven month names. The translation's notes then blame a 'corrupt' manuscript, invent a Deuteronomy allusion, and say the scribe left out months that are on the page. An expert would flag this on sight."
+  }
+]

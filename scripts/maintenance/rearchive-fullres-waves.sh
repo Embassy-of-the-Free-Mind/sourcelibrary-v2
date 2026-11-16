@@ -105,6 +105,8 @@ pass() {  # $1 list, $2 done file, $3 label
     log "$label wave: $n books"
     node --env-file="$ENVF" scripts/maintenance/rearchive-iiif-fullres.mjs --book-ids-file "$DIR/wave.txt" --done-file "$donef" $TOOL_ARGS >>"$DIR/run.log" 2>&1
     rc=$?
+    # 4 = the R2 storage ceiling refused (scripts/lib/r2-storage-ceiling.mjs). A budget, not a crash.
+    [ $rc -eq 4 ] && { say "PAUSED: $(grep -E 'R2 ceiling' "$DIR/run.log" | tail -1 | cut -c1-300). Needs a new approval in scripts/lib/r2-storage-ceiling.json before resuming. $(status)"; quit 4; }
     [ $rc -eq 0 ] || { say "the tool exited $rc ($label); last lines in $DIR/run.log. $(status)"; quit 3; }
     local after; after=$( [ -f "$donef" ] && wc -l <"$donef" || echo 0 )
     [ "$after" -gt "$before" ] || { say "a wave checkpointed nothing ($label); stopping rather than loop. $(status)"; quit 3; }

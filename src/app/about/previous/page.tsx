@@ -270,14 +270,14 @@ export default async function PreviousAboutPage() {
         <p className="text-secondary mb-8 leading-relaxed">
           Source Library and the Embassy of the Free Mind are made possible by the
           generosity of those who believe in this work. We gratefully acknowledge the{' '}
-          <a href="https://wisdomfrontiers.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Wisdom Frontiers Society</strong></a> of La Jolla, California, and the{' '}
+          <a href="https://wisdom-frontiers.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Wisdom Frontiers Society</strong></a> of La Jolla, California, and the{' '}
           <a href="https://gambrellfoundation.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Gambrell Foundation</strong></a>{' '}
           of Charlotte, North Carolina, for their support.
         </p>
 
         <div className="flex flex-wrap items-center gap-10 mb-8">
           <a
-            href="https://wisdomfrontiers.org"
+            href="https://wisdom-frontiers.com"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Wisdom Frontiers"

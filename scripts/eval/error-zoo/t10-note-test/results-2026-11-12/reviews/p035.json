@@ -1,0 +1,82 @@
+[
+  {
+    "book_id": "69dfd990220eedf04e13b0cf",
+    "slot": 1,
+    "title": "Dresden Codex (Codex Dresdensis)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A facsimile of the Dresden Codex, a Maya screenfold. It belongs in the open-source/community collections. 'published: 1200' is a conventional approximate date.",
+    "rights_flag": null,
+    "structure_note": "The structure counts give pages_translated 0, but pages_translated_field is 74, and this page does carry a translation. That looks like a counting or provenance mismatch (E2), not missing English. With 74 records for 74 codex pages, the record count fits. 'Leaf 34 = codex p. 55' fits a facsimile in Förstemann's page order (1–24, then 46–74, then 25–45), so it is not a sequencing error. No printed numbers, so no backsteps.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 34,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "two registers split by a red rule; upper: two-column glyph block, a three-compartment caption box, a framed profile head at left, and to its right five numeral columns, three rows of day signs and red/black distance numbers; lower: two glyph rows over eight columns of bar-and-dot numerals (red zero shells), three rows of day signs and red/black distance numbers at the foot",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "- **Head:** a large profile head, black outline on the plain ground.",
+            "english": "<note>- **Head:** a large profile head, black outline on the plain ground.",
+            "problem": "Three body bullets of the figure description (Head, Frame, Panel) are wrapped in <note>. The reader then sees the page's own description styled as editorial apparatus, while the Identification and Colour bullets of the same list stay in the body.",
+            "severity": "moderate",
+            "class": "T3"
+          }
+        ],
+        "other": [
+          {
+            "note": "The 'transcription' is a model-written structured reading in the first person, and the translation copies it into the reader text: 'I treat these as glyph affixes, not numerals.', 'Either I have missed a dot or the scribe left one out', 'I cannot confirm a Kin sign on the forehead'. It also includes PASS/FAIL arithmetic checks and comparisons with Förstemann's tables. It is openly labelled ('A structured reading by Claude Opus'), but model reasoning sits in the reading pane.",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Nearly every glyph is given as 'unread glyph', now wrapped as <unclear>. The page is a numeral and day-sign reading with commentary, not a transcription of the hieroglyphic text. This is declared, not hidden.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "- **Head:** a large profile head, black outline on the plain",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "sun, day",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "Each group has three days, read top to bottom. The red coefficient stands to the left of each sign.",
+              "why": "Names like Muluc, Cimi and Ahau, and the numbers 1–13 in front of them, are days of the 260-day ritual calendar (tzolk'in). Nothing in the English says so."
+            },
+            {
+              "english": "*Series totals (black, three places stacked: 360s / 20s / 1s)*",
+              "why": "The Maya count is base 20, except that the third place is 18×20 = 360. Without a note a reader cannot see why the places are 1, 20, 360, 7200, or check any total."
+            },
+            {
+              "english": "4. Lunar structure:",
+              "why": "The page never says that 177 and 148 days are six and five lunar months, i.e. eclipse half-years. That is the whole point of the table."
+            },
+            {
+              "english": "Förstemann thinks this is probably God D (Itzamna)",
+              "why": "'God D' is Schellhas's letter for a Maya deity in the codices. A general reader does not know the lettering system."
+            },
+            {
+              "english": "*Series totals (black, with red shells for zero; four places: 7200s / 360s / 20s / 1s)*",
+              "why": "The shell glyph is the Maya sign for zero. A reader may take the 'red shells' as decoration."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is a real Dresden Codex leaf: p. 55 of the eclipse table, matching the image in layout, picture, red/black distance numbers and zero shells. Its numerals and day-sign arithmetic hold together. The text is a first-person model commentary rather than a transcription, though, and the translation styles part of the body as a <note>, so an expert would flag the presentation."
+  }
+]

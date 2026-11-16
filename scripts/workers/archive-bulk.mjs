@@ -29,6 +29,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { checkR2Ceiling } from '../lib/r2-storage-ceiling.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
@@ -708,6 +709,13 @@ async function main() {
     console.log(`[archive-bulk] Pipeline paused. Exiting.`);
     await client.close();
     process.exit(0);
+  }
+  // The standing R2 storage budget (scripts/lib/r2-storage-ceiling.mjs). Like the pause, a
+  // --book-id one-off bypasses it: one named book is a human's call, not queue drain.
+  if (!TARGET_BOOK_ID) {
+    const ceiling = await checkR2Ceiling(db);
+    console.log(`[archive-bulk] ${ceiling.reason}`);
+    if (!ceiling.ok) { await client.close(); process.exit(0); }
   }
   // Selective unpause: when globally paused but a scope is configured (and this
   // isn't an explicit --book-id one-off), proceed but confine archiving to the

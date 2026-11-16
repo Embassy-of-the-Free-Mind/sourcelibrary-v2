@@ -29,7 +29,7 @@ brief="${1:-}"
 
 moves_warn() {
   local lands since recent
-  lands=$(head -15 "$brief" | grep -m1 -iE '^[[:space:]]*Lands:[[:space:]]' | grep -oE '[0-9]{3,5}' | head -1)
+  lands=$(head -15 "$brief" | grep -m1 -iE '^[[:space:]]*Lands:[[:space:]]' | sed -E 's/v[23]#/#/g; s/^[^:]*://' | grep -oE '[0-9]+' | head -1)
   [ -n "$lands" ] || return 0
   head -15 "$brief" | grep -qiE '^[[:space:]]*Moves:[[:space:]]*[^[:space:]]' && return 0
   since=$(date -u -d '48 hours ago' +%FT%TZ 2>/dev/null || date -u -v-48H +%FT%TZ)   # GNU, else BSD (the laptop)

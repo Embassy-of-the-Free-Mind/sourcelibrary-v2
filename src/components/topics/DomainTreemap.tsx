@@ -223,7 +223,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
                 {w > 40 && (
                   <text x={x+6} y={y+hdrH/2+1} dominantBaseline="central" fill={color}
                     fontSize={9} fontWeight={600} opacity={0.9}
-                    fontFamily="var(--font-display, 'Playfair Display'), serif"
+                    fontFamily="'Cormorant Garamond', Georgia, serif"
                     style={{ pointerEvents: 'none' }}>
                     {dd.name} ({(domain.value || 0).toLocaleString('en-US')})
                   </text>
@@ -291,7 +291,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
                 <text x={x+5} y={y+(showCount ? h*0.36 : h/2)}
                   dominantBaseline="central" fill={txtCol}
                   fontSize={fontSize} fontWeight={isPure || !isSub ? 600 : 500}
-                  fontFamily="var(--font-display, 'Playfair Display'), serif"
+                  fontFamily="'Cormorant Garamond', Georgia, serif"
                   style={{ pointerEvents: 'none', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
                   {isPure ? `${label} (core)` : label}
                 </text>
@@ -300,7 +300,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
                 <text x={x+5} y={y+h*0.36+fontSize+3}
                   dominantBaseline="central" fill={txtCol}
                   fontSize={fontSize-2} opacity={0.6}
-                  fontFamily="var(--font-sans, Inter), sans-serif"
+                  fontFamily="'Source Sans 3', sans-serif"
                   style={{ pointerEvents: 'none', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
                   {(leaf.value || 0).toLocaleString('en-US')}
                 </text>
@@ -325,7 +325,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
           {tooltip.domain && (
             <div className="text-xs text-secondary">{tooltip.domain}</div>
           )}
-          <div className="font-display font-semibold text-primary text-sm leading-tight">
+          <div className="font-serif font-semibold text-primary text-sm leading-tight">
             {tooltip.label}
           </div>
           <div className="text-xs text-secondary mt-0.5">

@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: (q) Bern-</meta>
+
+# Elenchus
+
+## *Clarissimorum Virorum, qui Leobergâ orti et superius memorati sunt.*
+
+### Philosophi et Poetæ celebriores.
+
+(a) *Magister Casparus Suevus Scholae Leorinae Rector et Instaurator.*
+(b) *Magister Laurentius Ludovicus Gymnasii Gorlicensis Rector.*
+(c) *Magister Nicolaus Gerstmannus Facultatis Philosophicae in Academia Lipsiensi Decanus.*
+
+*Ejusdem Facultatis Matricula nominat plures ex Leorinis Familiis, Reusneris, Wirthiis, aliis Magistros et Baccalaureos Primo Academiae illius seculo creatos.*
+
+(d) *Nicolaus Reusnerus Iureconsultus Poeta Laureatus Comes Palatinus Caesareus in Argentoratensi et Jenensi Academia Antecessor.*
+(e) *Elias Reusnerus Medicinae Licentiatus Historiarum et Poeseos in Academia Jenensi Professor.*
+(f) *Hieronymus Arconatus Poeta, Sacrae Caesareae Majestatis ab Epistolis Bellicis.*
+(g) *Valentinus Neukirch Poeta in Academia Regiomontana.*
+
+### Medici.
+
+(h) *Georgius Wirth. I. Medicinae Doctor Ludovici Regis Hungariae Archiater.*
+*Georgius Wirth. II. Medicinae Doctor Practicus Viennae. Georgius Wirth. III. Medicinae Doctor Caroli V. Imperatoris et Philippi Hispaniae Regis Medicus.*
+(i) *Johannes Langius Medicinae Doctor IV. Comitum et Electorum Palatinorum Archiater, Autor Epistolarum Medicinalium.*
+(k) *Caspar Hoffmannus Medicinae Doctor Electoris Brandenburgensis Archiater.*
+(l) *Balthasar Gitlerus Medicinae Doctor et Professor in Academia Lipsiensi.*
+(m) *Johannes Zeidlerus Medicinae Doctor et Professor ibidem.*
+(n) *Georgius Bejerus Medicinae Doctor Ducis Saxoniae Archiater et Physicus Martisburgensis.*
+(o) *Hieronymus Reusnerus Medicinae Doctor Physicus Imperialis Nordlingae.*
+*Bartholomaeus Reusnerus Medicus et Physicus Zittaviensis. Pater Bartholomaei Reusneri Iureconsulti et Ordinarii Wittebergensis.*
+(p) *Tobias Koberus Medicinae Doctor Poeta Laureatus Physicus Patriae.*
+
+<vocab>Elenchus, Leoberga, Reusnerus, Wirth, Medici, Philosophi, Poetae, Academia, Iureconsultus, Archiater, Physicus, Comes Palatinus, Antecessor</vocab>

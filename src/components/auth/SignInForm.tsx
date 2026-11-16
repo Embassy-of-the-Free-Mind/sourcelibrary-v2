@@ -220,12 +220,12 @@ function SignInContent({ locale }: { locale: Locale }) {
               <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
               <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
             </svg>
-            <span className="text-xl uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
+            <span className="font-logo text-xl uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
               <span className="font-semibold">Source</span>
               <span className="font-light">Library</span>
             </span>
           </Link>
-          <h1 className="text-2xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="text-2xl font-serif mb-2" style={{ color: 'var(--text-primary)' }}>
             {s.signIn}
           </h1>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>

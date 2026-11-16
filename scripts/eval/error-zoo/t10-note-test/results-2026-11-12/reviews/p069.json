@@ -1,0 +1,111 @@
+[
+  {
+    "book_id": "69b3f78da107e55a0ee1dd03",
+    "slot": 1,
+    "title": "Canon medicinae / Avicenna, trans. Gerard of Cremona (BPL 7)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 13th-century two-column Latin textualis manuscript of a surgical section (skull fractures) that matches the Canon in Gerard's version. No tradition or collection is set, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "There are 255 printed backsteps and 268 repeats among 673 pages with a 'printed number'. This manuscript has no printed pagination; this leaf shows only a red mark at the head of column b. So those numbers are almost certainly misread marks or folio guesses, not a real broken sequence. structure.pages_translated is 0 while the pages_translated field says 901, so the counts disagree (E2). 948 of 1018 pages have OCR. The scan photographs the open volume: the leaf plus a strip of the facing page at the right edge.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 965,
+        "right_page": "yes",
+        "printed_marker": "none legible: a small red mark at the head of column b, which I cannot read at this resolution (perhaps a quire or chapter sign)",
+        "layout": "two columns of Gothic textualis; red-underlined marginal rubric notes in the outer (left) margin; a strip of the facing page with its own red marginal note at the right edge",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "aut fimus menilz greci possibilis est",
+            "image": "the opening lines of column a read as separate lines (roughly '…cum signis… de fractura' / '…et si est possibile. Et'); the OCR fuses them into one line that does not construe",
+            "problem": "Most of both columns is misread into Latin that does not construe. Lines are fused or dropped, and a reader of the transcription cannot recover what the page says. This is pervasive, not a few slips.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "et est via q iam dea. Et melz z aure",
+            "image": "the line appears once in column a",
+            "problem": "The OCR writes this line twice (lines 9 and 11 of its column a). The duplicate is not on the leaf.",
+            "severity": "moderate",
+            "class": "O4"
+          },
+          {
+            "ocr": "in fustera aut puluis in fudo fy ulino",
+            "image": "the leaf has one 'puluis in fundo … ulnis' line here; the next line on the image is a different line",
+            "problem": "A repeated line ('…puluis in fudo fy ulino') stands where a different line of the leaf belongs. That line is lost.",
+            "severity": "moderate",
+            "class": "O4"
+          },
+          {
+            "ocr": "fay extrema",
+            "image": "marginal rubric reading approximately '…ar experienta' (experientia)",
+            "problem": "Marginal note misread; 'experientia' becomes 'extrema'",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "vulnus epulare",
+            "image": "marginal rubric reading approximately '…ar nō epulare' (non epulare)",
+            "problem": "The marginal note seems to carry a negation that the OCR reads as 'vulnus'. Low confidence at this resolution.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "huy fusturam. Oln vo. cepid.",
+            "image": "the line ends with a red rubric after 'cepid.'",
+            "problem": "The red rubric at the foot of column a is left out",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "fay extrema",
+            "english": "<unclear>extreme</unclear>",
+            "problem": "The margin is translated from the misread; the leaf's note is about 'experientia'. It is marked unclear, which limits the harm.",
+            "severity": "moderate"
+          },
+          {
+            "source": "vulnus epulare\nab elongatione",
+            "english": "a wound closed over <unclear>after removal</unclear>",
+            "problem": "If the image's 'nō' is right, the margin says the wound is NOT to be closed over before the bone is separated. The English states the opposite as fact. Low confidence.",
+            "severity": "moderate"
+          },
+          {
+            "source": "z in etate qui eo rimoz magnus",
+            "english": "in the season when the swelling is great",
+            "problem": "'in estate quia in eo timor magnus' (in summer, because then the danger is great) becomes a vague 'season' tied to a swelling. 'estate' (summer) is also rendered 'the season' a second time ('in the season … days'), which loses the summer/winter contrast with 'in winter' below.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "A raw <column-break/> tag stands in the English reading text between the two halves",
+            "severity": "minor"
+          },
+          {
+            "note": "Most of the English consists of '<unclear>…</unclear>' fragments. This is honest about the OCR's state (and the <warning> says so), but the page as served is hardly readable.",
+            "severity": "moderate"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"capitale,\" that is, medicines for the head", "verdict": "ok", "helpful": true },
+            { "quote": "bitter vetch", "verdict": "ok", "helpful": true },
+            { "quote": "birthwort", "verdict": "ok", "helpful": true },
+            { "quote": "a medicinal gum resin", "verdict": "ok", "helpful": true },
+            { "quote": "a gum used to close wounds", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "and dragon's blood", "why": "A general reader may take it literally; it is a red plant resin used as a drug" },
+            { "english": "<unclear>of the hard membrane</unclear>", "why": "The dura mater (the membrane over the brain) is not named. A reader cannot tell what membrane the fracture rules refer to, here or in 'whether the fracture reaches the membrane'" }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "This is the right leaf of a genuine Latin Avicenna manuscript, but the OCR of this page is largely garbled, with duplicated and dropped lines. The translation is honest about this and mostly shows '<unclear>' fragments, with a few moderate slips in the margins and with 'estate'. The notes and glosses that are there are sound."
+  }
+]

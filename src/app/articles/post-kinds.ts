@@ -86,7 +86,7 @@ export interface ArticleAuthor {
 const DEREK_LOMAS: ArticleAuthor = {
   name: 'Derek Lomas',
   bio: 'Founder, Source Library · Asst. Professor of Positive AI, TU Delft',
-  photo: '/founder-derek.jpg',
+  photo: '/vision/derek-lomas.webp',
 };
 
 export const AUTHORED_ARTICLES: Record<string, ArticleAuthor> = {

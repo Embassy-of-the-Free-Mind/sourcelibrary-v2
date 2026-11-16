@@ -1,0 +1,78 @@
+[
+  {
+    "book_id": "699ef9fd0600353e655fe517",
+    "slot": 1,
+    "title": "[Cyrillisch:] Sleutel tot de geheimen van de natuur",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An early-19th-century Russian translation of Eckartshausen (pre-reform orthography with ѣ, і, ъ). It belongs on an esoteric/natural-philosophy shelf. The catalogue title is Dutch ('[Cyrillisch:] Sleutel tot…'), a cataloguer's label rather than the Russian title, but the work matches the display title.",
+    "rights_flag": null,
+    "structure_note": "Record 376 carries printed p. 338. An offset of 38 is plausible for front matter, or for several volumes bound or scanned together (published 1804–1821). There are 433 page records against 418 distinct page numbers (15 duplicate records), and the printed numbers repeat 25 times, which points to duplicate records or a multi-volume restart rather than misread numerals alone. The structure count gives pages_translated 0 while the book field says 401, so the instruments disagree (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 376,
+        "right_page": "yes",
+        "printed_marker": "338",
+        "layout": "single column of text with a letter-spaced small-caps section heading; handwritten 'P' in the left margin; the scan cuts off the right edge of the text block; the book's fore-edge shows at left",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "шерніе.",
+            "image": "шерніе (the typeface's т, printed like ш; elsewhere the OCR normalises it to т, e.g. 'мѣсто')",
+            "problem": "The first word is transcribed glyph-for-glyph as 'шерніе' and not as 'терніе', which is inconsistent with the rest of the page. The translation still reads it correctly as 'thorns'.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Всякъ\nстремится къ пріятнымъ чувствова-",
+            "image": "The right edge of the text block is cut off in the scan ('Всяк…', 'чувствов…', 'правил…', 'удовол…')",
+            "problem": "The line endings are filled in plausibly, but they cannot be seen in this scan. The completions look right and do not change the meaning.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<margin>P</margin>",
+            "image": "A large handwritten script 'P' in ink in the left margin, a later hand on the printed page",
+            "problem": "A reader's mark is transcribed as if it were a printed marginal note (O13).",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The <note>Vocabulary appearing at the bottom of the original page: feeling, voluptuousness, the Deity, moderation, reason, religion, theory.</note> invents apparatus. The printed page has no vocabulary list; the list is the OCR model's own <vocab> tag, presented to the reader as a fact about the original page.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "note": "The meta quotes the previous page's text: \"continues from previous page: \\\"man himself destroys the earthly paradise and sows\\\" thorns\". That wording is not on this leaf and cannot be checked from it.",
+            "severity": "minor",
+            "class": "T15"
+          },
+          {
+            "note": "<margin>P</margin> is carried into the English reader text. The handwritten reader's mark is shown as if it were part of the text.",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "original: \"сладострастія\", meaning sensual indulgence or l",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "Vocabulary appearing at the bottom of the original page: fee",
+              "verdict": "wrong",
+              "helpful": false
+            }
+          ],
+          "missing": []
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR and the English are faithful on this page; the only problems are a glyph-literal first word and line endings filled in where the scan crops the right edge. The defect a reader sees is a note that claims a vocabulary list is printed at the foot of the page when it is not, and the record counts suggest duplicate records."
+  }
+]

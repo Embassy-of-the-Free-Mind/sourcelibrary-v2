@@ -255,10 +255,11 @@ Sourced from \`src/app/globals.css\` (CSS variables under \`:root\`).
 |------|-----|----------|-------|
 | Rust | \`#9e4a3a\` | \`--accent-rust\` | Primary CTA, links, key actions |
 | Gold | \`#c9a86c\` | \`--accent-gold\` | Highlights, decorative emphasis |
-| Gold (dark) | \`#9e7c3c\` | \`--accent-gold-dark\` | Gold on light backgrounds |
+| Gold (dark) | \`#8d6f35\` | \`--accent-gold-dark\` | Gold on light backgrounds |
 | Sage | \`#8b9a7d\` | \`--accent-sage\` | Secondary accents, success-adjacent |
 | Sage (dark) | \`#5e6d52\` | \`--accent-sage-dark\` | Sage on light backgrounds |
-| Violet | \`#7c5db5\` | \`--accent-violet\` | Special-case accent (rarely used) |
+| Violet | \`#7c5db5\` | \`--accent-violet\` | Concepts, terms, glosses |
+| Violet (dark) | \`#6b4ea3\` | \`--accent-violet-dark\` | Violet on light backgrounds |
 
 ### Borders
 
@@ -273,22 +274,30 @@ Sourced from \`src/app/globals.css\` (CSS variables under \`:root\`).
 |------|-----|----------|-------|
 | Primary | \`#1a1612\` | \`--text-primary\` | Body, headings |
 | Muted | \`#6b6560\` | \`--text-muted\` | Captions, secondary text (5.2:1 on cream) |
-| Faint | \`#8a8480\` | \`--text-faint\` | Tertiary text (4.5:1 on cream) |
+| Faint | \`#6b6560\` | \`--text-faint\` | Tertiary text (same value as Muted) |
 
 ## Typography
 
-The site uses four font families from Google Fonts, each with a distinct role.
+The site uses three font families, each with one role. All are under the SIL Open Font
+License and served from \`public/fonts/google/\`.
 
 | Role | Family | Variable | Weights | Used for |
 |------|--------|----------|---------|----------|
-| Sans | **Inter** | \`--font-sans\` | 300, 400, 500, 600 | UI, navigation, **logo**, buttons, headers |
-| Body serif | **Newsreader** | \`--font-body\` | 400, 500, italic 400/500 (opsz 6–72) | Long-form reading prose, book pages |
-| Display serif | **Cormorant Garamond** | \`--font-serif\` | 400, 500, 600 | Section headings, editorial display |
-| Hero display | **Playfair Display** | \`--font-display\` | 400, 600, 700 | Top-of-page hero titles, large display |
+| Sans | **Source Sans 3** | \`--font-sans\` | 300, 400, 500, 600, italic 400 | UI, navigation, labels, buttons, tables |
+| Body serif | **Newsreader** | \`--font-body\` | 400, 500, 600, italic 400/500 (opsz 6–72) | Long-form reading prose, book pages |
+| Display serif | **Cormorant Garamond** | \`--font-serif\` | 300, 400, 500, 600, italic 400/500 | Headings, hero titles, editorial display |
+
+Inter is used for the logo wordmark only (\`--font-logo\`). Playfair Display was retired in
+November 2026.
+
+No sans text is bold: semibold (600) is the heaviest sans weight. Use \`font-semibold\` where
+you would have used \`font-bold\`.
 
 ### Logo wordmark specifics
 
-- **Family**: Inter
+The logo was not redrawn when the site moved to Source Sans 3; its words stay in Inter.
+
+- **Family**: Inter (the wordmark is the only place it appears)
 - **"Source"**: weight 600 (semibold)
 - **"Library"**: weight 300 (light)
 - **"Beta"** (when shown): weight 300, 0.6em, normal case, tracking-normal, opacity 0.8, vertical offset −0.5em

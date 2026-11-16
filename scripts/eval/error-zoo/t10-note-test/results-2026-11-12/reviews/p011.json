@@ -1,0 +1,65 @@
+[
+  {
+    "book_id": "69b4c057978ca9526eda396d",
+    "slot": 1,
+    "title": "Iulii Firmici Iunioris Mathesis",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A humanist-cursive manuscript of Firmicus Maternus, Mathesis book VI (sample nativities of Demosthenes, Homer and Plato). It matches the title and the '15th century' date. No tradition or collection is set, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "The number at the head of the leaf, 'VI', is the running book number (Liber VI), not a folio, but the OCR records it as <page-num>VI</page-num>. Running book numbers read as page numbers would explain most of the 49 backsteps and 46 repeats (a misread furniture artefact, not a scan splice). structure.pages_translated is 0 against pages_translated_field 302, so one of the counters is wrong (E2).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 218,
+        "right_page": "yes",
+        "printed_marker": "VI",
+        "layout": "single column of humanist cursive; red marginal rubrics in the left margin (pro mendicis, pro cecis, pro oratoribus, Natale demosthenis/poetae/Homeri/platonis); bracket marks and faint show-through; book open with the facing leaf edge at right",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "An animo mesto cupiditatis ardore prorepserit", "image": "ista coniunctio incesto cupiditatis ardore sorores sibi [iungit uxores facit]", "problem": "the incest clause (the configuration makes men take their sisters as wives) is misread as 'mesto … prorepserit', so the sense is lost", "severity": "serious", "class": "O6" },
+          { "ocr": "positus pignu iouis teneat", "image": "loco positus signu tauri teneat", "problem": "'signum Tauri' (Saturn in Taurus) misread as 'pignu iouis'; a planetary position in Demosthenes' chart is lost", "severity": "serious", "class": "O6" },
+          { "ocr": "Sol uero in equo", "image": "Sol uo in dec° / capcorni sig°", "problem": "the Sun's sign in Homer's chart (Capricorn, as far as can be read) misread as 'equo'; the position is wrong", "severity": "serious", "class": "O6" },
+          { "ocr": "Martis et Arepiteris", "image": "Martios strepitus", "problem": "'the din of Mars' misread as a nonsense word, which the translation then explains", "severity": "moderate" },
+          { "ocr": "homeri diuini in illis heroici carminis", "image": "homerum diuinu in iliacu heroici carminis", "problem": "'Iliacum' (of the Iliad) misread as 'illis'; the case of Homer's name is also wrong", "severity": "moderate" },
+          { "ocr": "faciet heredes ad ora officia", "image": "faciet hoies [homines] ad ora officia", "problem": "'homines' misread as 'heredes' (the translation silently has 'men')", "severity": "moderate" },
+          { "ocr": "ex antegeminante", "image": "i q̄nto geniture [in quinto geniturae] loco", "problem": "'the fifth place of the nativity' misread as a non-word", "severity": "moderate" },
+          { "ocr": "<page-num>VI</page-num>", "image": "VI (running book number)", "problem": "book number at the head of the leaf recorded as the page number (O11)", "severity": "minor" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "An animo mesto cupiditatis ardore prorepserit iungit uxores facit", "english": "with a sorrowful mind it creeps forth in the ardour of desire and brings about marriages", "problem": "the manuscript says this conjunction joins men to their sisters as wives with incestuous desire; the English gives an innocuous, invented sense", "severity": "serious", "class": "O6" },
+          { "source": "positus pignu iouis teneat", "english": "holds the pledge of Jupiter", "problem": "the leaf reads 'signum tauri'; the English carries the misread, and a note calls the manuscript 'obscure' when it is clear", "severity": "serious", "class": "T10" },
+          { "source": "Sol uero in equo constitutus signo", "english": "the Sun is placed in the sign of the horse", "problem": "built on a misread (the leaf has Capricorn, as far as can be read), and a note then claims the sign is 'probably Sagittarius'; the Sun's position in Homer's chart is wrong", "severity": "serious", "class": "T10" },
+          { "source": "ut Martis et Arepiteris pugnasque metuenda tonitrua", "english": "sets forth the battles of Mars and of the gods and the fearful thunders", "problem": "'and of the gods' is invented to cover the garble ('Martios strepitus' = the din of Mars), and the note offers Jupiter", "severity": "moderate" },
+          { "source": "homeri diuini in illis heroici carminis fecit interprete", "english": "Such a nativity made Homer the divine interpreter of heroic song.", "problem": "loses 'Iliacum': Homer as the interpreter of Iliadic heroic song", "severity": "minor" },
+          { "source": "ex antegeminante loco constituta", "english": "set in the place before it", "problem": "the leaf has 'in the fifth place'; the English invents a position", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "The opening <meta> invents the wording of the previous page's sentence ('If the Sun and the Moon and the ascendant are so placed... that neither the Sun nor the ascendant...'), which cannot be checked from this leaf", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "ascendant", "verdict": "ok", "helpful": true },
+            { "quote": "the place rising next after the ascendant", "verdict": "ok", "helpful": true },
+            { "quote": "the <term>imum caeli</term>, the point opposite the midheave", "verdict": "ok", "helpful": true },
+            { "quote": "an exact aspect, degree to degree", "verdict": "ok", "helpful": true },
+            { "quote": "the phrase is obscure in the manuscript; the ninth place fro", "verdict": "wrong", "helpful": false },
+            { "quote": "Demosthenes was famous for his speeches against Philip II of", "verdict": "ok", "helpful": true },
+            { "quote": "the \"terms\" are unequal subdivisions of each sign assigned t", "verdict": "ok", "helpful": true },
+            { "quote": "probably Sagittarius, pictured as a horse-bodied archer", "verdict": "wrong", "helpful": false },
+            { "quote": "Homer was traditionally said to be blind", "verdict": "ok", "helpful": true },
+            { "quote": "the manuscript reading here is corrupt; \"Arepiteris\" may sta", "verdict": "wrong", "helpful": false }
+          ],
+          "missing": [
+            { "english": "If Venus is placed in the right-hand square of the Moon", "why": "'right-hand square' (dexter square aspect) is a technical term and is not explained" },
+            { "english": "Jupiter, placed in the eighth, possesses the sign of Pisces", "why": "'the eighth', 'the fifth', 'the ninth' are places (houses) counted from the ascendant; a general reader is not told this" },
+            { "english": "This fortune grows stronger if Jupiter regards one of the two with trine radiation", "why": "'trine radiation' (and later 'diametric radiation') are aspects that are not glossed" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The manuscript is the right one and the OCR is broadly of this leaf, but several meaning-changing misreads (the incest clause, Saturn in Taurus, the Sun's sign in Homer's chart) reach the English. Three notes give the misreads false authority: they call a clear reading 'obscure', suggest Sagittarius and offer Jupiter."
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "book_id": "69b3e596c94a4ff7cce22d4f",
+    "slot": 1,
+    "title": "Collection of magical and other treatises ascribed to Hermes Trismegistus",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Arabic Hermetic manuscript on the magical properties of stones and engraved talismans. It belongs in a library of historical primary sources. No tradition or collections are set, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree: pages_translated is 0 but pages_translated_field is 163. One of the two counters is stale. The book has 20 printed backsteps and 12 repeats among only 63 printed numbers. That is most likely misread pencil foliation or catchwords in an unpaginated manuscript, not a scan splice. This leaf carries no page number, only the catchword \"الدم\".",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "printed_marker": "الدم",
+        "layout": "single column of naskh with red rubric headings; three inset drawings on the left (a ram, a seated woman with a child, a balance) with the text wrapped to their right; a catchword at the bottom left; a strip of the facing page at the left edge",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "حجر الحما المحكّه",
+            "image": "حجرا احمرا محكه (as far as I can read it: 'a red stone', parallel to حجرا اسودا in the fourth stone)",
+            "problem": "The stone's colour seems to have been read as a proper name, al-ḥamā. The translation then builds a 'stone of al-ḥamā' on it, with a note saying the name is uncertain.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "صبي تعلمه",
+            "image": "صبي تحمله (?), with the drawing beside it showing the woman holding the child",
+            "problem": "Possible misreading of 'carrying him' as 'teaching him'. The hand is ambiguous at this size, so confidence is low.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<margin>\nالدم\n</margin>",
+            "image": "the catchword الدم at the foot of the page, written at the bottom left",
+            "problem": "The catchword is tagged as a marginal note. The English then shows 'blood' as a separate margin block after 'nothing of'.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ما اصفر",
+            "english": "one with yellowness inside him",
+            "problem": "The image reads ماء اصفر, 'yellow water' (dropsy or jaundice fluid). 'Yellowness' blurs the medical sense.",
+            "severity": "minor"
+          },
+          {
+            "source": "حجر الحما المحكّه",
+            "english": "the stone of <term>al-ḥamā</term> <note>the stone's name is uncertain in the manuscript</note>",
+            "problem": "The note claims the manuscript is uncertain where the OCR has no <unclear> mark and the leaf reads clearly (apparently 'a red stone'). It gives authority to a misreading.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "حجر العقا",
+            "english": "the stone of <term>al-ʿaqā</term> <note>the stone's name is uncertain in the manuscript</note>",
+            "problem": "Same boilerplate note. The OCR does not mark the word as unclear. The claim of uncertainty in the manuscript has no support (the word may be a colour, as with the other stones).",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The catchword is shown in the reader text as a stray margin block, 'blood'.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "the stone's name is uncertain in the manuscript", "verdict": "unsupported", "helpful": false },
+            { "quote": "A line drawing of a ram, the sign Aries, facing right in a ga", "verdict": "ok", "helpful": false },
+            { "quote": "the stone's name is uncertain in the manuscript", "verdict": "unsupported", "helpful": false },
+            { "quote": "attendant spirits, jinn believed to harm pregnant women and i", "verdict": "ok", "helpful": true },
+            { "quote": "Two drawings. The upper one shows a seated woman with long ha", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "a black stone called <unclear>adkh m a h h</unclear>", "why": "The name is written in red cipher or magical characters, with Arabic letters over them. The reader is not told this, so the string of letters means nothing to them." },
+            { "english": "Fontas said", "why": "No one tells the reader who 'Fontas' (فنطس) is: an authority cited beside Hermes on the properties of stones." },
+            { "english": "If the image of Aries is engraved upon this stone at the time of its rising", "why": "This is an astrological election: the talisman is engraved when the sign is rising. A general reader may not know the practice." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription and translation are largely faithful on this illustrated talisman page. The main fault is two boilerplate notes calling the stone names 'uncertain in the manuscript', which give authority to what looks like a colour misread as a name (the second stone, apparently 'red'). There are also small slips such as the catchword shown as a margin note. Nothing a reader would flag on sight."
+  }
+]

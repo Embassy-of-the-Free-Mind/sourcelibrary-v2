@@ -232,7 +232,7 @@ export default async function PipelineNowPage() {
         <h1 className="text-xl font-semibold">Pipeline now</h1>
         <p className="text-sm text-stone-600">
           Generated from live state, not written by hand. How a book moves and the standing rules: <code>.claude/docs/book-process.md</code>.
-          Work left by step: <a className="text-accent-rust hover:underline" href="/admin/pipeline">/admin/pipeline</a>. Claude jobs: <a className="text-accent-rust hover:underline" href="/admin/work">/admin/work</a>.
+          Work left by step: <a className="text-accent-rust hover:underline" href="/admin/pipeline">/admin/pipeline</a>. Each batch of books by stage, and what blocks it: <a className="text-accent-rust hover:underline" href="/admin/pipeline/batches">/admin/pipeline/batches</a>. Claude jobs: <a className="text-accent-rust hover:underline" href="/admin/work">/admin/work</a>.
         </p>
       </header>
       {error || !data ? <p className="text-sm text-red-700">Could not read ops_reports: {error}</p> : (

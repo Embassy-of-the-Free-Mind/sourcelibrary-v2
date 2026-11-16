@@ -71,6 +71,8 @@ export interface MetricsHistoryRow {
   geoLikely?: Record<string, number>;
 }
 
+export interface LikelyDay { date: string; all: number; likely: number; strict: number; pageviews: number; likelyPageviews: number }
+
 /** The subset of system_config.metrics_snapshot the dashboard renders (full shape: scripts/analytics/snapshot-metrics.mjs). */
 export interface MetricsSnapshot {
   generatedAt: Date | string;
@@ -82,8 +84,28 @@ export interface MetricsSnapshot {
     humanPvs: number; dailyPageviews: { date: string; hits: number }[];
     topBooks?: { key: string; hits: number; title: string; author: string }[];
     topCollections?: { slug: string; hits: number }[];
+    /** Sources ordered by visitors: utm tag first, then referrer (scripts/lib/pageview-source.mjs). `hits` are pageviews, not arrivals. `visitors` is absent on snapshots before the tag was read. */
+    topReferrers?: { referrer: string; hits: number; visitors?: number }[];
+    /** Readers arriving from an assistant, all assistants together; absent on older snapshots. Tags are stored from `utmSince` only. */
+    fromAssistants?: { visitors: number; pageviews: number; utmSince: string; bySource: { source: string; visitors: number; pageviews: number }[]; byDay?: { date: string; visitors: number }[] };
   };
-  series: { signupsByDay: { date: string; n: number }[] };
+  series: {
+    signupsByDay: { date: string; n: number }[];
+    /** Fingerprints per full UTC day: all, likely human, strict (referred or phone). Absent before #48. */
+    likelyDaily?: LikelyDay[];
+  };
+  /**
+   * The readers headline (#48): fingerprints that behave like readers, by the
+   * rule in scripts/lib/likely-human.mjs. `mau`/`dau` above count every
+   * fingerprint, fleets included. Absent on snapshots written before #48.
+   */
+  likely?: {
+    method: string;
+    mau: number; mauStrict: number; mauAll: number;
+    pageviews30: number; pageviewsAll30: number;
+    /** Median per day over the last `dauDays` full days. */
+    dau: number; dauStrict: number; dauAll: number; dauDays: number;
+  };
   /** Likely-human visitors by country, 30 days (#8522); absent on snapshots before 2026-11-11. */
   geo?: { windowDays: number; since?: string; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
   /** Keyword tallies over /welcome introductions; counts only, never text (#8541). */
@@ -92,7 +114,8 @@ export interface MetricsSnapshot {
   geoReaders?: { windowDays: number; source: string; method: string; countries: { country: string; all: number; likely: number; referred: number }[] };
   /** PostHog reader pageviews by month and country since 2026-06 (#8541). */
   readersMonthly?: { source: string; method: string; months: Record<string, Record<string, number>> };
-  search: { human: number; zeroResult: number; topQueries: { query: string; count: number }[]; zeroQueries: { query: string; count: number }[] };
+  /** `human` excludes known bots and, from #48, our own probe and tools (`ownTools` counts what was removed). */
+  search: { human: number; ownTools?: number; zeroResult: number; topQueries: { query: string; count: number }[]; zeroQueries: { query: string; count: number }[] };
   missionActions: { download: number; cite: number; share: number };
   social: { feedbackUnread: number; likes?: number; likeVisitors?: number };
   /** Model-backed reader features (librarian, search expansion, voice, MCP), last 30 days. */

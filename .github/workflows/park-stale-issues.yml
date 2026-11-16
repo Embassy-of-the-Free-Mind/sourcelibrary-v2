@@ -18,12 +18,13 @@ on:
 
 permissions:
   contents: read
+  repository-projects: read  # `gh pr|issue edit` queries classic Projects; without this it fails on a private repo
   issues: write
   pull-requests: read
 
 jobs:
   park:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4

@@ -1,0 +1,58 @@
+[
+ {
+  "cell": "de-lite",
+  "route": "lite>hydrogen-low",
+  "page_id": "69f5036c64bf733e4036e86f",
+  "book_id": "69c6ebe4da9771c7163148a5",
+  "why": "stored draft changed since the draw",
+  "contain": false
+ },
+ {
+  "cell": "de-lite",
+  "route": "lite>hydrogen-low",
+  "page_id": "69d387c69453b2919745bf54",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "why": "stored draft changed since the draw",
+  "contain": false
+ },
+ {
+  "cell": "de-flash3",
+  "route": "hydrogen-low",
+  "page_id": "6992cbc6018b80967354affc",
+  "book_id": "6992cbc6018b80967354afba",
+  "why": "a second marker inside the block",
+  "contain": false
+ },
+ {
+  "cell": "de-flash3",
+  "route": "hydrogen-medium",
+  "page_id": "6992cbc6018b80967354affc",
+  "book_id": "6992cbc6018b80967354afba",
+  "why": "a second marker inside the block",
+  "contain": false
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "3flash>hydrogen-low",
+  "page_id": "6a43bb183c91e2a63d4dd5a3",
+  "book_id": "6a43bb183c91e2a63d4dd595",
+  "why": "not read",
+  "contain": false
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "hydrogen-low",
+  "page_id": "6a43bb183c91e2a63d4dd5a3",
+  "book_id": "6a43bb183c91e2a63d4dd595",
+  "why": "not read",
+  "contain": false
+ },
+ {
+  "cell": "latin-flash3",
+  "route": "hydrogen-medium",
+  "page_id": "6a43bb183c91e2a63d4dd5a3",
+  "book_id": "6a43bb183c91e2a63d4dd595",
+  "why": "not read",
+  "contain": false
+ }
+]

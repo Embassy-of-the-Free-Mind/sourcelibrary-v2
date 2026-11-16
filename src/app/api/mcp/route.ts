@@ -25,7 +25,7 @@ import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findBookByIdOrSlug, isBookIdShaped, resolveBookRef } from '@/lib/book-lookup';
 import { publicFirstTranslationStatus, PUBLIC_FT_PROJECTION } from '@/lib/first-translation/public-status';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import { MCP_HEADERS, mcpApiGet, mcpApiGetText, type McpCaller } from '@/lib/mcp-inprocess';
@@ -1538,7 +1538,7 @@ const TOOLS: Tool[] = [
         languages: { type: 'array', items: { type: 'string' }, description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.' },
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
-        book_id: { type: 'string', description: 'Search within a specific book' },
+        book_id: { type: 'string', description: 'Search within a specific book. Its id, or the slug from a book URL (the part after /book/): both work.' },
         author: { type: 'array', items: { type: 'string' }, description: 'Keep only passages by these authors, e.g. ["Ficino"] or ["della Porta", "Agrippa"]. Matches by name: every word you give must start a word of the book\'s author field.' },
         exclude_authors: { type: 'array', items: { type: 'string' }, description: 'Drop passages by these authors, e.g. ["Agrippa"]. Use it to iterate a survey: run, see who dominates, exclude, run again.' },
         max_per_author: { type: 'number', description: 'Hard cap on passages from one author; the rest are DROPPED (unlike diversity, which only re-orders). Set 1 for "N quotes from N different authors".' },
@@ -1585,7 +1585,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        book_id: { type: 'string', description: 'The book ID to search within' },
+        book_id: { type: 'string', description: 'The book to search within. Its id, or the slug from a book URL (the part after /book/): both work.' },
         query: { type: 'string', description: 'Search query' },
         offset: { type: 'number', description: 'Pagination offset. Each call returns up to 50 pages; when truncated is true, call again with next_offset (default 0).' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
@@ -1623,7 +1623,7 @@ const TOOLS: Tool[] = [
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
-      properties: { book_id: { type: 'string', description: 'The book ID' } },
+      properties: { book_id: { type: 'string', description: 'The book: its id, or the slug from a book URL (the part after /book/). Both work.' } },
       required: ['book_id'],
     },
   },
@@ -1635,7 +1635,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        book_id: { type: 'string', description: 'The book ID' },
+        book_id: { type: 'string', description: 'The book: its id, or the slug from a book URL (the part after /book/). Both work.' },
         chapter: { type: 'number', description: 'Chapter index (0-based). Preferred over from/to — returns pre-structured chapter text with embedded [Page N] markers.' },
         part: { type: 'number', description: 'Part number (1-based) for large chapters split into multiple parts' },
         content: { type: 'string', enum: ['ocr', 'translation', 'both'], description: 'Which text to include: ocr (original language), translation (English), or both (default)' },
@@ -1655,7 +1655,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        book_id: { type: 'string', description: 'The book ID' },
+        book_id: { type: 'string', description: 'The book: its id, or the slug from a book URL (the part after /book/). Both work.' },
         page: { type: 'number', description: 'Page number' },
         context: { type: 'boolean', description: 'Also return the full text of the previous and next pages, so a sentence spanning the page break can be read whole. Set this when continuity.continues_from_previous or continues_on_next came back true on an earlier call, or whenever you are about to quote near a page edge.' },
         include_image: { type: 'boolean', description: 'Also return the scan of the cited leaf as an inline image (display size, ≤1200px). Set this when the user would benefit from SEEING the page — an illustrated leaf, a title page, a diagram, disputed OCR — or asks to see it. The image arrives as an MCP image block you can view and the user sees rendered.' },
@@ -1672,7 +1672,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        book_id: { type: 'string', description: 'Any edition you already have. Its work is looked up and the siblings returned.' },
+        book_id: { type: 'string', description: 'Any edition you already have, by id or by the slug from its URL. Its work is looked up and the siblings returned.' },
         work_id: { type: 'string', description: 'A work identifier, if you already have one (from get_book).' },
       },
     },
@@ -1702,7 +1702,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        book_id: { type: 'string', description: 'The book ID' },
+        book_id: { type: 'string', description: 'The book: its id, or the slug from a book URL (the part after /book/). Both work.' },
         pages: { type: 'array', items: { type: 'number' }, description: 'Explicit list of page numbers (e.g. [12, 40, 41]). Use this OR from/to.' },
         from: { type: 'number', description: 'Start page (inclusive) of a range. Use with to.' },
         to: { type: 'number', description: 'End page (inclusive) of a range. Use with from.' },
@@ -1730,7 +1730,7 @@ const TOOLS: Tool[] = [
         symbol: { type: 'string', description: 'EXACT, case-sensitive match on a symbol tag ("ouroboros", "triangle"). Look it up with list_image_facets.' },
         year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some works carry the date a photograph or upload was made (e.g. 2005) rather than the date of the work — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup). Undated artworks are excluded from any year-filtered search, not passed through.' },
         year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
-        book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
+        book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages (the book\'s id, or the slug from its URL). Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
         offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
@@ -2002,8 +2002,37 @@ function pagesServedByTool(name: string, result: unknown): number {
   return 0;
 }
 
-async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMarks?: boolean; caller?: McpCaller }) {
+/**
+ * Read tools whose `book_id` reaches a route that filters `pages.book_id` (or
+ * the gallery's `bookId`) by the caller's string, and builds links from it.
+ * get_book, list_editions, get_quote(s) and get_book_text are not here: their
+ * routes resolve a slug themselves.
+ */
+const BOOK_REF_TOOLS = new Set(['search_translations', 'search_passages', 'search_within_book', 'search_images']);
+
+/**
+ * A slug in `book_id` becomes the book's id before the tool runs. Every link a
+ * tool returns is /book/<slug>, so a model holding only the link passes the
+ * slug; unresolved, these tools answered with nothing found. An id costs no
+ * query, and a lookup that fails leaves the argument as the caller sent it.
+ * The call log keeps the caller's own arguments, so slugs stay countable.
+ */
+async function withCanonicalBookId(name: string, args: ToolArgs): Promise<ToolArgs> {
+  if (!BOOK_REF_TOOLS.has(name) || typeof args.book_id !== 'string') return args;
+  const ref = args.book_id.trim();
+  // Decided before the database is touched: the usual call, by id, opens no connection here.
+  if (!ref || isBookIdShaped(ref)) return ref === args.book_id ? args : { ...args, book_id: ref };
+  try {
+    const id = await resolveBookRef(await getReadDb(), ref);
+    return id === args.book_id ? args : { ...args, book_id: id };
+  } catch {
+    return args;
+  }
+}
+
+async function handleToolCall(name: string, rawArgs: ToolArgs, opts?: { keepQuoteMarks?: boolean; caller?: McpCaller }) {
   const caller = opts?.caller;
+  const args = await withCanonicalBookId(name, rawArgs);
   switch (name) {
     case 'search_library': return searchLibrary(args, caller);
     case 'search_translations':

@@ -17,7 +17,7 @@
     --wf: #ffcb05;
     --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --body: 'Newsreader', Georgia, 'Times New Roman', serif;
-    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    --sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .ai-partners * { box-sizing: border-box; }
 .ai-partners { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 19px; line-height: 1.6; }
 .ai-partners a { color: var(--rust); text-decoration-thickness: 1px; text-underline-offset: 3px; }

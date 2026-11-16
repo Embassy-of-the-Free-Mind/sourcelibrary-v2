@@ -1323,7 +1323,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </Link>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display"
+            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif"
           >
             {collection.name}
           </h1>
@@ -1431,7 +1431,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
       {childCollections.length > 0 && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-8">
-            <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
+            <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-serif">
               Sub-collections
             </h2>
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
@@ -1500,7 +1500,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-10">
             <div className="flex items-end justify-between gap-4 mb-6">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">
                 Featured books
               </h2>
               <a
@@ -1559,7 +1559,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-10">
             <div className="flex items-end justify-between gap-4 mb-2">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">
                 First translations
               </h2>
               <span className="text-sm text-muted whitespace-nowrap">
@@ -1617,7 +1617,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">
                 Illustrations
               </h2>
               <Link
@@ -1709,7 +1709,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 </div>
                 <div className="flex-1 min-w-0 flex flex-col justify-center">
                   <p className="text-xs font-medium uppercase tracking-wider text-accent-rust mb-2">Start here</p>
-                  <h2 className="text-2xl sm:text-3xl font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight mb-2 font-display">
+                  <h2 className="text-2xl sm:text-3xl font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight mb-2 font-serif">
                     {featured.title}
                   </h2>
                   <p className="text-base text-muted mb-3">
@@ -1735,7 +1735,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-10">
             {exhibition.subtitle && (
-              <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
+              <p className="text-lg text-muted italic mb-6 font-serif">{exhibition.subtitle}</p>
             )}
             <ExhibitionLayout
               layout={exhibition.layout}
@@ -1755,7 +1755,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-[1500px] mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">
                 Visual Art
               </h2>
               <Link
@@ -1840,7 +1840,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             {/* Tier 1: Essential Reading (skip first, already shown as featured) */}
             {tier1.length > 1 && (
               <div className="mb-10">
-                <h2 className="text-2xl sm:text-3xl text-primary mb-2 font-display">
+                <h2 className="text-2xl sm:text-3xl text-primary mb-2 font-serif">
                   Essential Reading
                 </h2>
                 <p className="text-sm text-muted mb-6">The foundational texts of this tradition</p>
@@ -1869,7 +1869,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                         </div>
                       </div>
                       <div className="flex-1 min-w-0 py-1">
-                        <h3 className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-display">
+                        <h3 className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-serif">
                           {h.title}
                         </h3>
                         <p className="text-sm text-muted mb-2">
@@ -1893,7 +1893,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             {/* Tier 2: Important Works */}
             {tier2.length > 0 && (
               <div className="mb-10">
-                <h2 className="text-xl sm:text-2xl text-primary mb-2 font-display">
+                <h2 className="text-xl sm:text-2xl text-primary mb-2 font-serif">
                   Important Works
                 </h2>
                 <p className="text-sm text-muted mb-5">Significant texts that deepen understanding</p>
@@ -1946,7 +1946,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             {/* Tier 3: Also Notable */}
             {tier3.length > 0 && (
               <div className="mb-10">
-                <h2 className="text-lg sm:text-xl text-primary mb-4 font-display">
+                <h2 className="text-lg sm:text-xl text-primary mb-4 font-serif">
                   Also Notable
                 </h2>
                 <div className="grid gap-2 grid-cols-1 sm:grid-cols-2">

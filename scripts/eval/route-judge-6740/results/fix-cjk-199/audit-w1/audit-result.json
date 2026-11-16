@@ -1,0 +1,104 @@
+{
+ "wave": "1",
+ "judge": "fable",
+ "corrector": "opus",
+ "better": 10,
+ "same": 0,
+ "worse": 0,
+ "missing": 0,
+ "controls": [
+  "accept=false f1",
+  "accept=false f1",
+  "accept=false f1",
+  "accept=false f1"
+ ],
+ "rows": [
+  {
+   "page_id": "6a3c60d540c88a541d8eb197",
+   "book_id": "6a3c60d540c88a541d8eb14f",
+   "page_number": 72,
+   "stored": "r2/wt5",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69f3263852a77bb28fdb6756",
+   "book_id": "69f3263852a77bb28fdb6738",
+   "page_number": 30,
+   "stored": "r3/wt1",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69bd0ac7b01b17638a098066",
+   "book_id": "69bd0ac6b01b17638a09803e",
+   "page_number": 40,
+   "stored": "r3/wt2",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "699df0873430a1d77dc7933b",
+   "book_id": "699df0863430a1d77dc7922c",
+   "page_number": 271,
+   "stored": "r3/wt3",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "6a3c628e40c88a541d8f4774",
+   "book_id": "6a3c628e40c88a541d8f46a5",
+   "page_number": 75,
+   "stored": "r3/wt2",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "6a3c64ab39b4508b04e28f5e",
+   "book_id": "6a3c64ab39b4508b04e28ee7",
+   "page_number": 118,
+   "stored": "r3/wt4",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "695924fa1cac2ce31a4a8b11",
+   "book_id": "695924fa1cac2ce31a4a8a33",
+   "page_number": 222,
+   "stored": "r2/wt22",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "6992caced4d545ae73feeb2b",
+   "book_id": "6992caced4d545ae73feeb1c",
+   "page_number": 15,
+   "stored": "r2/wt4",
+   "written": "A4/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "69f3263852a77bb28fdb6750",
+   "book_id": "69f3263852a77bb28fdb6738",
+   "page_number": 24,
+   "stored": "r3/wt2",
+   "written": "A5/wt0",
+   "rel": "better"
+  },
+  {
+   "page_id": "6a3c60d540c88a541d8eb1f6",
+   "book_id": "6a3c60d540c88a541d8eb14f",
+   "page_number": 167,
+   "stored": "r3/wt3",
+   "written": "A5/wt0",
+   "rel": "better"
+  }
+ ],
+ "recorded": {
+  "apply": true,
+  "rows": 8,
+  "inserted": 8,
+  "already": 0,
+  "failed": []
+ }
+}

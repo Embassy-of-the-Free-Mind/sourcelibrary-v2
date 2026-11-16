@@ -29,4 +29,4 @@ export const POST = withAuth(async (request, session, context) => {
     success: true,
     deleted: result.deletedCount,
   });
-});
+}, { minRole: 'reader' });

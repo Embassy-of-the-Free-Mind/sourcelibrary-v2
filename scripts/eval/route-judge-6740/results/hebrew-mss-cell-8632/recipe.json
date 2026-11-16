@@ -1,0 +1,14 @@
+{
+  "question": "route",
+  "issue": 8632,
+  "stage": "ocr",
+  "languages": ["Hebrew"],
+  "about": "v2#8632 (Derek approved 2026-11-13, job hebrew-mss-cell): router cell hebrew-flash3/manuscript (14.6K pages waiting, HOLD at n=4 a route) has no repair route, so the Hebrew `fix` books wait. One page per book over every eligible book of the cell's frame (44). Arms on the same pages: the stored 3 Flash read (baseline), the live route's Opus correction, a fresh Opus read, the agy Flash-low correction. Blind Opus image judge; the Gemini (agy) second judge on the Opus arm the Opus judge ranks first, because the ocr/manuscript stratum fails Opus self-preference (rules.json judge_validity, DBG 0.43).",
+  "baseline": "3flash",
+  "arms": ["3flash", "3flash>opus-correct", "opus-read", "3flash>agy-flash-low"],
+  "batch": { "pages_per_call": 1, "tested": null },
+  "noise_floor": { "repeat_kind": "repeat", "from": null },
+  "feeds": "route",
+  "router_evidence": "hebrew-flash3",
+  "waive": {}
+}

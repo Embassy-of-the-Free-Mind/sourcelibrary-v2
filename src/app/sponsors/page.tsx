@@ -135,7 +135,7 @@ export default async function SponsorsPage() {
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-4">
             Corporate Sponsorship
           </div>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl text-stone-900 mb-6 leading-tight font-display">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl text-stone-900 mb-6 leading-tight font-serif">
             Translate the Renaissance.
           </h1>
           <p className="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl">
@@ -168,13 +168,13 @@ export default async function SponsorsPage() {
         <div className="px-6 md:px-12 max-w-5xl mx-auto py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
             <div>
-              <div className="text-4xl md:text-5xl font-display text-stone-900 mb-2">533K</div>
+              <div className="text-4xl md:text-5xl font-serif text-stone-900 mb-2">533K</div>
               <div className="text-sm text-stone-500 uppercase tracking-wider">
                 Latin editions printed 1450–1700
               </div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-display text-stone-900 mb-2">
+              <div className="text-4xl md:text-5xl font-serif text-stone-900 mb-2">
                 &lt; 3%
               </div>
               <div className="text-sm text-stone-500 uppercase tracking-wider">
@@ -182,7 +182,7 @@ export default async function SponsorsPage() {
               </div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-display text-stone-900 mb-2">
+              <div className="text-4xl md:text-5xl font-serif text-stone-900 mb-2">
                 {formatStat(stats.firstTranslations)}+
               </div>
               <div className="text-sm text-stone-500 uppercase tracking-wider">
@@ -206,7 +206,7 @@ export default async function SponsorsPage() {
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
             For AI labs and model providers
           </div>
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-serif">
             Annual Stewardship Membership.
           </h2>
           <p className="text-lg text-stone-600 leading-relaxed mb-4 max-w-3xl">
@@ -245,7 +245,7 @@ export default async function SponsorsPage() {
                 <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
                   Commitment
                 </div>
-                <div className="font-display text-2xl text-stone-900 mb-1">From $250K / yr</div>
+                <div className="font-serif text-2xl text-stone-900 mb-1">From $250K / yr</div>
                 <div className="text-xs text-stone-500 mb-3">Multi-year preferred</div>
                 <p className="text-sm text-stone-600 leading-relaxed mb-6">
                   Scope set in conversation. Wire, stock, DAF, or annual invoice, whatever your
@@ -276,7 +276,7 @@ export default async function SponsorsPage() {
                     2 seats only
                   </span>
                 </div>
-                <h3 className="font-display text-2xl md:text-3xl mb-4 leading-snug">
+                <h3 className="font-serif text-2xl md:text-3xl mb-4 leading-snug">
                   The first two labs to commit at $1M / yr take a permanent named seat in the
                   project&apos;s origin.
                 </h3>
@@ -291,7 +291,7 @@ export default async function SponsorsPage() {
                 <div className="text-xs uppercase tracking-wider text-stone-400 mb-2">
                   Commitment
                 </div>
-                <div className="font-display text-2xl text-[#c9a86c] mb-1">$1M / yr</div>
+                <div className="font-serif text-2xl text-[#c9a86c] mb-1">$1M / yr</div>
                 <div className="text-xs text-stone-400 mb-6">Multi-year, by arrangement</div>
                 <OutboundLink
                   href={mailto}
@@ -321,7 +321,7 @@ export default async function SponsorsPage() {
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
             For everyone who depends on the sources
           </div>
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-serif">
             The Stewards Circle.
           </h2>
           <p className="text-lg text-stone-600 leading-relaxed mb-4 max-w-3xl">
@@ -379,7 +379,7 @@ export default async function SponsorsPage() {
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
             For one-off support
           </div>
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-serif">
             Sponsor an event or a collection.
           </h2>
           <p className="text-lg text-stone-600 leading-relaxed mb-10 max-w-3xl">
@@ -409,7 +409,7 @@ export default async function SponsorsPage() {
       {/* Institutional structure */}
       <section className="bg-[#faf8f5] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-serif">
             Institutional structure
           </h2>
           <p className="text-base md:text-lg text-stone-600 leading-relaxed mb-8 max-w-3xl">
@@ -465,7 +465,7 @@ export default async function SponsorsPage() {
       {/* CTA */}
       <section className="bg-stone-900 text-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl text-white mb-6 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-white mb-6 leading-tight font-serif">
             Get in touch.
           </h2>
           <p className="text-base md:text-lg text-stone-300 leading-relaxed mb-10">

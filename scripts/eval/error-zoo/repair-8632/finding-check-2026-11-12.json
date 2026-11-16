@@ -1,0 +1,201 @@
+{
+ "tally": {
+  "uncheckable (no quoted misread and reading)": 4,
+  "changed, but not to the reading the audit gave": 16,
+  "fixed": 4
+ },
+ "rows": [
+  {
+   "page_id": "69f6ad3e78ec39b89ca67113",
+   "source": "book_checks",
+   "cls": "O17",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69b631a81c1c21a373809644",
+   "source": "book_checks",
+   "cls": "O5",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa3e3",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69dbca3a1040d1d5e20aa4b3",
+   "source": "book_checks",
+   "cls": "O6",
+   "bad": "",
+   "good": "",
+   "status": "uncheckable (no quoted misread and reading)"
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d654",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "in templum vero viuen ream gemmis inappreciabilibus in",
+   "good": "in templum vero viuen / tis dei preter vasa misit mensam au / ream gemmis inappr",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbc8e91040d1d5e209d654",
+   "source": "spare_audit",
+   "cls": "O7",
+   "bad": "et eis. ccc. milia. occi derunt",
+   "good": "ex eis.xxx. milia. occi / derunt",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "que potentia sequitur per essentia. et tunc est vera potentia. essentia sibi pro",
+   "good": "q2 potẽtia seq̃tur eẽntiã. dõm q essentia aie pt dupliciter capi. uno° f'm q res",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "et qua partes animalis sunt perfecte continue sic una pars potest moveri alia qu",
+   "good": "ex q ptes aialis nõ sunt pfecte cõtinue sic una pars pt moveri alia quiescẽte",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "alia est extensio essentialiter informat qualibet parte animae",
+   "good": "alia ẽ extensio essentialis. et sic aia est extensa i corpe. q2 essentialiter in",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "ergo in diversis animas que tunc possibile esset diversitas animas que inveniunt",
+   "good": "g° in diversis significãt formas sbales. alio° accipiũt f'm q inveniũt i uno et ",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcaf51040d1d5e20b00e1",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "ut lupicies est colorata. lupicies est in subiecto primo.",
+   "good": "ut superficies est colorata. superficies enim subordinatur colori. q2 color ẽ in",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcc660f8c5edf20f4b358",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "cum in habeat quadam proportionem ad quaedam sensibilia, scilicet ad tangibilia",
+   "good": "cū tn̄ habeāt quādā ptē aīe: ꝛ patiāt a quibusdā sensibilib⁹ .s. a tangibilib⁹",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcc660f8c5edf20f4b358",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "manifestum est enim quod calefacit et infrigidat. et igitur quaerendo non requir",
+   "good": "manifestū est eni ꝙ calescūt ꝛ infrigidant. cā igit q̄re nō sentiūt est: qꝛ nō e",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcc660f8c5edf20f4b358",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "sed bene intelligendum est de saporibus: non inquantum tangibile, et quantum tac",
+   "good": "sʒ h̄ intelligendū est de saporib⁹: nō inqꝫtū sapores sunt: sed inqꝫtū gustabile",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcaa11040d1d5e20ad3bd",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "c. igitur ex centro mundi non educta linea p. punctum l.",
+   "good": "c.igit ex cẽtro mũdi.n.educta linea ꝑ pũ/ctũ.l.",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcc9d0f8c5edf20f4cb4e",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "ergo rius quo orat que iracundiam contra primum portat in corde",
+   "good": "grego-|rius quo orat q̄ iracūdiā ↄtra ꝓximū portat in corde",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dc55e4cb6f7429748b9871",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "omissum est. constat tamen quod viris ecclesiasticis et praelatis amplius est om",
+   "good": "ꝯmissū ē. cōstat tñ ꝙ viris ecclesiasticis ꝛ ꝑlatis amplius ē ꝯmissum ꝙ̄ monasti",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3da7",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "quicquid uero adiciat podere repraesentari morte. ab eo que cuspides i praeliis ",
+   "good": "quicqd uero adiiciat pōderi repræsētari mortē. hoc ē uenenū quod īnocētissī auct",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcb371040d1d5e20b3da7",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "nec illud praeteribo als fopore enecas uis earum.",
+   "good": "nec illud prǽteribo aspidū natæ halicaccabum ītātū aduersā: ut radice eius ,ppiu",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "| 6 | ♂ | 22 | 52 |",
+   "good": "☍ 22 52",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "source": "spare_audit",
+   "cls": "O5",
+   "bad": "| 4 | | | | | | | | | | | |",
+   "good": "☌ 12 in the jupiter column on day 4",
+   "status": "changed, but not to the reading the audit gave"
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "| 19 | | | | | | | | ☽ ♂ ☿ | |",
+   "good": "☌ ☉ ☿",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "| 20 | | δ | 0 | | | | | ☽ ♂ ♀ | |",
+   "good": "☌ ☉ ♀",
+   "status": "fixed"
+  },
+  {
+   "page_id": "69dbcb821040d1d5e20b759a",
+   "source": "spare_audit",
+   "cls": "O6",
+   "bad": "| 30 | | □ | 16 | δ | 10 | δ | 8 | δ | 12 | ♂ ♀ | |",
+   "good": "☌ ♂ ☿",
+   "status": "fixed"
+  }
+ ]
+}

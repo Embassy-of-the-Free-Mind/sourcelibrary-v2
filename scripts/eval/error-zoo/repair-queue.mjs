@@ -14,18 +14,31 @@
  *   evidence    readers and families that flagged it; confirmed = two model families flagged the same page
  *   status      queued            confirmed, the cell has a route, nothing blocks a repair
  *               needs-second-read one family flagged it; a reader of the other family must agree first
+ *               not-confirmed     the other family's second read, on the same text, found no serious OCR error
  *               no-route          the cell binds no route (HOLD, UNTESTED, planned, or no such cell)
  *               deferred          book held or in a translate lane (the lane would re-translate at once)
  *               skip              human-edited or manual text: never re-read for a write
  */
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import { loadCurrentTable, boundRoute } from '../../lib/router-binding.mjs';
 import { translationLaneReason } from '../../batch/ocr-convergence/lib.mjs';
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
-const LABELS = arg('labels'), OUT = arg('out');
-if (!LABELS || !OUT) { console.error('usage: repair-queue.mjs --labels=FILE --out=FILE'); process.exit(2); }
+const LABELS = arg('labels'), OUT = arg('out'), SECOND = arg('second-reads');
+if (!LABELS || !OUT) { console.error('usage: repair-queue.mjs --labels=FILE --out=FILE [--second-reads=FILE]'); process.exit(2); }
+// --second-reads=FILE[,FILE] (second-read.mjs confirm --ledger; later files win): the latest verdict per page and text hash. A verdict counts only
+// while the page holds the text it was given on, so a re-read page is second-read again.
+const secondReads = new Map();
+let badLines = 0;
+for (const f of (SECOND || '').split(',').filter((f) => f && fs.existsSync(f))) for (const l of fs.readFileSync(f, 'utf8').split('\n')) {
+  if (!l.trim()) continue;
+  let v; try { v = JSON.parse(l); } catch { badLines++; continue; }   // a half-written append must not stop the week
+  if (v.page_id && v.ocr_sha256 && v.family) secondReads.set(`${v.page_id}:${v.ocr_sha256}`, v);
+}
+if (badLines) console.log(`second-read ledger: ${badLines} unreadable line(s) skipped`);
+const secondReadPages = new Set([...secondReads.values()].map((v) => v.page_id));
 const family = (reader) => (/gemini/i.test(reader || '') ? 'gemini' : /claude|opus|sonnet/i.test(reader || '') ? 'claude' : 'other');
 
 const pages = new Map();
@@ -59,6 +72,10 @@ const db = client.db('bookstore');
 const ids = [...pages.keys()];
 const live = new Map();
 for (let i = 0; i < ids.length; i += 1000) for (const d of await db.collection('pages').find({ id: { $in: ids.slice(i, i + 1000) } }, { projection: { id: 1, book_id: 1, script_type: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.edited_by': 1, read_count: 1 } }).toArray()) live.set(d.id, d);
+// The text, to hash, only for pages with a second read on file (not every labelled page).
+const textSha = new Map();
+const srIds = ids.filter((id) => secondReadPages.has(id));
+for (let i = 0; i < srIds.length; i += 500) for (const d of await db.collection('pages').find({ id: { $in: srIds.slice(i, i + 500) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()) textSha.set(d.id, crypto.createHash('sha256').update(String(d.ocr?.data ?? '')).digest('hex'));
 const bids = [...new Set([...live.values()].map((d) => d.book_id))];
 const books = new Map();
 for (let i = 0; i < bids.length; i += 500) for (const b of await db.collection('books').find({ id: { $in: bids.slice(i, i + 500) } }, { projection: { id: 1, language: 1, slug: 1, read_count: 1, pages_ocr: 1, pages_blank: 1, pages_translated: 1, pipeline_auto: 1 } }).toArray()) books.set(b.id, b);
@@ -72,15 +89,18 @@ for (const p of pages.values()) {
   let route = row ? boundRoute(row) : null;
   // A bound route that is just the engine that made the page (`lite` on a lite read) keeps the text: not a repair.
   if (route && !route.includes('>') && engineOf(route) && engineOf(route) === engineOf(d.ocr?.model)) route = null;
+  // A second read on the text the page still holds: the second family's verdict (--second-reads).
+  const sr = textSha.has(p.page_id) ? secondReads.get(`${p.page_id}:${textSha.get(p.page_id)}`) : null;
+  if (sr?.serious_ocr) p.families.add(sr.family);
   // Two MODEL families: a lane judge or person counted as 'other' does not stand in for the second family.
   const confirmed = p.families.has('claude') && p.families.has('gemini');
   let status;
   if (d.ocr?.edited_by || d.ocr?.source === 'manual') status = 'skip';
   else if (translationLaneReason(b)) status = 'deferred';
   else if (!route) status = 'no-route';
-  else status = confirmed ? 'queued' : 'needs-second-read';
+  else status = confirmed ? 'queued' : sr && !sr.serious_ocr ? 'not-confirmed' : 'needs-second-read';
   rows.push({ page_id: p.page_id, book_id: d.book_id, slug: b.slug, page_number: p.page_number, language: b.language, ocr_model: d.ocr?.model ?? null, script: d.script_type ?? null,
-    cell, decision: row?.decision ?? null, route, status, families: [...p.families], methods: [...p.methods], classes: [...p.classes], page_reads: d.read_count ?? 0, book_reads: b.read_count ?? 0 });
+    cell, decision: row?.decision ?? null, route, status, families: [...p.families], methods: [...p.methods], classes: [...p.classes], ...(sr && { second_read: { reader: sr.reader, family: sr.family, serious_ocr: sr.serious_ocr, run: sr.run } }), page_reads: d.read_count ?? 0, book_reads: b.read_count ?? 0 });
 }
 rows.sort((a, b) => (b.book_reads - a.book_reads) || (b.page_reads - a.page_reads));
 const by = (k) => rows.reduce((m, r) => ((m[r[k]] = (m[r[k]] || 0) + 1), m), {});

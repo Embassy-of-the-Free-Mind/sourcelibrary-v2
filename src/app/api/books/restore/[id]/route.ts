@@ -85,7 +85,7 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error restoring book:', error);
     return NextResponse.json({ error: 'Failed to restore book' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * List all deleted books available for restoration
@@ -122,4 +122,4 @@ export const GET = withAuth(async (request, session) => {
     console.error('Error listing deleted books:', error);
     return NextResponse.json({ error: 'Failed to list deleted books' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -1,0 +1,60 @@
+<language>Hebrew</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<warning>The manuscript is heavily faded, with significant ink bleed-through from the reverse side. There are wormholes and physical damage to the top and bottom edges of the parchment.</warning>
+<meta>The text appears to be a Rabbinic or philosophical treatise in Hebrew cursive script. Due to the severe fading and bleed-through, many lines are only partially legible.</meta>
+
+<image-desc size="small" type="decorative" significance="low">Wormholes and physical deterioration at the top and bottom edges of the folio.</image-desc>
+
+<unclear>...שם...</unclear>
+<unclear>...הנה...</unclear>
+<unclear>...כי אם...</unclear>
+<unclear>...על פי...</unclear>
+<unclear>...לפי שכל...</unclear>
+<unclear>...הוא כי...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...בזה...</unclear>
+<unclear>...מכל...</unclear>
+<unclear>...הדברים...</unclear>
+<unclear>...אבל...</unclear>
+<unclear>...כי...</unclear>
+<unclear>...לפי...</unclear>
+<unclear>...הוא...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...בכל...</unclear>
+<unclear>...מפני...</unclear>
+<unclear>...היה...</unclear>
+<unclear>...על...</unclear>
+<unclear>...כי...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...הוא...</unclear>
+
+<column-break/>
+
+<unclear>...אמר...</unclear>
+<unclear>...כי...</unclear>
+<unclear>...הנה...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...בכל...</unclear>
+<unclear>...הוא...</unclear>
+<unclear>...על...</unclear>
+<unclear>...כי...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...הוא...</unclear>
+<unclear>...בזה...</unclear>
+<unclear>...מכל...</unclear>
+<unclear>...הדברים...</unclear>
+<unclear>...אבל...</unclear>
+<unclear>...כי...</unclear>
+<unclear>...לפי...</unclear>
+<unclear>...הוא...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...בכל...</unclear>
+<unclear>...מפני...</unclear>
+<unclear>...היה...</unclear>
+<unclear>...על...</unclear>
+<unclear>...כי...</unclear>
+<unclear>...אשר...</unclear>
+<unclear>...הוא...</unclear>
+
+<vocab>Hebrew manuscript, Rabbinic literature, cursive script, parchment</vocab>

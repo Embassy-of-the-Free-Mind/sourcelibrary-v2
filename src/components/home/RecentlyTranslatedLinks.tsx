@@ -28,7 +28,7 @@ export default async function RecentlyTranslatedLinks({
   if (books.length === 0) return null;
   return (
     <section className={className} aria-labelledby="recently-translated-links">
-      <h2 id="recently-translated-links" className="text-2xl text-primary font-display mb-4">
+      <h2 id="recently-translated-links" className="text-2xl text-primary font-serif mb-4">
         {heading}
       </h2>
       <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 text-sm">

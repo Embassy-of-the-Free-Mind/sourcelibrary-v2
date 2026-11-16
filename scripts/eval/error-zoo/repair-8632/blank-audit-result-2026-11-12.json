@@ -1,0 +1,264 @@
+{
+ "set": "blank24",
+ "audited": 24,
+ "writes": 24,
+ "read": {
+  "opus": 24,
+  "gemini": 0
+ },
+ "writes_worse": {
+  "opus": 6,
+  "gemini": 0
+ },
+ "writes_better": {
+  "opus": 18,
+  "gemini": 0
+ },
+ "writes_same": {
+  "opus": 0,
+  "gemini": 0
+ },
+ "gate": "STOP",
+ "rows": [
+  {
+   "page_id": "69bd9faef6d63c9197481a25",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is blank; the title text ('MUNDUS SYMBOLICUS ... PHILIPPO PICINELLO') shows through mirrored from the other side, so X's title-page transcription (with 'AUGUSTAE VINDELICORUM', 'BENCARD', which aren't even in the show-through) is invented for this leaf."
+  },
+  {
+   "page_id": "69dbcb1e1040d1d5e20b25c3",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is blank apart from faint show-through of two columns; Y invents a whole text ('Utrum mundus sit eternus aut non...')."
+  },
+  {
+   "page_id": "6a267e1d6c1f37c9c4f3bf8c",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is blank and shows only mirrored show-through of a table ('Nocentia', 'Olea, Ungventa'); Y gives a fabricated three-column table of repeated '<unclear>...o</unclear>' rows."
+  },
+  {
+   "page_id": "69e9c962625ec74a14473427",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is blank and carries only mirrored show-through of 'VOCABVLA BARBARA' and the 1516 Alcalá colophon; X invents 'Vallis in montibus:' repeated dozens of times."
+  },
+  {
+   "page_id": "69afd0c2775a23a98ee938b3",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is a full two-column text page ('Tractatus.II.', 272, starting 'cut mitridatu:'). X wrongly calls it blank. Y gets the header, page number and first words right but then degenerates into endless 'i:i:i', so both texts are badly deficient."
+  },
+  {
+   "page_id": "69de988c1b234a773e438c0c",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The column drawings and text are mirrored show-through from the other side, so the leaf is blank; Y describes the illustration as on this leaf and invents Italian captions ('In questa parte si uede la colonna...')."
+  },
+  {
+   "page_id": "6958e850538549809db8225b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is a printed 'De piscibus' page with the mermaid and ship woodcuts, 'Ca.lxviij' and 'Ca.lxix'. X transcribes it faithfully ('Plataniste z perna. Albertus...'), while Y wrongly calls it blank."
+  },
+  {
+   "page_id": "69dbcaa71040d1d5e20ad567",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is blank with mirrored show-through of the 'SPHAERAE' page; X invents a 'Quoniam igitur in hoc tractatu de sphaera...' text and a looping margin note."
+  },
+  {
+   "page_id": "6958e96f813ea03889c33367",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is blank and shows only mirrored show-through of 'Menda sic emenda'; Y invents an errata list ('In pag. 1. lin. 1. pro monstrorum lege monstrorum...')."
+  },
+  {
+   "page_id": "69dbca101040d1d5e20a909b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is a printed page (fol. 114) ending 'Explicit liber Geber foeliciter.' Y transcribes it accurately ('tis extraximus et uidimus oculis et manibus...'), while X wrongly calls it blank."
+  },
+  {
+   "page_id": "699253f859cdabeb78f1a586",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The image is a completely blank white leaf, so X's 'CAPUT VII. De ordinatione episcopi' text and page number 144 are invented."
+  },
+  {
+   "page_id": "69dbc7ec1040d1d5e2095817",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf carries only mirrored show-through from the other side; X invents a reading ('Quoniam autem secundum tria diuidimus animam…' repeated in a loop)."
+  },
+  {
+   "page_id": "69ee93a0f2c6312502f6a473",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The header '899', the text and the printer's mark all show through in mirror image from the verso, so X's 'Appendix ad Serpentarij Narcissi descriptionem' is another leaf's text."
+  },
+  {
+   "page_id": "69b6a35d080b19f98fd19fd1",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is a full printed page ('MAGNETISMVS ET MARIS. 483', 'partim versus ostium sinus Adriatici…') that X records closely, though it garbles the tapering final lines; Y wrongly calls it blank."
+  },
+  {
+   "page_id": "69dbc86d1040d1d5e209987a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The page prints two columns ('De lacte camelino Capitulum LXII', 'De lacte vaccino', 'De lacte caprino') that X transcribes with only minor misreadings; Y's 'blank' drops all of it."
+  },
+  {
+   "page_id": "69dbca531040d1d5e20ab656",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "All the text on this leaf is mirrored show-through, so X's 'Dyamoron est electuarium…' column is invented or comes from another leaf."
+  },
+  {
+   "page_id": "69dbc54937db7bc4b2eb27d6",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The two columns and the running head are mirror-reversed show-through, and X's loop of 'Et ideo dicit Aristoteles in principio huius libri…' is fabricated."
+  },
+  {
+   "page_id": "69af0bfad52f95654dfae304",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The index columns, the headpiece and 'INDEX' are all mirrored show-through; X's 100 rows of '<unclear>A</unclear>' and its 'Cap. I. De Avibus in genere…' list are invented."
+  },
+  {
+   "page_id": "69b699a7080b19f98fcfb69f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf in view is blank, and the only text is on the edge of the facing page ('ceteras ho…', 'Tab…'); Y transcribes that neighbouring leaf, fills in words that are cut off, and garbles the table."
+  },
+  {
+   "page_id": "6992469fbc722ec0ee80f57b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf is printed page 456 'VINDICTA SALVATORIS.' ('miserunt nuntios suos ad Tiberium…') with footnotes 19–21, and X records it faithfully; Y's 'blank' drops the whole page."
+  },
+  {
+   "page_id": "69dbccae0f8c5edf20f4cd3d",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf carries only mirrored show-through and the stamp 'BIBLIOTHECA REGIA MONACENSIS'; X invents repetitive Latin ('et uirtute et uirtute...') that is not on the page."
+  },
+  {
+   "page_id": "69bda005f6d63c9197483ded",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The emblem plate is mirror-image show-through from the other side; X presents it as this leaf's engraving with invented numerals 'CIX'–'CXX' (the mirrored labels actually read CDX… series)."
+  },
+  {
+   "page_id": "69b6b8cc8566c83814628360",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The leaf shows only mirrored show-through ('FINIS' reversed); Y transcribes the neighbouring page's fragmentary column edge ('gre', 'bis', 'tate'…) as invented full Latin text ending 'FINIS'."
+  },
+  {
+   "page_id": "69dbcb801040d1d5e20b73d4",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": null,
+   "gemini_serious": null,
+   "opus_note": "The astronomical table is mirrored show-through from the verso; X misreports it as a faded table printed on this leaf, though it transcribes no actual content."
+  }
+ ]
+}

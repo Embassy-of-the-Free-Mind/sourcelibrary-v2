@@ -119,11 +119,11 @@ export function TranslationFailuresClient() {
           return (
             <div key={bucket.key} style={{ border: `1px solid ${C.border}`, borderRadius: 8, overflow: 'hidden' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', background: C.panel }}>
-                <div style={{ fontSize: 26, fontWeight: 700, color, minWidth: 48, textAlign: 'right' }}>{bucket.count}</div>
+                <div style={{ fontSize: 26, fontWeight: 600, color, minWidth: 48, textAlign: 'right' }}>{bucket.count}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 15, fontWeight: 600 }}>
                     {bucket.label}
-                    <span style={{ marginLeft: 10, fontSize: 11, fontWeight: 700, color, border: `1px solid ${color}`, borderRadius: 4, padding: '1px 6px', textTransform: 'uppercase' }}>
+                    <span style={{ marginLeft: 10, fontSize: 11, fontWeight: 600, color, border: `1px solid ${color}`, borderRadius: 4, padding: '1px 6px', textTransform: 'uppercase' }}>
                       {bucket.action}
                     </span>
                   </div>

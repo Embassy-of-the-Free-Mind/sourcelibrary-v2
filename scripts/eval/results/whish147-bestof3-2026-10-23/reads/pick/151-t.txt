@@ -1,3 +1,0 @@
-PICK | A
-RANK | A, C, B
-WHY | A reads most like real text across most rows, e.g. the kevalānvayi example "yathā ghaṭapaṭayoḥ prameyatvāt ghaṭavat iti prameyatvābhidheyatva…", "sarvaprameyatvāt", "gandhavattvāt" and "yathā jalaṃ"; C has good spots ("itarabhinnam ity apa…", "sādṛśya") but garbles key words like "pratmayathā"; B is mostly [illegible].

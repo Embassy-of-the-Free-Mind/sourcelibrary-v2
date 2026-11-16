@@ -102,7 +102,7 @@ export default function IndexCatalogSection({ catalogs }: Props) {
           <BookMarked className="w-3.5 h-3.5" />
           <span>Reference catalog</span>
         </div>
-        <h2 className="text-3xl font-display font-semibold mb-2 text-stone-900">
+        <h2 className="text-3xl font-serif font-semibold mb-2 text-stone-900">
           The Index, by edition
         </h2>
         <p className="text-stone-700 max-w-3xl">
@@ -124,7 +124,7 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                   : 'border-transparent text-stone-500 hover:text-stone-800 hover:border-stone-300')
               }
             >
-              <span className="font-display">{c.startYear ?? '?'}</span>
+              <span className="font-serif">{c.startYear ?? '?'}</span>
               <span className="ml-1 text-xs text-stone-400">({c.totalEntries.toLocaleString()})</span>
             </button>
           ))}
@@ -132,7 +132,7 @@ export default function IndexCatalogSection({ catalogs }: Props) {
       )}
 
       <div className="mb-4">
-        <div className="font-display text-lg text-stone-800">{active.indexName}</div>
+        <div className="font-serif text-lg text-stone-800">{active.indexName}</div>
         <div className="text-sm text-stone-500 mt-0.5">
           {active.totalEntries.toLocaleString()} entries · <strong>{active.heldCount}</strong> held by Source Library
         </div>
@@ -220,7 +220,7 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                   return (
                     <tr key={e.id} className="align-top hover:bg-stone-50/60">
                       <td className="px-3 py-2.5 text-stone-700 whitespace-nowrap">{e.author || <span className="text-stone-400">–</span>}</td>
-                      <td className="px-3 py-2.5 font-display text-stone-900 min-w-[14rem]">
+                      <td className="px-3 py-2.5 font-serif text-stone-900 min-w-[14rem]">
                         {e.sl_book_slug
                           ? <Link href={`/book/${e.sl_book_slug}`} className="hover:underline">{e.title}</Link>
                           : <span>{e.title}</span>}

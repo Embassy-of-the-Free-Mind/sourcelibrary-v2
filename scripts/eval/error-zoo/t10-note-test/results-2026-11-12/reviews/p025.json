@@ -1,0 +1,139 @@
+[
+  {
+    "book_id": "6953ab4577f38f6761bd6c6f",
+    "slot": 1,
+    "title": "Picatrix Fragment, Steganographia, Paracelsus & Chemical Secrets",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "No tradition or collection is set. The record calls the book Latin, and its title promises Picatrix, Trithemius, Paracelsus and chemical secrets. This leaf is a German theological tract in a Kurrent hand: Nicodemus, the Word made flesh, and a polemic against those who 'bring his body down from heaven into the bread'. Probably one part of a composite codex (the banner reads MSS_Reg.lat.1344), but neither the title nor the language field describes this part.",
+    "rights_flag": "The scan carries a burned-in banner, 'Copyright © Biblioteca Apostolica Vaticana / https://digi.vatlib.it/view/MSS_Reg.lat.1344/0123', and a diagonal watermark across the leaf, 'Biblioteca Apostolica Vaticana ... ALL RIGHTS RESERVED ©'. The manuscript itself is early modern, so this is about the image licence, not the text.",
+    "structure_note": "The structure count gives pages_translated 0, but the book field gives 272: one of the two counts is wrong (E2). Only 155 of 314 records have a printed number, with 44 backsteps and 34 repeats. That fits a composite manuscript whose parts are foliated separately, plus some misread numerals, rather than a broken scan order. This leaf's '60' sits at scan 123, which is consistent with that.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 123,
+        "right_page": "yes",
+        "printed_marker": "60",
+        "layout": "one column of German cursive inside a ruled frame; page number top right, catchword at the foot; a strip of the facing leaf at the left edge; Vatican watermark and copyright banner",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Die ursachin diser Gebur wast wundertlichwol das",
+            "image": "Si Celestia dixero Vobis, wast wundert ihr wol ...",
+            "problem": "The Latin quotation of John 3:12 ('if I tell you heavenly things') is misread as an invented German clause, 'the cause of this birth'. The reader loses the scriptural quotation the passage turns on.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Worttauff\ndar. Da ist Christus auch. Wer in Christo und wir in ihm,",
+            "image": "Worttauff / Erd, da ist Christus auch. Aber in vnß, vnd wir in ihm,",
+            "problem": "'his Word on earth' is read as 'dar', and 'Aber in uns' as 'Wer in Christo'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Wer so in Christo Christus, und wir in ihm",
+            "image": "Aber so in vnß Christus, vnd wir in ihm",
+            "problem": "'in uns' is misread as 'in Christo'. The translation happens to give the right sense ('If Christ is in us').",
+            "severity": "minor"
+          },
+          {
+            "ocr": "unsere Neue Natur siehet ihn",
+            "image": "vnsere Neüe Creatur siehet ihn",
+            "problem": "'Creatur' (the Pauline 'new creature') is normalised to 'Natur'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "darmit kommen wir durch uns auch nicht in Himmel",
+            "image": "Darumb können wir durch vns auch nicht in himmel",
+            "problem": "'Darumb können' is misread as 'darmit kommen'. The sense survives.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Wie die in d. Rauch gebeist",
+            "image": "the hand is unclear here; it does not clearly read 'Rauch'",
+            "problem": "A doubtful reading that becomes 'those in the smoke' in the English. Low confidence.",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Die ursachin diser Gebur wast wundertlichwol das\nverstehn.",
+            "english": "The cause of this birth is wonderful indeed to understand.",
+            "problem": "This sentence is a translation of an OCR misread. The image has the Latin 'Si Celestia dixero Vobis' (John 3:12) followed by 'was wundert ihr ...'. The English invents a statement about 'this birth', and the quotation disappears.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Also haben wir sein Worttauff\ndar. Da ist Christus auch.",
+            "english": "So we have his Word on it: there Christ is also.",
+            "problem": "The image reads 'sein Wort auff Erd' ('his Word on earth'). The English 'his Word on it' loses the point, which is that Christ is present in the Word on earth.",
+            "severity": "moderate"
+          },
+          {
+            "source": "<margin>Bartos</margin>",
+            "english": "<margin>Bartos</margin> <note>Possibly a garbled marginal reference, perhaps to Matthew.</note>",
+            "problem": "On the leaf the word stands inline, at the start of the paragraph in a larger hand, like a heading or a speaker label. It is not in the margin. The English moves it into a margin tag and adds a guess about it.",
+            "severity": "moderate"
+          },
+          {
+            "source": "unsere Neue Natur siehet ihn",
+            "english": "our new nature sees him",
+            "problem": "The image has 'Creatur'. The allusion to 'new creature' (2 Cor 5:17) is lost.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "A '<margin>Bartos</margin>' tag is shown in the reader text with a speculative note beside it, for a word that is not marginal on the leaf",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "A reference to John 3, where Nicodemus the Pharisee asks Jesu",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"ecce hic est Christus,\" echoing Matthew 24:23.",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Matthew 28:20.",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "Possibly a garbled marginal reference, perhaps to Matthew.",
+              "verdict": "unsupported",
+              "helpful": false
+            }
+          ],
+          "missing": [
+            {
+              "english": "So they say proudly: I bring his body down from heaven into the bread?",
+              "why": "The page is a polemic against the real presence of Christ in the bread of the Eucharist. A general reader needs that context to see who 'they' are and what is being attacked."
+            },
+            {
+              "english": "Even those in the smoke may nonetheless say: there is Christ.",
+              "why": "The phrase makes no sense without a note, and it rests on a doubtful reading of the hand. It should be marked uncertain or explained."
+            },
+            {
+              "english": "the father warring against the son",
+              "why": "This alludes to Matthew 10:35 / Luke 12:53. The English cites the other gospel verses on the page but not this one."
+            },
+            {
+              "english": "These words are a strong prophecy against the learned Athenians or the synagogues",
+              "why": "'Athenians' stands for Greek philosophical learning (compare Acts 17). A general reader may take it literally."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf is a German theological text in a cursive hand, filed under a Latin occult and alchemical title with a Vatican copyright banner on the scan. The OCR is broadly right, but it turns the Latin John 3:12 quotation into an invented German sentence, which the English then translates, so a reader would flag this on sight."
+  }
+]

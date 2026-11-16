@@ -1,0 +1,67 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_sanskrit_7243.py (v3 #95; no model calls)",
+ "provenance": "#7243 confirmation, scripts/eval/experiments/2026-11-03-sanskrit-surya-print-confirm-7243.md: 50 printed Devanagari books, one page each, preregistered (scripts/eval/sanskrit-gex45-7243/CONFIRM.md); per-page grades in scripts/eval/sanskrit-gex45-7243/severity-confirm.json",
+ "judge": "one blind Opus grader a page (claude -p), image tiles + frozen two-reader reference + word-level diff spans; #6740 0-4 grade and REVIEWER.md severity",
+ "mapping": "wrong_text = REVIEWER.md severity serious, or grade 4; accept = read (not DNR) and not wrong text; invented = grade 4. Stricter than the route judge (see controls.planted_one_error_called_serious): compare the two routes with each other, not with a route-judge cell.",
+ "cells": {
+  "sa-print-7243": {
+   "task": "ocr",
+   "lang": "Sanskrit",
+   "pages": 50,
+   "script": "print (printed Devanagari by eye; manuscripts, lithographs and other scripts were set aside before the test)",
+   "controls": {
+    "planted_caught": "50/50",
+    "unchanged_reference_false_alarms": "0/50",
+    "planted_one_error_called_serious": "41/50",
+    "_note": "K1 is the reference with ONE planted word swap or dropped line: the share called serious is how strict the wrong-text cut is",
+    "valid": true
+   },
+   "routes": {
+    "surya": {
+     "n": 50,
+     "books": 50,
+     "accept": "32/50",
+     "wrong_text_pages": "18/50",
+     "classes_k_of_n": {},
+     "invented_pages": "0/50",
+     "did_not_read": "0/50",
+     "served": "Surya 2 (datalab-to/surya-ocr-2) on gex45 through vLLM, the whole page at <= 2,400 px, no guards applied",
+     "sensitivity": {
+      "_about": "the same pages under other cuts of the same grades; none is the route judge's scale",
+      "wrong_text_if_grade_ge_2_meaning_changed": "36/50",
+      "wrong_text_if_grade_ge_3_structural": "3/50",
+      "wrong_text_if_grade_4_only": "0/50",
+      "errors_ge2_counted": 98
+     }
+    },
+    "flash-7243": {
+     "n": 50,
+     "books": 50,
+     "accept": "33/50",
+     "wrong_text_pages": "17/50",
+     "classes_k_of_n": {
+      "invented": "1/50"
+     },
+     "invented_pages": "1/50",
+     "did_not_read": "0/50",
+     "served": "Flash as #7243 defined the arm: the stored gemini-3-flash-preview read where there was one (10 pages), else agy gemini-3.8-flash-low, one page a call (40 pages)",
+     "sensitivity": {
+      "_about": "the same pages under other cuts of the same grades; none is the route judge's scale",
+      "wrong_text_if_grade_ge_2_meaning_changed": "38/50",
+      "wrong_text_if_grade_ge_3_structural": "3/50",
+      "wrong_text_if_grade_4_only": "1/50",
+      "errors_ge2_counted": 118
+     }
+    }
+   },
+   "paired": {
+    "surya|flash-7243": {
+     "both": 23,
+     "a_only": 9,
+     "b_only": 10,
+     "neither": 8
+    }
+   }
+  }
+ }
+}

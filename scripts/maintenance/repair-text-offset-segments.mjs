@@ -11,9 +11,10 @@
  *   embedding permutation) and the shared field list SHIFT_FIELDS.
  *
  * Gate (fail closed): the move plan is SIMULATED and the result is read against the IIIF
- * canvas labels (scripts/lib/canvas-label-alignment.mjs). The script refuses unless the
- * book scores `shifted` before and at least --min-aligned (default 0.95) of scored pages
- * land at offset 0 after. A wrong segment spec therefore cannot be written.
+ * canvas labels (scripts/lib/canvas-label-alignment.mjs). The script refuses unless fewer
+ * than --min-aligned (default 0.95) of scored pages sit at offset 0 before (the book is
+ * `shifted`, or `mixed` when only part of it is off) and at least that share land at offset 0
+ * after (segmentGate). A wrong segment spec therefore cannot be written.
  * A book the labels cannot score (ordinal labels, or an unreachable manifest) is refused
  * unless --by-eye names the opened slots that showed the moved text, one near each end of
  * every segment; the gate used is recorded on the book_events row.
@@ -40,7 +41,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { computeSegmentMoves, parseSegments, SHIFT_FIELDS } from '../lib/text-shift.mjs';
-import { labelNumber, ordinalLabels, slotOffsets, bookVerdict, offsetRuns } from '../lib/canvas-label-alignment.mjs';
+import { labelNumber, ordinalLabels, slotOffsets, bookVerdict, offsetRuns, segmentGate } from '../lib/canvas-label-alignment.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { isHumanEditedTranslation, resyncMirrors } from '../lib/translation-text-repair.mjs';
 
@@ -197,7 +198,13 @@ try {
   if (residual.length) console.log(`  residual non-zero runs after the move (read by eye): ${residual.map((r) => `${r.from}-${r.to}:${r.offset}(${r.scored})`).join(' ')}`);
   const gate = BY_EYE && before.verdict === 'unscored' ? { by: 'eye', slots: BY_EYE } : { by: 'labels' };
   if (gate.by === 'eye') console.log(`  gate: labels cannot score this book; by eye at slots ${BY_EYE.join(',')}`);
-  else if (before.verdict !== 'shifted' || zeroShare < MIN_ALIGNED) { console.log(`[REFUSE] gate: need before=shifted and after offset-0 share >= ${MIN_ALIGNED}`); process.exit(2); }
+  else {
+    // A partly shifted book reads `mixed` before (v2#5924); segmentGate passes it when the move
+    // takes it from below MIN_ALIGNED to at least MIN_ALIGNED.
+    const g = segmentGate(before, afterV, MIN_ALIGNED);
+    if (!g.ok) { console.log(`[REFUSE] gate: ${g.why}`); process.exit(2); }
+    console.log(`  gate: labels, ${g.why}`);
+  }
 
   const cleared = moves.filter((m) => m.cleared).map((m) => m.page_number);
   // Text whose slot is overwritten (a move target) and which no move carries elsewhere. Slots outside every segment keep their text.

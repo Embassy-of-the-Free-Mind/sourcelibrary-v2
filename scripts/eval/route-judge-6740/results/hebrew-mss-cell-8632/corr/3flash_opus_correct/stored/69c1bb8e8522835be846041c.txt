@@ -1,0 +1,37 @@
+<language>Latin</language>
+<page-type>text</page-type>
+<warning>The text on this page is extremely faded and suffers from significant bleed-through from the reverse side, making much of the original ink nearly illegible.</warning>
+
+<unclear>non solum illud, sed etiam</unclear>
+<unclear>quod ad hunc modum se habet</unclear>
+<unclear>ut si quis velit aliud quid agere</unclear>
+<unclear>et non illud ipsum quod</unclear>
+
+<unclear>Nam sicut supra dictum est</unclear>
+<unclear>ita et hic videtur esse</unclear>
+<unclear>quodam modo in hoc casu</unclear>
+<unclear>nam nisi id esset, non posset</unclear>
+<unclear>fieri ut aliquis ita ageret</unclear>
+<unclear>ut non videretur sibi ipsi</unclear>
+<unclear>contrarius esse in hoc</unclear>
+<unclear>quod facit et vult.</unclear>
+
+---
+
+<unclear>Deinde considerandum est</unclear>
+<unclear>quomodo illud quod supra</unclear>
+<unclear>positum est, intelligi debeat</unclear>
+<unclear>namque in omni actione humana</unclear>
+<unclear>duo sunt quae maxime</unclear>
+<unclear>spectanda videntur, scilicet</unclear>
+<unclear>id quod agitur et finis</unclear>
+<unclear>propter quem agitur.</unclear>
+
+<unclear>Itaque cum quis aliquid</unclear>
+<unclear>facit, non solum id quod</unclear>
+<unclear>agit, sed etiam finem</unclear>
+<unclear>respicere debet, ut sit</unclear>
+<unclear>actio sua perfecta et</unclear>
+<unclear>rationi consentanea.</unclear>
+
+<vocab>actio humana, finis, ratio, contrarius, perfecta</vocab>

@@ -1,0 +1,70 @@
+[
+  {
+    "book_id": "6955739df63a7571091720cf",
+    "slot": 1,
+    "title": "De institutione musica (15th c. MS)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century two-column manuscript of Boethius, De institutione musica, Book I, chapters 10–13. It belongs in the OPenn/UPenn manuscript collections. The 'americana' tag fits less well, but it is a collection tag, not a wrong work.",
+    "rights_flag": null,
+    "structure_note": "structure.pages_translated is 0, but pages_translated_field is 106 and this page has a translation, so the counts disagree. The book is a manuscript, yet 49 pages carry a 'printed' number with 4 backsteps and 2 repeats. Those are most likely marginal numerals and corrections read as folios: this leaf has a marginal 'viii' and no foliation. They do not look like a real break in sequence.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "two columns of a gothic hand; red rubricated chapter headings; blue and red penwork initials (H, S, S); a marginal correction 'viii' in the left margin; edge of the facing leaf at right",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "ad malleũ .viii. et malleus .viii. põderũ", "image": "ad malleũ .viiii. et malleus .viii. pōderũ", "problem": "The first hammer weight is 9 (viiii) on the leaf, but the OCR has 8. This ruins the 12:9 ratio for the fourth, and the error carries into the translation.", "severity": "serious", "class": "O7" },
+          { "ocr": ".viii . uero pendẽs ad .vi. et", "image": "viiii . uero ponderũ ad .vi. et", "problem": "9 is misread as 8 again, and 'ponderũ' as 'pendẽs'. The translation silently restores 9 here.", "severity": "moderate" },
+          { "ocr": "viii . uero ad .viiii. in ſeſqui-", "image": "viiii. uero ad .viii. in sesqui-", "problem": "The two terms are swapped (9 to 8 becomes 8 to 9). The ratio is the same.", "severity": "minor" },
+          { "ocr": "quatuor equorũ põderũ", "image": "cyatos equorũ pōderũ", "problem": "'cyathos' (ladles) is misread as 'quatuor' (four)", "severity": "moderate" },
+          { "ocr": "uirga l'erea feritante patiens", "image": "uirga l'erea ferreaue percutiens", "problem": "'ferreaue percutiens' is garbled into nonsense. The translation follows the leaf.", "severity": "moderate" },
+          { "ocr": "magnitudines cor-\nporum", "image": "magnitudines cor-|darum", "problem": "'cordarum' (of strings) is misread as 'corporum' (of bodies), and the translation carries 'bodies'", "severity": "moderate" },
+          { "ocr": "nõ tacitũ\nmeatus", "image": "nõ tacit(ur)|nitatis", "problem": "'taciturnitatis' is misread as 'tacitũ meatus'", "severity": "minor" },
+          { "ocr": "quantitatibuſque\nlaxandis", "image": "grauitatibusque laxandis", "problem": "'grauitatibus' is misread as 'quantitatibus'", "severity": "minor" },
+          { "ocr": "Di<s> uox", "image": "Dĩs uox (omnis uox)", "problem": "The 'omnis' abbreviation is not recognised, and a stray tag is left in the OCR", "severity": "minor" },
+          { "ocr": "uniuſcuiſqʒ <unclear>p'aci-\nmen</unclear>", "image": "vnusqsqz l'acu|men (unusquisque uel acumen)", "problem": "'uel acumen' is misread and marked unclear", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "Malleus uero .xii. põderũ\nad malleũ .viii.", "english": "The hammer of 12 pounds compared with the hammer of 8", "problem": "The leaf reads 12 to 9. The English follows the OCR's misread 8, so it says 12:8 (a fifth) makes a fourth. In a passage that exists to give the ratios, that is a false number.", "severity": "serious", "class": "O7" },
+          { "source": "<margin>viii</margin>", "english": "<margin>9</margin>", "problem": "The marginal correction reads viii (8), but the English gives 9. On the leaf it corrects the 'ix' in that line to viii (12:8, the fifth). The English reverses its value and leaves it unexplained.", "severity": "moderate", "class": "O7" },
+          { "source": "magnitudines cor-\nporum / ſonũq; metimur", "english": "by which we measure the sizes of bodies and sounds", "problem": "This carries the OCR misread. The leaf says the sizes of strings ('cordarum').", "severity": "moderate" },
+          { "source": "Di<s> uox aut", "english": "For the voice is either", "problem": "'omnis' (every voice) is dropped", "severity": "minor" },
+          { "source": "<meta>continues from previous page: \"Therefore, these hammers which were of weights 12 and 6...\"</meta>", "english": "<meta>continues from previous page: \"Therefore, these hammers which were of weights 12 and 6...\"</meta>", "problem": "The meta repeats the previous page's English", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "A raw <column-break/> tag stands between 'the differences of the voice.' and 'For the voice is either' in the reader text", "severity": "moderate", "class": "D1" },
+          { "note": "A bare '9' in a <margin> block between two sentences, with nothing to tell the reader it is a scribal correction", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"diapason\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"diatessaron\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"epitritam\"; the Greek name for the 4:3 ratio, equiva", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"diapente\"", "verdict": "ok", "helpful": false },
+            { "quote": "a whole tone", "verdict": "ok", "helpful": false },
+            { "quote": "a 9:8 ratio", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"symphoniarum\"; here meaning consonances, sounds t", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"acetabulis\"; small vessels, here used as resonatin", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"regula\"; the monochord, a single-string instrument", "verdict": "ok", "helpful": true },
+            { "quote": "continuous", "verdict": "ok", "helpful": true },
+            { "quote": "intervallic", "verdict": "ok", "helpful": true },
+            { "quote": "a Roman writer on music and other liberal arts, whose works a", "verdict": "unsupported", "helpful": true },
+            { "quote": "epic poetry, recited in a chanting manner", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"spiritus\"", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "<margin>9</margin>", "why": "A reader sees a stray number in the margin. Without a note they cannot tell it is a scribe's correction of a ratio term in the line, or what it corrects." },
+            { "english": "The hammer of 12 pounds compared with the hammer of 8, and the hammer weighing 8 compared with the hammer of 6, joined together the consonance of a fourth", "why": "There is no note on the ratios, so a reader cannot see that 12:8 is not a fourth. As written, the sentence contradicts the 4:3 gloss two notes later." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The pages are the right leaf of a Boethius manuscript, and the translation is mostly fluent and faithful. But the hammer-ratio passage gives a false weight (12:8 'makes a fourth') taken from an OCR misread, and the marginal correction is turned into the wrong number. A raw <column-break/> tag also shows in the reader text."
+  }
+]

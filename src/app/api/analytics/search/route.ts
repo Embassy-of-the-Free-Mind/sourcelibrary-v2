@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
@@ -8,7 +8,7 @@ export const maxDuration = 30;
 const cache = new Map<number, { data: any; timestamp: number }>();
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
-export const GET = withAuth(async (request, session) => {
+export const GET = withInnerCircleAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '30', 10);

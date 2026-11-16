@@ -1,5 +1,5 @@
 /* Typography imports - must be first. Self-hosted from public/fonts/google/, not
-   fonts.googleapis.com, which mainland China blocks (#7537). Inter + Newsreader keep
+   fonts.googleapis.com, which mainland China blocks (#7537). The sans faces + Newsreader keep
    display=swap; headings and non-Latin scripts keep display=optional. */
 @import "./fonts-google.css";
 
@@ -44,11 +44,13 @@
   --border-light: #e8e4dc;
   --border-medium: #d4cfc4;
 
-  /* Status colors */
-  --status-success: #16a34a;
-  --status-error: #dc2626;
-  --status-warning: #d97706;
-  --status-info: #2563eb;
+  /* Status colors. Each clears 4.5:1 as text on cream, on warm and on its own 15%
+     tint over cream (the badge pattern), and with white text on a solid fill. The
+     Tailwind bridge below repeats these values: change both together (v3#317). */
+  --status-success: #2a7048;
+  --status-error: #b82a20;
+  --status-warning: #a04e07;
+  --status-info: #33629f;
 
   /* Legacy support */
   --background: var(--bg-cream);
@@ -58,10 +60,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Newsreader', Georgia, serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  /* The wordmark's face. The logo kept Inter when the UI moved to Source Sans 3 (v3#317). */
+  --font-logo: 'Inter', 'Source Sans 3', sans-serif;
 
   /* Palette as Tailwind utilities */
   --color-cream: #fdfcf9;
@@ -75,7 +78,12 @@
   --color-accent-sage: #8b9a7d;
   --color-accent-violet: #7c5db5;
   --color-accent-sage-dark: #5e6d52;
-  --color-accent-gold-dark: #9e7c3c;
+  /* The -dark accents exist to be text on paper, and the reader's night theme gives
+     them lighter values. They read the variable so each theme gets its own, and so
+     the class cannot drift from it: gold-dark sat at a copied #9e7c3c (3.8:1 on
+     cream) for months after the variable was darkened (v3#317). */
+  --color-accent-gold-dark: var(--accent-gold-dark);
+  --color-accent-violet-dark: var(--accent-violet-dark);
   --color-border-light: #e8e4dc;
   --color-border-medium: #d4cfc4;
 
@@ -91,10 +99,10 @@
   --color-search-highlight: rgba(192, 154, 93, 0.5);
 
   /* Status colors as Tailwind utilities */
-  --color-status-success: #16a34a;
-  --color-status-error: #dc2626;
-  --color-status-warning: #d97706;
-  --color-status-info: #2563eb;
+  --color-status-success: #2a7048;
+  --color-status-error: #b82a20;
+  --color-status-warning: #a04e07;
+  --color-status-info: #33629f;
 
   /* Container widths — max 3 sizes site-wide (see #232)
      Wide: browse, collections, multi-column layouts
@@ -161,7 +169,7 @@ mark.sl-search-hl {
   padding: 12px 24px;
   background: var(--bg-dark);
   color: #fff;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-weight: 500;
   border-radius: 0;
@@ -176,7 +184,7 @@ mark.sl-search-hl {
 body {
   background: var(--bg-cream);
   color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -184,13 +192,58 @@ body {
 /* Typography */
 h1, h2, h3, h4 {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
+/* The default heading weight lives in @layer base so a weight class on a heading
+   applies. It used to sit in the unlayered rule above, which beats every Tailwind
+   utility: `<h3 class="font-semibold">` rendered at 400 on 745 headings (v3#317). */
+@layer base {
+  h1, h2, h3, h4 {
+    font-weight: 400;
+  }
+}
+
 .font-serif {
   font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Cormorant floor. Cormorant Garamond is a display face: under 24px its thin strokes
+   and small x-height go faint on cream. A heading or `font-serif` text whose size
+   class never reaches text-2xl is set in Newsreader instead. Nothing to remember at
+   the call site: write the size you want and the family follows. Text with another
+   family class (font-sans, font-body, font-logo, font-mono) is left alone, and so is
+   anything sized without a Tailwind class. */
+:is(h1, h2, h3, h4, .font-serif):is(.text-xs, .text-sm, .text-base, .text-lg, .text-xl):not(
+    .font-sans, .font-body, .font-logo, .font-mono,
+    [class*=':text-2xl'], [class*=':text-3xl'], [class*=':text-4xl'], [class*=':text-5xl'],
+    [class*=':text-6xl'], [class*=':text-7xl'], [class*=':text-8xl'], [class*=':text-9xl'],
+    [class*=':text-[']
+  ) {
+  font-family: 'Newsreader', Georgia, serif;
+  letter-spacing: 0;
+}
+
+/* A small heading in Newsreader reads as a heading at 500. In base, so a weight
+   class still wins. */
+@layer base {
+  :is(h1, h2, h3, h4):is(.text-xs, .text-sm, .text-base, .text-lg, .text-xl) {
+    font-weight: 500;
+  }
+}
+
+/* No bold on sans text: the heaviest sans weight is semibold, 600 (v3#322). The browser's
+   own default for strong, b and th asks for 700. Newsreader and Cormorant stop at
+   600 as well, so serif text draws exactly as before; the Arabic and Rashi faces, which do
+   have a 700, keep it. In base, so a weight class still wins. */
+@layer base {
+  strong, b, th {
+    font-weight: 600;
+  }
+  :is(.font-arabic, .font-rashi, [lang="ar"], .prose-manuscript.rtl, .prose-manuscript[dir="rtl"]) :is(strong, b) {
+    font-weight: 700;
+  }
 }
 
 .font-body {
@@ -198,7 +251,12 @@ h1, h2, h3, h4 {
 }
 
 .font-sans {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* The "Source Library" wordmark only. Everything else in sans is font-sans. */
+.font-logo {
+  font-family: 'Inter', 'Source Sans 3', sans-serif;
 }
 
 /* Links — must be in @layer base so Tailwind utilities (text-white etc.) can override */
@@ -353,7 +411,7 @@ h1, h2, h3, h4 {
    otherwise beat an inherited inline style. */
 [data-reader-v2-typeface='sans'],
 [data-reader-v2-typeface='sans'] .prose-manuscript {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Reader v2 is a fixed-frame reader: it owns exactly one viewport and never
@@ -653,7 +711,7 @@ main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
   border: 1px solid var(--border-light);
   padding: 2px 8px;
   border-radius: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 12px;
   color: var(--text-muted);
   margin: 0.5em 0;
@@ -661,7 +719,7 @@ main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
 
 /* Labels */
 .label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -674,7 +732,7 @@ main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
@@ -701,7 +759,7 @@ main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-secondary);

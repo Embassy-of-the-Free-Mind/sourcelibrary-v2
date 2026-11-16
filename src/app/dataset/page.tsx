@@ -3,6 +3,7 @@ import OutboundLink from '@/components/analytics/OutboundLink';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getReadDb } from '@/lib/mongodb';
+import { BOOK_CORPUS_STATS } from '@/lib/public-stats';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 // Must be a finite number — `false` would cache a bad-render fallback forever.
@@ -12,7 +13,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Dataset | Source Library',
   description:
-    'Structured parallel-text training data from 19,000+ historical texts in more than 50 languages. Page-aligned OCR, English translations, and scholarly metadata.',
+    `Structured parallel-text training data from ${BOOK_CORPUS_STATS.books} historical texts in more than 50 languages. Page-aligned OCR, English translations, and scholarly metadata.`,
   alternates: { canonical: '/dataset' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],

@@ -116,7 +116,9 @@ export async function requireAuth(): Promise<Session> {
 /**
  * Global inner-circle membership (#3846): a memberships doc
  * `{ email, tenantId: null, role: 'inner_circle' | 'editor', status: 'active' }`
- * grants access to the /curation/* surfaces and their APIs — nothing else.
+ * grants access to the inner-circle surfaces (/curation/*, /analytics,
+ * /experiments, /jobs, /learn/maya/expert) and the APIs behind them that are
+ * wrapped in withInnerCircleAuth — nothing else.
  *
  * Deliberately NOT resolved into the session role: minting `editor` into the
  * JWT would unlock every editor-gated surface (imports, metadata edits) for
@@ -145,7 +147,7 @@ async function isGlobalInnerCircle(email: string | null | undefined): Promise<bo
   }
 }
 
-/** Page-side gate for /curation/* layouts. Superadmins pass automatically. */
+/** Page-side gate for the inner-circle layouts (/curation, /analytics, /experiments, /jobs). Superadmins pass automatically. */
 export async function requireInnerCircle(loginPath = '/auth/signin'): Promise<Session> {
   const session = await getSession();
   if (!session?.user) {
@@ -158,7 +160,18 @@ export async function requireInnerCircle(loginPath = '/auth/signin'): Promise<Se
   redirect('/unauthorized');
 }
 
-/** Route-side gate matching requireInnerCircle. No CRON bypass — nothing unattended may actuate these queues. */
+/**
+ * Route-side gate matching requireInnerCircle. No CRON bypass — nothing
+ * unattended may actuate the curation queues, and no script calls the
+ * dashboard read routes.
+ *
+ * Two kinds of route use it: the /curation queues (read and adjudicate), and
+ * the GET handlers that feed the /analytics, /experiments and /jobs pages.
+ * For the dashboards it is a READ gate only: every handler in those folders
+ * that writes, spends or queues stays on withAuth at editor or above, which a
+ * global inner-circle membership does not satisfy (see isGlobalInnerCircle).
+ * Pinned by tests/unit/inner-circle-dashboard-routes.test.ts.
+ */
 export function withInnerCircleAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
 ): (request: NextRequest, context?: any) => Promise<NextResponse> {
@@ -236,9 +249,10 @@ export async function isInnerCircle(): Promise<boolean> {
 
 // requireInnerCircle now lives above with real inner-circle semantics (#3846);
 // the legacy alias here mapped to requireRole('editor'), which never resolved
-// on the main site (superadmin-only in practice). Its four callsites
-// (/analytics, /experiments, /jobs, /traffic) now open to inner-circle
-// members as the name always promised.
+// on the main site (superadmin-only in practice). Its callsites
+// (/analytics, /experiments, /jobs) now open to inner-circle members as the
+// name always promised; /traffic has since moved to /admin/traffic, which is
+// admin-only.
 
 // --- Dual-mode identity resolution for engagement APIs ---
 
@@ -290,10 +304,17 @@ export async function resolveIdentity(request: NextRequest): Promise<ResolvedIde
  * Phase 1 tenant verification:
  * - If x-tenant-id is present (tenant-scoped route), verifies session tenantId matches
  * - Prevents cross-tenant data access via crafted headers
+ *
+ * The default role is `editor` (fail closed). Sign-up is open and every new
+ * account is a `reader`, so a reader-level route is one any visitor can reach
+ * after a free sign-in. Pass `{ minRole: 'reader' }` explicitly, and only for
+ * routes that touch the caller's own data (reading history, own notes).
+ * `tests/unit/withauth-explicit-minrole.test.ts` fails CI on a call that
+ * does not name a minRole.
  */
 export function withAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>,
-  { minRole = 'reader' as Role }: { minRole?: Role } = {}
+  { minRole = 'editor' as Role }: { minRole?: Role } = {}
 ): (request: NextRequest, context?: any) => Promise<NextResponse> {
   return async (request: NextRequest, context?: any) => {
     // CRON_SECRET bypass — pipeline workers call admin routes with this token
@@ -360,6 +381,16 @@ export function withAuth(
 
     return handler(request, session, context);
   };
+}
+
+/**
+ * True when the session's platform role is at least `minRole`. For handlers
+ * that let a reader act on their own records and staff act on anyone's.
+ * Platform role only: tenant membership is not consulted here.
+ */
+export function sessionHasRole(session: Session | null | undefined, minRole: Role): boolean {
+  const role = normalizeRole((session?.user as any)?.role);
+  return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL[minRole];
 }
 
 // --- Shims — keep existing callsites working during Phase 1 migration ---

@@ -32,16 +32,19 @@ await withMongo(async (db) => {
   const hasLogin = await users.countDocuments({ lastLogin: { $exists: true } });
   console.log('=== USERS ===');
   console.log(`total signups        ${total}`);
-  console.log(`emailVerified        ${verified}`);
+  console.log(`by email link       ${verified}   (emailVerified is set only by a clicked sign-in link; Google sign-ups never carry it, so this is NOT a verification rate, #48)`);
   console.log(`has logged in        ${hasLogin}`);
   console.log(`new last 30d         ${new30}`);
   console.log(`new last 7d          ${new7}`);
   console.log(`new last 24h         ${new1}`);
 
-  // beta / newsletter subscribers
-  for (const cn of ['beta_subscribers', 'newsletter_subscribers']) {
-    try { const c = await db.collection(cn).countDocuments({}); console.log(`${cn}: ${c}`); } catch {}
-  }
+  // Mailing-list signups without an account (/api/beta/subscribe). This is NOT
+  // the newsletter's reach: letters go to the Resend audience "Source Library
+  // Newsletter", which scripts/workers/refresh-newsletter-audience.mjs builds
+  // from users + these + volunteers + memberships and prints the size of daily.
+  // (`newsletter_subscribers` was counted here until #77: no code ever wrote
+  // that collection, so it reported 0 and read as "nobody subscribes".)
+  try { const c = await db.collection('beta_subscribers').countDocuments({}); console.log(`beta_subscribers (list signups without an account): ${c}`); } catch {}
 
   // ---- DAU / MAU / DWELL from analytics_pageviews ----
   const pv = db.collection('analytics_pageviews');

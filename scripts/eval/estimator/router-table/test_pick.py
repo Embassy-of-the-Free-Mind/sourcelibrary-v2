@@ -424,6 +424,35 @@ class Bind(unittest.TestCase):
     def test_keep_live_beats_everything_but_a_person(self):
         self.assertEqual(self.bound('HOLD (x)', 'tr-lite', cell={'id': 'c/unknown', 'current': 'lite'}), 'tr-lite')
 
+    def test_an_opus_live_route_is_kept_only_with_evidence_in_the_cell(self):
+        # #360: hebrew-flash3/unknown and five more HOLD cells kept an Opus route never measured there
+        opus = self.r('3flash>opus', 'claude', 'opus-img@10', tested=False)
+        rs = [opus] + self.rs()[2:]
+        self.assertEqual(B.bind(self.C, 'HOLD (x)', opus, '3flash>opus', [], rs, self.PM)[0], 'agy-read')
+        measured = dict(opus, tested=True); rs = [measured] + self.rs()[2:]
+        self.assertEqual(B.bind(self.C, 'HOLD (x)', measured, '3flash>opus', [measured], rs, self.PM)[0], '3flash>opus')
+
+    def test_an_unmeasured_agy_route_is_not_the_default_where_measured_agy_fails_the_floor(self):
+        # #360: latin-flash3/unknown (549K pages) took an untested pero>agy while every measured agy route invented text
+        lite = dict(self.r('lite', None, 'none'), hard_floor_block=True)
+        blocked, untested = dict(self.r('agy-read', 'agy', 'agy-read'), hard_floor_block=True), self.r('pero>agy@4', 'agy', 'agy@4', tested=False)
+        self.assertIsNone(B.bind(self.C, 'HOLD (x)', lite, 'lite', [lite, blocked], [lite, blocked, untested], self.PM)[0])
+        self.assertIsNone(B.menu_default(self.C, 'HOLD (no defect verdicts: x)', [lite, blocked], [lite, blocked, untested], self.PM))
+        # negative control: agy never measured here, so the untested agy route is the default
+        self.assertEqual(B.bind(self.C, 'HOLD (x)', lite, 'lite', [lite], [lite, untested], self.PM)[0], 'pero>agy@4')
+
+    def test_an_agy_route_that_passed_none_of_its_few_pages_is_not_the_default(self):
+        # #360: arabic-flash3/manuscript (14K pages) bound 3flash>agy on "too few pages here" at 0/2
+        lite = dict(self.r('lite', None, 'none'), hard_floor_block=True)
+        zero = dict(self.r('3flash>agy', 'agy', 'agy-low'), k=0, n=2)
+        self.assertIsNone(B.bind(self.C, 'HOLD (x)', lite, 'lite', [lite], [lite, zero], self.PM)[0])
+        self.assertIsNone(B.menu_default(self.C, 'HOLD (no defect verdicts: x)', [lite], [lite, zero], self.PM))
+        # an untested agy sibling is still the default; so is a too-few route that passed a page
+        untested = self.r('agy-read', 'agy', 'agy-read', tested=False)
+        self.assertEqual(B.bind(self.C, 'HOLD (x)', lite, 'lite', [lite], [lite, zero, untested], self.PM)[0], 'agy-read')
+        one = dict(zero, k=1)
+        self.assertEqual(B.bind(self.C, 'HOLD (x)', lite, 'lite', [lite], [lite, one], self.PM)[0], '3flash>agy')
+
     def test_held_and_plain_planned_bind_nothing_but_a_planned_decision_binds(self):
         rs = self.rs()
         self.assertIsNone(self.bound('held', 'lite', rs, cell=dict(self.C, held='x')))

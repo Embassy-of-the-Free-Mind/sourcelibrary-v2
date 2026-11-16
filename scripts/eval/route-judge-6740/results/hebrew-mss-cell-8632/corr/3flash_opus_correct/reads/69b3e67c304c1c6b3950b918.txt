@@ -1,0 +1,31 @@
+<warning>Handwritten Oriental (Yemenite-style) square/semi-cursive Hebrew script. A stain at the lower right obscures part of a line, and the bottom line is stylised and only partly legible.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>קפ״א</page-num>
+<meta>A later pencil number, 165, and a short note in a different hand appear in the upper outer margin. The edge of the facing leaf is visible at right and is not transcribed.</meta>
+
+<margin><unclear>ז״ב</unclear> 165</margin>
+
+ומלאכו צדקיאל ומשרתו צדק׳ יום ו׳ <unclear>כבבתי</unclear>:
+יום ז׳ ואני דרי ל׳ ומלאכו קפציאל ומשרתו
+שבתי / ובעיני כל רואי ותגמלני חסדים
+טובים והטה לבב כל אדם שיש לי עסק
+עמהם לכל אשר אחפוץ והשכר עמם לכל
+אשר ארצה ובטל כל מחשבות שונאי והפר
+כל עצת אויבי ומלא כל משאלותי לטובה
+ככתוב יתן לך כלבבך וכל עצתך ימלא׳
+נרננה בישועתך ובשם אלהינו נדגול
+ימלא יי כל משאלותיך ותהיה עם לבבי בעת
+מחשבי ועם ידי בעת מעבדי ועם פי בעת
+הטיפי ותשכילני ותורני בכל דרכי ותתני חן
+בכל מהלכי ותשלח ברכה בכל מעשה ידי ואל
+תצריכני לידי <unclear>מכל</unclear> מעפר עוני תקימני ומאשפות
+דלותי תרוממני ותעמידני <unclear>במעון</unclear> ברכותיך ותגמלני
+חסדים טובים כא״י מגמל חסדים טובים לעמו
+ישר׳׳
+
+<unclear>בנ״נ שלום</unclear>
+
+<vocab>צדקיאל, קפציאל, צדק, שבתי, חסדים טובים, ישועתך, ברכה, משאלותי, גומל חסדים טובים</vocab>

@@ -70,7 +70,7 @@ export default function VisualizingClassificationPage() {
           What Each View Shows
         </h2>
 
-        <h3 className="text-lg font-display font-semibold text-primary mt-8 mb-3">
+        <h3 className="text-lg font-serif font-semibold text-primary mt-8 mb-3">
           Map: Semantic Similarity, Colored by Facet
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
@@ -81,7 +81,7 @@ export default function VisualizingClassificationPage() {
           tradition, but scatter across natural-philosophy and medicine when colored by domain.
         </p>
 
-        <h3 className="text-lg font-display font-semibold text-primary mt-8 mb-3">
+        <h3 className="text-lg font-serif font-semibold text-primary mt-8 mb-3">
           Heatmap: Tradition &times; Domain (Bacon&rsquo;s Desiderata)
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
@@ -91,7 +91,7 @@ export default function VisualizingClassificationPage() {
           Sufi &times; music is white (a known gap). Every white cell is a curation opportunity.
         </p>
 
-        <h3 className="text-lg font-display font-semibold text-primary mt-8 mb-3">
+        <h3 className="text-lg font-serif font-semibold text-primary mt-8 mb-3">
           Flow: How Traditions Feed into Domains
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
@@ -102,7 +102,7 @@ export default function VisualizingClassificationPage() {
           at that intersection.
         </p>
 
-        <h3 className="text-lg font-display font-semibold text-primary mt-8 mb-3">
+        <h3 className="text-lg font-serif font-semibold text-primary mt-8 mb-3">
           Connections: When Traditions Overlap
         </h3>
         <p className="text-secondary leading-relaxed mb-6">

@@ -41,12 +41,12 @@
 # the shared main directory.
 #
 # Env: SAFE_MERGE_MAX_TEST_AGE_HOURS (default 24),
-#      SAFE_MERGE_REPO (default Embassy-of-the-Free-Mind/sourcelibrary-v2),
+#      SAFE_MERGE_REPO (default Embassy-of-the-Free-Mind/sourcelibrary-v3),
 #      SAFE_MERGE_POLL_SECS (default 5), SAFE_MERGE_POLL_TRIES (default 24).
 
 set -uo pipefail
 
-REPO="${SAFE_MERGE_REPO:-Embassy-of-the-Free-Mind/sourcelibrary-v2}"
+REPO="${SAFE_MERGE_REPO:-Embassy-of-the-Free-Mind/sourcelibrary-v3}"
 POLL_SECS="${SAFE_MERGE_POLL_SECS:-5}"
 POLL_TRIES="${SAFE_MERGE_POLL_TRIES:-24}"
 VIEW_FIELDS=number,title,state,isDraft,labels,baseRefName,headRefName,headRefOid,isCrossRepository,mergeable,mergeStateStatus,statusCheckRollup

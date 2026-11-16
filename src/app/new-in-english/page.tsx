@@ -45,7 +45,7 @@ export default async function NewInEnglishPage() {
       {weeks.map((w, i) =>
         w.works.length === 0 ? null : (
           <section key={w.from} className="mb-14">
-            <h2 className="font-display text-2xl text-primary mb-1">
+            <h2 className="font-serif text-2xl text-primary mb-1">
               {i === 0 ? 'This week' : i === 1 ? 'Last week' : `${fmt(w.from)} to ${fmt(w.to)}`}
             </h2>
             <p className="text-muted mb-6">

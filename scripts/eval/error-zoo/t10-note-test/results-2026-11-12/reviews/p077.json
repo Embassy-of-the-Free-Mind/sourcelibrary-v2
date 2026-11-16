@@ -1,0 +1,45 @@
+[
+  {
+    "book_id": "69a5ef38bfd8cafd91e43e69",
+    "slot": 1,
+    "title": "Charta lusoria",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is assigned, so there is no shelf to misfit. A 1588 Jost Amman playing-card book with Latin verses fits a general early modern holding. Page 1 is only the later marbled-paper cover, so it cannot confirm the work.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree. structure.pages_translated is 0, but the book field pages_translated is 103: either the field is stale or the translations are not where the count looks. Only 62 of 134 pages carry a printed number, with 4 backsteps and 4 repeats. For a woodcut card book with plates and unnumbered leaves, these are more likely misread numerals or plate captions than a splice, but I cannot confirm that from one cover page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "front cover in combed marbled paper with a light paper/vellum spine strip; star-bordered shelfmark label upper left reading 'Res. 4º / Gymn. / 3'; no text block",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<page-type>text</page-type>", "image": "a binding cover with only a shelfmark label", "problem": "page type self-reported as text on a cover", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "->Gymn.<-", "english": "->.<-", "problem": "The 'Gymn.' line of the shelfmark is dropped and only its full stop is kept. The summary then gives the shelfmark as \"Res. 4º 3,\" which misstates the label.", "severity": "moderate", "class": "T9" },
+          { "source": "(no catchword on the leaf)", "english": "The catchword at the foot of the page belongs to the next page and is not translated.", "problem": "Boilerplate meta invents a catchword on a cover that has none.", "severity": "moderate", "class": "T15" }
+        ],
+        "other": [
+          { "note": "The OCR's arrow markup leaks into the reader text: \"->**********<-\", \"->Res. 4º<-\", \"->.<-\"", "severity": "moderate", "class": "D1" },
+          { "note": "The image description is turned into a <note> and shown as apparatus in the reading flow, so the cover is presented as if it had translatable content", "severity": "minor", "class": "D1" },
+          { "note": "The meta invents apparatus: it states a catchword at the foot of the page, and there is none", "severity": "moderate", "class": "T15" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "The front cover of a book bound in marbled paper with a \"pea", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "->Res. 4º<-", "why": "The shelfmark abbreviations are glossed only in the <meta> box ('Res.' = reserve, '4º' = quarto). There is no note in the reading text, and the dropped 'Gymn.' (a Gymnasium library holding) is never explained." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The cover is transcribed correctly. The English drops 'Gymn.' from the shelfmark, leaks '->…<-' markup, and carries a meta about a catchword that does not exist. The 0 vs 103 translated-page counts should be checked."
+  }
+]

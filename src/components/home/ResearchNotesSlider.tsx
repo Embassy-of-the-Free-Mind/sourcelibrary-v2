@@ -27,7 +27,7 @@ export default function ResearchNotesSlider({
       ariaLabel="articles"
       header={
         <>
-          <h2 className="text-3xl md:text-4xl text-primary font-display">{heading}</h2>
+          <h2 className="text-3xl md:text-4xl text-primary font-serif">{heading}</h2>
           <p className="text-secondary mt-2 max-w-2xl">{subtitle}</p>
         </>
       }

@@ -133,7 +133,7 @@ export default function SignUpCTA({
           {t.eyebrow}
         </p>
         <h2
-          className="text-2xl md:text-3xl lg:text-4xl font-display mb-5 leading-snug"
+          className="text-2xl md:text-3xl lg:text-4xl font-serif mb-5 leading-snug"
           style={{ color: '#f5f0e8' }}
         >
           {t.heading}

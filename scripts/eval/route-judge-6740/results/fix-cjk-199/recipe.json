@@ -1,0 +1,26 @@
+{
+ "question": "route",
+ "issue": 199,
+ "stage": "ocr",
+ "languages": [
+  "lzh",
+  "ko"
+ ],
+ "baseline": "stored",
+ "arms": [
+  "stored",
+  "opus",
+  "fable"
+ ],
+ "batch": {
+  "pages_per_call": 1,
+  "tested": null
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": "none — not a router cell test: one mixed set of audit-flagged pages across six cells (v3#199)",
+ "waive": {}
+}

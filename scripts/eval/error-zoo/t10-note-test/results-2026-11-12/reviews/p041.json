@@ -1,0 +1,46 @@
+[
+  {
+    "book_id": "69c834666c6f3cc53c84e53b",
+    "slot": 1,
+    "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1613 German Fraktur devotional 'spiritual prognostication' that sets Scripture against astrological almanacs. It matches its catalogue record. No tradition or collection is given to test it against.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree with each other: structure.pages_translated is 0, but pages_translated_field is 57 (of 60), and this page has a translation. One of the two instruments is wrong. with_printed_number is 0, which fits this leaf: it carries a running head and a catchword but no printed page number. There are no backsteps, repeats or duplicate records.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "printed_marker": "wird",
+        "layout": "single column of Fraktur with Antiqua loan-words, running head over a rule, scripture references in the left (outer) margin, catchword at the foot; the book's fore-edge is visible on the left",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ein grosser unterscheid ist", "image": "ein groſ-ſer vnterſcheid iſt", "problem": "initial v silently normalised to u, though elsewhere the OCR keeps v ('vnd', 'vmb')", "severity": "minor" },
+          { "ocr": "denn Er ist selbst unwandelbar", "image": "Er iſt ſelbſt vnwandelbar", "problem": "the same v→u normalisation, inconsistent with the rest of the page", "severity": "minor" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The running head 'Geistlich Prognosticon.' is promoted to a top-level heading, '# Spiritual Prognostication', in the reader's English.", "severity": "minor", "class": "T16" },
+          { "note": "The meta 'continues from previous page: \"Yes, many say, the calendars often speak of many...\"' quotes the previous leaf. I cannot check it from this page.", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "a proverbial expression: they miss the mark by a wide margin", "verdict": "ok", "helpful": true },
+            { "quote": "forecast or prognostication", "verdict": "ok", "helpful": false },
+            { "quote": "influence", "verdict": "ok", "helpful": true },
+            { "quote": "calculation", "verdict": "ok", "helpful": true },
+            { "quote": "presides over, rules", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "Just ask the first world, which", "why": "'the first world' means the world before the Flood. A general reader will not know this, and the argument that follows depends on it." }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A faithful page. The OCR is near-exact, with only two silent v→u normalisations, and the translation is accurate. All five notes and glosses are correct and drawn from the words. The only blemishes are cosmetic: the running head shown as a heading, and the book's translated-page counts contradicting each other."
+  }
+]

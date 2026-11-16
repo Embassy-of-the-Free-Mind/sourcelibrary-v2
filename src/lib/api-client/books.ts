@@ -9,10 +9,6 @@ import type {
   BookStatusResponse,
   BookCategorizeRequest,
   BookCategorizeResponse,
-  BatchTranslateRequest,
-  BatchTranslateResponse,
-  BatchOcrRequest,
-  BatchOcrResponse,
   BookReimportRequest,
   BookReimportResponse,
   BookPagesResponse,
@@ -155,44 +151,6 @@ export const books = {
    */
   pages: async (id: string): Promise<BookPagesResponse> => {
     return await apiClient.get(getBookUrl(`/${id}/pages`));
-  },
-
-  /**
-   * Batch OCR book pages (async with Gemini Batch API)
-   */
-  batchOcrAsync: async (id: string, request: BatchOcrRequest): Promise<BatchOcrResponse> => {
-    return await apiClient.post(getBookUrl(`/${id}/batch-ocr-async`), request);
-  },
-
-  /**
-   * Batch OCR book pages with parent-child job architecture (multi-batch)
-   * Handles large books by splitting into multiple Gemini batches
-   * Only supports OCR and image extraction (not translation/summary)
-   */
-  batchOcrMulti: async (
-    id: string,
-    request: {
-      pageIds: string[];
-      action: Extract<import('@/lib/types/job').JobType, 'ocr' | 'image_extraction'>;
-      overwriteMode?: boolean;
-    }
-  ): Promise<{
-    success: boolean;
-    parentJobId: string;
-    childJobIds: string[];
-    totalBatches: number;
-    totalPages: number;
-    error?: string;
-  }> => {
-    // Use 2-minute timeout for batch operations (fetching images + Gemini submission)
-    return await apiClient.post(getBookUrl(`/${id}/batch-ocr-multi`), request, { timeout: 120000 });
-  },
-
-  /**
-   * Batch translate book pages (async with Gemini Batch API)
-   */
-  batchTranslateAsync: async (id: string, request: BatchTranslateRequest): Promise<BatchTranslateResponse> => {
-    return await apiClient.post(getBookUrl(`/${id}/batch-translate-async`), request);
   },
 
   /**
@@ -448,20 +406,6 @@ export const books = {
    */
   quote: async (id: string): Promise<{ quote: string; page: number; context: string }> => {
     return await apiClient.get(getBookUrl(`/${id}/quote`));
-  },
-
-  /**
-   * Stitch translations together
-   */
-  stitchTranslations: async (id: string): Promise<{ success: boolean; stitched_count: number }> => {
-    return await apiClient.post(getBookUrl(`/${id}/stitch-translations`));
-  },
-
-  /**
-   * Import batch of pages
-   */
-  importBatch: async (id: string, pages: Array<{ page_number: number; photo: string }>): Promise<{ imported: number }> => {
-    return await apiClient.post(getBookUrl(`/${id}/import-batch`), { pages });
   },
 
   /**

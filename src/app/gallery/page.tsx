@@ -103,7 +103,7 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
       {/* Header renders instantly; the data-heavy grid streams in below. */}
       <ConditionalSiteHeader variant="dark" />
       <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-6 md:pt-11 flex items-baseline justify-between gap-4">
-        <h1 className="text-2xl md:text-4xl font-display text-primary">The Gallery</h1>
+        <h1 className="text-2xl md:text-4xl font-serif text-primary">The Gallery</h1>
         {/* The curated image collections have their own page, as the book collections do. */}
         <Link href="/gallery/collections" className="text-[13px] sm:text-sm text-secondary underline decoration-border-medium underline-offset-[3px] hover:text-primary whitespace-nowrap">
           Image collections

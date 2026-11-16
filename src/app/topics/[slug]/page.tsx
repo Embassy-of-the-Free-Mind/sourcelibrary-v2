@@ -292,7 +292,7 @@ function BookCard({ book }: { book: BookItem }) {
         </div>
       </div>
       <div className="flex-1 min-w-0 py-0.5">
-        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-0.5 font-display">
+        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-0.5 font-serif">
           {title}
         </h3>
         <p className="text-xs text-muted truncate">
@@ -327,7 +327,7 @@ export default async function TopicDetailPage({ params }: Props) {
         <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
           <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
             <p className="text-sm text-white/40 mb-2">{data.facet.label}</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-serif">
               {data.value.label}
             </h1>
             <p className="text-white/60 text-sm max-w-xl mb-4">
@@ -358,7 +358,7 @@ export default async function TopicDetailPage({ params }: Props) {
                 return (
                   <div key={groupValue} className="mb-10">
                     <div className="flex items-center gap-3 mb-4">
-                      <h2 className="text-lg font-display font-semibold text-primary">
+                      <h2 className="text-lg font-serif font-semibold text-primary">
                         {crossValue?.label || groupValue}
                       </h2>
                       <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded-full">
@@ -381,7 +381,7 @@ export default async function TopicDetailPage({ params }: Props) {
 
               {data.ungrouped.length > 0 && (
                 <div className="mb-10">
-                  <h2 className="text-lg font-display font-semibold text-primary mb-4">Other</h2>
+                  <h2 className="text-lg font-serif font-semibold text-primary mb-4">Other</h2>
                   <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
                     {data.ungrouped.slice(0, 20).map((book) => (
                       <BookCard key={book.id || book.slug} book={book} />
@@ -431,7 +431,7 @@ export default async function TopicDetailPage({ params }: Props) {
       <SiteHeader variant="light" />
       <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
         <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-serif">
             {clusterName}
           </h1>
 
@@ -457,7 +457,7 @@ export default async function TopicDetailPage({ params }: Props) {
         {subclusters.map(([name, books]) => (
           <div key={name} className="mb-10">
             <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-lg font-display font-semibold text-primary">{name}</h2>
+              <h2 className="text-lg font-serif font-semibold text-primary">{name}</h2>
               <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded-full">{books.length}</span>
             </div>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -470,7 +470,7 @@ export default async function TopicDetailPage({ params }: Props) {
 
         {uncategorized.length > 0 && subclusters.length > 0 && (
           <div className="mb-10">
-            <h2 className="text-lg font-display font-semibold text-primary mb-4">Other</h2>
+            <h2 className="text-lg font-serif font-semibold text-primary mb-4">Other</h2>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {uncategorized.map((book) => (
                 <BookCard key={book.id || book.slug} book={book} />

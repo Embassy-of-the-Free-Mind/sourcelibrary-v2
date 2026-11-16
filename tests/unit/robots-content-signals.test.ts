@@ -43,7 +43,7 @@ describe('robots.txt content signals', () => {
     expect(text).toMatch(/User-agent: OAI-SearchBot\nContent-Signal: [^\n]+\nAllow: \/\n/);
     // Training crawlers stay reserved (docs/API only, content disallowed) —
     // but every one of them can read the licensing terms.
-    for (const ua of ['GPTBot', 'ClaudeBot', 'Google-Extended', 'CCBot', 'PerplexityBot', 'Bytespider']) {
+    for (const ua of ['GPTBot', 'ClaudeBot', 'Google-Extended', 'CCBot', 'Applebot-Extended', 'Amazonbot', 'Bytespider']) {
       const group = text.split(/\n\n/).find((b) => b.startsWith(`User-agent: ${ua}\n`));
       expect(group, ua).toBeTruthy();
       expect(group).toContain('Disallow: /');
@@ -51,6 +51,31 @@ describe('robots.txt content signals', () => {
       expect(group).toContain('Allow: /llms.txt');
     }
     expect(text).toContain('Sitemap: https://sourcelibrary.org/sitemap.xml');
+  });
+
+  it('gives the AI search crawlers the crawl-budget disallows, with the encyclopedia left open (#79)', async () => {
+    const text = await body();
+    for (const ua of ['Claude-SearchBot', 'OAI-SearchBot', 'PerplexityBot']) {
+      const group = text.split(/\n\n/).find((b) => b.startsWith(`User-agent: ${ua}\n`))!;
+      expect(group, ua).toContain('Allow: /\n');
+      // A named group replaces '*', so each default has to be repeated here.
+      for (const path of ['/api/', '/admin/', '/book/*/page-number/', '/book/*/read$', '/search/text']) {
+        expect(group, `${ua} ${path}`).toContain(`Disallow: ${path}\n`);
+      }
+      expect(group, ua).not.toContain('Disallow: /encyclopedia/');
+      // Content itself stays open: no blanket disallow.
+      expect(group, ua).not.toMatch(/^Disallow: \/$/m);
+    }
+  });
+
+  it('leaves search crawlers that have a separate training token under the default group (#79)', async () => {
+    const text = await body();
+    const groups = text.split(/\n\n/).filter((b) => b.startsWith('User-agent:'));
+    // Applebot (Siri, Spotlight, Safari) and Amzn-SearchBot read as search engines.
+    // A named group with `Disallow: /` for either would take us out of those results.
+    for (const ua of ['Applebot', 'Amzn-SearchBot', 'YandexBot']) {
+      expect(groups.find((g) => g.startsWith(`User-agent: ${ua}\n`)), ua).toBeUndefined();
+    }
   });
 
   it('keeps the crawl-budget disallows for the default group', async () => {

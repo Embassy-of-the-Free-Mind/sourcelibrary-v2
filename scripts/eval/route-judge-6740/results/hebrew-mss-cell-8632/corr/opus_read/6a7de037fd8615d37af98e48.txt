@@ -1,0 +1,36 @@
+<warning>Handwritten Oriental (Middle Eastern) semi-cursive Hebrew, reproduced as a low-contrast red halftone facsimile plate. The halftone screen and the faded, rubbed manuscript make most of the cursive hard to read with confidence. Only the heading, a few phrases and the printed caption are transcribed. The rest is marked unclear rather than reconstructed.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>mixed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="diagram" significance="high">Photographic facsimile plate, printed in red, of one manuscript leaf. It holds about 40 lines of cursive Hebrew under a short centered heading. The top edge of the leaf is darkened and damaged, with a small hole near the upper left. There are faint marks in the right margin and a tear at the lower right.</image-desc>
+
+->בשמא דאלהא רבה וקדישא<-
+
+<margin><unclear>[illegible — 2-3 words]</unclear></margin>
+
+המלאכים הממונים על החרב <unclear>[illegible — 6-8 words]</unclear>
+
+<unclear>[illegible — about 4 lines]</unclear>
+
+אלהי <unclear>[illegible — 3-4 words]</unclear> מעולם שבע <unclear>[illegible — 4-5 words]</unclear>
+
+<unclear>[illegible — 1 line]</unclear>
+
+<unclear>[illegible — 4-5 words]</unclear> אלהי <unclear>[illegible — 2 words]</unclear> הזקנים
+
+<unclear>[illegible — 2 lines]</unclear>
+
+<unclear>[illegible — 3-4 words]</unclear> על אחד ואחד <unclear>[illegible — 3-4 words]</unclear>
+
+<unclear>[illegible — about 6 lines]</unclear>
+
+<unclear>[illegible — 4-5 words]</unclear> על כל <unclear>[illegible — 4-5 words]</unclear>
+
+<unclear>[illegible — about 23 lines of cursive Hebrew to the foot of the leaf]</unclear>
+
+->Sword of Moses<-
+
+<meta>The caption "Sword of Moses" is printed in English below the plate. The plate is a facsimile of a Hebrew manuscript of the magical text Ḥarba de-Moshe.</meta>
+<vocab>Sword of Moses, Ḥarba de-Moshe, facsimile plate, Hebrew magical manuscript, angels (מלאכים), sword (חרב)</vocab>

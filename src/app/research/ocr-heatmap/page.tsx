@@ -232,7 +232,7 @@ export default function OcrHeatmapPage() {
             <div>
               <span className="text-stone-500">Avg best match:</span>{' '}
               <span
-                className={`font-bold ${heatmap.stats.avgBestMatch > 0.8 ? 'text-green-600' : heatmap.stats.avgBestMatch > 0.6 ? 'text-amber-600' : 'text-red-600'}`}
+                className={`font-semibold ${heatmap.stats.avgBestMatch > 0.8 ? 'text-green-600' : heatmap.stats.avgBestMatch > 0.6 ? 'text-amber-600' : 'text-red-600'}`}
               >
                 {(heatmap.stats.avgBestMatch * 100).toFixed(1)}%
               </span>
@@ -255,7 +255,7 @@ export default function OcrHeatmapPage() {
                   </span>
                   <br />
                   <span
-                    className={`font-bold ${hoveredCell.sim > 0.8 ? 'text-green-600' : hoveredCell.sim > 0.6 ? 'text-amber-600' : 'text-red-600'}`}
+                    className={`font-semibold ${hoveredCell.sim > 0.8 ? 'text-green-600' : hoveredCell.sim > 0.6 ? 'text-amber-600' : 'text-red-600'}`}
                   >
                     {(hoveredCell.sim * 100).toFixed(1)}% similarity
                   </span>

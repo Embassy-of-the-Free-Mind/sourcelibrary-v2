@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { AnnotationType, AnnotationStatus } from '@/lib/types';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAuth, sessionHasRole } from '@/lib/auth-helpers';
+
+function isOwner(annotation: Record<string, unknown>, session: { user?: unknown }): boolean {
+  const userId = (session.user as { id?: string } | undefined)?.id;
+  return Boolean(userId) && annotation.user_id === userId;
+}
 
 // GET /api/annotations/[id] - Get a single annotation with replies
 export async function GET(
@@ -51,6 +56,22 @@ export const PATCH = withAuth(async (request, session, context) => {
     const { content, type, status, encyclopedia_refs } = body;
 
     const db = await getDb();
+
+    // Readers may edit only their own annotations; editors may edit any and
+    // are the only ones who may change moderation status.
+    const isStaff = sessionHasRole(session, 'editor');
+    if (!isStaff) {
+      const existing = await db.collection('annotations').findOne({ id }, { projection: { user_id: 1 } });
+      if (!existing) {
+        return NextResponse.json({ error: 'Annotation not found' }, { status: 404 });
+      }
+      if (!isOwner(existing, session)) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      }
+      if (status !== undefined) {
+        return NextResponse.json({ error: 'Forbidden - only editors can change status' }, { status: 403 });
+      }
+    }
 
     // Build update object
     const updateData: Record<string, unknown> = {
@@ -120,7 +141,7 @@ export const PATCH = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'reader' });
 
 // DELETE /api/annotations/[id] - Delete an annotation
 export const DELETE = withAuth(async (request, session, context) => {
@@ -136,6 +157,11 @@ export const DELETE = withAuth(async (request, session, context) => {
         { error: 'Annotation not found' },
         { status: 404 }
       );
+    }
+
+    // Readers may delete only their own annotations.
+    if (!sessionHasRole(session, 'editor') && !isOwner(annotation, session)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     // If this annotation has replies, just hide it instead of deleting
@@ -166,4 +192,4 @@ export const DELETE = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'reader' });

@@ -1,0 +1,133 @@
+[
+  {
+    "book_id": "69906ed78a353648e1ed085f",
+    "slot": 1,
+    "title": "Ars Notoria sive Flores Aurei",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is set, so there is no shelf to test. The leaf is a two-column Gothic Latin manuscript of the Ars Notoria: a prayer, the fifth oration of nomina barbara, then prologues. That agrees with the title and the medieval date.",
+    "rights_flag": "The scan carries a licence mark burned into the image: a diagonal watermark \"ALL RIGHTS RESERVED © Biblioteca Apostolica Vaticana\" across the text, and a footer bar \"Copyright © Biblioteca Apostolica Vaticana / powered by AMLAD·NTT DATA\". The work itself is a medieval manuscript, but the image is under the holding library's reuse terms.",
+    "structure_note": "The structure counts give pages_translated 0, but the book field says 70 translated, and this page has a translation. The instrument count is wrong (E2). Only 19 of 72 pages have a printed number and there are 5 backsteps. On a manuscript with faint, sparse foliation (on this leaf only a faint \"4\" at the top right), these are more likely misread folio or margin numerals than real disorder. A strip of the facing leaf shows at the left edge, and the OCR correctly ignored it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "printed_marker": "4",
+        "layout": "two columns of Gothic textualis with red rubrics; the edge of the facing leaf visible at left; Vatican watermark across the text",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Incipit prolog’ prim hore sexte.",
+            "image": "Incipit prolog' posterior orationis quinte (red rubric at the top of column b)",
+            "problem": "The rubric is misread as the heading that actually comes further down the column. A reader is told that the second prologue of the fifth prayer opens the sixth hour, so the section structure of the work is wrong.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Christe almi creator pceptoz mīific mĩroz op-",
+            "image": "[L]egifer altissime preceptor mirifice ... optime (the initial is left blank for a rubricator)",
+            "problem": "The prayer is addressed to the 'most high Lawgiver'. The OCR makes it an address to Christ ('Christe almi creator'), which is not on the leaf.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Ad adorationū tuorum & dñi lonez misericor-",
+            "image": "Ad cogitationum sermonum & operum bonorum institutor / & amator ...",
+            "problem": "The opening line of the prologue is misread ('author and lover of good thoughts, words [and works]' becomes 'adorations ... merciful'). The whole column b prologue is heavily garbled from here on.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "auctoz dñesta questo dñe sũpheatibȝ",
+            "image": "auctor adesto queso dñe supplicationibus meis & aperi ...",
+            "problem": "'adesto queso ... supplicationibus' ('be present, I pray, to my supplications') is misread, and the translation then invents a different petition from it.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "mentis pscuant ut parte per te & in te mi uiuātus",
+            "image": "mens pseuerant ut per te p[ro] te & in te illuminatus",
+            "problem": "'illuminatus' is misread as 'mi uiuātus', and the translation renders it as 'living'.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "regno eternitatis regis maiestatis tue in gloriam",
+            "image": "regno eternitatis atque maiestatis tue ad gloriam",
+            "problem": "'atque' is read as 'regis', and 'ad' as 'in'.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Incipit prolog’ prim hore sexte.",
+            "english": "### Here begins the prologue of the first prayer of the sixth hour",
+            "problem": "This carries the OCR misread of the rubric 'posterior prologue of the fifth prayer'. The English now prints the same heading twice in a row, the second time correctly, and attaches the fifth prayer's prologue to the sixth hour.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Christe almi creator pceptoz mīific mĩroz op-",
+            "english": "Christ, kindly Creator, wonderful teacher of wonders, best",
+            "problem": "The leaf has 'Legifer altissime' (most high Lawgiver). The English invents an address to Christ, with no unclear marker.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "auctoz dñesta questo dñe sũpheatibȝ",
+            "english": "I beg you, Lord, <unclear>do not look upon</unclear> my sins,",
+            "problem": "The source asks the Lord to be present to 'my supplications' and to open his eyes. The English invents a petition not to look on 'my sins'. It is marked unclear, but it is still a fabricated sense.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Ad adorationū tuorum & dñi lonez misericor-",
+            "english": "<unclear>To the worship</unclear> of your <unclear>holy ones</unclear>, O good Lord, lover of the merciful,",
+            "problem": "This is built on the garbled OCR. The source has 'author and lover of good thoughts, words and works'.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "mentis pscuant ut parte per te & in te mi uiuātus",
+            "english": "so that through you and in you, living,",
+            "problem": "The source has 'illuminatus' (enlightened), and that word matters in a prayer for knowledge.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "Because of the misread rubric, the reader sees the same heading 'Here begins the prologue of the first prayer of the sixth hour' printed twice in succession.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "note": "The OCR carries a <warning> block (describing the bleed-through and the Vatican stamp) inside the transcription.",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [],
+          "missing": [
+            {
+              "english": "Here begins the fifth prayer, which is of the sacred particles",
+              "why": "The English never explains that the following block is a string of nomina barbara (magical names), recited and not meant to be understood. The meta only says it is 'not translatable'."
+            },
+            {
+              "english": "Here begins the prologue of the first prayer of the sixth hour",
+              "why": "A general reader needs to know that the Ars Notoria arranges its prayers by numbered orations and set hours of recitation."
+            },
+            {
+              "english": "who shut and no one opens, who open and",
+              "why": "This is a quotation of Revelation 3:7 (the key of David) that the reader is not told about."
+            },
+            {
+              "english": "into whom the angels long to",
+              "why": "This is an allusion to 1 Peter 1:12, and the sentence leans on it."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf of a genuine Ars Notoria manuscript. Column a's prayer is read and translated passably. The column b prologues are heavily garbled, and the translation builds on them: a misread rubric attaches the fifth prayer's prologue to the sixth hour, and an address to 'Christ' is invented where the leaf reads 'Legifer'. The scan also carries a Vatican 'All rights reserved' watermark."
+  }
+]

@@ -45,8 +45,8 @@ const link = 'underline decoration-1 underline-offset-[0.2em] decoration-accent-
 const PARTNERS: { name: string; href: string; site: string; logo?: string; invert?: boolean }[] = [
   {
     name: 'Wisdom Frontiers',
-    href: 'https://wisdomfrontiers.org',
-    site: 'wisdomfrontiers.org',
+    href: 'https://wisdom-frontiers.com',
+    site: 'wisdom-frontiers.com',
     logo: '/ai-partners/wisdom-frontiers-white.svg',
   },
   {

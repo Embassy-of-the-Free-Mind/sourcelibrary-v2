@@ -59,7 +59,9 @@ function makePost(url: string, body: object, headers?: Record<string, string>): 
 
 async function waitForReadCount(bookId: string, tenantId: string, expected: number): Promise<void> {
   const db = getTestDb();
-  const timeoutMs = 1500;
+  // The counter update is fire-and-forget after the response. 1.5 s timed out on a loaded gex45 runner
+  // (load ~40, PR #299 shard 3/3, 2026-11-13); polling returns as soon as it lands, so a passing run is no slower.
+  const timeoutMs = 15_000;
   const intervalMs = 50;
   const start = Date.now();
 
@@ -114,8 +116,9 @@ describe('Tenant API isolation', () => {
     const db = getTestDb();
 
     await db.collection('books').insertMany([
-      { id: 'book-1', title: 'Alpha Book', tenantId: 'tenant-alpha' },
-      { id: 'book-1', title: 'Beta Book', tenantId: 'tenant-beta' },
+      // Published books: the popular list shows published books only (ops #17).
+      { id: 'book-1', title: 'Alpha Book', tenantId: 'tenant-alpha', visible: true },
+      { id: 'book-1', title: 'Beta Book', tenantId: 'tenant-beta', visible: true },
     ]);
 
     await db.collection('likes').insertMany([

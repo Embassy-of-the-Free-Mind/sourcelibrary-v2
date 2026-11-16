@@ -3,12 +3,13 @@
 # a quota stop) and scripts/eval/pareto-6182/opus-arm.mjs (#6182's Opus arm, an Agent-tool context request, not a
 # headless runner). This is run-cli-arm.py's shape for `claude -p` on the subscription (no API key).
 """
-claude-arm.py --requests REQ.jsonl --out OUT.jsonl --arm OPUS [--model opus] [--parallel 3]
+claude-arm.py --requests REQ.jsonl --out OUT.jsonl --arm OPUS [--model opus] [--effort LEVEL] [--parallel 3]
 
 One `claude -p --model <model>` per request, prompt on stdin, cwd a fresh scratch dir. A row with `image` gets the image
 copied into that dir, IMAGE_PATH in the prompt replaced by "the file <path>; open it with the Read tool", and only the
 Read tool allowed; without an image no tool is allowed. The reply's text between <<<BEGIN>>>/<<<END>>> is the result.
-OUT rows: {uid, arm, model, route: 'claude-cli', date, raw, text, problem, secs, attempts, error}. Restart skips uids
+OUT rows: {uid, arm, model, route: 'claude-cli', date, raw, text, problem, secs, attempts, error, effort, cost_usd,
+output_tokens, models} (the last three are the CLI's own report, summed over attempts; cost is list price, not a bill). Restart skips uids
 with text. A usage-limit reply sleeps 20 min and retries (up to 12 times), as the judge drivers do.
 """
 import argparse, json, os, re, shutil, subprocess, sys, tempfile, threading, time, datetime
@@ -25,11 +26,17 @@ def sealed_env():
     return {k: v for k, v in os.environ.items() if not re.match(r'^(ANTHROPIC_|CLAUDE_CODE_USE_|OPENROUTER|CLAUDE_CODE_MESSAGING|CLAUDE_CODE_SESSION)', k)}
 
 
-def one_call(prompt, model, image, scratch, sealed=False):
+def one_call(prompt, model, image, scratch, sealed=False, effort=None, lane=False, timeout=1500):
     ws = tempfile.mkdtemp(prefix='cl-', dir=scratch)
     args = ['claude', '-p', '--model', model, '--output-format', 'json']
-    if sealed: args += ['--strict-mcp-config', '--no-session-persistence', '--disallowedTools', 'Agent', 'Skill', 'Workflow', 'ToolSearch', 'ScheduleWakeup', 'ListAgents']
-    if image:
+    if effort: args += ['--effort', effort]
+    if lane and not image:
+        # #93: the live Claude translation lane's call (scripts/batch/claude-translate.mjs), plus --disable-slash-commands (lean)
+        args += ['--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence', '--disable-slash-commands']
+    elif sealed: args += ['--strict-mcp-config', '--no-session-persistence', '--disallowedTools', 'Agent', 'Skill', 'Workflow', 'ToolSearch', 'ScheduleWakeup', 'ListAgents']
+    if lane and not image:
+        pass
+    elif image:
         dst = os.path.join(ws, os.path.basename(image)); shutil.copyfile(image, dst)
         prompt = prompt.replace('IMAGE_PATH', f'the file {dst}; open it with the Read tool')
         args += ['--allowedTools', 'Read', '--disallowedTools', 'Bash', 'Edit', 'Write', 'WebFetch', 'WebSearch', 'Task', 'Glob', 'Grep']
@@ -37,23 +44,27 @@ def one_call(prompt, model, image, scratch, sealed=False):
         args += ['--disallowedTools', 'Bash', 'Edit', 'Write', 'WebFetch', 'WebSearch', 'Task', 'Read', 'Glob', 'Grep']
     t0 = time.time()
     try:
-        r = subprocess.run(args, input=prompt, capture_output=True, text=True, cwd=ws, timeout=1500, env=sealed_env() if sealed else None)
+        r = subprocess.run(args, input=prompt, capture_output=True, text=True, cwd=ws, timeout=timeout, env=sealed_env() if (sealed or lane) else None)
         out, err, code = r.stdout, r.stderr, r.returncode
     except subprocess.TimeoutExpired:
         out, err, code = '', 'timeout', -9
     shutil.rmtree(ws, ignore_errors=True)
     try:
         j = json.loads(out); res = j.get('result') or ''; is_err = j.get('is_error'); turns = j.get('num_turns')
-    except ValueError:
-        res, is_err, turns = out, True, None
-    return res, err, code, time.time() - t0, bool(is_err), turns
+        use = {'cost_usd': j.get('total_cost_usd') or 0, 'output_tokens': (j.get('usage') or {}).get('output_tokens') or 0, 'models': sorted((j.get('modelUsage') or {}).keys())}
+    except (ValueError, AttributeError):
+        res, is_err, turns, use = out, True, None, {'cost_usd': 0, 'output_tokens': 0, 'models': []}
+    return res, err, code, time.time() - t0, bool(is_err), turns, use
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--requests', required=True); ap.add_argument('--out', required=True); ap.add_argument('--arm', required=True)
     ap.add_argument('--model', default='opus'); ap.add_argument('--parallel', type=int, default=3); ap.add_argument('--limit', type=int)
+    ap.add_argument('--effort', help='passed to claude --effort (low | medium | high | xhigh | max); unset = the CLI default for the model')
     ap.add_argument('--sealed', action='store_true', help='no MCP servers, no session file, API-key and session env stripped (#6690 judge)')
+    ap.add_argument('--lane', action='store_true', help='text-only rows: the live claude-translate.mjs call (--restricted --tools "" --strict-mcp-config --no-session-persistence) plus --disable-slash-commands, env sealed (#93)')
+    ap.add_argument('--timeout', type=int, default=1500, help='seconds per call, INCLUDING any wait for a pace-guard slot (#93: an over-pace account queues calls for many minutes)')
     ap.add_argument('--raw-json', action='store_true', help='keep the reply whole (the edit-contract arm answers JSON in markers)')
     a = ap.parse_args()
     scratch = os.path.join(os.environ.get('JOB_SCRATCH', '/tmp'), 'claude-ws'); os.makedirs(scratch, exist_ok=True)
@@ -69,9 +80,10 @@ def main():
 
     def run(req):
         total, tries, res, prob, err, turns = 0.0, 0, '', 'empty', None, None
+        cost, toks, models = 0.0, 0, set()
         for tries in range(1, 15):
-            res, e, code, secs, is_err, turns = one_call(req['prompt'], a.model, req.get('image'), scratch, a.sealed)
-            total += secs
+            res, e, code, secs, is_err, turns, use = one_call(req['prompt'], a.model, req.get('image'), scratch, a.sealed, a.effort, a.lane, a.timeout)
+            total += secs; cost += use['cost_usd']; toks += use['output_tokens']; models.update(use['models'])
             if is_err or code != 0:
                 blob = (res + e).lower()
                 if any(x in blob for x in LIMIT):
@@ -85,7 +97,8 @@ def main():
             if tries >= 2: break
         text, prob = unwrap(res) if not err else ('', 'error')
         row = {'uid': req['uid'], 'arm': a.arm, 'model': f'{a.model} (claude -p)', 'route': 'claude-cli', 'date': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-               'raw': res, 'text': text if prob != 'empty' and not err else '', 'problem': prob, 'secs': round(total, 1), 'attempts': tries, 'turns': turns, 'error': err}
+               'raw': res, 'text': text if prob != 'empty' and not err else '', 'problem': prob, 'secs': round(total, 1), 'attempts': tries, 'turns': turns, 'error': err,
+               'effort': a.effort, 'cost_usd': round(cost, 4), 'output_tokens': toks, 'models': sorted(models)}
         with lock, open(a.out, 'a', encoding='utf-8') as f:
             f.write(json.dumps(row, ensure_ascii=False) + '\n')
         print(f"  {req['uid']} {prob or 'ok'} {len(row['text'])} chars {round(total)}s x{tries}", flush=True)

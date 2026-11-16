@@ -26,7 +26,10 @@ const J = process.env.J || '/root/jobs/gpu-flash-vs-opus-7263';
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const ARM = arg('arm'); const ROUND = Number(arg('round', '1'));
 if (!['D', 'D2'].includes(ARM)) { console.error('--arm=D|D2'); process.exit(2); }
-if (process.env.AGY_HOME) { console.error('AGY_HOME is set: this job runs on the main pool only'); process.exit(2); }
+// D_DIFF_PANEL=<file> (#225): the same call on another run's pages ({pages: [{slug}]}, drafts and images under $J as
+// below). Such a run may name its pool (AGY_HOME); the #7263 panel stays on the main pool.
+const PANEL = process.env.D_DIFF_PANEL || null;
+if (process.env.AGY_HOME && !PANEL) { console.error('AGY_HOME is set: this job runs on the main pool only'); process.exit(2); }
 const OUT = path.join(J, 'e2', `${ARM}-r${ROUND}`); fs.mkdirSync(OUT, { recursive: true });
 const CONC = Number(arg('conc', '4')); const FLOOR = Number(arg('floor', '0.25'));
 const MODEL = 'gemini-3.8-flash-low';
@@ -109,7 +112,7 @@ function quota() {
   try { return JSON.parse(r.stdout).command.data.groups.find((x) => /gemini/i.test(x.name)).buckets.find((b) => b.window === 'weekly').remaining_fraction; } catch { return null; }
 }
 
-const panel = JSON.parse(fs.readFileSync(path.join(HERE, '..', 'euro-gpu-correct-7567', 'panel.json'), 'utf8')).pages;
+const panel = JSON.parse(fs.readFileSync(PANEL || path.join(HERE, '..', 'euro-gpu-correct-7567', 'panel.json'), 'utf8')).pages;
 const only = arg('only') ? new Set(fs.readFileSync(arg('only'), 'utf8').split('\n').filter(Boolean)) : null;
 const FROM = ARM === 'D2' ? arg('from') : null;
 if (ARM === 'D2' && !FROM) { console.error('--from=<D arm dir> required'); process.exit(2); }

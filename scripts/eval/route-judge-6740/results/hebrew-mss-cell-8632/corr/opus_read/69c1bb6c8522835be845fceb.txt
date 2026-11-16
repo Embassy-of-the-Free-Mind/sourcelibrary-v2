@@ -1,0 +1,43 @@
+<warning>Sephardic/Italian semi-cursive Hebrew hand. Many words are hard to read and the readings below are uncertain. Brown stains and some show-through from the other side of the leaf. Partial text from the facing page at the left edge was not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<header><unclear>שירות</unclear></header>
+
+<insert>**אמיתך**</insert> <unclear>בכל נבל ״ קום והתהלל בצלצלי ״ בקול המון</unclear>
+<unclear>קהל ״ שמים וארץ תהלה ״ תעיר כוסי ״ צ״ל תמהי</unclear>
+
+<unclear>מתוך כלאי ״ יעבר בעלי ״ חי גואלי ״ משגב עם בחרי ״ חסק הצליח ״</unclear>
+<unclear>כל יקוש כבלי ״ יקום חילי ״ קורא גורלי ״ חי ״</unclear>
+
+<unclear>בחור משתמש ההתנה ״ בחוק תשובה יבא ״ תולה הכונה לו הקהלה ״ יבין</unclear>
+<unclear>צין בפנאות צ״ל ״ חי ״ תעיר ״ כוסי ״</unclear>
+
+<unclear>ראש כונס יבלה הדר ״ נוראות יתין יורנו ״ חי ״ בנחום תוגברו ״ יבין</unclear>
+<unclear>גנה ״ חור מבוא נחת עלוי ״ חי תעיר כוסי ״</unclear>
+
+<unclear>הר בר צין ״ יר יכונה ״ ירחם נוה עמו ״ חי בית זבולו בחרבו</unclear>
+<unclear>אמבונה ״ בבל בכפו בהלונן ״ חי תעיר כוסי ״</unclear>
+
+<unclear>תמנוהה צין עלו ״ על הר כרך ותמתים ״ מכתי לך הנה והלו ״</unclear>
+<unclear>עומד תולבך לנס עמים ״ חי ״ תעיר</unclear>
+
+->קס<-
+
+<insert>**אצפה**</insert> <unclear>לא ישעני ״ כי הוא רועי ״ הוה רעיני ״ לאלוהים</unclear>
+<unclear>בקן ״ חוש יבכן ״ בכבוד אירך ״ מאוה בחרך ״</unclear>
+
+<unclear>חוש תהדיר ״ יאיר יהדיר ״ אור בהיר ״ על נגה הבהק ״ חי ״</unclear>
+<unclear>בכבוד קדם קהל ״ הוא עליון ״ מגדל לחסד ״ חי לאלוהים ״ בקן ״</unclear>
+
+<unclear>ראשון לכל בית יוסף ״ עדל בעתו ״ יחוש יאסף ״ חי לאלוהים</unclear>
+<unclear>ההר תלך בהב עם ״ תשיב עוז ״ לנפש יגעה ״ חי ״ לאלוהים ״</unclear>
+
+<unclear>תגהל ״ יעשה תלבו ״ יאחז הרבו ״ יעזבנו בקומו ״ חי לאלוהים</unclear>
+
+->קס<-
+
+<image-desc size="large" type="decorative" significance="low">A ruled frame drawn in ink around the text block. The opening words of the two poems, אמיתך and אצפה, are written in large display letters.</image-desc>
+
+<vocab>אמיתך, אצפה, piyyut, liturgical poetry, תעיר כוסי, לאלוהים</vocab>

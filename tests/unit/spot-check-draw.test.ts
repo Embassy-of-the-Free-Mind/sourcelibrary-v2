@@ -7,8 +7,12 @@
  * in a book are one observation); and a book with no such run is skipped, not padded with loose pages.
  */
 import { describe, it, expect } from 'vitest';
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import {
-  drawSample, pickRun, bookOrder, seedFromDate, structureCounts, printedToNum,
+  drawSample, pickRun, bookOrder, seedFromDate, structureCounts, printedToNum, packetTranslation, servedResults,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/eval/spot-check/lib.mjs';
@@ -101,5 +105,82 @@ describe('structure counts', () => {
     expect(s.printed_repeats).toBe(2);
     expect(printedToNum('三')).toBe(3);
     expect(printedToNum('xii')).toBeNull();
+  });
+});
+
+// v3#154: on an English leaf of an English edition the reader is served the transcription, so the stored
+// translation there is neither handed to a reviewer nor scored. Round 7 counted 7 serious findings in such text.
+describe('text the reader is not served', () => {
+  const stored = { ocr: { data: 'Of the nature of things' }, translation: { data: 'On how things are', model: 'm', source: 's' } };
+  const trError = { source: 'Esdras', english: 'Ezra', problem: 'name changed', severity: 'serious', class: 'T8' };
+  const ocrError = { ocr: 'tbe', image: 'the', problem: 'misread', severity: 'serious', class: 'O6' };
+  const results = [
+    { book_id: 'english', on_sight_defect: true, pages: [
+      { page_number: 1, ocr_score: 5, tr_score: 2, right_page: 'yes', ocr_errors: [], tr_errors: [trError, { ...trError, severity: 'minor' }], other: [] },
+      { page_number: 2, ocr_score: 3, tr_score: 2, right_page: 'yes', ocr_errors: [ocrError], tr_errors: [trError], other: [] },
+      { page_number: 3, ocr_score: 5, tr_score: 5, right_page: 'yes', ocr_errors: [], tr_errors: [], other: [] }] },
+    { book_id: 'latin', on_sight_defect: false, pages: [
+      { page_number: 7, ocr_score: 5, tr_score: 2, right_page: 'yes', ocr_errors: [], tr_errors: [trError], other: [] }] },
+  ];
+  const notServedAt = { english: { 1: 'rewrite_not_served', 2: 'rewrite_not_served', 3: 'rewrite_not_served' }, latin: { 7: 'served' } };
+
+  it('the packet leaves the stored translation out of a rewrite_not_served page, and says why', () => {
+    const p = packetTranslation(stored, 'rewrite_not_served');
+    expect(p).toMatchObject({ translation: '', translation_model: null, translation_source: null });
+    expect(p.translation_note).toMatch(/served the transcription/);
+    // Negative control: any other exposure gets the stored text as before, and no note.
+    expect(packetTranslation(stored, 'served')).toEqual({ translation: 'On how things are', translation_model: 'm', translation_source: 's' });
+  });
+
+  it('servedResults drops findings in the stored rewrite and keeps those in the transcription', () => {
+    const { results: scored, notServed } = servedResults(results, notServedAt);
+    expect(notServed).toEqual({ pages: 2, books: 1, findings: 3, serious: 2 });
+    const [english, latin] = scored;
+    expect(english.pages.map((p: { tr_errors: unknown[] }) => p.tr_errors.length)).toEqual([0, 0, 0]);
+    expect(english.pages[1].ocr_errors).toEqual([ocrError]);            // the transcription is served: its error stays
+    expect(english.pages[0].tr_errors_not_served).toHaveLength(2);      // kept beside, not deleted
+    expect(latin).toBe(results[1]);                                     // a served translation is untouched
+    expect(results[0].pages[0].tr_errors).toHaveLength(2);              // the input is not changed
+  });
+
+  it('negative control: with no rewrite_not_served page in the draw log, nothing is dropped', () => {
+    const served = { english: { 1: 'served', 2: 'served', 3: 'served' }, latin: { 7: 'served' } };
+    for (const exposure of [served, {}, undefined]) {
+      const r = servedResults(results, exposure);
+      expect(r.results).toEqual(results);
+      expect(r.notServed).toEqual({ pages: 0, books: 0, findings: 0, serious: 0 });
+    }
+  });
+
+  // score.mjs end to end, on a fixture run directory.
+  const score = (exposure: unknown) => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'spot-score-'));
+    const dir = path.join(root, '2026-11-13');
+    fs.mkdirSync(dir);
+    const sample = results.map((r, i) => ({ slot: i + 1, book_id: r.book_id, pages: r.pages.map((p) => ({ page_number: p.page_number })) }));
+    fs.writeFileSync(path.join(dir, 'sample.json'), JSON.stringify(sample));
+    fs.writeFileSync(path.join(dir, 'results.json'), JSON.stringify(results));
+    fs.writeFileSync(path.join(dir, 'draw-log.json'), JSON.stringify({ frame: 'public', exposure }));
+    const r = spawnSync('node', [path.resolve(__dirname, '../../scripts/eval/spot-check/score.mjs'), '--date', '2026-11-13', '--root', root], { encoding: 'utf8' });
+    expect(r.status, r.stderr).toBe(0);
+    return { report: JSON.parse(fs.readFileSync(path.join(dir, 'report.json'), 'utf8')), md: fs.readFileSync(path.join(dir, 'report.md'), 'utf8') };
+  };
+
+  it('score.mjs: an English-original book with a differing stored translation scores as not served', () => {
+    const { report, md } = score(notServedAt);
+    // 4 pages. Served findings: the OCR error on english p.2 and the translation error on latin p.7.
+    expect(report.fortnight).toMatchObject({ pages: 4, pages_with_serious: 2, serious_errors: 2 });
+    expect(report.not_served).toEqual({ pages: 2, books: 1, findings: 3, serious: 2 });
+    expect(report.typed.by_exposure.served.n).toBe(2);                  // the English book is still a served book
+    expect(report.typed.by_exposure.rewrite_not_served.n).toBe(0);
+    expect(md).toMatch(/Not counted above: 3 findings \(2 serious\) on 2 pages of 1 books/);
+  });
+
+  it('score.mjs negative control: the same results drawn as served count every finding', () => {
+    const served = { english: { 1: 'served', 2: 'served', 3: 'served' }, latin: { 7: 'served' } };
+    const { report, md } = score(served);
+    expect(report.fortnight).toMatchObject({ pages: 4, pages_with_serious: 3, serious_errors: 4 });
+    expect(report.not_served).toEqual({ pages: 0, books: 0, findings: 0, serious: 0 });
+    expect(md).not.toMatch(/Not counted above/);
   });
 });

@@ -26,7 +26,7 @@ export async function OPTIONS() {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const limit = Math.min(parseInt(searchParams.get('limit') || '6'), 24);
+    const limit = Math.min(Math.max(1, parseInt(searchParams.get('limit') || '6', 10) || 6), 24);
     const category = searchParams.get('category');
 
     const db = await getReadDb();

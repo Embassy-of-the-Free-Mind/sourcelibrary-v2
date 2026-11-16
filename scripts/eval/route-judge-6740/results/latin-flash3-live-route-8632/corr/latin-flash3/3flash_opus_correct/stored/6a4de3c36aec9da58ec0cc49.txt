@@ -1,0 +1,48 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<header>SIM. VALLAMBERTI</header>
+
+Mansuetudo tamen, grauitas, uultusque seueri, et
+Humani nusquam uisa coire magis.
+Quid memorem, doctos quod fouit saepe poetas?
+Quod Musis hodie templaque sacra locat?
+O domus, o superum, o Regi gratissima: doctis
+O celebranda uiris, o memoranda domus.
+Vestra, precor, cumulet Deus ornamenta tuendo.
+Semper sis felix inclyta Turno domus.
+
+### De Iac. Bordingo.
+
+Ergo Bordingum nosti? doctumque, probumque,
+Nec falsa nosti relligione uirum.
+
+### De Hieron. Lopide.
+
+Redderet ut clarum Lopidem medicina, uir ille
+Hanc studuit claram reddere luce sua.
+
+### Philauto.
+
+Foedus Aristotelem grex commaculauerat: et iam
+Vulcanum querulus ille rogabat opem.
+Sed tua cum maculas tersit censura Philaute:
+Tangere post nemo est ausus Aristotelem.
+
+### Meretrici.
+
+Haerens dum coeno succincta ueste meretrix,
+Hic quam foetet, ais, das tria uera simul.
+
+### Legulei.
+
+Quis tot leguleos dedit?
+Quis Troianus equus dedit?
+Quae Styx, Lerna'ue tot dedit?
+Leges qui sine legibus
+
+<meta>catchword: Tractant,</meta>
+
+<vocab>Mansuetudo, Jacobo Bordingo, Hieronymo Lopide, Philauto, Aristotelem, Meretrici, Legulei</vocab>

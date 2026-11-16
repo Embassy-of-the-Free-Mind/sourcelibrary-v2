@@ -69,7 +69,7 @@ export const THEMES = [
     rule: /ocr went nuts|garbl|gibberish|\brepeating\b|^repetition$|repeated line|russian characters|\\frac|hallucinat|hardly any text but a lot of translation/i,
     paraphrase: 'A transcription ran into a loop, used the wrong alphabet, wrote formulas instead of letters, or held far more text than the page.',
     status: 'in progress',
-    did: 'Reported pages are re-read one at a time. A check that finds garbled pages across the whole library is planned.',
+    did: 'Reported pages are re-read one at a time. A check for garbled pages across the whole library was measured in October and did not pick them out reliably enough to use, so it does not run.',
     links: [5313, 4850, 4580],
   },
   {

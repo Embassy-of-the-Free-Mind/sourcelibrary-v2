@@ -29,6 +29,8 @@
  * A book matching no cell with a measurement gets the overall rate and risk_basis "overall".
  */
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { withMongo } from '../lib/mongo.mjs';
 import { mulberry32, pairedFifths } from '../lib/paired-fifths.mjs';
 import { isNotAcquiredReason, SIKU_LANE_HOLDS } from '../lib/hold-reasons.mjs';
@@ -74,7 +76,7 @@ function scriptFamily(language) {
 }
 const MS_PROVIDERS = new Set(['laurenziana', 'vatican', 'e-codices', 'penn_colenda', 'chester_beatty', 'morgan', 'e-manuscripta']);
 const MS_TITLE = /manuscri|handschrift|\bms\.?\s|\bmss?\b|\bcod(ex|\.)\b|manoscr|autograph/i;
-function formOf(b) {
+export function formOf(b) {
   const y = Number(String(b.published ?? '').match(/\d{3,4}/)?.[0]);
   return MS_PROVIDERS.has(b.image_source?.provider) || MS_TITLE.test(b.title ?? '') || (y && y < 1450) ? 'ms' : 'print';
 }
@@ -157,4 +159,5 @@ async function main() {
     for (const r of out.slice(0, 10)) console.log(`${r.stratum.padEnd(8)} t${r.tier} reads ${String(r.reads).padStart(5)} risk ${r.risk} [${r.risk_basis}] score ${r.score}  ${r.book_id}  ${String(r.title).slice(0, 50)}`);
   });
 }
-main().catch((e) => { console.error(e); process.exit(1); });
+// Run only as a script: scripts/audit/spare-paired-fifths.mjs imports formOf for its language x form cells.
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((e) => { console.error(e); process.exit(1); });

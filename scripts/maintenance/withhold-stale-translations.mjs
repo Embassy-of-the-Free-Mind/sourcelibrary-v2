@@ -67,6 +67,8 @@
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
  *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
+ *   … --strip-only        only strip text left in `translation_withheld` (.data, .text) where a
+ *                         snapshot backs it byte-for-byte; walks every book carrying a copy (v2#8518)
  */
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -79,6 +81,7 @@ import {
   staleTranslationReason, withholdUpdate, translationText, isPlaceholderTranslation,
 } from '../lib/stale-translation.mjs';
 import { isHeld } from '../lib/pipeline-hold.mjs';
+import { splitAnnotations } from '../lib/annotation-layer.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
@@ -88,6 +91,7 @@ const BOOKS_FILE = ARG('--books-file', null);
 const LIMIT = Number(ARG('--limit', '0')) || 0;
 const REPORT = ARG('--report', `scripts/output/withhold-stale-translations-${new Date().toISOString().slice(0, 10)}.jsonl`);
 const SKIP_MIRROR = process.argv.includes('--skip-supabase-mirror');
+const STRIP_ONLY = process.argv.includes('--strip-only');
 /**
  * Arm 3 (#4765/#4850): also consider pages whose TRANSCRIPTION is a degeneration
  * loop. Opt-in and book-scoped, because unlike arms 1 and 2 the candidate set is
@@ -201,6 +205,8 @@ if (ONLY_BOOK) {
   bookIds = [ONLY_BOOK];
 } else if (BOOKS_FILE) {
   bookIds = fs.readFileSync(BOOKS_FILE, 'utf8').trim().split('\n').map((s) => s.trim()).filter(Boolean);
+} else if (STRIP_ONLY) {
+  bookIds = []; // --strip-only finds its own books (those carrying a copy), below
 } else {
   process.stdout.write('finding candidate books … ');
   bookIds = await pages.distinct('book_id', STALE_CANDIDATE_FILTER);
@@ -258,9 +264,12 @@ async function withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers) {
  * on the next pass instead of waiting for someone to notice.
  */
 async function stripTextFromWithheldObjects(bookId) {
+  // Two copies to strip: `data` (the first version of the withhold moved it)
+  // and `text`, the annotation-layer parser's copy of the same words (#5942),
+  // which withholdUpdate kept until v2#8518 found it on 470 withheld pages.
   const carrying = await pages.find(
-    { book_id: bookId, 'translation_withheld.data': { $type: 'string' } },
-    { projection: { id: 1, 'translation_withheld.data': 1 } },
+    { book_id: bookId, $or: [{ 'translation_withheld.data': { $type: 'string' } }, { 'translation_withheld.text': { $type: 'string' } }] },
+    { projection: { id: 1, 'translation_withheld.data': 1, 'translation_withheld.text': 1 } },
   ).toArray();
   if (!carrying.length) return;
   const ids = carrying.map((p) => p.id);
@@ -268,27 +277,27 @@ async function stripTextFromWithheldObjects(bookId) {
     .find({ page_id: { $in: ids }, field: 'translation', reason: WITHHOLD_REVISION_SOURCE },
       { projection: { page_id: 1, data: 1 } })
     .toArray();
-  const byPage = new Map(revs.map((r) => [r.page_id, r.data]));
+  const byPage = new Map();
+  for (const r of revs) if (typeof r.data === 'string') (byPage.get(r.page_id) || byPage.set(r.page_id, []).get(r.page_id)).push(r.data);
   const ops = [];
   for (const p of carrying) {
-    const snap = byPage.get(p.id);
+    const snaps = byPage.get(p.id) || [];
+    const w = p.translation_withheld;
+    const $unset = {}; const $set = {};
     // Byte-for-byte. A snapshot that does not match is not a snapshot OF this
     // text, and dropping the field would then be the one destructive act this
     // whole mechanism exists to avoid.
-    if (snap !== p.translation_withheld.data) {
-      T.stripSkipped++;
-      rec({ book: bookId, page_id: p.id, status: 'strip-skipped-no-matching-snapshot' });
-      continue;
+    if (typeof w.data === 'string') {
+      if (snaps.includes(w.data)) { $unset['translation_withheld.data'] = ''; $set['translation_withheld.chars'] = w.data.length; }
+      else { T.stripSkipped++; rec({ book: bookId, page_id: p.id, status: 'strip-skipped-no-matching-snapshot', field: 'data' }); }
     }
-    ops.push({
-      updateOne: {
-        filter: { id: p.id },
-        update: {
-          $unset: { 'translation_withheld.data': '' },
-          $set: { 'translation_withheld.chars': snap.length },
-        },
-      },
-    });
+    // `text` is derived from a `data`: it is backed when a snapshot parses to exactly it.
+    if (typeof w.text === 'string') {
+      if (snaps.some((s) => splitAnnotations(s).text === w.text)) $unset['translation_withheld.text'] = '';
+      else { T.stripSkipped++; rec({ book: bookId, page_id: p.id, status: 'strip-skipped-no-matching-snapshot', field: 'text' }); }
+    }
+    if (!Object.keys($unset).length) continue;
+    ops.push({ updateOne: { filter: { id: p.id }, update: { $unset, ...(Object.keys($set).length ? { $set } : {}) } } });
   }
   if (!ops.length) return;
   if (!APPLY) { T.stripped += ops.length; rec({ book: bookId, status: 'dry-run-strip', would_strip: ops.length }); return; }
@@ -307,6 +316,24 @@ const T = {
   quotesWithdrawn: 0, stripped: 0, stripSkipped: 0, keptOtherScript: 0,
   revisions: 0, chars: 0, byReason: {}, countersResynced: 0, mirrorSynced: 0, aborted: 0,
 };
+
+// --strip-only: heal every withheld object that still carries text, and nothing
+// else. The hourly run only strips inside the books it walks (stale candidates),
+// so by-eye and loop withholds written by an older withholdUpdate never heal.
+if (STRIP_ONLY) {
+  // Every withheld object carries a reason; the hint keeps this off a collection scan of `pages`.
+  const carryingBooks = ONLY_BOOK || BOOKS_FILE ? bookIds : (await pages.aggregate([
+    { $match: { 'translation_withheld.reason': { $exists: true },
+      $or: [{ 'translation_withheld.data': { $type: 'string' } }, { 'translation_withheld.text': { $type: 'string' } }] } },
+    { $group: { _id: '$book_id' } },
+  ], { hint: { 'translation_withheld.reason': 1, book_id: 1 } }).toArray()).map((r) => r._id);
+  for (const bookId of carryingBooks) { T.books++; await stripTextFromWithheldObjects(bookId); }
+  console.log(JSON.stringify({ mode: APPLY ? 'apply' : 'dry-run', strip_only: true, books: T.books, stripped: T.stripped, stripSkipped: T.stripSkipped }, null, 2));
+  rec({ status: 'run-summary', mode: APPLY ? 'apply' : 'dry-run', strip_only: true, ...T });
+  await new Promise((r) => report.end(r)); // flush the report before exiting
+  await mongo.close();
+  process.exit(0);
+}
 
 for (const bookId of bookIds) {
   T.books++;

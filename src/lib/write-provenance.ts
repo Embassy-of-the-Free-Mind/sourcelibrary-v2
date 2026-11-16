@@ -9,6 +9,7 @@
  */
 import { createHash } from 'crypto';
 import os from 'os';
+import provenanceHistoryJson from '../../scripts/lib/provenance-history.json';
 
 export const ENGINE_SCHEMA = 'gemini-engine/1';
 export const NOT_RECORDED = 'not_recorded';
@@ -322,7 +323,7 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     else if (isNotRecorded(i)) markers.push(`${field}.engine.input`);
     else if (field === 'ocr' && !i.image_url) missing.push(`${field}.engine.input.image_url`);
     else if (field === 'translation' && !HEX16.test((i.source_text_hash as string) || '')) missing.push(`${field}.engine.input.source_text_hash`);
-  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle' || src === 'lightonocr') {
+  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle' || src === 'lightonocr' || src === 'surya') {
     if (!e) missing.push(`${field}.engine`);
     else {
       if (!e.name) missing.push(`${field}.engine.name`);
@@ -339,4 +340,41 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     }
   }
   return { missing, markers };
+}
+
+// ── Rows written before the writers went live ─────────────────────────────────
+// Twin of inferHistoricalGeneration() in scripts/lib/write-provenance.mjs (read its note there). The
+// .mjs reads provenance-history.json through import.meta.url, which a Next bundle does not resolve;
+// here the same file is a static import (top of this file), so the two read one table. Parity:
+// tests/unit/provenance-grade-parity.test.ts.
+
+interface HistoryRule {
+  id: string; field: string; writer: string; basis?: unknown; caveat?: unknown;
+  generation?: unknown;
+  when?: { source?: string[]; code_version?: 'present' | 'absent'; from?: string; to?: string };
+}
+export type HistoricalGeneration =
+  | { status: 'observed' }
+  | { status: 'inferred'; rule: string; writer: string; generation: unknown; basis: unknown; caveat: unknown }
+  | NotRecorded;
+
+export function inferHistoricalGeneration(field: 'ocr' | 'translation', sub: unknown): HistoricalGeneration {
+  if (!sub || typeof sub !== 'object') return notRecorded('no subdocument');
+  const s = sub as Record<string, unknown>;
+  if ((s.engine as { schema?: string } | undefined)?.schema === ENGINE_SCHEMA) return { status: 'observed' };
+  const at = s.updated_at instanceof Date ? s.updated_at : (s.updated_at ? new Date(s.updated_at as string) : null);
+  if (!at || Number.isNaN(at.getTime())) return notRecorded('no updated_at to place the row in time');
+  const hasCodeVersion = typeof s.code_version === 'string' && s.code_version.length > 0;
+  for (const r of (provenanceHistoryJson as { rules: HistoryRule[] }).rules) {
+    if (r.field !== field) continue;
+    const w = r.when || {};
+    if (w.source && !w.source.includes(s.source as string)) continue;
+    if (w.code_version === 'present' && !hasCodeVersion) continue;
+    if (w.code_version === 'absent' && hasCodeVersion) continue;
+    if (w.from && at < new Date(w.from)) continue;
+    if (w.to && at >= new Date(w.to)) continue;
+    if (!r.generation) return notRecorded(`${r.id}: ${r.writer}`);
+    return { status: 'inferred', rule: r.id, writer: r.writer, generation: r.generation, basis: r.basis, caveat: r.caveat ?? null };
+  }
+  return notRecorded(`no dated rule covers ${field} source=${(s.source as string) ?? 'none'} at ${at.toISOString()}`);
 }

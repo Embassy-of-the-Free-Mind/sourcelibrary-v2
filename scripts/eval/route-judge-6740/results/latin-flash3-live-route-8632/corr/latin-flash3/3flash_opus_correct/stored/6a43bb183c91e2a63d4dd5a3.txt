@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>S 1</sig>
+
+hemos germanis permixtos ipsam Germaniam inhabitare
+asserit.
+§. 16. Pariter ineptiunt, qui Bohemum propterea que
+non sit Elector electione privandum, asserunt: Primaria vero eorum argumentatio hæc est: Quicunque non habet sessionem in Comitiis, nec contributionibus aliisque Imperii oneribus est obnoxius, non est status Imperii, nec per consequens Elector. Atque de Rege Bohemiæ verum est antecedens. Ergo et consequens. Sed respondeo. I. Inanem de quæstione censeri disputationem, ubi clara constitutionis determinatio; neque cognitis diu immorandum: Quin autem de eo, quod Elector fit, clara adfit constitutio, ex conjunctione antecedentium cum subsequentibus apparebit. II. Respondeo Limitando Majorem hoc modo: Quicunque nec in universalibus nec particularibus Comitiis votum et sessionem habet, ille non est status Imperii. Atque sic negamus Minorem. Sciendum et hic est, quod vox Status sumatur dupliciter. 1. Late et generaliter; sic omnis ille est status Imperii, qui in matricula hodie invenitur, et ab omnibus pro tali habetur. 2. Stricte et specialiter, sic nullus est status Imperii, qui non habet votum et sessionem in Comitiis: hoc modo Rex Bohemiæ non est status, sed priori. Præsuppono et hic cum Nobilissimo, Amplissimo, Consultissimo atque Excellentissimo Domino Præside Professore Publico hac Salana decantatissimo, Præceptore meo æternùm suspiciendo Lectionibus suis privatis ad Epitomen Jurisprudentiæ Publicæ, Brandlach libro 1. capitulo 3. duplicem esse matriculam, aliam in quibus nomina statuum tantum sunt consignata, aliam in quibus tantùm <unclear>ii</unclear> status enumerantur, qui contribuunt imperio: Hinc etiam quod Rex Bohemiæ in hac posteriori, cum nihil contribuat Imperio Romano, non concineatur.
+§. 17. Alii quidem quibus meliora præcordia Titan finxit, mitiores sese exhibent: et tum demum vocandum esse Regem Bohemiæ. Si nimirum alii discordent, ut Petrus de An-
+de Imperio Romano, libro 2. capitulo 2. et velut arbitrum saltem honorarium paria vota discrepantia in electione fuerint, intervenire, censent ac largiuntur Manuscriptis Pasianis libro 2. capitulo 35. in 26. de probationibus.
+
+<vocab>Bohemiæ, Elector, Comitiis, status Imperii, matricula, Petrus de Andlo, Jurisprudentia Publica, Salana</vocab>

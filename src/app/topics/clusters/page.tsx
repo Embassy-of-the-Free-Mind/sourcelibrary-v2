@@ -160,7 +160,7 @@ export default async function TopicsPage() {
             {/* Content */}
             <div className="p-4">
               <div className="flex items-start justify-between gap-2 mb-2">
-                <h2 className="font-display text-base font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight">
+                <h2 className="font-serif text-base font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight">
                   {topic.name}
                 </h2>
                 <span className="text-xs text-muted whitespace-nowrap flex-shrink-0">

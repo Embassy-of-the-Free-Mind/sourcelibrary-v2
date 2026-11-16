@@ -1,0 +1,2725 @@
+{
+ "reference": [
+  {
+   "id": "asanskritreader03lanmgoog",
+   "title": "A Sanskrit reader : with vocabulary and notes",
+   "year": 1884,
+   "lang": "san",
+   "images": 328
+  },
+  {
+   "id": "sanskritreaderwi00lanmuoft",
+   "title": "A Sanskrit reader: with vocabulary and notes",
+   "year": 1888,
+   "lang": "san",
+   "images": 478
+  },
+  {
+   "id": "anthologiasansc00gildgoog",
+   "title": "Anthologia sanscritica glossario instrvcta",
+   "year": 1868,
+   "lang": "san",
+   "images": 347
+  },
+  {
+   "id": "anthologiasansc00lassgoog",
+   "title": "Anthologia sanscritica glossario instrvcta",
+   "year": 1868,
+   "lang": "san",
+   "images": 337
+  },
+  {
+   "id": "anthologiasansc01gildgoog",
+   "title": "Anthologia sanscritica glossario instrvcta: In vsvm scholarvm edidit ...",
+   "year": 1865,
+   "lang": "san",
+   "images": 321
+  },
+  {
+   "id": "b30094872",
+   "title": "Nalopȧkhyȧnam, or, The tale of Nala : containing the Sanskrit text in Roman characters, followed by a vocabulary in which each word is placed under its root, with references to derived words in cognate languages, and a sketch of Sanskrit grammar",
+   "year": 1875,
+   "lang": "san",
+   "images": 208
+  },
+  {
+   "id": "namalinganusasan00amaruoft",
+   "title": "Namalinganusasana; Amarakosaha. With the commentary, Amarakoshodghatana of Kshirasvamin. Edited with critical notes, an essay on the time of Amarasimha and Kshirasvamin, a list of works and author quoted, glossary of words",
+   "year": 1913,
+   "lang": "san",
+   "images": 398
+  },
+  {
+   "id": "paribhvrttiatre00dubegoog",
+   "title": "Paribhásvritti, a treatise on Sanskrit grammar;",
+   "year": 1887,
+   "lang": "san",
+   "images": 217
+  },
+  {
+   "id": "bub_gb_G3woAAAAYAAJ",
+   "title": "A catalogue of palm-leaf & selected paper mss. belonging to the Durbar Library, Nepal",
+   "year": 1905,
+   "lang": "eng,san",
+   "images": 446
+  },
+  {
+   "id": "cu31924062545417",
+   "title": "A compendious Sanskrit grammar, with a brief sketch of scenic Prákrit",
+   "year": 1885,
+   "lang": "eng,san",
+   "images": 200
+  },
+  {
+   "id": "b30094045",
+   "title": "A descriptive catalogue of Sanskrit mss. in the library of the Asiatic society of Bengal : Part first.--Grammar",
+   "year": 1877,
+   "lang": "eng,san",
+   "images": 250
+  },
+  {
+   "id": "afr4972.0001.001.umich.edu",
+   "title": "A dictionary of Sanscrit and English, designed for the use of private students and of Indian colleges and schools",
+   "year": 1846,
+   "lang": "eng,san",
+   "images": 934
+  },
+  {
+   "id": "b24858687",
+   "title": "A manual of Sanskrit phonetics : in comparison with the Indogermanic mother-language, for the students of Germanic and classical philology",
+   "year": 1898,
+   "lang": "eng,san",
+   "images": 138
+  },
+  {
+   "id": "cu31924023200748",
+   "title": "A practical grammar of the Sanskrit language : arranged with reference to the classical languages of Europe, for the use of English students",
+   "year": 1877,
+   "lang": "eng,san",
+   "images": 434
+  },
+  {
+   "id": "sanskritgrammari00whit_1",
+   "title": "A Sanskrit grammar : including both the classical language, and the older dialects, of Veda and Brahmana",
+   "year": 1891,
+   "lang": "eng,san",
+   "images": 590
+  },
+  {
+   "id": "asanskritgramma00goog",
+   "title": "A Sanskrit grammar : including both the classical language, and the older dialects, of Veda and Brahmana",
+   "year": 1896,
+   "lang": "eng,san",
+   "images": 559
+  },
+  {
+   "id": "asanskritgramma01unkngoog",
+   "title": "A Sanskrit grammar : including both the classical language, and the older dialects, of Veda and Brahmana",
+   "year": 1896,
+   "lang": "eng,san",
+   "images": 593
+  },
+  {
+   "id": "b30096042",
+   "title": "A Sanskrit-English dictionary : based upon the St. Petersburg lexicons",
+   "year": 1891,
+   "lang": "eng,san",
+   "images": 692
+  },
+  {
+   "id": "sanskritenglishd00capprich",
+   "title": "A Sanskrit-English dictionary, based upon the St. Petersburg lexicons;",
+   "year": 1891,
+   "lang": "eng,san",
+   "images": 696
+  },
+  {
+   "id": "sanskritenglishd00benf",
+   "title": "A Sanskrit-English dictionary; with references to the best editions of Sanskrit authors and etymologies and comparisons of cognate words, chiefly in Greek, Latin, Gothic, and Anglo-Saxon",
+   "year": 1866,
+   "lang": "eng,san",
+   "images": 1194
+  },
+  {
+   "id": "asynopsisscienc00unkngoog",
+   "title": "A Synopsis of science form [sic] the standpoint of the Nyáya philosophy : Sanskrit and English",
+   "year": 1852,
+   "lang": "eng,san",
+   "images": 563
+  },
+  {
+   "id": "b33520938",
+   "title": "A vocabulary of the names of the various parts of the human body and of medical and technical terms in English, Arabic, Persian, Hindee and Sanscrit for the use of the members of the Medical Department in India",
+   "year": 1825,
+   "lang": "ara,eng,hin,per,san",
+   "images": 244
+  },
+  {
+   "id": "altindischerahn02calagoog",
+   "title": "Altindischer ahnencult;",
+   "year": 1893,
+   "lang": "ger,san",
+   "images": 285
+  },
+  {
+   "id": "altindischerahn01calagoog",
+   "title": "Altindischer ahnencult;",
+   "year": 1893,
+   "lang": "ger,san",
+   "images": 298
+  },
+  {
+   "id": "cu31924074308432",
+   "title": "An introduction to Kachchāyana's grammar of the Pāli language",
+   "year": 1863,
+   "lang": "eng,pli,san",
+   "images": 300
+  },
+  {
+   "id": "b30092887",
+   "title": "Anthologia sanscritica glossario instrvcta",
+   "year": 1868,
+   "lang": "lat,san",
+   "images": 320
+  },
+  {
+   "id": "diedukaracarydes00dutouoft",
+   "title": "Die dukaracary des Bodhisattva in der buddhistischen Tradition",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 120
+  },
+  {
+   "id": "bub_gb_OekoAAAAYAAJ",
+   "title": "Die indischen Genuslehren mit dem Text der Lin̄gânuçâsana's des Câkaṭâyana, Harṣavardhana, Vararuci",
+   "year": 1890,
+   "lang": "ger,san",
+   "images": 169
+  },
+  {
+   "id": "lmentsdesanscri00henrgoog",
+   "title": "Éléments de sanscrit classique",
+   "year": 1902,
+   "lang": "fre,san",
+   "images": 321
+  },
+  {
+   "id": "glossariumcompa01boppgoog",
+   "title": "Glossarium comparativum linguae sanscritae : in quo omnes sanscritae radices et vocabula usitatissima explicantur et cum vocabulis graecis, latinis, germanicis, lituanicis, slavicis, celticis comparantur",
+   "year": 1867,
+   "lang": "lat,san",
+   "images": 509
+  },
+  {
+   "id": "aem9648.0001.001.umich.edu",
+   "title": "Glossarium comparativum linguae sanscritae, in quo omnes sanscritae radices et vocabula usitatissima explicantur et cum vocabulis graecis, latinis, germanicis, lituanicis, slavicis, celticis",
+   "year": 1867,
+   "lang": "lat,san",
+   "images": 512
+  },
+  {
+   "id": "glossariumsanscr00bopp",
+   "title": "Glossarium sanscritum, in quo omnes radices et vocabula usitatissima explicantur et cum vocabulis graecis,",
+   "year": 1847,
+   "lang": "ger,lat,san",
+   "images": 430
+  },
+  {
+   "id": "bub_gb_QVaKv4oOp4QC",
+   "title": "Grammaire sanscrite",
+   "year": 1859,
+   "lang": "fre,san",
+   "images": 237
+  },
+  {
+   "id": "handbuchdessans03thumgoog",
+   "title": "Handbuch des sanskrit, mit texten und glossar; eine einführung in das sprach wissenschaftliche studium des altindischen",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 149
+  },
+  {
+   "id": "handbuchdessans02thumgoog",
+   "title": "Handbuch des sanskrit, mit texten und glossar; eine einführung in das sprach wissenschaftliche studium des altindischen",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 163
+  },
+  {
+   "id": "bub_gb_lPofAAAAMAAJ",
+   "title": "Handbuch des sanskrit, mit texten und glossar; eine einführung in das sprach wissenschaftliche studium des altindischen",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 540
+  },
+  {
+   "id": "bub_gb_aoMKAAAAIAAJ",
+   "title": "Handbuch des sanskrit, mit texten und glossar; eine einführung in das sprach wissenschaftliche studium des altindischen",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 165
+  },
+  {
+   "id": "handbuchdessans00thumgoog",
+   "title": "Handbuch des sanskrit, mit texten und glossar; eine einführung in das sprach wissenschaftliche studium des altindischen",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 548
+  },
+  {
+   "id": "handbuchdessans01thumgoog",
+   "title": "Handbuch des sanskrit, mit texten und glossar; eine einführung in das sprach wissenschaftliche studium des altindischen",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 535
+  },
+  {
+   "id": "indischeskizzenv00webe",
+   "title": "Indische Skizzen. Vier bisher in zeitschriften Zerstreute Vorträge und Abhandlungen",
+   "year": 1857,
+   "lang": "ger,san",
+   "images": 544
+  },
+  {
+   "id": "lebouddhismejap01fujigoog",
+   "title": "Le bouddhisme japonais : doctrines et histoire des douze grandes sectes bouddhiques du Japon",
+   "year": 1889,
+   "lang": "fre,jap,san",
+   "images": 226
+  },
+  {
+   "id": "lespoqueslittra00nvgoog",
+   "title": "Les époques littéraires de l'Inde : études sur la poésie sanscrite",
+   "year": 1883,
+   "lang": "fre,san",
+   "images": 545
+  },
+  {
+   "id": "materialienzumdh00liebuoft",
+   "title": "Materialien zum Dhatupatha",
+   "year": 1922,
+   "lang": "ger,san",
+   "images": 68
+  },
+  {
+   "id": "matriauxpourser00blongoog",
+   "title": "Matériaux pour servir à l'histoire de la déesse buddhique Tārā",
+   "year": 1895,
+   "lang": "fre,san",
+   "images": 99
+  },
+  {
+   "id": "mthodepourdchif01juligoog",
+   "title": "Méthode pour déchiffrer et transcrire les noms sanscrits qui se rencontrent dans les livres chinois",
+   "year": 1861,
+   "lang": "chi,san",
+   "images": 261
+  },
+  {
+   "id": "mthodepourdchif00juligoog",
+   "title": "Méthode pour déchiffrer et transcrire les noms sanscrits qui se rencontrent dans les livres chinois, à l'aide des règles, d'exercices et d'un répertoire de onze cents caractères chinois idéographiques, employés alphabétiquement",
+   "year": 1861,
+   "lang": "chi,fre,san",
+   "images": 272
+  },
+  {
+   "id": "mthodepourdchiff00juli",
+   "title": "Méthode pour déchiffrer et transcrire les noms sanscrits qui se rencontrent dans les livres chinois, à l'aide des règles, d'exercices et d'un répertoire de onze cents caractères chinois idéographiques, employés alphabétiquement",
+   "year": 1861,
+   "lang": "chi,fre,san",
+   "images": 270
+  },
+  {
+   "id": "paiasaddamahaavo0000seth",
+   "title": "Paia-sadda-mahaṇṇavo ; a comprehensive Prakrit Hindi dictionary with Sanskrit equivalents, quotations and complete references 1923",
+   "year": 1923,
+   "lang": "eng,hin,san",
+   "images": 1408
+  },
+  {
+   "id": "panditvolume00vishgoog",
+   "title": "Pandit",
+   "year": 1866,
+   "lang": "eng,san",
+   "images": 853
+  },
+  {
+   "id": "paralleledunepi00ditagoog",
+   "title": "Parallèle d'un épisode de l'ancienne poésie indienne avec des poëmes de l'antiquité classique",
+   "year": 1856,
+   "lang": "fre,gre,san",
+   "images": 185
+  },
+  {
+   "id": "bub_gb_dikpAAAAYAAJ",
+   "title": "Prolegomena zu des Vasantarâja Çâkuna, nebst Textproben",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 100
+  },
+  {
+   "id": "rigvedarepetiti00bloogoog",
+   "title": "Rig-veda repetitions : the repeated verses and distichs and stanzas of the Rig-veda in systematic presentation and with critical discussion",
+   "year": 1916,
+   "lang": "eng,san",
+   "images": 511
+  },
+  {
+   "id": "rigvedarepetiti01bloogoog",
+   "title": "Rig-veda repetitions; the repeated verses and distichs and stanzas of the Rig-veda in systematic presentation and with a critical discussion",
+   "year": 1916,
+   "lang": "eng,san",
+   "images": 516
+  },
+  {
+   "id": "sagenundmrchen00essiuoft",
+   "title": "Sagen und Märchen Altindiens",
+   "year": 1915,
+   "lang": "ger,san",
+   "images": 278
+  },
+  {
+   "id": "sanskritenglishd00moni_0",
+   "title": "Sanskrit-English dictionary etymologically and philogically arranged with special reference to Greek, Latin, Gothic, German, Anglo-Saxon, and other co",
+   "year": 1872,
+   "lang": "eng,san",
+   "images": 1228
+  },
+  {
+   "id": "bub_gb_uyMYAAAAYAAJ",
+   "title": "Sanskrit-Lesebuch : zur Einführung in die altindische Sprache und Literatur",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 668
+  },
+  {
+   "id": "sanskritlesebuc01liebgoog",
+   "title": "Sanskrit-Lesebuch : zur Einführung in die altindische Sprache und Literatur",
+   "year": 1905,
+   "lang": "ger,san",
+   "images": 673
+  },
+  {
+   "id": "sanskritlesebuc00liebgoog",
+   "title": "Sanskrit-lesebuch. Zur Einführung in die altindische Sprache und Literatur",
+   "year": 1905,
+   "lang": "eng,ger,san",
+   "images": 672
+  },
+  {
+   "id": "sanskritwrterbu02bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 304
+  },
+  {
+   "id": "sanskritwrterbu06bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 278
+  },
+  {
+   "id": "sanskritwrterbu00bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 312
+  },
+  {
+   "id": "sanskritwrterbu03bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 314
+  },
+  {
+   "id": "sanskritwrterbu01bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 403
+  },
+  {
+   "id": "sanskritwrterbu00unkngoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 313
+  },
+  {
+   "id": "sanskritwrterbu04bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 318
+  },
+  {
+   "id": "sanskritwrterbu05bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 281
+  },
+  {
+   "id": "bub_gb_yS4OAAAAIAAJ",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 315
+  },
+  {
+   "id": "bub_gb_cxEPAQAAMAAJ",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 627
+  },
+  {
+   "id": "sanskritwrterbu07bhgoog",
+   "title": "Sanskrit-wörterbuch in kürzerer fassung",
+   "year": 1879,
+   "lang": "ger,san",
+   "images": 279
+  },
+  {
+   "id": "secondbookofsans00bhanrich",
+   "title": "Second book of Sanskrit, being a treatise on grammar, with exercises",
+   "year": 1881,
+   "lang": "eng,san",
+   "images": 224
+  },
+  {
+   "id": "b29001456",
+   "title": "The Ayurvedic system of medicine, or, An exposition, in English, of Hindu medicine as occurring in Charka [sic], Sucruta, Bágbhata and other authoritative works, ancient and modern, in Sanskrit",
+   "year": 1909,
+   "lang": "eng,san",
+   "images": 526
+  },
+  {
+   "id": "bub_gb_5q1DAAAAYAAJ",
+   "title": "The Bhagvad-gîtâ : with Samskṛit text, free translation into English, a word-for-word translation, and an introduction on Samskṛit grammar",
+   "year": 1905,
+   "lang": "eng,san",
+   "images": 398
+  },
+  {
+   "id": "b29980252",
+   "title": "The positive sciences of the ancient Hindus",
+   "year": 1915,
+   "lang": "eng,san",
+   "images": 318
+  },
+  {
+   "id": "standardsanskri00unkngoog",
+   "title": "The standard Sanskrit-English dictionary; containing appendices on Sanskrit prosody and names of noted mythological persons, &c",
+   "year": 1889,
+   "lang": "eng,san",
+   "images": 947
+  },
+  {
+   "id": "studentsenglishs00apterich",
+   "title": "The student's English-Sanskrit dictionary",
+   "year": 1893,
+   "lang": "eng,san",
+   "images": 488
+  },
+  {
+   "id": "usefulsanskritn00johngoog",
+   "title": "Useful Sanskrit nouns and verbs in English letters",
+   "year": 1892,
+   "lang": "eng,san",
+   "images": 45
+  },
+  {
+   "id": "cu31924023201126",
+   "title": "Useful Sanskrit nouns and verbs in English letters",
+   "year": 1892,
+   "lang": "eng,san",
+   "images": 40
+  },
+  {
+   "id": "usefulsanskritno00johnrich",
+   "title": "Useful Sanskrit nouns and verbs in English letters",
+   "year": 1892,
+   "lang": "eng,san",
+   "images": 48
+  },
+  {
+   "id": "vedischechresto01delbgoog",
+   "title": "Vedische Chrestomathie mit Anmerkungen und Glossar",
+   "year": 1874,
+   "lang": "ger,san",
+   "images": 145
+  },
+  {
+   "id": "vedischechresto00delbgoog",
+   "title": "Vedische Chrestomathie mit Anmerkungen und Glossar",
+   "year": 1874,
+   "lang": "ger,san",
+   "images": 140
+  },
+  {
+   "id": "vergleichendegr12boppgoog",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 595
+  },
+  {
+   "id": "vergleichendegr00arengoog",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 589
+  },
+  {
+   "id": "vergleichendegr01arengoog",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 593
+  },
+  {
+   "id": "vergleichendegra03bopp",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 536
+  },
+  {
+   "id": "vergleichendegr19boppgoog",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 537
+  },
+  {
+   "id": "vergleichendegr08boppgoog",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 591
+  },
+  {
+   "id": "vergleichendegra03bopp_0",
+   "title": "Vergleichende grammatik des sanskrit, ṣend, armenischen, griechischen, lateinischen, litauischen, altslavischen, gothischen und deutschen",
+   "year": 1868,
+   "lang": "mul,san",
+   "images": 538
+  },
+  {
+   "id": "adictionarysans00yategoog",
+   "title": "A dictionary in Sanscrit and English : designed for the use of private students and of Indian colleges and schools",
+   "year": 1846,
+   "lang": "eng,san",
+   "images": 931
+  },
+  {
+   "id": "grammarofsanskri00kiel",
+   "title": "A grammar of the Sanskrit language",
+   "year": 1870,
+   "lang": "eng,san",
+   "images": 286
+  },
+  {
+   "id": "b28741249",
+   "title": "Anthologia Sanscritica glossario instructa",
+   "year": 1838,
+   "lang": "san",
+   "images": 390
+  },
+  {
+   "id": "bub_gb_hZBFAAAAcAAJ",
+   "title": "Ausführliche sanskrit-grammatik für den öffentlichen und selbstunterricht",
+   "year": 1847,
+   "lang": "ger,san",
+   "images": 395
+  },
+  {
+   "id": "b3009267x",
+   "title": "Bibliotecae Sanskritae, sive recensvs librorvm Sanskritorvm hvcvsqve typis vel lapide exscriptorvm critici specimen",
+   "year": 1847,
+   "lang": "san",
+   "images": 228
+  },
+  {
+   "id": "bibliothecaindi03indigoog",
+   "title": "Bibliotheca Indica",
+   "year": 1848,
+   "lang": "eng,inc,san",
+   "images": 963
+  },
+  {
+   "id": "bibliothecaindi01indigoog",
+   "title": "Bibliotheca Indica",
+   "year": 1848,
+   "lang": "eng,inc,san",
+   "images": 555
+  },
+  {
+   "id": "bibliothecaindi01benggoog",
+   "title": "Bibliotheca Indica",
+   "year": 1848,
+   "lang": "eng,inc,san",
+   "images": 725
+  },
+  {
+   "id": "bibliothecaindi00indigoog",
+   "title": "Bibliotheca Indica",
+   "year": 1848,
+   "lang": "eng,inc,san",
+   "images": 1109
+  },
+  {
+   "id": "bibliothecaindi05indigoog",
+   "title": "Bibliotheca Indica",
+   "year": 1848,
+   "lang": "eng,inc,san",
+   "images": 567
+  },
+  {
+   "id": "glossariumsansc00boppgoog",
+   "title": "Glossarium sanscritum, in quo omnes radices et vocabula usitatissima explicantur et cum vocabulis graeis",
+   "year": 1847,
+   "lang": "ger,lat,san",
+   "images": 428
+  },
+  {
+   "id": "radiceslingusan01westgoog",
+   "title": "Radices linguae sanscritae",
+   "year": 1841,
+   "lang": "lat,san",
+   "images": 412
+  },
+  {
+   "id": "radiceslinguaesa00westuoft",
+   "title": "Radices linguae Sanscritae ad decreta grammaticorum definivit atque copia exemplorum exquisitiorum illustravit",
+   "year": 1841,
+   "lang": "san",
+   "images": 416
+  },
+  {
+   "id": "bub_gb_Uv9zkRm1Nv4C",
+   "title": "Radices pracriticae supplementum ad Lassenii Institutiones linguae pracriticae edidit et illustravit Nicolaus Delius",
+   "year": 1839,
+   "lang": "lat,san",
+   "images": 109
+  },
+  {
+   "id": "samskrtapathopak00yate",
+   "title": "Saṃskṛtapāṭhopakārakoyaṃ granthaḥ ... = The Sunscrit reader, or, Easy introduction to the reading of the Sunscrit Language.",
+   "year": 1822,
+   "lang": "san",
+   "images": 72
+  },
+  {
+   "id": "sanskritlesebuc01hoefgoog",
+   "title": "Sanskrit Lesebuch",
+   "year": 1849,
+   "lang": "san",
+   "images": 111
+  },
+  {
+   "id": "sanskritlesebuc00hoefgoog",
+   "title": "Sanskrit Lesebuch: mit Benutzung handschriftlicher Quellen",
+   "year": 1849,
+   "lang": "san",
+   "images": 107
+  },
+  {
+   "id": "b28743635",
+   "title": "Sanskrit-Chrestomathie",
+   "year": 1845,
+   "lang": "san",
+   "images": 458
+  },
+  {
+   "id": "vominfinitivbes00hoefgoog",
+   "title": "Vom infinitiv besonders im sanskrit. Eine etymologisch-syntactische abhandlung als probe einer sanskrit-syntax",
+   "year": 1840,
+   "lang": "ger,san",
+   "images": 136
+  },
+  {
+   "id": "vycaranaseulocu00bartgoog",
+   "title": "Vyàcarana seu Locupletissima samscrdamicae linguae institutio in usum fidei praeconum in India orientali, et virorum litteratorum in Europa",
+   "year": 1804,
+   "lang": "lat,san",
+   "images": 367
+  }
+ ],
+ "manuscript": [
+  {
+   "id": "catalogueofprint00asiauoft",
+   "title": "Catalogue of printed books and manuscripts in Sanskrit belonging to the Oriental Library of the Asiatic Society of Bengal",
+   "year": 1903,
+   "lang": "san",
+   "images": 364
+  },
+  {
+   "id": "ldpd_11151615_000",
+   "title": "Harivaṅca : a supplement to the Mahābhārata",
+   "year": 1891,
+   "lang": "san",
+   "images": 830
+  },
+  {
+   "id": "ldpd_17878457_000",
+   "title": "Makaranda : manuscript, 1865",
+   "year": 1865,
+   "lang": "san",
+   "images": 62
+  },
+  {
+   "id": "ldpd_17860669_000",
+   "title": "Śrīsūryasiddhānta : manuscript, 1873",
+   "year": 1873,
+   "lang": "san",
+   "images": 34
+  },
+  {
+   "id": "ldpd_8960570_000",
+   "title": "Suklayajurvedīya Brahma (Nitya) karma : [Premānandātmajena Jayaśan̄karaśarmanā sam̀śodhya",
+   "year": 1890,
+   "lang": "san",
+   "images": 94
+  },
+  {
+   "id": "ldpd_14439740_000",
+   "title": "The Kirâtârjunîya, with the commentary Sabdârthadîpikâ of Chitrabhânu",
+   "year": 1918,
+   "lang": "san",
+   "images": 258
+  },
+  {
+   "id": "ldpd_6769882_000",
+   "title": "The Nyayabindutika of Dharmottaracharya",
+   "year": 1889,
+   "lang": "san",
+   "images": 148
+  },
+  {
+   "id": "ldpd_17901947_000",
+   "title": "Yantracintāmaṇī : manuscript, 1872",
+   "year": 1872,
+   "lang": "san",
+   "images": 44
+  },
+  {
+   "id": "McGillLibrary-osl_sarngadharasamhita_BibOsl0102-22935",
+   "title": "Śārṅgadharasaṃhitā",
+   "year": 1887,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "acataloguesansk00bhgoog",
+   "title": "A catalogue of Sanskrit manuscripts contained in the private libraries of Gujarât, Kâṭhiâvâd, Kachchh, Sindh, and Khândesʹ",
+   "year": 1871,
+   "lang": "eng,san",
+   "images": 847
+  },
+  {
+   "id": "reportasecondto00bhangoog",
+   "title": "Report of a second tour in search of Sanskrit manuscripts made in Rajputana and Central India in 1904-5 and 1905-6",
+   "year": 1907,
+   "lang": "eng,san",
+   "images": 129
+  },
+  {
+   "id": "reportofsecondto00bhan",
+   "title": "Report of a second tour in search of Sanskrit manuscripts made in Rajputana and Central India in 1904-5 and 1905-6",
+   "year": 1907,
+   "lang": "eng,san",
+   "images": 116
+  },
+  {
+   "id": "reportonsearch189601seshuoft",
+   "title": "Report on a search for Sanskrit and Tamil manuscripts",
+   "year": 1898,
+   "lang": "eng,san,tam",
+   "images": 326
+  },
+  {
+   "id": "reportonsearchfo01seshuoft",
+   "title": "Report on a search for Sanskrit and Tamil manuscripts",
+   "year": 1898,
+   "lang": "eng,san,tam",
+   "images": 330
+  },
+  {
+   "id": "reportonsearchfo02seshuoft",
+   "title": "Report on a search for Sanskrit and Tamil manuscripts",
+   "year": 1898,
+   "lang": "eng,san,tam",
+   "images": 408
+  },
+  {
+   "id": "b30094082",
+   "title": "Report on the search for Sanskrit manuscripts in the Bombay Presidency during the year 1882-83",
+   "year": 1884,
+   "lang": "eng,san",
+   "images": 244
+  },
+  {
+   "id": "McGillLibrary-osl_anjananidaa_BibOsl0097-22923",
+   "title": "Añjananidāna",
+   "year": 1926,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "ldpd_17788128_000",
+   "title": "Bhāsvatī : manuscript, 1822",
+   "year": 1822,
+   "lang": "san",
+   "images": 20
+  },
+  {
+   "id": "ldpd_17902672_000",
+   "title": "Brahmatulyasāraṇī : manuscript, 1798",
+   "year": 1798,
+   "lang": "san",
+   "images": 32
+  },
+  {
+   "id": "ldpd_17879318_000",
+   "title": "Br̥hajjātaka : manuscript, 1818",
+   "year": 1818,
+   "lang": "san",
+   "images": 82
+  },
+  {
+   "id": "ldpd_17879306_000",
+   "title": "Br̥hattithicintāmaṇi : manuscript, [1700-1900]",
+   "year": 1700,
+   "lang": "san",
+   "images": 78
+  },
+  {
+   "id": "McGillLibrary-rbsc_19th-century-indian-sketchbook-arms_MSIndic43-21862",
+   "title": "Early 19th century Indian sketchbook of arms, standards, and temples",
+   "year": 1800,
+   "lang": "eng,per,san",
+   "images": null
+  },
+  {
+   "id": "McGillLibrary-rbsc_ms-indic90-30266",
+   "title": "Early eighteenth century Sanskrit manuscript : on Hindu theology and folk-lore in Sarada script",
+   "year": 1600,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "b30506815",
+   "title": "Ezour-Vedam oder der alte Commentar über den Vedam",
+   "year": 1779,
+   "lang": "fre,ger,san",
+   "images": 580
+  },
+  {
+   "id": "McGillLibrary-osl_grahani-fragment_BibOsl0100-22926",
+   "title": "Grahaṇi : [fragment of a commentary on the medical work of Mādhava, entitled \"Rugviniścaya\" or \"Nidāna\"]",
+   "year": 1800,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "ldpd_17789013_000",
+   "title": "Hillājadīpikā : manuscript, [1700-1900]",
+   "year": 1700,
+   "lang": "san",
+   "images": 25
+  },
+  {
+   "id": "ldpd_17788162_000",
+   "title": "Jātakacandrikā : manuscript, 1832",
+   "year": 1832,
+   "lang": "san",
+   "images": 5
+  },
+  {
+   "id": "ldpd_17879299_000",
+   "title": "Jātakapaddhati : manuscript, 1827",
+   "year": 1827,
+   "lang": "san",
+   "images": 12
+  },
+  {
+   "id": "McGillLibrary-osl_jvaratimirabhaskara_BibOsl0098-22848",
+   "title": "Jvaratimirabhāskara",
+   "year": 1884,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "mscoll390_item3020",
+   "title": "Kālakācaryakathā, circa 1700-1850. = कालकाचर्यकथा, १७००-१८५०.",
+   "year": 1700,
+   "lang": "pra,san",
+   "images": null
+  },
+  {
+   "id": "McGillLibrary-osl_madanapalavinodanighantu_BibOsl0099-22929",
+   "title": "Madanapālavinodanighaṇṭu",
+   "year": 1800,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "ldpd_17788137_000",
+   "title": "Mean motion tables : manuscript, [1700-1900]",
+   "year": 1700,
+   "lang": "san",
+   "images": 6
+  },
+  {
+   "id": "ldpd_17879313_000",
+   "title": "Pañcāñgavidyādharī : manuscript, 1750",
+   "year": 1750,
+   "lang": "san",
+   "images": 36
+  },
+  {
+   "id": "ldpd_17901952_000",
+   "title": "Pañcapakṣi : manuscript, [1700-1907]",
+   "year": 1700,
+   "lang": "san",
+   "images": 22
+  },
+  {
+   "id": "ldpd_17892946_000",
+   "title": "Ramalanavaratna : manuscript, [1811-1907]",
+   "year": 1811,
+   "lang": "san",
+   "images": 109
+  },
+  {
+   "id": "ldpd_17901949_000",
+   "title": "Raudrī Meghamālā : manuscript, [1700-1900]",
+   "year": 1700,
+   "lang": "san",
+   "images": 41
+  },
+  {
+   "id": "McGillLibrary-osl_indic_bib-osl-7784_2-22634",
+   "title": "Sinhalese Manuscript Olas of works on Hindu medicine, Sanskrit fragment",
+   "year": 1695,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "McGillLibrary-rbsc_indic-manuscript39_poleman1919-21844",
+   "title": "Stories of Hindu gods",
+   "year": 1720,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "McGillLibrary-rbsc_Indic-MS_37_Poleman520-20315",
+   "title": "Stotras and other Sanskrit religious texts",
+   "year": 1700,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "ldpd_17879302_000",
+   "title": "Tājika tables : manuscript, [1700-1907]",
+   "year": 1700,
+   "lang": "san",
+   "images": 18
+  },
+  {
+   "id": "ldpd_17878417_000",
+   "title": "Tājikanīlakaṇṭhī : manuscript, 1745",
+   "year": 1745,
+   "lang": "san",
+   "images": 93
+  },
+  {
+   "id": "ldpd_17878460_000",
+   "title": "Trailokyaprakāśa. Arghakāṇḍa : manuscript, 1847",
+   "year": 1847,
+   "lang": "san",
+   "images": 26
+  },
+  {
+   "id": "McGillLibrary-osl_trisati-verses-145-194_BibOsl0103-22854",
+   "title": "Triśatī (verses 145-194)",
+   "year": 1700,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "ldpd_17789147_000",
+   "title": "Yantrarāja : manuscript, 1765",
+   "year": 1765,
+   "lang": "san",
+   "images": 32
+  },
+  {
+   "id": "ldpd_17879317_000",
+   "title": "Yantrarājaracanā : manuscript, [1730-1907]",
+   "year": 1730,
+   "lang": "san",
+   "images": 76
+  },
+  {
+   "id": "McGillLibrary-rbsc_ms-indic125-30985",
+   "title": "Yogaratnagara",
+   "year": 1760,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "McGillLibrary-osl_yogatarangini_BibOsl0104-23142",
+   "title": "Yogataraṅgiṇī",
+   "year": 1894,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "13SanskritManuscriptm",
+   "title": "13. Sanskrit Manuscript",
+   "year": null,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "14SanskritManuscriptn",
+   "title": "14. Sanskrit Manuscript",
+   "year": null,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "McGillLibrary-rbsc_ms36_bhagavadgita_sarada-script-18083",
+   "title": "Bhagavadgītā in Sarada script",
+   "year": null,
+   "lang": "san",
+   "images": null
+  },
+  {
+   "id": "mipc-usarmyamis_army_mil",
+   "title": "usarmyamis army mil",
+   "year": null,
+   "lang": "san",
+   "images": null
+  }
+ ],
+ "undated": [
+  {
+   "id": "vajasaneyimadhya00killuoft",
+   "title": "Vajasaneyi Madhyandina ukla Yajurveda samhitayah sarvanukramasutram",
+   "year": null,
+   "lang": "san",
+   "images": 116
+  }
+ ],
+ "royal_asiatic_society_manuscripts": [
+  {
+   "id": "raswhish85-84b",
+   "title": "",
+   "images": 218
+  },
+  {
+   "id": "raswhish17-16",
+   "title": "[Collection of six Upanishads]",
+   "images": 32
+  },
+  {
+   "id": "raswhish18-17",
+   "title": "[Collection of twelve Ātharvaṇa Upaniṣads]",
+   "images": 76
+  },
+  {
+   "id": "raswhish101-100",
+   "title": "[Nyāya philosophy]",
+   "images": 75
+  },
+  {
+   "id": "raswhish62-63",
+   "title": "A commentary on Vālmīki's Rāmāyaṇa",
+   "images": 96
+  },
+  {
+   "id": "raswhish168-179",
+   "title": "A fragment of the Nidānasthāna of the Aṣṭāṅgasaṃgraha",
+   "images": 62
+  },
+  {
+   "id": "raswhish110-109",
+   "title": "Abhinayadarpaṇa",
+   "images": 51
+  },
+  {
+   "id": "raswhish90-89",
+   "title": "Adhikaraṇaratnamālā",
+   "images": 103
+  },
+  {
+   "id": "rashodgson65",
+   "title": "Adhivāsanavidhi",
+   "images": 205
+  },
+  {
+   "id": "rashodgson69",
+   "title": "Ādikarmapradīpa",
+   "images": 18
+  },
+  {
+   "id": "raswhish196-12",
+   "title": "Ahīndrapuramāhātmya [etc.]",
+   "images": 47
+  },
+  {
+   "id": "raswhish191-44",
+   "title": "Aitareya-Āraṇyaka",
+   "images": 72
+  },
+  {
+   "id": "raswhish155-160",
+   "title": "Amarakośa",
+   "images": 112
+  },
+  {
+   "id": "raswhish152-155",
+   "title": "Amarakośodghāṭana",
+   "images": 183
+  },
+  {
+   "id": "raswhish157-163",
+   "title": "Ānandalaharī",
+   "images": 104
+  },
+  {
+   "id": "raswhish59-60",
+   "title": "Aṣṭādhyāyī",
+   "images": 95
+  },
+  {
+   "id": "raswhish120-117",
+   "title": "Aṣṭāṅgahṛdaya",
+   "images": 230
+  },
+  {
+   "id": "raswhish6-6",
+   "title": "Ātharvaṇaprokta",
+   "images": 121
+  },
+  {
+   "id": "raswhish135-136",
+   "title": "Bālabhārata",
+   "images": 79
+  },
+  {
+   "id": "raswhish160-169",
+   "title": "Bārhaspatyasūtra",
+   "images": 124
+  },
+  {
+   "id": "raswhish20-19",
+   "title": "Bhāgavata Purāṇa. Skandhas 1-9",
+   "images": 286
+  },
+  {
+   "id": "raswhish9-9",
+   "title": "Bhāgavata sāram",
+   "images": 157
+  },
+  {
+   "id": "raswhish39-38",
+   "title": "Bhāgavata-Purāṇa with Śrīdhara's commentary",
+   "images": 180
+  },
+  {
+   "id": "raswhish126-125A",
+   "title": "Bhāgavata-purāṇa.",
+   "images": 189
+  },
+  {
+   "id": "raswhish114-112A",
+   "title": "Bhaktapriyā",
+   "images": 108
+  },
+  {
+   "id": "raswhish123-121",
+   "title": "Bharttṛkāvya",
+   "images": 111
+  },
+  {
+   "id": "raswhish164-175",
+   "title": "Bharttṛkāvya",
+   "images": 46
+  },
+  {
+   "id": "raswhish163-174",
+   "title": "Bhāṣāpariccheda",
+   "images": 66
+  },
+  {
+   "id": "raswhish78-78",
+   "title": "Bhāṣyaratnaprabhā",
+   "images": 243
+  },
+  {
+   "id": "raswhish104-103",
+   "title": "Bhāṣyārthasaṃgraha.",
+   "images": 98
+  },
+  {
+   "id": "raswhish119-116",
+   "title": "Bhāṭṭadīpikā.",
+   "images": 140
+  },
+  {
+   "id": "raswhish92-91",
+   "title": "Bhāṭṭadīpikā.",
+   "images": 234
+  },
+  {
+   "id": "rastod111",
+   "title": "Bhaṭṭi-kāvya-ṭīkā",
+   "images": 194
+  },
+  {
+   "id": "raswhish175-190",
+   "title": "Bhojaprabandha",
+   "images": 46
+  },
+  {
+   "id": "raswhish3-3",
+   "title": "Brahmagītā",
+   "images": 81
+  },
+  {
+   "id": "raswhish184-4",
+   "title": "Brahmakaivarta-purāṇa. Madhyārjunamāhātmya",
+   "images": 185
+  },
+  {
+   "id": "raswhish193-167",
+   "title": "Brahmasūtracandrikā",
+   "images": 29
+  },
+  {
+   "id": "raswhish132-132",
+   "title": "Brahmottarakhaṇḍa",
+   "images": 149
+  },
+  {
+   "id": "raswhish72-72",
+   "title": "Bṛhatsaṃhitā of Varāhamihira, with a commentary (Saṃhitāvivṛti)",
+   "images": 111
+  },
+  {
+   "id": "raswhish173-188",
+   "title": "Caṇḍikāsaptati",
+   "images": 25
+  },
+  {
+   "id": "raswhish86-85",
+   "title": "Chandogamantrabrāhmaṇa",
+   "images": 106
+  },
+  {
+   "id": "raswhish23-22",
+   "title": "Chāndogyopaniṣad-vivaraṇa",
+   "images": 204
+  },
+  {
+   "id": "raswhish159-165",
+   "title": "Commentaries on the Tṛptidīpa, Kūṭasthadīpa (Tātparyadīpikā), and Dhyānadīpa, parts of the Pañcadaśī",
+   "images": 52
+  },
+  {
+   "id": "raswhish136-137",
+   "title": "Commentary on Jayadeva's Gītagovinda",
+   "images": 49
+  },
+  {
+   "id": "raswhish121-118",
+   "title": "Commentary on Kālidāsa's Kumārasambhava",
+   "images": 204
+  },
+  {
+   "id": "raswhish33-32",
+   "title": "Commentary on Śaṅkarācārya's Ātmabodhaprakaraṇa",
+   "images": 31
+  },
+  {
+   "id": "raswhish10-10",
+   "title": "Commentary on the Bālakāṇḍa and Ayodhyākāṇḍa of Vālmīki's Rāmāyaṇa",
+   "images": 226
+  },
+  {
+   "id": "raswhish4-4",
+   "title": "Commentary on the Brahmagītā",
+   "images": 178
+  },
+  {
+   "id": "raswhish130-129",
+   "title": "Commentary on the Viṣṇusahasranāman",
+   "images": 57
+  },
+  {
+   "id": "raswhish54-55",
+   "title": "Commentary on Vālmīki's Rāmāyaṇa",
+   "images": 189
+  },
+  {
+   "id": "raswhish67-68",
+   "title": "Commentary on Vālmīki's Rāmāyaṇa, the Yuddha-kāṇḍa",
+   "images": 118
+  },
+  {
+   "id": "raswhish149-151",
+   "title": "Dakṣayajñaprabandha.",
+   "images": 165
+  },
+  {
+   "id": "raswhish94-93",
+   "title": "Dvaidhasūtra.",
+   "images": 192
+  },
+  {
+   "id": "rashodgson40",
+   "title": "Dvātriṃśatkalpa-mahātantrarāja",
+   "images": 53
+  },
+  {
+   "id": "raswhish11-11",
+   "title": "Ekādaśaskandhasāraślokasaṃgraha",
+   "images": 183
+  },
+  {
+   "id": "raswhish27-26",
+   "title": "Ekāgnikāṇḍavyākhyā",
+   "images": 141
+  },
+  {
+   "id": "rashodgson46",
+   "title": "Ekallavīratantram [Caṇḍamahāroṣaṇatantram]",
+   "images": 55
+  },
+  {
+   "id": "rastod112",
+   "title": "Gaṇa-ratna-mahodadhi",
+   "images": 185
+  },
+  {
+   "id": "rashodgson2",
+   "title": "Gaṇḍa-vyūha",
+   "images": 302
+  },
+  {
+   "id": "raswhish102-101",
+   "title": "Gautamīya dharmaśāstra and commentary",
+   "images": 173
+  },
+  {
+   "id": "raswhish75-75",
+   "title": "Gṛhyavṛtti",
+   "images": 85
+  },
+  {
+   "id": "raswhish7-7",
+   "title": "Halasyamahatmya",
+   "images": 163
+  },
+  {
+   "id": "raswhish80-80",
+   "title": "Haribhaktisudhodaya",
+   "images": 204
+  },
+  {
+   "id": "raswhish181-1",
+   "title": "Hastigirimāhātmya",
+   "images": 57
+  },
+  {
+   "id": "rashodgson67",
+   "title": "Hetubinduṭīkā",
+   "images": 74
+  },
+  {
+   "id": "raswhish49-50",
+   "title": "Jaiminibhārata. Āśvamedhikaparvan. Kuśalavopākhyāna",
+   "images": 86
+  },
+  {
+   "id": "raswhish35-34",
+   "title": "Jayamaṅgaḻā",
+   "images": 176
+  },
+  {
+   "id": "raswhish199-15",
+   "title": "Kadambapurīmāhātmya",
+   "images": 15
+  },
+  {
+   "id": "raswhish200-16",
+   "title": "Kadambapurīmāhātmya",
+   "images": 31
+  },
+  {
+   "id": "rashodgson49",
+   "title": "Kālacakratantram",
+   "images": 185
+  },
+  {
+   "id": "raswhish12-12",
+   "title": "Kāmadogdhrī",
+   "images": 306
+  },
+  {
+   "id": "rashodgson54",
+   "title": "Kaṅkīrṇatantram",
+   "images": 34
+  },
+  {
+   "id": "raswhish188-8",
+   "title": "Kapālīśasthalamāhātmya",
+   "images": 59
+  },
+  {
+   "id": "raswhish201-17",
+   "title": "Kapisthalamāhātmya",
+   "images": 41
+  },
+  {
+   "id": "raswhish96-95",
+   "title": "Kauḻādarśatantra.",
+   "images": 107
+  },
+  {
+   "id": "raswhish187-7",
+   "title": "Kaunjarāśanakṣetramāhātmya",
+   "images": 192
+  },
+  {
+   "id": "raswhish202-18",
+   "title": "Kāyārohaṇamāhātmya",
+   "images": 19
+  },
+  {
+   "id": "raswhish147-149",
+   "title": "Keraḻamāhātmya",
+   "images": 167
+  },
+  {
+   "id": "raswhish134-134",
+   "title": "Kriyākalāpa",
+   "images": 136
+  },
+  {
+   "id": "rashodgson42",
+   "title": "Kriyāpanjikā",
+   "images": 51
+  },
+  {
+   "id": "rashodgson41",
+   "title": "Kṛṣṇayamāritantra-ṭīkā",
+   "images": 189
+  },
+  {
+   "id": "raswhish161-171",
+   "title": "Kṛṣṇīyam",
+   "images": 42
+  },
+  {
+   "id": "raswhish162-172",
+   "title": "Kṛṣṇīyam",
+   "images": 58
+  },
+  {
+   "id": "raswhish125-123",
+   "title": "Kuḻacūḍāmaṇi",
+   "images": 51
+  },
+  {
+   "id": "raswhish43-42",
+   "title": "Kuḻārṇavatantra",
+   "images": 109
+  },
+  {
+   "id": "raswhish98-97",
+   "title": "Kumārasaṃhitā.",
+   "images": 140
+  },
+  {
+   "id": "raswhish189-9",
+   "title": "Kumbhaghoṇamāhātmya",
+   "images": 50
+  },
+  {
+   "id": "raswhish204-19",
+   "title": "Kumbhakoṇamāhātmya",
+   "images": 48
+  },
+  {
+   "id": "raswhish203-187B",
+   "title": "Kumbhakoṇamāhātmya",
+   "images": 42
+  },
+  {
+   "id": "raswhish109-108",
+   "title": "Kuvalayānandīya",
+   "images": 88
+  },
+  {
+   "id": "raswhish112-110b",
+   "title": "Laḻitādevīstotra.",
+   "images": 81
+  },
+  {
+   "id": "raswhish115-112B",
+   "title": "Laḻitāstavaratna.",
+   "images": 57
+  },
+  {
+   "id": "rashodgson23",
+   "title": "Madhyama-syaṃbhūpurāṇa",
+   "images": 113
+  },
+  {
+   "id": "raswhish198-14",
+   "title": "Madhyamabhāga",
+   "images": 180
+  },
+  {
+   "id": "raswhish50-51",
+   "title": "Mahābhārata",
+   "images": 174
+  },
+  {
+   "id": "raswhish87-86",
+   "title": "Mahābhārata",
+   "images": 72
+  },
+  {
+   "id": "raswhish52-53",
+   "title": "Mahābhārata",
+   "images": 174
+  },
+  {
+   "id": "raswhish61-62",
+   "title": "Mahābhārata",
+   "images": 320
+  },
+  {
+   "id": "raswhish64-65",
+   "title": "Mahābhārata",
+   "images": 83
+  },
+  {
+   "id": "raswhish84-84a",
+   "title": "Mahābhārata. Parvan V. Udyoga Parvan.",
+   "images": 142
+  },
+  {
+   "id": "raswhish153-158",
+   "title": "Mahābhārata. Sambhava-Parvan.",
+   "images": 117
+  },
+  {
+   "id": "raswhish71-71",
+   "title": "Mahābhāratasaṃgraha",
+   "images": 207
+  },
+  {
+   "id": "raswhish207-186",
+   "title": "Mahāgaṇapaddhati",
+   "images": 10
+  },
+  {
+   "id": "raswhish29-28",
+   "title": "Mahāgaṇeśa-mantrapaddhati",
+   "images": 77
+  },
+  {
+   "id": "raswhish66-67",
+   "title": "Mahānāṭakasūktisudhānidhi",
+   "images": 76
+  },
+  {
+   "id": "rashodgson18",
+   "title": "Mahat-svayambhūpurāṇam",
+   "images": 199
+  },
+  {
+   "id": "raswhish170-182",
+   "title": "Maṇimañjarī",
+   "images": 42
+  },
+  {
+   "id": "raswhish26-25",
+   "title": "Mantrapāṭha",
+   "images": 67
+  },
+  {
+   "id": "raswhish143-145",
+   "title": "Mantras for Tantric worship",
+   "images": 77
+  },
+  {
+   "id": "raswhish99-98",
+   "title": "Manual of Śrauta Rites [etc]",
+   "images": 233
+  },
+  {
+   "id": "raswhish30-29",
+   "title": "Mayūkhamālikā",
+   "images": 276
+  },
+  {
+   "id": "raswhish108-107",
+   "title": "Mīmāṃsā-Tantravārttika",
+   "images": 274
+  },
+  {
+   "id": "raswhish36-35",
+   "title": "Mīmāṃsākaustubha",
+   "images": 147
+  },
+  {
+   "id": "rashodgson34",
+   "title": "Nāmasaṃgītiṭīkā = Gūḍhapadā",
+   "images": 185
+  },
+  {
+   "id": "rashodgson35",
+   "title": "Nāmasaṃgītiṭippanī = Amṛtakaṇikā",
+   "images": 73
+  },
+  {
+   "id": "raswhish73-73",
+   "title": "Naparavyākhyāna",
+   "images": 232
+  },
+  {
+   "id": "raswhish140-142_0",
+   "title": "Nārāyaṇīya",
+   "images": 105
+  },
+  {
+   "id": "raswhish140-142",
+   "title": "Nārāyaṇīya",
+   "images": 106
+  },
+  {
+   "id": "rastod113",
+   "title": "Nava-sāhasāṅka-carita",
+   "images": 241
+  },
+  {
+   "id": "raswhish81-81",
+   "title": "Pañcadaśī.",
+   "images": 201
+  },
+  {
+   "id": "raswhish185-5",
+   "title": "Pañcanadamāhātmya",
+   "images": 229
+  },
+  {
+   "id": "raswhish48-49",
+   "title": "Pañcāṅgarudranyāsa",
+   "images": 64
+  },
+  {
+   "id": "raswhish205-20",
+   "title": "Pāpavināśamāhātmya",
+   "images": 45
+  },
+  {
+   "id": "raswhish106-105",
+   "title": "Parāmarśavādārtha.",
+   "images": 97
+  },
+  {
+   "id": "raswhish128-127",
+   "title": "Paramārthasāravivaraṇa",
+   "images": 90
+  },
+  {
+   "id": "raswhish95-94",
+   "title": "Paribhāṣārtthasaṃgraha",
+   "images": 196
+  },
+  {
+   "id": "rashodgson70",
+   "title": "Poṣavidhānam",
+   "images": 11
+  },
+  {
+   "id": "raswhish154-159",
+   "title": "Prākṛtarūpāvatāra",
+   "images": 78
+  },
+  {
+   "id": "raswhish107-106",
+   "title": "Prapañcahṛdaya",
+   "images": 98
+  },
+  {
+   "id": "raswhish97-96",
+   "title": "Prapañcasārasārasaṃgraha",
+   "images": 80
+  },
+  {
+   "id": "raswhish118-115",
+   "title": "Praśnāmṛta.",
+   "images": 172
+  },
+  {
+   "id": "raswhish144-146",
+   "title": "Praśnasaṃgraha, etc.",
+   "images": 58
+  },
+  {
+   "id": "raswhish5-5",
+   "title": "Prāyaścittasubodhinī",
+   "images": 168
+  },
+  {
+   "id": "raswhish47-48",
+   "title": "Purāṇas. Skandapurāṇa. Vaiśākhamāhātmya",
+   "images": 145
+  },
+  {
+   "id": "raswhish34-33",
+   "title": "Puranas. Viṣṇupurāṇa",
+   "images": 294
+  },
+  {
+   "id": "raswhish224-NA",
+   "title": "Raṅgamāhātmya",
+   "images": 66
+  },
+  {
+   "id": "raswhish8-8",
+   "title": "Rasābhivyañjikā",
+   "images": 93
+  },
+  {
+   "id": "raswhish77-77",
+   "title": "Ratnāpaṇa: a commentary on Vidyānātha's Pratāparudra.",
+   "images": 199
+  },
+  {
+   "id": "raswhish1-1",
+   "title": "Ṛgveda bhāṣya and Sāyaṇācārya's commentary on the first Āraṇyaka of the Aitareya Āraṇyaka",
+   "images": 196
+  },
+  {
+   "id": "raswhish2-2",
+   "title": "Ṛgveda-bhāṣya",
+   "images": 178
+  },
+  {
+   "id": "raswhish13-13",
+   "title": "Ṛgveda-bhāṣya",
+   "images": 143
+  },
+  {
+   "id": "raswhish165-176",
+   "title": "Ṛgveda-Saṃhitā",
+   "images": 279
+  },
+  {
+   "id": "raswhish166-177",
+   "title": "Ṛgveda-Saṃhitā",
+   "images": 170
+  },
+  {
+   "id": "raswhish70-70",
+   "title": "Rudravidhi",
+   "images": 94
+  },
+  {
+   "id": "rashodgson68",
+   "title": "Ṣaḍaṅgayogaṭippaṇī",
+   "images": 34
+  },
+  {
+   "id": "raswhish82-82",
+   "title": "Sāhityasarvasva",
+   "images": 94
+  },
+  {
+   "id": "raswhish190-10",
+   "title": "Samaṣṭikānanamāhātmya",
+   "images": 66
+  },
+  {
+   "id": "raswhish180-195",
+   "title": "Sāmaveda. Rahasya",
+   "images": 149
+  },
+  {
+   "id": "raswhish211-180",
+   "title": "Śaṃkarācāryacarita",
+   "images": 29
+  },
+  {
+   "id": "rashodgson37",
+   "title": "Saṃpuṭodbhava",
+   "images": 135
+  },
+  {
+   "id": "rashodgson38",
+   "title": "Saṃvarodaya-mahātantram",
+   "images": 99
+  },
+  {
+   "id": "raswhish158-164",
+   "title": "Śaṅkara's commentary on the Bahuvṛcabrāhmaṇa Upaniṣad",
+   "images": 154
+  },
+  {
+   "id": "raswhish79-79",
+   "title": "Śāṅkarācāryacarita",
+   "images": 168
+  },
+  {
+   "id": "raswhish91-90",
+   "title": "Sārarahasyacāturvarṇakramavibhāga.",
+   "images": 137
+  },
+  {
+   "id": "raswhish57-58",
+   "title": "Śarīrakamīmāṃsābhāṣya",
+   "images": 409
+  },
+  {
+   "id": "rashodgson50",
+   "title": "Sarvadurgatipariśodhanam",
+   "images": 105
+  },
+  {
+   "id": "raswhish83-83",
+   "title": "Śatadūṣaṇī",
+   "images": 189
+  },
+  {
+   "id": "raswhish156-162",
+   "title": "Śivadharmottara",
+   "images": 136
+  },
+  {
+   "id": "raswhish31-30",
+   "title": "Śivagītā",
+   "images": 99
+  },
+  {
+   "id": "raswhish103-102",
+   "title": "Śivarahasyakhaṇḍa",
+   "images": 165
+  },
+  {
+   "id": "raswhish89-88",
+   "title": "Śivārcanaśiromaṇi. Pratāparudrayaśobhūṣaṇa.",
+   "images": 219
+  },
+  {
+   "id": "raswhish60-61",
+   "title": "Śivatattvasudhānidhi",
+   "images": 103
+  },
+  {
+   "id": "raswhish148-150",
+   "title": "Skanda-purāṇa",
+   "images": 221
+  },
+  {
+   "id": "raswhish88-87",
+   "title": "Skanda-Purāṇa",
+   "images": 137
+  },
+  {
+   "id": "raswhish74-74",
+   "title": "Smṛtimuktāphala. Pariccheda I Varṇāśramadharmanirūpaṇa.",
+   "images": 266
+  },
+  {
+   "id": "rashodgson29",
+   "title": "Sragdharāstotram (with Ṭīkā)",
+   "images": 44
+  },
+  {
+   "id": "raswhish229-NA",
+   "title": "Śrībhāṣya",
+   "images": 294
+  },
+  {
+   "id": "raswhish116-113",
+   "title": "Śrutisūktimālā.",
+   "images": 137
+  },
+  {
+   "id": "raswhish41-40",
+   "title": "Subodhiní",
+   "images": 194
+  },
+  {
+   "id": "raswhish46-46",
+   "title": "Sūryaśataka, with a commentary",
+   "images": 57
+  },
+  {
+   "id": "raswhish137-139",
+   "title": "Sūryasiddhāntavivaraṇa",
+   "images": 74
+  },
+  {
+   "id": "raswhish28-27",
+   "title": "Svaralakṣaṇa",
+   "images": 73
+  },
+  {
+   "id": "raswhish225-NA",
+   "title": "Śvetasrakerala prabhu, commentary on the Sarvasiddhāntasaṃgraha",
+   "images": 32
+  },
+  {
+   "id": "raswhish178-193",
+   "title": "Taittirīya-Brāhmaṇa",
+   "images": 136
+  },
+  {
+   "id": "raswhish177-192",
+   "title": "Taittirīya-Brāhmaṇa",
+   "images": 316
+  },
+  {
+   "id": "raswhish38-37",
+   "title": "Taittirīya-Prātiśākhya and Tribhāṣyaratna",
+   "images": 137
+  },
+  {
+   "id": "raswhish176-191",
+   "title": "Taittirīya-Samhitā",
+   "images": 237
+  },
+  {
+   "id": "raswhish15-14",
+   "title": "Taittirīya-upaniṣad-bhāṣya",
+   "images": 89
+  },
+  {
+   "id": "rashodgson52",
+   "title": "Tantraślokasaṃgraha",
+   "images": 19
+  },
+  {
+   "id": "raswhish117-114",
+   "title": "Tarkacūḍāmaṇi.",
+   "images": 181
+  },
+  {
+   "id": "raswhish100-99",
+   "title": "Tarkaparibhāṣā",
+   "images": 89
+  },
+  {
+   "id": "raswhish169-181",
+   "title": "Tarkasaṃgraha",
+   "images": 20
+  },
+  {
+   "id": "rashodgson43",
+   "title": "Tattvajñānasaṃsiddhi-ṭippaṇī",
+   "images": 14
+  },
+  {
+   "id": "raswhish111-110a",
+   "title": "Trilokasāravṛtti",
+   "images": 359
+  },
+  {
+   "id": "raswhish186-6",
+   "title": "Tulākāverīmāhātmya",
+   "images": 154
+  },
+  {
+   "id": "raswhish51-52",
+   "title": "Tulākāverīmāhātmya",
+   "images": 77
+  },
+  {
+   "id": "raswhish131-130",
+   "title": "Tulākāverīmāhātmya",
+   "images": 177
+  },
+  {
+   "id": "raswhish206-21",
+   "title": "Tulasīvanamārkaṇḍeyaśrīnivāsakṣetramāhātmya",
+   "images": 22
+  },
+  {
+   "id": "raswhish37-36",
+   "title": "Ujjvalā",
+   "images": 206
+  },
+  {
+   "id": "raswhish208-22",
+   "title": "Untitled astrological work.",
+   "images": 32
+  },
+  {
+   "id": "rastod114",
+   "title": "Upadeśa-rasāyana and Dharma-rasāyana, or Caccarī",
+   "images": 76
+  },
+  {
+   "id": "raswhish56-57",
+   "title": "Upadeśagranthavivaraṇa",
+   "images": 205
+  },
+  {
+   "id": "raswhish58-59",
+   "title": "Upadeśagranthavivaraṇa",
+   "images": 229
+  },
+  {
+   "id": "raswhish16-15",
+   "title": "Upanishads. Īśopaniṣad.",
+   "images": 53
+  },
+  {
+   "id": "raswhish55-56",
+   "title": "Uttara-Rāmāyaṇa",
+   "images": 70
+  },
+  {
+   "id": "raswhish68-69a",
+   "title": "Vākyakaraṇadīpikā",
+   "images": 138
+  },
+  {
+   "id": "raswhish63-64",
+   "title": "Vākyasudhāṭīkā",
+   "images": 112
+  },
+  {
+   "id": "raswhish65-66",
+   "title": "Vākyavṛttiprakāśikā",
+   "images": 70
+  },
+  {
+   "id": "raswhish194-11",
+   "title": "Vāsudevamananaprakaraṇa",
+   "images": 47
+  },
+  {
+   "id": "raswhish105-104",
+   "title": "Vedāntaśāstrasiddhāntaleśasaṃgraha",
+   "images": 100
+  },
+  {
+   "id": "raswhish25-24",
+   "title": "Viliṃghyavyākhyāna",
+   "images": 106
+  },
+  {
+   "id": "raswhish44-43",
+   "title": "Viṣṇupādādikeśāntastuti",
+   "images": 58
+  },
+  {
+   "id": "raswhish183-3",
+   "title": "Viśvaguṇādarśa",
+   "images": 96
+  },
+  {
+   "id": "raswhish24-23",
+   "title": "Vivekacūḍāmaṇi",
+   "images": 157
+  },
+  {
+   "id": "raswhish129-128",
+   "title": "Vyavahāramālikā.",
+   "images": 138
+  },
+  {
+   "id": "rashodgson39",
+   "title": "Yogāmbaratantram",
+   "images": 33
+  },
+  {
+   "id": "raswhish151-154",
+   "title": "Alaṃkārasarvasva",
+   "images": 151
+  },
+  {
+   "id": "raswhish40-39",
+   "title": "Bhagavadgītā",
+   "images": 64
+  },
+  {
+   "id": "raswhish42-41",
+   "title": "Devīmāhātmya",
+   "images": 99
+  },
+  {
+   "id": "rashodgson74",
+   "title": "Dravyaguṇasaṃgraha",
+   "images": 35
+  },
+  {
+   "id": "raswhish171-183",
+   "title": "Durgāṣṭaka",
+   "images": 15
+  },
+  {
+   "id": "rashodgson21",
+   "title": "Karuṇāpuṇḍarīka-mahāyānāsūtram",
+   "images": 209
+  },
+  {
+   "id": "raswhish127-126",
+   "title": "Kuvalayānanda",
+   "images": 84
+  },
+  {
+   "id": "raswhish69-69b",
+   "title": "Laḻitopākhyāna",
+   "images": 152
+  },
+  {
+   "id": "rashodgson47",
+   "title": "Mahākālatantram",
+   "images": 59
+  },
+  {
+   "id": "raswhish133-133",
+   "title": "Nāmaliṅgānuśāsana",
+   "images": 198
+  },
+  {
+   "id": "raswhish122-119",
+   "title": "Nāmaliṅgānuśāsana",
+   "images": 142
+  },
+  {
+   "id": "rashodgson73",
+   "title": "Niṣpannayogāmbalī (-yogāmbaratantram)",
+   "images": 72
+  },
+  {
+   "id": "raswhish32-31",
+   "title": "Pañcaratnaprakaraṇa",
+   "images": 104
+  },
+  {
+   "id": "rashodgson66",
+   "title": "Prayogamukham",
+   "images": 53
+  },
+  {
+   "id": "raswhish167-178",
+   "title": "Sāmaveda",
+   "images": 175
+  },
+  {
+   "id": "raswhish179-194",
+   "title": "Sāmaveda",
+   "images": 161
+  },
+  {
+   "id": "raswhish146-148",
+   "title": "Sarvārthacintāmaṇi",
+   "images": 206
+  },
+  {
+   "id": "raswhish22-21",
+   "title": "Śatarudriya",
+   "images": 87
+  },
+  {
+   "id": "raswhish21-20",
+   "title": "Śatarudriya",
+   "images": 103
+  },
+  {
+   "id": "raswhish141-143",
+   "title": "Smṛticandrikā",
+   "images": 196
+  },
+  {
+   "id": "raswhish139-141",
+   "title": "Ṣodaśakriyā",
+   "images": 109
+  },
+  {
+   "id": "raswhish142-144",
+   "title": "Śrutirañjinī",
+   "images": 105
+  },
+  {
+   "id": "rashodgson17",
+   "title": "Svayambhūpurāṇam",
+   "images": 25
+  },
+  {
+   "id": "raswhish150-152",
+   "title": "Tantrasamuccaya",
+   "images": 204
+  },
+  {
+   "id": "raswhish215-28",
+   "title": "Translation of Mr. Glenies sermon in Sanskrit",
+   "images": 36
+  },
+  {
+   "id": "raswhish214-27",
+   "title": "Translation of Mr. Glenies sermon in Sanskrit",
+   "images": 15
+  },
+  {
+   "id": "raswhish212-25",
+   "title": "Translation of Mr. Glenies sermon in Sanskrit",
+   "images": 15
+  },
+  {
+   "id": "raswhish213-26",
+   "title": "Translation of Mr. Glenies sermon in Sanskrit'",
+   "images": 15
+  },
+  {
+   "id": "raswhish216-NA",
+   "title": "Untitled manuscript.",
+   "images": 65
+  },
+  {
+   "id": "raswhish209-23",
+   "title": "Untitled text.",
+   "images": 36
+  },
+  {
+   "id": "raswhish113-111",
+   "title": "Vedāntasāra.",
+   "images": 174
+  }
+ ],
+ "after_1928": [
+  {
+   "id": "b20456645_0002",
+   "title": "A handlist of the Sanskrit and Prakrit manuscripts in the library of the Wellcome Institute for the History of Medicine [electronic resource]",
+   "year": 1985
+  },
+  {
+   "id": "b20456645_0001",
+   "title": "A handlist of the Sanskrit and Prakrit manuscripts in the library of the Wellcome Institute for the History of Medicine [electronic resource]",
+   "year": 1985
+  },
+  {
+   "id": "asanskritreader01lanmgoog",
+   "title": "A Sanskrit reader : text and vocabulary and notes",
+   "year": 1976
+  },
+  {
+   "id": "atibetanenglish00dasgoog",
+   "title": "A Tibetan-English dictionary, with Sanskrit synonyms",
+   "year": 1995
+  },
+  {
+   "id": "atibetanenglish01dasgoog",
+   "title": "A Tibetan-English dictionary, with Sanskrit synonyms;",
+   "year": 1957
+  },
+  {
+   "id": "monvmentaantiqv00eichgoog",
+   "title": "Alphabetical index of the Sanskrit manuscripts in the University Manuscripts Library, Trivandrum",
+   "year": 1957
+  },
+  {
+   "id": "amarakoawithcom00jhalgoog",
+   "title": "Amarakośa : with the commentary of Maheśvara",
+   "year": 2002
+  },
+  {
+   "id": "anavestagrammar02jackgoog",
+   "title": "An Avesta grammar in comparison with Sanskrit and The Avestan alphabet and its transcription",
+   "year": 1975
+  },
+  {
+   "id": "englishsanskritg00swan",
+   "title": "An English-Sanskrit glossary",
+   "year": 1957
+  },
+  {
+   "id": "songcelestialor00arnogoog",
+   "title": "Bhagavad Gita; the song celestial",
+   "year": 1965
+  },
+  {
+   "id": "b31366326",
+   "title": "Bṛhacchārīram / Part 1",
+   "year": 1942
+  },
+  {
+   "id": "b32232196",
+   "title": "Catalogue of books in Sanskrit, Hindi and European languages on Indian philosophy & religion in Central Secretariat Library",
+   "year": 1984
+  },
+  {
+   "id": "b32882099",
+   "title": "Catalogue of the Anup Sanskrit Library",
+   "year": 1944
+  },
+  {
+   "id": "censusofexactsci01ping",
+   "title": "Census of the exact sciences in Sanskrit; Series A Volume 1",
+   "year": 1970
+  },
+  {
+   "id": "censusofexactsci02ping",
+   "title": "Census of the exact sciences in Sanskrit; Series A Volume 2",
+   "year": 1970
+  },
+  {
+   "id": "censusofexactsci03ping",
+   "title": "Census of the exact sciences in Sanskrit; Series A Volume 3",
+   "year": 1970
+  },
+  {
+   "id": "censusofexactsci04ping",
+   "title": "Census of the exact sciences in Sanskrit; Series A Volume 4",
+   "year": 1970
+  },
+  {
+   "id": "censusofexactsci05ping",
+   "title": "Census of the exact sciences in Sanskrit; Series A Volume 5",
+   "year": 1970
+  },
+  {
+   "id": "b3352287x",
+   "title": "Chrestomathie sanskrite",
+   "year": 1977
+  },
+  {
+   "id": "devimahatmyamglo0000unse",
+   "title": "Devī-māhātmyam = The glorification of the great goddess",
+   "year": 1963
+  },
+  {
+   "id": "dictionaryofpali00sing",
+   "title": "Dictionary of Pali–Sanskrit–Hindi–English",
+   "year": 2011
+  },
+  {
+   "id": "historyofsanskri00patk",
+   "title": "History of Sanskrit lexicography",
+   "year": 1981
+  },
+  {
+   "id": "hymnsfromrigveda00lem",
+   "title": "Hymns from the Rig-Veda = Rgveda-samhita",
+   "year": 1975
+  },
+  {
+   "id": "jtakamlorbodhis00rygoog",
+   "title": "Jātaka-mālā",
+   "year": 1959
+  },
+  {
+   "id": "joyforworldbuddh0000cand",
+   "title": "Joy for the world : a Buddhist play",
+   "year": 1987
+  },
+  {
+   "id": "kenaupanisadbyra0000unse",
+   "title": "Kena upanisad",
+   "year": 1963
+  },
+  {
+   "id": "kramabaddhaparya0000bhar",
+   "title": "Kramabaddha paryay = Sequence bound modifications",
+   "year": 1987
+  },
+  {
+   "id": "krdantarupamala05ramauoft",
+   "title": "Krdantarupamala",
+   "year": 1971
+  },
+  {
+   "id": "krsnayajurvediya00ankauoft",
+   "title": "Krsnayajurvediya Taittiriyopanisat",
+   "year": 1929
+  },
+  {
+   "id": "laparatrisikalag0000abhi",
+   "title": "La parātrīśikālaghuvr̥tti de Abhinavagupta",
+   "year": 1975
+  },
+  {
+   "id": "madhaviyadhatuvr00paniuoft",
+   "title": "Madhaviyadhatuvrittih",
+   "year": 1934
+  },
+  {
+   "id": "madhaviyadhatuvr00sayauoft",
+   "title": "Madhaviyadhatuvrttih",
+   "year": 1984
+  },
+  {
+   "id": "madhaviyahdhatuv00sayauoft",
+   "title": "Madhaviyah dhatuvrttih",
+   "year": 1964
+  },
+  {
+   "id": "mahanarayanopani00vima",
+   "title": "Mahanarayanopanisad (with accented text)",
+   "year": 1979
+  },
+  {
+   "id": "maharishimaheshy00mahe",
+   "title": "Maharishi Mahesh Yogi on the Bhagavad-gita: a new translation and commentary with Sanskrit text. Chapters 1 to 6",
+   "year": 1973
+  },
+  {
+   "id": "meditationothers00swahrich",
+   "title": "Meditation and other spiritual disciplines",
+   "year": 1983
+  },
+  {
+   "id": "nandonrigpaimint00rigz",
+   "title": "Naṅ don rig paʼi miṅ tshig Bod-Dbyin śan sbyar = Tibetan-English dictionary of Buddhist terminology",
+   "year": 1993
+  },
+  {
+   "id": "persiantajikkash00ghra",
+   "title": "Persian/Tajik–Kashmiri–English Dictionary",
+   "year": 2013
+  },
+  {
+   "id": "b31366545",
+   "title": "Pratyaksha-Shārīram : A text-book on human anatomy in Sanskrit (including History of Ayurveda, Classical Nomenclature and Elements of Physiology)",
+   "year": 1941
+  },
+  {
+   "id": "prayerspraisesps2ndeunse",
+   "title": "Prayers, praises and psalms : selections from the Vedas, Upanishads, Epics, Gita, Puranas, Agamas, Tantras, Kavyas & the writings of the Acharyas and others",
+   "year": 1948
+  },
+  {
+   "id": "questfororiginal0000khai",
+   "title": "Quest for the original Gītā",
+   "year": 1969
+  },
+  {
+   "id": "sabdakalpadrumah05devauoft",
+   "title": "Sabdakalpadrumah",
+   "year": 1967
+  },
+  {
+   "id": "sabdakalpadrumah02devauoft",
+   "title": "Sabdakalpadrumah",
+   "year": 1967
+  },
+  {
+   "id": "sabdakalpadrumah01devauoft",
+   "title": "Sabdakalpadrumah",
+   "year": 1967
+  },
+  {
+   "id": "sabdakalpadrumah03devauoft",
+   "title": "Sabdakalpadrumah",
+   "year": 1967
+  },
+  {
+   "id": "sabdakalpadrumah04devauoft",
+   "title": "Sabdakalpadrumah",
+   "year": 1967
+  },
+  {
+   "id": "asanskritgramma01whitgoog",
+   "title": "Sanskrit grammar : including both the classical language and the older dialects, of Veda and Brahmana",
+   "year": 1981
+  },
+  {
+   "id": "asanskritgramma00whitgoog",
+   "title": "Sanskrit grammar : including both the classical language and the older dialects, of Veda and Brahmana",
+   "year": 1981
+  },
+  {
+   "id": "asanskritgramma03whitgoog",
+   "title": "Sanskrit grammar : including both the classical language and the older dialects, of Veda and Brahmana",
+   "year": 1981
+  },
+  {
+   "id": "shrimadbhagavadg0000unse",
+   "title": "Shrimad-Bhagavad-Gita",
+   "year": 1967
+  },
+  {
+   "id": "bub_gb_o7xAAQAAIAAJ",
+   "title": "Sri Kamakoti Pitha of Sri Sankaracharya",
+   "year": 1976
+  },
+  {
+   "id": "srinaradapanchar0023unse",
+   "title": "Srî Narada Pancharatnam : the Jñānāmrita sāra saṁhitā",
+   "year": 1974
+  },
+  {
+   "id": "studiesinsomeasp0000chat",
+   "title": "Studies in some aspects of Hindu saṁskāras in ancient India : in the light of Saṁskāratattva of Raghunandana",
+   "year": 1967
+  },
+  {
+   "id": "b32232184",
+   "title": "The Ayurvedic formulary of India",
+   "year": 2003
+  },
+  {
+   "id": "b32220522_0006",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "b32220522_0003",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "b32220522_0007",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "b32220522_0004",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "b32220522_0009",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "b32220522_0005",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "b32220522_0002",
+   "title": "The Ayurvedic Pharmacopoeia of India",
+   "year": 1989
+  },
+  {
+   "id": "bhagavadgitatext00siva",
+   "title": "The Bhagavad Gita : text, word-to-word meaning, translation and commentary by Swami Sivananda",
+   "year": 2003
+  },
+  {
+   "id": "bhagavadgitawith0000unse",
+   "title": "The Bhagavadgītā : with an introductory essay, Sanskrit text, English translation and notes",
+   "year": 1948
+  },
+  {
+   "id": "brahmasux1atraph0000bax1",
+   "title": "The Brahma Su#x1A;tra, the philosophy of spiritual life",
+   "year": 1968
+  },
+  {
+   "id": "garuapurasroddh00subrgoog",
+   "title": "The Garuḍa purâṇa (Sâroddhâra)",
+   "year": 1974
+  },
+  {
+   "id": "institutesvishn00jollgoog",
+   "title": "The institutes of Vishnu",
+   "year": 1965
+  },
+  {
+   "id": "kusumnjaliorhin01udaygoog",
+   "title": "The Kusumánjali : or, Hindu proof of the existence of a supreme being",
+   "year": 1979
+  },
+  {
+   "id": "kusumnjaliorhin00udaygoog",
+   "title": "The Kusumánjali : or, Hindu proof of the existence of a supreme being",
+   "year": 1979
+  },
+  {
+   "id": "troisupanishadsi0000ghos",
+   "title": "Trois Upanishads (Isha, Kena, Mundaka)",
+   "year": 1949
+  },
+  {
+   "id": "vacaspatyam03tarkuoft",
+   "title": "Vacaspatyam",
+   "year": 1962
+  },
+  {
+   "id": "vacaspatyam06tarkuoft",
+   "title": "Vacaspatyam",
+   "year": 1962
+  },
+  {
+   "id": "vacaspatyam01tarkuoft",
+   "title": "Vacaspatyam",
+   "year": 1962
+  },
+  {
+   "id": "vacaspatyam04tarkuoft",
+   "title": "Vacaspatyam",
+   "year": 1962
+  },
+  {
+   "id": "vacaspatyam05tarkuoft",
+   "title": "Vacaspatyam",
+   "year": 1962
+  },
+  {
+   "id": "vacaspatyam02tarkuoft",
+   "title": "Vacaspatyam",
+   "year": 1962
+  },
+  {
+   "id": "evanusataledays00crakgoog",
+   "title": "Vaidika khila sūkta : eka adhyayana = Vedic khila hymns : a study",
+   "year": 1979
+  },
+  {
+   "id": "parigobukkyojite008800",
+   "title": "パ－リ語佛教辞典~Pāli-go bukkyō jiten",
+   "year": 1997
+  },
+  {
+   "id": "bibliothecabudd04sssrgoog",
+   "title": "Bibliotheca buddhica",
+   "year": 1977
+  },
+  {
+   "id": "bibliothecabudd02sssrgoog",
+   "title": "Bibliotheca buddhica",
+   "year": 1977
+  },
+  {
+   "id": "kularnavatantra0000unse",
+   "title": "Kulârṇava tantra",
+   "year": 1965
+  },
+  {
+   "id": "bhagavadgitasuny00chri",
+   "title": "The Bhagavad Gītā",
+   "year": 1984
+  },
+  {
+   "id": "textsofwhiteyaju0000unse",
+   "title": "The texts of the White Yajurveda",
+   "year": 1957
+  },
+  {
+   "id": "vishnupuranasyst0000unse",
+   "title": "The Vishńu Puráńa : a system of Hindu mythology and tradition",
+   "year": 1972
+  }
+ ]
+}

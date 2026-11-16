@@ -45,7 +45,7 @@ export const GET = withAuth(async (
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * PATCH /api/social/posts/[id]
@@ -145,7 +145,7 @@ export const PATCH = withAuth(async (
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });
 
 /**
  * DELETE /api/social/posts/[id]
@@ -189,4 +189,4 @@ export const DELETE = withAuth(async (
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

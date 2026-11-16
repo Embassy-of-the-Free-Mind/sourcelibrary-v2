@@ -1,0 +1,141 @@
+{
+ "about": "Defect rates per 1,000 words by route, Opus judge, from paired-score.json (v2#8632 flash3 cell tests).",
+ "cells": {
+  "latin-flash3-unknown": {
+   "3flash": {
+    "n": 50,
+    "words": 17976,
+    "misleads_per_1k": 3.73,
+    "wrong_text_per_1k": 2.73,
+    "fidelity_mean": 3.88,
+    "accept": "33/50"
+   },
+   "3flash>agy-flash-low": {
+    "n": 50,
+    "words": 17680,
+    "misleads_per_1k": 2.09,
+    "wrong_text_per_1k": 2.43,
+    "fidelity_mean": 4.16,
+    "accept": "37/50"
+   },
+   "agy-flash-low@4": {
+    "n": 50,
+    "words": 17101,
+    "misleads_per_1k": 2.51,
+    "wrong_text_per_1k": 2.05,
+    "fidelity_mean": 3.96,
+    "accept": "34/50"
+   },
+   "3flash>opus-correct": {
+    "n": 30,
+    "words": 9514,
+    "misleads_per_1k": 1.26,
+    "wrong_text_per_1k": 0.32,
+    "fidelity_mean": 4.67,
+    "accept": "28/30"
+   }
+  },
+  "latin-flash3-print": {
+   "3flash": {
+    "n": 40,
+    "words": 12164,
+    "misleads_per_1k": 2.71,
+    "wrong_text_per_1k": 1.15,
+    "fidelity_mean": 4.05,
+    "accept": "30/40"
+   },
+   "3flash>agy-flash-low": {
+    "n": 38,
+    "words": 10542,
+    "misleads_per_1k": 1.42,
+    "wrong_text_per_1k": 0.09,
+    "fidelity_mean": 4.39,
+    "accept": "33/38"
+   },
+   "agy-flash-low@4": {
+    "n": 40,
+    "words": 10506,
+    "misleads_per_1k": 1.9,
+    "wrong_text_per_1k": 0.48,
+    "fidelity_mean": 4.33,
+    "accept": "30/40"
+   },
+   "3flash>opus-correct": {
+    "n": 30,
+    "words": 8408,
+    "misleads_per_1k": 0.48,
+    "wrong_text_per_1k": 0.12,
+    "fidelity_mean": 4.53,
+    "accept": "29/30"
+   }
+  },
+  "greek-flash3-print": {
+   "3flash": {
+    "n": 40,
+    "words": 15088,
+    "misleads_per_1k": 5.04,
+    "wrong_text_per_1k": 4.84,
+    "fidelity_mean": 3.77,
+    "accept": "19/40"
+   },
+   "3flash>agy-flash-low": {
+    "n": 40,
+    "words": 15088,
+    "misleads_per_1k": 4.44,
+    "wrong_text_per_1k": 4.64,
+    "fidelity_mean": 3.95,
+    "accept": "24/40"
+   },
+   "agy-flash-low@4": {
+    "n": 40,
+    "words": 14187,
+    "misleads_per_1k": 4.23,
+    "wrong_text_per_1k": 3.95,
+    "fidelity_mean": 3.95,
+    "accept": "24/40"
+   },
+   "3flash>opus-correct": {
+    "n": 30,
+    "words": 11269,
+    "misleads_per_1k": 0.62,
+    "wrong_text_per_1k": 0,
+    "fidelity_mean": 4.53,
+    "accept": "29/30"
+   }
+  },
+  "greek-flash3-unknown": {
+   "3flash": {
+    "n": 40,
+    "words": 16590,
+    "misleads_per_1k": 6.15,
+    "wrong_text_per_1k": 5.55,
+    "fidelity_mean": 3.5,
+    "accept": "16/40"
+   },
+   "3flash>agy-flash-low": {
+    "n": 40,
+    "words": 16689,
+    "misleads_per_1k": 4.79,
+    "wrong_text_per_1k": 5.45,
+    "fidelity_mean": 3.6,
+    "accept": "13/40"
+   },
+   "agy-flash-low@4": {
+    "n": 39,
+    "words": 15326,
+    "misleads_per_1k": 5.29,
+    "wrong_text_per_1k": 4.89,
+    "fidelity_mean": 3.77,
+    "accept": "19/39"
+   },
+   "3flash>opus-correct": {
+    "n": 28,
+    "words": 11988,
+    "misleads_per_1k": 0.92,
+    "wrong_text_per_1k": 0.25,
+    "fidelity_mean": 4.46,
+    "accept": "25/28"
+   }
+  }
+ }
+}

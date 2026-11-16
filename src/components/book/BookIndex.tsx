@@ -67,7 +67,7 @@ export default function BookIndex({ entries, bookSlug, pageIdByNumber, totalPage
     <details className="card group sl-collapse">
       <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
         <div className="flex items-baseline gap-3">
-          <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{str.index}</h3>
+          <h3 className="font-serif font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{str.index}</h3>
           <span className="text-xs" style={{ color: '#a09884' }}>{str.indexTerms(entries.length)}</span>
         </div>
         <PlusToggle />

@@ -1,0 +1,22 @@
+<warning>Handwritten Sephardic semi-cursive Hebrew. The image resolution is too low to read this dense cursive reliably. Only the section headings and a few scattered words can be read with confidence. Most lines are marked unclear rather than reconstructed. A clear plastic clip on the right edge covers no text. Partial text at the left edge belongs to the facing page and is not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Catchword or folio mark at lower left: לב</meta>
+
+<unclear>[illegible — about 15 lines of cursive Hebrew text; scattered words include ראובן, שמעון, הקהל, לבדוק, לבחון]</unclear>
+
+<unclear>[illegible — 1 short closing line]</unclear>
+
+## להיות
+
+<unclear>שראובן ושמעון</unclear> <unclear>[illegible — rest of line]</unclear>
+
+<unclear>[illegible — about 9 lines of cursive Hebrew text; scattered words include ראובן, שמעון, הנה]</unclear>
+
+## להיות שראובן
+
+<unclear>[illegible — about 10 lines of cursive Hebrew text]</unclear>
+
+<vocab>להיות, ראובן, שמעון, קהל, legal formulary, responsa</vocab>

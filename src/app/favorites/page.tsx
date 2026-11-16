@@ -483,7 +483,7 @@ export default function FavoritesPage() {
               >
                 <div className="flex items-start gap-4 p-5">
                   {mode === 'popular' && (
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-sm font-bold text-muted">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-sm font-semibold text-muted">
                       {i + 1}
                     </div>
                   )}

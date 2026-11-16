@@ -1,0 +1,32 @@
+<warning>Handwritten Hebrew in a square/semi-cursive hand on parchment, probably Sephardic or Oriental. A stain in the lower left blurs some letters. Words at the right edge from the facing leaf are not transcribed.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>162</page-num>
+<header>קפיצא</header>
+<meta>A pencil folio number "162" (reading uncertain) is in the upper left margin, with a short ink mark above it. A horizontal rule runs under the header.</meta>
+
+<margin><unclear>ז״ב</unclear></margin>
+
+ומלאכו צדקיאל ומשרתו צדק׳ יום ז׳ כוכבי
+יום ה׳ מזל גדי דלי ומלאכו קפציאל ומשרתו
+שבתי / וכשיעשה כל רצוני ותמלאני חסדים
+טובים והטה לבב בני אדם שיש לי עסק
+עמהם לכל אשר אחפוץ <unclear>והשבר</unclear> שם לכל
+אשר ארצה ובטל כל מחשבות שונאי והפר
+כל עצת אויבי ומלא כל משאלותי לטובה
+<unclear>ככתוב</unclear> יתן לך כלבבך וכל עצתך ימלא׳
+נרננה בישועתך ובשם אלהינו נדגל
+ימלא ה׳ כל משאלותיך ותהיה עם לבבי בעת
+מחשבתי ועם ידי בעת מעבדי ועם פי בעת
+<unclear>הטיפי</unclear> ותשכלני ותורני בכל דרכי ותתן חן
+בכל מהלכי ותשלח ברכה בכל מעשה ידי ואל
+תצריכני לידי <unclear>מתן</unclear> מעפר עוני תקימני ומאשפות
+דלותי תרוממני ותעטרני ממון בברכותיך ותמלאני
+חסדים טובים <unclear>כאוי</unclear> מלא חסדים טובים למע
+ישר״
+
+<unclear>כׄצׄשׄ חׄלׄם</unclear>
+
+<vocab>צדקיאל, צדק, קפציאל, שבתי, מזל גדי, דלי, מלאכים, משרתים, כוכבי לכת, קפיצה, תפילה, חסדים טובים, ברכה, magic, angelology</vocab>

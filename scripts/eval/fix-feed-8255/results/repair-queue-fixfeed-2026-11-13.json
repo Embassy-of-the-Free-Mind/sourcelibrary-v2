@@ -1,0 +1,3200 @@
+{
+ "built_at": "2026-11-13T08:55:23.279Z",
+ "router_table": "2026-11-01-validated-7263",
+ "n": 151,
+ "by_status": {
+  "deferred": 73,
+  "no-route": 78
+ },
+ "by_cell": {
+  "hebrew-flash3/unknown": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "deferred": 23,
+    "no-route": 26
+   }
+  },
+  "hebrew and judeo-arabic-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 4,
+    "no-route": 4
+   }
+  },
+  "hebrew-lite/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 3
+   }
+  },
+  "hebrew-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 8,
+    "no-route": 5
+   }
+  },
+  "armenian-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 6
+   }
+  },
+  "hebrew-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2,
+    "deferred": 1
+   }
+  },
+  "armenian-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "armenian-lite/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3,
+    "deferred": 7
+   }
+  },
+  "japanese-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 4,
+    "no-route": 3
+   }
+  },
+  "japanese-lite/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "hebrew-flash3/print": {
+   "route": null,
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "statuses": {
+    "deferred": 2
+   }
+  },
+  "korean-lite/manuscript": {
+   "route": null,
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "statuses": {
+    "no-route": 16,
+    "deferred": 10
+   }
+  },
+  "korean-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  },
+  "armenian-lite/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 1
+   }
+  },
+  "hebrew-flash3/manuscript": {
+   "route": null,
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "japanese-other/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "japanese-other/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 3
+   }
+  },
+  "hebrew, judeo-arabic and aramaic-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 3
+   }
+  },
+  "japanese-flash3/unknown": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 1
+   }
+  },
+  "japanese-flash3/manuscript": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "deferred": 4
+   }
+  },
+  "korean-lite/unknown": {
+   "route": null,
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "statuses": {
+    "no-route": 3
+   }
+  },
+  "korean-flash3/print": {
+   "route": null,
+   "decision": null,
+   "statuses": {
+    "no-route": 2
+   }
+  }
+ },
+ "rows": [
+  {
+   "page_id": "6990633def12272ffdc907b7",
+   "book_id": "6990633def12272ffdc907b0",
+   "slug": "the-zohar-sefer-ha-zohar-attributed-2",
+   "page_number": 7,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990633def12272ffdc908a2",
+   "book_id": "6990633def12272ffdc907b0",
+   "slug": "the-zohar-sefer-ha-zohar-attributed-2",
+   "page_number": 242,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990633def12272ffdc9083a",
+   "book_id": "6990633def12272ffdc907b0",
+   "slug": "the-zohar-sefer-ha-zohar-attributed-2",
+   "page_number": 138,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "695285cdab34727b1f04c2a8",
+   "book_id": "695285cdab34727b1f04c25a",
+   "slug": "sepher-maphteah-shelomo-book-of-the-key-of-solomon-anonymous",
+   "page_number": 78,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "695285cdab34727b1f04c2e1",
+   "book_id": "695285cdab34727b1f04c25a",
+   "slug": "sepher-maphteah-shelomo-book-of-the-key-of-solomon-anonymous",
+   "page_number": 135,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb948522835be84604ff",
+   "book_id": "69c1bb948522835be84604fa",
+   "slug": "magical-formulae-and-prescriptions-anonymous",
+   "page_number": 5,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb948522835be8460500",
+   "book_id": "69c1bb948522835be84604fa",
+   "slug": "magical-formulae-and-prescriptions-anonymous",
+   "page_number": 6,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb948522835be8460504",
+   "book_id": "69c1bb948522835be84604fa",
+   "slug": "magical-formulae-and-prescriptions-anonymous",
+   "page_number": 10,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb948522835be8460507",
+   "book_id": "69c1bb948522835be84604fa",
+   "slug": "magical-formulae-and-prescriptions-anonymous",
+   "page_number": 13,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb8e8522835be8460401",
+   "book_id": "69c1bb8e8522835be84603f3",
+   "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
+   "page_number": 14,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb8e8522835be84603fd",
+   "book_id": "69c1bb8e8522835be84603f3",
+   "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
+   "page_number": 10,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb8e8522835be846040a",
+   "book_id": "69c1bb8e8522835be84603f3",
+   "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
+   "page_number": 23,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb8e8522835be8460409",
+   "book_id": "69c1bb8e8522835be84603f3",
+   "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
+   "page_number": 22,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bb8e8522835be8460408",
+   "book_id": "69c1bb8e8522835be84603f3",
+   "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
+   "page_number": 21,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f50092343a9b4f8e7aa35f",
+   "book_id": "69c736b46a0f3d112faf76b0",
+   "slug": "jesuitici-templi-stupenda-beringer",
+   "page_number": 5,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "mixed",
+   "cell": "hebrew-lite/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f50092343a9b4f8e7aa360",
+   "book_id": "69c736b46a0f3d112faf76b0",
+   "slug": "jesuitici-templi-stupenda-beringer",
+   "page_number": 4,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "mixed",
+   "cell": "hebrew-lite/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f50099343a9b4f8e7aa366",
+   "book_id": "69c736b46a0f3d112faf76b0",
+   "slug": "jesuitici-templi-stupenda-beringer",
+   "page_number": 10,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6956eb53f23ebf30578dbb92",
+   "book_id": "6956eb52f23ebf30578dbb85",
+   "slug": "recueil-de-traites-de-kabbale-hebrew-manuscript-kabbalists",
+   "page_number": 13,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6956eb53f23ebf30578dbb93",
+   "book_id": "6956eb52f23ebf30578dbb85",
+   "slug": "recueil-de-traites-de-kabbale-hebrew-manuscript-kabbalists",
+   "page_number": 14,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6956eb53f23ebf30578dbbca",
+   "book_id": "6956eb52f23ebf30578dbb85",
+   "slug": "recueil-de-traites-de-kabbale-hebrew-manuscript-kabbalists",
+   "page_number": 69,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6956eb53f23ebf30578dbbcb",
+   "book_id": "6956eb52f23ebf30578dbb85",
+   "slug": "recueil-de-traites-de-kabbale-hebrew-manuscript-kabbalists",
+   "page_number": 70,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6956eb53f23ebf30578dbbe8",
+   "book_id": "6956eb52f23ebf30578dbb85",
+   "slug": "recueil-de-traites-de-kabbale-hebrew-manuscript-kabbalists",
+   "page_number": 99,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6956eb53f23ebf30578dbc30",
+   "book_id": "6956eb52f23ebf30578dbb85",
+   "slug": "recueil-de-traites-de-kabbale-hebrew-manuscript-kabbalists",
+   "page_number": 171,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52bd1d6bd9f58edb24c40",
+   "book_id": "69b52bd1d6bd9f58edb24c2c",
+   "slug": "albumasar-on-intellect-with-aristotle-ethics-al-farabi",
+   "page_number": 20,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52bd1d6bd9f58edb24c51",
+   "book_id": "69b52bd1d6bd9f58edb24c2c",
+   "slug": "albumasar-on-intellect-with-aristotle-ethics-al-farabi",
+   "page_number": 37,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52bd1d6bd9f58edb24c7f",
+   "book_id": "69b52bd1d6bd9f58edb24c2c",
+   "slug": "albumasar-on-intellect-with-aristotle-ethics-al-farabi",
+   "page_number": 83,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52bd1d6bd9f58edb24c80",
+   "book_id": "69b52bd1d6bd9f58edb24c2c",
+   "slug": "albumasar-on-intellect-with-aristotle-ethics-al-farabi",
+   "page_number": 84,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52bd1d6bd9f58edb24cb5",
+   "book_id": "69b52bd1d6bd9f58edb24c2c",
+   "slug": "albumasar-on-intellect-with-aristotle-ethics-al-farabi",
+   "page_number": 137,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6953a82c77f38f6761bd0c43",
+   "book_id": "6953a82c77f38f6761bd0bc5",
+   "slug": "new-testament-various",
+   "page_number": 126,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "armenian-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6953a82c77f38f6761bd0beb",
+   "book_id": "6953a82c77f38f6761bd0bc5",
+   "slug": "new-testament-various",
+   "page_number": 38,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "armenian-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6953a82c77f38f6761bd0c48",
+   "book_id": "6953a82c77f38f6761bd0bc5",
+   "slug": "new-testament-various",
+   "page_number": 131,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "armenian-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6953a82c77f38f6761bd0bea",
+   "book_id": "6953a82c77f38f6761bd0bc5",
+   "slug": "new-testament-various",
+   "page_number": 37,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "armenian-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6953a82c77f38f6761bd0c1e",
+   "book_id": "6953a82c77f38f6761bd0bc5",
+   "slug": "new-testament-various",
+   "page_number": 89,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "armenian-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6953a82c77f38f6761bd0c44",
+   "book_id": "6953a82c77f38f6761bd0bc5",
+   "slug": "new-testament-various",
+   "page_number": 127,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "armenian-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990630ce7b7642c081de1dd",
+   "book_id": "6990630be7b7642c081de08b",
+   "slug": "the-zohar-sefer-ha-zohar-attributed",
+   "page_number": 337,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990630ce7b7642c081de193",
+   "book_id": "6990630be7b7642c081de08b",
+   "slug": "the-zohar-sefer-ha-zohar-attributed",
+   "page_number": 263,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990630ce7b7642c081de1e5",
+   "book_id": "6990630be7b7642c081de08b",
+   "slug": "the-zohar-sefer-ha-zohar-attributed",
+   "page_number": 345,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990630ce7b7642c081de1e6",
+   "book_id": "6990630be7b7642c081de08b",
+   "slug": "the-zohar-sefer-ha-zohar-attributed",
+   "page_number": 346,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6990630ce7b7642c081de1e7",
+   "book_id": "6990630be7b7642c081de08b",
+   "slug": "the-zohar-sefer-ha-zohar-attributed",
+   "page_number": 347,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1ba978522835be8459a3c",
+   "book_id": "69c1ba978522835be845973b",
+   "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+   "page_number": 769,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "hebrew-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1ba978522835be84599b7",
+   "book_id": "69c1ba978522835be845973b",
+   "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+   "page_number": 636,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "hebrew-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b7d7",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+   "page_number": 20,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b7d8",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+   "page_number": 21,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b82c",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+   "page_number": 105,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b82d",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+   "page_number": 106,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b931",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+   "page_number": 366,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac04d0bd3547a5654b9a",
+   "book_id": "69d5ac04d0bd3547a5654b83",
+   "slug": "armenian-manuscript-armenien-128-anonymous",
+   "page_number": 23,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "armenian-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e67c304c1c6b3950b7e5",
+   "book_id": "69b3e67c304c1c6b3950b7c3",
+   "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+   "page_number": 34,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac04d0bd3547a5654b99",
+   "book_id": "69d5ac04d0bd3547a5654b83",
+   "slug": "armenian-manuscript-armenien-128-anonymous",
+   "page_number": 22,
+   "language": "Armenian",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "armenian-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac04d0bd3547a5654be5",
+   "book_id": "69d5ac04d0bd3547a5654b83",
+   "slug": "armenian-manuscript-armenien-128-anonymous",
+   "page_number": 98,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac04d0bd3547a5654c0b",
+   "book_id": "69d5ac04d0bd3547a5654b83",
+   "slug": "armenian-manuscript-armenien-128-anonymous",
+   "page_number": 136,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac04d0bd3547a5654c0c",
+   "book_id": "69d5ac04d0bd3547a5654b83",
+   "slug": "armenian-manuscript-armenien-128-anonymous",
+   "page_number": 137,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52be43dd6d9423027ca14",
+   "book_id": "69b52be43dd6d9423027ca00",
+   "slug": "avicenna-astrological-treatise-avicenna",
+   "page_number": 20,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52be43dd6d9423027ca15",
+   "book_id": "69b52be43dd6d9423027ca00",
+   "slug": "avicenna-astrological-treatise-avicenna",
+   "page_number": 21,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52be43dd6d9423027ca43",
+   "book_id": "69b52be43dd6d9423027ca00",
+   "slug": "avicenna-astrological-treatise-avicenna",
+   "page_number": 67,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52be43dd6d9423027ca39",
+   "book_id": "69b52be43dd6d9423027ca00",
+   "slug": "avicenna-astrological-treatise-avicenna",
+   "page_number": 57,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52be43dd6d9423027ca3a",
+   "book_id": "69b52be43dd6d9423027ca00",
+   "slug": "avicenna-astrological-treatise-avicenna",
+   "page_number": 58,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b52be43dd6d9423027ca41",
+   "book_id": "69b52be43dd6d9423027ca00",
+   "slug": "avicenna-astrological-treatise-avicenna",
+   "page_number": 65,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e677304c1c6b3950b5eb",
+   "book_id": "69b3e677304c1c6b3950b41f",
+   "slug": "zohar-on-genesis-exodus-attributed",
+   "page_number": 460,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69b3e677304c1c6b3950b662",
+   "book_id": "69b3e677304c1c6b3950b41f",
+   "slug": "zohar-on-genesis-exodus-attributed",
+   "page_number": 579,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "hebrew-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": [
+    "I1"
+   ]
+  },
+  {
+   "page_id": "69906607ef12272ffdc94deb",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "slug": "vat-ebr-228",
+   "page_number": 27,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69906607ef12272ffdc94dec",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "slug": "vat-ebr-228",
+   "page_number": 28,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bb14da4f8dce52f175e",
+   "book_id": "69d66bb14da4f8dce52f16eb",
+   "slug": "four-gospels-armenian-10th-11th-c-anonymous",
+   "page_number": 115,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69906607ef12272ffdc94e2c",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "slug": "vat-ebr-228",
+   "page_number": 92,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": [
+    "I1"
+   ]
+  },
+  {
+   "page_id": "69906607ef12272ffdc94e2d",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "slug": "vat-ebr-228",
+   "page_number": 93,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": [
+    "I1"
+   ]
+  },
+  {
+   "page_id": "69906607ef12272ffdc94e5f",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "slug": "vat-ebr-228",
+   "page_number": 143,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bb14da4f8dce52f1727",
+   "book_id": "69d66bb14da4f8dce52f16eb",
+   "slug": "four-gospels-armenian-10th-11th-c-anonymous",
+   "page_number": 60,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bb14da4f8dce52f1728",
+   "book_id": "69d66bb14da4f8dce52f16eb",
+   "slug": "four-gospels-armenian-10th-11th-c-anonymous",
+   "page_number": 61,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bb14da4f8dce52f175f",
+   "book_id": "69d66bb14da4f8dce52f16eb",
+   "slug": "four-gospels-armenian-10th-11th-c-anonymous",
+   "page_number": 116,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bb14da4f8dce52f1760",
+   "book_id": "69d66bb14da4f8dce52f16eb",
+   "slug": "four-gospels-armenian-10th-11th-c-anonymous",
+   "page_number": 117,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bb14da4f8dce52f18a5",
+   "book_id": "69d66bb14da4f8dce52f16eb",
+   "slug": "four-gospels-armenian-10th-11th-c-anonymous",
+   "page_number": 442,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bbcf8522835be8460a0b",
+   "book_id": "69c1bbcf8522835be8460a04",
+   "slug": "fragments-from-magical-manuscripts-anonymous",
+   "page_number": 7,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bbcf8522835be8460a0c",
+   "book_id": "69c1bbcf8522835be8460a04",
+   "slug": "fragments-from-magical-manuscripts-anonymous",
+   "page_number": 8,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6976ea4094eb7d465c667cc4",
+   "book_id": "6976db51097b3607ee4be2f9",
+   "slug": "holy-service-avodat-ha-kodesh-gabbai",
+   "page_number": 85,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6a017aee6ee843bc671e319d",
+   "book_id": "6911cf678cb6d2ae494a1061",
+   "slug": "the-book-of-brightness-hakana",
+   "page_number": 29,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6a017af06ee843bc671e31a0",
+   "book_id": "6911cf678cb6d2ae494a1061",
+   "slug": "the-book-of-brightness-hakana",
+   "page_number": 26,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6976f063aa33c27ee886f910",
+   "book_id": "6976db51097b3607ee4be2f9",
+   "slug": "holy-service-avodat-ha-kodesh-gabbai",
+   "page_number": 133,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6976f0d4aa33c27ee886f91e",
+   "book_id": "6976db51097b3607ee4be2f9",
+   "slug": "holy-service-avodat-ha-kodesh-gabbai",
+   "page_number": 137,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "6a017af46ee843bc671e31a7",
+   "book_id": "6911cf678cb6d2ae494a1061",
+   "slug": "the-book-of-brightness-hakana",
+   "page_number": 56,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bbcf8522835be8460a2f",
+   "book_id": "69c1bbcf8522835be8460a04",
+   "slug": "fragments-from-magical-manuscripts-anonymous",
+   "page_number": 43,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bbcf8522835be8460a30",
+   "book_id": "69c1bbcf8522835be8460a04",
+   "slug": "fragments-from-magical-manuscripts-anonymous",
+   "page_number": 44,
+   "language": "Hebrew and Judeo-Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew and judeo-arabic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f656718b68eaabaab5b69a",
+   "book_id": "69c734076a0f3d112faf750d",
+   "slug": "hebrew-ayelet-ahavim-perush-al-shir-ha-shirim-alkabets",
+   "page_number": 23,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f656ca8b68eaabaab5b6e2",
+   "book_id": "69c734076a0f3d112faf750d",
+   "slug": "hebrew-ayelet-ahavim-perush-al-shir-ha-shirim-alkabets",
+   "page_number": 95,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f66dc280c7a291ec4c223b",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "slug": "zohar-chadash",
+   "page_number": 56,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f66de580c7a291ec4c2277",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "slug": "zohar-chadash",
+   "page_number": 110,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f656628b68eaabaab5b68d",
+   "book_id": "69c734076a0f3d112faf750d",
+   "slug": "hebrew-ayelet-ahavim-perush-al-shir-ha-shirim-alkabets",
+   "page_number": 8,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfebae090ad7d5c33b1910",
+   "book_id": "69dfebad090ad7d5c33b1903",
+   "slug": "kojiki-vol-1",
+   "page_number": 13,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfebae090ad7d5c33b1923",
+   "book_id": "69dfebad090ad7d5c33b1903",
+   "slug": "kojiki-vol-1",
+   "page_number": 32,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac5f4dc55b8478ddd920",
+   "book_id": "69d5ac5f4dc55b8478ddd6b5",
+   "slug": "babylonian-talmud-vilna-romm-edition-1884-various-romm-press",
+   "page_number": 630,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfedf08d34461cbe7f508d",
+   "book_id": "69dfedef8d34461cbe7f5079",
+   "slug": "oku-no-hosomichi-narrow-road-to-the-deep-north",
+   "page_number": 20,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "mixed",
+   "cell": "japanese-lite/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c7b45825ec2ba5ccd7f4da",
+   "book_id": "69c7b18425ec2ba5ccd7f44e",
+   "slug": "hebrew-sefer-pardes-rimmonim-cordovero",
+   "page_number": -32,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "hebrew-flash3/print",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfedf08d34461cbe7f5092",
+   "book_id": "69dfedef8d34461cbe7f5079",
+   "slug": "oku-no-hosomichi-narrow-road-to-the-deep-north",
+   "page_number": 25,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f6974492ec22e3603c00f9",
+   "book_id": "69c7b18425ec2ba5ccd7f44e",
+   "slug": "hebrew-sefer-pardes-rimmonim-cordovero",
+   "page_number": 70,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f697b692ec22e3603c01f8",
+   "book_id": "69c7b18425ec2ba5ccd7f44e",
+   "slug": "hebrew-sefer-pardes-rimmonim-cordovero",
+   "page_number": 335,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfedf08d34461cbe7f509e",
+   "book_id": "69dfedef8d34461cbe7f5079",
+   "slug": "oku-no-hosomichi-narrow-road-to-the-deep-north",
+   "page_number": 37,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c7b45b25ec2ba5ccd7f55b",
+   "book_id": "69c7b18425ec2ba5ccd7f44e",
+   "slug": "hebrew-sefer-pardes-rimmonim-cordovero",
+   "page_number": -135,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "hebrew-flash3/print",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f6978292ec22e3603c0188",
+   "book_id": "69c7b18425ec2ba5ccd7f44e",
+   "slug": "hebrew-sefer-pardes-rimmonim-cordovero",
+   "page_number": 223,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "hebrew-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33b96876dd827cbc58f7d",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "slug": "harak-isu-chen",
+   "page_number": 28,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33b96876dd827cbc58f7e",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "slug": "harak-isu-chen",
+   "page_number": 29,
+   "language": "Korean",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "korean-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33b96876dd827cbc58fa5",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "slug": "harak-isu-chen",
+   "page_number": 68,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33b96876dd827cbc58fa6",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "slug": "harak-isu-chen",
+   "page_number": 69,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33b96876dd827cbc58fbe",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "slug": "harak-isu-chen",
+   "page_number": 93,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33b96876dd827cbc59005",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "slug": "harak-isu-chen",
+   "page_number": 164,
+   "language": "Korean",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "korean-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69a5ead1d507939f0352d002",
+   "book_id": "69a5ead1d507939f0352ced7",
+   "slug": "patmut-iwn-hayots-history-of-the-armenians-buzand",
+   "page_number": 299,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "armenian-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d66bc14da4f8dce52f1a3e",
+   "book_id": "69d66bc14da4f8dce52f197e",
+   "slug": "proclus-elements-of-theology-with-petritzi-s-commentary-petritzi",
+   "page_number": 192,
+   "language": "Armenian",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "handwritten",
+   "cell": "armenian-lite/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bf288522835be846c265",
+   "book_id": "69c1bf288522835be846c264",
+   "slug": "kabbalistic-text-anonymous",
+   "page_number": 1,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.8-flash-low",
+   "script": "handwritten",
+   "cell": "hebrew-flash3/manuscript",
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfedec8d34461cbe7f501b",
+   "book_id": "69dfedec8d34461cbe7f4fc2",
+   "slug": "tsurezuregusa-essays-in-idleness",
+   "page_number": 89,
+   "language": "Japanese",
+   "ocr_model": "ndl-koten/v3",
+   "script": "handwritten",
+   "cell": "japanese-other/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3296eaeeee0fa38c658f8",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "slug": "sinjong-hwangjye-kuch-yop-mundap",
+   "page_number": 14,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bf288522835be846c266",
+   "book_id": "69c1bf288522835be846c264",
+   "slug": "kabbalistic-text-anonymous",
+   "page_number": 2,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3296eaeeee0fa38c658f7",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "slug": "sinjong-hwangjye-kuch-yop-mundap",
+   "page_number": 13,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3296eaeeee0fa38c65913",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "slug": "sinjong-hwangjye-kuch-yop-mundap",
+   "page_number": 41,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3296eaeeee0fa38c65919",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "slug": "sinjong-hwangjye-kuch-yop-mundap",
+   "page_number": 47,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33eee876dd827cbc60b95",
+   "book_id": "69f33eee876dd827cbc60b78",
+   "slug": "sop-aerok",
+   "page_number": 29,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33eee876dd827cbc60ba4",
+   "book_id": "69f33eee876dd827cbc60b78",
+   "slug": "sop-aerok",
+   "page_number": 44,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "699243fabc722ec0ee80b297",
+   "book_id": "699243fabc722ec0ee80b251",
+   "slug": "prague-haggadah-1526-anonymous",
+   "page_number": 70,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew-flash3/unknown",
+   "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69dfeded8d34461cbe7f5032",
+   "book_id": "69dfeded8d34461cbe7f5026",
+   "slug": "hjki-an-account-of-my-hut",
+   "page_number": 12,
+   "language": "Japanese",
+   "ocr_model": "ndl-koten/v3",
+   "script": "printed",
+   "cell": "japanese-other/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33eee876dd827cbc60bf9",
+   "book_id": "69f33eee876dd827cbc60b78",
+   "slug": "sop-aerok",
+   "page_number": 129,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ad8f4dc55b8478de0eb5",
+   "book_id": "69d5ad8f4dc55b8478de0eac",
+   "slug": "heart-sutra-commentary-ed",
+   "page_number": 9,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ad8f4dc55b8478de0eb3",
+   "book_id": "69d5ad8f4dc55b8478de0eac",
+   "slug": "heart-sutra-commentary-ed",
+   "page_number": 7,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3273552a77bb28fdb6fab",
+   "book_id": "69f3273552a77bb28fdb6f93",
+   "slug": "yosa-ch-oryak",
+   "page_number": 24,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3273552a77bb28fdb6fc6",
+   "book_id": "69f3273552a77bb28fdb6f93",
+   "slug": "yosa-ch-oryak",
+   "page_number": 51,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3273552a77bb28fdb6fae",
+   "book_id": "69f3273552a77bb28fdb6f93",
+   "slug": "yosa-ch-oryak",
+   "page_number": 27,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f646c9ec9cbbee5665b7ba",
+   "book_id": "69e75cf2cc48e59ad74eb2b4",
+   "slug": "kanze-ryu-utaibon-vol-11a-school",
+   "page_number": 64,
+   "language": "Japanese",
+   "ocr_model": "ndl-koten/v3",
+   "script": "printed",
+   "cell": "japanese-other/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f646f4ec9cbbee5665b7ce",
+   "book_id": "69e75cf2cc48e59ad74eb2b4",
+   "slug": "kanze-ryu-utaibon-vol-11a-school",
+   "page_number": 84,
+   "language": "Japanese",
+   "ocr_model": "ndl-koten/v3",
+   "script": "printed",
+   "cell": "japanese-other/print",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3273552a77bb28fdb6fbb",
+   "book_id": "69f3273552a77bb28fdb6f93",
+   "slug": "yosa-ch-oryak",
+   "page_number": 40,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bc6b8522835be846329a",
+   "book_id": "69c1bc6b8522835be8463238",
+   "slug": "yemenite-prayer-book-for-the-whole-year-tikhlal-anonymous",
+   "page_number": 98,
+   "language": "Hebrew, Judeo-Arabic and Aramaic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew, judeo-arabic and aramaic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69e753d3095c302d3fddc440",
+   "book_id": "69e753d3095c302d3fddc43d",
+   "slug": "kanze-ryu-noh-texts-zeami",
+   "page_number": 3,
+   "language": "Japanese",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "mixed",
+   "cell": "japanese-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69e753d3095c302d3fddc44f",
+   "book_id": "69e753d3095c302d3fddc43d",
+   "slug": "kanze-ryu-noh-texts-zeami",
+   "page_number": 18,
+   "language": "Japanese",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "japanese-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bc6b8522835be846340f",
+   "book_id": "69c1bc6b8522835be8463238",
+   "slug": "yemenite-prayer-book-for-the-whole-year-tikhlal-anonymous",
+   "page_number": 471,
+   "language": "Hebrew, Judeo-Arabic and Aramaic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew, judeo-arabic and aramaic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69e753d3095c302d3fddc448",
+   "book_id": "69e753d3095c302d3fddc43d",
+   "slug": "kanze-ryu-noh-texts-zeami",
+   "page_number": 11,
+   "language": "Japanese",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "japanese-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69e753d3095c302d3fddc44a",
+   "book_id": "69e753d3095c302d3fddc43d",
+   "slug": "kanze-ryu-noh-texts-zeami",
+   "page_number": 13,
+   "language": "Japanese",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "japanese-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69e753d3095c302d3fddc44c",
+   "book_id": "69e753d3095c302d3fddc43d",
+   "slug": "kanze-ryu-noh-texts-zeami",
+   "page_number": 15,
+   "language": "Japanese",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "handwritten",
+   "cell": "japanese-flash3/manuscript",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69e787db4a6785cfd60cdee4",
+   "book_id": "69e787db4a6785cfd60cdeb1",
+   "slug": "nosho-shuryaku-agricultural-anthology-various",
+   "page_number": 51,
+   "language": "Japanese",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "script": "printed",
+   "cell": "japanese-lite/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69c1bc6b8522835be846340d",
+   "book_id": "69c1bc6b8522835be8463238",
+   "slug": "yemenite-prayer-book-for-the-whole-year-tikhlal-anonymous",
+   "page_number": 469,
+   "language": "Hebrew, Judeo-Arabic and Aramaic",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": null,
+   "cell": "hebrew, judeo-arabic and aramaic-flash3/unknown",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69d5ac8c4dc55b8478dddd24",
+   "book_id": "69d5ac8c4dc55b8478dddcab",
+   "slug": "code-of-jewish-law-civil-section-karo",
+   "page_number": 121,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "mixed",
+   "cell": "hebrew-lite/unknown",
+   "decision": null,
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f326c952a77bb28fdb6a88",
+   "book_id": "69f326c952a77bb28fdb6a80",
+   "slug": "t-onggam-kugyol-publisher-not",
+   "page_number": 8,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "mixed",
+   "cell": "korean-lite/unknown",
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33c78876dd827cbc5a5af",
+   "book_id": "69f33c78876dd827cbc5a5a9",
+   "slug": "ch-onha-yojido",
+   "page_number": 6,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb58f0",
+   "book_id": "69f325ae52a77bb28fdb58e9",
+   "slug": "yoja-sanghaeng-p-yon",
+   "page_number": 7,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f326c952a77bb28fdb6a86",
+   "book_id": "69f326c952a77bb28fdb6a80",
+   "slug": "t-onggam-kugyol-publisher-not",
+   "page_number": 6,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "mixed",
+   "cell": "korean-lite/unknown",
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33c33876dd827cbc5a05b",
+   "book_id": "69f33c33876dd827cbc5a057",
+   "slug": "yoji",
+   "page_number": 4,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "mixed",
+   "cell": "korean-lite/unknown",
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33c78876dd827cbc5a5aa",
+   "book_id": "69f33c78876dd827cbc5a5a9",
+   "slug": "ch-onha-yojido",
+   "page_number": 1,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb58fd",
+   "book_id": "69f325ae52a77bb28fdb58e9",
+   "slug": "yoja-sanghaeng-p-yon",
+   "page_number": 20,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb58fb",
+   "book_id": "69f325ae52a77bb28fdb58e9",
+   "slug": "yoja-sanghaeng-p-yon",
+   "page_number": 18,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb5907",
+   "book_id": "69f325ae52a77bb28fdb58e9",
+   "slug": "yoja-sanghaeng-p-yon",
+   "page_number": 30,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb591b",
+   "book_id": "69f325ae52a77bb28fdb58e9",
+   "slug": "yoja-sanghaeng-p-yon",
+   "page_number": 50,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f3278d52a77bb28fdb7341",
+   "book_id": "69f3278d52a77bb28fdb732f",
+   "slug": "namgye-nan-go",
+   "page_number": 18,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f32966aeeee0fa38c65875",
+   "book_id": "69f32966aeeee0fa38c65856",
+   "slug": "kumsansa-ch-angop-yonnok",
+   "page_number": 31,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33bab876dd827cbc591ba",
+   "book_id": "69f33bab876dd827cbc590c5",
+   "slug": "uirye-munhae-kim",
+   "page_number": 245,
+   "language": "Korean",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "korean-flash3/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb5919",
+   "book_id": "69f325ae52a77bb28fdb58e9",
+   "slug": "yoja-sanghaeng-p-yon",
+   "page_number": 48,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "deferred",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f32966aeeee0fa38c65898",
+   "book_id": "69f32966aeeee0fa38c65856",
+   "slug": "kumsansa-ch-angop-yonnok",
+   "page_number": 66,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "script": "handwritten",
+   "cell": "korean-lite/manuscript",
+   "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  },
+  {
+   "page_id": "69f33bab876dd827cbc590e0",
+   "book_id": "69f33bab876dd827cbc590c5",
+   "slug": "uirye-munhae-kim",
+   "page_number": 27,
+   "language": "Korean",
+   "ocr_model": "gemini-3-flash-preview",
+   "script": "printed",
+   "cell": "korean-flash3/print",
+   "decision": null,
+   "route": null,
+   "status": "no-route",
+   "families": [
+    "claude"
+   ],
+   "methods": [
+    "fix-feed-8255"
+   ],
+   "classes": []
+  }
+ ]
+}

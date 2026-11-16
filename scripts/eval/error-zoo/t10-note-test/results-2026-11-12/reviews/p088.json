@@ -1,0 +1,148 @@
+[
+  {
+    "book_id": "69942aa9045dfc482ad77d13",
+    "slot": 1,
+    "title": "Opera Omnia I (Delarue-Lommatzsch)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 19th-century Latin edition of Origen (Lommatzsch reprint of Delarue). It fits a general European-libraries collection.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 620 of 1,081 numbered pages, with 125 backsteps, is far more than misread numerals would produce. It suggests the printed pagination restarts, i.e. more than one printed volume in one scan. This leaf is 'ORIGENIS IN MATTHAEUM' p. 312, the Latin Commentariorum series (section 60), at record 807. As far as I recall, Lommatzsch's vol. I (1831) holds the John commentary, so the title 'Vol. 1' and the date 1834 may not describe this part of the scan. I have not confirmed this. Separately, structure.pages_translated is 0 while the pages_translated field is 1300, so the counts disagree (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 807,
+        "right_page": "yes",
+        "printed_marker": "312",
+        "layout": "single column with running head 'ORIGENIS IN MATTHAEUM', footnotes below a short rule; black band across the top and dark blots obscuring the right-hand line ends",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Instat enim perfectis, et habentibus in se vestigium noctis",
+            "image": "\"Instat enim perfectis, et [obscured word at line end] / habentibus in se vestigium noctis\"",
+            "problem": "The word hidden by the blot at the line end (by sense a negation, 'non') is dropped with no marker. As transcribed, the sentence says the day is at hand for those who DO have a trace of night, which reverses the sense. The <warning> is generic and does not mark the gap. The translation repairs it inside <unclear>.",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "jam ad virtutem propinquat, nienter dicitur",
+            "image": "\"propinquat, / nienter dicitur\" (the start of [conve]nienter is lost under the blot at the line end)",
+            "problem": "A word fragment is fused into the text as if it were a word, with no lacuna marker",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "et poquidem obliviscitur",
+            "image": "\"et po[obscured] / quidem obliviscitur\"",
+            "problem": "The obscured line end is collapsed into a non-word, 'poquidem'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "„nox⁴) promovet, dies autem appa-quavit.“",
+            "image": "\"„nox⁴) promovit, dies autem ap[obscured] / quavit.“\"",
+            "problem": "The image reads 'promovit', not 'promovet'. 'appa-quavit' is a garble of the obscured 'appropinquavit'.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Signandum est autem, quoniam dixit: autem appropinquavit.“",
+            "image": "\"quoniam dixit: [obscured to line end] / autem appropinquavit.“\"",
+            "problem": "The obscured words after 'dixit:' (and footnote anchor 5) are dropped with no marker, so the quotation opens with 'autem'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "sperans per abstinentiam jusmodi",
+            "image": "\"per abstinenti[obscured] / jusmodi\"",
+            "problem": "'ejusmodi' is truncated to 'jusmodi'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Dominum suscipere in sum.",
+            "image": "\"suscipere i[obscured] / sum.\"",
+            "problem": "Probably 'in se ipsum'. The obscured part is collapsed to 'in sum'.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "meditantidi",
+            "image": "\"meditant[obscured] di\" at the line end",
+            "problem": "The obscured line end is fused into a non-word",
+            "severity": "minor"
+          },
+          {
+            "ocr": "„non⁵) sumus noctis",
+            "image": "\"„non ⁶) sumus noctis\" (footnote 6 = I Thess. V, 5)",
+            "problem": "The footnote anchor is numbered 5 instead of 6, so it points to the wrong note. The translation corrects it to ⁶.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<meta>catchword: \"60. Quoniam\"</meta>",
+            "image": "no catchword at the foot of the page",
+            "problem": "The meta records a catchword the leaf does not have (it quotes a section opening from mid-page)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(not on the page)",
+            "english": "<meta>continues from previous page: \"let your loins be girded, and your lamps burning, and you yourselves...\"</meta>",
+            "problem": "The continuity meta quotes text (Luke 12:35–36) that is not on this leaf and states what the previous page holds. This page cannot confirm it.",
+            "severity": "minor"
+          },
+          {
+            "source": "quoniam dixit: autem appropinquavit.“",
+            "english": "he said <unclear>not \"the day is at hand,\" but</unclear> \"the day has drawn near.\"⁵)",
+            "problem": "The words hidden in the image are reconstructed. They are marked <unclear> and fit footnote 5, but they are in neither the OCR nor the visible image.",
+            "severity": "minor"
+          },
+          {
+            "source": "³) Deest „ci“ in textu",
+            "english": "The word \"into it\" <note>original: \"ei\"</note> is missing",
+            "problem": "The print reads 'ci' (a misprint for 'ei'). The translation corrects it silently. This is harmless.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "Romans 13:12. Origen reads the verse as a picture of moral p",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "The four watches of the night (evening, midnight, cockcrow,",
+              "verdict": "unsupported",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"in se ipso\", a different word division.",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"ei\"",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"comprehenditur\" instead of \"reprehenditur\".",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "M. and R. in the text: \"but the day is at hand\"; R., however, in the notes: \"Manuscripts etc.\"",
+              "why": "'M.' and 'R.' are the sigla for the earlier editions (Merlin and, presumably, Delarue/Ruaeus). A general reader cannot tell what they stand for."
+            },
+            {
+              "english": "Merlin's editions: \"whose lamp has thus been lit.\"",
+              "why": "Nothing says who Merlin is (the early 16th-century editor of Origen's Latin works), or why his reading is cited"
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is a clean single-column Lommatzsch leaf, but a dark blot over the right edge causes several unmarked garbles and omissions in the OCR, one of which reverses a sentence's sense in the transcription. The translation recovers sensibly, flagging its reconstructions with <unclear>, and its notes are mostly sound. The volume title and the many repeated printed page numbers deserve a check for concatenated volumes."
+  }
+]

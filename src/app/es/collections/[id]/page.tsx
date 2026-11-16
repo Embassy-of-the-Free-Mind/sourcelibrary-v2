@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
-import { getEsCollection } from '@/lib/es-collections';
+import { englishCollectionFallback, getEsCollection } from '@/lib/es-collections';
+import { getReadDb } from '@/lib/mongodb';
 import { isNativeEdition } from '@/lib/localized';
 import { siteOgImage } from '@/lib/og-locale';
 import collectionRedirects from '@/lib/collection-redirects.json';
@@ -75,7 +76,14 @@ export default async function EsCollectionPage({ params }: Props) {
   if (redirectTarget) permanentRedirect(`/es/collections/${redirectTarget}`);
 
   const col = await getEsCollection(id);
-  if (!col) notFound();
+  if (!col) {
+    // No Spanish page, but the collection may be live in English (visual-art
+    // collections, and those whose `visible` was never set). Send the reader
+    // there instead of a 404. Temporary: a Spanish page can appear later.
+    const english = await englishCollectionFallback(await getReadDb(), id);
+    if (english) redirect(english);
+    notFound();
+  }
 
   // Readable in Spanish EITHER WAY — translated into it, or written in it. The
   // counter alone put Cogolludo, Landa and Scherzer under "these read in their
@@ -132,7 +140,7 @@ export default async function EsCollectionPage({ params }: Props) {
             <ArrowLeft className="w-4 h-4" />
             {col.parent ? col.parent.name : 'Colecciones'}
           </Link>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{col.name}</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif">{col.name}</h1>
           {col.subtitle && <p className="text-lg sm:text-xl text-white/70 max-w-3xl leading-relaxed mb-4">{col.subtitle}</p>}
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
             <span>{nf(col.bookCount)} {col.bookCount === 1 ? 'libro' : 'libros'}</span>
@@ -164,7 +172,7 @@ export default async function EsCollectionPage({ params }: Props) {
             Spanish books are listed. */}
         {col.children.length > 0 && (
           <section className="mb-14">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-5">Dentro de esta colección</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-5">Dentro de esta colección</h2>
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {col.children.map((ch) => (
                 <Link key={ch.slug} href={`/es/collections/${ch.slug}`} className="group block">
@@ -174,7 +182,7 @@ export default async function EsCollectionPage({ params }: Props) {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <div className="text-white font-display text-lg leading-tight group-hover:text-accent-rust transition-colors">{ch.name}</div>
+                      <div className="text-white font-serif text-lg leading-tight group-hover:text-accent-rust transition-colors">{ch.name}</div>
                       <div className="text-white/60 text-xs tabular-nums">{nf(ch.spanishBookCount)} en español</div>
                     </div>
                   </div>
@@ -188,7 +196,7 @@ export default async function EsCollectionPage({ params }: Props) {
             and the badge are the content; only the heading is language-bearing. */}
         {col.firstTranslations.length > 0 && (
           <section className="mb-14">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2">Primeras traducciones al inglés</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-2">Primeras traducciones al inglés</h2>
             <p className="text-muted mb-6 max-w-2xl">
               Obras que, hasta donde sabemos, se traducen aquí al inglés por primera vez.
             </p>
@@ -203,7 +211,7 @@ export default async function EsCollectionPage({ params }: Props) {
         {spanishBooks.length > 0 && (
           <section className="mb-14">
             <div className="flex items-baseline justify-between gap-4 mb-2">
-              <h2 className="text-2xl sm:text-3xl font-display text-primary">
+              <h2 className="text-2xl sm:text-3xl font-serif text-primary">
                 {isSpanishCollection ? 'Los libros' : 'En español'}
               </h2>
             </div>
@@ -220,7 +228,7 @@ export default async function EsCollectionPage({ params }: Props) {
 
         {otherBooks.length > 0 && (
           <section className="mb-14">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2">
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-2">
               {spanishBooks.length > 0 ? 'Más obras de la colección' : 'Las obras'}
             </h2>
             <p className="text-muted mb-6 max-w-2xl">
@@ -240,7 +248,7 @@ export default async function EsCollectionPage({ params }: Props) {
         {illustrations.length > 0 && (
           <section className="mb-14">
             <div className="flex items-baseline justify-between gap-4 mb-6">
-              <h2 className="text-2xl sm:text-3xl font-display text-primary">Ilustraciones</h2>
+              <h2 className="text-2xl sm:text-3xl font-serif text-primary">Ilustraciones</h2>
               <Link href={`/gallery?collection=${encodeURIComponent(id)}`} className="text-sm text-muted hover:text-accent-rust transition-colors underline underline-offset-2">
                 Ver las {nf(col.galleryTotal)} &rarr;
               </Link>

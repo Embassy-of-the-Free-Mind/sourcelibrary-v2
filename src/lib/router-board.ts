@@ -25,6 +25,20 @@ export interface CellEvidence {
   wrong_text_pages: string | null;
   defects: { books: number; words: number; misleads_per_1k: number | null; wrong_text_per_1k: number | null } | null;
 }
+/** One tested (or untested) route of a cell, from router-board-push.mjs routeRows (#240). */
+export interface RouteRow {
+  id: string; stage: string | null; lane: string | null;
+  /** false: `rate` and `ci90` are the PRIOR, not a measurement */
+  tested: boolean;
+  k: number | null; n: number | null; rate: number | null; ci90: [number, number] | null;
+  wrong_text: number | null; invented_or_wrong_leaf: string | null; hard_floor_block: boolean;
+  written_of_drawn: string | null; paired: Record<string, string> | null;
+  /** posteriors [low, mid, high] per 1,000 words */
+  defects: { books: number; words: number; misleads_per_1k: number[] | null; wrong_text_per_1k: number[] | null } | null;
+  /** units per accepted page; null = no new call (the stored text) */
+  cost: { unit: string; low: number | null; mid: number | null; high: number | null } | null;
+  in_use: boolean; decided: boolean;
+}
 export interface RouterCell {
   cell: string; title: string | null; status: CellStatus;
   decision: string; decision_label: string; route: string; table: string; decided_set: string | null;
@@ -32,6 +46,8 @@ export interface RouterCell {
   judge: { stratum: string; valid: boolean | null } | null;
   pages_waiting: number;
   lanes: CellLane[]; production: string[];
+  /** every route in the table row (#240); absent in a document pushed before it */
+  routes?: RouteRow[];
   waivers: { lane: string | null; set: string; until: string; live: boolean; reason: string }[];
   routing_row: boolean;
 }

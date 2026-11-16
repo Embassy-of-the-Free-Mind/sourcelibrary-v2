@@ -1,0 +1,151 @@
+[
+  {
+    "book_id": "6991c53c3074a1745a4107ab",
+    "slot": 1,
+    "title": "Aureum Vellus: Guldin Schatz und Kunstkammer with Splendor Solis illustrations (Cod. Sang. 1727)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A German alchemical recipe manuscript (process for raising silver to the Rhenish standard), in keeping with the Aureum Vellus / Trismosin title. No tradition or collection is set, so only the title can be checked; the page matches it.",
+    "rights_flag": null,
+    "structure_note": "Record 200 carries the handwritten page number 196. A steady offset of 4 suggests unnumbered front leaves, not a misalignment. The 59 backsteps and 62 repeats across 432 numbered pages fit an inconsistently paginated manuscript, or numerals misread from a cursive hand, better than a broken sequence, though this one page cannot settle it. The counts disagree with each other: structure.pages_translated is 0 but pages_translated_field is 517.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 200,
+        "right_page": "yes",
+        "printed_marker": "196",
+        "layout": "single column of cursive German inside a ruled frame; a three-line heading under a smaller repeated title line; page number at top left; catchword \"das\" at bottom right",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Process eines geheimen gradier 🜂",
+            "image": "Process Eines geheimen gradier ▽ (downward triangle, the water sign: 'Gradier-Wasser', a grading water)",
+            "problem": "In both title lines the water sign is read as fire (🜂), so the process is named as the wrong substance",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "In ☿ man darin Bad dz ☉",
+            "image": "Jn ▽ man darin Baad dz ☉ (water sign again)",
+            "problem": "Water is read as mercury, so the medium of the opening operation is changed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "℞ <unclear>Halbe</unclear> ☉ das\nLaminier die Maß mit 3 ℥",
+            "image": "℞ \"3\" lot ☉, das Laminier dün, Machs mit \"3\" ℥ (the scribe puts numerals in quotation marks, as in \"2\", \"30\")",
+            "problem": "The quantity of gold, 3 lot, becomes 'Halbe' (half), so the recipe's dose is lost. 'Machs' is also read as 'die Maß'",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Losen hof-\nfertigen Leuffen",
+            "image": "Losen hof-|fertigen Leüthen (Leuten, 'people')",
+            "problem": "'Leuthen' read as 'Leuffen', which the translation turns into 'vagabonds'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Parafolon dz Stuhls",
+            "image": "Parasolon, dz Stuckh (reading not certain)",
+            "problem": "'Stuckh' (the procedure or piece) appears to be read as 'Stuhls' (chair), which gives the nonsense 'of the chair'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "auf 2 🜔",
+            "image": "auf \"2\" ⊠ (a square with a cross: a time or vessel sign, not the salt sign)",
+            "problem": "The duration or unit sign is replaced by 🜔, so the length of the maceration cannot be recovered",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "thue solches in ein ☾ ℞",
+            "image": "thue solches in ein 6, ℞ (the same vessel sign as after 'Kolben' a few lines up)",
+            "problem": "A vessel sign is read as silver, so the text says to put the precipitate 'into a Silver'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "des Boginds 7 ½ Lot",
+            "image": "deß Vogündlenz \"2\" Lot (hand hard to read here)",
+            "problem": "The quantity may be misread (\"2\" vs 7½), and the substance's name is uncertain",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Process eines geheimen gradier 🜂",
+            "english": "Process of a secret grading **fire [🜂]**",
+            "problem": "The OCR's misread is carried into the title: the image has a grading WATER (▽). The reader is told the wrong reagent is the subject of the process",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "In ☿ man darin Bad dz ☉",
+            "english": "In **Mercury [☿]**, as in a bath, the **Gold [☉]**",
+            "problem": "The image says water (▽), not mercury",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "℞ <unclear>Halbe</unclear> ☉",
+            "english": "**Take [℞]** <unclear>half</unclear> **Gold [☉]**",
+            "problem": "The image gives 3 lot of gold. The English gives 'half', so the dose is wrong",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "Losen hof-\nfertigen Leuffen",
+            "english": "above all not to loose, arrogant vagabonds",
+            "problem": "Built on the misread 'Leuffen'. The image has 'Leüthen' (people). The added 'above all' is not in the source either",
+            "severity": "moderate"
+          },
+          {
+            "source": "in Parafolon dz Stuhls",
+            "english": "in the <term>Parafolon</term> of the chair",
+            "problem": "'of the chair' is meaningless here and rests on the misread 'Stuhls'",
+            "severity": "moderate"
+          },
+          {
+            "source": "thue solches in ein ☾",
+            "english": "put it into a **Silver [☾]**",
+            "problem": "Nonsensical vessel inherited from the OCR misread",
+            "severity": "moderate"
+          },
+          {
+            "source": "Zum 3 tag mall starch",
+            "english": "strongly for the third day",
+            "problem": "The image reads '\"3\" ten mall' (the third time), not a third day",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The summary repeats the misreads ('a grading fire', 'using mercury, salts'), so the derived metadata is wrong too",
+            "severity": "minor",
+            "class": "E1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"auf den Reinischen grad\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Losen hoffertigen Leuffen\"", "verdict": "wrong", "helpful": false },
+            { "quote": "original: \"Macerieren\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Verlutiers\"; seal it with luting clay", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"zur olitet\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Precipitat\"", "verdict": "ok", "helpful": false },
+            { "quote": "into a viscous state", "verdict": "ok", "helpful": true },
+            { "quote": "into a viscous state", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "**Silver [☾]** is graded up to the Rhenish standard", "why": "A general reader will not know that the 'Rhenish standard' is the fineness of Rhenish gold coin, so the aim of the process, to make silver pass as gold of that grade, is lost" },
+            { "english": "3 lot of <term>Volucum santason</term>", "why": "'lot' is an old weight (about half an ounce), and the reader needs it to follow the quantities" },
+            { "english": "Pour the strong <term>Jaferon</term> over it", "why": "A cover name for a reagent, left with no word on what kind of substance it is or that it is a code name" },
+            { "english": "3 **ounces [℥]** of <term>Albachet on Rubei</term>, that is **🜔**", "why": "An unexplained Arabic-Latin term. The reader cannot tell that it is a cover name the text decodes with the following sign" },
+            { "english": "in a cement box", "why": "Cementation vessel: a technical term that a general reader may take literally" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of this cursive alchemical manuscript is mostly sound, but it misreads key signs and a quantity: water becomes fire in the title and mercury in the first line, and '3 lot' of gold becomes 'half'. The fluent English carries all of them, so a reader gets the wrong reagent and the wrong dose."
+  }
+]

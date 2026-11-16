@@ -1,0 +1,28 @@
+<warning>Handwritten Arabic naskh hand, with later notes in brown ink. Each conjunction entry carries several columns of abjad letter-numerals. These can't be read reliably letter by letter, so they are marked unclear and not reproduced. The digits in the left-hand entries are partly uncertain.</warning>
+<scan-quality>fair</scan-quality>
+<language>Arabic</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>9</columns>
+<page-num>١٢٢٩</page-num>
+<meta>Pencil foliation "101" at the top left corner. Ruled astronomical table of mean conjunctions (اجتماع) by lunar month. Each entry has a left-hand descriptive cell and eight narrow columns of abjad numerals. Slash marks (//) appear above many columns.</meta>
+
+| Entry | Abjad columns |
+|-------|---------------|
+| <gloss>يوم</gloss> اجتماع جمادي الاولى <unclear>٢٥ ... ٢٠ و</unclear> م ليلة <unclear>٢</unclear> / <unclear>٢٣ ... ١:</unclear> / <unclear>٢٣ ... ١:</unclear> / الاول | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+| اجتماع جمادي الاخر <unclear>٢٥ ...</unclear> م يوم <unclear>...</unclear> / <unclear>٢٣ ...</unclear> / الثاني | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+| اجتماع رجب <unclear>٢٥ ... ٢٠</unclear> م ليلة <unclear>...</unclear> / <unclear>٢٣ ... ١:</unclear> / ~~الرابع~~ الثالث | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+
+<margin><unclear>ربع</unclear></margin>
+<insert>تبارك <unclear>اسكعظم ملكم الملوك</unclear> تبديل لانه حكم من قدام <unclear>و د ع اس</unclear> كتبه كاتبه مسلم <unclear>دنقى فى عدنه</unclear></insert>
+
+| Entry | Abjad columns |
+|-------|---------------|
+| اجتماع شعبان <unclear>٢٥ ...</unclear> م ليلة <unclear>...</unclear> / <unclear>١٢٣ ... ١:</unclear> / ~~الخامس~~ الرابع <insert><unclear>دجا بيع كوف ... سلاه هلوي ... حرصا صلبه</unclear></insert> | <unclear>8 columns of abjad numerals, not transcribed, with brown-ink additions in the fourth column</unclear> |
+| اجتماع رمضان <unclear>٢٥ ...</unclear> م يوم <unclear>...</unclear> / <unclear>٢٣ ...</unclear> / <unclear>١٢ ...</unclear> / الخامس | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+| <unclear>مخرج ٨٣</unclear> عبرانيه <unclear>تنسبه يزدجرديه</unclear> / <unclear>و ... ١:</unclear> | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+| اجتماع شوال <unclear>٢٥ ...</unclear> م ليلة <unclear>...</unclear> / <unclear>٢٣ ... ٢:</unclear> / ~~<unclear>...</unclear>~~ / <unclear>السادس</unclear> | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+| اجتماع ذي القعدة <unclear>٢٥ ...</unclear> م يوم <unclear>...</unclear> / <unclear>٢٣ ... ١:</unclear> / ~~<unclear>الثامن</unclear>~~ سابع | <unclear>8 columns of abjad numerals, not transcribed, with brown-ink additions in the fourth column</unclear> |
+| اجتماع ذي الحجة <unclear>٢٥ ...</unclear> م ليلة <unclear>...</unclear> / <unclear>٢٣ ... ١:</unclear> / ~~التاسع~~ <unclear>الثامن</unclear> | <unclear>8 columns of abjad numerals, not transcribed</unclear> |
+
+<vocab>اجتماع, جمادي الاولى, جمادي الاخر, رجب, شعبان, رمضان, شوال, ذي القعدة, ذي الحجة, يزدجردية, عبرانية, ليلة, يوم, حساب الجمل, abjad numerals, mean conjunction tables</vocab>

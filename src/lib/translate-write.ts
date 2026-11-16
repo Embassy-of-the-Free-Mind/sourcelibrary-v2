@@ -389,7 +389,7 @@ export async function neighbourGate(
 
 /**
  * The reasoning-leak gate (#6117, #8465) for the writers that do not go through `writePageTranslation` (the
- * translation worker, batch-save, the batch-translate-async collectors): true when `text` is the model's
+ * translation worker): true when `text` is the model's
  * scratchpad, a refusal or a reply to the request, in which case the refusal is stamped on the page and the
  * text kept (recordRefusedTranslation). The caller writes nothing and counts the page as failed.
  */

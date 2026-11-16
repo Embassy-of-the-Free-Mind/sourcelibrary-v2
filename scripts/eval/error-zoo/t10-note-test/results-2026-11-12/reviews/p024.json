@@ -1,0 +1,50 @@
+[
+  {
+    "book_id": "6992cdfe00f13b15f3ca3b1f",
+    "slot": 1,
+    "title": "本草綱目拾遺(一)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Zhao Xuemin's Qing materia medica supplement, a printed Chinese text, in the general 'universallibrary' collection; the page (medicinal waters, lotus-leaf dew) matches the title.",
+    "rights_flag": null,
+    "structure_note": "The structure counts give pages_translated 0, but the book's pages_translated field says 99 and this page carries a translation, so the counter and the field disagree (E2). with_printed_number is 1 of 99, which fits a Chinese print whose folio sits on the block-heart, out of frame here. No backsteps and no repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<script>handwritten</script>", "image": "printed type in a ruled frame", "problem": "script tag wrong: the leaf is printed, not handwritten (self-reported tag)", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "治食百尿", "english": "To treat eating a hundred urines", "problem": "a literal rendering that makes no sense; the note admits the heading is uncertain, so it does not mislead, but the reader gets nonsense. The glyph on the image is a little unclear (尿 or a 脈-like variant)", "severity": "minor" },
+          { "source": "聖水開服", "english": "mixed with a little holy water, and taken by mouth", "problem": "開 (dissolve or mix in) is folded into 'taken'. Acceptable, but loose", "severity": "minor" }
+        ],
+        "other": [],
+        "printed_marker": "none visible",
+        "layout": "half-leaf of a Chinese print: ten ruled vertical columns inside a heavy frame; the entry title 荷葉上露 stands in its own column; a strip of the block-heart shows at the right edge",
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"喉蛾喉瘧\"; \"throat moth\" is a traditional name for swol", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"陸氏濟世良方\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"肥婆草\", a folk plant name", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"治食百尿\"; the meaning of this heading is uncertain and ", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"伏露\", dew of the hottest weeks of midsummer", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"水臌\", abdominal swelling from retained fluid", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"氣脹\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"大力丸\"; this entry continues on the next page", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "mixed with a little holy water", "why": "'holy water' (聖水) is the substance of the previous entry. Nothing on this page says what it is, and a reader will take it as Christian holy water" },
+            { "english": "Throat moth and throat ague", "why": "'throat ague' (喉瘧) gets no gloss, although 'throat moth' does" },
+            { "english": "tooth sores and tooth ague", "why": "'tooth ague' (牙瘧) is an opaque disease name, left without a gloss" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is faithful character by character, and the translation is faithful with sensible glosses. The only problems are an odd literal heading, which the translation flags itself, a wrong 'handwritten' script tag, and a book-level counter that disagrees with the page-count field."
+  }
+]

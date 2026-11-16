@@ -1,0 +1,33 @@
+<warning>Handwritten Italian semi-cursive Hebrew, with Aramaic phrasing in a kabbalistic, Zohar-style text. The hand is idiosyncratic and heavily ligatured, so many readings below are uncertain and are marked unclear. Show-through from the verso is visible and has not been transcribed. Partial text at the left edge, from the facing page, is ignored.</warning>
+<scan-quality>good</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Catchword at foot of page: מסטרא</meta>
+
+<margin><unclear>ג' שהוא קדישא דבנוקבא איהו ואור יהוה חיו</unclear></margin>
+מקום ונאמר כי פ' יפה לך לומר עולם עולם <unclear>לא תיקון</unclear> אבל בנוקבא
+פירוש לא אלא <unclear>לבחינת כלים מקומות</unclear> זה שני העולמות <unclear>כי"ב לעמוק</unclear>
+לון אבל לאתתא דאתי פ' יפה לך לומר עולם ולא דשכינתא
+<unclear>דעי' טיפרא דאתיין מקדושה ולאתין מקמי ואתי</unclear> וישראל בגלותא
+לא לאתין סלקין לאתין <unclear>נבקין</unclear> אבל מסטרא דקב"ה <unclear>ומובדי ובלעדה</unclear>
+<unclear>בזמן בגבורתיו לשכינתא מעולמא לנהון בקוקט"ב אתון</unclear> ל
+דשכינתא <unclear>אתי ונלן חוזר</unclear> בעולם דאתא <unclear>דבלבון דאתא בעולמו</unclear>
+ומסטרא <unclear>דיה מקמר בישרל</unclear> ויה זרעך כעפר הארץ ומסטרא
+דקב"ה ככוכבי השמים אבל לאתתא דאתי כלא מסטרא דקב"ה
+<unclear>יפה קליל</unclear> כי פ' יפה לך לומר עולם דשכינתא <unclear>יקומר</unclear> בה ויהי אור
+<unclear>בלבנה</unclear> כאור החמה <unclear>כלין וגלותי יתי אבלך לא יקבה קו גליותו</unclear>
+מסטרין מסאבין <unclear>כלל קט</unclear> רע"א מהימנא <unclear>ומל"ל</unclear> בריך אנת <unclear>ליה</unclear> ו
+<unclear>דאתהדרי</unclear> עלמא דאתי זמין <unclear>דמיקם</unclear> בעלמא דא לקב"ה כן <unclear>בבנ"י</unclear>
+<unclear>עתן לו אתך</unclear> בריך אנת <unclear>קאי וית קטיעא בין דאבהרים</unclear> דשכינתא
+נוקבא אבל לאתתא דאתי <unclear>קדשא ויגלותא לדברא בה קנ"ו ומבריא</unclear>
+בה קרין <unclear>תשימין</unclear> למסטרא <unclear>דקליק אתה תכתם דבלל קרין ממרש</unclear>
+<unclear>דאקמור בה תכתם</unclear> ומסטרא דשכינתא <unclear>דיבולו בה בן</unclear> ומקמר
+<unclear>בך ובזיב לב מבוקש על בנטי ולב בנטי על אבוקש דקליק</unclear>
+קשורא <unclear>דלא סבירין וכך יקשרון</unclear> בלבו בקשורא חדא <unclear>בלבא יאתך</unclear>
+<unclear>קט אבריכם סבבא מסילת</unclear> מקום ונאמר בראשית ברא
+אלקים את השמים ואת הארץ <unclear>היקם קומו ובו ובו</unclear> בנוקבא
+<unclear>ומשך על תני קפוסי למחשבות</unclear> מסטרא דשכינתא <unclear>דביה מנשקין</unclear>
+<unclear>בלבו</unclear> סטרין מסאבין <unclear>בנ"ב על תני קפוסי</unclear> ויאמר אלקים יהי אור
+
+<vocab>שכינתא, קב"ה, מסטרא, סטרין מסאבין, נוקבא, עלמא דאתי, רעיא מהימנא, גלותא, בראשית ברא אלקים, יהי אור, קשורא</vocab>

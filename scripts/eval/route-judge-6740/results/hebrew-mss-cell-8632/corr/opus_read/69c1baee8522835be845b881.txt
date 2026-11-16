@@ -1,0 +1,24 @@
+<warning>Handwritten square/semi-cursive Sephardic Hebrew hand. The leaf is badly damaged: water stains run across the page, and a large rectangular hole in the centre has been torn through or patched, so text from the leaves underneath shows through the gap. The ink is faded and partly offset. More than 20% of the text cannot be read with confidence. Readings below are tentative.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>107</page-num>
+<meta>The folio number "107" is a later addition, written in pencil or brown ink in the upper left. The text block covers only the upper middle of the leaf; the lower half is blank and stained. Through the hole in the leaf, fragments of lines on the underlying leaves are visible. They are written in darker ink with vocalization marks.</meta>
+
+השמים <unclear>[illegible — 4-5 words]</unclear>
+<unclear>ובשנים ונגעים</unclear> <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — 4-5 words]</unclear>
+<unclear>[illegible — 3-4 words; line cut by the hole]</unclear>
+
+<insert><unclear>[fragment of underlying leaf visible through the hole — 1 line, illegible]</unclear></insert>
+<insert><unclear>[illegible — 2 words]</unclear> תשעה <unclear>[illegible — 1-2 words]</unclear></insert>
+<insert><unclear>שתים</unclear> <unclear>[illegible — 1 word]</unclear> ועם עשה <unclear>לשתיך</unclear></insert>
+
+<unclear>[illegible — 2 words]</unclear> שלשה <unclear>[illegible — 3 words]</unclear>
+<unclear>[illegible — 4-5 words]</unclear>
+<unclear>עשרה</unclear> <unclear>[illegible — 1 word]</unclear> <unclear>ומעלה</unclear> <unclear>שמונה עשר</unclear>
+<unclear>[illegible — 2 words]</unclear> <unclear>ועשרים</unclear> <unclear>[illegible — 2 words]</unclear>
+<unclear>[illegible — 3-4 words]</unclear>
+
+<vocab>Hebrew manuscript, damaged leaf, numerals, תשעה, שלשה, עשרה, שמונה עשר</vocab>

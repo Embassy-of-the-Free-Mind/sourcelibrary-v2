@@ -82,7 +82,9 @@ export function qualityStatement(c: Concept): { lead: string; paragraphs: string
 // the chart cannot drift from the record. tests/unit/history-lanes.test.ts fails if a re-import drops a placed claim.
 type LaneDot = { c: string; id: string; who: string; date: number; approx?: boolean; label?: boolean | string };
 type Lane = { key: string; label: string; gloss: string; apart?: boolean; dots: LaneDot[] };
-type LaneChart = { title: string; finding: string; lanes: Lane[] };
+// `axis`: a chart's own time axis, drawn evenly (bath, whose claims stop at 1700); without it, -350 to 2030 with 1500 as the break
+type LaneAxis = { start: number; end: number; ticks: number[]; smallTicks: number[] };
+type LaneChart = { title: string; finding: string; axis?: LaneAxis; lanes: Lane[] };
 export type ResolvedDot = LaneDot & { href: string; statement: string; partial: boolean };
 export type ResolvedLanes = Omit<LaneChart, 'lanes'> & { lanes: (Omit<Lane, 'dots'> & { dots: ResolvedDot[] })[] };
 
@@ -112,6 +114,15 @@ export type Pick = {
   image: { src: string; book: string; page: number; alt: string; caption: string };
   quote: string;
   opening: { essay: string; section: string };
+  /** The site's own essay on the subject, with its book share page. */
+  article?: { href: string; title: string; share?: string };
+  /** More pictures from the books, chosen by eye; see Plate.tsx. */
+  plates?: PlateImage[];
+};
+/** A picture from a book: `size` is the image's pixels, `crop` [x, y, w, h] the part shown, as fractions of it. */
+export type PlateImage = {
+  src: string; book: string; page: number; size: [number, number]; alt: string; caption: string;
+  crop?: [number, number, number, number];
 };
 export type Figure = {
   claim: string; concept: string; q: string; qo?: string; l: string; loc?: string; u: string;

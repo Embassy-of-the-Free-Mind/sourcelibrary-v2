@@ -123,3 +123,47 @@ export function sameNameForm(a, b) {
   }
   return false;
 }
+
+/**
+ * A byline that names nobody. Comparing it to a person's name forms says
+ * nothing: "Unknown" next to Plutarch is a gap, not a contradiction — the
+ * entity link is often what SUPPLIES the attribution. Case- and accent-folded, so "Unknown
+ * artist", "[Anonymus]" and "Unbekannt" all read as placeholders.
+ */
+const PLACEHOLDER_WORDS = new Set(['unknown', 'anonymous', 'anonymus', 'anon', 'various', 'artist', 'author',
+  'unbekannt', 'onbekend', 'anonyme', 'anonimo', 'sine', 'nomine', 'none', 'not', 'stated', 'no', 'na', 'sn']);
+export function isPlaceholderByline(s) {
+  // A plain accent/case fold, NOT foldOrtho: that one rewrites k→c and v→u
+  // ("uncnown", "uarious"), which is right for names and wrong for this list.
+  const toks = stripRelator(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/[^a-z]+/g, ' ').split(' ').filter(Boolean);
+  return toks.length === 0 || toks.every((t) => PLACEHOLDER_WORDS.has(t));
+}
+
+/**
+ * Does this byline name the person whose name forms are `forms`? (#3894 item 4)
+ *
+ *   'same'         some form shares a name stem with the byline
+ *   'different'    both sides are judgeable and no form agrees — the byline
+ *                  names someone else
+ *   'unjudgeable'  a placeholder byline, or a script `foldOrtho` cannot read on
+ *                  either side (CJK, Arabic, Cyrillic, Hebrew). NEVER read this
+ *                  as 'different': the metric is blind there, not the names.
+ *
+ * Why it exists: a byline correction that clears `author_id` but leaves the old
+ * `author_entity_id` behind gets re-linked to the PRINTER the next night by the
+ * entity-id phase of backfill-author-canonical-links.mjs, at confidence "high".
+ * Measured 2026-11-12: 31 of 14,150 judgeable entity-id links contradict their
+ * own byline (Streinnius → Henri Estienne, Merian → Michael Maier, della Porta →
+ * Kenelm Digby, Cranach → Dürer). Orthographic only, like `sameNameForm`: a
+ * thesaurus variant the doc does not carry (Suda/Suidas) reads 'different', so
+ * a caller should treat the verdict as "do not link", never as "delete".
+ */
+export function bylineVsNameForms(byline, forms) {
+  if (!byline || isPlaceholderByline(byline)) return 'unjudgeable';
+  const b = stripRelator(byline);
+  if (!nameStems(b).size) return 'unjudgeable';
+  const usable = (forms || []).filter((f) => f && nameStems(f).size);
+  if (!usable.length) return 'unjudgeable';
+  return usable.some((f) => sameNameForm(b, f)) ? 'same' : 'different';
+}

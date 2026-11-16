@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import crypto from 'crypto';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAuth, withInnerCircleAuth } from '@/lib/auth-helpers';
 
 export interface OCRCondition {
   id: string;
@@ -102,10 +102,10 @@ export const POST = withAuth(async (request, session) => {
     console.error('Error creating OCR experiment:', error);
     return NextResponse.json({ error: 'Failed to create experiment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 // GET /api/experiments/ocr-quality - List OCR quality experiments
-export const GET = withAuth(async (request, session) => {
+export const GET = withInnerCircleAuth(async (request, session) => {
   try {
     const db = await getDb();
     const experiments = await db

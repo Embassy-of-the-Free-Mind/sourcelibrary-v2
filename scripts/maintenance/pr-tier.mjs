@@ -64,7 +64,7 @@ export function classifyPaths(paths, addedLines = []) {
     const hitPaths = paths.filter((p) => rule.res.some((re) => re.test(p)));
     const hitLines = rule.diffRes.length ? addedLines.filter((l) => rule.diffRes.some((re) => re.test(l))) : [];
     if (hitPaths.length || hitLines.length) {
-      reasons.push({ reason: rule.reason, paths: hitPaths.slice(0, 8), lines: hitLines.slice(0, 4).map((l) => l.trim().slice(0, 120)) });
+      reasons.push({ reason: rule.reason, paths: hitPaths.slice(0, 8), lines: hitLines.slice(0, 4).map((l) => l.trim().slice(0, 120)), ...(rule.note ? { note: rule.note } : {}) });
     }
   }
   return { tier: reasons.length ? 'HOLD' : 'AUTO', reasons };
@@ -279,6 +279,7 @@ function applyLabel({ pr, result, labels }) {
         ? 'Touches nothing on the hold list. `auto-merge.yml` will squash-merge this PR once `test` and `DCO` are green and the entities-sweep interlock is clear. Add the `blocked` label to stop that.'
         : 'Waits for a human merge because it touches:',
       ...result.reasons.map((r) => `- ${r.reason}${r.paths.length ? ': ' + r.paths.map((p) => '`' + p + '`').join(', ') : ''}${r.lines.length ? '\n  ' + r.lines.map((l) => '`' + l + '`').join('\n  ') : ''}`),
+      ...result.reasons.filter((r) => r.note).map((r) => `\n> **${r.reason}:** ${r.note}`),
       '',
       '_Rules: `scripts/maintenance/pr-tier-rules.json`._',
     ].join('\n');

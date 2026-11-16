@@ -1,7 +1,7 @@
 name: Auto-merge tier:auto PRs
 
 # Merges ONE green `tier:auto` PR per run (scripts/maintenance/auto-merge.mjs):
-# test + DCO green, next-build not failed, no `blocked`, settled ≥10 min, main quiet ≥8 min (one
+# test + DCO green, next-build not failed, no `blocked`, settled ≥10 min (main-quiet gap removed 2026-11-13: merges build nothing since #7008; was: one
 # Vercel build at a time), entities-sweep interlock clear. `tier:hold` PRs are
 # never touched — a human merges those. Labels come from pr-tier.yml.
 #
@@ -26,6 +26,8 @@ permissions:
   pull-requests: write
   issues: write    # to close the issues a merged PR names: GitHub skips `Closes #N` for github-actions merges (#7288)
   actions: write   # to dispatch post-deploy-warm.yml after a merge (a GITHUB_TOKEN push does not trigger it)
+  checks: read     # a private repo hides check results from a token that does not ask (v3 move, 2026-11-12)
+  statuses: read
 
 concurrency:
   group: auto-merge
@@ -33,7 +35,7 @@ concurrency:
 
 jobs:
   merge:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 20   # ≤ 5 to merge + ≤ 10 asleep before booking the next run
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +44,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - run: npm ci --omit=dev --ignore-scripts
       - name: Merge one ready PR
         id: merge

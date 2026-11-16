@@ -1,0 +1,1904 @@
+[
+ {
+  "page_id": "69bd0ac7b01b17638a09803f",
+  "book_id": "69bd0ac6b01b17638a09803e",
+  "slug": "chen-dao-weng-inner-alchemy-essays-chen-zhizun",
+  "page_number": 1,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 53,
+  "book_reads": 54,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 201,
+  "score": 2.3061108404495148,
+  "human_reads": 66,
+  "title": "陳道翁就正篇 (Chen Dao Weng, Inner Alchemy Essays)",
+  "ocr_updated_at": "2026-03-20T09:32:20.196Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69bd0ac7b01b17638a098060",
+  "book_id": "69bd0ac6b01b17638a09803e",
+  "slug": "chen-dao-weng-inner-alchemy-essays-chen-zhizun",
+  "page_number": 34,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": "handwritten",
+  "cell": "chinese-flash3/manuscript",
+  "decision": "UNTESTED (manuscript)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 50,
+  "book_reads": 54,
+  "engine": "flash3",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × flash3 × manuscript",
+  "len": 563,
+  "score": 2.3061108404495148,
+  "human_reads": 66,
+  "title": "陳道翁就正篇 (Chen Dao Weng, Inner Alchemy Essays)",
+  "ocr_updated_at": "2026-03-25T00:50:03.490Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69bd0ac7b01b17638a098061",
+  "book_id": "69bd0ac6b01b17638a09803e",
+  "slug": "chen-dao-weng-inner-alchemy-essays-chen-zhizun",
+  "page_number": 35,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": "handwritten",
+  "cell": "chinese-flash3/manuscript",
+  "decision": "UNTESTED (manuscript)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 27,
+  "book_reads": 54,
+  "engine": "flash3",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × flash3 × manuscript",
+  "len": 749,
+  "score": 2.3061108404495148,
+  "human_reads": 66,
+  "title": "陳道翁就正篇 (Chen Dao Weng, Inner Alchemy Essays)",
+  "ocr_updated_at": "2026-03-25T00:50:03.490Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69bd0ac7b01b17638a098066",
+  "book_id": "69bd0ac6b01b17638a09803e",
+  "slug": "chen-dao-weng-inner-alchemy-essays-chen-zhizun",
+  "page_number": 40,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": "handwritten",
+  "cell": "chinese-flash3/manuscript",
+  "decision": "UNTESTED (manuscript)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 23,
+  "book_reads": 54,
+  "engine": "flash3",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × flash3 × manuscript",
+  "len": 846,
+  "score": 2.3061108404495148,
+  "human_reads": 66,
+  "title": "陳道翁就正篇 (Chen Dao Weng, Inner Alchemy Essays)",
+  "ocr_updated_at": "2026-03-25T00:50:03.490Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb20",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 4,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O6",
+   "O1",
+   "O5",
+   "O14"
+  ],
+  "page_reads": 49,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1190,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:04.767Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb21",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 5,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O7",
+   "O6",
+   "O1",
+   "O16"
+  ],
+  "page_reads": 48,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 3519,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:09.430Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb23",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 7,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [],
+  "page_reads": 53,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1754,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:13.942Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb24",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 8,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O7",
+   "O6",
+   "O1"
+  ],
+  "page_reads": 38,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1164,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:03.542Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb27",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 11,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O6",
+   "O1",
+   "O8",
+   "O7"
+  ],
+  "page_reads": 33,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1551,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:03.275Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb28",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 12,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O1",
+   "O6",
+   "T10"
+  ],
+  "page_reads": 23,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1495,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:01.783Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb2b",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 15,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "I4",
+   "O1",
+   "O12",
+   "T10"
+  ],
+  "page_reads": 14,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 599,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:10:53.148Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb2c",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 16,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O1",
+   "O3",
+   "O4",
+   "O5",
+   "O16",
+   "E2"
+  ],
+  "page_reads": 28,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 2707,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:42.170Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb2d",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 17,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O6",
+   "O1",
+   "O5",
+   "E2"
+  ],
+  "page_reads": 23,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 2356,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:11:02.950Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992caced4d545ae73feeb2e",
+  "book_id": "6992caced4d545ae73feeb1c",
+  "slug": "pelliot-chinois-2012",
+  "page_number": 18,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O5",
+   "O1",
+   "O14",
+   "T10"
+  ],
+  "page_reads": 16,
+  "book_reads": 126,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 2105,
+  "score": 2.018397303134242,
+  "human_reads": 34,
+  "title": "Pelliot chinois 2012",
+  "ocr_updated_at": "2026-02-16T08:10:56.825Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "695924fa1cac2ce31a4a8a34",
+  "book_id": "695924fa1cac2ce31a4a8a33",
+  "slug": "taoist-canon-daozang-masters",
+  "page_number": 1,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 15,
+  "book_reads": 74,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 448,
+  "score": 1.989517832118504,
+  "human_reads": 27,
+  "title": "道藏 (Daozang - Taoist Canon)",
+  "ocr_updated_at": "2026-02-06T14:52:04.401Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "695924fa1cac2ce31a4a8a93",
+  "book_id": "695924fa1cac2ce31a4a8a33",
+  "slug": "taoist-canon-daozang-masters",
+  "page_number": 96,
+  "language": "Chinese",
+  "ocr_model": "claude-opus-5-5",
+  "script": "printed",
+  "cell": "chinese-opus/print",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O5",
+   "O6"
+  ],
+  "page_reads": 19,
+  "book_reads": 74,
+  "engine": "opus",
+  "script_kind": "print",
+  "mycell": "Chinese × opus × print",
+  "len": 1342,
+  "score": 1.989517832118504,
+  "human_reads": 27,
+  "title": "道藏 (Daozang - Taoist Canon)",
+  "ocr_updated_at": "2026-11-04T11:19:42.125Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "695924fa1cac2ce31a4a8b11",
+  "book_id": "695924fa1cac2ce31a4a8a33",
+  "slug": "taoist-canon-daozang-masters",
+  "page_number": 222,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O5",
+   "O6",
+   "O7"
+  ],
+  "page_reads": 3,
+  "book_reads": 74,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1256,
+  "score": 1.989517832118504,
+  "human_reads": 27,
+  "title": "道藏 (Daozang - Taoist Canon)",
+  "ocr_updated_at": "2026-02-06T14:52:37.284Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992f3d4dc69844b023ff282",
+  "book_id": "6992f3d4dc69844b023ff228",
+  "slug": "shishi-yuanliu-illustrated-life-of-the-buddha",
+  "page_number": 90,
+  "language": "Chinese",
+  "ocr_model": "claude-opus-5-5",
+  "script": "printed",
+  "cell": "chinese-opus/print",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 4,
+  "book_reads": 35,
+  "engine": "opus",
+  "script_kind": "print",
+  "mycell": "Chinese × opus × print",
+  "len": 888,
+  "score": 1.7237576049808696,
+  "human_reads": 17,
+  "title": "釋氏源流應化事蹟 (Shishi Yuanliu: Illustrated Life of the Buddha)",
+  "ocr_updated_at": "2026-11-13T00:46:11.234Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "699df0873430a1d77dc7926b",
+  "book_id": "699df0863430a1d77dc7922c",
+  "slug": "illustrated-astronomical-omen-compendium",
+  "page_number": 63,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 7,
+  "book_reads": 28,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 804,
+  "score": 1.352877215191163,
+  "human_reads": 6,
+  "title": "天文圖註祥異賦 (Illustrated Astronomical Omen Compendium)",
+  "ocr_updated_at": "2026-02-25T10:52:50.778Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "699df0873430a1d77dc7929b",
+  "book_id": "699df0863430a1d77dc7922c",
+  "slug": "illustrated-astronomical-omen-compendium",
+  "page_number": 111,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "O5",
+   "O6"
+  ],
+  "page_reads": 3,
+  "book_reads": 28,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1198,
+  "score": 1.352877215191163,
+  "human_reads": 6,
+  "title": "天文圖註祥異賦 (Illustrated Astronomical Omen Compendium)",
+  "ocr_updated_at": "2026-02-25T10:52:11.971Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "699df0873430a1d77dc792de",
+  "book_id": "699df0863430a1d77dc7922c",
+  "slug": "illustrated-astronomical-omen-compendium",
+  "page_number": 178,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "I6"
+  ],
+  "page_reads": 1,
+  "book_reads": 28,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1001,
+  "score": 1.352877215191163,
+  "human_reads": 6,
+  "title": "天文圖註祥異賦 (Illustrated Astronomical Omen Compendium)",
+  "ocr_updated_at": "2026-02-25T10:53:16.827Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "699df0873430a1d77dc7933b",
+  "book_id": "699df0863430a1d77dc7922c",
+  "slug": "illustrated-astronomical-omen-compendium",
+  "page_number": 271,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 7,
+  "book_reads": 28,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1327,
+  "score": 1.352877215191163,
+  "human_reads": 6,
+  "title": "天文圖註祥異賦 (Illustrated Astronomical Omen Compendium)",
+  "ocr_updated_at": "2026-02-25T10:51:50.429Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497451",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 615,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": "printed",
+  "cell": "chinese-flash3/print",
+  "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 1,
+  "book_reads": 1,
+  "engine": "flash3",
+  "script_kind": "print",
+  "mycell": "Chinese × flash3 × print",
+  "len": 1087,
+  "score": 1.2369811719385966,
+  "human_reads": 5,
+  "title": "Resshi 列子: Japanese kanbun edition of the Liezi with Zhang Zhan commentary (cont",
+  "ocr_updated_at": "2026-05-29T05:44:09.230Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992c92869b777d72c76351a",
+  "book_id": "6992c92869b777d72c763513",
+  "slug": "yi-jing-64-hexagram-diagrams-anonymous",
+  "page_number": 7,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 22,
+  "book_reads": 38,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1353,
+  "score": 1.057326473840078,
+  "human_reads": 3,
+  "title": "易經 斷易天機周易 64卦圖 (Yi Jing - 64 Hexagram Diagrams)",
+  "ocr_updated_at": "2026-02-16T08:11:28.459Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992c92869b777d72c76351c",
+  "book_id": "6992c92869b777d72c763513",
+  "slug": "yi-jing-64-hexagram-diagrams-anonymous",
+  "page_number": 9,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 20,
+  "book_reads": 38,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1580,
+  "score": 1.057326473840078,
+  "human_reads": 3,
+  "title": "易經 斷易天機周易 64卦圖 (Yi Jing - 64 Hexagram Diagrams)",
+  "ocr_updated_at": "2026-02-16T08:11:27.932Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992c92869b777d72c76351f",
+  "book_id": "6992c92869b777d72c763513",
+  "slug": "yi-jing-64-hexagram-diagrams-anonymous",
+  "page_number": 12,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 24,
+  "book_reads": 38,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1367,
+  "score": 1.057326473840078,
+  "human_reads": 3,
+  "title": "易經 斷易天機周易 64卦圖 (Yi Jing - 64 Hexagram Diagrams)",
+  "ocr_updated_at": "2026-02-16T08:11:34.809Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992c92869b777d72c763523",
+  "book_id": "6992c92869b777d72c763513",
+  "slug": "yi-jing-64-hexagram-diagrams-anonymous",
+  "page_number": 16,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 32,
+  "book_reads": 38,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1398,
+  "score": 1.057326473840078,
+  "human_reads": 3,
+  "title": "易經 斷易天機周易 64卦圖 (Yi Jing - 64 Hexagram Diagrams)",
+  "ocr_updated_at": "2026-02-16T08:11:19.672Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992c92869b777d72c763529",
+  "book_id": "6992c92869b777d72c763513",
+  "slug": "yi-jing-64-hexagram-diagrams-anonymous",
+  "page_number": 22,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "gemini"
+  ],
+  "methods": [
+   "ocr-convergence"
+  ],
+  "classes": [
+   "ocr-misread"
+  ],
+  "page_reads": 23,
+  "book_reads": 38,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1096,
+  "score": 1.057326473840078,
+  "human_reads": 3,
+  "title": "易經 斷易天機周易 64卦圖 (Yi Jing - 64 Hexagram Diagrams)",
+  "ocr_updated_at": "2026-02-16T08:11:33.150Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6992cad1d4d545ae73feeb5d",
+  "book_id": "6992cad1d4d545ae73feeb53",
+  "slug": "pelliot-chinois-2088",
+  "page_number": 10,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O5",
+   "O6"
+  ],
+  "page_reads": 14,
+  "book_reads": 22,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 1778,
+  "score": 1.057326473840078,
+  "human_reads": 3,
+  "title": "Pelliot chinois 2088",
+  "ocr_updated_at": "2026-02-16T08:11:21.844Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69e72c60a409200ea79f478f",
+  "book_id": "69e72c60a409200ea79f46f6",
+  "slug": "zhuangzi-with-commentary-vol-1-zhuangzi",
+  "page_number": 153,
+  "language": "Chinese",
+  "ocr_model": "gemini-3.1-flash-lite",
+  "script": "printed",
+  "cell": "zh-lite/print",
+  "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O6",
+   "O5"
+  ],
+  "page_reads": 0,
+  "book_reads": 1,
+  "engine": "lite",
+  "script_kind": "print",
+  "mycell": "Chinese × lite × print",
+  "len": 887,
+  "score": 0.7502047388963237,
+  "human_reads": 1,
+  "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 1",
+  "ocr_updated_at": "2026-10-01T04:01:10.452Z",
+  "translation_withheld": true
+ },
+ {
+  "page_id": "6a3c634a4daf85677d170cb9",
+  "book_id": "6a3c634a4daf85677d170c3e",
+  "slug": "vol-248",
+  "page_number": 123,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O5",
+   "O6"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 436,
+  "score": 0.7502047388963237,
+  "human_reads": 1,
+  "title": "御定佩文韻府·卷九十八之四 (vol 248)",
+  "ocr_updated_at": "2026-10-02T17:33:01.499Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69f3263852a77bb28fdb673b",
+  "book_id": "69f3263852a77bb28fdb6738",
+  "slug": "upch-ong",
+  "page_number": 3,
+  "language": "Korean",
+  "ocr_model": "gemini-3.1-flash-lite",
+  "script": "handwritten",
+  "cell": "korean-lite/manuscript",
+  "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O7"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "lite",
+  "script_kind": "manuscript",
+  "mycell": "Korean × lite × manuscript",
+  "len": 346,
+  "score": 0.4592391304347826,
+  "human_reads": 0,
+  "title": "Ŭpchʻong",
+  "ocr_updated_at": "2026-05-29T13:24:07.806Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69f3263852a77bb28fdb6742",
+  "book_id": "69f3263852a77bb28fdb6738",
+  "slug": "upch-ong",
+  "page_number": 10,
+  "language": "Korean",
+  "ocr_model": "gemini-3.1-flash-lite",
+  "script": "handwritten",
+  "cell": "korean-lite/manuscript",
+  "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O7",
+   "O6"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "lite",
+  "script_kind": "manuscript",
+  "mycell": "Korean × lite × manuscript",
+  "len": 364,
+  "score": 0.4592391304347826,
+  "human_reads": 0,
+  "title": "Ŭpchʻong",
+  "ocr_updated_at": "2026-05-29T13:24:07.806Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69f3263852a77bb28fdb6750",
+  "book_id": "69f3263852a77bb28fdb6738",
+  "slug": "upch-ong",
+  "page_number": 24,
+  "language": "Korean",
+  "ocr_model": "gemini-3.1-flash-lite",
+  "script": "handwritten",
+  "cell": "korean-lite/manuscript",
+  "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "T10"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "lite",
+  "script_kind": "manuscript",
+  "mycell": "Korean × lite × manuscript",
+  "len": 382,
+  "score": 0.4592391304347826,
+  "human_reads": 0,
+  "title": "Ŭpchʻong",
+  "ocr_updated_at": "2026-05-29T13:24:07.806Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69f3263852a77bb28fdb6756",
+  "book_id": "69f3263852a77bb28fdb6738",
+  "slug": "upch-ong",
+  "page_number": 30,
+  "language": "Korean",
+  "ocr_model": "gemini-3.1-flash-lite",
+  "script": "handwritten",
+  "cell": "korean-lite/manuscript",
+  "decision": "HOLD (k/n: manuscript: the defect rates are not split by script type)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O7"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "lite",
+  "script_kind": "manuscript",
+  "mycell": "Korean × lite × manuscript",
+  "len": 447,
+  "score": 0.4592391304347826,
+  "human_reads": 0,
+  "title": "Ŭpchʻong",
+  "ocr_updated_at": "2026-05-29T13:24:07.806Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69af12630092756351e44a9d",
+  "book_id": "69af12630092756351e449f9",
+  "slug": "guide-to-calculation-zhizao",
+  "page_number": 164,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": null,
+  "cell": "chinese-flash3/unknown",
+  "decision": "UNTESTED (unknown)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 0,
+  "book_reads": 7,
+  "engine": "flash3",
+  "script_kind": "unknown",
+  "mycell": "Chinese × flash3 × unknown",
+  "len": 824,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "墨子 (Mozi)",
+  "ocr_updated_at": "2026-03-24T03:40:07.147Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69d5ae594dc55b8478de138f",
+  "book_id": "69d5ae594dc55b8478de1380",
+  "slug": "book-of-odes-documents-changes-combined-japanese-edition-various",
+  "page_number": 15,
+  "language": "Chinese",
+  "ocr_model": "gemini-3.1-flash-lite-preview",
+  "script": "printed",
+  "cell": "zh-lite/print",
+  "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O5"
+  ],
+  "page_reads": 7,
+  "book_reads": 2,
+  "engine": "lite",
+  "script_kind": "print",
+  "mycell": "Chinese × lite × print",
+  "len": 895,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "Shi Jing, Shu Jing, Yi Jing",
+  "ocr_updated_at": "2026-04-08T13:30:24.798Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69f1347c365e3fcae574ed88",
+  "book_id": "69f1347c365e3fcae574ed1c",
+  "slug": "kumarajiva-um-412-miao-fa-lian-hua-jing-staatsibliothek",
+  "page_number": 108,
+  "language": "Chinese",
+  "ocr_model": "gemini-3.1-flash-lite",
+  "script": "printed",
+  "cell": "zh-lite/print",
+  "decision": "HOLD (k/n: the live route lite has no defect verdicts)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O5",
+   "O6"
+  ],
+  "page_reads": 0,
+  "book_reads": 3,
+  "engine": "lite",
+  "script_kind": "print",
+  "mycell": "Chinese × lite × print",
+  "len": 914,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "Kumārajīva um 412: Miao fa lian hua jing",
+  "ocr_updated_at": "2026-10-01T14:50:13.056Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "69f33c10876dd827cbc59aeb",
+  "book_id": "69f33c10876dd827cbc597ed",
+  "slug": "liu-yi-liu-bie-20-juan-huang",
+  "page_number": 766,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": "printed",
+  "cell": "chinese-flash3/print",
+  "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "zh-print-arms-7263"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 0,
+  "book_reads": 3,
+  "engine": "flash3",
+  "script_kind": "print",
+  "mycell": "Chinese × flash3 × print",
+  "len": 659,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "Liu yi liu bie, 20 juan",
+  "ocr_updated_at": "2026-06-05T18:54:08.640Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c5e5840c88a541d8e1310",
+  "book_id": "6a3c5e5840c88a541d8e12e6",
+  "slug": "vol-2-6",
+  "page_number": 41,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "lane-paired-retranslation-check"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 1,
+  "book_reads": 3,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 290,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "錦繡萬花谷別集(二) (vol 2)",
+  "ocr_updated_at": "2026-10-02T13:25:29.302Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c60d540c88a541d8eb164",
+  "book_id": "6a3c60d540c88a541d8eb14f",
+  "slug": "imperial-parallel-characters-vol-238",
+  "page_number": 21,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O5",
+   "O6",
+   "O7"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 413,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定駢字類編·卷五十五: Imperial Parallel Characters (vol 238)",
+  "ocr_updated_at": "2026-10-04T12:11:22.400Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c60d540c88a541d8eb197",
+  "book_id": "6a3c60d540c88a541d8eb14f",
+  "slug": "imperial-parallel-characters-vol-238",
+  "page_number": 72,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O5",
+   "O4"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 366,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定駢字類編·卷五十五: Imperial Parallel Characters (vol 238)",
+  "ocr_updated_at": "2026-10-02T16:50:49.169Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c60d540c88a541d8eb1cc",
+  "book_id": "6a3c60d540c88a541d8eb14f",
+  "slug": "imperial-parallel-characters-vol-238",
+  "page_number": 125,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O1"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 471,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定駢字類編·卷五十五: Imperial Parallel Characters (vol 238)",
+  "ocr_updated_at": "2026-10-02T16:50:49.169Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c60d540c88a541d8eb1f6",
+  "book_id": "6a3c60d540c88a541d8eb14f",
+  "slug": "imperial-parallel-characters-vol-238",
+  "page_number": 167,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O7"
+  ],
+  "page_reads": 0,
+  "book_reads": 2,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 301,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定駢字類編·卷五十五: Imperial Parallel Characters (vol 238)",
+  "ocr_updated_at": "2026-10-02T16:50:49.169Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c614440c88a541d8ef640",
+  "book_id": "6a3c614440c88a541d8ef620",
+  "slug": "imperial-parallel-characters-vol-349",
+  "page_number": 32,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "served-audit"
+  ],
+  "classes": [
+   "other:column-interleave"
+  ],
+  "page_reads": 0,
+  "book_reads": 1,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 327,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定駢字類編·卷一百七十四: Imperial Parallel Characters (vol 349)",
+  "ocr_updated_at": "2026-10-02T20:50:34.021Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c617a879008ba7e15e78f",
+  "book_id": "6a3c617a879008ba7e15e723",
+  "slug": "imperial-parallel-characters-vol-401",
+  "page_number": 107,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "served-audit"
+  ],
+  "classes": [
+   "O6"
+  ],
+  "page_reads": 2,
+  "book_reads": 2,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 347,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定駢字類編·卷二百二十八: Imperial Parallel Characters (vol 401)",
+  "ocr_updated_at": "2026-10-02T16:01:53.174Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c628e40c88a541d8f473a",
+  "book_id": "6a3c628e40c88a541d8f46a5",
+  "slug": "vol-69-3",
+  "page_number": 17,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O5",
+   "O11"
+  ],
+  "page_reads": 0,
+  "book_reads": 3,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 472,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷十六之十~卷十六之十一 (vol 69)",
+  "ocr_updated_at": "2026-10-04T12:43:54.945Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c628e40c88a541d8f4774",
+  "book_id": "6a3c628e40c88a541d8f46a5",
+  "slug": "vol-69-3",
+  "page_number": 75,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O5"
+  ],
+  "page_reads": 0,
+  "book_reads": 3,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 442,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷十六之十~卷十六之十一 (vol 69)",
+  "ocr_updated_at": "2026-10-02T19:12:39.198Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c628e40c88a541d8f47d0",
+  "book_id": "6a3c628e40c88a541d8f46a5",
+  "slug": "vol-69-3",
+  "page_number": 167,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O5"
+  ],
+  "page_reads": 0,
+  "book_reads": 3,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 304,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷十六之十~卷十六之十一 (vol 69)",
+  "ocr_updated_at": "2026-10-02T19:12:39.198Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c628e40c88a541d8f4805",
+  "book_id": "6a3c628e40c88a541d8f46a5",
+  "slug": "vol-69-3",
+  "page_number": 220,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O6",
+   "O5"
+  ],
+  "page_reads": 0,
+  "book_reads": 3,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 394,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷十六之十~卷十六之十一 (vol 69)",
+  "ocr_updated_at": "2026-10-02T19:12:39.198Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c648f39b4508b04e28188",
+  "book_id": "6a3c648f39b4508b04e2814a",
+  "slug": "vol-575",
+  "page_number": 62,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O11",
+   "O6"
+  ],
+  "page_reads": 2,
+  "book_reads": 5,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 510,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷七十四之一 (vol 575)",
+  "ocr_updated_at": "2026-10-02T22:53:08.390Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c64ab39b4508b04e28f33",
+  "book_id": "6a3c64ab39b4508b04e28ee7",
+  "slug": "vol-602",
+  "page_number": 75,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "T4",
+   "O6"
+  ],
+  "page_reads": 0,
+  "book_reads": 1,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 526,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷八十二之二 (vol 602)",
+  "ocr_updated_at": "2026-10-02T19:53:35.067Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c64ab39b4508b04e28f5e",
+  "book_id": "6a3c64ab39b4508b04e28ee7",
+  "slug": "vol-602",
+  "page_number": 118,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "judged-pages"
+  ],
+  "classes": [
+   "O11",
+   "O1",
+   "O6",
+   "O5"
+  ],
+  "page_reads": 0,
+  "book_reads": 1,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 543,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定佩文韻府·卷八十二之二 (vol 602)",
+  "ocr_updated_at": "2026-10-02T19:53:35.067Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c65fe39b4508b04e30bef",
+  "book_id": "6a3c65fe39b4508b04e30be9",
+  "slug": "vol-94-4",
+  "page_number": 5,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "lane-paired-retranslation-check"
+  ],
+  "classes": [
+   "T9"
+  ],
+  "page_reads": 1,
+  "book_reads": 0,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 423,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定子史精華·卷一百三十一~卷一百三十三 (vol 94)",
+  "ocr_updated_at": "2026-10-04T16:41:26.676Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c663039b4508b04e32c24",
+  "book_id": "6a3c663039b4508b04e32b9e",
+  "slug": "vol-146-2",
+  "page_number": 134,
+  "language": "Chinese",
+  "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+  "script": "handwritten",
+  "cell": "chinese-paddle/manuscript",
+  "decision": null,
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "lane-paired-retranslation-check"
+  ],
+  "classes": [
+   "O6",
+   "T7"
+  ],
+  "page_reads": 1,
+  "book_reads": 0,
+  "engine": "paddle",
+  "script_kind": "manuscript",
+  "mycell": "Chinese × paddle × manuscript",
+  "len": 385,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "御定子史精華·卷一百三十~卷一百三十二 (vol 146)",
+  "ocr_updated_at": "2026-10-02T22:13:14.522Z",
+  "translation_withheld": false
+ },
+ {
+  "page_id": "6a3c6ac3af3c49b59c5e9e1a",
+  "book_id": "6a3c6ac3af3c49b59c5e9e15",
+  "slug": "vol-2-1782344387807",
+  "page_number": 5,
+  "language": "Chinese",
+  "ocr_model": "gemini-3-flash-preview",
+  "script": "printed",
+  "cell": "chinese-flash3/print",
+  "decision": "HOLD (k/n: the live route 3flash>opus has no defect verdicts)",
+  "route": null,
+  "status": "no-route",
+  "families": [
+   "claude"
+  ],
+  "methods": [
+   "paired-fifths-check"
+  ],
+  "classes": [
+   "E2",
+   "O15",
+   "O12"
+  ],
+  "page_reads": 0,
+  "book_reads": 0,
+  "engine": "flash3",
+  "script_kind": "print",
+  "mycell": "Chinese × flash3 × print",
+  "len": 578,
+  "score": 0.44308300395256917,
+  "human_reads": 0,
+  "title": "學庸正說·卷下 (vol 2)",
+  "ocr_updated_at": "2026-06-26T16:45:44.641Z",
+  "translation_withheld": false
+ }
+]

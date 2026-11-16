@@ -352,7 +352,7 @@ function collectDecisions() {
 }
 
 function collectHolds(now) {
-  const prs = JSON.parse(sh('gh', ['pr', 'list', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--label', 'tier:hold',
+  const prs = JSON.parse(sh('gh', ['pr', 'list', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v3', '--label', 'tier:hold',
     '--state', 'open', '--limit', '200', '--json', 'number,title,createdAt']));
   return prs.filter(p => now - new Date(p.createdAt) > 864e5).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 }

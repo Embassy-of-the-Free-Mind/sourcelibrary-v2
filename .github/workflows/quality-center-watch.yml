@@ -6,7 +6,8 @@ name: Quality Center watch
 #
 #   1. scripts/audit/quality-center-freshness.mjs (no secrets): the prose and the open-work
 #      list may not lag the newest experiment write-up by more than 30 days, and the feedback
-#      synthesis may not be more than 30 days old.
+#      synthesis may not be more than 30 days old. With --issues it also reads each issue on
+#      the open-work list (public v2 repo, the job's own token) and fails on any that is closed.
 #   2. scripts/analytics/quality-feedback-themes.mjs --check (reads Mongo): how far the
 #      committed feedback counts are from the collection. Informational only: new feedback
 #      arrives most weeks, so a difference alone would file an issue nearly every week. It goes
@@ -29,10 +30,12 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: read
+  # A private repo shows a token only what it asks for (v3 move, 2026-11-12).
 
 jobs:
   freshness:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,11 +43,13 @@ jobs:
           node-version: '22'
       - run: npm ci --ignore-scripts
 
-      - name: Prose, open-work list and feedback dates
+      - name: Prose, open-work list and feedback dates, and no closed issue on the list
         id: dates
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set +e
-          node scripts/audit/quality-center-freshness.mjs > dates.txt 2>&1
+          node scripts/audit/quality-center-freshness.mjs --issues > dates.txt 2>&1
           echo "code=$?" >> "$GITHUB_OUTPUT"
           cat dates.txt
 

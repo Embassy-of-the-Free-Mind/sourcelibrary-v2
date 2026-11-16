@@ -30,7 +30,7 @@ concurrency:
 jobs:
   issue-link:
     if: github.event.pull_request.draft == false
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sl]
     timeout-minutes: 5
     steps:
       # Checkout MAIN, not the PR head: the checker comes from reviewed code.

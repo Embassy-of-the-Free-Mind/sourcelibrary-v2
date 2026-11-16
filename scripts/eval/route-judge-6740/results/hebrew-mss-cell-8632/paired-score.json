@@ -1,0 +1,354 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "route",
+  "issue": 8632,
+  "stage": "ocr",
+  "languages": [
+   "Hebrew"
+  ],
+  "about": "v2#8632 (Derek approved 2026-11-13, job hebrew-mss-cell): router cell hebrew-flash3/manuscript (14.6K pages waiting, HOLD at n=4 a route) has no repair route, so the Hebrew `fix` books wait. One page per book over every eligible book of the cell's frame (44). Arms on the same pages: the stored 3 Flash read (baseline), the live route's Opus correction, a fresh Opus read, the agy Flash-low correction. Blind Opus image judge; the Gemini (agy) second judge on the Opus arm the Opus judge ranks first, because the ocr/manuscript stratum fails Opus self-preference (rules.json judge_validity, DBG 0.43).",
+  "baseline": "3flash",
+  "arms": [
+   "3flash",
+   "3flash>opus-correct",
+   "opus-read",
+   "3flash>agy-flash-low"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "hebrew-flash3",
+  "waive": {}
+ },
+ "judges": {
+  "gemini": {
+   "cells": {
+    "hebrew-flash3-manuscript": {
+     "routes": {
+      "3flash": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 44,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      },
+      "3flash>opus-correct": {
+       "n": 28,
+       "books": 28,
+       "unjudged": 1,
+       "accept": "10/28",
+       "accept_wilson": [
+        0.207,
+        0.542
+       ],
+       "accept_by_book": [
+        0.179,
+        0.536
+       ],
+       "wrong_text_pages": "18/28",
+       "wrong_text_wilson": [
+        0.458,
+        0.793
+       ],
+       "fidelity_mean": 3.29,
+       "counts": true,
+       "words": 10263,
+       "misleads_per_1k": 8.57,
+       "wrong_text_per_1k": 11.89
+      },
+      "opus-read": {
+       "n": 44,
+       "books": 44,
+       "unjudged": 0,
+       "accept": "9/44",
+       "accept_wilson": [
+        0.112,
+        0.345
+       ],
+       "accept_by_book": [
+        0.091,
+        0.341
+       ],
+       "wrong_text_pages": "35/44",
+       "wrong_text_wilson": [
+        0.655,
+        0.888
+       ],
+       "fidelity_mean": 2.66,
+       "counts": true,
+       "words": 15823,
+       "misleads_per_1k": 5.94,
+       "wrong_text_per_1k": 16.18
+      },
+      "3flash>agy-flash-low": {
+       "n": 0,
+       "books": 0,
+       "unjudged": 41,
+       "accept": "0/0",
+       "accept_wilson": null,
+       "accept_by_book": null,
+       "wrong_text_pages": "0/0",
+       "wrong_text_wilson": null,
+       "fidelity_mean": null,
+       "counts": false
+      }
+     },
+     "controls": {
+      "3flash": {
+       "n": 0,
+       "passed": false
+      },
+      "3flash>opus-correct": {
+       "n": 2,
+       "passed": true
+      },
+      "opus-read": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 0,
+       "passed": false
+      }
+     },
+     "noise_floor": {
+      "pairs": 4,
+      "accept_flips": "1/4",
+      "flip_rate": 0.25,
+      "fidelity_abs_diff": 0.25
+     },
+     "against_baseline": {
+      "3flash -> 3flash>opus-correct": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "3flash -> opus-read": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      },
+      "3flash -> 3flash>agy-flash-low": {
+       "shared_pages": 0,
+       "better": "0/0",
+       "worse": "0/0",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": null
+      }
+     }
+    }
+   }
+  },
+  "opus": {
+   "cells": {
+    "hebrew-flash3-manuscript": {
+     "routes": {
+      "3flash": {
+       "n": 44,
+       "books": 44,
+       "unjudged": 0,
+       "accept": "0/44",
+       "accept_wilson": [
+        0,
+        0.08
+       ],
+       "accept_by_book": [
+        0,
+        0
+       ],
+       "wrong_text_pages": "44/44",
+       "wrong_text_wilson": [
+        0.92,
+        1
+       ],
+       "fidelity_mean": 1.82,
+       "counts": true,
+       "words": 15745,
+       "misleads_per_1k": 8.64,
+       "wrong_text_per_1k": 15.12
+      },
+      "3flash>opus-correct": {
+       "n": 29,
+       "books": 29,
+       "unjudged": 0,
+       "accept": "13/29",
+       "accept_wilson": [
+        0.284,
+        0.625
+       ],
+       "accept_by_book": [
+        0.276,
+        0.621
+       ],
+       "wrong_text_pages": "13/29",
+       "wrong_text_wilson": [
+        0.284,
+        0.625
+       ],
+       "fidelity_mean": 3.34,
+       "counts": true,
+       "words": 10673,
+       "misleads_per_1k": 5.15,
+       "wrong_text_per_1k": 2.9
+      },
+      "opus-read": {
+       "n": 44,
+       "books": 44,
+       "unjudged": 0,
+       "accept": "20/44",
+       "accept_wilson": [
+        0.317,
+        0.599
+       ],
+       "accept_by_book": [
+        0.318,
+        0.591
+       ],
+       "wrong_text_pages": "16/44",
+       "wrong_text_wilson": [
+        0.238,
+        0.511
+       ],
+       "fidelity_mean": 3.2,
+       "counts": true,
+       "words": 15823,
+       "misleads_per_1k": 5.31,
+       "wrong_text_per_1k": 2.53
+      },
+      "3flash>agy-flash-low": {
+       "n": 41,
+       "books": 41,
+       "unjudged": 0,
+       "accept": "0/41",
+       "accept_wilson": [
+        0,
+        0.086
+       ],
+       "accept_by_book": [
+        0,
+        0
+       ],
+       "wrong_text_pages": "41/41",
+       "wrong_text_wilson": [
+        0.914,
+        1
+       ],
+       "fidelity_mean": 1.95,
+       "counts": true,
+       "words": 13588,
+       "misleads_per_1k": 7.58,
+       "wrong_text_per_1k": 17.52
+      }
+     },
+     "controls": {
+      "3flash": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>opus-correct": {
+       "n": 2,
+       "passed": true
+      },
+      "opus-read": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 8,
+      "accept_flips": "0/8",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0.25
+     },
+     "against_baseline": {
+      "3flash -> 3flash>opus-correct": {
+       "shared_pages": 29,
+       "better": "23/29",
+       "worse": "0/29",
+       "accept_gained": 13,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.14
+      },
+      "3flash -> opus-read": {
+       "shared_pages": 44,
+       "better": "36/44",
+       "worse": "1/44",
+       "accept_gained": 20,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.39
+      },
+      "3flash -> 3flash>agy-flash-low": {
+       "shared_pages": 41,
+       "better": "6/41",
+       "worse": "3/41",
+       "accept_gained": 0,
+       "accept_lost": 0,
+       "accept_sign_test_p": null,
+       "fidelity_diff": 0.07
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "4 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 4 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "8 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

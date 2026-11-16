@@ -121,7 +121,7 @@ function VisualPanel({ visuals, onClose }: { visuals: Visual[]; onClose: () => v
         <button onClick={onClose} className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 text-white/70 hover:text-white flex items-center justify-center text-lg backdrop-blur-sm">&times;</button>
       </div>
       <div className="px-5 py-4 bg-[#0e0c0a]">
-        <p className="text-white/90 text-sm font-display leading-snug">{current.title}</p>
+        <p className="text-white/90 text-sm font-serif leading-snug">{current.title}</p>
         {current.caption && <p className="text-white/40 text-xs mt-1 font-sans">{current.caption}</p>}
       </div>
       {visuals.length > 1 && (
@@ -273,7 +273,7 @@ function VoiceAgentInner() {
           <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-[#0e0c0a]/95" />
           <div className="relative flex flex-col items-center max-w-[520px]">
-            <h1 className="text-4xl sm:text-5xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>The Librarian</h1>
+            <h1 className="text-4xl sm:text-5xl text-white font-serif mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>The Librarian</h1>
             <p className="text-white/60 text-base font-body leading-relaxed mb-10">
               Ask aloud. The Librarian searches the collection as you speak.
             </p>
@@ -292,7 +292,7 @@ function VoiceAgentInner() {
                 Sign in (free)
               </Link>
             )}
-            <Link href="/librarian" className="mt-10 text-sm text-white/50 hover:text-white/80 font-display">Prefer to type? Switch to text chat &rarr;</Link>
+            <Link href="/librarian" className="mt-10 text-sm text-white/50 hover:text-white/80 font-serif">Prefer to type? Switch to text chat &rarr;</Link>
           </div>
         </div>
       ) : (

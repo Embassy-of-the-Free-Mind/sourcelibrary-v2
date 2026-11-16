@@ -1,0 +1,14 @@
+{
+ "apply": true,
+ "verdicts": 200,
+ "rows": 200,
+ "inserted": 200,
+ "already": 0,
+ "failed": [],
+ "changed_since_check": 0,
+ "verdict_counts": {
+  "caveat": 66,
+  "fix": 108,
+  "show": 26
+ }
+}

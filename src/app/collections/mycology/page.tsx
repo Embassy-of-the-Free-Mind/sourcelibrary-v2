@@ -326,7 +326,7 @@ export default async function MycologyCollectionPage() {
               </>
             )}
           </nav>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Fungi &amp; Mycology</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif">Fungi &amp; Mycology</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Fungi built the soil that built our world. These are the books that first studied them.</p>
           {/* Stats set exactly as the book hero's status row (size, weight,
               colours blue / green / gold in that order), no boxes. Same hex
@@ -385,7 +385,7 @@ export default async function MycologyCollectionPage() {
         <section id="translations" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-end justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
+              <h2 className="text-2xl sm:text-3xl text-primary font-serif">First translations</h2>
               <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
             </div>
             <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
@@ -465,7 +465,7 @@ export default async function MycologyCollectionPage() {
       {gallery.length > 0 && (
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
-            <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-1">Gallery</h2>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
             {/* Balanced masonry (true heights, no crop), capped + faded into the page
                 so the ragged bottom is hidden. Cap is static (server-rendered). */}
@@ -500,7 +500,7 @@ export default async function MycologyCollectionPage() {
           {/* Text right, left-aligned. */}
           <div className="max-w-xl">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-3">Ask the librarian</p>
-            <h2 className="text-2xl sm:text-3xl text-primary font-display mb-3">Search inside every book</h2>
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-3">Search inside every book</h2>
             <p className="text-secondary leading-relaxed font-body mb-7">
               The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.
             </p>
@@ -514,7 +514,7 @@ export default async function MycologyCollectionPage() {
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
-            <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif">Works in this collection</h2>
             <CatalogueLink query={`?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></CatalogueLink>
           </div>
           <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
@@ -601,20 +601,20 @@ export default async function MycologyCollectionPage() {
       {/* ===== Get involved ===== */}
       <section id="involved" className="bg-cream scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
-          <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
+          <h2 className="text-2xl sm:text-3xl text-primary font-serif mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
           <div className="grid gap-4 sm:grid-cols-2">
             {/* Feedback — opens the global feedback modal (same one used across the site). */}
             <div className="border border-border-light bg-white p-6 flex flex-col">
               <div className="text-[11px] uppercase tracking-wider text-muted mb-3">Open to all</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Leave feedback</h3>
+              <h3 className="text-lg font-semibold text-primary mb-2 font-serif">Leave feedback</h3>
               <p className="text-sm text-secondary mb-5 font-body flex-1">Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.</p>
               <FeedbackWidget label="Send feedback" className={`${RUST_LINK} self-start`} />
             </div>
             {/* Patron */}
             <div className="border border-border-light bg-white p-6 flex flex-col">
               <div className="text-[11px] uppercase tracking-wider text-muted mb-3">Support</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Become a patron</h3>
+              <h3 className="text-lg font-semibold text-primary mb-2 font-serif">Become a patron</h3>
               <p className="text-sm text-secondary mb-5 font-body flex-1">Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.</p>
               <Link href="/support" className={`${BTN_DARK} self-start`}>Become a patron <ArrowRight className="w-4 h-4" /></Link>
             </div>

@@ -1,0 +1,1074 @@
+{
+ "_note": "Sacred Books of the East, Harvard Oriental Series, Sacred Books of the Hindus (one scan per volume, 1928 or earlier, volumes we hold removed) and Pali Text Society publications 1928 or earlier. Built 2026-11-13.",
+ "campaign": "indic-translation-series-2026-11",
+ "issue": 225,
+ "sweep": "indic-translation-series-2026-11",
+ "hold_release": "Held at import (#225): Tamil waits for a routed OCR test on a sample; the English and Pali series release to the normal OCR route after a title-page check. Release with --to queued.",
+ "collections": [],
+ "BOOKS": [
+  {
+   "id": "in.ernet.dli.2015.217461",
+   "title": "Harvard Oriental Series Vol 2",
+   "author": "Charles Rockwell Lanman",
+   "year": 1895,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 2. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "dli.bengal.10689.16210",
+   "title": "HARVARD ORIENTAL SERIES VOL.3",
+   "author": "LANMAN, CHARLES ROCKWELL",
+   "year": 1896,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 3. One scan chosen of 3 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.280327",
+   "title": "Harvard Oriental Series Vol 4 Raja Cekharas Karpura Manjari",
+   "author": "Charles Rockwell Lanman",
+   "year": 1901,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 4. One scan chosen of 3 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.217361",
+   "title": "Harvard Oriental Series Vol 5",
+   "author": "Charles Rockwell Lanman",
+   "year": 1904,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 5. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.215918",
+   "title": "Harvard Oriental Series Vol Vi",
+   "author": "Charles Rockwell Lanman",
+   "year": 1904,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 6. One scan chosen of 5 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.217393",
+   "title": "Harvard Oriental Series Vol 7",
+   "author": "Charles Rockwell Lanman",
+   "year": 1905,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 7. One scan chosen of 4 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.263108",
+   "title": "Atharva-Veda-Samhita, Harvard Oriental Series Vol. 8",
+   "author": "Charles Rockwell Lanman (Translator), Whitney, William Dwight (Editor)",
+   "year": 1905,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 8. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.217460",
+   "title": "Harvard Oriental Series Vol 9",
+   "author": "Charles Rockwell Lanman",
+   "year": 1905,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 9. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "TheHarvardOrientalSeriesVolXI",
+   "title": "The Harvard Oriental Series Vol-Xi",
+   "author": "Arthur William Ryder, Ph.D.",
+   "year": 1905,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 11. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.227980",
+   "title": "The Harvard Oriental Series Vol 12",
+   "author": "Charles Rockwell",
+   "year": 1912,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 12. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.227991",
+   "title": "The Harvard Oriental Series Vol 13",
+   "author": "Charles Rockwell",
+   "year": 1912,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 13. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "india.history.resource.118381",
+   "title": "Bharavi’s Poem Kiratarjuniya; or, Arjuna’s Combat with the Kirata; translated from the original Sanskrit (Harvard Oriental Series, Vol. XV)",
+   "author": "Bharavi",
+   "year": 1912,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 15. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.149564",
+   "title": "The Harvard Oriental Series Vol.17 The Yoga-system Of Patanjali Ed. 2nd",
+   "author": "Woods, James Haughton",
+   "year": 1927,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 17. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "unset0019unse_v3x7",
+   "title": "Harvard Oriental Series (vol. 19)",
+   "author": "Charles Rockwell Lanman",
+   "year": 1914,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 19. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "SP2365RamasLaterHistoryOrUttaraRamaCharitaHarvardOrientalSeriesVol211915SKBelvalkar",
+   "title": "SP 2365 Ramas Later History Or Uttara Rama Charita Harvard Oriental Series Vol 21 1915 S K Belvalkar",
+   "author": "Raju Srivastava",
+   "year": 1915,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 21. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.97816",
+   "title": "Harvard Oriental Series, Vol.24, Rig- Veda Repetitions Part.2-3",
+   "author": "Bloomfield,maurice",
+   "year": 1916,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 24. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.188962",
+   "title": "The Harvard Oriental Series Vol.25",
+   "author": "Arthur Berriedale Keith",
+   "year": 1920,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 25. One scan chosen of 3 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.217391",
+   "title": "Harvard Oriental Series Vol 26",
+   "author": "Charles Rockwell Lanman",
+   "year": 1926,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 26. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.220643",
+   "title": "Harvard Oriental Series Vol 27",
+   "author": "Charles Rockwell Lanman",
+   "year": 1926,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 27. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "india.history.resource.117587",
+   "title": "Buddhist Legends, Part II.: Translation of Books 3 to 12; translated from the original Pali text of the Dhammapada commentary (Harvard Oriental Series, Vol. XXIX)",
+   "author": "Dhammapada",
+   "year": 1921,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 29. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "harvardorientals0030unse",
+   "title": "the harvard oriental series (vol. 30)",
+   "author": "Charles Rockwell Lanman (ed.)",
+   "year": 1921,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 30. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "dli.ernet.233919",
+   "title": "The Religion and Philosophy of the Veda and Upanishads, The Harvard Oriental Series, Vol. 31",
+   "author": "Arthur Berriedale Keith",
+   "year": 1925,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 31. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "bwb_C0-AXF-860",
+   "title": "The Harvard Oriental Series (vol. 32)",
+   "author": "Arthur Berriedale",
+   "year": 1925,
+   "lang": "English",
+   "note": "Harvard Oriental Series, vol. 32. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.282220",
+   "title": "The Isvsya Upnisad The Sacred Books Of The Hindus Vol I",
+   "author": "B D Basu",
+   "year": 1911,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 1. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "dli.csl.4705",
+   "title": "Sacred books of the Hindus vol.III",
+   "author": "B. D. Basu (ed.)",
+   "year": 1909,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 3. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol04yogasutras1924_202002",
+   "title": "Sacred Books Of The Hindus Vol 04 Yogasutras 1924",
+   "author": "Lamp Thakkar",
+   "year": 1924,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 4. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol05extravolumephilosophicalteachingsintheupanishads1920_202002",
+   "title": "Sacred Books Of The Hindus Vol 05 Extra Volume Philosophical Teachings In The Upanishads 1920",
+   "author": "Shining Char",
+   "year": 1920,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 5. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "dli.ernet.237986",
+   "title": "The Sacred Books Of The Hindus Vol-vi (1923)",
+   "author": "Basu B. D.",
+   "year": 1923,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 6. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.274397",
+   "title": "The Sacred Books Of The Hindus Vol Viii",
+   "author": "Major B. D. Basu",
+   "year": 1913,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 8. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "dli.csl.4626",
+   "title": "Sacred books of the Hindus vol.IX",
+   "author": "B. D. Basu (ed.)",
+   "year": 1911,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 9. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol11samkhyaphilosophynandalalsinha1915_202002",
+   "title": "Sacred Books Of The Hindus Vol 11 Samkhya Philosophy Nandalal Sinha 1915",
+   "author": "Prabhakara Dhingra",
+   "year": 1915,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 11. One scan chosen of 4 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "pli.kerala.rare.24012",
+   "title": "The Sacred Books of the Hindus Vol.13",
+   "author": "B.D Basu (Ed)",
+   "year": 1923,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 13. One scan chosen of 5 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.38186",
+   "title": "The Sacred Books Of The Hindus Vol.14, Pt. 1",
+   "author": "Vasu, Sris Chandra, Tr.",
+   "year": 1913,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 14. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol16thepositivebackgroundofhindusociologybook11914_202002",
+   "title": "Sacred Books Of The Hindus Vol 16 The Positive Background Of Hindu Sociology Book 1, 1914",
+   "author": "Mirai Thampuran",
+   "year": 1914,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 16. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "india.history.resource.118363",
+   "title": "The Matsya Puranam, Part II.- Chapters 129-292; translated by a Taluqdar of Oudh (the Sacred Books of the Hindus; translated by various Sanskrit Scholars, Vol. XVII.- Part II.)",
+   "author": "Basu, B. D. Maj. (Ed.)",
+   "year": 1917,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 17. One scan chosen of 3 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "dli.csl.8043",
+   "title": "The Sacred Books of the Hindus, Vol. XVIII",
+   "author": "B. D. Basu (ed.)",
+   "year": 1916,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 18. One scan chosen of 3 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.283721",
+   "title": "The Sacred Books Of The Hindus Vol Xix",
+   "author": "B.d.basu",
+   "year": 1917,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 19. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "india.history.resource.88862",
+   "title": "The Sacred Books of the Hindus, Vol. XX- the Daily Practice of the Hindus; contianing the Morning and Midday Duties, 3rd ed.",
+   "author": "Vidyarnava, Srisa Chandra",
+   "year": 1918,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 20. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol22isakenaupanishadspart11919_202002",
+   "title": "Sacred Books Of The Hindus Vol 22 Isa & Kena Upanishads ( Part 1) 1919",
+   "author": "Maalai Subramaniam",
+   "year": 1919,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 22. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol24brahmavaivartapurana1922_202002",
+   "title": "Sacred Books Of The Hindus Vol 24 Brahmavaivarta Purana 1922",
+   "author": "Lamp Thakkar",
+   "year": 1922,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 24. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.283715",
+   "title": "The Sacred Books Of The Hindus Part.i Vol.xxv",
+   "author": "Benoy Kumar Sarkar",
+   "year": 1921,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 25. One scan chosen of 1 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.196025",
+   "title": "The Sacred Books Of The Hindus Vol.26, Pt. 2",
+   "author": "Vijnananda, Tr.",
+   "year": 1890,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 26. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "sacredbooksofthehindusvol27mimamsasutrasofjaiminipart12mohanlalsandal1923_202002",
+   "title": "Sacred Books Of The Hindus Vol 27 Mimamsa Sutras Of Jaimini Part 1 & 2 Mohan Lal Sandal 1923",
+   "author": "Arya Gandhi",
+   "year": 1923,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 27. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "in.ernet.dli.2015.147534",
+   "title": "The Sacred Books Of The Hindus Vol.-xxviii",
+   "author": "Basu, B. D.",
+   "year": 1925,
+   "lang": "English",
+   "note": "The Sacred Books of the Hindus, vol. 28. One scan chosen of 2 on IA (library scans preferred). Volume read from IA metadata or title, not yet checked against the title page."
+  },
+  {
+   "id": "bub_gb_su44AAAAIAAJ",
+   "title": "Text series -",
+   "author": "Pali Text Society",
+   "year": 1901,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "paramatthadipani00dhamrich",
+   "title": "Paramatthadipani. Dhammapala's commentary on the Therigatha",
+   "author": "Dhammapala",
+   "year": 1893,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext25socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1900,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext28socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1896,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext14socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1890,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext26socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1904,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext27socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1898,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "compediumofphilo00anur",
+   "title": "Compedium of philosophy: being a translation now made for the first time from the original Pali of the Abhidhammattha-sanga",
+   "author": "Anuruddha",
+   "year": 1910,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "samyuttanikayaof06feer",
+   "title": "The Samyutta-nikaya of the Sutta-pitaka. Edited by M. Léon Feer",
+   "author": "Feer, Léon, 1830-1902",
+   "year": 1884,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "bub_gb_cScYAAAAYAAJ",
+   "title": "The Aṅguttaranikâya Ekanipâta, Dukanipâta, and Tikanipâta",
+   "author": "Edmund Hardy",
+   "year": 1900,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "bub_gb_bycYAAAAYAAJ",
+   "title": "The Aṅguttaranikâya Pañcakanipāta, and Chakkanipāta",
+   "author": "Edmund Hardy",
+   "year": 1896,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "paisambhidmagga00taylgoog",
+   "title": "Paṭisambhidāmagga",
+   "author": "Taylor, Arnold C. (Arnold Charles), 1867- ed",
+   "year": 1905,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "buddhavasaandca00morrgoog",
+   "title": "The Buddhavaṃsa and the Cariyā-piṭaka",
+   "author": "Morris, Richard, 1833-1894, ed",
+   "year": 1882,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "sasanavamsa00pa",
+   "title": "Sasanavamsa",
+   "author": "Paññasami, 19th cent",
+   "year": 1897,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "samyuttanikayaof05feer",
+   "title": "The Samyutta-nikaya of the Sutta-pitaka. Edited by M. Léon Feer",
+   "author": "Feer, Léon, 1830-1902",
+   "year": 1884,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "kathavatthu01upag",
+   "title": "Kathavatthu",
+   "author": "Upagupta",
+   "year": 1894,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "puggalapaatt01morruoft",
+   "title": "The Puggala-paññatti. Edited by Richard Morris",
+   "author": "Morris, Richard, 1833-1894",
+   "year": 1883,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "puggalapaattpt100morruoft",
+   "title": "The Puggala-paññatti. Edited by Richard Morris",
+   "author": "Morris, Richard, 1833-1894",
+   "year": 1883,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "vibhagabeingsec00davigoog",
+   "title": "The Vibhaṅga, being the second book of the Abhidhamma piṭaka",
+   "author": "Davids, Caroline A. F. Rhys (Caroline Augusta Foley Rhys), 1857-1942, ed",
+   "year": 1904,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext10socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1890,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext04socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1888,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "pt3samyuttanikay00paliuoft",
+   "title": "The Samyutta-nikaya of the Sutta-pitaka. Edited by M. Léon Feer",
+   "author": "Pali Text Society (London, England)",
+   "year": 1884,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "ssanavamsa01bodegoog",
+   "title": "Sāsanavamsa",
+   "author": "Paññasāmi, 19th cent",
+   "year": 1897,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext07socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1885,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext30socigoog",
+   "title": "The Saṃyutta-nikâya of the Sutta-piṭaka ..",
+   "author": "Feer, Léon, 1830-1902, ed",
+   "year": 1884,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dli.bengal.10689.2345",
+   "title": "The Jataka - Vol.3",
+   "author": "Cowell, E.B., ed.",
+   "year": 1897,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "manualofmysticbe00wood",
+   "title": "Manual of a mystic: being a translation from the Pali and Sinhalese work entitled The Yogāvachara's manual",
+   "author": "Woodward, Frank Lee",
+   "year": 1916,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext00socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1907,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext03socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1921,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext05socigoog",
+   "title": "Journal of the Pali text society",
+   "author": "Pali Text Society",
+   "year": 1882,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext12socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1886,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dli.ministry.29350",
+   "title": "Mahā- bodhi- vaṁsa",
+   "author": "Strong, S. Arthur",
+   "year": 1801,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "nettipakaranawi00hardgoog",
+   "title": "The Netti-pakarana, with extracts from Dhammapāla's commentary",
+   "author": "Kaccāyana",
+   "year": 1902,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "niddesamahanidde01lava",
+   "title": "Niddesa, Mahaniddesa. Edited by L. de La Vallée Poussin and E.J. Thomas",
+   "author": "La Vallée Poussin, Louis de, 1869-1938",
+   "year": 1916,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "niddesamahanidde02lava",
+   "title": "Niddesa, Mahaniddesa. Edited by L. de La Vallée Poussin and E.J. Thomas",
+   "author": "La Vallée Poussin, Louis de, 1869-1938",
+   "year": 1916,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "yamakabeingsixth02daviuoft",
+   "title": "The Yamaka, being the sixth book of the Abhidhamma Pitaka. Edited by Caroline Rhys Davids",
+   "author": "Davids, Caroline Augusta (Foley) Rhys, d. 1942",
+   "year": 1911,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "pointsofcontrove00mogg",
+   "title": "Points of controversy, or, Subjects of discourse: being a translation of the Kathāvatthu from the Abhidhamma-piṭaka",
+   "author": "Moggaliputta Tissa, 3e siècle av. J.-C",
+   "year": 1915,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "fournewyorkboys00davigoog",
+   "title": "The sumaṅgala-vilāsinī",
+   "author": "Buddhaghosa",
+   "year": 1886,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "india.history.resource.89469",
+   "title": "The Ayaramga Sutta of the Cvetambara Jains, Part I Text",
+   "author": "Jacobi, Hermann (Ed)",
+   "year": 1882,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "india.history.resource.106164",
+   "title": "Udanam (Pali Text Society)",
+   "author": "Steinthal, Paul (Ed.)",
+   "year": 1885,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext23socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1900,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext29socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society (London, England ), Pali Text Society",
+   "year": 1889,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "pt4samyuttanikay00paliuoft",
+   "title": "The Samyutta-nikaya of the Sutta-pitaka. Edited by M. Léon Feer",
+   "author": "Pali Text Society (London, England)",
+   "year": 1884,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext13socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1907,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext21socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1887,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "mahbodhivamsa00strogoog",
+   "title": "The Mahā-bodhi-vamsa",
+   "author": "Upatissa",
+   "year": 1891,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "bub_gb_hq44AAAAIAAJ",
+   "title": "The Netti-pakarana, with extracts from Dhammapāla's commentary",
+   "author": "Kaccāyana",
+   "year": 1902,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "niddesa03pali",
+   "title": "Niddesa",
+   "author": "Pali Text Society (London, England)",
+   "year": 1916,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "textseries00socigoog",
+   "title": "The Mahāvamsa;",
+   "author": "Mahānāma, 5th cent",
+   "year": 1908,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext02socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1896,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext08socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1902,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "manualofmysticbe0000unse",
+   "title": "Manual of a mystic: being a translation from the Pali and Sinhalese work entitled The Yogāvachara's manual",
+   "author": "",
+   "year": 1916,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dhammapalasparam00dham",
+   "title": "Dhammapāla's Paramattha-dīpanī Part IV : being the commentary on the Vimāna-vatthu",
+   "author": "Dhammapāla",
+   "year": 1901,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "petavatthuedit00petauoft",
+   "title": "Petavatthu. Edited by Prof. Minayeff",
+   "author": "Petavatthu",
+   "year": 1888,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "niddesa02pali",
+   "title": "Niddesa",
+   "author": "Pali Text Society (London, England)",
+   "year": 1916,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext16socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1883,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "mahavamsaorgreat00maha",
+   "title": "The Mahavamsa or the great chronicle of Ceylon, tr. into English by Wilhelm Geiger...assisted by Mabel Haynes Bode.",
+   "author": "Mahanama",
+   "year": 1912,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dli.csl.8318",
+   "title": "The Pali Text Societys Pali-English Dictionary (Part-I (A))",
+   "author": "",
+   "year": 1921,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "niddesacullanidd02steduoft",
+   "title": "Niddesa, Cullaniddesa. Edited by W. Stede",
+   "author": "Stede, Wilhelm, 1882-",
+   "year": 1918,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "patisambhidamagg00tayl",
+   "title": "Patisambhidamagga. Edited by Arnold C. Taylor",
+   "author": "Taylor, Arnold Charles, 1867-",
+   "year": 1905,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "bub_gb_cCcYAAAAYAAJ",
+   "title": "The Aṅguttaranikâya Sattakanipāta, Aṭṭhhakanipāta, and Navakanipāta",
+   "author": "Edmund Hardy",
+   "year": 1899,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "india.history.resource.89470",
+   "title": "The Majjhima-Nikaya, Vol. I",
+   "author": "Trenckner, V. (Ed)",
+   "year": 1888,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext06socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1893,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext31socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1922,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "niddesa01pali",
+   "title": "Niddesa",
+   "author": "Pali Text Society (London, England)",
+   "year": 1916,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "samyuttanikayaof03paliuoft",
+   "title": "The Samyutta-nikaya of the Sutta-pitaka. Edited by M. Léon Feer",
+   "author": "Pali Text Society (London, England)",
+   "year": 1884,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "petavatthuedited00petauoft",
+   "title": "Petavatthu. Edited by J. Minayeff",
+   "author": "Petavatthu",
+   "year": 1888,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "textseries00unkngoog",
+   "title": "The Saṃyutta-nikâya of the Sutta-piṭaka ..",
+   "author": "Feer, Léon, 1830-1902, ed",
+   "year": 1884,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "samantapsdikbudd0003budd",
+   "title": "Samantapāsādikā: Buddhaghosa's commentary on the Vinaya Piṭaka",
+   "author": "Buddhaghosa",
+   "year": 1924,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "india.history.resource.105783",
+   "title": "The Yogavacara’s Manual of Indian Mysticism as practised by Buddhists",
+   "author": "Davids, T. W. Rhys",
+   "year": 1896,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "thevimana00vimauoft",
+   "title": "The Vimana-Vatthu of the Khuddhaka nikaya Sutta pitaka. Edited by Edmund Rowland Gooneratne",
+   "author": "Vimanavatthu",
+   "year": 1886,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext17socigoog",
+   "title": "Journal of the Pali text society",
+   "author": "Pali Text Society",
+   "year": 1882,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext20socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1899,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "buddhavasaandca01morrgoog",
+   "title": "The Buddhavaṃsa and the Cariyā-piṭaka",
+   "author": "Morris, Richard, 1833-1894, ed",
+   "year": 1882,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dli.ministry.05446",
+   "title": "The Puggala-paññatti",
+   "author": "Morris, Richard",
+   "year": 1883,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "ssanavamsa00bodegoog",
+   "title": "Sāsanavamsa",
+   "author": "Paññasāmi, 19th cent",
+   "year": 1897,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "petavatthu00mine",
+   "title": "Petavatthu.",
+   "author": "Mineav, Ivan Pavlovich, 1840-1890, ed",
+   "year": 1888,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext01socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1899,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "journalpalitext22socigoog",
+   "title": "Journal of the Pali Text Society",
+   "author": "Pali Text Society",
+   "year": 1884,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "india.history.resource.105834",
+   "title": "Psalms of the Early Buddhists; I.- Psalms of the Sisters",
+   "author": "Davids, Rhys Mrs.",
+   "year": 1909,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "itivuttaka00itivgoog",
+   "title": "Iti-vuttaka",
+   "author": "Itivuttaka",
+   "year": 1889,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "tikapatthanaofab03budduoft",
+   "title": "Tikapatthana of the Abhidhamma pitaka",
+   "author": "Buddhaghosa, Pancappakaranatthakatha",
+   "year": 1921,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dukapatthanavol101pattuoft",
+   "title": "Dukapatthana, vol. 1, being part of the Abhidhamma pitaka. Edited by Mrs. Rhys Davids",
+   "author": "Patthana",
+   "year": 1906,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "dhtukathpakaraa00gugoog",
+   "title": "The Dhātu kathā pakaraṇa and its commentary",
+   "author": "Guṇaratna, Edmund Rowland, ed",
+   "year": 1892,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "yragasuttacvetm00jacogoog",
+   "title": "The Âyâraṃga sutta of the C̦vetâmbara Jains",
+   "author": "Jacobi, Hermann, 1850-1937",
+   "year": 1882,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "tikapatthanaofab02budduoft",
+   "title": "Tikapatthana of the Abhidhamma pitaka",
+   "author": "Buddhaghosa, Pancappakaranatthakatha",
+   "year": 1921,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "compendiumofphil02anur",
+   "title": "Compendium of philosophy,",
+   "author": "Anuruddha",
+   "year": 1910,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "vimanavatthuofkh00guna",
+   "title": "VimaÌ„na-vatthu of the Khuddhaka nikaÌ„ya Sutta pitaka.",
+   "author": "Guṇaratna, Edmund Rowland, ed",
+   "year": 1886,
+   "lang": "English",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  },
+  {
+   "id": "yogvacarasmanual00davi",
+   "title": "The Yogvacara's manual of Indian mysticism as practised by Buddhists",
+   "author": "Davids, Thomas William Rhys, 1843-1922",
+   "year": 1896,
+   "lang": "Pali",
+   "note": "Pali Text Society publication on IA (publisher field), dated 1928 or earlier. Language from IA record; check at QA."
+  }
+ ]
+}

@@ -22,7 +22,7 @@ interface Props {
 function Step({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
     <section className="mb-8">
-      <h2 className="flex items-baseline gap-2 text-lg text-primary font-display mb-2">
+      <h2 className="flex items-baseline gap-2 text-lg text-primary font-serif mb-2">
         <span className="text-accent-rust">{n}</span>
         <span>{title}</span>
       </h2>
@@ -45,7 +45,7 @@ export default async function CatalogHelpPage({ params }: Props) {
         >
           ← Back to catalogue
         </a>
-        <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-2">
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif leading-tight mb-2">
           Editing the BPH catalogue
         </h1>
         <p className="text-sm text-muted mb-8">
@@ -104,7 +104,7 @@ export default async function CatalogHelpPage({ params }: Props) {
         </Step>
 
         <div className="border-t border-border-light pt-6 mt-2 text-[15px] text-secondary leading-relaxed space-y-2">
-          <h2 className="text-lg text-primary font-display mb-2">A few notes</h2>
+          <h2 className="text-lg text-primary font-serif mb-2">A few notes</h2>
           <p>
             <strong>Found something off, or have an idea?</strong> Use the <strong>Feedback</strong> button
             on any of these pages. It comes straight to us, and your hands-on notes shape the tool.

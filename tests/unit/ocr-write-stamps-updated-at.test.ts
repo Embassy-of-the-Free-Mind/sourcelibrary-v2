@@ -47,7 +47,6 @@ const ALLOWED: Record<string, string> = {
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/import/import-thirukkural.ts': 'seeds an empty ocr object at import',
   'src/lib/import-utils.ts': 'seeds an empty ocr object when a page doc is created',
-  'scripts/migration/backfill-ocr-near-complete.mjs': 'backfills counters from stored text; the text does not change',
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription; superseded",
 };
 

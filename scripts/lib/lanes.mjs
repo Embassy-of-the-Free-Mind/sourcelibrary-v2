@@ -67,10 +67,78 @@ const ORCH = 'scripts/workers/pipeline-orchestrator.mjs';
 const API_ROUTES = [
   'src/app/api/process/route.ts',
   'src/app/api/process/batch/route.ts',
-  'src/app/api/admin/bulk-reocr/route.ts',
-  'src/app/api/admin/bulk-ocr-new/route.ts',
   'src/app/api/scan/start-ocr/route.ts',
-  'src/app/api/books/[id]/batch-translate-async/route.ts',
+];
+
+/**
+ * Website doors retired outright (v2#8590, Derek 2026-11-12): each picked its own engine (most on the paid Gemini
+ * Batch API), outside the router. A hand request now queues the book for the lane its router cell names (docs/routing.md).
+ * tests/unit/retired-batch-routes.test.ts fails if one of these directories comes back.
+ */
+export const RETIRED_API_ROUTES = [
+  'src/app/api/books/[id]/batch-ocr-async',
+  'src/app/api/books/[id]/batch-translate-async',
+  'src/app/api/books/[id]/batch-ocr-multi',
+  'src/app/api/[tenant]/books/[id]/batch-ocr-async',
+  'src/app/api/[tenant]/books/[id]/batch-translate-async',
+  'src/app/api/[tenant]/books/[id]/batch-ocr-multi',
+  'src/app/api/admin/bulk-reocr',
+  'src/app/api/admin/bulk-ocr-new',
+  // v3#212: three more doors that wrote model text on an engine of their own, with no caller in the site.
+  'src/app/api/batch-save',
+  'src/app/api/books/[id]/import-batch',
+  'src/app/api/books/[id]/stitch-translations',
+];
+
+/**
+ * Website doors into page TEXT (v2#8590 item 1): every live route under src/app/api that writes or clears
+ * `pages.ocr` / `pages.translation` and is not a file of a lane in LANES. tests/unit/page-text-doors.test.ts finds
+ * the routes and fails on one that is neither a lane's file nor listed here, and on an entry here that no longer
+ * writes. A new door is a decision, not a list edit: text a model produces belongs to a lane the router feeds.
+ *
+ * kind:
+ *   human-edit  a person typed or approved the text (source 'manual')
+ *   restore     puts back text the page already held, from page_revisions
+ *   clear       removes text and produces none (a split, a reimport, a reset)
+ *   rewrite     transforms the page's own stored text without a model
+ *   model       writes text a model produced, on an engine the route or the caller picks. The router does not see
+ *               it. Each carries the issue that retires it or makes it a lane; the test refuses one without.
+ *   reader      reads only; the writer probe over-matches it (kept so the list is the probe's whole answer)
+ */
+export const PAGE_TEXT_DOOR_KINDS = ['human-edit', 'restore', 'clear', 'rewrite', 'model', 'reader'];
+export const PAGE_TEXT_DOORS = [
+  { file: 'src/app/api/pages/[id]/route.ts', kind: 'human-edit', reason: 'the page editor saves what an editor typed; stamps edited_by and source manual' },
+  { file: 'src/app/api/[tenant]/pages/[id]/route.ts', kind: 'human-edit', reason: 'the partner-site page editor; same write as /api/pages/[id]' },
+  { file: 'src/app/api/pages/[id]/revisions/[revisionId]/restore/route.ts', kind: 'restore', reason: 'an editor puts back a stored revision of the same page (restoreRevision in src/lib/page-revisions.ts)' },
+  { file: 'src/app/api/pages/batch-split/route.ts', kind: 'clear', reason: 'splitting a spread unsets the text read from the unsplit frame; the lanes read the new leaves' },
+  { file: 'src/app/api/[tenant]/pages/batch-split/route.ts', kind: 'clear', reason: 'partner-site twin of /api/pages/batch-split' },
+  { file: 'src/app/api/books/[id]/auto-split-ml/route.ts', kind: 'clear', reason: 'the ML splitter unsets the text of each frame it splits' },
+  { file: 'src/app/api/admin/backfill-cropped-images/route.ts', kind: 'clear', reason: 'unsets OCR/translation stubs that hold no text, before it generates the missing crops' },
+  { file: 'src/app/api/admin/check-split-ocr/route.ts', kind: 'clear', reason: 'admin check that unsets OCR read from the whole spread on a page that was later split' },
+  { file: 'src/app/api/books/[id]/reimport/route.ts', kind: 'clear', reason: 'a reimport replaces the page images, so it unsets the text read from the old ones' },
+  { file: 'src/app/api/books/[id]/clear-ocr/route.ts', kind: 'clear', reason: 'admin action: clears OCR and/or translation for a book' },
+  { file: 'src/app/api/books/[id]/reset-ocr/route.ts', kind: 'clear', reason: 'editor action: clears OCR and translation text on a book\'s pages' },
+  { file: 'src/app/api/admin/migrate-annotations/route.ts', kind: 'rewrite', reason: 'one-off syntax migration, [[tag:…]] to <tag>…</tag>, over stored text; no model' },
+  { file: 'src/app/api/books/[id]/cleanup/route.ts', kind: 'rewrite', reason: 'editor action: rewrites stored text through a cleanup function; no model' },
+  { file: 'src/app/api/contribute/process/route.ts', kind: 'model', issue: 'v2#8590', reason: 'a signed-in contributor reads and translates a book on their own Gemini key and model' },
+  { file: 'src/app/api/books/[id]/text/route.ts', kind: 'reader', reason: 'serves a book as text; writes nothing' },
+  { file: 'src/app/api/dataset/v1/pages/route.ts', kind: 'reader', reason: 'the dataset export; writes nothing' },
+];
+
+/**
+ * Hand-run script doors into page TEXT (v2#8590 item 3, v3#241): every script under scripts/ that submits a Gemini
+ * batch AND writes page text, and is not a file of a lane in LANES. "Writes" means the script does one of three
+ * things: it writes or clears `pages.ocr` / `pages.translation` itself (the shared probe), it calls a library writer
+ * by name, or it inserts a `batch_jobs` row of type `ocr` / `translation`, which batch-collector.mjs then writes into
+ * pages. tests/unit/script-page-text-doors.test.ts fails on a script that does this and is not listed here or in a
+ * lane, and on an entry that no longer does it. Scheduled scripts are checked in lanes-registry.test.ts as well.
+ * Kinds are PAGE_TEXT_DOOR_KINDS. Every entry names the issue that makes it a lane or retires it.
+ */
+export const SCRIPT_PAGE_TEXT_DOORS = [
+  { file: 'scripts/maintenance/reread-loop-pages.mjs', kind: 'model', issue: 'v2#3878',
+    reason: 'two-pass Gemini Batch re-read of pages whose OCR loops (pass 1 flash-lite, pass 2 flash-preview, set in the script); `apply --apply` writes the kept read to pages.ocr. Run by hand for the loop-OCR books. The model is picked by the script, not the OCR router.' },
+  { file: 'scripts/maintenance/tengyur-heading-judge-5497.mjs', kind: 'rewrite', issue: 'v2#5497',
+    reason: 'flash-preview judges, in a batch, Tengyur translation headings that have no Tibetan source span; `--apply --write` deletes those lines from the stored translation through repairTranslationText. It deletes lines and adds no model text.' },
 ];
 
 /**
@@ -288,6 +356,10 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/audit/hold-release-check.mjs', reason: 'audit: reads held books and their reasons, writes only its one GitHub issue (v2#7860); pipeline-hold.mjs is imported for its reason predicates' },
+  { file: 'scripts/audit/page-count-audit.mjs', reason: 'audit: recounts a sample of books from pages and compares, writes only its one GitHub issue (v2#5331); page-counts.mjs is imported for the count pipeline' },
+  { file: 'scripts/audit/translation-state-audit.mjs', reason: 'audit: recounts translation_state for a sample and compares, writes only its one GitHub issue (v2#5290); page-counts.mjs is imported for the rule' },
+  { file: 'scripts/lib/translation-state-audit.mjs', reason: 'pure comparators for translation-state-audit.mjs, no database handle (v2#5290)' },
   { file: 'scripts/eval/quality-dashboard/build.mjs', reason: 'report: reads book and page counts, writes only its dashboard file and ops_reports' },
   { file: 'scripts/eval/quality-dashboard/trends.mjs', reason: 'report: reads book and page counts, writes only its own daily trend rows; no book or page writes' },
   { file: 'scripts/maintenance/rebuild-human-read-count-5048.mjs', reason: 'metadata: recomputes books.human_read_count from analytics_events, no step work (#5048); daily cron' },
@@ -378,7 +450,14 @@ export const OFF_REPO_CRON = [
  *   IDLE 7 DAYS    the row names the page stamp it writes (`writes`: pages.ocr.lane / translation.lane, else
  *                  .source) and the corpus wrote 0 pages under it in 7 days. Lane-level: rows sharing a stamp
  *                  are idle together. `paused` rows are not judged idle;
- *   MATCHES A RETIRED PATTERN  RETIRED_PATTERNS, unless the row lists the pattern id in `allow` with a reason.
+ *   MATCHES A RETIRED PATTERN  RETIRED_PATTERNS, unless the row lists the pattern id in `allow` with a reason;
+ *   LOG SILENT     (#379) the line appends to a log (`>> file`) that has not been written for more than
+ *                  LOG_SILENT_INTERVALS of the schedule's longest gap (cronMaxGapMin, over every live line that
+ *                  appends to the same log): the two FT nightly lines (12 h apart, one log) are red 24 h after the
+ *                  log's last write, a daily line after 48 h, a weekly line after 14 days. Judged on EVERY live line, registered or
+ *                  not (the FT nightly that went 42 h silent on 2026-11-13..15, v3#376, has no stage in
+ *                  JUDGED_STAGES). Not judged: a line with no log file yet (a new weekly line before its first
+ *                  run), a `paused` row, and the lines in LOG_QUIET_OK, which write only when they act.
  *
  * match:     { script?: basename of the executed script, mode?: its subcommand, has?: substrings of the raw line }.
  *            Every key given must hold. First matching row wins, so the narrower row comes first.
@@ -426,14 +505,19 @@ export const CRON_ROWS = [
   // QA / flags on main (qc is judged only when a row or a pattern matches)
   { id: 'main-mark-stale', box: 'main', match: { script: 'mark-stale-translations.mjs' }, issue: 4927, route: 'none (staleness flags)', owner: 'Derek', review_by: QUARTER, status: 'current' },
   { id: 'main-leak-check', box: 'main', match: { script: 'new-translation-leaks.mjs' }, issue: 8414, route: 'none (neighbour-leak detector, sees page breaks)', owner: 'Derek', review_by: QUARTER, status: 'current' },
-  { id: 'main-corpus-audit-draw', box: 'main', match: { script: 'monthly-draw.sh' }, issue: 5301, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one interior page per book: move to paired-fifths (#8405)?' },
-  { id: 'main-convergent-audit', box: 'main', match: { script: 'convergent-audit-weekly.sh' }, issue: 6420, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one page per call: move to paired-fifths (#8405)?' },
+  { id: 'main-corpus-audit-draw', box: 'main', match: { script: 'monthly-draw.sh' }, issue: 5301, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'retired', note: 'retired 2026-11-15 (v3#381): the daily paired-fifths lane reads the corpus; the script exits unless TCA_RUN_RETIRED=1' },
+  { id: 'main-convergent-audit', box: 'main', match: { script: 'convergent-audit-weekly.sh' }, issue: 8632, route: 'Gemini (second read, agy)', owner: 'Derek', review_by: SOON, status: 'current', note: 'since v3#381 the Monday weekly loop only (labels over book_checks, repair queue, second read, digest, risk pool); single-page reads need AUDIT_READ=1',
+    allow: { 'single-page-qa': 'reads no single pages by default since v3#381 (AUDIT_READ=0): the scheduled run is the #8632 loop over the paired-fifths book_checks' } },
+  // Not page work (stage research / none), registered so the brief and LOG SILENT name an owner (#379).
+  { id: 'main-ft-nightly', box: 'main', match: { script: 'nightly.sh', has: ['ft-search'] }, issue: 7598, route: 'Sonnet claude -p (subscription, meter-guard FT_CAPW=70)', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'two lines, 01:30Z team@ and 13:30Z derek@, one log; wrapped so a failure before nightly.sh logs and pages (v3#376)' },
+  { id: 'main-morning-brief', box: 'main', match: { script: 'situation.mjs', has: ['--brief'] }, issue: 379, route: 'none (read-only report to ntfy)', owner: 'Derek', review_by: QUARTER, status: 'current', note: '07:23 Europe/Amsterdam, both 05:23Z and 06:23Z fire; the script sends only at 07 local' },
 
   // ── gex45 ──────────────────────────────────────────────────────────────────────────────────────────
   { id: 'gex45-cli-translate', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'run' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 7075, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
   { id: 'gex45-cli-translate-stale', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'stale' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 7263, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
+  { id: 'gex45-first-read-translate', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'finish', has: ['--frame=first-read'] }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 380, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'new books first (Derek 2026-11-15): English for books held "published as scans" that the first-read lanes read; the hold stays' },
   { id: 'gex45-cli-translate-finish', box: 'gex45', match: { script: 'cli-translate-lane.mjs', mode: 'finish' }, lane: 'agy-flash-translate', writes: 'agy-flash-translate', issue: 8482, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'finish books first (Derek 2026-11-10): idle visible books, >= 80% translated first' },
-  { id: 'gex45-latin-first', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'latin-first' }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7263, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'one line a pool (default, james, milo)' },
+  { id: 'gex45-latin-first', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'latin-first' }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7263, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'one line a pool (default, james, milo); --quality=flagged since 2026-11-15 (#380): finish steps, then re-reads only of flagged pages' },
   { id: 'gex45-first-reads', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'run', has: ['--cohort=visible-unread'] }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 7701, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current' },
   { id: 'gex45-finish-first-reads', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'run', has: ['--cohort=finish'] }, lane: 'agy-flash-ocr', writes: 'agy-flash-ocr', issue: 8482, route: 'agy', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'unread pages of books >= 80% translated, German and French' },
   { id: 'gex45-armc-first-read', box: 'gex45', match: { script: 'cli-ocr-lane.mjs', mode: 'armc-plan', has: ['--frame=first-read'] }, lane: 'agy-flash-ocr', issue: 7701, route: 'GPU>agy', owner: 'Derek', review_by: '2026-12-08', status: 'paused', note: 'paused 2026-11-04 at 19% yield; stays paused' },
@@ -442,13 +526,16 @@ export const CRON_ROWS = [
   { id: 'gex45-gpu-queue', box: 'gex45', match: { has: ['/root/bin/gpu-queue.sh'] }, issue: 6871, route: 'GPU drafts (PERO / LightOn / Paddle)', owner: 'Derek', review_by: QUARTER, status: 'current' },
   { id: 'gex45-ocr-filler', box: 'gex45', match: { has: ['/root/bin/ocr-filler.sh'] }, issue: 6871, route: 'GPU drafts', owner: 'Derek', review_by: QUARTER, status: 'current' },
   { id: 'gex45-withhold-stale', box: 'gex45', match: { script: 'withhold-stale-translations.mjs' }, issue: 4927, route: 'none (withholding)', owner: 'Derek', review_by: QUARTER, status: 'current' },
-  { id: 'gex45-page-integrity-draw', box: 'gex45', match: { script: 'page-integrity-draw.mjs' }, issue: 8040, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one served page per book: move to paired-fifths (#8405)?' },
+  { id: 'gex45-page-integrity-draw', box: 'gex45', match: { script: 'page-integrity-draw.mjs' }, issue: 8040, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'retired', note: 'retired 2026-11-15 (v3#381): the daily paired-fifths lane reads served books; the script exits unless --run-retired' },
 
   // ── l7a ────────────────────────────────────────────────────────────────────────────────────────────
   { id: 'l7a-refused-pages', box: 'l7a', match: { script: 'refused-pages.mjs' }, lane: 'claude-opus-ocr', writes: 'claude-opus-ocr', issue: 7170, route: 'Opus (or Sonnet)', owner: 'Derek', review_by: SOON, status: 'current', open: 'Sonnet is off the four routes: Opus only? (#8283 decision 4)' },
-  { id: 'l7a-lane-judge-nightly', box: 'l7a', match: { script: 'lane-judge-sampler.mjs', mode: 'nightly' }, issue: 7611, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'one page per book: move to paired-fifths (#8405)?' },
+  { id: 'l7a-lane-judge-nightly', box: 'l7a', match: { script: 'lane-judge-sampler.mjs', mode: 'nightly' }, issue: 7611, route: 'Opus (judge)', owner: 'Derek', review_by: SOON, status: 'current', open: 'feeds ROUTER evidence per lane write, which the daily book lane cannot: move it = judge the written page with its facing neighbour (paired-fifths-check judgePair). Follow-up proposed on v3#381' },
   { id: 'l7a-lane-judge-weekly', box: 'l7a', match: { script: 'lane-judge-sampler.mjs', mode: 'weekly-pr' }, issue: 7611, route: 'none (weekly report)', owner: 'Derek', review_by: QUARTER, status: 'current' },
-  // cloudlayer: no page-text lines in its snapshot (2026-11-08; its live crontab could not be read).
+  // ── cloudlayer ─────────────────────────────────────────────────────────────────────────────────────
+  // No page-text lines (2026-11-08). The daily QA lane writes book_checks only (v3#381, Derek 2026-11-15).
+  { id: 'cloudlayer-paired-fifths-daily', box: 'cloudlayer', match: { script: 'paired-fifths-daily.sh', mode: 'day' }, issue: 381, route: 'Opus (judge)', owner: 'Derek', review_by: QUARTER, status: 'current', note: 'paired-fifths book check, 40 books a day, <= 200 calls, 85% pace guard; writes book_checks only' },
+  { id: 'cloudlayer-paired-fifths-week', box: 'cloudlayer', match: { script: 'paired-fifths-daily.sh', mode: 'week' }, issue: 381, route: 'none (weekly pooled comment)', owner: 'Derek', review_by: QUARTER, status: 'current' },
 ];
 
 /**
@@ -487,6 +574,80 @@ export function hasRetiredBanner(text) {
 
 const basename = (p) => (p ? String(p).split('/').pop() : null);
 
+// ── schedule gaps (#379; moved from scripts/maintenance/situation.mjs, which re-exports them)
+
+function cronField(spec, lo, hi) {
+  const out = new Set();
+  for (const part of String(spec).split(',')) {
+    const [range, stepS] = part.split('/');
+    const step = stepS ? Number(stepS) : 1;
+    let a = lo, b = hi;
+    if (range !== '*') { const [x, y] = range.split('-').map(Number); a = x; b = y ?? (stepS ? hi : x); }
+    if (![a, b, step].every(Number.isFinite) || step < 1) return null;
+    for (let v = a; v <= b; v += step) out.add(v);
+  }
+  return out;
+}
+
+/** Minutes-of-week a schedule fires at; 'month' when pinned to days of the month or months; null when unreadable. */
+function cronFires(schedule) {
+  const f = String(schedule || '').trim().split(/\s+/);
+  if (f.length < 5) return null;
+  const [m, h, dom, mon, dow] = f;
+  if (dom !== '*' || mon !== '*') return 'month';
+  const M = cronField(m, 0, 59), H = cronField(h, 0, 23), D = cronField(dow, 0, 7);
+  if (!M || !H || !D || !M.size || !H.size || !D.size) return null;
+  if (D.has(7)) D.add(0);
+  const fires = [];
+  for (let d = 0; d < 7; d++) if (D.has(d)) for (const hh of H) for (const mm of M) fires.push(d * 1440 + hh * 60 + mm);
+  return fires.length ? fires : null;
+}
+
+/**
+ * The longest gap, in minutes, between two runs of a cron schedule over a week; null when it cannot be read
+ * (@reboot, names). A schedule pinned to days of the month or months is called a month. Given several schedules
+ * (lines that append to ONE log), the longest gap between runs of any of them.
+ */
+export function cronMaxGapMin(schedule) {
+  const all = (Array.isArray(schedule) ? schedule : [schedule]).map(cronFires);
+  const fires = [...new Set(all.filter(Array.isArray).flat())].sort((a, b) => a - b);
+  if (!fires.length) return all.includes('month') ? 31 * 1440 : null;
+  let gap = fires[0] + 7 * 1440 - fires[fires.length - 1];
+  for (let i = 1; i < fires.length; i++) gap = Math.max(gap, fires[i] - fires[i - 1]);
+  return gap;
+}
+
+/** LOG SILENT (#379): red when the log is older than this many of the line's own longest gaps. */
+export const LOG_SILENT_INTERVALS = 2;
+
+/**
+ * Lines whose log is written only when they ACT, so a quiet log is the healthy state. Each is a substring of the
+ * live line, with why. A line here is never LOG SILENT; give it a heartbeat line and remove it to have it judged.
+ */
+export const LOG_QUIET_OK = [
+  { match: 'archive-lanes-revive.sh', reason: 'logs only when it (re)starts a lane or reports a blocked one; a quiet log means every lane is up' },
+  { match: '/root/bin/gpu-queue.sh run', reason: 'every 5 min; exits without a word while a task holds the runner lock (tasks run up to 6 h) or when nothing is pending' },
+  { match: '/root/bin/ocr-filler.sh run', reason: 'every 10 min; adds nothing and logs nothing while the GPU queue has work pending or running' },
+];
+
+const fmtH = (min) => (min < 90 ? `${Math.round(min)} min` : min < 72 * 60 ? `${Math.round(min / 60)} h` : `${Math.round(min / 1440)} days`);
+
+/**
+ * The LOG SILENT verdict for one live line, or null. `logAt` is the log file's mtime (ISO or Date), null when the
+ * file does not exist (not judged: nothing tells a new line from a dead one). `logSchedules` are the schedules of
+ * every live line appending to the same log (the two FT nightly lines share nightly.log, so the log is due every
+ * 12 h, not every 24 h); default: this line's own.
+ */
+export function logSilent(line, { now = new Date(), logAt = null, row = null, logSchedules = null } = {}) {
+  if (line.disabled || line.one_shot || !logAt || row?.status === 'paused') return null;
+  if (LOG_QUIET_OK.some((q) => String(line.cmd).includes(q.match))) return null;
+  const gap = cronMaxGapMin(logSchedules?.length ? logSchedules : line.schedule);
+  if (gap == null) return null;
+  const age = (new Date(now).getTime() - new Date(logAt).getTime()) / 60000;
+  if (!(age > LOG_SILENT_INTERVALS * gap)) return null;
+  return { flag: 'LOG SILENT', why: `log last written ${fmtH(age)} ago; it is due at least every ${fmtH(gap)}` };
+}
+
 /** The CRON_ROWS row a live line belongs to, or null. `line` carries { cmd, script, mode }; `box` may be an alias. */
 export function cronRowFor(box, line) {
   const b = BOX_ALIASES[box] ?? box;
@@ -501,10 +662,12 @@ export function cronRowFor(box, line) {
  * `laneTotals` is pages written per stamp over the last 7 days ({ 'agy-flash-ocr': 280474, … }), or null when
  * unknown (then IDLE is not judged). A disabled or one-shot line is never red.
  */
-export function judgeCronLine(box, line, { now = new Date(), laneTotals = null } = {}) {
+export function judgeCronLine(box, line, { now = new Date(), laneTotals = null, logAt = null, logSchedules = null } = {}) {
   if (line.disabled || line.one_shot) return [];
   const row = cronRowFor(box, line);
   const red = [];
+  const silent = logSilent(line, { now, logAt, row, logSchedules });
+  if (silent) red.push(silent);
   if (!row) {
     if (JUDGED_STAGES.includes(line.stage)) red.push({ flag: 'UNREGISTERED', why: 'no CRON_ROWS row in scripts/lib/lanes.mjs matches this line' });
   } else {
@@ -579,73 +742,86 @@ const STOP_REVIEW = '2026-11-22';
 const HOLD_BASE = { kind: 'hold-reason', box: 'corpus', set_at: null, review_by: STOP_REVIEW };
 
 /**
- * Hold reasons found in the 2026-11-11 pipeline_next_daily report, as [reason, owner issue]. The issue is the hold's
- * own (`held[].issue` of the report; where a reason carried several, the one named in the reason). null = the report
- * named no owner. `review_by` is the default for all of them: nobody has yet read each hold's release-when.
+ * Hold reasons found in the 2026-11-11 pipeline_next_daily report, as [reason, owner issue, repo?, note?]. The issue is
+ * the hold's own (`held[].issue` of the report; where a reason carried several, the one named in the reason). null = the
+ * report named no owner. repo: 'v2' (default: every number before the 2026-11-12 move), 'v3', or 'conceptual-histories'
+ * (JDerekLomas/conceptual-histories); a bare number is ambiguous across repos, so a v3 owner says so. note: why the owner
+ * is not the hold record's own issue (re-owned 2026-11-15, v3#384: the record's issue had closed with books still held).
+ * `review_by` is the default for all of them: nobody has yet read each hold's release-when.
  */
 const HOLD_OWNERS = [
   ['manifest-only-lazy-pages', 7343], ['zh-shi-ji-8053', 8053], ['acquisition-wave-2026-10-images-only', 5457],
-  ['scans-only-publish-7176', 7176], ['paddle-zh-5600-ocr-only', 5600], ['scans-only-publish-7270', 7270],
+  ['scans-only-publish-7176', 7860, 'v2', 'was v2#7176 (closed 10-24); the priced-wave release queue owns it'], ['paddle-zh-5600-ocr-only', 5600], ['scans-only-publish-7270', 7270],
   ['acquisition-wave-2026-10b', 7343], ['gpu-backlog-5660', 5660], ['warehouse-promotion-5470', 5470],
   ['tibetan-translation-lane-6948', 6948], ['preview-stub-first-read-8181', 8181], ['paddle-zh-6388-ocr-only', 6388],
-  ['specialist-ocr-lane-4523', 4523], ['jcb-1600-8049', 8049], ['paddle-print-6101', 6101],
+  ['specialist-ocr-lane-4523', 4523], ['jcb-1600-8049', 8049], ['paddle-print-6101', 7860, 'v2', 'was v2#6101 (closed 11-11); translation is an unfunded release'],
   ['title-leaf-recitation-6297', 6297], ['ia-free-text-first-4966', 4966], ['ia-wrong-leaf-4790', 4790],
   ['same-edition-copy-unread', 4285], ['zh-histories-7546', 7546], ['leaf-shift-5021', 5021],
-  ['ocr-flash-cli-7075', 7075], ['zh-complete-sets-8053', 8053], ['ndl-koten-lane-4925', 4925],
-  ['mongol-kanjur-import-5664', 5664], ['kangyur-import', 5665], ['syriac-retranslation-awaits-derek', 4883],
+  ['ocr-flash-cli-7075', 7075], ['zh-complete-sets-8053', 8053], ['ndl-koten-lane-4925', 4745, 'v2', 'was v2#4925 (closed 11-11); the NDLkotenOCR trial owns the by-eye read'],
+  ['mongol-kanjur-import-5664', 5664], ['kangyur-import', 7860, 'v2', 'was v2#5665 (closed 10-08); the English draft is a priced release'], ['syriac-retranslation-awaits-derek', 4883],
   ['paddle-zh-6388-excluded', 6388], ['maya-mss-6559', 6559], ['translate-cli-7075', 7075],
   ['summary-placeholder-6117', 6117], ['wrong-leaf-clef-audit-5803', 5803], ['tengyur-import-5497', 5497],
-  ['ocr-unsettled-6420', 6420], ['gemini-ocr-tibetan-4523', 4523], ['submarine-imports-7721', null],
-  ['ocr-wrong-leaf-6694', 6694], ['recitation-marker-english-7100', 7100], ['magic-kb-cli-reads', null],
-  ['by-eye-off-leaf-pages', 8518], ['jabir-ocr-gate-7341', 7341], ['aliveness-kb-cli-reads', null],
+  ['ocr-unsettled-6420', 6420], ['gemini-ocr-tibetan-4523', 4523], ['submarine-imports-7721', 7865, 'v2', 'import issue v2#7721 closed 10-29: release is a decision on v3#384'],
+  ['ocr-wrong-leaf-6694', 6694], ['recitation-marker-english-7100', 7100], ['magic-kb-cli-reads', 1, 'conceptual-histories', 'concept-KB import; owned by the concept KBs merge'],
+  ['by-eye-off-leaf-pages', 8518], ['jabir-ocr-gate-7341', 7341], ['aliveness-kb-cli-reads', 1, 'conceptual-histories', 'concept-KB import; owned by the concept KBs merge'],
   ['by-eye-wrong-leaf-6420', 6420], ['english-page-shift-5021', 5021], ['near-blank-invented-5274', 5274],
-  ['leak-contained-5026', 5026], ['wrong-leaf-text-7949', 7949], ['served-audit-6691', 6691],
+  ['leak-contained-5026', 5026], ['wrong-leaf-text-7949', 7949], ['served-audit-6691', 199, 'v3', 'was v2#6691 (closed 11-11); contained pages go to the repair loop'],
   ['tca-wave2-contained-5274', 5274], ['sky-sources-qa-7339', 7339], ['withdrawn-alternatives-4809', 4809],
-  ['broken-text-6056', 6056], ['agy-route-8038', 8038], ['wrong-leaf-screen-7866', 7866],
-  ['latin-strata-contained-7947', 7947], ['maya-sources-7038', 7038], ['invented-page-7991', 7991],
+  ['broken-text-6056', 6056], ['agy-route-8038', 8038],
+  ['latin-strata-contained-7947', 7947], ['maya-sources-7038', 7038], ['invented-page-7991', 199, 'v3', 'was v2#7991 (closed 11-03); contained pages go to the repair loop'],
   ['blank-leaf-english-orphan-6420', 6420], ['tibetan-unverified-gemini-ocr-4523', 4523],
   ['english-misaligned-7100', 7100], ['split-wave-a-6114', 6114], ['zh-flash-agy-7037', 7037],
-  ['wrong-leaf-found-route-panel-7263', 7263], ['markets-cli-reads', null], ['contained-invented-7568', 7568],
-  ['showthrough-invented-ocr-7201', 7201], ['glm-english-5660-ocr-only', 5660], ['plethon-folios-only', null],
-  ['invented-table-by-eye-7274', 7274], ['hand-read-leaves-8440', 8440], ['qa-enrich-1007', 6109],
+  ['wrong-leaf-found-route-panel-7263', 7263], ['markets-cli-reads', 2, 'conceptual-histories', 'markets conceptual history import'], ['contained-invented-7568', 199, 'v3', 'was v2#7568 (closed 10-28); contained pages go to the repair loop'],
+  ['glm-english-5660-ocr-only', 5660], ['plethon-folios-only', 7865, 'v2', 'no issue on record; the weekly hold-release check owns it'],
+  ['invented-table-by-eye-7274', 7274], ['hand-read-leaves-8440', 7865, 'v2', 'was v2#8440 (closed 11-08): release is a decision on v3#384'], ['qa-enrich-1007', 6109],
   ['image-shift-erara-pdf-5803', 5803], ['wrong-leaf-image-shift-7866', 7866], ['invented-spread-ocr-7605', 7605],
-  ['contained-invented-ocr-7591', 7613], ['blank-leaf-invented-6056', 6056], ['balinese-script-ocr-probe-6142', null],
-  ['contained-7968', 7968], ['cbeta-chan-translate-5566', 5566], ['ocr-scrambled-lexicon-6056', 6056],
-  ['invented-text-by-eye-8478', 8494], ['contained-by-eye-7402', 7402], ['invented-pages-by-eye-6048', 6048],
-  ['wrong-leaf-5942-spot', 7685], ['ocr-rashi-type-garble-6056', 6056], ['invented-facing-column-7567', 7567],
-  ['tattva-flash-reread-6142', 6142], ['wrong-leaf-blank-7866', 7866], ['harmony-byz-ranges', null],
-  ['fabricated-page-4960', 4960], ['wrong-leaf-text-5924', 5924], ['peiresc-awaits-derek-5811', 5811],
-  ['invented-ocr-7666', 7666], ['unreadable-strip-invented-5929', 6420], ['recited-quran-ocr-7605', 7605],
+  ['blank-leaf-invented-6056', 6056], ['balinese-script-ocr-probe-6142', 6142, 'v2', 'named in the hold record release_when'],
+  ['contained-7968', 199, 'v3', 'was v2#7968 (closed 11-03); contained pages go to the repair loop'], ['cbeta-chan-translate-5566', 5566], ['ocr-scrambled-lexicon-6056', 6056],
+  ['invented-text-by-eye-8478', 8494], ['invented-pages-by-eye-6048', 6048],
+  ['ocr-rashi-type-garble-6056', 6056],
+  ['tattva-flash-reread-6142', 6142], ['harmony-byz-ranges', 7865, 'v2', 'no issue on record; the weekly hold-release check owns it'],
+  ['peiresc-awaits-derek-5811', 5811],
+  ['unreadable-strip-invented-5929', 6420], ['recited-quran-ocr-7605', 7605],
   ['blank-leaf-invented-5826', 5826], ['broken-text-6142', 6142], ['leaked-reasoning-6117-awaits-guard', 6117],
   ['token-run-loop-7945', 4850], ['cbeta-chan-5566', 5566], ['voynich-undeciphered-8157', 8157],
-  ['loagaeth-letter-grids-no-ocr', null], ['by-eye-invented-english-5274', 5274],
-  ['invented-ocr-blank-verso-6025', 6025], ['russian-ocr-over-german-7522', 7522], ['invented-ocr-8003', 8003],
+  ['loagaeth-letter-grids-no-ocr', 7865, 'v2', 'no issue on record; the weekly hold-release check owns it'], ['by-eye-invented-english-5274', 5274],
+  ['invented-ocr-blank-verso-6025', 6025], ['russian-ocr-over-german-7522', 199, 'v3', 'was v2#7522 (closed 10-27); contained pages go to the repair loop'], ['invented-ocr-8003', 8003],
   ['landa-rah-7038', 7038], ['flash-lite-invented-7274', 7274], ['ocr-invention-newar-6056', 6056],
-  ['wrong-leaf-text-vs-images-7321', 7321], ['block-drift-wrong-leaf-5021', 5021],
-  ['wrong-work-and-invented-ocr-6056', 6056], ['steiner-free-ocr-6874', null], ['invented-translation-6056', 6056],
-  ['drebbel-creative-5811', null], ['malayalam-palm-leaf-lane', null], ['invented-read-4775', 4775],
+  ['block-drift-wrong-leaf-5021', 5021],
+  ['wrong-work-and-invented-ocr-6056', 6056], ['steiner-free-ocr-6874', 6874, 'v2', 'named in the hold record release_when'], ['invented-translation-6056', 6056],
+  ['drebbel-creative-5811', 5811, 'v2', 'named in the reason'], ['malayalam-palm-leaf-lane', 7865, 'v2', 'no issue on record; the weekly hold-release check owns it'], ['invented-read-4775', 4775],
   ['nalanda-sanskrit-ocr-only', 4523], ['ocr-loop-by-eye-7075', 7075], ['bw-reread-7274', 7274],
-  ['ocr-letter-confusion-hebrew-6056', 6056], ['ocr-untrusted-5700', 5700], ['cursive-hebrew-invention-6048', 6048],
-  ['ocr-invention-arabic-ms-6056', 6056], ['invented-ocr-6056', 6056], ['etz-hayyim-wrong-leaf-7476', 7476],
-  ['ocr-wrong-leaf-6420', 6420], ['contained-7263', 7263], ['samaritan-script-ocr-fabricated', 5621],
-  ['wrong-leaf-8425', 8425], ['wrong-leaf-text-7517', 7517], ['barocci-reocr-7090', 7090],
-  ['drebbel-witnesses-5811', null], ['neighbour-strip-by-eye-6740', 6740], ['tib-flash-invented-line-6948', 6948],
-  ['ocr-leaf-offset-7567', 7567],
+  ['ocr-letter-confusion-hebrew-6056', 6056], ['ocr-untrusted-5700', 199, 'v3', 'was v2#5700 (closed 11-11); contained pages go to the repair loop'], ['cursive-hebrew-invention-6048', 6048],
+  ['ocr-invention-arabic-ms-6056', 6056], ['invented-ocr-6056', 6056],
+  ['ocr-wrong-leaf-6420', 6420], ['contained-7263', 7263], ['samaritan-script-ocr-fabricated', 199, 'v3', 'was v2#5621 (closed 10-02); contained pages go to the repair loop'],
+  ['barocci-reocr-7090', 7090],
+  ['drebbel-witnesses-5811', 5811, 'v2', 'named in the hold record release_when'], ['tib-flash-invented-line-6948', 6948],
+  // Registered 2026-11-15 (v3#384): reasons new since the 11-11 report, owner from the hold record.
+  ['egangotri-mss-95', 95, 'v3'], ['indic-print-2026-11', 225, 'v3'], ['sanskrit-print-surya-lane', 95, 'v3'],
+  ['sarada-unread-254', 254, 'v3'], ['hebrew-mss-invented-8632', 8632, 'v2'],
+  ['bath-sb-cli-reads', 16, 'conceptual-histories'], ['harvard-strip-contained-7947', 7947, 'v2'],
+  ['sarada-ocr-invented-95', 95, 'v3'], ['flash3-invented-8632', 8632, 'v2'],
+  ['bulk-jp2-multi-offset-8570', 5803, 'v2'], ['rtl-pair-swap-165', 165, 'v3'],
+  ['enlightenment-cli-reads', 13, 'conceptual-histories'], ['fix-latin-199-invented-page', 199, 'v3'],
+  ['by-eye-invented-pages-199', 199, 'v3'], ['text-shift-erara-5803', 5803, 'v2'],
+  ['wrong-leaf-text-270', 270, 'v3'], ['by-eye-invented-pages', 199, 'v3'],
 ];
 
 export const STOP_ROWS = [
   { id: 'siku-translate-stop', kind: 'stop-file', box: 'main', match: { path: '/mnt/HC_Volume_105839809/siku-lane-5600/STOP' }, issue: 7914, why: 'Siku translate lane paused by the 2026-10-30 spot check (1 invented page; the next fix is in the translator), ticket #7914, lane #5600; ~1.3M pages wait', set_at: '2026-10-30', review_by: STOP_REVIEW },
   { id: 'tengyur-cli-stop', kind: 'stop-file', box: 'main', match: { path: '/mnt/HC_Volume_105839809/tengyur-cli-6361/STOP' }, issue: 6361, why: 'stage 2 stopped at the by-eye gate; remove only on a decision to re-run stage 2', set_at: '2026-10-10', review_by: STOP_REVIEW },
   { id: 'acq-wave-import-stop', kind: 'stop-file', box: 'main', match: { path: '/root/acq-wave/STOP-IMPORT' }, issue: 5457, why: 'acquisition wave hit its page cap (3,501,287 >= cap, acq-wave-resume-5457)', set_at: '2026-10-06', review_by: STOP_REVIEW },
-  { id: 'ft-batch-2026-10-29-05-stop', kind: 'stop-file', box: 'main', match: { path: '/root/ft-batches/2026-10-29-05/STOP' }, issue: null, why: 'owner unknown: empty STOP in an old first-translation batch dir (written 2026-10-29); nothing says why', set_at: '2026-10-29', review_by: STOP_REVIEW },
-  { id: 'ft-batch-meter-blind-stop', kind: 'stop-file', box: 'main', match: { path: '/root/ft-batches/*/STOP.meter-blind-pr8540' }, issue: 8540, why: 'FT nightly batch stopped by a blind meter (5 empty readings); PR #8540 is the meter fix', set_at: '2026-11-11', review_by: STOP_REVIEW },
-  { id: 'gpu-backlog-5660-zh-stop', kind: 'stop-file', box: 'main', match: { path: '/root/gpu-backlog-5660/zh/STOP' }, issue: 5660, why: 'empty STOP in the gpu-backlog-5660 zh dir since 2026-10-07; reason not recorded in the file', set_at: '2026-10-07', review_by: STOP_REVIEW },
+  { id: 'ft-nightly-meter-cap-stop', kind: 'stop-file', box: 'main', match: { path: '/root/ft-batches/*-nightly-*/STOP' }, issue: 7598, why: 'first-translation nightly batch stopped by scripts/ft-search/meter-guard.sh (an empty STOP is a 5-hour or weekly cap stop, a blind meter writes its reason into the file; the reading is in the dir\'s meter.log). Resumable: remove STOP and run run-batch.sh on that dir again; nightly.sh skips an un-ingested dir', set_at: '2026-11-11', review_by: STOP_REVIEW },
   { id: 'route-la-first-read-armc-7701', kind: 'route-off', box: 'gex45', match: { route: 'la-first-read-armc-7701' }, issue: 7701, why: 'Latin GPU first-read route switched off in ocr-filler-routes.tsv (2026-11-04); the GPU is mostly idle', set_at: '2026-11-04', review_by: STOP_REVIEW },
   { id: 'route-euro-armc-7567', kind: 'route-off', box: 'gex45', match: { route: 'euro-armc-7567' }, issue: 7567, why: 'arm-c euro-draft GPU route switched off in ocr-filler-routes.tsv; reason and date not recorded in the tsv', set_at: null, review_by: STOP_REVIEW },
-  { id: 'gate-translate-20261010', kind: 'quality-gate', box: 'corpus', match: { gate: 'qg_translate_202610101657_1rqt' }, issue: 8279, why: 'paid translate quality gate NO-GO since 2026-10-10; the paid chained lane stays closed (#8279)', set_at: '2026-10-10', review_by: STOP_REVIEW },
-  ...HOLD_OWNERS.map(([reason, issue]) => ({
-    ...HOLD_BASE, id: `hold-${reason}`, match: { reason }, issue,
-    why: issue ? `hold ${reason}: books kept out of every lane; owner is the hold's issue, release-when is in the hold record` : 'owner unknown: the report names no issue for this hold',
+  { id: 'route-la-translate-armc-7263', kind: 'route-off', box: 'gex45', match: { route: 'la-translate-armc-7263' }, issue: 7263, why: 'off since 2026-11-07 (v2#8319): never installed on gex45; its consumer cron line in infrastructure/gex45-crontab is PROPOSED, NOT INSTALLED until its pilot and judge pass (ocr-filler-routes.tsv)', set_at: '2026-11-07', review_by: STOP_REVIEW },
+  { id: 'route-gpu-print-en19-6871', kind: 'route-off', box: 'gex45', match: { route: 'gpu-print-en19-6871' }, issue: 6871, why: 'off: its gate failed on 2026-11-07 (21/30 accepted, wrong text 3/30; scripts/eval/experiments/2026-11-07-en1800-gpu-agy-widen-6871.md). Turn on only after a new gate passes (ocr-filler-routes.tsv)', set_at: '2026-11-07', review_by: STOP_REVIEW },
+  { id: 'gate-translate-20261010', kind: 'quality-gate', box: 'corpus', match: { gate: 'qg_translate_202610101657_1rqt' }, issue: 8283, why: 'paid translate quality gate NO-GO since 2026-10-10; the paid chained lane stays closed (PR #8279 put routing on agy; the chained lines were retired 2026-11-08, PR #8452). Owner was #8279, a merged PR; the routing issue owns it now (v3#384)', set_at: '2026-10-10', review_by: STOP_REVIEW },
+  ...HOLD_OWNERS.map(([reason, issue, repo = 'v2', note = null]) => ({
+    ...HOLD_BASE, id: `hold-${reason}`, match: { reason }, issue, repo,
+    why: !issue ? 'owner unknown: the report names no issue for this hold'
+      : note ? `hold ${reason}: books kept out of every lane; owner ${repo}#${issue}: ${note}`
+        : `hold ${reason}: books kept out of every lane; owner is the hold's issue, release-when is in the hold record`,
   })),
 ];
 
@@ -686,14 +862,17 @@ export function judgeStops(found, { box, judged = STOP_KINDS, now = new Date(), 
     }
     out.push({
       id: row?.id ?? `unregistered:${s.kind}:${s.key}`, kind: s.kind, box: s.box ?? box, key: s.key,
-      issue: row?.issue ?? null, why: row?.why ?? null, set_at: row?.set_at ?? s.set_at ?? null, review_by: row?.review_by ?? null,
+      issue: row?.issue ?? null, issue_repo: row ? (row.repo ?? 'v2') : null, why: row?.why ?? null, set_at: row?.set_at ?? s.set_at ?? null, review_by: row?.review_by ?? null,
       scope: s.scope ?? null, detail: s.detail ?? null, flags,
     });
   }
   for (const r of rows) {
     if (seen.has(r.id) || !judged.includes(r.kind) || (BOX_ALIASES[r.box] ?? r.box) !== b) continue;
+    // A glob row names the owner of stops that come and go (the FT nightly cap stop): none standing is its normal
+    // state, not a dead row (v3#384).
+    if (r.match.path?.includes('*')) continue;
     out.push({
-      id: r.id, kind: r.kind, box: r.box, key: stopKey(r), issue: r.issue, why: r.why, set_at: r.set_at, review_by: r.review_by,
+      id: r.id, kind: r.kind, box: r.box, key: stopKey(r), issue: r.issue, issue_repo: r.repo ?? 'v2', why: r.why, set_at: r.set_at, review_by: r.review_by,
       scope: null, detail: null, flags: [{ flag: 'STALE ROW', why: 'the stop no longer exists: delete this row from STOP_ROWS' }],
     });
   }

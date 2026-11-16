@@ -29,6 +29,8 @@ export interface BoxJob {
   state: JobState;
   started: Date | string | null;
   last_activity: Date | string | null;
+  /** The wrapper's heartbeat (`<name>.hb`, rewritten every minute while it runs); moves during a long tool call (#368). */
+  heartbeat_at?: Date | string | null;
   done_at?: Date | string | null;
   blocked_at?: Date | string | null;
   brief_first_line: string;
@@ -76,6 +78,11 @@ export interface BoxDoc {
   chains: BoxChain[];
   flags?: InfraFlag[];
   stops?: LaneStop[];
+  /** Unmarked DECISION lines in the box's decisions.txt (#368); read by `situation`. */
+  decisions?: { unmarked: number; oldest: string | null; jobs: string[]; oldest_rows: { day: string; job: string; text: string }[] } | { error: string };
+  /** main only: the ntfy topic's last 48 h (ntfy.sh keeps ~12 h), for STANDING alarms in `situation` (#368). */
+  alarm_log?: { id: string; time: number; priority: number; title: string; message: string }[];
+  alarm_log_error?: string;
   /** A pusher on a slower cadence than STALE_MIN (the hourly Hetzner pass) says how old is too old. */
   stale_after_min?: number;
 }

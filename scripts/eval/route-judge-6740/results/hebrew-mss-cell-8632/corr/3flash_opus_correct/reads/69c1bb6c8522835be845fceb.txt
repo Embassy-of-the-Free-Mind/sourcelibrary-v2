@@ -1,0 +1,43 @@
+<warning>Handwritten Hebrew cursive (semi-cursive hand); many words are hard to read at this resolution, and readings are uncertain throughout. The running header is uncertain. The double-stroke word separators (″) are rendered as ·· and are not the divine-name abbreviation יי.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<header><unclear>שוירען</unclear></header>
+
+# אמיתיך
+בכל <unclear>נכל</unclear> ·· קדוש <unclear>ותהלל</unclear> בגלגלי ·· בקרב <unclear>הגיון</unclear>
+הלל ·· שרפים <unclear>וחיות ואופן</unclear> ·· תתנו כבוד ·· ל״ו <unclear>תתמה</unclear>.
+שמך בפי ·· יושב בשמי ·· חי גואלי ·· שמעו שם בפי ·· חסדך הראנו ·
+כל יקרא בשמו · יקום חילו ·· קדושך <unclear>בורא</unclear> ·· חי ··
+
+כבוד תעשינה להיתך ·· בתוך <unclear>תערוכה</unclear> יצא ·· <unclear>תהלה הגולה</unclear> לו הקדושה ·· <unclear>יאין</unclear>
+<unclear>אין</unclear> בפעולה ל״ל ·· חי · תתנו ·· כבוד ··
+
+רחום בטובו ימלא הארץ ·· נוראות יפגין יברכו ·· חי · בנעימות תזכרנו ·· <unclear>יאין</unclear>
+<unclear>בנה</unclear> ·· חסד <unclear>פניו</unclear> נשקה עלינו ·· חי תתנו כבוד ·
+
+הן בך <unclear>ילין</unclear> ·· יד <unclear>יכופפו</unclear> ·· <unclear>יפחדו</unclear> נורא <unclear>עליכון</unclear> ·· חי טוב זכרונו בברכה
+<unclear>[illegible — 1 word]</unclear> ·· בכל שפתי ברוכין ·· חי תתנו כבוד ··
+
+תשבחות לך נאה ·· נאה לך סדר ובשירות ·· פיהם לך הדר והלל ··
+<unclear>עושינו המלכך</unclear> עולם עולמים ·· חי · תתנו
+
+->קס<-
+
+# אצפה
+לך ישעי ·· כי הוא רועי ·· הדר <unclear>וזיוי</unclear> ·· לאלהים
+כהן ·· חיים <unclear>יפקו</unclear> ·· בנווה <unclear>חירך</unclear> ·· <unclear>מחזה כחטאי</unclear> ·
+<unclear>חיים תהיר</unclear> ·· יחיד יתהדר ·· חסד בהיר ·· של טובך הכינו ·· חי ··
+בכבוד קדש <unclear>קדשי</unclear> ·· הנח עמינו ·· מיכאל לימיננו ·· חי לאלהים ·· כהן ·
+<unclear>רחמיך</unclear> לכל בית יוסף ·· עזר לי בנפשי ·· יתום <unclear>יחסיד</unclear> ·· חי לאלהים
+<gloss>חי</gloss>
+הדר ימלך ברוב עוז ·· <unclear>תעשינו</unclear> עמו ·· לרחם רעיה ·· חי ·· לאלהים ·
+<gloss>חי ·</gloss>
+תעלה ישועת מלכנו ·· יחתו רשעו ·· <unclear>יפציעו</unclear> בטובו · חי לאלהים
+
+->קס .<-
+
+<image-desc size="large" type="decorative" significance="low">The text block is enclosed in a hand-drawn ruled frame. The opening words אמיתיך and אצפה are written in large square letters.</image-desc>
+
+<vocab>אמיתיך, אצפה, piyyut, תתנו כבוד, לאלהים, קדוש, שרפים, מיכאל, בית יוסף, בגלגלי</vocab>

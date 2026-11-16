@@ -49,6 +49,8 @@ import { archiveFromManifest } from '../lib/manifest-archive.mjs';
 import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import { laneSelectionTiers } from './archive-lanes.mjs';
 import { openIaZip } from '../lib/ia-zip-ledger.mjs';
+import { isPaused } from '../lib/pause.mjs';
+import { checkR2Ceiling, CEILING_EXIT } from '../lib/r2-storage-ceiling.mjs';
 import {
   isMissFor, isBookScopedFailure, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
   notCoolingDown, cooldownUntil,
@@ -152,6 +154,19 @@ async function main() {
   const queue = db.collection('acquisition_queue');
   const books = db.collection('books');
   const pages = db.collection('pages');
+
+  // Two brakes before any byte is written. The `archive` step pause was read by
+  // archive-bulk but not here, so pausing `archive` left all nine host lanes and the
+  // hourly cron running. The R2 ceiling is the standing storage budget (#4404, #5457).
+  // Both exit CEILING_EXIT, which archive-lane.sh sleeps on instead of re-scanning.
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' } as object);
+  if (isPaused(control, 'archive')) {
+    console.log('archive-acquired: archive step paused (processing_control) — exiting');
+    await mc.close(); process.exit(CEILING_EXIT);
+  }
+  const ceiling = await checkR2Ceiling(db);
+  console.log(`archive-acquired: ${ceiling.reason}`);
+  if (!ceiling.ok) { await mc.close(); process.exit(CEILING_EXIT); }
 
   // A blocked host must stop the run, not be retried page after page. On
   // 2026-08-29 Wellcome's CloudFront WAF began answering every image request

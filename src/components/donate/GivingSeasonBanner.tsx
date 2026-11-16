@@ -116,7 +116,7 @@ export default function GivingSeasonBanner() {
         >
           <X className="w-4 h-4" />
         </button>
-        <p className="font-display text-lg sm:text-2xl text-stone-900 leading-snug pr-8 mb-1.5 sm:mb-2">
+        <p className="font-serif text-lg sm:text-2xl text-stone-900 leading-snug pr-8 mb-1.5 sm:mb-2">
           This library is free, and volunteers built it.
         </p>
         {/* Phones get the short version: the card sits over the text being read,

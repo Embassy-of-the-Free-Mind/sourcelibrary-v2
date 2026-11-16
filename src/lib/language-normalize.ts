@@ -611,6 +611,34 @@ export function fromLocale(locale: string | null | undefined): string | null {
   return r ? r.code : null;
 }
 
+/**
+ * A stored BARE CODE → its language name; anything else comes back unchanged
+ * (v2#8628: 5,300 books stored `de`, `la`, `ger`… in `books.language`, so every  corpus-number-ok: books with a bare code, measured for v2#8628
+ * view that counts "German" missed them).
+ *
+ * Folds only a value that IS a code — 2–3 letters, all lower or all upper case, optionally with a
+ * region or script subtag (`de-DE`, `zh-Hant`) — and only when the table knows
+ * it as a code (ISO 639-3, 639-1 or MARC, never a name or alias) AND the name
+ * API reads it as the same language. Where the two vocabularies disagree the
+ * code is ambiguous and stays (`el`: Modern Greek here, Greek there).
+ * Placeholders (`und`, `mul`, `zxx`), unknown codes, names and compound labels
+ * are returned as given: this changes a spelling, never a value.
+ */
+export function foldBareLanguageCode<T>(raw: T): T | string {
+  if (typeof raw !== 'string') return raw;
+  const m = raw.trim().match(/^([A-Za-z]{2,3})(?:[-_](?:[A-Za-z]{2}|[A-Za-z]{4}))?$/);
+  if (!m) return raw;
+  // A code is written `de` or `DE`. Title case is how a NAME is written: `Mon` and `San` are
+  // languages, and `mon` / `san` are the codes of two others.
+  if (m[1] !== m[1].toLowerCase() && m[1] !== m[1].toUpperCase()) return raw;
+  const base = m[1].toLowerCase();
+  const r = languageRow(languageCode(base));
+  if (!r) return raw;
+  if (base !== r.code && base !== r.iso1 && !r.marc.includes(base)) return raw;
+  if (languageCode(normalizeLanguageToken(base)) !== r.code) return raw;
+  return r.name;
+}
+
 /** Display label for an ordered code list: `['grc', 'lat']` → "Greek and Latin". */
 export function displayLabel(codes: readonly string[] | null | undefined, locale = 'en'): string | null {
   const names = (codes || []).map((c) => languageName(c, locale)).filter((n): n is string => !!n);

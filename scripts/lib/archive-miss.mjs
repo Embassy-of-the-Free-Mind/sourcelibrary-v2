@@ -53,6 +53,10 @@ export const HOST_MISS_CODES = Object.freeze({
   // BnF's openapi IIIF: a folio past the document's end answers 500 with a query-error JSON.
   // 2026-10-26, bpt6k15122214 (45 folios): f45 200, f46 500, f60 500, f46/info.json the same error.
   'openapi.bnf.fr': Object.freeze(['500']),
+  // Göttingen GDZ: a page whose image file is broken answers 500 (an HTML error page) at every size, its
+  // info.json included, while its neighbours answer 200. 2026-11-13, PPN722474687 pages 40, 217 and 353.
+  // The positive control in manifest-archive.mjs keeps an outage's 500s from being recorded as misses.
+  'images.sub.uni-goettingen.de': Object.freeze(['500']),
 });
 
 const hostOfUrl = (url) => { try { return new URL(url).hostname; } catch { return ''; } };

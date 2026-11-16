@@ -115,7 +115,7 @@ export default async function CatalogReviewPage({ params }: Props) {
     return (
       <div className="bg-cream min-h-screen">
         <div className="max-w-3xl mx-auto px-6 py-8">
-          <h1 className="text-2xl text-primary font-display mb-3">Catalogue review</h1>
+          <h1 className="text-2xl text-primary font-serif mb-3">Catalogue review</h1>
           <div className="p-4 rounded-lg border border-accent-rust/40 bg-accent-rust/5 text-sm text-secondary">
             <p className="font-medium text-accent-rust mb-1">Pending-changes table not initialised</p>
             <p>
@@ -154,7 +154,7 @@ export default async function CatalogReviewPage({ params }: Props) {
         >
           ← Catalogue
         </a>
-        <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif leading-tight mb-1">
           Catalogue review
         </h1>
         <p className="text-sm text-muted mb-6">

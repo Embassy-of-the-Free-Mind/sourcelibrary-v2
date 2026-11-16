@@ -108,7 +108,7 @@ export default async function TenantCataloguePage({ params, searchParams }: Prop
   return (
     <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl text-primary font-display">Catalogue</h1>
+        <h1 className="text-2xl sm:text-3xl text-primary font-serif">Catalogue</h1>
         <p className="text-sm text-muted mt-1">
           Complete catalogue of the {tenantDoc.name || tenant} collection. Click any column header to sort.
         </p>

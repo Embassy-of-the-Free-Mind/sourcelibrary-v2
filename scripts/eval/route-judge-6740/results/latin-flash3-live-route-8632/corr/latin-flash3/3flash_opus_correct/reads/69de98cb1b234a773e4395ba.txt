@@ -1,0 +1,11 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>6</page-num>
+
+<image-desc size="large" type="engraving" significance="high">An architectural perspective engraving set in an oval frame inside a rectangular plate. The view looks through a tall barrel-vaulted archway. The vault is partly ruined, with an oculus at its crown, and broken stonework and small plants grow along the tops of the walls. On both sides, porticos with columns on high plinths open into vaulted arcades. On the left is a small doorway with a pediment and a roundel; an inscribed tablet is mounted on its pier. Through the central arch a courtyard is visible, with a multi-storey palace façade. The façade has a central arched entrance, niches holding statues, a sunken stair, and a roof topped by chimneys, a gable and finials. Steps and a paved floor fill the foreground. The four spandrels outside the oval are filled with strapwork, scrolls and studded ornaments.</image-desc>
+
+<insert>VRIE SE INV ENT</insert>
+
+<vocab>Vredeman de Vries, invenit, perspective, architecture, barrel vault, portico, courtyard, palace, strapwork, engraving</vocab>

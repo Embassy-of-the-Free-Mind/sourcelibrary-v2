@@ -1,6 +1,6 @@
 /**
  * PRIOR ART: scripts/lib/stray-script.mjs — this is its TS twin, for the app-side translation
- * writers (Lambda, batch-translate-async, batch-save, /api/process, contribute). Behaviour is
+ * writers (Lambda, /api/process, contribute). Behaviour is
  * pinned to the .mjs by tests/unit/stray-script-guard.test.ts, which runs both on the same
  * fixtures. src/lib/non-latin-scripts.ts maps a language LABEL to "non-Latin?" only.
  *

@@ -1,0 +1,211 @@
+[
+ {
+  "id": "stored:699f92622c6ec1d73a97e812",
+  "judged_as": "j62e945f3f1cd",
+  "cell": "hebrew",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "699f92622c6ec1d73a97e812",
+  "book_id": "699ef9fd15618a982bb1ebd9",
+  "language": "Hebrew"
+ },
+ {
+  "id": "opus:699f92622c6ec1d73a97e812",
+  "judged_as": "j0b2b44423c42",
+  "cell": "hebrew",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "699f92622c6ec1d73a97e812",
+  "book_id": "699ef9fd15618a982bb1ebd9",
+  "language": "Hebrew"
+ },
+ {
+  "id": "stored:69938a8ee07f979c72ac6688",
+  "judged_as": "j5ab94bb47542",
+  "cell": "greek",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69938a8ee07f979c72ac6688",
+  "book_id": "69938a8ee07f979c72ac658f",
+  "language": "Greek"
+ },
+ {
+  "id": "opus:69938a8ee07f979c72ac6688",
+  "judged_as": "ja7fd3e698f10",
+  "cell": "greek",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69938a8ee07f979c72ac6688",
+  "book_id": "69938a8ee07f979c72ac658f",
+  "language": "Greek"
+ },
+ {
+  "id": "stored:6a060d36e16c60cb2a894917",
+  "judged_as": "j851f79d0c9e5",
+  "cell": "indic",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6a060d36e16c60cb2a894917",
+  "book_id": "6a060d36e16c60cb2a8946c7",
+  "language": "Sanskrit"
+ },
+ {
+  "id": "opus:6a060d36e16c60cb2a894917",
+  "judged_as": "j1f359651f427",
+  "cell": "indic",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6a060d36e16c60cb2a894917",
+  "book_id": "6a060d36e16c60cb2a8946c7",
+  "language": "Sanskrit"
+ },
+ {
+  "id": "stored:6ae4dccc2b8091b67d1a45c3",
+  "judged_as": "j05b02bebac73",
+  "cell": "arabic",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6ae4dccc2b8091b67d1a45c3",
+  "book_id": "6a2032b518654bf8e19035c4",
+  "language": "Arabic"
+ },
+ {
+  "id": "opus:6ae4dccc2b8091b67d1a45c3",
+  "judged_as": "j63c5a56f6de6",
+  "cell": "arabic",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6ae4dccc2b8091b67d1a45c3",
+  "book_id": "6a2032b518654bf8e19035c4",
+  "language": "Arabic"
+ },
+ {
+  "id": "stored:69944861185a84ef595aaf48",
+  "judged_as": "jb6d9f975a9d6",
+  "cell": "other-script",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69944861185a84ef595aaf48",
+  "book_id": "69944861185a84ef595aae5b",
+  "language": "Armenian"
+ },
+ {
+  "id": "opus:69944861185a84ef595aaf48",
+  "judged_as": "j8585376933da",
+  "cell": "other-script",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69944861185a84ef595aaf48",
+  "book_id": "69944861185a84ef595aae5b",
+  "language": "Armenian"
+ },
+ {
+  "id": "stored:6959067f95a91542b28bd357",
+  "judged_as": "j76b211b17c13",
+  "cell": "greek",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "6959067f95a91542b28bd357",
+  "book_id": "5ddd6b40-5a26-4994-86ea-e2dfd4957597",
+  "language": "Greek"
+ },
+ {
+  "id": "opus:6959067f95a91542b28bd357",
+  "judged_as": "j01ddd65a7004",
+  "cell": "greek",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "6959067f95a91542b28bd357",
+  "book_id": "5ddd6b40-5a26-4994-86ea-e2dfd4957597",
+  "language": "Greek"
+ },
+ {
+  "id": "stored:69c1bb638522835be845f5ee",
+  "judged_as": "j1754a3fb615a",
+  "cell": "hebrew",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69c1bb638522835be845f5ee",
+  "book_id": "69c1bb638522835be845f5c7",
+  "language": "Judeo-Arabic and Hebrew"
+ },
+ {
+  "id": "opus:69c1bb638522835be845f5ee",
+  "judged_as": "jb9dd95e356d3",
+  "cell": "hebrew",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69c1bb638522835be845f5ee",
+  "book_id": "69c1bb638522835be845f5c7",
+  "language": "Judeo-Arabic and Hebrew"
+ },
+ {
+  "id": "stored:69b62f671c1c21a3737f5201",
+  "judged_as": "j03ceef77ae42",
+  "cell": "greek",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69b62f671c1c21a3737f5201",
+  "book_id": "69b62f671c1c21a3737f51f5",
+  "language": "Greek"
+ },
+ {
+  "id": "opus:69b62f671c1c21a3737f5201",
+  "judged_as": "j3fcd12008cfd",
+  "cell": "greek",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69b62f671c1c21a3737f5201",
+  "book_id": "69b62f671c1c21a3737f51f5",
+  "language": "Greek"
+ },
+ {
+  "id": "stored:699750805583d749eb733000",
+  "judged_as": "j17e394a9bef5",
+  "cell": "greek",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "699750805583d749eb733000",
+  "book_id": "69938d5f5d28b693146cede1",
+  "language": "Greek"
+ },
+ {
+  "id": "opus:699750805583d749eb733000",
+  "judged_as": "j38914ed599ff",
+  "cell": "greek",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "699750805583d749eb733000",
+  "book_id": "69938d5f5d28b693146cede1",
+  "language": "Greek"
+ },
+ {
+  "id": "stored:69a5e3d7006a4098422165e2",
+  "judged_as": "jd43fe4c7004a",
+  "cell": "greek",
+  "route": "stored",
+  "kind": "item",
+  "page_id": "69a5e3d7006a4098422165e2",
+  "book_id": "69a5e3d7006a4098422165d4",
+  "language": "Greek"
+ },
+ {
+  "id": "opus:69a5e3d7006a4098422165e2",
+  "judged_as": "j09132dc487ac",
+  "cell": "greek",
+  "route": "opus",
+  "kind": "item",
+  "page_id": "69a5e3d7006a4098422165e2",
+  "book_id": "69a5e3d7006a4098422165d4",
+  "language": "Greek"
+ },
+ {
+  "id": "wp:opus:opus:699f92622c6ec1d73a97e812",
+  "judged_as": "j6efb91342b9c",
+  "cell": "control",
+  "route": "opus",
+  "kind": "wrong_page",
+  "page_id": "699f92622c6ec1d73a97e812",
+  "book_id": "699ef9fd15618a982bb1ebd9"
+ }
+]

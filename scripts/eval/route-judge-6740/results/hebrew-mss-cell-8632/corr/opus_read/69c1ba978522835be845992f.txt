@@ -1,0 +1,87 @@
+<warning>Handwritten square Sephardic/Ashkenazic Hebrew book hand (biblical codex), with Masorah magna above and below the text block and Masorah parva between and beside the columns in a smaller hand. Brown ink is badly faded and flaked across both columns, so many readings follow the remaining letter-forms. The Masorah is mostly illegible. The columns are given in Hebrew reading order: the right column first, then the left.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<meta>Faint pencil marks at the top centre and the top right corner (possibly a foliation number), illegible. Text: Jeremiah 4:11–5:6. A plastic clip is visible at the right edge of the leaf.</meta>
+
+<insert><unclear>Masorah magna, 2 lines above the text block, largely faded; fragments legible: … ולשמים … עד מתי … קול שופר …</unclear></insert>
+
+<margin><unclear>Masorah parva notes beside the column, mostly illegible (e.g. ל׳, ב׳)</unclear></margin>
+בעת ההיא יאמר לעם הזה ול
+ירושלם רוח צח שפיים
+במדבר דרך בת עמי לוא לזרות
+ולוא להבר רוח מלא מאלה
+יבוא לי עתה גם אני אדבר
+משפטים אותם הנה כעננים יעלה
+וכסופה מרכבותיו קלו מנשרים
+סוסיו אוי לנו כי שדדנו כבסי
+מרעה לבך ירושלם למען תושעי
+עד מתי תלין בקרבך מחשבות
+אונך כי קול מגיד מדן ומשמיע
+און מהר אפרים הזכירו לגוים
+הנה השמיעו על ירושלם נצרים
+באים מארץ המרחק ויתנו על
+ערי יהודה קולם כשמרי שדי
+היו עליה מסביב כי אתי מרתה
+נאם יהוה דרכך ומעלליך עשו
+אלה לך זאת רעתך כי מר כי
+נגע עד לבך מעי מעי
+אוחילה קירות לבי הומה לי לבי
+לא אחריש כי קול שופר שמעתי
+נפשי תרועת מלחמה שבר על
+שבר נקרא כי שדדה כל הארץ
+פתאם שדדו אהלי רגע יריעתי
+עד מתי אראה נס אשמעה קול
+שופר כי אויל עמי אותי
+לא ידעו בנים סכלים המה ולא
+נבונים המה חכמים המה להרע
+ולהיטיב לא ידעו ראיתי את
+הארץ והנה תהו ובהו ואל השמים
+ואין אורם ראיתי ההרים
+והנה רעשים וכל הגבעות
+התקלקלו ראיתי והנה אין האדם
+וכל עוף השמים נדדו ראיתי
+והנה הכרמל המדבר וכל עריו
+<column-break/>
+<margin><unclear>Masorah parva notes between the columns, mostly illegible (e.g. ל׳, ב׳, חס׳)</unclear></margin>
+נתצו מפני יהוה מפני חרון אפו
+כי כה אמר יהוה שממה
+תהיה כל הארץ וכלה לא אעשה
+על זאת תאבל הארץ וקדרו ה
+השמים ממעל על כי דברתי זמתי
+ולא נחמתי ולא אשוב ממנה
+מקול פרש ורמה קשת בורחת
+כל העיר באו בעבים ובכפים עלו
+כל העיר עזובה ואין יושב בהן
+איש ואתי שדוד מה תעשי כי
+תלבשי שני כי תעדי עדי זהב כי
+תקרעי בפוך עיניך לשוא תתיפי
+מאסו בך עגבים נפשך יבקשו
+כי קול כחולה שמעתי צרה
+כמבכירה קול בת ציון תתיפח
+תפרש כפיה אוי נא לי כי עיפה
+נפשי להרגים שוטטו
+בחוצות ירושלם וראו נא ודעו
+ובקשו ברחובותיה אם תמצאו
+איש אם יש עשה משפט
+מבקש אמונה ואסלח לה ואם
+חי יהוה יאמרו לכן לשקר ישבעו
+יהוה עיניך הלוא לאמונה הכיתה
+אתם ולא חלו כליתם מאנו
+קחת מוסר חזקו פניהם מסלע
+מאנו לשוב ואני אמרתי אך
+דלים הם נואלו כי לא ידעו דרך
+יהוה משפט אלהיהם אלכה לי
+אל הגדלים ואדברה אותם כי
+המה ידעו דרך יהוה משפט
+אלהיהם אך המה יחדו שברו
+על נתקו מוסרות על כן הכם
+אריה מיער זאב ערבות ישדדם
+נמר שקד על עריהם כל היוצא
+מהנה יטרף כי רבו פשעיהם
+
+<insert><unclear>Masorah magna, 3 lines below the text block, largely faded; fragments legible: אבותינו … והבשת אכלה את יגיע אבותינו … חטאנו אנחנו ואבותינו … עון אבותינו … אשר לא ידעו אבותינו …</unclear></insert>
+
+<vocab>Jeremiah 4–5, Masorah magna, Masorah parva, ירושלם, בת ציון, יהודה, אפרים, דן, שופר, תהו ובהו, הכרמל</vocab>

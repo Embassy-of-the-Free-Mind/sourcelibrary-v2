@@ -1,0 +1,20 @@
+{
+  "question": "route",
+  "issue": 8632,
+  "stage": "ocr",
+  "languages": ["Latin"],
+  "about": "#8632 decision 2 (Derek 2026-11-12: yes, spare quota, no writes). Router rows latin-flash3/print and latin-flash3/unknown are HOLD because their live route, 3flash>opus, has no defect verdicts. This judges 3flash>opus-correct on the 30 pages of router-tests-2026-10-26 (draw --from, one page per book), beside 3flash as stored and 3flash>agy-flash-low corrected afresh, so all three pair on the same pages under one judge in one run.",
+  "baseline": "3flash",
+  "arms": ["3flash", "3flash>agy-flash-low", "3flash>opus-correct"],
+  "batch": {
+    "pages_per_call": 1,
+    "tested": null
+  },
+  "noise_floor": {
+    "repeat_kind": "repeat",
+    "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "latin-flash3",
+  "waive": {}
+}

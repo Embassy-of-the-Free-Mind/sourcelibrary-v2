@@ -1,5 +1,5 @@
 {
- "_about": "Hand-placed: for a history that has an arc, the senses of the concept as lanes, and in each lane the claims that attest it. Sense assignments follow the history's own arc essay (sympathy: ideas/01-the-arc.md, its 'Where sympathy was located' table). `date` is the date of the text or thinker the claim cites, not of the edition quoted; negative is BCE; `approx` prints as c. Claim text, status and link are resolved from <c>-claims.json at build time, so nothing here restates a claim; tests/unit/history-lanes.test.ts fails if a re-import drops one. `label` prints a name beside the dot: true for `who`, or a shorter string.",
+ "_about": "Hand-placed: for a history that has an arc, the senses of the concept as lanes, and in each lane the claims that attest it. Sense assignments follow the history's own arc essay (sympathy: ideas/01-the-arc.md, its 'Where sympathy was located' table; bath: ideas/01-the-arc.md, its seven numbered sections). `date` is the date of the text or thinker the claim cites, not of the edition quoted; negative is BCE; `approx` prints as c. Claim text, status and link are resolved from <c>-claims.json at build time, so nothing here restates a claim; tests/unit/history-lanes.test.ts fails if a re-import drops one. `label` prints a name beside the dot: true for `who`, or a shorter string. `axis` (optional): the chart's own years, drawn evenly with no compressed stretch, for a history whose claims stop well before today.",
  "concepts": {
   "sympathy": {
    "title": "Where sympathy was located",
@@ -88,6 +88,81 @@
      { "c": "sympathy", "id": "ch-chenghao-only-ganying", "who": "Cheng Hao, in the Jinsilu", "date": 1080, "approx": true },
      { "c": "magic", "id": "w4mus-shenkuo-rejects-ganzhao", "who": "Shen Kuo", "date": 1088, "label": true },
      { "c": "sympathy", "id": "ch-zhuxi-ganying-pattern-of-all-change", "who": "Zhu Xi, in the Zhuzi yulei", "date": 1190, "approx": true, "label": "Zhu Xi" }
+    ] }
+   ]
+  },
+  "bath": {
+   "title": "Seven things sought in the bath",
+   "finding": "Each of the seven appears early and lasts: they are not stages, one replacing the last. What changes is who writes them down.",
+   "axis": { "start": -700, "end": 1750, "ticks": [-600, -300, 1, 300, 600, 900, 1200, 1500], "smallTicks": [-500, 1, 500, 1000, 1500] },
+   "lanes": [
+    { "key": "person", "label": "The made heat is a person", "gloss": "the sweat house as somebody, or a rite that takes offerings", "dots": [
+     { "c": "bath", "id": "nor-herodotus-scythians-cleanse-after-burial", "who": "Herodotus, on the Scythians", "date": -430, "approx": true, "label": "Herodotus" },
+     { "c": "bath", "id": "ind-charaka-jentaka-house", "who": "Charaka", "date": 100, "approx": true, "label": true },
+     { "c": "bath", "id": "isl-ghazali-hot-room-is-like-hell", "who": "al-Ghazali", "date": 1100, "approx": true },
+     { "c": "bath", "id": "nor-karamzin-nestor-andrew-wooden-baths", "who": "The Primary Chronicle, as quoted by Karamzin", "date": 1113, "approx": true, "label": "Primary Chronicle" },
+     { "c": "bath", "id": "am-sahagun-nahuatl-grandmother-of-the-temazcal", "who": "Sahagún’s Nahua collaborators, Florentine Codex", "date": 1577, "label": "Florentine Codex" },
+     { "c": "bath", "id": "am-duran-god-of-the-baths-buried-under", "who": "Durán", "date": 1579, "approx": true },
+     { "c": "bath", "id": "nor-einhorn-women-cured-in-the-bathhouses", "who": "Einhorn, on the Latvians", "date": 1649, "label": "Einhorn" }
+    ] },
+    { "key": "owner", "label": "The found water has an owner", "gloss": "springs with gods, nymphs and founders", "dots": [
+     { "c": "bath", "id": "rom-pliny-springs-add-gods-found-cities", "who": "Pliny the Elder", "date": 77, "label": "Pliny" },
+     { "c": "bath", "id": "scr-bethesda-angel-troubles-water", "who": "The Gospel of John, on Bethesda", "date": 90, "approx": true },
+     { "c": "bath", "id": "gr-pausanias-amphiaraus-spring-coins", "who": "Pausanias", "date": 160, "approx": true },
+     { "c": "bath", "id": "rom-solinus-britain-springs-minerva", "who": "Solinus, on Minerva at Bath", "date": 250, "approx": true, "label": "Solinus" },
+     { "c": "bath", "id": "jpn-izumo-fudoki-gods-hot-water", "who": "Izumo fudoki", "date": 733, "label": true },
+     { "c": "bath", "id": "spa-schwenckfeld-teplitz-found-by-pigs", "who": "Schwenckfeld, on Teplitz", "date": 1607 },
+     { "c": "bath", "id": "spa-fautsch-numen-in-the-spring", "who": "Fautsch", "date": 1618, "label": true }
+    ] },
+    { "key": "physicians", "label": "Physicians take the water from the god", "gloss": "hot water judged by what it carries and what it cures", "dots": [
+     { "c": "bath", "id": "gr-hippocrates-hot-spring-waters-bad", "who": "Hippocrates, Airs, Waters, Places", "date": -400, "approx": true, "label": "Hippocrates" },
+     { "c": "bath", "id": "rom-vitruvius-hot-water-medicinal", "who": "Vitruvius", "date": -25, "approx": true, "label": true },
+     { "c": "bath", "id": "rom-pliny-baiae-kinds-of-water", "who": "Pliny the Elder, on Baiae", "date": 77 },
+     { "c": "bath", "id": "gr-galen-asclepius-ancestral-god-saved-him", "who": "Galen", "date": 180, "approx": true, "label": true },
+     { "c": "bath", "id": "isl-muqaddasi-king-pulls-down-healing-rooms", "who": "al-Muqaddasi, on Tiberias", "date": 985, "approx": true },
+     { "c": "bath", "id": "isl-ibn-sina-bath-heats-by-air-wets-by-water", "who": "Ibn Sina", "date": 1025, "approx": true, "label": true },
+     { "c": "bath", "id": "spa-paracelsus-pfaefers-not-from-earth-fire", "who": "Paracelsus, on Pfäfers", "date": 1535, "label": "Paracelsus" },
+     { "c": "bath", "id": "am-sahagun-book11-all-the-sick-benefit", "who": "The Tlatelolco physicians, Florentine Codex Book 11", "date": 1577 },
+     { "c": "bath", "id": "spa-montaigne-no-miraculous-effect", "who": "Montaigne", "date": 1580 }
+    ] },
+    { "key": "law", "label": "Purity becomes a law with measures", "gloss": "which water, how much, and nothing between flesh and water", "dots": [
+     { "c": "bath", "id": "scr-leviticus-living-water", "who": "Leviticus", "date": -500, "approx": true, "label": true },
+     { "c": "bath", "id": "gr-aristophanes-plutus-sea-bath-first", "who": "Aristophanes, Wealth", "date": -388 },
+     { "c": "bath", "id": "jpn-kojiki-middle-current-and-gods-of-pollution", "who": "Kojiki", "date": 712, "label": true },
+     { "c": "bath", "id": "isl-ghazali-bath-duties-of-the-eyes", "who": "al-Ghazali", "date": 1100, "approx": true, "label": true },
+     { "c": "bath", "id": "chn-bath-room-kept-from-latrine-well-stove-altar", "who": "Zhou Shouzhong, Yangsheng leizuan", "date": 1220, "approx": true },
+     { "c": "bath", "id": "jew-dura-mikveh-rainwater-not-drawn", "who": "Isaac of Düren", "date": 1300, "approx": true },
+     { "c": "bath", "id": "jew-aboab-forty-seah-in-amsterdam-beer-measure", "who": "Aboab, Amsterdam prayer book", "date": 1687, "label": "Aboab" }
+    ] },
+    { "key": "company", "label": "The city bath is company and pleasure", "gloss": "and the moralists who answer it", "dots": [
+     { "c": "bath", "id": "chn-liji-men-and-women-do-not-share-bath-room", "who": "The Book of Rites", "date": -100, "approx": true, "label": "Book of Rites" },
+     { "c": "bath", "id": "rom-seneca-ep56-sounds-of-bath", "who": "Seneca", "date": 63, "approx": true, "label": true },
+     { "c": "bath", "id": "rom-martial-nero-and-his-thermae", "who": "Martial", "date": 85, "approx": true },
+     { "c": "bath", "id": "rom-tacitus-baths-part-of-servitude", "who": "Tacitus", "date": 98 },
+     { "c": "bath", "id": "isl-yaqubi-baghdad-five-thousand-baths", "who": "al-Ya‘qubi, on Baghdad", "date": 891, "approx": true, "label": "al-Ya‘qubi" },
+     { "c": "bath", "id": "isl-ibn-battuta-baghdad-baths-pitch-and-towels", "who": "Ibn Battuta", "date": 1355, "approx": true, "label": true },
+     { "c": "bath", "id": "spa-poggio-floating-table-no-german", "who": "Poggio, at Baden", "date": 1416, "label": "Poggio" },
+     { "c": "bath", "id": "am-tudela-many-offenses-in-the-heat", "who": "Codex Tudela", "date": 1553, "approx": true },
+     { "c": "bath", "id": "nor-olaus-sexes-parted-by-boards-against-poggio", "who": "Olaus Magnus", "date": 1555 },
+     { "c": "bath", "id": "spa-montaigne-company-best-part-of-effect", "who": "Montaigne", "date": 1581, "label": true }
+    ] },
+    { "key": "inner", "label": "The inner bath answers the outer", "gloss": "water does not wash the heart", "dots": [
+     { "c": "bath", "id": "scr-jeremiah-natron-does-not-wash", "who": "Jeremiah", "date": -600, "approx": true, "label": true },
+     { "c": "bath", "id": "scr-mark-washings-and-the-heart", "who": "The Gospel of Mark", "date": 70, "approx": true, "label": "Mark" },
+     { "c": "bath", "id": "chn-yunji-inner-and-outer-clean", "who": "Yunji qiqian", "date": 1029, "approx": true },
+     { "c": "bath", "id": "isl-ghazali-outer-purity-is-the-husk", "who": "al-Ghazali", "date": 1100, "approx": true, "label": true },
+     { "c": "bath", "id": "chn-tang-basin-inscription-zhu-xi", "who": "Zhu Xi", "date": 1190, "approx": true },
+     { "c": "bath", "id": "spa-fautsch-genius-of-spring-against-revellers", "who": "Fautsch", "date": 1618, "label": true }
+    ] },
+    { "key": "transformation", "label": "The bath as a figure of transformation", "gloss": "rebirth, regeneration, and the alchemists’ bath", "dots": [
+     { "c": "bath", "id": "scr-naaman-wash-seven-times", "who": "2 Kings, Naaman", "date": -550, "approx": true, "label": "Naaman" },
+     { "c": "bath", "id": "jpn-kojiki-amaterasu-born-from-washing-left-eye", "who": "Kojiki, the birth of Amaterasu", "date": 712 },
+     { "c": "bath", "id": "alch-brunschwig-balneum-mariae-in-a-bath-tub", "who": "Brunschwig", "date": 1512 },
+     { "c": "bath", "id": "alch-martyr-boiuca-fountain-doubted", "who": "Peter Martyr", "date": 1516 },
+     { "c": "bath", "id": "alch-splendor-solis-old-man-cut-up-and-boiled", "who": "Splendor solis", "date": 1532, "approx": true },
+     { "c": "bath", "id": "alch-rosarium-ablutio-dew-washes-the-black-body", "who": "Rosarium philosophorum", "date": 1550, "label": "Rosarium" },
+     { "c": "bath", "id": "jew-shelah-immersion-returns-the-soul", "who": "Isaiah Horowitz, Shenei luhot ha-berit", "date": 1630, "approx": true },
+     { "c": "bath", "id": "alch-communication-1700-martyr-made-to-assure", "who": "A chemical tract", "date": 1700 }
     ] }
    ]
   }

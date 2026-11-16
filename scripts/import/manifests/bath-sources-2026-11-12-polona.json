@@ -1,0 +1,16 @@
+[
+  {
+    "manifest_url": "https://polona.pl/api/search-service/search/iiif/491bdf9c-01aa-4fe0-908a-ea415a4aab71/manifest.json",
+    "title": "Cieplice",
+    "author": "Oczko, Wojciech",
+    "year": 1578,
+    "language": "Polish",
+    "provider": "polona",
+    "provider_name": "National Library of Poland",
+    "source_url": "https://polona.pl/item-view/491bdf9c-01aa-4fe0-908a-ea415a4aab71",
+    "source_id": "polona:491bdf9c-01aa-4fe0-908a-ea415a4aab71",
+    "license": "Public Domain (Polona: Domena Publiczna)",
+    "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "contributing_library": "Biblioteka Narodowa (National Library of Poland)"
+  }
+]

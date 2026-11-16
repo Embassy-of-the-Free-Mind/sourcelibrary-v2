@@ -349,7 +349,7 @@ function PathNode({ lesson, done, open, current, ring, onOpen }: { lesson: Lesso
   return (
     <>
       {current && (
-        <span className="relative mb-2 yk-r bg-white border-2 border-border-light px-3 py-1 text-sm font-bold text-accent-rust yk-bob">
+        <span className="relative mb-2 yk-r bg-white border-2 border-border-light px-3 py-1 text-sm font-semibold text-accent-rust yk-bob">
           Start
           <span aria-hidden className="absolute left-1/2 -bottom-[7px] -translate-x-1/2 w-3 h-3 rotate-45 bg-white border-r-2 border-b-2 border-border-light" />
         </span>
@@ -400,7 +400,7 @@ function BigButton({ children, onClick, disabled, tone }: { children: React.Reac
         ? 'bg-accent-rust text-white shadow-[0_4px_0_#6f3328]'
         : 'bg-[#1a1612] text-white shadow-[0_4px_0_#000]';
   return (
-    <button type="button" disabled={disabled} onClick={onClick} className={`w-full min-h-14 yk-r text-lg font-bold transition-transform ${color} ${disabled ? '' : 'active:translate-y-1 active:shadow-none'}`}>
+    <button type="button" disabled={disabled} onClick={onClick} className={`w-full min-h-14 yk-r text-lg font-semibold transition-transform ${color} ${disabled ? '' : 'active:translate-y-1 active:shadow-none'}`}>
       {children}
     </button>
   );

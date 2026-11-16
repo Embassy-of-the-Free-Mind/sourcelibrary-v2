@@ -1,0 +1,52 @@
+[
+  {
+    "book_id": "6953cc6d77f38f6761be20a9",
+    "slot": 1,
+    "title": "De Proprietatibus Rerum - Medieval Manuscript",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 13th/14th-century two-column Latin textualis manuscript of Bartholomaeus Anglicus, book XIX (running head 'XIX'), on odour and stench. Its Smithsonian collection tag and the 1275 date are plausible.",
+    "rights_flag": null,
+    "structure_note": "The structure counts give pages_translated 0, but the book field says 511 translated: the counts disagree. printed_backsteps 130 and printed_repeats 177 look like misreads, not a broken sequence. A manuscript foliated on rectos only will repeat or skip numbers. Marginal chapter numerals like '80' and '81' on this leaf could also be taken as page numbers. The OCR's <page-num>208 sits against a corner numeral I read as '209' (low confidence), which would make a misread numeral the source of some of these breaks.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 483,
+        "right_page": "yes",
+        "printed_marker": "209 (later-hand folio, top right; final digit uncertain); running head \"XIX\"; marginal chapter numbers \"80\" and \"81\"",
+        "layout": "two columns of textualis; red and blue initials and paragraph marks; rubricated running head; chapter numbers and one later-hand note in the margins",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "allonc̃ iil t̃re sũistnet̃", "image": "calorĩs nĩl ĩre ɔtinet (approx.)", "problem": "Opening lines of col. a are largely garbled; several lines like this one do not match the leaf's abbreviations", "severity": "moderate" },
+          { "ocr": "ut d' d' ylaoch", "image": "ut dʳ ysaach (long-s read as l)", "problem": "The authority 'Ysaac' (Isaac Israeli) is misread as 'Ylaoch' at both places it occurs", "severity": "moderate", "class": "O6" },
+          { "ocr": "# Post' ẽ de r'e corrupta. uã", "image": "Fetor ẽ ex re corrupta ua[por] (blue initial F, guide letter 'F' in the margin)", "problem": "The opening sentence of the stench chapter ('Stench is vapour from a corrupted thing') is misread and tagged as a heading", "severity": "moderate", "class": "O6" },
+          { "ocr": "->¶ Est itaqz odor sũi obiecti manifestat̃<-", "image": "the ¶ clauses run on inside the column text, each marked by a red or blue paragraph sign", "problem": "Inline rubricated clauses are turned into separate centred lines, a layout that is not on the leaf", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "# Post' ẽ de r'e corrupta. uã", "english": "# Next, on the corrupted thing, that is, on stench", "problem": "The opening definition ('Stench is a vapour from a corrupted thing') becomes an invented heading, so the definition is lost", "severity": "moderate", "class": "T16" },
+          { "source": "aiam̃ q̃ malã p̃. qz subt̃ tõi ord̃is iñiunctã", "english": "... <unclear>the soul, which the bad</unclear>, because the whole substance <unclear>joined in its order</unclear>", "problem": "Fluent English built on garbled OCR. It is hedged with <unclear>, but the sense cannot be checked against the leaf", "severity": "moderate" },
+          { "source": "as Ylaoch says", "english": "as Ylaoch says", "problem": "The misread name is kept in the English; a reader meets a non-existent authority (the first time it is hedged in a note)", "severity": "moderate", "class": "O6" }
+        ],
+        "other": [
+          { "note": "'->¶ … <-' centring arrows leak into the English reader text, in ten clauses", "severity": "moderate", "class": "D1" },
+          { "note": "A raw '<column-break/>' sits in the middle of a sentence in the English ('brought to the organ <column-break/> and applied to it in taste')", "severity": "moderate", "class": "D1" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"collirium,\" a medicinal eyewash", "verdict": "ok", "helpful": false },
+            { "quote": "a garbled authority's name, possibly Isaac, who is cited on t", "verdict": "unsupported", "helpful": true }
+          ],
+          "missing": [
+            { "english": "It is a kind of altering species.", "why": "'species' here is the scholastic technical term (a sensible form passed to the sense organ), not a biological kind" },
+            { "english": "so a foul odor infects the spirit of smell and <unclear>troubles it</unclear>, as Ylaoch says", "why": "The second 'Ylaoch' has no note; the reader is not told this is Isaac Israeli" },
+            { "english": "likewise corrupts the animal spirit", "why": "'animal spirit' (spiritus animalis) is a term of Galenic physiology that a general reader will not know" },
+            { "english": "Inside the body, foul odor often arises from corrupted humor", "why": "Humoral theory is assumed and never glossed" }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "This is the right leaf of a real Bartholomaeus manuscript, and the translation is careful to mark its uncertain passages. But the OCR is badly garbled in places: 'Isaac' is read as 'Ylaoch', and the stench definition becomes a heading. The English also shows raw '->¶…<-' and '<column-break/>' markup to the reader."
+  }
+]

@@ -1,0 +1,22 @@
+<warning>Handwritten Ashkenazi semi-cursive Hebrew with many abbreviations; the hand is hard to read and many readings are tentative. There is an ink blot in the middle of the upper section. Partial text from the facing leaf at the right edge has been ignored.</warning>
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>ח ב</page-num>
+<header><unclear>[illegible — 2 words]</unclear></header>
+<meta>Pencil number "7" in the top corner, in a later hand. There are flourished scribal pen marks in the margins before several paragraphs.</meta>
+
+<margin>7</margin>
+
+ד' עמ' תוס' ד"ה בבהמת ארנונא וכו' והוית ספיקא דרבנן בבהמת ארנונא וכו' <unclear>[illegible — 2 words]</unclear> והא דקאמר <unclear>[illegible — 1 word]</unclear> באיסורו הויא <unclear>ספק</unclear> דלא <unclear>[illegible — 2 words]</unclear> ורבא וכו' אלא אמר רבא וכו' <unclear>[illegible — 1 word]</unclear> ע"ש ודו"ק
+
+<unclear>[illegible — 1 word]</unclear> גמרא <unclear>[illegible — 2 words]</unclear> פירוש <unclear>[illegible — 1 word]</unclear> והרש"ל <unclear>[illegible — 4 words]</unclear> בבדיקה <unclear>[illegible — 1 word]</unclear> <unclear>[illegible — 1 word]</unclear> בכל <unclear>[illegible — 3 words]</unclear> דהא לא <unclear>[illegible — 3 words]</unclear> <unclear>[illegible — 1 word]</unclear> וכו' ע"ש <unclear>[illegible — 1 word]</unclear> ולפירושו <unclear>[illegible — 5 words]</unclear> לי' ובטלו הא <unclear>[illegible — 1 word]</unclear> בכל <unclear>[illegible — 3 words]</unclear> ולא <unclear>[illegible — 1 word]</unclear> לבטלו אלא דלא <unclear>[illegible — 3 words]</unclear> בכל <unclear>[illegible — 4 words]</unclear> ונבטלו בשוק <unclear>[illegible — 2 words]</unclear> לבטלו ודו"ק <unclear>[ink blot — 1 word]</unclear> <unclear>[illegible — 4 words]</unclear> דלא <unclear>[illegible — 2 words]</unclear>
+
+ד' עמ' תוס' ד"ה <unclear>[illegible — 2 words]</unclear> וכו' <unclear>[illegible — 6 words]</unclear> <unclear>[illegible — 6 words]</unclear> והרש"ל <unclear>[illegible — 5 words]</unclear> ידו <unclear>[illegible — 1 word]</unclear>
+
+<unclear>[illegible — 2 words]</unclear> דלא <unclear>[illegible — 1 word]</unclear> וכו' <unclear>[illegible — 1 word]</unclear> והרש"ל <unclear>[illegible — 1 word]</unclear> ודו"ק <unclear>[illegible — 4 words]</unclear> כלא <unclear>[illegible — 1 word]</unclear> <unclear>[illegible — 5 words]</unclear> לא <unclear>[illegible — 3 words]</unclear> בבדיקה <unclear>[illegible — 5 words]</unclear> לא <unclear>[illegible — 4 words]</unclear> טמאה <unclear>[illegible — 3 words]</unclear> <unclear>[illegible — 5 words]</unclear> דהא <unclear>[illegible — 4 words]</unclear> לא <unclear>[illegible — 2 words]</unclear> ולא <unclear>[illegible — 7 words]</unclear> <unclear>[illegible — 2 words]</unclear> ודו"ק
+
+<unclear>[illegible — 9 words]</unclear> חוששין ואפילו <unclear>[illegible — 3 words]</unclear> <unclear>[illegible — 4 words]</unclear> אלא <unclear>[illegible — 3 words]</unclear> עם כל <unclear>[illegible — 6 words]</unclear> <unclear>[illegible — 2 words]</unclear> דלא <unclear>[illegible — 1 word]</unclear> הא <unclear>[illegible — 2 words]</unclear> והרש"ל <unclear>[illegible — 7 words]</unclear> הוא דלא <unclear>[illegible — 3 words]</unclear> ספיקא הוא
+
+<vocab>תוספות, דיבור המתחיל, ארנונא, ספיקא דרבנן, ביטול, טומאה, בדיקה, מהרש"ל, ודו"ק</vocab>

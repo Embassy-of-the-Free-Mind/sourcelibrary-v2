@@ -237,6 +237,63 @@ export function splitPageBlocks(reply, n) {
 }
 
 /**
+ * The sentence agy prints at the end of a reply that Gemini's output filter cut (#68). Measured on the first-read
+ * lane's November 2026 calls (gex45, 38,833 block calls): 6,820 were refused for their markers, and 3,631 of those
+ * replies ended with this notice after zero or more whole pages. The model was transcribing; the service stopped it.
+ */
+export const GEMINI_CUT_NOTICE = "This request was blocked by Gemini's filters";
+
+/**
+ * The whole pages at the head of a block reply the filter cut (#68): the texts of pages 1..k, 0 <= k <= n, or null when
+ * the reply is not such a reply. As strict as splitPageBlocks on what it keeps: pages 1..k in order, each between its
+ * own two markers and non-empty, nothing but whitespace between them. After page k the reply may hold only the page the
+ * filter cut (<<<PAGE k+1 BEGIN>>>, its partial text, no END) and the notice. Any other marker, or text outside a
+ * page, returns null: the call is then a plain refusal and none of it is kept.
+ */
+export function cutReplyPages(reply, n) {
+  const s = String(reply || '');
+  const cut = s.lastIndexOf(GEMINI_CUT_NOTICE);
+  // The notice is the reply's last sentences (about 330 characters with its two links), never a quotation inside a page.
+  if (!(n >= 2) || cut < 0 || s.length - cut > 600) return null;
+  const body = s.slice(0, cut);
+  const marks = [...body.matchAll(/<<<\s*PAGE\s+(\d+)\s+(BEGIN|END)\s*>>>/g)];
+  const texts = [];
+  let at = 0;
+  while (texts.length < n) {
+    const i = texts.length, b = marks[2 * i], e = marks[2 * i + 1];
+    if (!b || !e || Number(b[1]) !== i + 1 || b[2] !== 'BEGIN' || Number(e[1]) !== i + 1 || e[2] !== 'END') break;
+    const inside = body.slice(b.index + b[0].length, e.index);
+    if (body.slice(at, b.index).trim() || /<<<\s*(?:BEGIN|END)\s*>>>/.test(inside) || !inside.trim()) return null;
+    texts.push(inside.trim());
+    at = e.index + e[0].length;
+  }
+  const k = texts.length, rest = marks.slice(2 * k);
+  if (rest.length > 1) return null;
+  if (rest.length === 1) {
+    const b = rest[0];
+    if (k >= n || Number(b[1]) !== k + 1 || b[2] !== 'BEGIN' || body.slice(at, b.index).trim()) return null;
+  } else if (body.slice(at).trim()) return null;
+  return texts;
+}
+
+/**
+ * What to read next when a block of n pages delivered only its first `kept` pages (#68). The same block sent again was
+ * refused again 2,896 times in 3,750 (77%), and one-page reads of the same pages landed 11,602 times in 11,638, so the
+ * block is not sent again at its size. `cut`: the filter fired inside page kept+1, so that page is read alone. The
+ * pages after it go out in blocks of half the size (`cap`, which the caller also applies to the rest of the book: the
+ * block after a refused one was refused 55% of the time, against 7% after an accepted one).
+ * Returns indexes into the block: { cap, alone: [i…], blocks: [[i…]…] }.
+ */
+export function refusedBlockPlan(n, kept, { cut = false } = {}) {
+  const cap = Math.max(1, Math.floor(n / 2));
+  const rest = Array.from({ length: Math.max(0, n - kept) }, (_, i) => kept + i);
+  const alone = cut && rest.length ? [rest.shift()] : [];
+  const blocks = [];
+  for (let i = 0; i < rest.length; i += cap) blocks.push(rest.slice(i, i + cap));
+  return { cap, alone, blocks };
+}
+
+/**
  * An agy account's pools, read from `agy -p "/quota" --output-format json` (free: no model turn). Each account has two
  * groups, Gemini and "Claude and GPT", each with a weekly and a 5-hour bucket. Returns
  * { gemini: {weekly, h5}, claude: {weekly, h5} } as remaining fractions (0..1), or null when unreadable.
@@ -330,7 +387,9 @@ export function assertGeminiModel(args, { agyHome = process.env.AGY_HOME || '', 
  * the script's file name. No ledger dir (a laptop): no ledger, no cap.
  */
 export const JOB_LEDGER = process.env.AGY_JOB_LEDGER || '/root/agy-quota/jobs';
-export const HEAVY_MODEL = /argon|-pro|-high$/;
+// An allowlist since 2026-11-13 (v3 #47): every Gemini model except 3.8 Flash low/medium is heavy, so a model agy adds
+// (Gemini 4 Carbon, Hydrogen) is capped from its first call. Keep in step with agy-guard.sh FREE_GEMINI.
+export const HEAVY_MODEL = /^gemini(?!-3\.8-flash-(low|medium)$)/i;
 export const HEAVY_DAILY_CAP = Number(process.env.AGY_HEAVY_DAILY_CAP || 300);
 export const agyJob = () => (process.env.AGY_JOB || path.basename(process.argv[1] || 'unknown').replace(/\.[cm]?js$/, '')).replace(/[^\w.-]/g, '_');
 export function jobCallsToday(job, { heavyOnly = true, dir = JOB_LEDGER, now = new Date() } = {}) {

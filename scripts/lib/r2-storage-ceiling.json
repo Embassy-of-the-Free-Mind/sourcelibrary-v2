@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "PRIOR ART: scripts/lib/r2-storage-ceiling.mjs — this is its data file; see its header for what it does not duplicate.",
+    "The R2 storage budget for bucket `sourcelibrary`, read by scripts/lib/r2-storage-ceiling.mjs.",
+    "ceiling = baseline.bytes + sum(approvals[].usd_per_month / usd_per_gb_month) GB.",
+    "To raise it, append an approval with who, when and the issue. Never edit an old row."
+  ],
+  "usd_per_gb_month": 0.015,
+  "baseline": {
+    "bytes": 21700000000000,
+    "measured": "2026-08-30",
+    "source": "system_config.storage_stats; ops costs/infrastructure-costs.md"
+  },
+  "approvals": [
+    { "usd_per_month": 250, "by": "Derek", "on": "2026-08-30", "issue": "v2#4404", "what": "grow the archived corpus to preservation grade (~17.9M pages)" },
+    { "usd_per_month": 40, "by": "Derek", "on": "2026-10-01", "issue": "v2#5457", "what": "acquisition wave 2026-10, hidden, images only" },
+    { "usd_per_month": 5, "by": "Derek", "on": "2026-10-29", "issue": "v2#6223", "what": "job-host scratch archived to R2 cold/" },
+    { "usd_per_month": 26, "by": "Derek", "on": "2026-11-12", "issue": "v2#3186", "what": "Siku full-resolution re-fetch, ~1.7 TB net (asked 2026-11-07)" },
+    { "usd_per_month": 10, "by": "Derek", "on": "2026-11-13", "issue": "#225", "what": "Tamil print and Indian translation series, ~530K pages, ~0.58 TB measured at 1.03 and 1.93 MB/page (\"do it. archive images r2\")" },
+    { "usd_per_month": 40, "by": "Derek", "on": "2026-11-13", "issue": "#95", "what": "Sanskrit named series (~1.0 TB) + eGangotri manuscripts and pre-1929 prints (3,713 items, ~1.6 TB), measured 1.8-1.9 MB/page (\"yes, that's fine, approve. pull it all in\")" }
+  ]
+}

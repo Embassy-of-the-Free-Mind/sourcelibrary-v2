@@ -845,8 +845,8 @@ export default function QualityCenterPage() {
             <p className="text-stone-700 leading-relaxed">
               A second reading by a stronger model now corrects weak German and French transcriptions (
               <IssueLink num={7558} />). The cheap signals we already store cannot pick out the weak books (
-              <a href="#learned" className={LINK}>finding 1</a>), so finding them means reading pages: we will repeat this
-              draw every month and report here whether the shares move (<IssueLink num={7263} />). The languages with the
+              <a href="#learned" className={LINK}>finding 1</a>), so finding them means reading pages. This draw has
+              run once; a repeat on a fresh draw is planned (<IssueLink num={7263} />). The languages with the
               lowest shares above — Greek, Sanskrit, Korean, Arabic — are the queue.
             </p>
           </div>
@@ -868,8 +868,8 @@ export default function QualityCenterPage() {
               table, the English of {englishTopRange} of pages from Latin, English and German books is rated 4 or 5 of 5 (
               {longDate(byLanguage.generated)}). That judge compares our English with our own transcription, so an error in
               the transcription does not count against it. The same is true of the{' '}
-              <A href="/quality/methods#monthly-audit">monthly audit</A>, which found a major error in the English on 14.8% of
-              pages (95% interval 7.0–24.2%; 103 books, one page each, drawn 1 October 2026).
+              <A href="/quality/methods#monthly-audit">monthly audit</A>, which found a major error in the English on 16.0% of
+              pages (95% interval 8.6–24.6%; 103 books, one page each, drawn 1 November 2026).
             </li>
             <li>
               <b className="text-stone-900">A page and a book.</b> A page figure counts pages; the headline counts books, and a

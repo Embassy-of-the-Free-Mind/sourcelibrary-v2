@@ -1,0 +1,33 @@
+<scan-quality>good</scan-quality>
+<language>Judeo-Persian</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>118</page-num>
+<warning>Handwritten square/semi-cursive Hebrew script. The text alternates three languages: Hebrew biblical verses (2 Kings 7:10–12), the Aramaic Targum (vocalized), and a Judeo-Persian translation in Hebrew characters. Some vocalization marks are not reproduced. Text from the facing page shows at the right edge and is not transcribed.</warning>
+<meta>The folio number "118" is written in a later hand in the top left corner. The text is written on ruled lines.</meta>
+
+רושן שודן באמדאד ובכסר אימא רא גונאה אכנון ביאייד
+תא ברוים ואגאה כונים בכאנה פאדשאה׃ ויבאו ויקראו
+אל שער העיר ויגידו להם לאמר באנו אל מחנה ארם והנה
+אין שם איש וקול אדם כי אם הסוס אסור והחמור אסור
+ואהלים כאשר המה׃ וַאֲתוֹ וּקְרוֹ לְנָטְרֵי תַּרְעָא קַרְתָּא
+וְחַוִּיאוּ לְהוֹן לְמֵימַר אֲתֵינָא לְמַשְׁרִית אֲרָם וְהָא לֵית תַּמָּן
+גְּבַר וְקָל אֱנָשׁ אֵילָהֵין סוּסָוָן אֲסִירִין וַחֲמָרִין אֲסִירִין ומשכנין
+כמא דאינון׃ וביאמדנד ובואנדנד בנגאה דרואן דרואזה
+אן שהר ואגה כרדנד בגפתן באישאן אמדים בלשכר <unclear>גאה</unclear>
+ארם ואינך ניסת אן גא מרד ואואז מרדום אלא אספאן
+בסתגאן ודראז גושאן בסתגאן וכיומהא צונאן אישאן
+<unclear>באלי</unclear>׃ ויקראו השערים ויגידו בית המלך פנימה׃ וּקְרוֹ
+נָטְרֵי תַרְעַיָּא וְחַוִּיאוּ בֵּית מַלְכָּא לְגָיו׃ ובאנדנד אן
+דרואזה באנאן ואגאה כרדנד כאנה פאדשאה רא אן
+אנדרונין׃ ויקם המלך לילה ויאמר אל עבדיו אגידה
+נא לכם את אשר עשו לנו ארם ידעו כי רעבים אנחנו ויצאו
+מן המחנה להחבא בשדה לאמר כי יצאו מן העיר ונתפשם
+חיים ואל העיר נבוא׃ וְקָם מַלְכָּא בְּלֵילְיָא וַאֲמַר לְעַבְדּוֹהִי
+אֲחַוֵּי כְעַן לְכוֹן יָת דִּיעֲבַדוּ לָנָא אֱנָשׁ אֲרָם יְדַעוּ אֲרֵי כַפְנִין
+אֲנַחְנָא וּנְפַקוּ מִן מַשְׁרִיתָא לְאִטְּמָרָא בְּחַקְלָא לְמֵימַר אֲרֵי
+יִפְקוּן מִן קַרְתָּא וְנֵיחוּדִינוּן כַּד חַיִּין וּלְקַרְתָּא נֵיעוֹל׃ וּבַר כַּאסת
+אן פאדשאה דר שב וגפת בבנדגאן אוי אגאה כונם <unclear>הנע</unclear>
+כאזשמא אנצר אנך בכרד באימא מרדום ארם דאנסתנד
+
+<vocab>2 Kings 7:10–12, Targum Jonathan, Judeo-Persian translation, שער העיר, מחנה ארם, נטרי תרעא, פאדשאה, דרואזה, לשכר, מלכא, משריתא</vocab>

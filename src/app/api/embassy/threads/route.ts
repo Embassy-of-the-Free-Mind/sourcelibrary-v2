@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { previewText } from '@/lib/embassy/thread-preview';
 import type { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
@@ -109,7 +110,7 @@ export async function GET(request: NextRequest) {
       lastMessageAt: thread.lastMessageAt,
       preview: {
         question: userMsg?.content?.slice(0, 200) || '',
-        answer: aiMsg?.content?.slice(0, 300) || '',
+        answer: previewText(aiMsg?.content, 300),
       },
     };
   });

@@ -3,7 +3,8 @@
  * Unified Pipeline Scheduler
  *
  * Replaces 15+ independent cron entries with a single coordinator that:
- *   1. Checks processing_control.paused — if paused, does nothing (NO auto-resume)
+ *   1. Checks processing_control.paused — if paused, starts nothing that spends (NO auto-resume);
+ *      only the workers marked `runsWhilePaused` (the batch collector) still run (#5492)
  *   2. Probes DB health before spawning any workers
  *   3. Tracks running workers via lock files
  *   4. Enforces a global connection budget (~40 Atlas connections)
@@ -18,6 +19,8 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
 import { execSync, spawn } from 'child_process';
 import { existsSync, readFileSync, writeFileSync, openSync, closeSync, appendFileSync, statSync } from 'fs';
 import { shouldBypassPause, hasScope } from './lib/selective-unpause.mjs';
@@ -30,7 +33,6 @@ startWorkerBeacon(import.meta.url);
 // ── Config ──
 
 const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const VERBOSE = process.argv.includes('--verbose') || process.argv.includes('-v');
@@ -50,7 +52,7 @@ const MAX_CONNECTIONS = 65;
 //   - healthMin: minimum health grade required ('healthy', 'degraded', 'critical')
 //   - log: log file path
 
-const WORKERS = [
+export const WORKERS = [
   // Tier 1: Core pipeline — must always run
   {
     name: 'pipeline-orchestrator',
@@ -145,6 +147,13 @@ const WORKERS = [
     interval: 600,      // every 10 min
     healthMin: 'critical', // always run — finishes in-flight batch jobs
     log: '/var/log/sourcelibrary/collector.log',
+    // Runs under a full stop too (#5492). It submits nothing and makes no generation call
+    // (spend-perimeter: spends:false), and Gemini drops a finished batch after 48h, so a pause
+    // that also stopped collection threw away work already paid for. Since 2026-10-10 nothing
+    // else collects on main: the standalone */10 collector line was never installed there and
+    // collect-batch-results.mjs was retired (#5813). The collector already "collects anyway"
+    // when it sees the pause (batch-collector.mjs main).
+    runsWhilePaused: true,
   },
 
   // Tier 3: Enrichment — Gemini API bound, moderate Atlas reads
@@ -370,7 +379,17 @@ function spawnWorker(worker) {
 
 // ── Main ──
 
+/**
+ * The workers the scheduler still starts under a full stop (paused, no selective-unpause scope).
+ * Only non-spenders belong here; tests/unit/scheduler-paused.test.ts checks each against
+ * spend-perimeter.mjs.
+ */
+export function pauseExemptWorkers(workers) {
+  return workers.filter((w) => w.runsWhilePaused === true);
+}
+
 async function main() {
+  if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
   const startTime = Date.now();
   console.log(`\n[scheduler] === Run at ${new Date().toISOString()} ===`);
 
@@ -392,12 +411,30 @@ async function main() {
       const ageMin = control.paused_at
         ? Math.round((Date.now() - new Date(control.paused_at).getTime()) / 60000)
         : '?';
-      console.log(`[scheduler] PAUSED (${ageMin}min ago, reason: ${control.paused_reason || control.paused_by || 'unknown'}). Skipping all workers.`);
+      console.log(`[scheduler] PAUSED (${ageMin}min ago, reason: ${control.paused_reason || control.paused_by || 'unknown'}). Skipping every worker that spends.`);
+
+      // Collection is not spending: finish the batches already submitted and paid for (#5492).
+      const lastRuns = getLastRuns();
+      const collectOnly = [];
+      for (const worker of pauseExemptWorkers(WORKERS)) {
+        if (isLocked(worker.lock)) continue;
+        if ((Date.now() - (lastRuns[worker.name] || 0)) / 1000 < worker.interval) continue;
+        if (DRY_RUN) {
+          console.log(`[scheduler]   ${worker.name}: WOULD SPAWN while paused (dry-run)`);
+        } else {
+          if (spawnWorker(worker) === null) continue;
+          lastRuns[worker.name] = Date.now();
+        }
+        collectOnly.push(worker.name);
+      }
+      if (!DRY_RUN && collectOnly.length) saveLastRuns(lastRuns);
+      if (collectOnly.length) console.log(`[scheduler] paused, still collecting: spawned=[${collectOnly.join(', ')}]`);
 
       await db.collection('cron_runs').insertOne({
         cron: 'scheduler', timestamp: new Date(),
         duration_ms: Date.now() - startTime, status: 'skipped',
-        summary: `paused (${ageMin}min)`,
+        summary: `paused (${ageMin}min)${collectOnly.length ? ` collect-only spawned=[${collectOnly.join(', ')}]` : ''}`,
+        ...(collectOnly.length ? { actions: { spawned: collectOnly, while_paused: true } } : {}),
       }).catch(() => {});
 
       await client.close();
@@ -630,4 +667,5 @@ async function main() {
   console.log(`[scheduler] done in ${Date.now() - startTime}ms`);
 }
 
-main();
+// Run only as the entry point, so tests can import WORKERS without starting a scheduler run.
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

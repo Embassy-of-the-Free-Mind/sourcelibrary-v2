@@ -54,6 +54,10 @@ while true; do
   rc=${PIPESTATUS[0]}
   case "$rc" in
     0|124|137|143) ;;
+    4) # archive step paused, or the R2 storage ceiling (scripts/lib/r2-storage-ceiling.mjs) refused.
+       # The ceiling's meter updates nightly, so re-asking more than hourly only adds noise.
+       echo "$(stamp) lane $LANE: $(grep -m1 -E 'R2 ceiling|archive step paused' "$out" | cut -c1-300) — sleeping 3600s"
+       rm -f "$out"; sleep 3600; continue ;;
     3) echo "$(stamp) lane $LANE: SOURCE BLOCKED (exit 3) — stopping this lane. Do not auto-retry a 403; ask the institution."
        # Leave a marker archive-lanes-revive.sh honours: without it the watchdog restarted the lane ten
        # minutes later, into the same refusal, every ten minutes (#5448). A human deletes it.

@@ -1,0 +1,69 @@
+[
+  {
+    "book_id": "6a45298cc6d95bc278fbc8c3",
+    "slot": 1,
+    "title": "Marcianus graecus Z. 299 (=584): Corpus of the Greek Alchemists",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 10th–11th-century Greek minuscule codex of the alchemical corpus. This leaf is from Olympiodorus' commentary on Zosimos, which fits the title. No tradition or collection is set to test it against.",
+    "rights_flag": null,
+    "structure_note": "pages_translated is 0 in the structure counts but 397 in the book field, so one of the two counters is wrong. 199 of 432 records carry a printed number, which fits recto-only pencil foliation (record 360 = fol. 169). The 10 backsteps and 10 repeats are more likely misread pencil folio numerals, or verso records that picked up the recto's number, than a scan splice. That is not verifiable from one page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 360,
+        "right_page": "yes",
+        "printed_marker": "169",
+        "layout": "single column of Greek minuscule in brown ink, wide blank outer margin; modern pencil foliation '169' top and bottom right; edge of the facing leaf's text visible at left (correctly ignored by the OCR)",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "ῥύσιμον ἐκ τοῦ αὐτοῦ ἄστρον", "image": "ῥέμβου ζητοῦσα θεόν (\"[do not] wander seeking God\")", "problem": "Zosimos' advice to Theosebeia was misread as nonsense about a star flowing away, and the translation carries it into the English", "severity": "serious", "class": "O6" },
+          { "ocr": "ὅθεν ἔσται μόνον·", "image": "ὡς τὸ δαιμόνιον· (\"like the daemonic\")", "problem": "the contrast between God, who is everywhere, and the localised daemon is lost", "severity": "moderate" },
+          { "ocr": "καθεζόμενον δὲ τὸ σῶμά σου. καθίζου δὲ τοῖς αὐτοῖς ἐν μηδὲ", "image": "καθεζομένη δὲ τῷ σώματι, καθέζου καὶ τοῖς πάθεσιν (\"being still in body, be still also in the passions\")", "problem": "the instruction to quiet the passions became 'sit down with these same things, in nothing'", "severity": "serious", "class": "O6" },
+          { "ocr": "τὸ ἅγιον. καὶ οὕτως ἥξει πρὸς τὸ ἅγιον", "image": "τὸ θεῖον. καὶ οὕτως ἥξει πρὸς σὲ τὸ θεῖον", "problem": "'the divine … will come to you' read as 'the holy … will come to the holy'", "severity": "moderate" },
+          { "ocr": "ὅταν δὲ ἐπιμείνας αὐτὴν. τό γε ἐπίγνωσιν καὶ τὸ μόνον", "image": "ὅταν δὲ ἐπιγνῷς σαυτήν, τότε ἐπιγνώσῃ καὶ τὸν μόνον [ὄντως θεόν]", "problem": "the self-knowledge maxim ('when you know yourself, then you will know the only true God') is lost and replaced by 'when you have persisted in it'", "severity": "serious", "class": "O6" },
+          { "ocr": "ἐπὶ τούτῳ καὶ τὸν γνήσιον | καὶ φησι κἀμοὶ. καὶ ἀγαπῶσα τῆς ὑμετέρας.", "image": "ἐπιτεύξῃ τῶν γνησίων καὶ φυσικῶν, καταπτύουσα τῆς ὕλης", "problem": "'you will attain the genuine and natural [tinctures], spitting on matter' became 'he says also to me, loving what is yours', which reverses the sense: contempt for matter becomes love", "severity": "serious", "class": "O6" },
+          { "ocr": "χρήσιμος τὰ παρ' ἐμοῦ· ὅθεν ἀκολουθήσας φησίν· ἐν τῷ παν-\nλόντι πᾶν. τοῦτο γὰρ ἡμῖν δεῖ τὸ πᾶν.", "image": "Χήμης τῷ Παρμενίδῃ ἀκολουθήσας φησίν· ἓν τὸ πᾶν, δι' οὗ τὸ πᾶν· τοῦτο γὰρ εἰ μὴ ἔχοι τὸ πᾶν, οὐδὲν τὸ πᾶν", "problem": "the authorities Chemes and Parmenides are lost, and the maxim 'One is the All, through which the All' is garbled", "severity": "serious", "class": "O6" },
+          { "ocr": "ὡς αὐτὸ αὐτὰ ἔχουσιν·", "image": "ὡς πρὸς τὰ θεῖα (as I read it)", "problem": "the theologians' position is misread; low confidence at this resolution", "severity": "moderate" },
+          { "ocr": "πῦρ ἀντὶ τῆς ἀκμῆς μου καίεσθαι", "image": "πῦρ ἀντὶ τῆς καμίνου καίεσθαι", "problem": "'in place of the furnace' read as 'in place of my prime'", "severity": "moderate" },
+          { "ocr": "ὁ γὰρ καπνός ἐστιν ἐξ ἀτμοῦ\nμοῦ καὶ ξηροῦ … μετὰ δὲ ἀτμοῦ θερμοῦ καὶ ὑγροῦ", "image": "smoke is μέσος/μεταξὺ θερμοῦ καὶ ξηροῦ; ὁ δὲ ἀτμὸς μεταξύ ἐστιν θερμοῦ καὶ ὑγροῦ", "problem": "the parallel is lost (smoke between hot and dry, vapour between hot and moist), and the duplicated 'μοῦ' shows a split 'θερ-μοῦ' was misread", "severity": "moderate" },
+          { "ocr": "καὶ ἡμᾶς τὸ μῆκος", "image": "καὶ ἵνα τὸ μῆκος", "problem": "small misread", "severity": "minor" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "ῥύσιμον ἐκ τοῦ αὐτοῦ ἄστρον", "english": "so that no star may flow away from it", "problem": "fluent English built on an OCR misread; the leaf says not to wander seeking God", "severity": "serious", "class": "T7" },
+          { "source": "ὅταν δὲ ἐπιμείνας αὐτὴν. τό γε ἐπίγνωσιν καὶ τὸ μόνον", "english": "And when you have persisted in it, there will be knowledge", "problem": "the leaf's 'when you know yourself, then you will know the only true God' is lost; the translation turns broken OCR into a confident sentence", "severity": "serious", "class": "T7" },
+          { "source": "καὶ ἀγαπῶσα τῆς ὑμετέρας", "english": "loving what is yours", "problem": "the leaf says 'spitting upon matter'; the English gives the opposite attitude", "severity": "serious", "class": "T7" },
+          { "source": "καθίζου δὲ τοῖς αὐτοῖς ἐν μηδὲ", "english": "Sit down, then, with these same things, in nothing", "problem": "the leaf says 'be still also in the passions'", "severity": "serious", "class": "T7" },
+          { "source": "χρήσιμος τὰ παρ' ἐμοῦ", "english": "Likewise the things from me are also useful.", "problem": "the leaf names Chemes following Parmenides; the attribution of the maxim is lost", "severity": "serious", "class": "T7" },
+          { "source": "οὐ δὲν τὸ πᾶν", "english": "\"the All is nothing\" <note>a garbled form of the alchemical maxim \"if the All is not One, the All is nothing\"", "problem": "the note puts the garbling on the source, which is clear on the leaf ('if it does not hold the All, the All is nothing'), and it supplies a different wording of the maxim", "severity": "moderate", "class": "T10" },
+          { "source": "οὐκ ἔσται ἡ γὰρ παραμονή", "english": "for the remaining is <note>the Greek is broken here; the sense seems to be that steadfastness is required</note>", "problem": "the Greek on the leaf is not broken, only the OCR is; the note guesses at a sense", "severity": "moderate", "class": "T10" },
+          { "source": "πῦρ ἀντὶ τῆς ἀκμῆς μου", "english": "fire, to burn in place of my prime", "problem": "the leaf says 'in place of the furnace' (OCR misread carried into the English)", "severity": "moderate" }
+        ],
+        "other": [
+          { "note": "the <meta> says the passage belongs to Olympiodorus' commentary on Zosimos and names Theosebeia, neither of which is on the page; this is probably correct, but it is not apparatus drawn from the leaf", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"anastasis\", rising up or resurrection", "verdict": "ok", "helpful": false },
+            { "quote": "the Greek is broken here; the sense seems to be that steadfa", "verdict": "unsupported", "helpful": false },
+            { "quote": "original: \"epignosis\", recognition or full knowledge", "verdict": "ok", "helpful": false },
+            { "quote": "a garbled form of the alchemical maxim \"if the All is not On", "verdict": "unsupported", "helpful": false },
+            { "quote": "original: \"physikoi\"", "verdict": "ok", "helpful": false },
+            { "quote": "the \"Good Spirit\", a legendary authority of Egyptian alchemy", "verdict": "ok", "helpful": true },
+            { "quote": "an alchemical substance, not modern magnesium", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"aithalē\", the fine sublimate deposited by vapour", "verdict": "ok", "helpful": true },
+            { "quote": "sal ammoniac, a salt used in sublimation", "verdict": "unsupported", "helpful": true }
+          ],
+          "missing": [
+            { "english": "as Zosimos also did", "why": "Zosimos of Panopolis, the chief authority quoted on the page, is never identified" },
+            { "english": "For Hermes too speaks about smoke", "why": "a general reader needs to know this is Hermes Trismegistus, the legendary founder of the art" },
+            { "english": "white in their own limbs throughout", "why": "'limbs' (melē) is alchemical jargon for the parts or bodies of the substance, and it reads as anatomical without a gloss" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right leaf, but the OCR misreads most of the Zosimos quotation in the top half. It loses 'know yourself, then you will know God', reverses 'spitting on matter' into 'loving what is yours', and drops Chemes and Parmenides. The English renders these misreads fluently, and notes paper over them."
+  }
+]

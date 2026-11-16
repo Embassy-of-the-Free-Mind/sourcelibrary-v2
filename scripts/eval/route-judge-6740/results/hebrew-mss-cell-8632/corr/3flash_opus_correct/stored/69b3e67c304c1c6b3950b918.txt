@@ -1,0 +1,30 @@
+<language>Hebrew</language>
+<page-type>text</page-type>
+<meta>The text is written in a Sephardic or Oriental semi-cursive Hebrew script. There is a later numerical addition in the upper left margin. The bottom line appears to be in a different script, possibly Judeo-Arabic or a stylized signature.</meta>
+
+<margin>165</margin>
+
+->קדיש<-
+
+ואנחנו צדקיך ועמך וצאן מרעיתך נודה לך
+יום ויום כי לך אנחנו קוים ומשחרים
+שבתנו ובעיני כל רואינו גמלנו חסדים
+טובים והטה בלבב כל אדם שיש לו עסק
+ועמהם לטובה ולישר חפצנו והשכר בפינו לכל
+אשר ארצה וכפול כל מחשבות שונאינו והפר
+כל עצת אויבינו ואל תתננו בידי בשר ודם
+בבוא יומן ואל תצטרכנו לידי מתנת בשר
+ודם נרננה בישועתך ובשם אלהינו נדגול
+ימלא יי כל משאלותיך ויהיה עם לבבי בעת
+מחשבי ועם ידי בעת מעבדי ועם פי בעת
+הטיפי ותשכיל ותצליח בכל דרכי ותצליחני
+בכל מהלכי ושלח ברכה בכל מעשה ידי ואל
+תעריכני לידי מכשול עוני תקימני ומהשחת
+דלני ותחייני ותעמידני ביראתך ותגמלני
+חסדים טובים לפניך ולפני חסדים טובים לעיני
+כל רואי
+יש"ר
+
+-><unclear>דוד חסאן</unclear><-
+
+<vocab>קדיש, צדקיך, חסדים טובים, ישועתך, ברכה, יראתך</vocab>

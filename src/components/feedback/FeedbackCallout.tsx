@@ -10,7 +10,10 @@ import { useLocale, FEEDBACK_STRINGS } from '@/lib/i18n';
 const HIDE_ON = ['/collections/mycology'];
 // Homepage editions opt out entirely — they carry their own "Be part of this"
 // band. Matched exactly, since every path startsWith('/').
-const HIDE_EXACT = ['/', '/es', '/la'];
+// The Librarian is a dark room that runs straight into the dark footer; this
+// pale band would cut a stripe between them. The footer's own "Give feedback"
+// link sits directly below. Exact match, so thread and room pages keep the band.
+const HIDE_EXACT = ['/', '/es', '/la', '/librarian', '/es/librarian'];
 
 /**
  * A warm callout section inviting visitors to share feedback.

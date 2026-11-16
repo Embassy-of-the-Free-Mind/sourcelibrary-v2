@@ -1,0 +1,49 @@
+{
+ "page_id": "69b4d61cf22c8341a90b9aa8",
+ "book_id": "69b4d61cf22c8341a90b9a9a",
+ "page_number": 14,
+ "cli": "agy",
+ "cli_version": "1.5.6",
+ "model": "gemini-3.8-flash-low",
+ "started_at": "2026-11-12T14:05:21.056Z",
+ "finished_at": "2026-11-12T14:05:39.614Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 1813,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "usage": [
+  {
+   "input": 18039,
+   "output": 717,
+   "thinking": 0,
+   "cache_read": 0,
+   "total": 18756
+  }
+ ],
+ "chatter": null,
+ "write_guard": "ok",
+ "prompt_variant": "sentinels-6523",
+ "agent": "page-reader",
+ "wrapper": null,
+ "tool_calls": [
+  "read_file"
+ ],
+ "image_url": "https://images.sourcelibrary.org/archived/69b4d61cf22c8341a90b9a9a/14.jpg",
+ "image_bytes": 348910,
+ "image_sha256": "0b58937acb6414586279afde4d65939b0f2710c1289d1b872ad4f6a2432a51e6",
+ "prompt_sent_chars": 16361,
+ "prompt_sent_hash": "f4342583da0217f2",
+ "stderr_tail": "",
+ "mode": "correct",
+ "lane": "route-judge-6740-eval",
+ "prompt_sent_file": "69b4d61cf22c8341a90b9aa8.prompt.txt",
+ "draft": {
+  "model": "gemini-3-flash-preview",
+  "pipeline": null,
+  "content_hash": "2767ce89cbccb0f17516f500906a5678d2dda23f246f5ed0dd991dd1cd947109",
+  "text_hash": "2767ce89cbccb0f1",
+  "updated_at": "2026-03-14T05:04:17.030Z"
+ }
+}

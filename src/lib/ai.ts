@@ -43,7 +43,7 @@ const THINKING_OFF_CONFIG = {
 function getThinkingOffModel(modelId: string) {
   // Self-metered: every function here RETURNS its token counts, and the callers
   // that matter (the OCR/translation workers, /api/process, modernize,
-  // transliterate, stitch-translations) write the usage row themselves with the
+  // transliterate) write the usage row themselves with the
   // book and page context an automatic row could not know. Letting the client
   // also log would put TWO rows on every page of the pipeline — which would
   // double the measured spend and close the daily dial on money never spent.

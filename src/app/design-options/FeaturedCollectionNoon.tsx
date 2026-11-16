@@ -107,7 +107,7 @@ export default function FeaturedCollectionNoon({ items }: { items: NoonFeaturedC
           {/* Left: text + description */}
           <div className="lg:col-span-2 flex flex-col justify-center">
             <Link href={`/collections/${collection.slug}`} className="group">
-              <h2 className="text-3xl md:text-4xl text-white mb-3 leading-tight font-display group-hover:text-accent-gold transition-colors">
+              <h2 className="text-3xl md:text-4xl text-white mb-3 leading-tight font-serif group-hover:text-accent-gold transition-colors">
                 {collection.name}
               </h2>
             </Link>

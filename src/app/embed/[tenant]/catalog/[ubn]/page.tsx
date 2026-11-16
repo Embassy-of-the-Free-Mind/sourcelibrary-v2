@@ -530,7 +530,7 @@ export default async function CatalogEntryPage({ params }: Props) {
           />
         )}
         {/* Identity */}
-        <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
+        <h1 className="text-3xl sm:text-4xl text-primary font-serif leading-tight mb-2">
           {displayTitle}
         </h1>
         {work.parallel_title && work.parallel_title !== displayTitle && (
@@ -576,7 +576,7 @@ export default async function CatalogEntryPage({ params }: Props) {
               <div className="flex-1 min-w-0">
 
                 {slBook.display_title && slBook.display_title !== work.title && (
-                  <p className="text-lg text-primary font-display leading-snug mb-1">
+                  <p className="text-lg text-primary font-serif leading-snug mb-1">
                     {slBook.display_title}
                   </p>
                 )}
@@ -679,7 +679,7 @@ export default async function CatalogEntryPage({ params }: Props) {
               )}
               <div className="flex-1 min-w-0">
                 {externalBook.display_title && externalBook.display_title !== work.title && (
-                  <p className="text-lg text-primary font-display leading-snug mb-1">
+                  <p className="text-lg text-primary font-serif leading-snug mb-1">
                     {externalBook.display_title}
                   </p>
                 )}

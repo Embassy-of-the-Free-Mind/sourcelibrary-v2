@@ -7,6 +7,7 @@
  * score.py can rank them. Read-only.
  *
  *   node --env-file=… scripts/eval/error-zoo/pool.mjs --out=DIR [--books=2500] [--seed=N]
+ *        [--exclude=labels.jsonl]            pages with a label are never candidates
  *        [--langs=Latin:150,German:150,...]   per-language quotas instead of a uniform draw (the calibration set)
  * Writes DIR/candidates.jsonl: {source:'candidate', book_id, page_id, page_number, language, serious:false, errors:[]}.
  */
@@ -17,6 +18,9 @@ import path from 'node:path';
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const OUT = path.resolve(arg('out', '')); if (!arg('out')) { console.error('--out=DIR required'); process.exit(2); }
 const NBOOKS = Number(arg('books', 2500)), SEED = Number(arg('seed', Date.now() % 1e9));
+// --exclude=FILE[,FILE]: label files whose pages are never candidates (a reviewed page is training data, not a draw).
+const EXCLUDE = new Set();
+for (const f of (arg('exclude') || '').split(',').filter(Boolean)) for (const l of fs.readFileSync(f, 'utf8').split('\n')) { const m = l.match(/"page_id":"([^"]+)"/); if (m) EXCLUDE.add(m[1]); }
 const QUOTA = arg('langs') ? Object.fromEntries(arg('langs').split(',').map((x) => { const [l, n] = x.split(':'); return [l, Number(n)]; })) : null;
 // Copied from convergent-audit-weekly.mjs so the pool is the audit's frame.
 const ENGLISH = /^(english|middle english|old english|early modern english|en)$/i;
@@ -41,7 +45,7 @@ for (const b of shuffle(frame.filter(want))) {
     { $project: { id: 1, page_number: 1, page_type: 1, ol: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, tl: { $strLenCP: { $ifNull: ['$translation.data', ''] } } } },
     { $match: { ol: { $gte: 200 }, tl: { $gte: 100 } } },
   ]).toArray();
-  const el = pages.filter((p) => !EXCLUDED_TYPES.has(p.page_type) && p.id);
+  const el = pages.filter((p) => !EXCLUDED_TYPES.has(p.page_type) && p.id && !EXCLUDE.has(p.id));
   if (!el.length) continue;
   const p = el[Math.floor(rng() * el.length)];
   out.push({ source: 'candidate', method: 'candidate', run_id: `pool-${SEED}`, book_id: b.id, page_id: p.id, page_number: p.page_number, language: L, serious: false, errors: [], exposure: 'served', selection: 'random' });

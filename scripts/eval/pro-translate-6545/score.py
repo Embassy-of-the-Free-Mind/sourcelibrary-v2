@@ -22,7 +22,7 @@ KEY = json.load(open(f'{J}/key.json'))
 TEXTS = json.load(open(f'{J}/texts.json'))
 ITEMS = KEY['items']
 GEMINI = {'FP', 'C38', 'C38S', 'PRO', 'CF', 'DF', 'C38_PLANT'}
-CLAUDE = {'OPUS', 'CO', 'DO'}
+CLAUDE = {'OPUS', 'CO', 'DO', 'OPUS2', 'OPUSX', 'FABLE'}   # the last three: the follow-up round (fresh Opus, Opus at higher effort, Fable)
 B = 2000
 
 
@@ -102,8 +102,8 @@ def boot(pages, stat, seed=6545):
     return [round(vals[int(0.025 * len(vals))], 3), round(vals[int(0.975 * len(vals)) - 1], 3)] if vals else None
 
 
-def arms_items(lang=None, kind='ARMS'):
-    return [i for i, k in ITEMS.items() if k['kind'] == kind and (lang is None or k['lang'] == lang)]
+def arms_items(lang=None, kind='ARMS', stratum=None):
+    return [i for i, k in ITEMS.items() if k['kind'] == kind and (lang is None or k['lang'] == lang) and (stratum is None or k.get('stratum') == stratum)]
 
 
 def fid(j, i, a):
@@ -173,8 +173,8 @@ def alpha_with_ci(units):
 
 
 # ---------- per-panel arm table ----------
-def panel_table(lang, arms):
-    items = arms_items(lang)
+def panel_table(lang, arms, stratum=None):
+    items = arms_items(lang, stratum=stratum)
     page = {i: ITEMS[i]['page_id'] for i in items}
     out = {'pages': len(items), 'by_judge': {}}
     for j in JUDGES:
@@ -194,12 +194,26 @@ def panel_table(lang, arms):
     return out
 
 
-def paired(lang, x, y, judge):
-    items = [i for i in arms_items(lang) if fid(judge, i, x) is not None and fid(judge, i, y) is not None]
+def paired(lang, x, y, judge, stratum=None):
+    items = [i for i in arms_items(lang, stratum=stratum) if fid(judge, i, x) is not None and fid(judge, i, y) is not None]
     if not items: return None
     d = lambda s: mean([fid(judge, i, x) - fid(judge, i, y) for i in s])
     w = sum(1 for i in items if fid(judge, i, x) > fid(judge, i, y)); l = sum(1 for i in items if fid(judge, i, x) < fid(judge, i, y))
     return {'n': len(items), 'mean': round(d(items), 3), 'ci_by_work': boot(items, d), 'wins': w, 'losses': l, 'ties': len(items) - w - l}
+
+
+FOLLOW_UP = [('FABLE', 'OPUS2'), ('FABLE', 'OPUSX'), ('OPUSX', 'OPUS2'), ('OPUS2', 'OPUS'), ('FABLE', 'OPUS'), ('OPUS2', 'C38S'), ('FABLE', 'C38S'), ('OPUSX', 'C38S')]
+
+
+def pair_block(lang, cmp, arms, stratum=None):
+    pairs = {}
+    for x, y in cmp:
+        if x not in arms or y not in arms: continue
+        pairs[f'{x}-{y}'] = {'headline_judge': headline_judge(x, y), **{j: paired(lang, x, y, j, stratum) for j in JUDGES}}
+        ps = [pairs[f'{x}-{y}'][j] for j in ('opus', 'pro') if pairs[f'{x}-{y}'].get(j)]
+        sg = {(p['mean'] > 0) - (p['mean'] < 0) for p in ps}
+        pairs[f'{x}-{y}']['judges_agree_on_sign'] = len(ps) == 2 and len(sg) == 1
+    return pairs
 
 
 def headline_judge(x, y):
@@ -450,6 +464,10 @@ def run_meta(arms):
         calls = [(r.get('attempts') or 1) for r in rows]
         m[a] = {'pages': len(rows), 'secs_per_page_median': round(statistics.median(secs), 1) if secs else None, 'secs_per_page_mean': round(mean(secs), 1) if secs else None,
                 'calls_per_page': round(mean(calls), 2), 'nudged': sum(1 for r in rows if r.get('nudged'))}
+        cost = [r['cost_usd'] for r in rows if r.get('cost_usd')]
+        if cost:   # claude-arm.py rows since the follow-up round: the CLI's list-price figure, not a bill
+            m[a].update({'list_usd_per_page_mean': round(mean(cost), 3), 'output_tokens_per_page_mean': round(mean([r.get('output_tokens') or 0 for r in rows])),
+                         'models': sorted({x for r in rows for x in (r.get('models') or [])}), 'effort': sorted({str(r.get('effort')) for r in rows})})
     return m
 
 
@@ -464,15 +482,13 @@ def main():
         pairs = {}
         cmp = [('PRO', 'C38'), ('PRO', 'C38S'), ('C38S', 'C38'), ('OPUS', 'C38'), ('OPUS', 'PRO'), ('PRO', 'FP'), ('C38', 'FP'), ('OPUS', 'FP'),
                ('OPUS', 'C38S'), ('CF', 'FP'), ('CO', 'FP'), ('CO', 'C38S'), ('C38S2', 'C38S'), ('OPUS', 'C38S2'), ('DO', 'OPUS'), ('DO', 'C38S'), ('DF', 'C38S'), ('CF', 'C38'), ('CO', 'C38'), ('CO', 'OPUS'), ('DF', 'FP'), ('DO', 'FP'), ('DF', 'C38'), ('DO', 'C38'), ('DO', 'CO'), ('DF', 'CF')]
-        for x, y in cmp:
-            if x not in arms or y not in arms: continue
-            pairs[f'{x}-{y}'] = {'headline_judge': headline_judge(x, y), **{j: paired(LL, x, y, j) for j in JUDGES}}
-            ps = [pairs[f'{x}-{y}'][j] for j in ('opus', 'pro') if pairs[f'{x}-{y}'].get(j)]
-            sg = {(p['mean'] > 0) - (p['mean'] < 0) for p in ps}
-            pairs[f'{x}-{y}']['judges_agree_on_sign'] = len(ps) == 2 and len(sg) == 1
+        pairs = pair_block(LL, cmp + FOLLOW_UP, arms)
         S['panels'][L] = {'table': tab, 'pairs': pairs}
         if LL is None:
             S['panels'][L]['table'] = panel_table(None, arms)
+    strata = sorted({k['stratum'] for k in ITEMS.values() if k.get('stratum')})
+    if strata:   # a round built with --uids: the same table and pairs within each stratum (hard / ceiling), languages pooled
+        S['strata'] = {st: {'table': panel_table(None, arms, st), 'pairs': pair_block(None, cmp + FOLLOW_UP, arms, st)} for st in strata}
     S['plant_controls'] = plant_catches()
     S['agreement'] = {}
     for ja, jb in (('opus', 'pro'), ('opus', 'fable'), ('pro', 'fable')):
@@ -517,6 +533,12 @@ def main():
             print(f'  {j:5s} ' + '  '.join(f"{a} {v['fidelity']:.2f}({v['n']}) r{v['reversals_per_100']:.0f}" for a, v in t.items()))
         for k, v in S['panels'][L]['pairs'].items():
             print(f'  {k:10s} head={v["headline_judge"]:5s} ' + '  '.join(f"{j} {v[j]['mean']:+.2f} {v[j]['ci_by_work']}" for j in JUDGES if v.get(j)) + ('' if v['judges_agree_on_sign'] else '  SPLIT'))
+    for st, v in S.get('strata', {}).items():
+        print(f'\n== stratum {st}')
+        for j in JUDGES:
+            print(f'  {j:5s} ' + '  '.join(f"{a} {x['fidelity']:.2f}({x['n']}) r{x['reversals_per_100']:.0f}" for a, x in v['table']['by_judge'].get(j, {}).items()))
+        for k, x in v['pairs'].items():
+            print(f'  {k:12s} ' + '  '.join(f"{j} {x[j]['mean']:+.2f} {x[j]['ci_by_work']} w{x[j]['wins']}/l{x[j]['losses']}" for j in JUDGES if x.get(j)))
     print('\nplant controls', {j: (v['located'], v['lower'], v['n']) for j, v in S['plant_controls'].items()})
     print('agreement', {k: (v['pooled']['alpha'], v['pooled']['ci_by_work'], v['span_f1']['f1'], v['ranking']['share']) for k, v in S['agreement'].items()})
     print('retest', {j: (v['alpha'], v['units']) for j, v in S['retest'].items()})

@@ -4,7 +4,7 @@ import HomeJoin from '@/components/home/HomeJoin';
 import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
-import EditorialSpread from '@/components/prototype/EditorialSpread';
+import EditorialSpread, { featuredBookHref } from '@/components/prototype/EditorialSpread';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
@@ -35,6 +35,11 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, nativeShelfTotal, beginnerShelf, untranslatedShelf, subjectShelves } = data;
   const subjectShelvesText = NATIVE_SUBJECT_SHELVES[lang];
   const hasShowcase = curatedShowcase.items.length > 0;
+  // The hero's "Start reading" link (#76) opens the lead book of the featured
+  // band further down: a curated, translated pick already on this page. None
+  // loaded, no link.
+  const leadBook = featuredItems[0]?.books[0];
+  const startReadingHref = leadBook ? featuredBookHref(leadBook, lang) : undefined;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
   // books can actually be READ in Spanish — the same thing /es/collections
@@ -67,7 +72,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.readableInEnglish} />
 
       {/* Video Hero */}
-      <HeroSection lang={lang} />
+      <HeroSection lang={lang} startReadingHref={startReadingHref} />
 
       {/* Read in Spanish — the first thing under the hero on /es, because it is
           the one section whose BOOKS (not just chrome) are in the visitor's
@@ -87,7 +92,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </div>
               <div className="p-6 sm:p-8 flex flex-col justify-center">
                 <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">{t.spanishHeading}</p>
-                <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanishCollection.name}</h2>
+                <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanishCollection.name}</h2>
                 <p className="text-muted leading-relaxed mb-4">{t.spanishSubtitle}</p>
                 <p className="text-sm text-secondary">{nf(spanishCollection.bookCount)} {t.booksLabel} &rarr;</p>
               </div>
@@ -105,7 +110,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         <section className="bg-white py-10 md:py-14">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
             <div className="flex items-end justify-between gap-4 mb-3">
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
+              <h2 className="text-3xl md:text-4xl text-primary font-serif">
                 {t.nativeShelfHeading}
               </h2>
               <Link
@@ -129,7 +134,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {beginnerShelf.length > 0 && (
         <section id="tironibus" className="bg-white pb-10 md:pb-14 scroll-mt-20">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <h2 className="text-3xl md:text-4xl text-primary font-display mb-3">
+            <h2 className="text-3xl md:text-4xl text-primary font-serif mb-3">
               {t.beginnerShelfHeading}
             </h2>
             <p className="text-muted mb-6 max-w-2xl">
@@ -147,7 +152,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {untranslatedShelf && untranslatedShelf.books.length > 0 && (
         <section id="nondum-conversi" className="bg-white pb-10 md:pb-14 scroll-mt-20">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <h2 className="text-3xl md:text-4xl text-primary font-display mb-3">
+            <h2 className="text-3xl md:text-4xl text-primary font-serif mb-3">
               {t.untranslatedShelfHeading}
             </h2>
             <p className="text-muted mb-6 max-w-2xl">
@@ -173,7 +178,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               {hasShowcase && (
                 <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">{t.showcaseEyebrow}</p>
               )}
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
+              <h2 className="text-3xl md:text-4xl text-primary font-serif">
                 {t.collectionsHeading}
               </h2>
               {hasShowcase && (
@@ -214,7 +219,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           <div className={hasShowcase ? 'mt-14 md:mt-20 pt-10 md:pt-12 border-t border-border-light' : ''}>
             <div className="flex items-end justify-between gap-4 mb-6">
               <div>
-                <h3 className="text-2xl md:text-3xl text-primary font-display">
+                <h3 className="text-2xl md:text-3xl text-primary font-serif">
                   {t.bySubjectHeading}
                 </h3>
                 <p className="text-muted mt-2">
@@ -290,7 +295,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
             <div className="flex items-end justify-between gap-4 mb-3">
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
+              <h2 className="text-3xl md:text-4xl text-primary font-serif">
                 {t.recentlyTranslatedHeading}
               </h2>
               <Link
@@ -331,14 +336,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {subjectShelves.length > 0 && subjectShelvesText && (
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <h2 className="text-3xl md:text-4xl text-primary font-display mb-10">
+            <h2 className="text-3xl md:text-4xl text-primary font-serif mb-10">
               {subjectShelvesText.heading}
             </h2>
             <div className="space-y-12">
               {subjectShelves.map((shelf) => (
                 <div key={shelf.slug}>
                   <div className="flex items-end justify-between gap-4 mb-4">
-                    <h3 className="text-2xl text-primary font-display">{shelf.heading}</h3>
+                    <h3 className="text-2xl text-primary font-serif">{shelf.heading}</h3>
                     <Link
                       href={lp(`/collections/${shelf.slug}`)}
                       className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap"
@@ -369,7 +374,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {galleryPlates.length > 0 && (
         <section className="bg-warm py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
+            <h2 className="text-3xl md:text-4xl text-primary mb-3 font-serif">
               {t.galleryHeading}
             </h2>
             <p className="text-muted mb-10 max-w-2xl">
@@ -408,7 +413,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
             <div className="flex items-end justify-between gap-4 mb-3">
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
+              <h2 className="text-3xl md:text-4xl text-primary font-serif">
                 {t.mostLikedHeading}
               </h2>
             </div>

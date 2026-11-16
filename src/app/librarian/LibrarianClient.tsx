@@ -14,6 +14,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import LibrarianMessageBody from './_components/MessageBody';
 import { LIBRARIAN_STRINGS, type LibrarianStrings } from '@/lib/librarian-i18n';
 import { localePath, type Locale } from '@/lib/locale-path';
+import { splitSourceCards, collapseRepeatedQuestions } from '@/lib/embassy/source-cards';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -141,40 +142,66 @@ function timeAgo(dateStr: string, t: LibrarianStrings): string {
 
 // ── Source Card Component ─────────────────────────────────────────────
 
-function SourceCardRow({ sources, tenant, lang, t }: { sources: SourceCard[]; tenant?: string; lang: Locale; t: LibrarianStrings }) {
-  if (sources.length === 0) return null;
+function SourceCardLink({ s, tenant, lang, t }: { s: SourceCard; tenant?: string; lang: Locale; t: LibrarianStrings }) {
+  const url = localePath(tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `/page-number/${s.pageNumber}` : ''), lang);
   return (
+    <Link
+      href={url}
+      className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${s.inCollection
+          ? 'border-[#e8e4dc] bg-white hover:border-[#c9a86c] hover:bg-[#faf8f4]'
+          : 'border-dashed border-[#d4d0c8] bg-[#f9f7f3] opacity-60'
+        }`}
+    >
+      <p className="text-[12px] font-body text-[#1a1612] font-medium leading-tight line-clamp-2">
+        {s.bookTitle}
+      </p>
+      <p className="text-[10px] text-[#8a8480] font-body mt-0.5">
+        {s.bookAuthor}
+        {s.pageNumber ? ` · p. ${s.pageNumber}` : ''}
+      </p>
+      {s.snippet && (
+        <p className="text-[10px] text-[#6b6560] font-body mt-1 line-clamp-2 italic leading-relaxed">
+          {s.snippet}
+        </p>
+      )}
+      {!s.inCollection && (
+        <p className="text-[9px] text-[#b0a89c] font-sans mt-1">{t.notYetInCollection}</p>
+      )}
+    </Link>
+  );
+}
+
+// The cards a reader sees are the pages the ANSWER cites, in the order it cites
+// them. Everything else a search of the turn returned sits behind one toggle:
+// shown as a single row, 22 cards for one answer read as noise, with uncited
+// books beside the cited ones (v3#250). Nothing is shown while the answer is
+// still being written, because what it cites is not known yet.
+function SourceCardRow({ sources, answer, settled, tenant, lang, t }: { sources: SourceCard[]; answer: string; settled: boolean; tenant?: string; lang: Locale; t: LibrarianStrings }) {
+  const [showOther, setShowOther] = useState(false);
+  if (sources.length === 0 || !settled) return null;
+  const { cited, other } = splitSourceCards(sources, answer);
+  const row = (cards: SourceCard[]) => (
     <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
-      {sources.map((s, i) => {
-        const url = localePath(tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `/page-number/${s.pageNumber}` : ''), lang);
-        return (
-          <Link
-            key={`${s.bookId}-${s.pageNumber}-${i}`}
-            href={url}
-            className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${s.inCollection
-                ? 'border-[#e8e4dc] bg-white hover:border-[#c9a86c] hover:bg-[#faf8f4]'
-                : 'border-dashed border-[#d4d0c8] bg-[#f9f7f3] opacity-60'
-              }`}
-          >
-            <p className="text-[12px] font-body text-[#1a1612] font-medium leading-tight line-clamp-2">
-              {s.bookTitle}
-            </p>
-            <p className="text-[10px] text-[#8a8480] font-body mt-0.5">
-              {s.bookAuthor}
-              {s.pageNumber ? ` · p. ${s.pageNumber}` : ''}
-            </p>
-            {s.snippet && (
-              <p className="text-[10px] text-[#6b6560] font-body mt-1 line-clamp-2 italic leading-relaxed">
-                {s.snippet}
-              </p>
-            )}
-            {!s.inCollection && (
-              <p className="text-[9px] text-[#b0a89c] font-sans mt-1">{t.notYetInCollection}</p>
-            )}
-          </Link>
-        );
-      })}
+      {cards.map((s, i) => <SourceCardLink key={`${s.bookId}-${s.pageNumber}-${i}`} s={s} tenant={tenant} lang={lang} t={t} />)}
     </div>
+  );
+  return (
+    <>
+      {cited.length > 0 && row(cited)}
+      {other.length > 0 && (
+        <>
+          <button
+            onClick={() => setShowOther(o => !o)}
+            aria-expanded={showOther}
+            data-testid="other-sources-toggle"
+            className="mt-2 text-[11px] text-[#6b6560] hover:text-[#1a1612] transition-colors font-sans"
+          >
+            {showOther ? t.hideOtherPages : t.otherPagesSearched(other.length)}
+          </button>
+          {showOther && row(other)}
+        </>
+      )}
+    </>
   );
 }
 
@@ -319,11 +346,14 @@ function pickSuggestions(pool0: readonly string[], count: number, extras: string
 // Filter for surfacing real visitor questions (from public threads, already
 // shown verbatim in the Recent sidebar) as suggestion chips. Keeps genuine
 // questions; drops imperative prompts ("write a 30 sec reel"), links, and
-// anything too short or long to make a good chip.
+// anything too short or long to make a good chip. A chip sits beside the
+// edited ones on the first screen, so it must also look edited: a capital to
+// start and a question mark to end ("is sanskrit older than hebrew" did not).
 const QUESTION_START_RE = /^(what|who|whose|how|why|did|do|does|was|were|is|are|which|where|when|can|could|tell me|show me|explain)\b/i;
 function looksLikeGoodQuestion(q: string): boolean {
   const t = q.trim();
   return t.length >= 20 && t.length <= 80
+    && /^\p{Lu}/u.test(t) && t.endsWith('?')
     && !t.includes('\n')
     && !/https?:\/\//i.test(t)
     && QUESTION_START_RE.test(t);
@@ -331,7 +361,7 @@ function looksLikeGoodQuestion(q: string): boolean {
 
 export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en' }: LibrarianClientProps) {
   const t = LIBRARIAN_STRINGS[lang];
-  const books = (Math.floor(bookCount / 1000) * 1000).toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
+  const books = (Math.floor(bookCount / 1000) * 1000).toLocaleString(t.dateLocale);
   const href = (path: string) => localePath(path, lang);
   const { data: session, status } = useSession();
   const params = useParams<{ tenant: string }>();
@@ -952,7 +982,12 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
   const isSignedIn = status !== 'loading' && !!session?.user;
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
+    // The page is one dark room with one lit object in it: the hero's library
+    // continues below as the ground, and the chat card is the only light
+    // surface, so "ask here" is the first thing a reader sees (v3#235). Text
+    // set directly on the ground (the sidebar) is cream; rust links fail
+    // contrast there, so links on the ground are gold.
+    <div className="min-h-screen bg-[#0e0c0a]">
       <SiteHeader variant="light" />
       {/* Hero */}
       <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[200px] sm:min-h-[240px]">
@@ -969,7 +1004,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0e0c0a]/90" />
 
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-10 sm:pt-12 pb-10 animate-fade-in-up">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-serif mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
             {t.title}
           </h1>
           <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
@@ -982,23 +1017,27 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
       <div className="relative">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.sourcelibrary.org/artwork/reading-room-hero.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.06]" />
+          <img src="https://images.sourcelibrary.org/artwork/reading-room-hero.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.28]" />
+          {/* Veil: solid at the top so the hero's fade meets it without a seam,
+              then dark enough everywhere that cream text clears 4.5:1 over the
+              brightest part of the photograph. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0e0c0a] via-[#0e0c0a]/60 to-[#0e0c0a]/80" />
         </div>
-        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8 md:py-12 animate-fade-in-up">
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-6 pb-16 md:pt-8 md:pb-24 animate-fade-in-up">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
             {/* Chat area */}
             <div className="flex-1 min-w-0">
-              <div ref={chatCardRef} className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm scroll-mt-4">
+              <div ref={chatCardRef} className="border border-[#c9a86c]/45 rounded-lg bg-[#fdfcf9] overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.75)] scroll-mt-4">
                 {/* Messages */}
                 <div ref={chatContainerRef} className="min-h-[200px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
                     <div className="text-center py-8">
                       <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
-                      <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
+                      <p className="text-[#444] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
                         {t.emptyLead(books)}
                       </p>
-                      <p className="text-[#8a8480]/50 text-xs font-body mt-1.5">
+                      <p className="text-[#6b6560] text-xs font-body mt-1.5">
                         {t.emptyDisclaimer}
                       </p>
                       <div className="flex flex-wrap justify-center gap-2 mt-5">
@@ -1010,7 +1049,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                             // cannot locate a chip by its wording (#3358).
                             data-testid="suggestion-chip"
                             onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}
-                            className="px-3 py-1.5 text-xs text-[#6b6560] border border-[#e8e4dc] rounded-full hover:bg-[#f5f0e8] hover:text-[#444] transition-colors font-sans"
+                            className="px-3 py-1.5 text-xs text-[#444] bg-white border border-[#d4cfc4] rounded-full hover:border-[#c9a86c] hover:text-[#1a1612] transition-colors font-sans"
                           >
                             {suggestion}
                           </button>
@@ -1114,7 +1153,14 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                           )}
 
                           {/* Source cards */}
-                          <SourceCardRow sources={assistant.sources} tenant={tenant} lang={lang} t={t} />
+                          <SourceCardRow
+                            sources={assistant.sources}
+                            answer={assistant.content}
+                            settled={!(sending && i === messages.length - 1)}
+                            tenant={tenant}
+                            lang={lang}
+                            t={t}
+                          />
 
                           {/* Copy / share actions (once the response has finished streaming) */}
                           {assistant.content && !assistant.error && !(sending && i === messages.length - 1) && (
@@ -1183,7 +1229,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                       onKeyDown={handleKeyDown}
                       placeholder={t.placeholder}
                       rows={1}
-                      className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-transparent disabled:opacity-50"
+                      className="flex-1 resize-none border border-[#d4cfc4] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#6b6560] focus:outline-none focus:border-[#c9a86c] transition-colors bg-white disabled:opacity-50"
                     />
                     {speechSupported && (
                       <button
@@ -1194,7 +1240,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                         title={listening ? t.stopVoice : t.speakYourQuestion}
                         className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg border transition-colors ${listening
                           ? 'border-[#9e4a3a] bg-[#9e4a3a] text-white animate-pulse'
-                          : 'border-[#e8e4dc] text-[#8a8480] hover:text-[#1a1612] hover:border-[#c9a86c]'
+                          : 'border-[#d4cfc4] bg-white text-[#6b6560] hover:text-[#1a1612] hover:border-[#c9a86c]'
                           }`}
                       >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -1208,7 +1254,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                       <button
                         type="button"
                         onClick={handleStop}
-                        className="flex-shrink-0 px-5 py-2.5 bg-[#9e4a3a] text-white rounded-lg text-sm font-sans hover:bg-[#8b3d30] transition-colors"
+                        className="flex-shrink-0 px-5 py-2.5 border border-[#9e4a3a] bg-white text-[#9e4a3a] rounded-lg text-sm font-sans hover:bg-[#9e4a3a] hover:text-white transition-colors"
                       >
                         {t.stop}
                       </button>
@@ -1216,7 +1262,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                       <button
                         type="submit"
                         disabled={!input.trim()}
-                        className="flex-shrink-0 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-30 transition-colors"
+                        className="flex-shrink-0 px-5 py-2.5 border border-[#9e4a3a] bg-[#9e4a3a] text-white rounded-lg text-sm font-sans hover:bg-[#8b3d30] disabled:hover:bg-[#9e4a3a] disabled:cursor-default transition-colors"
                       >
                         {t.send}
                       </button>
@@ -1226,7 +1272,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                   <div className="flex items-center justify-between mt-2">
                     <div className="flex items-center gap-3">
                       {messages.length > 0 && (
-                        <button onClick={startNewThread} className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans">
+                        <button onClick={startNewThread} className="text-[11px] text-[#6b6560] hover:text-[#1a1612] transition-colors font-sans">
                           {t.newConversation}
                         </button>
                       )}
@@ -1247,7 +1293,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setListed(visibility !== 'public')}
-                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
+                        className="text-[11px] text-[#6b6560] hover:text-[#1a1612] transition-colors font-sans flex items-center gap-1"
                       >
                         <span>{visibility === 'public' ? t.listed : t.notListed}</span>
                         <span className="text-[9px]">
@@ -1261,7 +1307,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                   </div>
 
                   {!isSignedIn && status !== 'loading' && (
-                    <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
+                    <p className="mt-2 text-[12px] text-[#6b6560] font-sans">
                       <Link href={`${href('/auth/signin')}?callbackUrl=${encodeURIComponent(href('/librarian'))}`} className="text-[#9e4a3a] hover:underline">
                         {t.signIn}
                       </Link>
@@ -1279,7 +1325,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                 <div className="flex gap-4 mb-4">
                   <button
                     onClick={() => { setSidebarTab('recent'); setVisibleThreads(5); }}
-                    className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'recent' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
+                    className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'recent' ? 'text-[#f5f0e8]' : 'text-[#f5f0e8]/60 hover:text-[#f5f0e8]/85'
                       }`}
                   >
                     {t.recent}
@@ -1287,7 +1333,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                   {isSignedIn && (
                     <button
                       onClick={() => { setSidebarTab('mine'); setVisibleThreads(5); }}
-                      className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'mine' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
+                      className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'mine' ? 'text-[#f5f0e8]' : 'text-[#f5f0e8]/60 hover:text-[#f5f0e8]/85'
                         }`}
                     >
                       {t.myConversations}
@@ -1296,14 +1342,16 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                 </div>
 
                 {sidebarTab === 'recent' && (
-                  <p className="text-[10px] text-[#b0a89c] font-sans mb-3 leading-relaxed">
+                  <p className="text-[10px] text-[#f5f0e8]/60 font-sans mb-3 leading-relaxed">
                     {t.recentHint}
                   </p>
                 )}
 
                 {(() => {
                   const isMine = sidebarTab === 'mine';
-                  const allThreads = isMine ? myThreads : threads;
+                  // Recent is other readers' questions; a suggestion chip pressed by five
+                  // readers was five identical rows. The reader's own list is left whole.
+                  const allThreads = isMine ? myThreads : collapseRepeatedQuestions(threads);
                   const listState = isMine ? myThreadsState : threadsState;
                   // Session still resolving means "we don't know yet", not "none".
                   const loading = listState === 'loading' || (isMine && status === 'loading');
@@ -1312,10 +1360,10 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                     return (
                       <div className="space-y-3" aria-busy="true">
                         {[0, 1, 2].map(i => (
-                          <div key={i} className="py-3 border-b border-[#e8e4dc] animate-pulse">
-                            <div className="h-3 bg-[#e8e4dc] rounded w-5/6 mb-2" />
-                            <div className="h-3 bg-[#eee9e1] rounded w-full mb-1.5" />
-                            <div className="h-3 bg-[#eee9e1] rounded w-2/3" />
+                          <div key={i} className="py-3 border-b border-[#f5f0e8]/15 animate-pulse">
+                            <div className="h-3 bg-[#f5f0e8]/20 rounded w-5/6 mb-2" />
+                            <div className="h-3 bg-[#f5f0e8]/10 rounded w-full mb-1.5" />
+                            <div className="h-3 bg-[#f5f0e8]/10 rounded w-2/3" />
                           </div>
                         ))}
                         <span className="sr-only">Loading conversations…</span>
@@ -1325,11 +1373,11 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
 
                   if (listState === 'error') {
                     return (
-                      <p className="text-[#8a8480] text-sm font-body">
+                      <p className="text-[#f5f0e8]/75 text-sm font-body">
                         Couldn&rsquo;t load {isMine ? 'your conversations' : 'recent conversations'}.{' '}
                         <button
                           onClick={() => { if (isMine) setReloadMine(n => n + 1); else window.location.reload(); }}
-                          className="text-[#9e4a3a] hover:underline"
+                          className="text-[#c9a86c] hover:underline"
                         >
                           Try again
                         </button>
@@ -1340,7 +1388,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
 
                   if (allThreads.length === 0) {
                     return (
-                      <p className="text-[#8a8480] text-sm font-body">
+                      <p className="text-[#f5f0e8]/75 text-sm font-body">
                         {isMine ? t.noConversationsMine : t.noConversationsRecent}
                       </p>
                     );
@@ -1353,15 +1401,15 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                         <Link
                           key={thread.id}
                           href={href(`/librarian/thread/${thread.id}`)}
-                          className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
+                          className="block py-3 border-b border-[#f5f0e8]/15 hover:bg-[#f5f0e8]/[0.06] transition-colors -mx-2 px-2 rounded"
                         >
-                          <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">
+                          <p className="text-sm font-body text-[#f5f0e8] line-clamp-2 leading-snug mb-1">
                             {thread.preview.question}
                           </p>
-                          <p className="text-[12px] text-[#8a8480] font-body line-clamp-2 leading-relaxed mb-1">
+                          <p className="text-[12px] text-[#f5f0e8]/75 font-body line-clamp-2 leading-relaxed mb-1">
                             {thread.preview.answer}
                           </p>
-                          <p className="text-[10px] text-[#8a8480] font-sans">
+                          <p className="text-[10px] text-[#f5f0e8]/60 font-sans">
                             {thread.creatorName} &middot; {timeAgo(thread.lastMessageAt, t)}
                             {thread.messageCount > 2 && <span> &middot; {thread.messageCount} {t.messages}</span>}
                           </p>
@@ -1370,7 +1418,7 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                       {hasMore && (
                         <button
                           onClick={() => setVisibleThreads(v => v + 10)}
-                          className="block w-full py-2 mt-1 text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans text-center"
+                          className="block w-full py-2 mt-1 text-[11px] text-[#f5f0e8]/60 hover:text-[#f5f0e8] transition-colors font-sans text-center"
                         >
                           {t.showMore} ({allThreads.length - visibleThreads})
                         </button>
@@ -1380,15 +1428,15 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                 })()}
 
                 {featuredPassage && showFeatured && (
-                  <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
-                    <p className="text-[11px] text-[#b0a89c] tracking-[0.15em] uppercase font-sans mb-2">
+                  <div className="mt-8 pt-6 border-t border-[#f5f0e8]/15">
+                    <p className="text-[11px] text-[#f5f0e8]/60 tracking-[0.15em] uppercase font-sans mb-2">
                       {t.librarianIsReading}
                     </p>
                     <Link href={href(featuredPassage.pageId ? `/book/${featuredPassage.bookSlug}/page/${featuredPassage.pageId}` : `/book/${featuredPassage.bookSlug}`)} className="block group">
-                      <blockquote className="text-[#6b6560] text-[14px] font-body leading-relaxed italic border-l-2 border-[#c9a86c]/50 pl-3">
+                      <blockquote className="text-[#f5f0e8]/85 text-[14px] font-body leading-relaxed italic border-l-2 border-[#c9a86c] pl-3">
                         &ldquo;{featuredPassage.text}&rdquo;
                       </blockquote>
-                      <p className="text-[#8a8480] text-xs font-body mt-2 group-hover:text-[#6b6560] transition-colors">
+                      <p className="text-[#f5f0e8]/60 text-xs font-body mt-2 group-hover:text-[#f5f0e8] transition-colors">
                         {featuredPassage.bookAuthor && <span>{featuredPassage.bookAuthor}, </span>}
                         <span className="italic">{featuredPassage.bookTitle}</span>
                         {featuredPassage.bookYear && <span> ({featuredPassage.bookYear})</span>}

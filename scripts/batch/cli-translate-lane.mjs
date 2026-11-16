@@ -53,20 +53,24 @@
  *
  * FINISH (#8482, Derek 2026-11-10: finish books first; agy-pools.mjs FINISH FIRST): `finish --out=DIR [--max-pages=N]
  * [--concurrency=6] [--book-chunk=40] [--deadline-min=M] [--floor-5h=0.25] [--agy-home=auto|default|DIR] [--book=ID[,ID]]
- * [--finish-only] [--apply]` translates the untranslated pages of IDLE visible books (status in IDLE_STATUSES, no hold,
+ * [--finish-only] [--frame=finish|first-read] [--apply]` translates the untranslated pages of IDLE visible books (status in IDLE_STATUSES, no hold,
  * never pipeline_auto.held, not English originals) whose row is an agy cli row, closest to done first (cli-ocr-lane.mjs
  * byFinishFirst: books >= 80% translated, then the share translated, then fewest pages left); --finish-only stops after
  * the >= 80% books. Nothing translated these books before: `run` reads only books Phase 4 held, and an idle book is in no
  * phase. Pages: UNTRANSLATED, plus a withheld page only when its English was withheld because its OCR was replaced
  * (stale_after_reocr: the new OCR is what is translated); any other withhold reason waits on an OCR repair. Same readers
  * and writer as `run` (the row's reader and per_call; cli-translate.mjs apply). Ledger DIR/../finish-ledger.jsonl, never retried.
+ *   CLAIMS (#8550): each book is leased in `book_claims` (scripts/lib/book-claims.mjs) before it is read, renewed per
+ * chunk and given back at the end, so two finish runs on different boxes never take one book; a book another live run
+ * holds is skipped (`claimed_elsewhere` in the tally). A run that dies frees its books when the 60-minute lease ends.
  *   OCR-FIRST GATE, per page: a page whose OCR is an unchecked Flash-Lite draft (ocr-first-gate.mjs uncheckedLite)
  * waits, and the book's other pages are translated now. The correction lanes take those books first (cli-ocr-lane.mjs
  * latin-first `--finish-first` steps: their untranslated Flash-Lite pages, finish books first). A lite page still
  * there GATE_RELEASE_HOURS after the run first saw the book waiting (DIR/../finish-gate-waits.json) is one no correction
  * lane is reaching (outside its frame: front matter, short pages, a language with no correction lane), and is translated,
  * the release named in the write's --reason and the run's log, not silently.
- *   Each run stamps the finish queue (agy-pools.mjs writeFinishQueue): open unless the run stopped on 'queue empty', so
+ *   Each run stamps the finish queue (agy-pools.mjs writeFinishQueue, a file on this box, and shareFinishQueue, a copy in
+ * Mongo ops_reports that the quality lanes on every box read, v3#70): open unless the run stopped on 'queue empty', so
  * the quality lanes keep FINISH_RESERVE while there is finishing work. It spends down to the other lanes' reserves (its
  * own key is cli-translate). The log ends with the books that crossed into readable or complete.
  *
@@ -84,10 +88,13 @@ import { translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES }
 import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_LANES } from '../lib/translation-routing.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
-import { agyEnv, readPools, choosePool, poolName, quotaBuckets, readQuotaStdout, writeFinishQueue } from '../lib/agy-pools.mjs';
-import { quotaFloor, parseAgyHome, byRereadPriority, byFinishFirst, isFinishBook, translatedShare, rungTracker, IDLE_STATUSES } from './cli-ocr-lane.mjs';
+import { agyEnv, readPools, choosePool, poolName, quotaBuckets, readQuotaStdout, writeFinishQueue, shareFinishQueue, pullFinishQueue, finishQueueNote } from '../lib/agy-pools.mjs';
+import { quotaFloor, parseAgyHome, byRereadPriority, byFinishFirst, isFinishBook, translatedShare, rungTracker, IDLE_STATUSES, FIRST_READ_HOLDS } from './cli-ocr-lane.mjs';
 import { ocrFirstGate, uncheckedLite, NO_TEXT } from '../lib/ocr-first-gate.mjs';
 import { WITHHOLD_REASONS } from '../lib/stale-translation.mjs';
+import { claimBook, releaseAll as releaseClaims, holderId } from '../lib/book-claims.mjs';
+import { stampGateRefusals, releaseStaleGateStamps, GATE_PROJECTION } from '../lib/translate-gate-stamp.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -143,6 +150,41 @@ async function gatePages(db, take) {
 
 const readLedger = (f) => new Set(fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
 
+// ── finish: what a run remembers between runs (#378) ──
+/**
+ * Days a finish-ledger entry keeps its page out of the run. The ledger was "never retried": 826 owed pages of the
+ * finish books sat in it on 2026-11-15, most of them transient (not_read 209, exit_1 61, exit_3 48, timeout 7,
+ * empty 8), and 198 books were blocked by nothing else. A page refused for good is stamped on the page
+ * (translation.health_blocked) and leaves the selector by itself, so a weekly retry costs only the transient ones.
+ */
+export const FINISH_LEDGER_RETRY_DAYS = 7;
+/** Pure: ledger lines (JSON strings) → the page ids whose LATEST entry is younger than `maxAgeDays`. */
+export function freshLedger(lines, { now = Date.now(), maxAgeDays = FINISH_LEDGER_RETRY_DAYS } = {}) {
+  const last = new Map();
+  for (const l of lines) {
+    let j; try { j = JSON.parse(l); } catch { continue; }
+    if (!j?.page_id) continue;
+    const t = Date.parse(j.at ?? '');
+    if (!last.has(j.page_id) || (Number.isFinite(t) && t > last.get(j.page_id))) last.set(j.page_id, Number.isFinite(t) ? t : -Infinity);
+  }
+  return new Set([...last].filter(([, t]) => now - t < maxAgeDays * 86400e3).map(([id]) => id));
+}
+const readFreshLedger = (f) => freshLedger(fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean) : []);
+
+/**
+ * Hours a book the run found with nothing to translate is skipped by later runs, unless it changed. Each run walked
+ * the frame closest-to-done first, one or two queries a book, and almost every >= 80% book has nothing the lane can
+ * take: on 2026-11-15 the 11:40 run spent 14 minutes before its first chunk, and its last chunks ran into the cron's
+ * `timeout 110m`. A book's `updated_at` moves whenever its counters or rung move (recountBook), so a book whose
+ * pages changed is looked at again at once; the TTL bounds anything that changed without moving a counter.
+ */
+export const FINISH_EMPTY_TTL_H = 24;
+/** Pure: skip `book` because a run found it empty, `entry` = { u: its updated_at then, at: ms }, and it is unchanged? */
+export function emptySkip(book, entry, { now = Date.now(), ttlH = FINISH_EMPTY_TTL_H } = {}) {
+  if (!entry || now - entry.at >= ttlH * 3600e3) return false;
+  return entry.u === String(book?.updated_at ?? '');
+}
+
 async function heldBooks(db) {
   return db.collection('books').find(
     // The status first: it is indexed, and a held book carries both (pipeline-hold.mjs).
@@ -161,9 +203,13 @@ export const staleLanePages = (bookId, lane) => ({
 /** A row's `per_call` for this run: the reader takes it from the row (readerArgs). */
 export const laneWithPerCall = (lane, perCall) => ({ ...lane, row: { ...lane.row, per_call: perCall } });
 
+/** The readers and writers a run has running, so a SIGTERM (the cron's `timeout`) can stop them with it. */
+const CHILDREN = new Set();
 function runAsync(args, env, tag, jobName = 'cli-retranslate-7263') {
   return new Promise((resolve) => {
     const child = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'], env: { ...env, CLI_JOB_NAME: jobName, AGY_JOB: jobName } });
+    CHILDREN.add(child);
+    child.on('exit', () => CHILDREN.delete(child));
     const pipe = (src, dst) => { let buf = ''; src.on('data', (d) => { buf += d; const ls = buf.split('\n'); buf = ls.pop(); for (const l of ls) dst.write(`${tag}${l}\n`); }); src.on('end', () => { if (buf) dst.write(`${tag}${buf}\n`); }); };
     pipe(child.stdout, process.stdout); pipe(child.stderr, process.stderr);
     child.on('close', resolve);
@@ -179,6 +225,13 @@ async function staleMain(arg) {
   const MAX = Number(arg('max-pages') || 200), DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
   const floor5h = Number(arg('floor-5h') ?? 0.25);
   const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+  // Connected before the pool is chosen (v3#70): the finishing lane may run on another box, and its stamp is then
+  // only in Mongo (agy-pools.mjs THE STAMP IS IN TWO PLACES). The line names the stamp that decided and its box.
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
+  await pullFinishQueue(db);
+  console.log(finishQueueNote());
   const want = parseAgyHome(arg('agy-home'));
   let home = want.home ?? null;
   if (want.auto) {
@@ -186,14 +239,11 @@ async function staleMain(arg) {
     for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
     // A quality lane (#8482): it keeps FINISH_RESERVE while the finishing lanes have work (agy-pools.mjs FINISH FIRST)
     const pick = choosePool(pools, (r) => { const f = quotaFloor(toBuckets(r), { floor5h, yieldToFinish: true }); return { open: f.ok, why: f.why }; });
-    if (!pick) { console.log('stale: no agy pool has its floor open; nothing read'); return; }
+    if (!pick) { console.log('stale: no agy pool has its floor open; nothing read'); await client.close(); return; }
     home = pick.home;
-  } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); process.exit(2); }
+  } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); await client.close(); process.exit(2); }
   const ENV = agyEnv(home), POOL = poolName({ home });
   const LEDGER = path.join(path.dirname(OUT), 'cli-retranslate-ledger.jsonl');
-  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
-  await client.connect();
-  const db = client.db('bookstore');
   const ledger = readLedger(LEDGER);
   const ids = await db.collection('pages').distinct('book_id', { 'translation_stale.reason': { $exists: true }, 'ocr.pipeline': LANE });
   const books = (await db.collection('books').find(
@@ -206,6 +256,10 @@ async function staleMain(arg) {
   const job = `cli-retranslate-${new Date().toISOString().slice(0, 10)}`;
   const worker = async () => {
     while (!stop) {
+      // Keep the shared finish-first stamp current (asks Mongo at most every 10 minutes; v3#70). First in the loop:
+      // from the checks below to `books[bi++]` nothing awaits, so no two workers take one book.
+      await pullFinishQueue(db);
+      if (stop) break;
       if (budget <= 0) { stop = 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop = 'deadline'; break; }
       if (bi >= books.length) { stop = 'queue empty'; break; }
@@ -259,6 +313,21 @@ export const FINISH_BOOKS = Object.freeze({
   'translation_state.rung': { $in: ['transcribing', 'transcribed', 'translating', 'readable'] },
   'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true },
 });
+/**
+ * FIRST-READ FRAME (#380, Derek 2026-11-15 "new books first": first reads AND their translation). `finish
+ * --frame=first-read` translates the books held "published as scans" (cli-ocr-lane.mjs FIRST_READ_HOLDS), which the
+ * first-read lanes read and which no translation lane took: `run` reads only CLI_TRANSLATE_HOLD books, the finish frame
+ * only unheld ones. The hold STAYS (nothing here releases a book), so Phase 2/4's paid lanes still never select it.
+ * Only pages whose OCR is not an unchecked Flash-Lite draft (the OCR-first gate never releases in this frame): the
+ * English is made from a checked or non-lite read (agy first reads, GPU>agy, the finish lane's own rule). It does not stamp the finish queue (it is not finishing work). Same readers,
+ * writer, claims and quota floor as `finish`; its own --out, so its own ledger.
+ */
+export const FINISH_FRAMES = Object.freeze(['finish', 'first-read']);
+export const FIRST_READ_TRANSLATE_BOOKS = Object.freeze({
+  visible: true, pages_count: { $gt: 0 }, 'translation_state.english_original': { $ne: true },
+  'translation_state.rung': { $in: ['transcribing', 'transcribed', 'translating', 'readable'] },
+  'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': { $in: FIRST_READ_HOLDS }, 'pipeline_auto.held': { $ne: true },
+});
 /** The pages `finish` translates in one book: UNTRANSLATED, a withheld page only when its OCR was replaced. */
 export const finishPages = (bookId) => ({
   book_id: bookId, ...UNTRANSLATED,
@@ -280,12 +349,22 @@ async function finishMain(arg) {
   const APPLY = process.argv.includes('--apply'), FINISH_ONLY = process.argv.includes('--finish-only');
   const OUT = arg('out') && path.resolve(arg('out'));
   if (!OUT) { console.error('finish needs --out=DIR'); process.exit(2); }
+  // --frame (header: FIRST-READ FRAME, #380): `finish` (default, as before) or `first-read`.
+  const FRAME = arg('frame') || 'finish', FIRST_READ = FRAME === 'first-read';
+  if (!FINISH_FRAMES.includes(FRAME)) { console.error(`--frame: ${FINISH_FRAMES.join(' or ')}`); process.exit(2); }
   const CONCURRENCY = Number(arg('concurrency') || 1), CHUNK = Number(arg('book-chunk') || 40);
   if (!(CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency 1 to 8'); process.exit(2); }
   const MAX = Number(arg('max-pages') || 200), DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
   const floor5h = Number(arg('floor-5h') ?? 0.25);
   const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-  const stamp = (pages, books) => { if (APPLY) writeFinishQueue('cli-translate-finish', { books, pages }); };
+  // Connected before the pool is chosen (v3#70): the stamp below goes to Mongo as well as to this box's file, and the
+  // "no pool open" stamp is written before any book is read.
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
+  // The finish queue's stamp: this box's file, then the shared copy the quality lanes on every box read (agy-pools.mjs
+  // THE STAMP IS IN TWO PLACES). A dry run stamps neither.
+  const stamp = async (pages, books) => { if (APPLY && !FIRST_READ) await shareFinishQueue(db, writeFinishQueue('cli-translate-finish', { books, pages })); };
   const want = parseAgyHome(arg('agy-home'));
   let home = want.home ?? null;
   if (want.auto) {
@@ -293,43 +372,94 @@ async function finishMain(arg) {
     for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
     const pick = choosePool(pools, (r) => { const f = quotaFloor(toBuckets(r), { floor5h, lane: 'cli-translate' }); return { open: f.ok, why: f.why }; });
     // No pool open is not an empty queue: the stamp stays open (1 page = "work waits"), so the quality lanes keep yielding.
-    if (!pick) { console.log('finish: no agy pool has its floor open; nothing read'); stamp(1, null); return; }
+    if (!pick) { console.log('finish: no agy pool has its floor open; nothing read'); await stamp(1, null); await client.close(); return; }
     home = pick.home;
-  } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); process.exit(2); }
+  } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); await client.close(); process.exit(2); }
   const ENV = agyEnv(home), POOL = poolName({ home });
   const LEDGER = path.join(path.dirname(OUT), 'finish-ledger.jsonl'), WAITS = path.join(path.dirname(OUT), 'finish-gate-waits.json');
+  const EMPTY = path.join(path.dirname(OUT), 'finish-empty-books.json');
   const waits = fs.existsSync(WAITS) ? JSON.parse(fs.readFileSync(WAITS, 'utf8')) : {};
-  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
-  await client.connect();
-  const db = client.db('bookstore');
-  const ledger = readLedger(LEDGER);
+  const ledger = readFreshLedger(LEDGER);
+  let empty = {};
+  try { empty = fs.existsSync(EMPTY) ? JSON.parse(fs.readFileSync(EMPTY, 'utf8')) : {}; } catch { empty = {}; }
+  const saveEmpty = () => { if (APPLY) { try { fs.writeFileSync(EMPTY, JSON.stringify(empty)); } catch { /* a cache never fails the run */ } } };
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
-  const books = (await db.collection('books').find(FINISH_BOOKS,
-    { projection: { id: 1, title: 1, publisher: 1, language: 1, visible: 1, image_source: 1, translation_state: 1, 'pipeline_auto.status': 1 } },
+  const all = (await db.collection('books').find(FIRST_READ ? FIRST_READ_TRANSLATE_BOOKS : FINISH_BOOKS,
+    { projection: { id: 1, title: 1, publisher: 1, language: 1, visible: 1, image_source: 1, translation_state: 1, updated_at: 1, 'pipeline_auto.status': 1, ...(FIRST_READ && { 'pipeline_auto.hold.reason': 1 }) } },
   ).toArray()).filter((b) => (!ONLY || ONLY.has(b.id)) && (!FINISH_ONLY || isFinishBook(b)))
     .map((b) => ({ ...b, lane: translateLaneForBook(b) }))
     .filter((b) => b.lane.channel === 'cli' && b.lane.engine === FINISH_ENGINE)
     .sort(byFinishFirst);
-  const tier1 = books.filter(isFinishBook).length;
-  console.log(`finish: pool ${POOL}; ${books.length} idle visible books on an agy row (${tier1} >= 80% translated, first)${FINISH_ONLY ? ', --finish-only' : ''}; up to ${MAX} pages, ${CONCURRENCY} at a time, ${CHUNK} a chunk${APPLY ? '' : ', DRY RUN'}`);
+  const tier1 = all.filter(isFinishBook).length;
+  let books = all.filter((b) => ONLY || !emptySkip(b, empty[b.id]));
+  if (FIRST_READ) console.log(`finish --frame=first-read (#380): books held ${FIRST_READ_HOLDS.join(', ')}; the hold stays; unchecked Flash-Lite pages are never translated here`);
+  console.log(`finish: pool ${POOL}; ${all.length} ${FIRST_READ ? 'held first-read' : 'idle'} visible books on an agy row (${tier1} >= 80% translated, first)${FINISH_ONLY ? ', --finish-only' : ''}; ${all.length - books.length} found empty by an earlier run and unchanged, skipped (#378); up to ${MAX} pages, ${CONCURRENCY} at a time, ${CHUNK} a chunk${APPLY ? '' : ', DRY RUN'}`);
+  // The finish queue's stamp goes out at the START too (#378): a run the cron's timeout kills never reached the stamp
+  // at its end, so from 2026-11-14 08:45 every quality lane read the queue as closed and kept no finish reserve.
+  // (stamp() writes nothing in the first-read frame.)
+  if (books.length) await stamp(1, tier1);
   let budget = MAX, bi = 0, stop = null;
-  const tally = { written: 0, not_written: 0, chunks: 0, lite_waiting: 0, lite_released: 0 };
+  const tally = { written: 0, not_written: 0, chunks: 0, lite_waiting: 0, lite_released: 0, claimed_elsewhere: 0, gate_stamped: 0, gate_released: 0 };
   const rungs = rungTracker(db);
   const job = `cli-tr-finish-${new Date().toISOString().slice(0, 10)}`;
+  // A re-read OCR is the exit from a translate-gate stamp (translate-gate-stamp.mjs REVERSIBLE): the stamps on pages
+  // whose OCR was written since the last run (an hour of overlap; 7 days the first time) are judged again.
+  {
+    const CURSOR = path.join(path.dirname(OUT), 'finish-gate-release-at.json');
+    let since = new Date(Date.now() - 7 * 86400e3);
+    try { const t = Date.parse(JSON.parse(fs.readFileSync(CURSOR, 'utf8')).at); if (Number.isFinite(t)) since = new Date(t - 3600e3); } catch { /* first run */ }
+    const startedAt = new Date();
+    const rel = await releaseStaleGateStamps(db, { since, apply: APPLY, lane: FINISH_JOB, run: job });
+    tally.gate_released = rel.released.length;
+    if (APPLY) for (const id of rel.books) await recountBook(db, id, { reason: 'cli-translate-lane finish: translate-gate stamps judged again on re-read OCR (#378)' });
+    // A released stamp re-opens pages: a book an earlier run found empty is looked at again in this run.
+    if (rel.books.length) { for (const id of rel.books) delete empty[id]; books = all.filter((b) => ONLY || !emptySkip(b, empty[b.id])); }
+    if (APPLY) { try { fs.writeFileSync(CURSOR, JSON.stringify({ at: startedAt.toISOString() })); } catch { /* the next run looks back 7 days */ } }
+    if (rel.released.length || rel.restamped.length) console.log(`translate-gate stamps on re-read OCR: ${rel.released.length} released, ${rel.restamped.length} still refused (re-stamped)${APPLY ? '' : ', DRY RUN'}`);
+  }
+  // #8550: a lease per book across boxes, so this run and another finish lane (another box's cron, a job's driver) never
+  // read the same book at once. Taken before the read, renewed with each chunk of the book, given back at the end.
+  const HOLDER = holderId(process.env.JOB_NAME || job);
+  const LEASE_MS = 60 * 60_000;
   // The next book with pages it can translate now (most books near the end of a frame have none: health-blocked,
   // ledgered, or waiting on a correction), found before /quota is read, so an empty book costs one query, not a call.
   const nextChunk = async () => {
     while (bi < books.length) {
+      // The walk itself can take minutes: the deadline is checked per book, not only per chunk (#378).
+      if (Date.now() >= DEADLINE) { stop ??= 'deadline'; return null; }
       const book = books[bi++];
       const open = (await db.collection('pages').find(finishPages(book.id), { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).toArray()).filter((p) => !ledger.has(p.id));
-      if (!open.length) continue;
+      if (!open.length) { empty[book.id] = { u: String(book.updated_at ?? ''), at: Date.now() }; continue; }
+      delete empty[book.id];
       const lite = new Set((await gatePages(db, open)).filter(uncheckedLite).map((p) => p.id));
       if (lite.size && waits[book.id] == null) { waits[book.id] = Date.now(); if (APPLY) fs.writeFileSync(WAITS, JSON.stringify(waits)); }
-      const split = gateSplit(open, lite, waits[book.id] ?? null);
+      const split = gateSplit(open, lite, waits[book.id] ?? null, { releaseHours: FIRST_READ ? Infinity : GATE_RELEASE_HOURS });
       tally.lite_waiting += split.wait.length;
       const ready = new Set([...split.now, ...split.released]);
-      const pages = open.filter((p) => ready.has(p.id));
-      if (pages.length) return { book, open, split, pages };
+      let pages = open.filter((p) => ready.has(p.id));
+      if (!pages.length) continue;
+      // UN-TRANSLATABLE PAGES (#378, translate-gate-stamp.mjs): the reader's own pre-flight refusals in the next chunk
+      // are recorded on the page (no body: nothing owed; looped or unreadable OCR: a repair item), so they leave the
+      // book's denominator instead of being asked again every run. Then the book is recounted: it may finish here.
+      const judged = await db.collection('pages').find({ id: { $in: pages.slice(0, CHUNK).map((p) => p.id) } }, { projection: GATE_PROJECTION }).toArray();
+      const g = await stampGateRefusals(db, judged, { apply: APPLY, lane: FINISH_JOB, run: job });
+      if (g.stamped.length) {
+        tally.gate_stamped += g.stamped.length;
+        const kinds = g.stamped.reduce((m, x) => ({ ...m, [x.reason]: (m[x.reason] || 0) + 1 }), {});
+        console.log(`  ${book.id}: ${g.stamped.length} page(s) the translator refuses before any call, recorded (${JSON.stringify(kinds)})${APPLY ? '' : ', DRY RUN'}`);
+        if (APPLY) { await rungs.before(book.id); await recountBook(db, book.id, { reason: 'cli-translate-lane finish: translate-gate stamps (#378)' }); await rungs.after(book.id); }
+        const gone = new Set(g.stamped.map((x) => x.id));
+        pages = pages.filter((p) => !gone.has(p.id));
+        if (!pages.length) continue;
+      }
+      const claim = await claimBook(db, { bookId: book.id, holder: HOLDER, job: process.env.JOB_NAME || job, leaseMs: LEASE_MS });
+      if (!claim.ok) {
+        tally.claimed_elsewhere++;
+        console.log(`  ${book.id}: being translated by ${claim.by?.job ?? 'another run'} on ${claim.by?.box ?? '?'} (lease to ${claim.by?.until?.toISOString?.() ?? '?'}); skipped`);
+        continue;
+      }
+      if (claim.degraded) console.log(`  claim store unreachable (${claim.error}); reading ${book.id} unclaimed, apply's English-changed guard (#8638) still holds`);
+      return { book, open, split, pages };
     }
     return null;
   };
@@ -359,7 +489,9 @@ async function finishMain(arg) {
       const read = await runAsync(readerArgs(book.lane, { ids: file, dir, job, ocrChecked: note ?? book.lane.row.adoption?.ocr_checked }), ENV, tag, FINISH_JOB);
       if (read === 3) { stop ??= 'usage limit'; break; }
       if (read !== 0) { console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = `#8482 finish lane: row ${book.lane.row.id}, ${book.lane.engine} (adopted on ${book.lane.row.adoption?.sample ?? 'the row'}); idle visible book, closest to done first${note ? `; ${note}` : ''}`;
+      const reason = FIRST_READ
+        ? `#380 first-read translation: row ${book.lane.row.id}, ${book.lane.engine} (adopted on ${book.lane.row.adoption?.sample ?? 'the row'}); visible book held ${book.pipeline_auto?.hold?.reason} (the hold stays); pages whose OCR is not an unchecked Flash-Lite draft`
+        : `#8482 finish lane: row ${book.lane.row.id}, ${book.lane.engine} (adopted on ${book.lane.row.adoption?.sample ?? 'the row'}); idle visible book, closest to done first${note ? `; ${note}` : ''}`;
       const applied = await runAsync([path.join(HERE, 'cli-translate.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])], ENV, tag, FINISH_JOB);
       if (!APPLY || applied !== 0) continue;
       await rungs.after(book.id);
@@ -376,11 +508,26 @@ async function finishMain(arg) {
       if (c.pages.length > take.length) books.splice(bi, 0, book);
     }
   };
+  // The run's last lines, once, whether it ends or is killed (#378): the cron's `timeout 110m` sends SIGTERM, and a run
+  // killed mid-chunk had printed no `books finished` line and written no stamp (every run from 2026-11-14 09:40).
+  let ended = null;
+  const end = () => (ended ??= (async () => {
+    saveEmpty();
+    try { await releaseClaims(db, HOLDER); } catch { /* the lease ends by itself in an hour */ }
+    console.log(`\nfinish run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+    console.log(rungs.summary('cli-translate finish'));
+    // The finish queue's stamp (header): open unless this run ran out of books with pages it could translate now.
+    await stamp(stop === 'queue empty' ? 0 : Math.max(1, budget < MAX ? MAX - budget : 1), tier1);
+  })());
+  const onSignal = (sig) => {
+    stop ??= `killed (${sig})`;
+    for (const c of CHILDREN) c.kill('SIGTERM');
+    end().finally(() => client.close().finally(() => process.exit(143)));
+  };
+  process.once('SIGTERM', onSignal); process.once('SIGINT', onSignal);
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-  console.log(`\nfinish run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
-  console.log(rungs.summary('cli-translate finish'));
-  // The finish queue's stamp (header): open unless this run ran out of books with pages it could translate now.
-  stamp(stop === 'queue empty' ? 0 : Math.max(1, budget < MAX ? MAX - budget : 1), tier1);
+  await end();
+  process.off('SIGTERM', onSignal); process.off('SIGINT', onSignal);
   await client.close();
 }
 

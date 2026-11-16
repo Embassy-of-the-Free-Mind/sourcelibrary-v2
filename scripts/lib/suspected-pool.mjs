@@ -59,6 +59,28 @@ export function excludePoolFilter(fingerprints, field = 'userAgent') {
 }
 
 /**
+ * A filter fragment excluding each flagged string ONLY while its pool was
+ * running (`first_seen` to `last_seen`, padded a day each side).
+ *
+ * For a series that spans months. `excludePoolFilter` drops a string for the
+ * whole window measured, which is right for a 30-day total and wrong for a
+ * 200-day line: the strings are stock Chrome, real readers wear them, and a
+ * pool that ran for one week in September would remove those readers from
+ * every other week too. Spread into a `$match` on a collection whose time
+ * field is `timeField`. Returns `{}` when nothing is flagged.
+ */
+export async function poolWindowFilter(db, { field = 'userAgent', timeField = 'timestamp', padDays = 1 } = {}) {
+  const rows = await db.collection(POOL_COLLECTION)
+    .find({}, { projection: { first_seen: 1, last_seen: 1 } }).toArray().catch(() => []);
+  const pad = padDays * 864e5;
+  const windows = rows.filter((r) => r.first_seen && r.last_seen).map((r) => ({
+    [field]: r._id,
+    [timeField]: { $gte: new Date(+new Date(r.first_seen) - pad), $lte: new Date(+new Date(r.last_seen) + pad) },
+  }));
+  return windows.length ? { $nor: windows } : {};
+}
+
+/**
  * One line for the top of a report, so a number is never quoted without the
  * caveat attached. Returns null when there is nothing to say.
  */

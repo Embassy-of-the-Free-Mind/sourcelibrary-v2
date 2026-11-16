@@ -200,7 +200,9 @@ async function main() {
       languages: multi ? b.languages : [b.lang],
       ...(multi ? { language_multi: true } : {}),
       field_provenance: { language: 'caller', languages: 'caller' },
-      published: String(b.year), year: b.year,
+      // An undated manuscript has `year: null` in its manifest row: write no year rather than a placeholder
+      // that would read as an imprint (#95, eGangotri). The rights check above treats it as pre-PD-line.
+      ...(b.year != null ? { published: String(b.year), year: b.year } : {}),
       ia_identifier: b.id, thumbnail: thumb(0),
       pages_count: pageCount, pages_ocr: 0, pages_translated: 0, content_type: 'book',
       ...(b.work_id ? { work_id: b.work_id, work_id_source: b.work_id_source || manifest.work_id_source || IMPORTER } : {}),

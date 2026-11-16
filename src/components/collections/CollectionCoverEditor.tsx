@@ -130,7 +130,7 @@ function CoverDialog({ slug, name, onClose }: { slug: string; name: string; onCl
       <div className="w-full max-w-[1080px] bg-cream border border-border-light shadow-xl" role="dialog" aria-modal="true" aria-label={`Cover for ${name}`}>
         <header className="flex items-center justify-between px-6 py-4 border-b border-border-light">
           <div>
-            <h2 className="font-display text-[20px]" style={{ color: '#2b2620' }}>Cover for {name}</h2>
+            <h2 className="font-serif text-[20px]" style={{ color: '#2b2620' }}>Cover for {name}</h2>
             <p className="text-xs" style={{ color: '#8a8170' }}>Pick a plate, drag it into place, zoom. Cards are square everywhere: search, the collections index and the full list.</p>
           </div>
           <button onClick={onClose} aria-label="Close" className="p-1.5" style={{ color: '#6b6560' }}><X className="w-4 h-4" /></button>

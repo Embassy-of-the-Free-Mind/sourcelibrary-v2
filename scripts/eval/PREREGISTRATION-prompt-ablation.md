@@ -129,7 +129,7 @@ experiment** — it is a different intervention from the metadata fields tested 
 confounding the two would make both uninterpretable.
 
 Remaining caveat: **realtime vs batch.** This harness uses realtime calls.
-`scripts/experiments/batch-size-experiment.mjs` lists RECITATION rate among the things
+`scripts/_archived/2026-11-batch-doors/experiments/batch-size-experiment.mjs` lists RECITATION rate among the things
 it measures, so batch-mode behaviour should not be assumed identical — do not
 generalize these results to the batch lane without checking.
 

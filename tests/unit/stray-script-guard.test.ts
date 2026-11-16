@@ -194,9 +194,6 @@ describe('the writers', () => {
     'scripts/batch/collect-batch-results.mjs': /strayScriptGate\(/,                         // manual batch collect
     'src/lib/translate-write.ts': /strayScriptGate\(db, \{ id: pageId/,                     // the TS door
     'src/workers/translation-processor-logic.ts': /strayScriptGate\(/,                      // Lambda
-    'src/app/api/books/[id]/batch-translate-async/route.ts': /strayScriptGate\(/,
-    'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts': /strayScriptGate\(/,
-    'src/app/api/batch-save/route.ts': /strayScriptGate\(/,
     'src/app/api/process/route.ts': /strayScriptVerdict\(/,
     'src/app/api/contribute/process/route.ts': /strayScriptVerdict\(/,
   };

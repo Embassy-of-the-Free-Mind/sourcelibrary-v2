@@ -1,0 +1,163 @@
+[
+  {
+    "book_id": "69942f35b2f6748db4abfc31",
+    "slot": 1,
+    "title": "Pseudo-Dionysius and Maximus Confessor Scholia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Greek minuscule manuscript (Vatican) of the Celestial Hierarchy (ch. 15) with marginal scholia in majuscule, as the title says. No tradition or collections are set, so there is no shelf to contradict.",
+    "rights_flag": "The scan carries a burned-in banner \"Copyright © Biblioteca Apostolica Vaticana / powered by AMLAD·NTT DATA\" and a diagonal watermark \"Biblioteca Apostolica Vaticana ... ALL RIGHTS RESERVED\". The work is medieval, but the image itself is under the library's reproduction terms and needs checking.",
+    "structure_note": "The book-level counts disagree: pages_translated is 0 in structure but 378 in the field. The book has 47 printed backsteps and 38 repeats among only 183 'printed' numbers. This leaf shows no visible folio number, so these are probably folio or quire marks misread by the OCR, or text numerals taken as page numbers (O11), not a broken page order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "one column of minuscule with enlarged initials set out into the left margin; marginal scholia in small majuscule down the left margin and across the foot; a small faint scholion block at the lower right; a strip of the facing leaf's text at the right edge (correctly not transcribed)",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "τὸ ἄφθορ<unclear>ον</unclear> καὶ ἄϋπνον καὶ ἀσχετον καὶ ἀκαθάρσυνον τῆς\nτῶν θεῶν ἀποπροσθέσεως καὶ τὸ πρὸς ἡμᾶς ἀπὸ τῆς\nτῶν θεῶν ἀποστίλβον ἀφομοιωτικόν.",
+            "image": "τὸ ἄφετον. καὶ εὔλυτον. καὶ ἄσχετον. καὶ καθαρεῦον τῆς / τῶν ἐκτὸς προσθήκης. καὶ τὸ πρὸς τὴν ἁπλότητα / τῶν θείων ὡς ἐφικτὸν ἀφομοιωτικόν (the known Dionysian sentence on nakedness and bare feet)",
+            "problem": "The first three lines are misread into different words ('incorruptible', 'sleepless', 'of the gods', 'toward us'). The image has 'free, unbound, unattached, pure of external addition, and likening to the simplicity of the divine as far as possible'.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Ἡ μὲν ἀληθινὴ καὶ ἁπλῆ καὶ μονοειδὴς σοφία.\nἐν τοῖς θεοῖς ἵδρυται· ἀμφιέννυσι δὲ καὶ τὴν τιμὰς\nδιδῶσαν περιφέρειαν αὐτοῖς. φέρει δὲ τὰ τῶν θεῶν\nχαρίσματα ἐν τοῖς οὐρανίοις σχήμασι καὶ ὀργάνοις.",
+            "image": "Ἀλλ' ἐπειδὴ αὖθις ἡ ἁπλῆ καὶ πολυποίκιλος σοφία / καὶ τοὺς γυμνοὺς ἀμφιέννυσι· καὶ σκεύη τινὰ / δίδωσι περιφέρειν αὐτοῖς. φέρε καὶ τὰς τῶν οὐ- / ρανίων νόων ἱερὰς περιβολὰς καὶ ὄργανα",
+            "problem": "Four lines confabulated in the right genre. 'Since the simple and manifold wisdom clothes the naked and gives them implements to carry, come, let us unfold the garments and instruments of the heavenly minds' becomes 'wisdom is seated among the gods ... carries the gifts of the gods'.",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "ἐν τῷ φωτιστικῷ. διὰ τὸ ἀεὶ ἐμοῦ μερίζεσθαι. ὅπου",
+            "image": "καὶ τὸ φωτιστικόν. διὰ τὸ ἐν οὐρανῷ ... ὅπου",
+            "problem": "'because it is in heaven, where the light is' misread as nonsense, which the translator then calls a corrupt copy",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ἡμᾶς\nδὲ ἐκλαμπόμενον.",
+            "image": "ἢ νοε- / ρῶς ἐλλαμπόμενον (an asterisk above the line keys the left-margin scholion on νοητόν / νοερόν)",
+            "problem": "'noerically illuminated' becomes 'we are illuminated'. This loses the very word the marginal scholion explains and reverses who receives the light.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "τὸ θεοειδὲς καὶ κατὰ τὴν πύρωσιν ἄγαλμα.",
+            "image": "τὸ θεοειδὲς καὶ κατὰ τὴν τοῦ πυρὸς εἰκόνα",
+            "problem": "'in the image of fire' misread as 'statue according to the burning'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "τὸ κα-\n<margin>",
+            "image": "τὸ βα- / σιλικὸν καὶ ἡγεμονικόν. καὶ εὐθείᾳ τὰ πάντα",
+            "problem": "'royal' read as 'ordering' (κα-σμητικὸν) and 'straightly' as 'here' (ἐνθάδε)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "τὰ δὲ ὄργανα. καὶ τοὺς πέλεκεις.",
+            "image": "τὰ δὲ δόρατα καὶ τοὺς πελέκεις",
+            "problem": "'spears' read as 'instruments'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ἐν τῷ περὶ θεί-\nων ὀνομάτων ἐν δ'\nτῷ κεφαλαίῳ πε-\nρὶ φωτὸς ἐλάλησεν.\nἔλεγεν·",
+            "image": "ἐν τῷ περὶ θεί / ων ὀνομάτων λόγῳ / τῷ κεφαλαίῳ τε / τάρτῳ ἐσαφήνισα / μὲν τί νοητὸν",
+            "problem": "The scholiast's 'I explained in the fourth chapter' becomes 'on light, he spoke ... he said'. The first person is lost and 'on light' is invented.",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "μέλιον τικὸν. καὶ οἰκοδομικὸν καὶ βλαστικόν.",
+            "image": "μελιωτικόν. καὶ οἰκοδομικόν. καὶ τελεσι(ουργ)ικόν",
+            "problem": "'perfecting' read as 'sprouting', which the English gives as 'makes things grow'",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "τὸ ἄφθορ<unclear>ον</unclear> καὶ ἄϋπνον καὶ ἀσχετον καὶ ἀκαθάρσυνον τῆς\nτῶν θεῶν ἀποπροσθέσεως",
+            "english": "the <unclear>incorruptible</unclear>, the sleepless, the unattached and the unpolluted, free from the addition of the gods",
+            "problem": "Fluent English built on the misread lines. The leaf says 'free, unbound, unattached, pure of external addition, likening to the simplicity of the divine'. Gods 'shining toward us' are invented.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Ἡ μὲν ἀληθινὴ καὶ ἁπλῆ καὶ μονοειδὴς σοφία.",
+            "english": "The true, simple and uniform **wisdom** is seated among the gods. It also clothes them with the encircling robe that bestows honours. It carries the gifts of the gods in heavenly shapes and instruments.",
+            "problem": "An invented passage. The leaf's sentence is 'since the simple and manifold wisdom clothes the naked and gives them implements to carry, let us unfold the sacred garments and instruments of the heavenly minds'.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "ἡμᾶς\nδὲ ἐκλαμπόμενον.",
+            "english": "while we are the ones illuminated",
+            "problem": "The image reads νοερῶς ἐλλαμπόμενον ('illuminated noerically'). The English invents 'we' and cuts the link to the noetic/noeric scholion keyed by the asterisk.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "ἀποπροσθέσεως",
+            "english": "<note>original: ἀποπροσθέσεως; the phrase is obscure in this copy. It seems to mean that the angels are free from anything added from outside.</note>",
+            "problem": "The note blames the manuscript ('obscure in this copy') for an OCR misread. The copy plainly reads τῶν ἐκτὸς προσθήκης.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "διὰ τὸ ἀεὶ ἐμοῦ μερίζεσθαι",
+            "english": "<note>original: διὰ τὸ ἀεὶ ἐμοῦ μερίζεσθαι; the wording is corrupt here.",
+            "problem": "The note asserts a corruption in the manuscript that is really the OCR's. The leaf has the standard wording the note quotes.",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "τὰ δὲ ὄργανα. καὶ τοὺς πέλεκεις.",
+            "english": "The **instruments** and the **axes**",
+            "problem": "the leaf reads δόρατα, 'spears'",
+            "severity": "moderate"
+          },
+          {
+            "source": "ἐν δ'\nτῷ κεφαλαίῳ πε-\nρὶ φωτὸς ἐλάλησεν.\nἔλεγεν·",
+            "english": "in the fourth chapter, on light, he spoke of this. He said",
+            "problem": "the scholiast writes 'I explained' (ἐσαφήνισα); 'on light' is not on the leaf",
+            "severity": "moderate"
+          },
+          {
+            "source": "<meta>Watermark of Biblioteca Apostolica Vaticana",
+            "english": "<meta>continues from previous page: the scholion on the angels' nakedness and bare feet",
+            "problem": "The opening lines are Dionysius's main text on nakedness and bare feet, not a scholion.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The scan carries a burned-in copyright banner and an 'ALL RIGHTS RESERVED' watermark (Biblioteca Apostolica Vaticana).",
+            "severity": "moderate",
+            "class": "other:rights-stamp"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: ἀποπροσθέσεως; the phrase is obscure in this copy.", "verdict": "wrong", "helpful": false },
+            { "quote": "original: διὰ τὸ ἀεὶ ἐμοῦ μερίζεσθαι; the wording is corrupt", "verdict": "wrong", "helpful": false },
+            { "quote": "intelligible", "verdict": "ok", "helpful": true },
+            { "quote": "original: ἱερατικὸν ἔνδυμα", "verdict": "wrong", "helpful": false },
+            { "quote": "the intelligible, what is known by mind", "verdict": "ok", "helpful": true },
+            { "quote": "the intellectual, what has mind and knows", "verdict": "ok", "helpful": true },
+            { "quote": "This marginal scholion explains a distinction common in Neo", "verdict": "unsupported", "helpful": false },
+            { "quote": "The standard text reads \"the royal and ruling power, which a", "verdict": "unsupported", "helpful": true },
+            { "quote": "original: ἀναγωγικῆς καὶ ἀφοριστικῆς; the standard text has", "verdict": "unsupported", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Where it is, in the sixteenth reading, in the seventh chapter.", "why": "A 'reading' (ἀνάγνωσις) is a lection or section division of the manuscript. Without a gloss a general reader cannot tell what is being cross-referenced." },
+            { "english": "In *On the Divine Names*, in the fourth chapter, on light, he spoke of this.", "why": "The reader needs to be told that *On the Divine Names* is another Dionysian treatise, the one the scholion points back to." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The opening of the page and several key words are misread. The English turns these misreads into fluent invented theology ('wisdom is seated among the gods'), and two notes blame the manuscript for corruption that is really the OCR's. The scan also carries a Vatican copyright stamp."
+  }
+]

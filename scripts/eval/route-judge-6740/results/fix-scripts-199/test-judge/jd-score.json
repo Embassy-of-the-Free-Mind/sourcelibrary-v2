@@ -1,0 +1,891 @@
+{
+ "arms": {
+  "stored by opus": {
+   "n": 30,
+   "accept": 4,
+   "mean_fidelity": 2.9
+  },
+  "stored by fable": {
+   "n": 30,
+   "accept": 4,
+   "mean_fidelity": 2.73
+  },
+  "opus": {
+   "judge": "fable",
+   "pages": 30,
+   "corrected": 26,
+   "unchanged": 2,
+   "contain": 2,
+   "no_answer": 0,
+   "judged": 28,
+   "better": 20,
+   "same": 8,
+   "worse": 0,
+   "accept_gained": 12,
+   "accept_lost": 0,
+   "accept": 16,
+   "worse_pages": [],
+   "mean_fidelity": 3.71,
+   "controls_held": true,
+   "pass": true
+  },
+  "fable": {
+   "judge": "opus",
+   "pages": 30,
+   "corrected": 26,
+   "unchanged": 3,
+   "contain": 1,
+   "no_answer": 0,
+   "judged": 29,
+   "better": 26,
+   "same": 3,
+   "worse": 0,
+   "accept_gained": 22,
+   "accept_lost": 0,
+   "accept": 26,
+   "worse_pages": [],
+   "mean_fidelity": 4.48,
+   "controls_held": true,
+   "pass": true
+  }
+ },
+ "controls": {
+  "stored by opus": [
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   },
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   }
+  ],
+  "stored by fable": [
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   },
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   }
+  ],
+  "opus by fable": [
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   },
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   }
+  ],
+  "fable by opus": [
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   },
+   {
+    "accept": false,
+    "fidelity": 1,
+    "held": true
+   }
+  ]
+ },
+ "noise": {
+  "opus": {
+   "n": 5,
+   "accept_flips": 0,
+   "fidelity_moved": 0,
+   "moved_2plus": 0
+  },
+  "fable": {
+   "n": 5,
+   "accept_flips": 0,
+   "fidelity_moved": 1,
+   "moved_2plus": 0
+  }
+ },
+ "pages": [
+  {
+   "arm": "opus",
+   "page_id": "695230c6ab34727b1f04478e",
+   "book_id": "695230c6ab34727b1f044784",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "6993890ece1538706594649b",
+   "book_id": "6993890ece15387065946496",
+   "stored": [
+    true,
+    4
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69938fa45d28b693146d14ff",
+   "book_id": "69938fa45d28b693146d14dd",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "6993895d74305116d72d1649",
+   "book_id": "6993895d74305116d72d1644",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "6953ae7f77f38f6761bd7e80",
+   "book_id": "6953ae7f77f38f6761bd7e65",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69b52cc7b3537347e51e2f10",
+   "book_id": "69b52cc7b3537347e51e2edd",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "6952c9ca77f38f6761bc3147",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "same"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69b52bd6d6bd9f58edb24ee7",
+   "book_id": "69b52bd6d6bd9f58edb24d5e",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69920bc6e0a548a13d885687",
+   "book_id": "69920bc6e0a548a13d885667",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69942f45b2f6748db4ac013f",
+   "book_id": "69942f45b2f6748db4ac0121",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69b222db56715b0e324757b0",
+   "book_id": "69b222db56715b0e324757a1",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "695311a477f38f6761bcca57",
+   "book_id": "695311a477f38f6761bcc8b8",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "6990532bd7712f78163cd534",
+   "unchanged": true,
+   "stored": [
+    false,
+    3
+   ]
+  },
+  {
+   "arm": "opus",
+   "page_id": "69942f6fb2f6748db4ac0dbc",
+   "book_id": "69942f6fb2f6748db4ac0db5",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    2
+   ],
+   "rel": "same"
+  },
+  {
+   "arm": "opus",
+   "page_id": "6955801057e3b773024f5040",
+   "book_id": "6955801057e3b773024f5030",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "same"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69937973b0a84a5763964db1",
+   "book_id": "69937973b0a84a5763964d43",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69afe660da5fa12b664a7626",
+   "book_id": "69afe65fda5fa12b664a75a2",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "699383b050654cbbe29181b6",
+   "book_id": "699383b050654cbbe291801e",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69938d895d28b693146d0238",
+   "book_id": "69938d895d28b693146d0231",
+   "stored": [
+    true,
+    4
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69b2223d08069e96e843316f",
+   "book_id": "69b2223d08069e96e84330fe",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "same"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69b2f40e0e2f024dfbfba63f",
+   "book_id": "69b2f40e0e2f024dfbfba5c2",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69942f42730aecc3c5a7823d",
+   "book_id": "69942f42730aecc3c5a7816a",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69b52c1d3dd6d9423027dd2b",
+   "book_id": "69b52c1d3dd6d9423027dcb0",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    3
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69bfcc988ab50eb88e8c56d5",
+   "book_id": "69bfcc988ab50eb88e8c5589",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "opus",
+   "page_id": "69bfcd228ab50eb88e8c7d6b",
+   "book_id": "69bfcd228ab50eb88e8c7d27",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    2
+   ],
+   "rel": "same"
+  },
+  {
+   "arm": "opus",
+   "page_id": "695906ee95a91542b28c0259",
+   "unchanged": true,
+   "stored": [
+    true,
+    5
+   ]
+  },
+  {
+   "arm": "opus",
+   "page_id": "6953a88d77f38f6761bd1b1f",
+   "book_id": "6953a88c77f38f6761bd19d6",
+   "stored": [
+    true,
+    4
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "same"
+  },
+  {
+   "arm": "opus",
+   "page_id": "699376e7b0a84a5763961ef2",
+   "book_id": "699376e7b0a84a5763961e8f",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "695230c6ab34727b1f04478e",
+   "book_id": "695230c6ab34727b1f044784",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6993890ece1538706594649b",
+   "unchanged": true,
+   "stored": [
+    true,
+    4
+   ]
+  },
+  {
+   "arm": "fable",
+   "page_id": "69938fa45d28b693146d14ff",
+   "book_id": "69938fa45d28b693146d14dd",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6993895d74305116d72d1649",
+   "book_id": "6993895d74305116d72d1644",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6953ae7f77f38f6761bd7e80",
+   "book_id": "6953ae7f77f38f6761bd7e65",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69b52cc7b3537347e51e2f10",
+   "book_id": "69b52cc7b3537347e51e2edd",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    false,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6952c9ca77f38f6761bc3147",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69b52bd6d6bd9f58edb24ee7",
+   "book_id": "69b52bd6d6bd9f58edb24d5e",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69920bc6e0a548a13d885687",
+   "book_id": "69920bc6e0a548a13d885667",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69942f45b2f6748db4ac013f",
+   "book_id": "69942f45b2f6748db4ac0121",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69b222db56715b0e324757b0",
+   "book_id": "69b222db56715b0e324757a1",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "695311a477f38f6761bcca57",
+   "book_id": "695311a477f38f6761bcc8b8",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6990532bd7712f78163cd534",
+   "book_id": "6990532bd7712f78163cd522",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69942f6fb2f6748db4ac0dbc",
+   "book_id": "69942f6fb2f6748db4ac0db5",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6955801057e3b773024f5040",
+   "book_id": "6955801057e3b773024f5030",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69937973b0a84a5763964db1",
+   "book_id": "69937973b0a84a5763964d43",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69afe660da5fa12b664a7626",
+   "book_id": "69afe65fda5fa12b664a75a2",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "699383b050654cbbe29181b6",
+   "book_id": "699383b050654cbbe291801e",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69938d895d28b693146d0238",
+   "unchanged": true,
+   "stored": [
+    true,
+    4
+   ]
+  },
+  {
+   "arm": "fable",
+   "page_id": "69b2223d08069e96e843316f",
+   "book_id": "69b2223d08069e96e84330fe",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    false,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69b2f40e0e2f024dfbfba63f",
+   "book_id": "69b2f40e0e2f024dfbfba5c2",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    false,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "6953cbb777f38f6761bdfd8c",
+   "book_id": "6953cbb777f38f6761bdfc4d",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69942f42730aecc3c5a7823d",
+   "book_id": "69942f42730aecc3c5a7816a",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69b52c1d3dd6d9423027dd2b",
+   "book_id": "69b52c1d3dd6d9423027dcb0",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69bfcc988ab50eb88e8c56d5",
+   "book_id": "69bfcc988ab50eb88e8c5589",
+   "stored": [
+    false,
+    4
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "69bfcd228ab50eb88e8c7d6b",
+   "book_id": "69bfcd228ab50eb88e8c7d27",
+   "stored": [
+    false,
+    2
+   ],
+   "corr": [
+    true,
+    4
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "695906ee95a91542b28c0259",
+   "unchanged": true,
+   "stored": [
+    true,
+    4
+   ]
+  },
+  {
+   "arm": "fable",
+   "page_id": "6953a88d77f38f6761bd1b1f",
+   "book_id": "6953a88c77f38f6761bd19d6",
+   "stored": [
+    true,
+    4
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  },
+  {
+   "arm": "fable",
+   "page_id": "699376e7b0a84a5763961ef2",
+   "book_id": "699376e7b0a84a5763961e8f",
+   "stored": [
+    false,
+    3
+   ],
+   "corr": [
+    true,
+    5
+   ],
+   "rel": "better"
+  }
+ ]
+}

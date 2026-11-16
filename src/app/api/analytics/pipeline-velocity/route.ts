@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
@@ -10,7 +11,8 @@ export const maxDuration = 30;
  * Returns current throughput, today's totals, hourly breakdown (24h), and daily breakdown (14d).
  * GET /api/analytics/pipeline-velocity
  */
-export async function GET(request: NextRequest) {
+// Pipeline figures are for staff: an editor sign-in or the cron bearer (ops #17).
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { id: tenantId } = getTenantContextFromRequest(request);
     if (!tenantId) {
@@ -142,4 +144,4 @@ export async function GET(request: NextRequest) {
     console.error('Pipeline velocity error:', error);
     return NextResponse.json({ error: 'Failed to fetch velocity data' }, { status: 500 });
   }
-}
+}, { minRole: 'editor' });

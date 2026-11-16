@@ -43,6 +43,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { buildExtenderIndex, matchKeyVerdict } from '../lib/variant-shape.mjs';
+import { bylineVsNameForms } from '../lib/name-equivalence.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
@@ -299,12 +300,24 @@ if (ARTWORKS) {
 }
 
 let entAmbiguous = 0, entOrphan = 0, entNameMatched = 0;
+// An entity id can outlive the byline it was derived from. A byline correction
+// that clears author_id but not author_entity_id (#3894: "Manuzio, Paolo" ->
+// the real author) would otherwise be re-linked to the PRINTER here the next
+// night, at confidence "high" — it happened to Streinnius on 2026-10-20, eleven
+// hours after the apply. So the entity's owner must not be contradicted by the
+// byline. Placeholder and non-Latin bylines are unjudgeable and link as before.
+const entContradicted = [];
 for (const b of liveEntityLinked) {
   const ds = entityToDocs.get(String(b.author_entity_id));
   let doc, method, matched;
   if (ds && ds.length > 1) { entAmbiguous++; continue; }
   if (ds) {
-    doc = ds[0]; method = 'entity-id-link'; matched = b.author_entity_id;
+    const owner = ds[0];
+    if (bylineVsNameForms(b.author, [owner.canonical_name, ...(owner.variants || []), ...(owner.aliases || [])]) === 'different') {
+      entContradicted.push({ id: b.id, author: b.author, entity_owner: owner.slug });
+      continue;
+    }
+    doc = owner; method = 'entity-id-link'; matched = b.author_entity_id;
   } else {
     // entity not owned by any canonical person — artwork-lane name fallback
     const entName = orphanEntityName.get(String(b.author_entity_id));
@@ -353,6 +366,10 @@ console.log(`    skipped: ambiguous ${ambiguous}, no-match ${noMatch}`);
 console.log('--- Phase B: entity-linked books (author_entity_id -> authors doc) ---');
 console.log(`  scanned: ${liveEntityLinked.length} | writes staged: ${ops.length - (anchored + unanchored)} (name-fallback: ${entNameMatched})`);
 console.log(`    skipped: entity owned by >1 person ${entAmbiguous}, orphan entity (no canonical owner) ${entOrphan}`);
+// Printed, never silent: each is a book whose stored entity names a different
+// person than its byline — a stale link to fix by hand, not a match to make.
+console.log(`    refused: byline contradicts the entity's owner ${entContradicted.length}`);
+for (const r of entContradicted.slice(0, 50)) console.log(`      ${r.id}  ${JSON.stringify(r.author)}  ≠ ${r.entity_owner}`);
 console.log(`=> TOTAL author_id writes staged: ${ops.length}`);
 
 // Refused matches, ALWAYS printed (dry run and apply): a screen that drops

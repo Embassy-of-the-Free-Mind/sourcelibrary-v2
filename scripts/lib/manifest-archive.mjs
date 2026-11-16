@@ -202,6 +202,27 @@ export async function archiveFromManifest(db, bookId, deps) {
 
   let next = 0;
   let abandoned = false;
+  // Positive control (#5448). A page miss is kept only once the host has served something this run, so an
+  // outage's 404s are not written down as facts about pages. But a book whose only pending pages are dead
+  // at the source can then never record them: nothing pending is servable, so the host never "serves", and
+  // the lane retries the same pages every run. On 2026-11-13 all 40 Göttingen books left on that lane were
+  // like this (e.g. PPN722474687: 702 of 705 archived; pages 40, 217 and 353 answer 500 at every size while
+  // their neighbours answer 200), and the lane archived 0 pages for 6 h and paged. So when a page fails on a
+  // host with no success yet this run, fetch ONE page of this book that is already archived. If the host
+  // serves it, the host is up, and the failure is about the page. At most one control fetch per book.
+  let controlTried = false;
+  const proveHostUp = async (h) => {
+    if (controlTried || !breaker || (breaker.stateOf(h)?.ok ?? 0) > 0) return;
+    controlTried = true;
+    let d = 0;
+    for (let q = 1; q <= photos.length; q++) if (ledger.isDone(q) && photos[q - 1] && hostOf(fetchUrl(photos[q - 1])) === h) { d = q; break; }
+    if (!d) return;
+    try {
+      await assertNotQuotaPlaceholder(await download(fetchUrl(photos[d - 1])), (b) => sharp(b).metadata());
+      breaker.success(h);
+      log(`book ${bookId}: host ${h} served archived page ${d} as a control, so this run's failures here are about the pages`);
+    } catch { /* the host is not serving: leave the failures unattributed, as before */ }
+  };
   const worker = async () => {
     while (!abandoned && !shouldStop()) {
       const p = pending[next++];
@@ -223,6 +244,7 @@ export async function archiveFromManifest(db, bookId, deps) {
         await storePage(p, jpg, { nativeWidth: master.nativeWidth, nativeHeight: master.nativeHeight }, h);
       } catch (e) {
         const code = classifyFetchError(e);
+        if (!fetched && isMissFor(url, code)) await proveHostUp(h);
         if (!fetched && isMissFor(url, code)) {
           // Kept only once the host has served something this run: an outage's 404s are not facts about
           // pages (archive-acquired.ts, 2026-10-26). Without a breaker there is no run state; keep it.

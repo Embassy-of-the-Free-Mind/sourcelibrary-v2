@@ -132,8 +132,9 @@ describe('the committed pointer', () => {
     // the build the pointer resolves for the cell, not a dated name: a nightly bind (#8283) moves `table` without changing the decision
     const ptr = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/current.json'), 'utf8'));
     expect(f[1]).toMatchObject({ decided: 'agy-flash-low@4-read', table: ptr.cells?.['french-lite/print']?.table ?? ptr.table });
-    // the waiver is the reread lane's: after its date the German cell is a mismatch again, and pages
-    expect(checkBinding(loadCurrentTable(), servedByReread({ languages: ['German'], perCall: 4 }), { today: '2026-11-15' })[0].status).toBe('mismatch');
+    // the waiver is the reread lane's, renewed once to 11-27 (#194): until then waived, after its date a mismatch again, and pages
+    expect(checkBinding(loadCurrentTable(), servedByReread({ languages: ['German'], perCall: 4 }), { today: '2026-11-15' })[0]).toMatchObject({ status: 'waived', waiver: { until: '2026-11-27' } });
+    expect(checkBinding(loadCurrentTable(), servedByReread({ languages: ['German'], perCall: 4 }), { today: '2026-11-28' })[0].status).toBe('mismatch');
   });
 });
 

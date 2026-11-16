@@ -1,0 +1,34 @@
+{
+ "router-tests-2026-10-26": {
+  "key_rows": 191,
+  "by_route_kind": {
+   "de-flash3|3flash|item": 30,
+   "de-flash3|3flash|wrong_page": 2,
+   "de-flash3|3flash>agy-flash-low|item": 30,
+   "de-flash3|3flash>agy-flash-low|wrong_page": 2,
+   "de-flash3|3flash>opus-correct|item": 29,
+   "de-flash3|3flash>opus-correct|wrong_page": 2,
+   "de-lite|lite|item": 30,
+   "de-lite|lite|wrong_page": 2,
+   "de-lite|lite>agy-flash-low|item": 30,
+   "de-lite|lite>agy-flash-low|wrong_page": 2,
+   "de-lite|lite>opus-correct|item": 30,
+   "de-lite|lite>opus-correct|wrong_page": 2
+  }
+ },
+ "latin-flash3-live-route-8632": {
+  "key_rows": 101,
+  "by_route_kind": {
+   "latin-flash3|3flash|item": 30,
+   "latin-flash3|3flash|repeat": 2,
+   "latin-flash3|3flash|wrong_page": 2,
+   "latin-flash3|3flash>agy-flash-low|item": 29,
+   "latin-flash3|3flash>agy-flash-low|repeat": 2,
+   "latin-flash3|3flash>agy-flash-low|wrong_page": 2,
+   "latin-flash3|3flash>opus-correct|item": 30,
+   "latin-flash3|3flash>opus-correct|repeat": 2,
+   "latin-flash3|3flash>opus-correct|wrong_page": 2
+  }
+ },
+ "german_word_standins": 124
+}

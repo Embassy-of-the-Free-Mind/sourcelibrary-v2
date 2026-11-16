@@ -1,0 +1,952 @@
+{
+ "generated_at": "2026-11-14T01:15:18.780Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 288,
+  "unparsed": 0,
+  "list_usd_equiv": 19.46
+ },
+ "meter": null,
+ "cells": {
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books": 2736,
+    "books_walked": 71,
+    "held_or_hidden": 0,
+    "no_eligible_page": 41,
+    "rule": "visible German books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten",
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "lite>hydrogen-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "hydrogen-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "hydrogen-medium": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite>hydrogen-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-4-hydrogen-low)",
+     "n": 28,
+     "books": 28,
+     "accept": "23/28",
+     "accept_rate": 0.82,
+     "accept_ci": {
+      "ci95": [
+       0.679,
+       0.964
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_pages": "2/28",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.179
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_classes": {
+      "O7": "1/28",
+      "O8": "1/28"
+     },
+     "classes_k_of_n": {
+      "O8": "15/28",
+      "E2": "10/28",
+      "O6": "9/28",
+      "O16": "6/28",
+      "O7": "4/28",
+      "O11": "3/28",
+      "T6": "2/28",
+      "O5": "2/28",
+      "O12": "2/28",
+      "O13": "1/28",
+      "O14": "1/28",
+      "T10": "1/28"
+     },
+     "fidelity_mean": 4.36,
+     "commonest": "O7",
+     "examples": [
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "in Lage M. an Grad Mond",
+       "severity": "wrong_text",
+       "what": "the slip reads '14 Tage M. an ☉ und Mond'; the duration '14 Tage' is lost"
+      },
+      {
+       "page": "69ef37016c5c0455cc3f69e5:19",
+       "quote": "Rom. 8. v. 21. 22.",
+       "severity": "misleads",
+       "what": "page reads 'v.21.ꝛc.' (etc.), not verse 22"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "in Lage M. an Grad Mond",
+       "severity": "wrong_text",
+       "what": "the slip reads '14 Tage M. an ☉ und Mond'; the duration '14 Tage' is lost"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-4-hydrogen-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0018,
+      "agy_share": 0.00000274
+     },
+     "counts": true,
+     "contain_answers": "0/28",
+     "contain_reasons": [],
+     "unchanged": "12/28",
+     "skipped": 2
+    },
+    "hydrogen-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-4-hydrogen-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "10/30",
+      "E2": "7/30",
+      "O6": "6/30",
+      "O12": "5/30",
+      "O11": "2/30",
+      "O7": "1/30",
+      "O13": "1/30",
+      "T6": "1/30"
+     },
+     "fidelity_mean": 4.53,
+     "commonest": "O7",
+     "examples": [
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "in Tag u: N: an ☉ und Mond",
+       "severity": "wrong_text",
+       "what": "the slip reads '14 Tag'; the number 14 is dropped and replaced by 'in'"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "in Tag u: N: an ☉ und Mond",
+       "severity": "wrong_text",
+       "what": "the slip reads '14 Tag'; the number 14 is dropped and replaced by 'in'"
+      },
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "vide memorabilia ♃ a p: 155 usque p: 156",
+       "severity": "misleads",
+       "what": "the slip reads 'p: 153', not 155"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-4-hydrogen-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000233
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "hydrogen-medium": {
+     "served": "this run's fresh read of the image, not served (agy gemini-4-hydrogen-medium)",
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "accept_rate": 0.9,
+     "accept_ci": {
+      "ci95": [
+       0.8,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.2
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "2/30",
+      "O1": "1/30",
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "11/30",
+      "O6": "5/30",
+      "O16": "4/30",
+      "E2": "3/30",
+      "O12": "3/30",
+      "O7": "3/30",
+      "T6": "2/30",
+      "O1": "1/30",
+      "O11": "1/30",
+      "T10": "1/30"
+     },
+     "fidelity_mean": 4.53,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b4192e2b0edf3eaa2def0d:118",
+       "quote": "gott der Allmächtige der Weiße",
+       "severity": "wrong_text",
+       "what": "the page has 'Allmächtige Bau Meister' (Baumeister, 'master builder'); 'Weiße' is a misread and 'Meister' is dropped"
+      },
+      {
+       "page": "69bd9e7ef6d63c919747b26e:133",
+       "quote": "Vnd kochs zu einem Sälblein klein.",
+       "severity": "wrong_text",
+       "what": "page reads 'Sältzlein' (little salt), not 'Sälblein' (little salve); this changes the recipe"
+      },
+      {
+       "page": "69c77c496a0f3d112faf964b:46",
+       "quote": "Nuzen",
+       "severity": "cosmetic",
+       "what": "the page prints 'Nutzen'; the candidate drops the t"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-4-hydrogen-medium call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.0000025
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>hydrogen-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "lite -> hydrogen-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "lite -> hydrogen-medium": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  },
+  "de-flash3": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books": 2736,
+    "books_walked": 52,
+    "held_or_hidden": 0,
+    "no_eligible_page": 22,
+    "rule": "visible German books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten",
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "3flash>hydrogen-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "hydrogen-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "hydrogen-medium": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash>hydrogen-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-4-hydrogen-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "accept_rate": 0.9,
+     "accept_ci": {
+      "ci95": [
+       0.767,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "O8": "22/30",
+      "O6": "10/30",
+      "E2": "10/30",
+      "O12": "5/30",
+      "T6": "3/30",
+      "O5": "2/30",
+      "O7": "1/30",
+      "O4": "1/30",
+      "O16": "1/30",
+      "D1": "1/30",
+      "O1": "1/30",
+      "O11": "1/30"
+     },
+     "fidelity_mean": 4.33,
+     "commonest": "O1",
+     "examples": [
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "quote": "<margin>Magd</margin>",
+       "severity": "wrong_text",
+       "what": "left margin note is cut off in the gutter; the visible fragments ('...Gifft', '...ereria') are not 'Magd', so the gloss is invented"
+      },
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "quote": "<margin>Magd</margin>",
+       "severity": "wrong_text",
+       "what": "left margin note is cut off in the gutter; the visible fragments ('...Gifft', '...ereria') are not 'Magd', so the gloss is invented"
+      },
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "quote": "<margin>*Crescentij* Ehegemahl</margin>",
+       "severity": "misleads",
+       "what": "cropped left-margin note is given as a complete, confident reading; only fragments are legible"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-4-hydrogen-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0038,
+      "agy_share": 0.0000025
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "21/30",
+     "skipped": 0
+    },
+    "hydrogen-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-4-hydrogen-low)",
+     "n": 29,
+     "books": 29,
+     "accept": "28/29",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.897,
+       1
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "1/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.103
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O5": "1/29"
+     },
+     "classes_k_of_n": {
+      "O8": "14/29",
+      "O16": "3/29",
+      "E2": "3/29",
+      "O12": "3/29",
+      "O13": "1/29",
+      "O7": "1/29",
+      "O6": "1/29",
+      "T10": "1/29",
+      "O5": "1/29"
+     },
+     "fidelity_mean": 4.48,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "quote": "offt sich in die Häuser / giengen / hineyn schleichendt gesehen ward",
+       "severity": "wrong_text",
+       "what": "drops 'darauff folgendts gewißlich etliche drauff' from the line, which leaves a garbled sentence"
+      },
+      {
+       "page": "6a427d8d28e9db2e39c240bb:23",
+       "quote": "offt sich in die Häuser / giengen / hineyn schleichendt gesehen ward",
+       "severity": "wrong_text",
+       "what": "drops 'darauff folgendts gewißlich etliche drauff' from the line, which leaves a garbled sentence"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-4-hydrogen-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000233
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "0/29",
+     "skipped": 1
+    },
+    "hydrogen-medium": {
+     "served": "this run's fresh read of the image, not served (agy gemini-4-hydrogen-medium)",
+     "n": 29,
+     "books": 29,
+     "accept": "28/29",
+     "accept_rate": 0.97,
+     "accept_ci": {
+      "ci95": [
+       0.897,
+       1
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "1/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.103
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O5": "1/29"
+     },
+     "classes_k_of_n": {
+      "O8": "11/29",
+      "E2": "7/29",
+      "O6": "4/29",
+      "O12": "3/29",
+      "D1": "2/29",
+      "O16": "1/29",
+      "O5": "1/29",
+      "O11": "1/29",
+      "T6": "1/29",
+      "I3": "1/29"
+     },
+     "fidelity_mean": 4.45,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "6992cbdc018b80967354bf99:151",
+       "quote": "nach Princip I berechnetnen Totalsummen",
+       "severity": "wrong_text",
+       "what": "the word 'absoluten' is missing: the page reads 'berechnetnen absoluten Totalsummen', so the reader is not told the sums are absolute values"
+      },
+      {
+       "page": "6992cbdc018b80967354bf99:151",
+       "quote": "nach Princip I berechnetnen Totalsummen",
+       "severity": "wrong_text",
+       "what": "the word 'absoluten' is missing: the page reads 'berechnetnen absoluten Totalsummen', so the reader is not told the sums are absolute values"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-4-hydrogen-medium call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000233
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "0/29",
+     "skipped": 1
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>hydrogen-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "3flash -> hydrogen-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "3flash -> hydrogen-medium": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  },
+  "latin-flash3": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15731,
+    "books_walked": 38,
+    "held_or_hidden": 0,
+    "no_eligible_page": 8,
+    "rule": "visible Latin books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten",
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "3flash>hydrogen-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "hydrogen-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "hydrogen-medium": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash>hydrogen-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-4-hydrogen-low)",
+     "n": 29,
+     "books": 29,
+     "accept": "24/29",
+     "accept_rate": 0.83,
+     "accept_ci": {
+      "ci95": [
+       0.69,
+       0.966
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "1/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.103
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O6": "1/29"
+     },
+     "classes_k_of_n": {
+      "O8": "17/29",
+      "O6": "10/29",
+      "O16": "4/29",
+      "E2": "4/29",
+      "O12": "3/29",
+      "O11": "2/29",
+      "D1": "2/29",
+      "O13": "1/29"
+     },
+     "fidelity_mean": 4.41,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69dbc9611040d1d5e20a3074:167",
+       "quote": "quod ueteribus amicis nullam prouinciam decernens",
+       "severity": "wrong_text",
+       "what": "page reads 'militiam prouinciasque decernens' (assigning commands and provinces to old friends); candidate's 'nullam prouinciam' (no province) inverts the sense"
+      },
+      {
+       "page": "6a08518715c643eb1af4a940:443",
+       "quote": "Genuclio Curuo",
+       "severity": "misleads",
+       "what": "the page has 'Genucilio'; the personal name is misspelled"
+      },
+      {
+       "page": "6a42c71697284560a2b10e43:18",
+       "quote": "glossa Clementis 1.",
+       "severity": "misleads",
+       "what": "the page has 'glos. Clemen. 1.' (gloss on the Clementines, c. 1); expanding it to 'Clementis' suggests Pope Clement I"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-4-hydrogen-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00413,
+      "agy_share": 0.00000272
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "17/29",
+     "skipped": 1
+    },
+    "hydrogen-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-4-hydrogen-low)",
+     "n": 29,
+     "books": 29,
+     "accept": "26/29",
+     "accept_rate": 0.9,
+     "accept_ci": {
+      "ci95": [
+       0.759,
+       1
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "1/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.103
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O5": "1/29"
+     },
+     "classes_k_of_n": {
+      "O8": "9/29",
+      "E2": "6/29",
+      "O6": "5/29",
+      "O12": "2/29",
+      "O11": "1/29",
+      "O13": "1/29",
+      "O5": "1/29"
+     },
+     "fidelity_mean": 4.72,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "6a4f665d1cba01ec54e75968:13",
+       "quote": "Ex quibus colligimus Judam quidem se ex loco edito",
+       "severity": "wrong_text",
+       "what": "the word 'primum' is missing. The page reads 'Judam primum quidem se', and 'primum' sets up the order of events (first he hanged himself, then the fall)."
+      },
+      {
+       "page": "6a4f665d1cba01ec54e75968:13",
+       "quote": "Ex quibus colligimus Judam quidem se ex loco edito",
+       "severity": "wrong_text",
+       "what": "the word 'primum' is missing. The page reads 'Judam primum quidem se', and 'primum' sets up the order of events (first he hanged himself, then the fall)."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-4-hydrogen-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000251
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "0/29",
+     "skipped": 1
+    },
+    "hydrogen-medium": {
+     "served": "this run's fresh read of the image, not served (agy gemini-4-hydrogen-medium)",
+     "n": 29,
+     "books": 29,
+     "accept": "27/29",
+     "accept_rate": 0.93,
+     "accept_ci": {
+      "ci95": [
+       0.828,
+       1
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "0/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "9/29",
+      "O6": "8/29",
+      "E2": "3/29",
+      "O12": "2/29",
+      "O13": "1/29",
+      "O5": "1/29",
+      "T6": "1/29"
+     },
+     "fidelity_mean": 4.69,
+     "commonest": "O8",
+     "examples": [
+      {
+       "page": "6a4adbc72f55066780cb4ba9:16",
+       "quote": "à DEO",
+       "severity": "cosmetic",
+       "what": "The page prints a circumflex (â DEO, â Diis); the candidate uses a grave accent (à). Spelling convention only."
+      },
+      {
+       "page": "6a42c71697284560a2b10e43:18",
+       "quote": "possumus adquirere alienam iurisdictionem",
+       "severity": "cosmetic",
+       "what": "page has 'acquirere'"
+      },
+      {
+       "page": "69b221d708069e96e8431644:300",
+       "quote": "nec fæta furore",
+       "severity": "cosmetic",
+       "what": "page has the œ ligature ('fœta'), not æ"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-4-hydrogen-medium call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000242
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "0/29",
+     "skipped": 1
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>hydrogen-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "3flash -> hydrogen-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    },
+    "3flash -> hydrogen-medium": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  }
+ },
+ "contain_candidates": []
+}

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Japanese</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<warning>Handwritten Japanese brush script (kanbun captions on an iconographic drawing scroll); creases, staining and some faded ink lines.</warning>
+<meta>Section of a handscroll with ink outline drawings of Buddhist deities and short vertical captions. The left edge shows part of the neighbouring sheet with fragments of drawings and no text.</meta>
+
+<image-desc size="large" type="diagram" significance="high">An ink outline drawing on a handscroll showing nine Buddhist figures in two rows. On the left, two wrathful guardian figures with flaming hair sit in dynamic poses on rock-like bases, and each holds a staff or lance. In the centre, five crowned bodhisattva figures sit cross-legged on lotus pedestals. They have halos and body aureoles, hold their hands in a mudra at the chest, and show a vajra or wheel-like emblem on the breast. On the right, two smaller attendant figures sit or kneel on lotus bases: the upper one holds a tray of offerings and the lower one holds a flowering branch.</image-desc>
+
+<insert>第一南門大悲金剛青</insert>
+
+<insert>第<gloss>東門</gloss><unclear>天鼓</unclear>金剛身白色</insert>
+
+<insert>第二南門<unclear>空藏</unclear>菩薩月色</insert>
+
+<insert>第一東門香藏<unclear>菩薩</unclear>白色</insert>
+
+<vocab>南門, 東門, 大悲金剛, 天鼓金剛, 空藏菩薩, 香藏菩薩, mandala gate guardians, iconographic drawing scroll, zuzō</vocab>

@@ -36,6 +36,7 @@ import { execFileSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { staleTranslationReason, restoreUpdate, WITHHOLD_REVISION_SOURCE } from '../lib/stale-translation.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { contentHash } from '../lib/write-provenance.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const APPLY = process.argv.includes('--apply');
@@ -67,20 +68,50 @@ for (const page of docs) {
   // that it cannot ride the reader's flight payload. `page_revisions` is the
   // one place holding it. Newest first: a page can have been withheld more
   // than once if it was restored and re-swept.
-  const rev = await db.collection('page_revisions')
-    .find({ page_id: page.id, field: 'translation', reason: WITHHOLD_REVISION_SOURCE })
-    .sort({ created_at: -1 }).limit(1).next();
+  //
+  // Match the snapshot by the withheld record's `content_hash`, not by page id
+  // alone (#8425). A text-shift repair moves `translation_withheld` to the leaf
+  // the text belongs to, but the snapshot stays under the page it was withheld
+  // FROM — so the page-id snapshot is then the English that LEFT this page, and
+  // restoring it puts another leaf's English back on the reader. 240 pages on
+  // one book were restored by hash by hand for exactly this reason.
+  const revHash = (r) => r?.content_hash ?? (r?.data ? contentHash(r.data) : null);
+  const want = page.translation_withheld.content_hash ?? null;
+  const revs = db.collection('page_revisions');
+  const snapQ = { field: 'translation', reason: WITHHOLD_REVISION_SOURCE };
+  let rev = await revs.find({ page_id: page.id, ...snapQ }).sort({ created_at: -1 }).limit(1).next();
+  let movedFrom = null;
+  if (want && rev && revHash(rev) !== want) {
+    // The newest own snapshot is someone else's text. Older own snapshots, then
+    // the rest of the book (page_id $in uses the page_id index; there is no
+    // book_id index on page_revisions).
+    const own = await revs.find({ page_id: page.id, ...snapQ }).sort({ created_at: -1 }).toArray();
+    rev = own.find((r) => revHash(r) === want) ?? null;
+    if (!rev) {
+      const ids = (await pages.find({ book_id: page.book_id }, { projection: { id: 1 } }).toArray()).map((p) => p.id);
+      const cands = await revs.find({ page_id: { $in: ids }, ...snapQ }).sort({ created_at: -1 }).toArray();
+      rev = cands.find((r) => revHash(r) === want) ?? null;
+      if (rev) movedFrom = rev.page_id;
+    }
+    if (!rev) {
+      console.log(`${page.id}: withheld content_hash ${want} matches NO snapshot in book ${page.book_id} — refusing (the page-id snapshot is a different text, likely moved by a shift repair)`);
+      skipped++;
+      continue;
+    }
+  }
   if (!rev?.data) {
     console.log(`${page.id}: withheld but NO SNAPSHOT — cannot restore, and this page should be reported by the drift audit as UNBACKED`);
     skipped++;
     continue;
   }
+  if (!want) console.log(`${page.id}: withheld record has no content_hash — using the page's own newest snapshot unverified`);
 
   const update = restoreUpdate(page, rev.data);
   const text = update.$set.translation.data;
   const stillStale = staleTranslationReason({ ...page, translation: update.$set.translation });
   console.log(`\n${page.book_id} p.${page.page_number} (${page.id})`);
   console.log(`  reason withheld: ${page.translation_withheld?.reason} · ${text.length} chars (recorded ${page.translation_withheld?.chars ?? '—'})`);
+  if (movedFrom) console.log(`  snapshot found by content_hash under page ${movedFrom} (text moved here by a shift repair)`);
   console.log(`  head: ${text.slice(0, 140).replace(/\n/g, ' ')}`);
   if (stillStale && !FORCE) {
     console.log(`  STILL STALE (${stillStale}) — the sweep would withhold it again. Pass --force to restore anyway.`);

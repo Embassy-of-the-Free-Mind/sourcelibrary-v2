@@ -38,7 +38,7 @@ export async function GET(
     const db = await getReadDb();
 
     // Get collection metadata from MongoDB (small doc, fast)
-    const collection = await db.collection('collections').findOne({ slug: id });
+    const collection = await db.collection('collections').findOne({ slug: id, visible: { $ne: false } });
     if (!collection) {
       return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
     }

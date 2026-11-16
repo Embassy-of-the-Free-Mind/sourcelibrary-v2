@@ -1,0 +1,25 @@
+[
+ {
+  "at": "2026-11-13T16:36:25.254Z",
+  "run": "ct-flash3-8632-latin-flash3-agy-flash-low-4-ocr",
+  "reason": "v2#8632 cell-test-flash3: judged pages whose arm cleared the floor in its cell (prereg 'Useful pages')",
+  "written": 13,
+  "skipped": {}
+ },
+ {
+  "at": "2026-11-13T16:36:26.311Z",
+  "run": "ct-flash3-8632-latin-flash3-3flash-agy-flash-low-ocr",
+  "reason": "v2#8632 cell-test-flash3: judged pages whose arm cleared the floor in its cell (prereg 'Useful pages')",
+  "written": 3,
+  "skipped": {}
+ },
+ {
+  "at": "2026-11-13T16:36:22.968Z",
+  "run": "ct-flash3-8632-greek-flash3-3flash-agy-flash-low-ocr",
+  "reason": "v2#8632 cell-test-flash3: judged pages whose arm cleared the floor in its cell (prereg 'Useful pages')",
+  "written": 6,
+  "skipped": {
+   "correction changes 302% of the draft's words: check by eye": 1
+  }
+ }
+]

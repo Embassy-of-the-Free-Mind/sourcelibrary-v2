@@ -1,0 +1,37 @@
+<scan-quality>fair</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>66</page-num>
+<warning>Handwritten Ashkenazic semi-cursive script. Significant ink fading in the lower half of the page. Some bleed-through from the reverse side.</warning>
+
+מספרים מספר והחשבון שהם י"ב י"ב כנגד שמות י"ב
+החתומים שהן כוללות סוד זמן ועתים <unclear>יהוה יהוה</unclear>
+והנה כי כן זה שמי לעולם זה זכרי לדר דר
+הנה גלה סוד הזמן בסוד שמו (סוד ז"ל ר"ל שסודם ר"ס של
+רת רת על ר"ס) וגזר לפי רצון ההנהגה כח המיוחד המלך
+ודור בא והארץ לעולם עומדת זה שמי לעולם ז' זכרי לדור
+ודור והנה חתום על הקדש ומה בו (הכירו יחיה) <unclear>לדעת</unclear>
+ומה בו ולא הכירו ימות חול על קדש קדש על חול יש
+שם קדש ויש שם חול יש שם קדש ושם חול חשמל שמו ק'
+<margin>
+<unclear>בסוד</unclear>
+<unclear>השמות</unclear>
+</margin>
+קדש יש שם קדש חול שמו שם חול קדש שמי לוקח שמי
+שד שמי חלק שמי
+
+->שדי שלו : פחדכם שלו<-
+->שלו חי : שדי של<-
+->שלו שדי : שלו שדי<-
+->דין : שלט<-
+
+->חלק שמי : הן שלכם<-
+->שוקל מה<-
+->שוקל מה<-
+->מחיטס : שלו<-
+->מחיטס שלו : נחל שמי<-
+
+->חשמל : מי גל<-
+
+<vocab>שמות, חשמל, קדש, חול, סוד, שדי, הנהגה</vocab>

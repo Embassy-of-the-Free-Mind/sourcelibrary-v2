@@ -314,7 +314,7 @@ async function CoreCollectionsSection() {
   return (
     <div>
       <div className="mb-4">
-        <h2 className="font-display text-2xl text-primary">Core Collections</h2>
+        <h2 className="font-serif text-2xl text-primary">Core Collections</h2>
         <p className="text-stone-500 mt-1 text-sm">The major subject wings of the library</p>
       </div>
       <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -344,7 +344,7 @@ async function CuratedPathwaysSection() {
   return (
     <div>
       <div className="mb-4">
-        <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
+        <h2 className="font-serif text-2xl text-primary">Curated Pathways</h2>
         <p className="text-stone-500 mt-1 text-sm">Thematic journeys drawn from across the core collections</p>
       </div>
       <ShowMorePathways initialCount={INITIAL_PATHWAYS} totalCount={items.length}>
@@ -386,7 +386,7 @@ function SectionSkeleton({ heading, sub }: { heading: string; sub: string }) {
   return (
     <div>
       <div className="mb-4">
-        <h2 className="font-display text-2xl text-primary">{heading}</h2>
+        <h2 className="font-serif text-2xl text-primary">{heading}</h2>
         <p className="text-stone-500 mt-1 text-sm">{sub}</p>
       </div>
       <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 animate-pulse">

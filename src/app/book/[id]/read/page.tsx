@@ -400,7 +400,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     <Fragment key={`c${m}`}>
       <span id={`p${m}`} />
       {chapterAt.get(m)?.map((c, i) => (
-        <Heading key={i} level={2} className="font-display text-2xl mb-4">
+        <Heading key={i} level={2} className="font-serif text-2xl mb-4">
           {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
         </Heading>
       ))}
@@ -449,7 +449,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
       <section key={p.id} id={`p${n}`} aria-labelledby={`h-p${n}`} className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
         {carriedHeads(carried)}
         {chapterAt.get(n)?.map((c, i) => (
-          <Heading key={i} level={2} className="font-display text-2xl mb-4">
+          <Heading key={i} level={2} className="font-serif text-2xl mb-4">
             {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
           </Heading>
         ))}
@@ -503,7 +503,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         <p className="text-sm text-muted mb-4">
           <Link href={`/book/${bookPath}`} className="hover:text-accent-rust underline underline-offset-2">← Book page</Link>
         </p>
-        <h1 className="font-display text-3xl sm:text-4xl leading-tight" lang={titleLang(shownTitle, book)}>{shownTitle}</h1>
+        <h1 className="font-serif text-3xl sm:text-4xl leading-tight" lang={titleLang(shownTitle, book)}>{shownTitle}</h1>
         {originalTitle && <p className="text-lg text-muted italic mt-1" lang={originalLang}>{originalTitle}</p>}
         <p className="text-sm text-muted mt-3">
           {[book.author, book.published, book.language].filter(Boolean).join(' · ')}
@@ -621,7 +621,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         {view === 'flow' && flowRuns(open).map((run, i) => (
           <div key={i}>
             {chapterAt.get(run[0].page_number)?.map((c, j) => (
-              <Heading key={j} level={2} className="font-display text-2xl mt-10 mb-4">
+              <Heading key={j} level={2} className="font-serif text-2xl mt-10 mb-4">
                 {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
               </Heading>
             ))}
@@ -649,7 +649,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           return (
             <section key={p.id} id={`p${n}`} aria-labelledby={`h-p${n}`} className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
               {[...(chapterAt.get(n) ?? []), ...(chapterAt.get(en.page_number) ?? [])].map((c, i) => (
-                <Heading key={i} level={2} className="font-display text-2xl mb-4">
+                <Heading key={i} level={2} className="font-serif text-2xl mb-4">
                   {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
                 </Heading>
               ))}
@@ -701,7 +701,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           // A signed-in reader past the daily whole-book budget: telling them to sign in
           // would ask for what they have done. The page-by-page reader is not counted.
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
-            <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">You have reached today&rsquo;s limit for this view</Heading>
+            <Heading level={pageLevel} id="gate-heading" className="font-serif text-xl">You have reached today&rsquo;s limit for this view</Heading>
             <p className="mt-2">
               The whole-book view serves up to {API_LIMITS.session.pagesPerDay.toLocaleString('en-US')} pages a day to each reader. The page-by-page reader has no
               such limit: <Link href={`/book/${bookPath}/page-number/${gateFrom}`} className="underline underline-offset-2 hover:text-accent-rust">continue
@@ -711,7 +711,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         )}
         {gateFrom !== null && meter?.identity.kind !== 'session' && (
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
-            <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>
+            <Heading level={pageLevel} id="gate-heading" className="font-serif text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>
             <p className="mt-2">
               The first {clampAt} pages of every book are open. Reading further is free, but asks you to{' '}
               <Link href="/auth/signin" className="underline underline-offset-2 hover:text-accent-rust">sign in</Link>.

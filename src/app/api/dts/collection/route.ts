@@ -17,6 +17,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { publicationFilter } from '@/lib/publication';
 import { resolveImprintPlace, IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { API_LIMITS } from '@/lib/api-limits';
@@ -190,7 +191,7 @@ export async function GET(request: NextRequest) {
       const skip = (page - 1) * PAGE_SIZE;
       const filter = {
         collections: id,
-        pages_count: { $gt: 0 },
+        ...publicationFilter('live'),
       };
 
       const [books, total] = await Promise.all([

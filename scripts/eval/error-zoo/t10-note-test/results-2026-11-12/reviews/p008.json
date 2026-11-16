@@ -1,0 +1,81 @@
+[
+  {
+    "book_id": "699ef9fd0600353e655fe517",
+    "slot": 1,
+    "title": "[Cyrillisch:] Sleutel tot de geheimen van de natuur",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Russian translation of Eckartshausen's Key to the Secrets of Nature in pre-reform orthography (ѣ, і, ъ), early-19th-century letterpress. That fits the catalogue record. No tradition or collection was given to check it against.",
+    "rights_flag": null,
+    "structure_note": "Record 376 carries printed p. 338. An offset of 38 is plausible for front matter or an earlier part. The 25 printed repeats, 8 backsteps and 15 duplicate records over 418 distinct page numbers suggest multiple parts with restarting pagination, duplicate records, or both; one page cannot tell which. The counts conflict: pages_translated is 0 in the structure counts but 401 in the book field.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 376,
+        "right_page": "yes",
+        "printed_marker": "338",
+        "layout": "single column of prose with a small-caps section heading in the lower third; a handwritten letter in the left margin; the text block's right edge is cut off by the frame, with the closed fore-edge of the book visible on the left",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Всякъ\nстремится къ пріятнымъ чувствова-",
+            "image": "the right edge of every line is cropped (\"Всяк…\", \"чувствов…\", \"сладостн…\", \"правил…\", \"чтоб…\")",
+            "problem": "The transcription supplies complete line-ends that are not visible on this image. They are linguistically forced and almost certainly correct, but they are not read from the leaf.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<margin>P</margin>",
+            "image": "a handwritten letter in ink (P/Р) in the left margin, a later reader's mark",
+            "problem": "A later hand's mark is transcribed as page text and carried into the English.",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<vocab>чувствованіе, сладострастіе, Божество, умѣренность, разсудокъ, религія, теорія</vocab>",
+            "english": "<note>Vocabulary appearing at the bottom of the original page: feeling, voluptuousness, Deity, moderation, reason, religion, theory.</note>",
+            "problem": "The note claims the printed page carries a vocabulary list at its foot. It does not: the <vocab> is the OCR model's own tag. This invents apparatus that is not on the page.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "<margin>P</margin>",
+            "english": "<margin>P</margin>",
+            "problem": "A later reader's marginal letter is presented in the English as a marginal note of the text.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented apparatus: the English says \"Vocabulary appearing at the bottom of the original page\", but no such list is printed on the leaf.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "note": "The continuity meta quotes the previous page (\"man himself destroys the earthly paradise and sows\"). It cannot be checked from this leaf, though it is consistent with the opening \"шерніе\" (thorns).",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "original: \"сладострастія\", sensual pleasure or lust",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "Vocabulary appearing at the bottom of the original page: fe",
+              "verdict": "wrong",
+              "helpful": false
+            }
+          ],
+          "missing": []
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription and translation of p. 338 are faithful; the only OCR caveat is that the cropped line-ends are filled in from inference. The English carries a note that invents a printed vocabulary list at the foot of the page, an invented-apparatus embarrassment that a reader would see."
+  }
+]

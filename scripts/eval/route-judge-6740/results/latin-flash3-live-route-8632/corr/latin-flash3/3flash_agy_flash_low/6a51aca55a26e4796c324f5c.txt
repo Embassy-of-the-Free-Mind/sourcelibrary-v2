@@ -1,0 +1,40 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>23</page-num>
+<header>CONFVTATIO</header>
+<sig>B 4</sig>
+
+# DE FRVCTIBVS IVSTIFICA-
+## tionis fidei, seu spiritus, seu de bonis operi-
+->bus, uel de noua obedientia<-
+->renatorum.<-
+
+*Causa efficiens bonorum operum, est spiritus
+sanctus in iustificatis habitans, et in iis per uer-
+bum Dei motus interiores et opera exteriora,
+cum uoluntate Dei congruentia accendens. 1. Cor.
+3. Gal. 5. Rom. 5.*
+
+*Errant, qui somniant ante iustificationem
+posse opera bona Deo placentia praestari. Etsi
+enim externa quaedam disciplina, utcunque uiri-
+bus humanis sit, tamen ea non placet, quia fit si-
+ne fide, ut postea dicetur.*
+
+*Errant, qui negant iustificatos debitores esse,
+ne secundum carnem ambulent. Rom. 8. Imo ope-
+ra carnis sunt adulterium, fornicatio, immundicia,
+lasciuia, idolorum seruitus, ueneficia etc. Qui ta-
+lia agunt, regnum Dei non possidebunt Galat. 5.
+Itaque ubi ista peccata dominantur sine poeniten-
+tia, ibi sunt certissimi indices ac testes, neque fidem,
+neque spiritum sanctum, neque iusticiam adesse.*
+
+*Causae impulsiuae bonorum operum in rena-
+tis sunt, mandatum Dei, ipsa regeneratio, fides,
+spiritus. Ista enim omnia non possunt stare cum ma-
+la conscientia, et delictis sine poenitentia. Item*
+
+<vocab>fructus iustificationis, spiritus sanctus, opera bona, obedientia, regeneratio, fides, poenitentia</vocab>

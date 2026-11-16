@@ -45,18 +45,23 @@ function bookTitle(book: { display_title?: string; title: string; localized?: Lo
   return dt && dt !== 'None' ? dt : book.title;
 }
 
+// A book with no edition in the page's language links straight to the page
+// its locale URL would redirect to, instead of a 307 hop (#7076). Unknown
+// (null) keeps the locale URL and lets the book page decide.
+// Locales with a book page for every book (/es, /zh, #7496) keep the prefix;
+// /la and /nl still send a book without an edition to English.
+// Exported so the hero's "Start reading" link (#76) goes where this band's
+// lead book does.
+export function featuredBookHref(book: FeaturedBook, lang: Locale): string {
+  return !hasBookPageForEveryBook(lang) && hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
+    ? `${bookUrl(book)}?lang=${lang}`
+    : localePath(bookUrl(book), lang);
+}
+
 export default function EditorialSpread({ collection, books, lang = 'en' }: EditorialSpreadProps) {
   const lp = (href: string) => localePath(href, lang);
   const t = HOME_STRINGS[lang];
-  // A book with no edition in the page's language links straight to the page
-  // its locale URL would redirect to, instead of a 307 hop (#7076). Unknown
-  // (null) keeps the locale URL and lets the book page decide.
-  // Locales with a book page for every book (/es, /zh, #7496) keep the prefix;
-  // /la and /nl still send a book without an edition to English.
-  const bookHref = (book: FeaturedBook) =>
-    !hasBookPageForEveryBook(lang) && hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
-      ? `${bookUrl(book)}?lang=${lang}`
-      : lp(bookUrl(book));
+  const bookHref = (book: FeaturedBook) => featuredBookHref(book, lang);
   const copy = localizedCollection(collection, lang);
   const name = lang === 'en' ? copy.name : collectionName(lang, collection.slug, copy.name);
   // No English description under foreign chrome.
@@ -86,7 +91,7 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
           <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
             {t.featuredCollectionEyebrow}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white leading-[1.1] mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.1] mb-4">
             {name}
           </h2>
           {subtitle && (

@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { ContributeBook } from '@/lib/api-client';
+import { publicationFilter } from '@/lib/publication';
 
 export const dynamic = 'force-dynamic';
+
+const MAX_LIMIT = 200;
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,20 +13,21 @@ export async function GET(request: NextRequest) {
 
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type') || 'ocr';
-    const limit = parseInt(searchParams.get('limit') || '50');
+    const limit = Math.min(MAX_LIMIT, Math.max(1, parseInt(searchParams.get('limit') || '50', 10) || 50));
 
-    // Find books that need work
+    // Find books that need work, among the published books only (ops #17).
     let query;
 
     if (type === 'ocr') {
       // Books where pages_ocr < pages_count
       query = {
-        pages_count: { $gt: 0 },
+        ...publicationFilter('live'),
         $expr: { $lt: ['$pages_ocr', '$pages_count'] },
       };
     } else {
       // Books where pages_translated < pages_ocr (needs OCR first)
       query = {
+        ...publicationFilter('live'),
         pages_ocr: { $gt: 0 },
         $expr: { $lt: ['$pages_translated', '$pages_ocr'] },
       };

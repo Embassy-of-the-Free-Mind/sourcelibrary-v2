@@ -120,7 +120,7 @@ export default async function BhutanLibraryPage() {
             <p className="text-accent-gold/90 text-sm md:text-base uppercase tracking-[0.2em] mb-4">
               Dedicated to His Majesty the King of Bhutan
             </p>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl text-white mb-5 leading-[1.1] font-display drop-shadow-sm">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl text-white mb-5 leading-[1.1] font-serif drop-shadow-sm">
               The Bhutanese
               <br className="hidden md:block" /> Buddhist Library
             </h1>
@@ -129,25 +129,25 @@ export default async function BhutanLibraryPage() {
               {formatStat(stats.pagesOcr)} pages), rescued from the monasteries of Bhutan and written
               in classical Tibetan, most never read in English. We are translating them for the first
               time with a high-quality model,{' '}
-              <em className="text-white not-italic font-display">proven faithful</em> to the
+              <em className="text-white not-italic font-serif">proven faithful</em> to the
               originals.
             </p>
 
             <div className="flex flex-wrap gap-x-10 gap-y-4 text-white/80 mb-9">
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">
+                <strong className="font-serif text-white text-lg md:text-xl">
                   {formatStat(stats.books)}
                 </strong>{' '}
                 manuscripts
               </span>
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">
+                <strong className="font-serif text-white text-lg md:text-xl">
                   {formatStat(stats.pagesOcr)}
                 </strong>{' '}
                 pages digitized
               </span>
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">
+                <strong className="font-serif text-white text-lg md:text-xl">
                   {formatStat(stats.firstTranslations)}+
                 </strong>{' '}
                 first-ever English translations
@@ -175,7 +175,7 @@ export default async function BhutanLibraryPage() {
       {/* An endangered library */}
       <section className="bg-white py-14 md:py-20 border-t border-stone-200">
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
-          <h2 className="text-2xl md:text-3xl text-stone-900 mb-5 font-display leading-tight">
+          <h2 className="text-2xl md:text-3xl text-stone-900 mb-5 font-serif leading-tight">
             An endangered library
           </h2>
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
@@ -223,7 +223,7 @@ export default async function BhutanLibraryPage() {
       {/* What we tested — the case for a premium model */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-14 md:py-20">
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
-          <h2 className="text-2xl md:text-3xl text-stone-900 mb-5 font-display leading-tight">
+          <h2 className="text-2xl md:text-3xl text-stone-900 mb-5 font-serif leading-tight">
             A high-quality model, proven faithful
           </h2>
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
@@ -252,7 +252,7 @@ export default async function BhutanLibraryPage() {
       {/* The offering */}
       <section className="bg-stone-950 py-14 md:py-20">
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl text-white mb-5 font-display leading-tight">
+          <h2 className="text-2xl md:text-3xl text-white mb-5 font-serif leading-tight">
             Dedicated to His Majesty the King of Bhutan
           </h2>
           <p className="text-white/80 leading-relaxed text-[1.05rem] max-w-2xl mx-auto">
@@ -268,7 +268,7 @@ export default async function BhutanLibraryPage() {
       <section id="support" className="bg-white py-14 md:py-20 border-t border-stone-200 scroll-mt-4">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <div className="max-w-3xl mb-8">
-            <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 font-display leading-tight">
+            <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 font-serif leading-tight">
               Help us complete the work
             </h2>
             <p className="text-stone-600 leading-relaxed text-[1.05rem]">
@@ -317,13 +317,13 @@ export default async function BhutanLibraryPage() {
             ))}
             <div className="flex items-center justify-between gap-4 px-5 py-4 bg-stone-900">
               <span className="text-sm font-semibold text-white">A faithful, citable edition</span>
-              <span className="text-base font-bold text-accent-gold whitespace-nowrap">~$10,000</span>
+              <span className="text-base font-semibold text-accent-gold whitespace-nowrap">~$10,000</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div>
-              <h3 className="text-lg text-stone-900 mb-3 font-display">Make a gift</h3>
+              <h3 className="text-lg text-stone-900 mb-3 font-serif">Make a gift</h3>
               <p className="text-stone-600 leading-relaxed mb-6 text-sm">
                 Give now through one of the routes below, or use the form and we&apos;ll follow up
                 personally.
@@ -391,7 +391,7 @@ export default async function BhutanLibraryPage() {
       {/* Explore */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-12 md:py-16">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-xl md:text-2xl text-stone-900 mb-6 font-display">
+          <h2 className="text-xl md:text-2xl text-stone-900 mb-6 font-serif">
             Explore the collection
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -422,7 +422,7 @@ export default async function BhutanLibraryPage() {
       {/* Credits — who digitized these */}
       <section className="bg-white py-12 md:py-16 border-t border-stone-200">
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
-          <h2 className="text-xl md:text-2xl text-stone-900 mb-3 font-display">Digitized by</h2>
+          <h2 className="text-xl md:text-2xl text-stone-900 mb-3 font-serif">Digitized by</h2>
           <p className="text-stone-600 leading-relaxed text-sm mb-6">
             These manuscripts were rescued from loss by the archives that scanned them. Source Library
             re-hosts and translates them with gratitude to:

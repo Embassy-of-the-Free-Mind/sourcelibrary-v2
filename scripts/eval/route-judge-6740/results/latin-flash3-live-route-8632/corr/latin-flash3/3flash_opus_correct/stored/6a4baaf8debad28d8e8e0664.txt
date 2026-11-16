@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>9</page-num>
+<sig>A 5</sig>
+<meta>catchword: ipsam</meta>
+<vocab>Anaxilaus, Socrates, Phocion, Q. Horatius Flaccus, τυχικῶν, Fortuna</vocab>
+
+adversus eos, qui delitiis et luxui indulgebant,
+tanquam armis quibusdam instruebat. Anaxi-
+laus, non se, sed utrem Anaxilai in pilâ contun-
+di sentiebat. Socrates, cicutâ poculo mulctatus,
+injuriâ se affici, haut quaquam existimabat.
+Phocion, cùm unâ cum nonnullis amicorum ad
+mortem duceretur, et quidam ex illis in lachry-
+mas prorumperet, viamque luctibus et lamentis im-
+plevisset; His ad eum verbis utebatur: Quid?
+annon benè tecum agi putas, qui cum phocione
+sis moriturus? In tam volubili rerum omnium
+circum actu, nescio quis nobis in aurem leniter
+insusurret:
+
+> Si fortuna levat caveto tolli!
+> Si fortuna premit caveto mergi!
+
+Prudenter, sapienter, meo censu! Securitas
+enim lento gradu in verticem ferens, in plano
+major, quàm in intutis præcipitiis, per quæ faci-
+lior lapsus et in momento. Quod etiam monuit
+Q. Horatius Flaccus Venusinus:
+
+> Rebus angustis, animosus atque
+> Fortis appare! sapienter idem
+> Contrahes vento nimiùm secundo
+->Turgida vela.<-
+
+Idem ego in his meorum τυχικῶν libris monere
+et minari volui, licet confusè, cùm Fortunam

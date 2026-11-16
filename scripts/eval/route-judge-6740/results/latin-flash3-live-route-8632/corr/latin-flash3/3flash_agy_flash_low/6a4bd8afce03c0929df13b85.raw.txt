@@ -1,0 +1,44 @@
+<<<BEGIN>>>
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: Docto-</meta>
+
+Macte tua virtute fies! jam nectit ad aram
+Alma Themis flores, dona parata Tibi.
+
+->f.<-
+
+->**Johann George Meurer/**<-
+->Juris Utriusque Cultor.<-
+
+---
+
+<image-desc size="small" type="decorative" significance="low">Ornate drop cap Q beginning the first epigram.</image-desc>
+
+**Q**uem Libitina suis nunc nuper legibus
+anxit,
+Leges in Cathedra non sine laude
+sonat.
+Enthea sic Pietas Libitinæ extendere leges
+Sangvineas sancto pectore sæpe potest!
+
+->*Honoratissimo Domino Respondenti, Amico*<-
+->*& Conterraneo optimo,*<-
+->*ponebat*<-
+
+->**Johannes Friderici,**<-
+->Sacrosanctae Theologiae Studiosus.<-
+
+---
+
+<image-desc size="small" type="decorative" significance="low">Ornate drop cap Q beginning the second epigram.</image-desc>
+
+**Q**uæ vis corruptos stringat, Doctissime,
+mores,
+Quaque fient publica vincula firma
+Rei,
+
+<vocab>Themis, Libitina, Pietas, Juris Utriusque Cultor, Sacrosanctae Theologiae Studiosus, epigram</vocab>
+<<<END>>>

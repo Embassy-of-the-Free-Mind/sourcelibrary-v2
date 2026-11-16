@@ -1,0 +1,268 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "route",
+  "issue": 225,
+  "stage": "ocr",
+  "languages": [
+   "ta",
+   "pi",
+   "sa"
+  ],
+  "about": "#225 (job indic-ocr-tests-225; Derek 2026-11-13 'yes' to both). Cell tamil (router tamil-lite/print): agy alone (the router's current answer, 9/10 on #6553) against the Internet Archive's own OCR corrected by agy, and a Surya 2 draft on gex45 corrected by agy; 40 books, one page each, about half Kovilur Andavar Library and half University of Toronto. Cell series (router english-gpu-7263/print, romanized Pali/Sanskrit/Prakrit text editions of the PTS and HOS volumes imported under #225): the bound route gpu2>agy-flash-low+diff (LightOnOCR + Surya 2 drafts and their word diff, agy reconciles; d-diff.mjs arm D) against agy alone; 24 books, one page each with dense diacritics. The judge counts every dropped or wrong diacritic as a defect (packet judge_note). Every agy call on one account (AGY_HOME=/root/.agy-james), gemini-3.8-flash-low, one page a call.",
+  "baseline": "agy",
+  "arms": [
+   "agy",
+   "ia>agy",
+   "surya>agy",
+   "gpu2>agy"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": [
+   "tamil-lite",
+   "romanized-indic-series-225"
+  ],
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "tamil": {
+     "routes": {
+      "agy": {
+       "n": 40,
+       "books": 40,
+       "unjudged": 0,
+       "accept": "15/40",
+       "accept_wilson": [
+        0.242,
+        0.53
+       ],
+       "accept_by_book": [
+        0.225,
+        0.525
+       ],
+       "wrong_text_pages": "22/40",
+       "wrong_text_wilson": [
+        0.398,
+        0.693
+       ],
+       "fidelity_mean": 3.48,
+       "counts": true,
+       "words": 5127,
+       "misleads_per_1k": 18.72,
+       "wrong_text_per_1k": 10.14
+      },
+      "ia>agy": {
+       "n": 39,
+       "books": 39,
+       "unjudged": 0,
+       "accept": "15/39",
+       "accept_wilson": [
+        0.249,
+        0.541
+       ],
+       "accept_by_book": [
+        0.231,
+        0.538
+       ],
+       "wrong_text_pages": "16/39",
+       "wrong_text_wilson": [
+        0.271,
+        0.566
+       ],
+       "fidelity_mean": 3.62,
+       "counts": true,
+       "words": 5073,
+       "misleads_per_1k": 15.38,
+       "wrong_text_per_1k": 6.9
+      },
+      "surya>agy": {
+       "n": 40,
+       "books": 40,
+       "unjudged": 0,
+       "accept": "13/40",
+       "accept_wilson": [
+        0.201,
+        0.48
+       ],
+       "accept_by_book": [
+        0.175,
+        0.475
+       ],
+       "wrong_text_pages": "19/40",
+       "wrong_text_wilson": [
+        0.329,
+        0.625
+       ],
+       "fidelity_mean": 3.73,
+       "counts": true,
+       "words": 5003,
+       "misleads_per_1k": 15.19,
+       "wrong_text_per_1k": 6.4
+      }
+     },
+     "controls": {
+      "agy": {
+       "n": 1,
+       "passed": true
+      },
+      "ia>agy": {
+       "n": 1,
+       "passed": true
+      },
+      "surya>agy": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 6,
+      "accept_flips": "1/6",
+      "flip_rate": 0.17,
+      "fidelity_abs_diff": 0.33
+     },
+     "against_baseline": {
+      "agy -> ia>agy": {
+       "shared_pages": 39,
+       "better": "9/39",
+       "worse": "3/39",
+       "accept_gained": 5,
+       "accept_lost": 4,
+       "accept_sign_test_p": 1,
+       "fidelity_diff": 0.15
+      },
+      "agy -> surya>agy": {
+       "shared_pages": 40,
+       "better": "14/40",
+       "worse": "5/40",
+       "accept_gained": 5,
+       "accept_lost": 7,
+       "accept_sign_test_p": 0.77,
+       "fidelity_diff": 0.25
+      }
+     }
+    },
+    "series": {
+     "routes": {
+      "gpu2>agy": {
+       "n": 24,
+       "books": 24,
+       "unjudged": 0,
+       "accept": "11/24",
+       "accept_wilson": [
+        0.279,
+        0.649
+       ],
+       "accept_by_book": [
+        0.25,
+        0.667
+       ],
+       "wrong_text_pages": "1/24",
+       "wrong_text_wilson": [
+        0.007,
+        0.202
+       ],
+       "fidelity_mean": 3.75,
+       "counts": true,
+       "words": 6504,
+       "misleads_per_1k": 14.15,
+       "wrong_text_per_1k": 0.15
+      },
+      "agy": {
+       "n": 24,
+       "books": 24,
+       "unjudged": 0,
+       "accept": "5/24",
+       "accept_wilson": [
+        0.092,
+        0.405
+       ],
+       "accept_by_book": [
+        0.042,
+        0.375
+       ],
+       "wrong_text_pages": "1/24",
+       "wrong_text_wilson": [
+        0.007,
+        0.202
+       ],
+       "fidelity_mean": 3.58,
+       "counts": true,
+       "words": 6485,
+       "misleads_per_1k": 21.13,
+       "wrong_text_per_1k": 0.15
+      }
+     },
+     "controls": {
+      "gpu2>agy": {
+       "n": 1,
+       "passed": true
+      },
+      "agy": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 6,
+      "accept_flips": "0/6",
+      "flip_rate": 0,
+      "fidelity_abs_diff": 0.17
+     },
+     "against_baseline": {
+      "agy -> gpu2>agy": {
+       "shared_pages": 24,
+       "better": "7/24",
+       "worse": "4/24",
+       "accept_gained": 7,
+       "accept_lost": 1,
+       "accept_sign_test_p": 0.07,
+       "fidelity_diff": 0.17
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "5 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 5 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "12 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}

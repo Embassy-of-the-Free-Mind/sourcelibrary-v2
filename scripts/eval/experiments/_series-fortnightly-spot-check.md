@@ -30,3 +30,20 @@ translations, so the unfiltered draw could pick a run no reader sees. That hole 
 Replayed over the eight draw dates 2026-10-19 → 2027-01-25, the old filter put 2 of 80 runs on such pages (2026-11-30, 2026-12-28).
 The new filter puts 0 there. It draws the same books, and every other book keeps the same run. Month 0's draw is in the
 ops repo and was not re-checked here.
+
+**Design change, 2026-11-13 (v3#154): the packet and the score follow what the reader is served on English books.**
+On an English leaf of an English edition the reader, `/quote`, `/text` and the exports serve the transcription; a stored
+translation there is a model's rewording that nobody is shown (#7100). Until now `draw.mjs` handed reviewers that stored text
+and `score.mjs` counted findings in it. In sprint round 7 (2026-11-13, public frame) 3 of the 10 drawn books were English
+editions, and 7 serious findings on one of them were all in the stored rewording: the round read 5 of 30 pages with a serious
+error, where the text readers meet gave 2 of 30. From this date:
+- `exposureOf()` labels such a page `rewrite_not_served` (in `draw-log.json`).
+- `draw.mjs` leaves the stored translation out of the packet for that page, with a one-line `translation_note`. The reviewer
+  reads the transcription against the image, as for any page; `REVIEWER.md` is unchanged.
+- `score.mjs` and `register.mjs` set aside `tr_errors` on such a page. Findings in the transcription (`ocr_errors`), `other`
+  and a wrong leaf still count, and the page still counts as served. `report.json` `not_served` says how much was set aside.
+
+Rows before this date are not rescored: their draw logs record no `rewrite_not_served` page, so the scorer returns them as
+they were. The frame is unchanged. It still admits a book by its stored translations (`pages_translated >= 3`), so English
+editions enter it only where the old rewording exists (2,297 of 25,940 frame books on 2026-11-13) and an English book
+without one cannot be drawn. That is a property of the frame this change does not touch.

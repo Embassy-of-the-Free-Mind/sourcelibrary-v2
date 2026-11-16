@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { hierarchy, treemap, treemapSquarify } from 'd3-hierarchy';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { experiment } from '@/lib/experiments-index';
 import { TENGYUR_QUALITY } from '@/lib/tengyur-quality';
@@ -35,6 +36,8 @@ const SRC = {
   liteVsYigdzin: exp('2026-10-04-tibetan-lite-vs-yigdzin-4523.md'),
   yigdzinRest: exp('2026-10-14-yigdzin-rest-withheld-and-unread-tibetan-4523.md'),
   correct: exp('2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md'),
+  correctionPass: exp('2026-10-28-tibetan-flash-correct-wave3-7263.md'),
+  kangyurEnglish: `${ISSUE}6948`,
   blOther: exp('2026-10-07-bl-tibetan-other-stratum-by-eye-4523.md'),
   blKangyur: exp('2026-10-07-bl-kangyur-chained-retranslation-pilot-4523.md'),
   tengyurRandom: exp('2026-10-04-tengyur-characterize-random-sample-5829.md'),
@@ -79,6 +82,10 @@ const CONTENTS = [
   ['pipeline', 'How a page is made'],
   ['reading', 'The Tibetan text'],
   ['english', 'The English'],
+  ['checked', 'Volume by volume: what has been checked'],
+  ['material', 'By kind of text'],
+  ['errors', 'What goes wrong: specimens'],
+  ['human', 'Beside a scholars’ translation'],
   ['unknown', 'What we have not measured'],
   ['needed', 'What is needed'],
 ] as const;
@@ -263,6 +270,7 @@ function progressRow(id: string, name: string, g: GroupCensus, href?: string): T
 const PROGRESS: TraditionProgressRow[] = [
   progressRow('bhutan', 'Manuscripts from Bhutan', C.bl as unknown as GroupCensus, '/collections/bhutan'),
   progressRow('tengyur', 'Derge Tengyur', C.tengyur as unknown as GroupCensus),
+  progressRow('kangyur', 'Derge Kangyur', C.kangyur as unknown as GroupCensus),
   progressRow('other', 'Other Tibetan volumes', C.other as unknown as GroupCensus),
 ];
 
@@ -311,6 +319,356 @@ function CanonEnglishBars({ n }: { n: number }) {
         ))}
       </div>
     </Figure>
+  );
+}
+
+/* ---------- book-level checks ---------- */
+
+// The latest check of each public volume, from `book_checks`: [verdict, date, pages read, method].
+type Verdict = 'show' | 'caveat' | 'fix';
+const CHECKS = data.checks as unknown as {
+  rows: number;
+  by_people: number;
+  first: string;
+  last: string;
+  latest: Record<string, [Verdict, string, number, string]>;
+};
+const HIDDEN = data.hidden as { books: number; pages: number; transcribed: number; translated: number };
+
+const VERDICT: Record<Verdict | 'none', { label: string; color: string }> = {
+  show: { label: 'no serious error on the pages read', color: '#059669' },
+  caveat: { label: 'errors noted on the pages read', color: '#d97706' },
+  fix: { label: 'a serious defect on the pages read', color: '#e11d48' },
+  none: { label: 'not yet checked', color: '#e7e5e4' },
+};
+
+type BookRow = TraditionProgressRow['book_pages'][number];
+const volNo = (b: BookRow) => Number(/vol\. (\d+)\)/.exec(b[1])?.[1] ?? 0);
+const byVolume = (rows: BookRow[]) => [...rows].sort((a, b) => volNo(a) - volNo(b));
+const byTitle = (rows: BookRow[]) => [...rows].sort((a, b) => a[1].localeCompare(b[1]));
+const sum = (rows: BookRow[], i: 3 | 4 | 5) => rows.reduce((t, b) => t + b[i], 0);
+
+const BL_BOOKS = (C.bl as unknown as GroupCensus).book_pages;
+const TSHAMDRAK_TANTRAS = BL_BOOKS.filter((b) => /Tshamdrak rNying rgyud/.test(b[1]));
+const DRAMETSE_TANTRAS = BL_BOOKS.filter((b) => /rNying ma rgyud .bum/.test(b[1]));
+const TANTRA_IDS = new Set([...TSHAMDRAK_TANTRAS, ...DRAMETSE_TANTRAS].map((b) => b[0]));
+
+const CHECK_GROUPS: { name: string; rows: BookRow[] }[] = [
+  { name: 'Derge Tengyur, by volume', rows: byVolume((C.tengyur as unknown as GroupCensus).book_pages) },
+  { name: 'Derge Kangyur, by volume', rows: byVolume((C.kangyur as unknown as GroupCensus).book_pages) },
+  { name: 'Nyingma tantras, Tshamdrak', rows: byTitle(TSHAMDRAK_TANTRAS) },
+  { name: 'Nyingma tantras, Drametse', rows: byTitle(DRAMETSE_TANTRAS) },
+  { name: 'Other manuscripts from Bhutan', rows: byTitle(BL_BOOKS.filter((b) => !TANTRA_IDS.has(b[0]))) },
+  { name: 'Other Tibetan volumes', rows: byTitle((C.other as unknown as GroupCensus).book_pages) },
+];
+const tally = (rows: BookRow[]) => {
+  const t = { show: 0, caveat: 0, fix: 0, none: 0 };
+  for (const b of rows) t[CHECKS.latest[b[0]]?.[0] ?? 'none'] += 1;
+  return t;
+};
+const ALL_ROWS = CHECK_GROUPS.flatMap((g) => g.rows);
+const TOTAL = tally(ALL_ROWS);
+const CHECKED = TOTAL.show + TOTAL.caveat + TOTAL.fix;
+
+function VerdictMap({ n }: { n: number }) {
+  return (
+    <Figure
+      n={n}
+      title="Every public volume, by its latest check"
+      caption={
+        <>
+          One square is one volume and opens it in the reader. A check is an AI reviewer reading between 1 and 10 pages
+          of the volume against the page images, so a square describes the pages read, not the whole volume. Some of
+          the volumes checked were drawn at random and some were chosen because something had been reported, so the
+          colours are not a rate for the shelf. {n0(CHECKS.rows)} checks between {fmtDate(CHECKS.first)} and{' '}
+          {fmtDate(CHECKS.last)}; {CHECKS.by_people === 0 ? 'none' : n0(CHECKS.by_people)} by a person. Read from our
+          database on {fmtDate(data.measured)}.
+        </>
+      }
+    >
+      <div className="font-body text-xs text-stone-600 mb-5 leading-relaxed">
+        {(['show', 'caveat', 'fix', 'none'] as const).map((v) => (
+          <Swatch key={v} style={{ backgroundColor: VERDICT[v].color }} label={`${VERDICT[v].label} (${n0(TOTAL[v])})`} />
+        ))}
+      </div>
+      <div className="space-y-5">
+        {CHECK_GROUPS.map((g) => {
+          const t = tally(g.rows);
+          return (
+            <div key={g.name}>
+              <div className="font-body text-sm text-stone-700 mb-1.5">
+                <span className="font-semibold text-stone-900">{g.name}</span>{' '}
+                <span className="tabular-nums text-stone-500">
+                  {n0(g.rows.length)} volumes, {n0(t.show + t.caveat + t.fix)} checked
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-[3px]">
+                {g.rows.map((b) => {
+                  const c = CHECKS.latest[b[0]];
+                  const v = c?.[0] ?? 'none';
+                  const what = c ? `${VERDICT[v].label}, ${c[2]} ${c[2] === 1 ? 'page' : 'pages'} read, ${fmtDate(c[1])}` : VERDICT.none.label;
+                  return (
+                    <a
+                      key={b[0]}
+                      href={`/book/${b[0]}`}
+                      title={`${b[1]}: ${what}`}
+                      aria-label={`${b[1]}: ${what}`}
+                      className="block w-2.5 h-2.5 rounded-[1px] hover:outline hover:outline-2 hover:outline-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-stone-900"
+                      style={{ backgroundColor: VERDICT[v].color }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </Figure>
+  );
+}
+
+/* ---------- by material ---------- */
+
+// The shelf sorted by what the volumes contain. Derge volumes carry their section in the title
+// ("བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ"); the Bhutanese manuscripts are sorted by title words, the same
+// rules as scripts/eval/tibetan-bl-evidence/strata.mjs. Counts come from the census in the JSON.
+const DERGE_SECTION: Record<string, string> = {
+  'འདུལ་བ': 'Vinaya',
+  'འབུམ': 'Prajñāpāramitā',
+  'ཉི་ཁྲི': 'Prajñāpāramitā',
+  'ཁྲི་བརྒྱད': 'Prajñāpāramitā',
+  'ཁྲི་པ': 'Prajñāpāramitā',
+  'བརྒྱད་སྟོང་པ': 'Prajñāpāramitā',
+  'ཤེས་རབ་སྣ་ཚོགས': 'Prajñāpāramitā',
+  'ཤེར་ཕྱིན': 'Prajñāpāramitā',
+  'ཕལ་ཆེན': 'Avataṃsaka',
+  'དཀོན་བརྩེགས': 'Ratnakūṭa',
+  'མདོ་སྡེ': 'Sūtra',
+  'རྒྱུད་འབུམ': 'Tantra',
+  'རྙིང་རྒྱུད': 'Old tantras',
+  'དྲི་མེད་འོད': 'Vimalaprabhā',
+  'གཟུངས་འདུས': 'Dhāraṇī',
+  'བསྟོད་ཚོགས': 'Hymns',
+  'རྒྱུད་འགྲེལ': 'Tantra commentary',
+  'དབུ་མ': 'Madhyamaka',
+  'སེམས་ཙམ': 'Cittamātra',
+  'མངོན་པ': 'Abhidharma',
+  'སྐྱེས་རབས': 'Jātaka',
+  'འཁྲི་ཤིང': 'Kalpalatā',
+  'ཚད་མ': 'Pramāṇa',
+  'སྒྲ་མདོ': 'Grammar',
+  'སྣ་ཚོགས': 'Miscellaneous',
+  'གསོ་རིག': 'Medicine',
+  'སྤྲིང་ཡིག': 'Letters',
+  'དཀར་ཆག': 'Catalogue',
+};
+const dergeSection = (b: BookRow, canon: string) => {
+  const bo = /། སྡེ་དགེ། ([^། (]+)/.exec(b[1])?.[1] ?? '';
+  const en = DERGE_SECTION[bo];
+  if (!en) return 'Other';
+  return canon === 'Tengyur' && en === 'Sūtra' ? 'Sūtra commentary' : en;
+};
+// The first three rules are strata.mjs's, widened; the rest sort what it left as "other". A title is
+// a cataloguer's short label and a volume often holds several texts, so this is a first sorting for
+// a reader to correct, not a classification. First matching rule wins.
+const MS_KINDS: [string, RegExp][] = [
+  ['Nyingma tantras', /rnying ?(ma'?i? )?rgyud|tsham ?drak|mtshams ?brag|rnying ma rgyud 'bum|rgyud bcu bdun/i],
+  ['Kangyur manuscripts', /kanjur|kangyur|bka'? ?'?gyur|brgyad stong|khri brgyad|nyi khri|rdo rje gcod pa|gser 'od dam pa|mtshan lnga stong|^'?bum [a-z']{1,4}$|mdo mang|gzungs? ?'?(bsdus|'dus)/i],
+  ['Sūtras and dhāraṇīs, single texts', /\bmdo\b|gzungs|za ma tog|so sor 'brang|rma bya chen mo|bshags pa/i],
+  ['Treasure cycles and biographies', /ma ?ni bka['’‘]? ?['’‘]?bum/i],
+  ['Collected works', /bka['’‘]? ?['’‘]?bum|gsung ['’‘]?bum|bka['’‘]? ['’‘]?thor/i],
+  ['Great Perfection', /rdzogs (pa )?chen|snying ?thig|snying tig|yang (thig|tig)|klong (gsal|chen|grol|sde)|ngal gso|mkha' 'gro (snying|yang)|bi ma|ye shes bla ma|khregs chod|thod rgal/i],
+  ['Treasure cycles and biographies', /kun bzang dgongs|bka['’‘]? ?thang|thang yig|mi la|ras chung|mgur ['’‘]?bum|bzhad pa rdo rje|dgongs ['’‘]?dus|dgongs pa 'dus|zhi khro|bar do|thos grol|kar gling|rnam ?['’‘]?thar|rnam par thar|skyes rabs|gter (ma|byon|chos|mdzod|gsar)|gling pa|rgod (kyi )?ldem|rgdo ldem|byang[- ]gter|thugs sgrub|thugs thig|bla ma nor bu rgya mtsho|dag snang|lung bstan|bka['’‘]? brgyad/i],
+  ['Epic, song and poetics', /ge sar|g\.yul 'gyed|snyan ngag|glu'i phreng|rdo rje glu|mgur/i],
+  ['Medicine and astrology', /\bsman\b|gso (ba )?(rig|dpyad)|rgyud bzhi|rtsis/i],
+  ['History, lineage and catalogues', /gser '?phreng|lo rgyus|chos 'byung|gnas (bshad|yig)|dkar chag|rgyal rabs|gdung rabs|bstan rtsis|thob yig|gsan yig/i],
+  ['Instructions', /khrid|zhal gdams|gdams (ngag|pa)|man ngag|snyan brgyud|phyag (rgya )?chen|do ha|lam rim|blo sbyong|gcod|zhi byed|nyams len/i],
+  ['Ritual and practice', /sgrub (thabs|skor|pa|rim)|cho ga|\bchog\b|las byang|gtor|dbang (chog|bskur|gi|skor)|mchod|gsol ('debs|kha)|srung|bskang|skangs|sbyin sreg|rab gnas|bsnyen|phrin las|smon lam|bsangs?\b|sngon 'gro|tshogs|sku rim|\bmdos\b|bzlog|phur (pa|ba)|rta mgrin|phag mo|mgon po|bde mchog|dus ['’‘]?khor|sgrol ma|tshe (sgrub|dbang)|mkha' spyod|drag po|rnal ['’‘]?byor|skyabs ['’‘]?gro/i],
+  ['Philosophy and commentary', /'grel|bstan bcos|mdzod|rgyud bla|spyod 'jug|dbu ma|tshad ma|mngon (pa|rtogs)|legs bshad|bshad|theg (pa|gsum)|sdom gsum|grub mtha'|sa lam|dgag lan/i],
+  ['Miscellanies', /thor ?bu|sna tshogs?|be'u bum/i],
+];
+const msKind = (b: BookRow) => MS_KINDS.find(([, re]) => re.test(b[1]))?.[0] ?? 'Not yet sorted';
+
+type Tile = { group: string; label: string; vols: number; pages: number; english: number; checked: number };
+function tiles(group: string, rows: BookRow[], labelOf: (b: BookRow) => string): Tile[] {
+  const m = new Map<string, Tile>();
+  for (const b of rows) {
+    const label = labelOf(b);
+    const t = m.get(label) ?? { group, label, vols: 0, pages: 0, english: 0, checked: 0 };
+    t.vols += 1;
+    t.pages += b[3];
+    t.english += b[5];
+    if (CHECKS.latest[b[0]]) t.checked += 1;
+    m.set(label, t);
+  }
+  return [...m.values()].sort((a, b) => b.pages - a.pages);
+}
+const MATERIAL: { group: string; tiles: Tile[] }[] = [
+  { group: 'Manuscripts from Bhutan', tiles: tiles('Manuscripts from Bhutan', BL_BOOKS, msKind) },
+  { group: 'Derge Tengyur', tiles: tiles('Derge Tengyur', (C.tengyur as unknown as GroupCensus).book_pages, (b) => dergeSection(b, 'Tengyur')) },
+  { group: 'Derge Kangyur', tiles: tiles('Derge Kangyur', (C.kangyur as unknown as GroupCensus).book_pages, (b) => dergeSection(b, 'Kangyur')) },
+];
+const UNSORTED = MATERIAL[0].tiles.find((t) => t.label === 'Not yet sorted');
+
+const TM_W = 1000;
+const TM_H = 620;
+const TREEMAP = treemap<{ name: string; tile?: Tile; children?: unknown[] }>()
+  .tile(treemapSquarify)
+  .size([TM_W, TM_H])
+  .paddingOuter(4)
+  .paddingTop(26)
+  .paddingInner(2)
+  .round(true)(
+  hierarchy<{ name: string; tile?: Tile; children?: unknown[] }>(
+    { name: 'shelf', children: MATERIAL.map((g) => ({ name: g.group, children: g.tiles.map((t) => ({ name: t.label, tile: t })) })) },
+    (d) => d.children as { name: string; tile?: Tile; children?: unknown[] }[] | undefined,
+  ).sum((d) => d.tile?.pages ?? 0),
+);
+
+function MaterialMap({ n }: { n: number }) {
+  return (
+    <Figure
+      n={n}
+      title="The public shelf by what the volumes contain"
+      caption={
+        <>
+          Each rectangle is one kind of text, sized by its pages; the darker it is, the larger the share of its pages
+          that have English. Derge volumes are sorted by the section named in their titles. The Bhutanese manuscripts
+          are sorted by words in their catalogue titles: a volume that holds several texts is counted once, under the
+          first kind its title matches, and {UNSORTED ? n0(UNSORTED.vols) : 0} volumes match none. That sorting is
+          ours and rough, and a reader of Tibetan will find volumes in the wrong place. Read from our database on {fmtDate(data.measured)}. The same figures are in the table below.
+        </>
+      }
+    >
+      <div className="font-body text-xs text-stone-600 mb-4 leading-relaxed">
+        <Swatch style={{ backgroundColor: '#e7e5e4' }} label="no English" />
+        <Swatch style={{ backgroundColor: `color-mix(in srgb, ${ENGLISH} 50%, #e7e5e4)` }} label="half in English" />
+        <Swatch style={{ backgroundColor: ENGLISH }} label="all in English" />
+      </div>
+      <svg viewBox={`0 0 ${TM_W} ${TM_H}`} className="w-full h-auto" role="img" aria-label="Treemap of the public Tibetan shelf by kind of text. The table below gives the same figures.">
+        {(TREEMAP.children ?? []).map((g) => (
+          <g key={g.data.name}>
+            <rect x={g.x0} y={g.y0} width={g.x1 - g.x0} height={g.y1 - g.y0} fill="#fafaf9" stroke="#d6d3d1" />
+            <text x={g.x0 + 8} y={g.y0 + 18} fontSize={15} fontWeight={600} fill="#1c1917" className="font-body">
+              {g.data.name}
+            </text>
+            {(g.children ?? []).map((leaf) => {
+              const t = leaf.data.tile as Tile;
+              const share = t.pages ? t.english / t.pages : 0;
+              const w = leaf.x1 - leaf.x0;
+              const h = leaf.y1 - leaf.y0;
+              const ink = share > 0.55 ? '#ffffff' : '#1c1917';
+              return (
+                <g key={t.label}>
+                  <title>{`${t.group}, ${t.label}: ${n0(t.vols)} ${t.vols === 1 ? 'volume' : 'volumes'}, ${n0(t.pages)} pages, ${pct(t.english, t.pages)} with English, ${n0(t.checked)} checked`}</title>
+                  <rect x={leaf.x0} y={leaf.y0} width={w} height={h} style={{ fill: `color-mix(in srgb, ${ENGLISH} ${Math.round(share * 100)}%, #e7e5e4)` }} />
+                  {w > 84 && h > 22 && (
+                    <text x={leaf.x0 + 6} y={leaf.y0 + 16} fontSize={12.5} fill={ink} className="font-body">
+                      {t.label.length * 6.6 > w - 10 ? `${t.label.slice(0, Math.max(3, Math.floor((w - 16) / 6.6)))}…` : t.label}
+                    </text>
+                  )}
+                  {w > 84 && h > 40 && (
+                    <text x={leaf.x0 + 6} y={leaf.y0 + 32} fontSize={11.5} fill={ink} opacity={0.85} className="font-body">
+                      {n0(t.pages)} pp · {pct(t.english, t.pages)}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+          </g>
+        ))}
+      </svg>
+      <div className="overflow-x-auto mt-6">
+        <table className="w-full font-body text-sm text-left border-collapse">
+          <thead>
+            <tr className="border-b border-stone-300 text-stone-500 text-xs uppercase tracking-wider">
+              <th className="py-2 pr-4 font-semibold">Kind of text</th>
+              <th className="py-2 pr-4 font-semibold text-right">Volumes</th>
+              <th className="py-2 pr-4 font-semibold text-right">Pages</th>
+              <th className="py-2 pr-4 font-semibold text-right">With English</th>
+              <th className="py-2 font-semibold text-right">Volumes checked</th>
+            </tr>
+          </thead>
+          {MATERIAL.map((g) => (
+            <tbody key={g.group}>
+              <tr>
+                <th colSpan={5} className="pt-4 pb-1 font-serif text-base text-stone-900 font-normal">
+                  {g.group}
+                </th>
+              </tr>
+              {g.tiles.map((t) => (
+                <tr key={t.label} className="border-b border-stone-100 text-stone-800">
+                  <td className="py-1.5 pr-4">{t.label}</td>
+                  <td className="py-1.5 pr-4 text-right tabular-nums">{n0(t.vols)}</td>
+                  <td className="py-1.5 pr-4 text-right tabular-nums">{n0(t.pages)}</td>
+                  <td className="py-1.5 pr-4 text-right tabular-nums">{pct(t.english, t.pages)}</td>
+                  <td className="py-1.5 text-right tabular-nums">{n0(t.checked)}</td>
+                </tr>
+              ))}
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </Figure>
+  );
+}
+
+/* ---------- specimens of error ---------- */
+
+type Specimen = { book_id: string; title: string; page: number; severity: 'misleads' | 'wrong_text'; quote: string; what: string };
+type ErrorKind = { code: string; name: string; cosmetic: number; misleads: number; wrong_text: number; pages: number; specimens: Specimen[] };
+const ZOO = data.zoo as unknown as {
+  judged_pages: number;
+  judged_books: number;
+  first: string;
+  last: string;
+  other_defects: number;
+  kinds: ErrorKind[];
+};
+const HUMAN = data.human as { toh: string; title: string; published: string; sides: number; vol: number; book_id: string; page: number; folio: string; url: string }[];
+const SEVERITY = {
+  wrong_text: { label: 'Wrong text', cls: 'bg-rose-50 text-rose-800 border-rose-200' },
+  misleads: { label: 'Misleading', cls: 'bg-amber-50 text-amber-900 border-amber-200' },
+} as const;
+const ZOO_TOTAL = ZOO.kinds.reduce((t, k) => ({ wrong_text: t.wrong_text + k.wrong_text, misleads: t.misleads + k.misleads, cosmetic: t.cosmetic + k.cosmetic }), { wrong_text: 0, misleads: 0, cosmetic: 0 });
+
+function ErrorZoo() {
+  return (
+    <div className="space-y-10 pt-2">
+      {ZOO.kinds.map((k) => (
+        <div key={k.code} id={`kind-${k.code}`} className="scroll-mt-24">
+          <h3 className="font-serif text-xl text-stone-900">{k.name}</h3>
+          <div className="font-body text-sm text-stone-500 tabular-nums mt-1">
+            {n0(k.wrong_text)} wrong text, {n0(k.misleads)} misleading, {n0(k.cosmetic)} cosmetic, on {n0(k.pages)}{' '}
+            {k.pages === 1 ? 'page' : 'pages'}
+          </div>
+          {k.specimens.length === 0 ? (
+            <p className="font-body text-sm text-stone-500 mt-3">No specimen can be shown: the passages concerned have since been corrected or withheld.</p>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-3 mt-3">
+              {k.specimens.map((s) => (
+                <a
+                  key={`${s.book_id}-${s.page}-${s.quote.slice(0, 12)}`}
+                  href={`/book/${s.book_id}?page=${s.page}`}
+                  className="block rounded-sm border border-stone-200 bg-white p-4 hover:border-stone-400 transition-colors"
+                >
+                  <span className={`text-[11px] uppercase tracking-wider font-semibold border rounded-sm px-2 py-0.5 ${SEVERITY[s.severity].cls}`}>
+                    {SEVERITY[s.severity].label}
+                  </span>
+                  <p lang="bo" className="text-lg leading-loose text-stone-900 break-words mt-3">
+                    {s.quote}
+                  </p>
+                  <p className="font-body text-sm leading-relaxed text-stone-700 mt-2">{s.what}</p>
+                  <p className="font-body text-xs text-stone-500 mt-3">
+                    {s.title}, page {s.page}
+                  </p>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -382,6 +740,8 @@ export default function TibetanBriefingPage() {
   const bl = C.bl;
   const tg = C.tengyur;
   const other = C.other;
+  const kg = C.kangyur;
+  const corrected = (bl.reader_by_model as Record<string, number>)['gemini-3.8-flash-low'] ?? 0;
   const blNoEnglish = bl.tibetan - bl.english;
   const sample = TQ.sample;
   return (
@@ -399,7 +759,7 @@ export default function TibetanBriefingPage() {
     >
       <div className="max-w-4xl mx-auto font-body text-stone-700 text-lg leading-relaxed">
         <p className="text-sm text-stone-500 mt-8">
-          Prepared October 2026. The counts were read from our database on {fmtDate(data.measured)}. Every other
+          Prepared October 2026. The counts and the checks were read from our database on {fmtDate(data.measured)}. Every other
           figure is copied from a dated write-up of a measurement and links to it. About fifteen minutes to read.
         </p>
 
@@ -407,8 +767,9 @@ export default function TibetanBriefingPage() {
           <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-3">In brief</div>
           <ul className="list-disc pl-5 space-y-2 text-base">
             <li>
-              {n0(bl.books)} handwritten volumes from Bhutanese temples and {n0(tg.books)} volumes of the Derge Tengyur,
-              each shown as scans, Tibetan text and English, page by page.
+              {n0(bl.books)} handwritten volumes from Bhutanese temples, and the Derge canon: {n0(tg.books)} volumes
+              of the Tengyur and {n0(kg.books)} of the Kangyur. Each is shown as scans, Tibetan text and English, page
+              by page.
             </li>
             <li>
               On manuscript copies of the canon, our machine reading of the Tibetan agrees with the Derge text on
@@ -421,6 +782,11 @@ export default function TibetanBriefingPage() {
             <li>
               Most of the Bhutanese manuscripts have no printed counterpart, so they cannot be scored against one.
               Read by AI reviewers, about 1 page in 11 has a serious error, mostly in the English.
+            </li>
+            <li>
+              {n0(CHECKED)} of the {n0(ALL_ROWS.length)} public volumes have had a few pages checked against the
+              image by an AI reviewer: no serious error on the pages read in {n0(TOTAL.show)}, errors noted in{' '}
+              {n0(TOTAL.caveat)}, a serious defect in {n0(TOTAL.fix)}. The <A href="#checked">map below</A> shows which.
             </li>
             <li>No one who reads Tibetan has yet checked our pages.</li>
           </ul>
@@ -456,8 +822,8 @@ export default function TibetanBriefingPage() {
           <p>
             Source Library is a free online library of primary sources. Each book is shown as its scans, a transcription
             of the original language, and an English translation, page by page and side by side. In Tibetan we now
-            serve {n0(bl.books + tg.books + other.books)} volumes, most of them manuscripts from the temples of Bhutan
-            and the Derge Tengyur.
+            serve {n0(bl.books + tg.books + kg.books + other.books)} volumes, most of them manuscripts from the temples
+            of Bhutan and the Derge Kangyur and Tengyur.
           </p>
           <p>
             Both the Tibetan text and the English are made by machine. We have measured them against texts typed and
@@ -477,9 +843,9 @@ export default function TibetanBriefingPage() {
         <Section id="holdings" title="What we hold">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-6">
             <Stat value={n0(bl.books)} label="Bhutanese manuscripts" />
-            <Stat value={n0(bl.pages)} label="pages photographed" />
             <Stat value={n0(tg.books)} label="Derge Tengyur volumes" />
-            <Stat value={n0(tg.pages)} label="Tengyur pages" />
+            <Stat value={n0(kg.books)} label="Derge Kangyur volumes" />
+            <Stat value={n0(bl.pages + tg.pages + kg.pages + other.pages)} label="pages in all" />
           </div>
           <H3>Manuscripts from Bhutan</H3>
           <p>
@@ -501,9 +867,31 @@ export default function TibetanBriefingPage() {
             machine. The Tibetan is the Esukhia digital Derge Tengyur, a proofread public-domain e-text, fitted to
             each scan folio by folio and checked by sampled reads.
           </p>
+          <H3>The Derge Kangyur</H3>
+          <p>
+            {n0(kg.books)} volumes of BDRC&rsquo;s scans of the Library of Congress copy of the Derge Kangyur
+            (W4CZ5369), made the same way: the Tibetan is the Esukhia digital Derge Kangyur, fitted folio by folio.{' '}
+            {n0(kg.tibetan)} of {n0(kg.pages)} pages carry the e-text and {n0(kg.english)} have English, the last of it
+            written in November 2026. <S href={SRC.kangyurEnglish} label="#6948" />
+          </p>
+          <H3>The Nyingma tantras</H3>
+          <p>
+            Among the Bhutanese manuscripts are two sets of the Nyingma tantras (rNying ma rgyud &rsquo;bum):{' '}
+            {n0(TSHAMDRAK_TANTRAS.length)} volumes from Tshamdrak ({n0(sum(TSHAMDRAK_TANTRAS, 3))} pages,{' '}
+            {n0(sum(TSHAMDRAK_TANTRAS, 5))} with English) and {n0(DRAMETSE_TANTRAS.length)} from Drametse (
+            {n0(sum(DRAMETSE_TANTRAS, 3))} pages, {n0(sum(DRAMETSE_TANTRAS, 5))} with English). Each set has its own
+            row in the <A href="#checked">map of checks</A> below.
+          </p>
           <H3>Other</H3>
           <p>
             {n0(other.books)} further Tibetan volumes, from BDRC and the Internet Archive, mostly modern prints.
+          </p>
+          <H3>Held, not yet public</H3>
+          <p>
+            A further {n0(HIDDEN.books)} Tibetan volumes ({n0(HIDDEN.pages)} pages), most of them BDRC scans of
+            collected works and treasure cycles, are held but not public. {n0(HIDDEN.transcribed)} of their pages have
+            a machine reading of the Tibetan, and {n0(HIDDEN.translated)} have English. They are not counted anywhere
+            else on this page.
           </p>
 
           <H3>What has been done, and what remains</H3>
@@ -541,16 +929,20 @@ export default function TibetanBriefingPage() {
             </li>
             <li>
               <strong>The Tibetan text.</strong> On the Tengyur, the Esukhia e-text. On the manuscripts, a reading by
-              a Tibetan OCR model from BDRC (Apache 2.0), run by us one leaf at a time. It has read{' '}
-              {n0(bl.yigdzin)} of the {n0(bl.pages)} manuscript pages. Where we could not confirm a reading, the page
+              a Tibetan OCR model from BDRC (Apache 2.0), run by us one leaf at a time. Its reading stands on{' '}
+              {n0(bl.yigdzin)} of the {n0(bl.pages)} manuscript pages. On a further {n0(corrected)} pages a
+              general-purpose model was given the image and that reading and corrected it. We stopped that pass on
+              29 October 2026, when an audit of its last run (7,890 pages) found a new serious error on 3 of 8 pages
+              checked. That run&rsquo;s readings are still served, and whether to keep them is undecided.{' '}
+              <S href={SRC.correctionPass} /> Where we could not confirm a reading, the page
               is marked <em>not reliably legible</em> and the reader shows only the scan. That applies to{' '}
               {n0(bl.not_legible)} pages ({pct(bl.not_legible, bl.pages)}).
             </li>
             <li>
               <strong>The English.</strong> A general-purpose model translates one page at
               a time from the stored Tibetan. It keeps technical terms with a
-              short gloss and can add notes. {n0(bl.english)} manuscript pages and {n0(tg.english)} Tengyur pages
-              have English. On {n0(blNoEnglish)} manuscript pages the Tibetan is ready but the English has not been
+              short gloss and can add notes. {n0(bl.english)} manuscript pages, {n0(tg.english)} Tengyur pages and{' '}
+              {n0(kg.english)} Kangyur pages have English. On {n0(blNoEnglish)} manuscript pages the Tibetan is ready but the English has not been
               made yet.
             </li>
             <li>
@@ -733,8 +1125,101 @@ export default function TibetanBriefingPage() {
           </ExampleCard>
         </Section>
 
+        <Section id="checked" title="Volume by volume: what has been checked">
+          <p>
+            Beside the sampled measurements above, we keep a record of every time a volume&rsquo;s pages were read
+            against their images. Each check ends in one of three findings for the pages read: no serious error,
+            errors noted, or a serious defect, such as text that is not on the leaf, a dropped line, or English that
+            says the opposite of the Tibetan.
+          </p>
+          <VerdictMap n={3} />
+          <p>
+            {n0(CHECKED)} of {n0(ALL_ROWS.length)} public volumes have a check and {n0(TOTAL.none)} have none. The
+            Derge Kangyur English is the newest text here: {n0(tally(CHECK_GROUPS[1].rows).none)} of its{' '}
+            {n0(kg.books)} volumes have no check yet.
+          </p>
+        </Section>
+
+        <Section id="material" title="By kind of text">
+          <p>
+            The same public shelf, sorted by what the volumes contain instead of where they came from. For the two
+            Derge collections the Tibetan is a proofread digital text placed page by page, so what varies between
+            sections is the English. For the manuscripts both the reading of the leaf and the English vary.
+          </p>
+          <MaterialMap n={4} />
+        </Section>
+
+        <Section id="errors" title="What goes wrong: specimens">
+          <p>
+            {ZOO.first === ZOO.last ? `On ${fmtDate(ZOO.first)}` : `Between ${fmtDate(ZOO.first)} and ${fmtDate(ZOO.last)}`} AI
+            reviewers read {n0(ZOO.judged_pages)} pages
+            from {n0(ZOO.judged_books)} public volumes against their photographs and recorded the differences they
+            saw in the Tibetan. Sorted into the {ZOO.kinds.length} kinds below, they noted {n0(ZOO_TOTAL.wrong_text)}{' '}
+            cases of wrong text, {n0(ZOO_TOTAL.misleads)} that could mislead a reader, and {n0(ZOO_TOTAL.cosmetic)}{' '}
+            cosmetic ones. A further {n0(ZOO.other_defects)} notes fall outside these kinds and are not shown. No
+            person has confirmed these findings, and that is one of the things we are asking for.
+          </p>
+          <p>
+            The pages come from several test runs that chose pages in different ways, so the counts say what was found
+            and are not rates for the shelf. Each specimen quotes the Tibetan as it is stored now, gives the
+            reviewer&rsquo;s note, and opens the page, where the photograph can be compared. In the notes,
+            &ldquo;the candidate&rdquo; is the transcription under review.
+          </p>
+          <ErrorZoo />
+        </Section>
+
+        <Section id="human" title="Beside a scholars&rsquo; translation">
+          <p>
+            For {n0(HUMAN.length)} Tengyur texts a translation by scholars exists: those 84000 had published by 3
+            October 2026, {n0(HUMAN.reduce((t, h) => t + h.sides, 0))} folio sides in all. Each row opens our page
+            where the text begins, with the leaf, the Tibetan and our English, and 84000&rsquo;s translation of the
+            same text, so the three can be read side by side. We link to 84000&rsquo;s text and do not copy it. The
+            passages our English was scored against in <A href="#english">section 5</A> come from eight of these
+            texts.{' '}
+            <S href={SRC.tengyurVs84000} />
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full font-body text-sm text-left border-collapse">
+              <thead>
+                <tr className="border-b border-stone-300 text-stone-500 text-xs uppercase tracking-wider">
+                  <th className="py-2 pr-4 font-semibold">Text (84000&rsquo;s English title)</th>
+                  <th className="py-2 pr-4 font-semibold">Tōhoku</th>
+                  <th className="py-2 pr-4 font-semibold text-right">Folio sides</th>
+                  <th className="py-2 pr-4 font-semibold">Our page</th>
+                  <th className="py-2 font-semibold">Scholars&rsquo; translation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {HUMAN.map((h) => (
+                  <tr key={h.toh} className="border-b border-stone-100 text-stone-800 align-top">
+                    <td className="py-2 pr-4">{h.title}</td>
+                    <td className="py-2 pr-4 tabular-nums whitespace-nowrap">{h.toh}</td>
+                    <td className="py-2 pr-4 text-right tabular-nums">{n0(h.sides)}</td>
+                    <td className="py-2 pr-4 whitespace-nowrap">
+                      <A href={`/book/${h.book_id}?page=${h.page}`}>
+                        vol. {h.vol}, f. {h.folio}
+                      </A>
+                    </td>
+                    <td className="py-2 whitespace-nowrap">
+                      <A href={h.url}>84000, {h.published.slice(0, 4)}</A>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            84000 has published no Tengyur text from the Pramāṇa or Madhyamaka sections, so for those the only
+            comparison is a reader&rsquo;s own.
+          </p>
+        </Section>
+
         <Section id="unknown" title="What we have not measured">
           <ul className="list-disc pl-6 space-y-3">
+            <li>
+              <strong>Most volumes.</strong> {n0(TOTAL.none)} of the {n0(ALL_ROWS.length)} public volumes have had no
+              page read against its image in a recorded check. The sampled rates above are what we know about them.
+            </li>
             <li>
               <strong>A reader of Tibetan.</strong> Every judgement on this page is either agreement with a text
               people made or the view of an AI reviewer. The AI reviewers are right about 70% of the time when their

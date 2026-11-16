@@ -31,6 +31,9 @@ export interface HomeStrings {
   didYouMean: (suggestion: string) => string;
   haveAccount: string;
   explore: string;
+  // Plain link under the hero sign-up to a featured book's page (#76): a
+  // visitor who will not sign up still gets something to read on screen one.
+  startReading: string;
   langEnglish: string;
   langSpanish: string;
   // Banner shown on `/` to es-locale visitors, linking to `/es`
@@ -172,6 +175,7 @@ const en: HomeStrings = {
   didYouMean: (suggestion) => `Did you mean ${suggestion}?`,
   haveAccount: 'Already have an account?',
   explore: 'Explore the collection',
+  startReading: 'Start reading',
   langEnglish: 'English',
   langSpanish: 'Español',
   suggestSpanish: 'Ver esta página en español',
@@ -275,6 +279,7 @@ const es: HomeStrings = {
   didYouMean: (suggestion) => `¿Quisiste decir ${suggestion}?`,
   haveAccount: '¿Ya tienes una cuenta?',
   explore: 'Explora la colección',
+  startReading: 'Empezar a leer',
   langEnglish: 'English',
   langSpanish: 'Español',
   suggestSpanish: 'View this page in English',
@@ -385,6 +390,7 @@ const la: HomeStrings = {
   didYouMean: (suggestion) => `Num ${suggestion} voluisti?`,
   haveAccount: 'Iam rationem habes?',
   explore: 'Bibliothecam perlustra',
+  startReading: 'Incipe legere',
   langEnglish: 'English',
   langSpanish: 'Español',
   suggestSpanish: 'Ver esta página en español',
@@ -493,6 +499,7 @@ const nl: HomeStrings = {
   didYouMean: (suggestion) => `Bedoelde je ${suggestion}?`,
   haveAccount: 'Heb je al een account?',
   explore: 'Verken de collectie',
+  startReading: 'Begin met lezen',
   langEnglish: 'English',
   langSpanish: 'Español',
   suggestSpanish: 'Ver esta página en español',
@@ -604,6 +611,7 @@ const zh: HomeStrings = {
   didYouMean: (suggestion) => `您是不是要输入 ${suggestion}？`,
   haveAccount: '已有账户？',
   explore: '浏览馆藏',
+  startReading: '开始阅读',
   langEnglish: 'English',
   langSpanish: 'Español',
   suggestSpanish: 'Ver esta página en español',

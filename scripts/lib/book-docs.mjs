@@ -92,6 +92,9 @@ export const BOOK_FIELDS = Object.freeze([
   'image_source', 'contributing_library',
   'provider', 'held_by', 'current_location', 'attribution_note',
   'dublin_core', 'catalog_metadata', 'catalog_ids', 'field_provenance',
+  // #8024: the append-only twin of field_provenance; an importer stamping at birth writes both
+  // (catalogueStampsForInsert in scripts/lib/catalogue-fields.mjs).
+  'field_provenance_history',
   'enrichment', 'linked_art', 'wikidata_id',
   'harvested_at', 'harvest_source', 'harvest_category',
   'metadata', 'metadata_quality', 'shelfmark', 'subject_geographic',
@@ -137,6 +140,11 @@ export const BOOK_FIELDS = Object.freeze([
   // Derived from page images and the OCR's own tags by scripts/eval/book-class-5768.mjs,
   // never imported; read by OCR routing (#5737) and the translate-side OCR trust gate
   // (#5700). Registered in books-known-fields.json for the $set lint.
+  // Two sub-keys, written only by a by-eye tag from the leaves (#254, scripts/eval/sa-script-tags-254/store.mjs,
+  // version script-tags-254-v1, evidence.source by-eye-254): `script` (devanagari | sharada | newar | … | mixed | none |
+  // unclear — the family stops at `indic`, and on #95 the Śāradā/Devanagari split decided whether the stored read was
+  // usable) and `kind` (print | manuscript | lithograph | unclear — `class` has no lithograph). The value replaced is
+  // kept in that book's sweep_log row (sweep script-tags-254, detail.previous).
   // NOT here either: `tradition` — string[], 0–2 of the 31 map labels in
   // src/lib/taxonomy/traditions.json (#4773): the tradition the WORK belongs to (a German
   // Bhagavad Gita is "Indian"). Derived from the book's metadata by
@@ -240,6 +248,7 @@ export const PAGE_FIELDS = Object.freeze([
 
 import { sourceFingerprints } from './source-fingerprints.mjs';
 import { initialPageCounters, PAGE_COUNTERS } from './page-counts.mjs';
+import { foldBareLanguageCode } from './language-normalize.mjs';
 
 const BOOK_FIELD_SET = new Set(BOOK_FIELDS);
 const PAGE_FIELD_SET = new Set(PAGE_FIELDS);
@@ -285,6 +294,17 @@ export function makeBookDoc(fields) {
   if (doc.source_fingerprints === undefined) {
     const fps = sourceFingerprints(doc);
     if (fps.length > 0) doc.source_fingerprints = fps;
+  }
+  // A bare language code is spelled out at birth (v2#8628). Importers handed a
+  // catalogue's `de` / `ger` / `la` straight through, and 5,089 books stored a
+  // code that every view counting "German" or "Latin" missed. Spelling only:
+  // a placeholder (`und`), a code the vocabulary does not know and any name or
+  // compound label pass through unchanged (foldBareLanguageCode).
+  for (const f of ['language', 'original_language']) {
+    if (typeof doc[f] === 'string') doc[f] = foldBareLanguageCode(doc[f]);
+  }
+  if (Array.isArray(doc.languages)) {
+    doc.languages = [...new Set(doc.languages.map((l) => foldBareLanguageCode(l)))];
   }
   // Declare what the record IS at birth (#5292c). A record with no
   // `resource_type` is already read as a text by every artwork check

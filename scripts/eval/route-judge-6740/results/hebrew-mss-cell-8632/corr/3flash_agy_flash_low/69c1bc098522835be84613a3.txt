@@ -1,0 +1,7 @@
+<scan-quality>poor</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten text is extremely faded, yellowed, and abraded throughout the entire leaf, rendering virtually all lines illegible.</warning>
+
+<unclear>[illegible — approximately 35 lines of heavily faded handwritten text]</unclear>

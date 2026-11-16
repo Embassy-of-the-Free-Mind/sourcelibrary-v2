@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -19,7 +20,8 @@ interface GraphEdge {
   type: 'authored' | 'printed_by' | 'printed_in' | 'has_subject' | 'same_work' | 'shared_entities';
 }
 
-export async function GET(request: NextRequest) {
+// Read by /admin/knowledge-graph, an admin page: an editor sign-in or the cron bearer (ops #17).
+export const GET = withAuth(async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
   const scope = searchParams.get('scope') || 'istc'; // 'istc' | 'all'
   const minYear = parseInt(searchParams.get('minYear') || '1450');
@@ -202,4 +204,4 @@ export async function GET(request: NextRequest) {
       workGroups: workGroups.size,
     },
   });
-}
+}, { minRole: 'editor' });

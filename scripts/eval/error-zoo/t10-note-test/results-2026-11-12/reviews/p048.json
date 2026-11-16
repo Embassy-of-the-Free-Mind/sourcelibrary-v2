@@ -1,0 +1,145 @@
+[
+  {
+    "book_id": "69b3e67c304c1c6b3950b7c3",
+    "slot": 1,
+    "title": "Collection of Kabbalah and Hekhalot texts (MS. Michael 9)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A medieval Hebrew manuscript leaf of Sefer Yetzirah (twelve simple letters, zodiac, months). It matches the title and the language. The record has no tradition or collections, so there is nothing to contradict.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree with each other: structure.pages_translated is 0, but pages_translated_field is 359. One of these instruments is wrong (E2). Only 165 of 388 pages have a printed number, with 21 backsteps and 14 repeats. On a manuscript foliated in pencil (\"8\" on this leaf) that pattern points to folio numbers read inconsistently or recto/verso sharing a folio number, not a scan splice. One page cannot settle it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "printed_marker": "8",
+        "layout": "single column of 18 lines in Hebrew semi-cursive; pencil folio '8' top left; a strip of the facing leaf at the right edge; ruler at the left",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "זה לעומת זה ב יחד / זהר ובדו שניהם דיג חולקין על ג וזו היא הכרע",
+            "image": "זה לעומת זה ג׳ אחד / אחד לבדו עומד ז׳ חולקין על ג׳ וזו חק מכריע",
+            "problem": "The Sefer Yetzirah formula ('three: each stands alone; seven divided against three, and a law decides between them') is misread as nonsense ('two together shone… fish divide')",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "יב מנהיגים ברוח ג ידיהם / וג רגליהם ג כליותם וב הידים",
+            "image": "יב׳ … עומדים במלחמה ג׳ אוהבים / וג׳ שונאים ג׳ מחיים וג׳ ממיתים",
+            "problem": "'Twelve stand in battle: three love, three hate, three give life, three kill' is replaced by invented text about hands, feet and kidneys",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "ח על גבי ח וג על גבי ו ח על גבי יה",
+            "image": "א׳ על גבי ג׳ וג׳ על גבי ז׳ וז׳ על גבי יב׳",
+            "problem": "The numerals (1 over 3, 3 over 7, 7 over 12) are misread as 8, 8, 3, 6, 8, and the numeral yod-bet (12) as the divine name יה",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "וכמין מריקין זה בזה",
+            "image": "וכלן אדוקין זה בזה",
+            "problem": "'and all of them cleave to one another' is misread, and the English turns it into 'like vessels emptying one into another'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "חזקן ויצב גבול עמין למנין ועד מהם יב",
+            "image": "חקקן חצבן צירפן שקלן והמירן וצר בהם יב׳",
+            "problem": "The formula 'He engraved them, hewed them, combined them, weighed them, exchanged them, and formed with them twelve…' is replaced by an echo of Deut. 32:8 ('He set the bounds of the peoples by number'), a remembered verse that is not on the leaf",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "ocr": "ואלו הן יב חודשים בשנה",
+            "image": "ניסן אייר סיון תמוז אב אלול תשרי",
+            "problem": "The first seven month names on line 17 are dropped and an invented heading phrase is put in their place, so the list of the twelve months keeps only five",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "זהר ובדו שניהם דיג חולקין על ג וזו היא הכרע",
+            "english": "Two together shone, and both of them were set apart; <unclear>fish</unclear> divide against three, and this is the decider between them.",
+            "problem": "Fluent English built on the misread. The page says 'one stands alone, seven divided against three, a law deciding between them'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "יב מנהיגים ברוח ג ידיהם",
+            "english": "Twelve leaders in the spirit: three their hands and three their feet, three their kidneys, and two the hands.",
+            "problem": "Translates confabulated OCR. The image has the twelve in battle: three loving, three hating, three giving life, three killing",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "ח על גבי יה",
+            "english": "eight upon <term>Yah</term> <gloss>a divine name, Yod-He</gloss>",
+            "problem": "The numeral 12 (yod-bet) becomes a divine name, and the gloss gives the misread authority",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "חזקן ויצב גבול עמין למנין",
+            "english": "what is the matter of their strength? And He set the boundary of the peoples by number",
+            "problem": "Renders a Deuteronomy recitation that is not on the leaf. The leaf has the engraving/hewing/combining formula",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "source": "ואלו הן יב חודשים בשנה מרחשון כסליו טבת שבט ואדר",
+            "english": "And these are the twelve months in the year: Marheshvan, Kislev, Tevet, Shevat, and Adar.",
+            "problem": "'Twelve months' followed by five. Nisan to Tishri are missing (inherited OCR omission)",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "other": [
+          {
+            "note": "The summary and keywords describe 'twelve leaders in the soul' and the organ lists as the page's content. Derived metadata is built on the invented lines",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "a divine name, Yod-He",
+              "verdict": "wrong",
+              "helpful": false
+            },
+            {
+              "quote": "constellations, signs of the zodiac",
+              "verdict": "ok",
+              "helpful": true
+            },
+            {
+              "quote": "original: \"Deli,\" literally \"bucket\"",
+              "verdict": "ok",
+              "helpful": false
+            }
+          ],
+          "missing": [
+            {
+              "english": "Twelve simple letters: they are half",
+              "why": "'Simple letters' is the Sefer Yetzirah class of the twelve letters that are neither 'mothers' nor 'doubles'. Without a note, and without being told the text is Sefer Yetzirah, the reader cannot follow it"
+            },
+            {
+              "english": "and two \"springs,\" and two devourers",
+              "why": "'Springs' (eyes/nostrils) and 'devourers' (organs that grind food) are opaque terms for parts of the body and are left unexplained"
+            },
+            {
+              "english": "two that murmur",
+              "why": "המיות (the 'murmuring' organs, usually the intestines) is unexplained"
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaf is a real Sefer Yetzirah passage, but about a third of the transcription is invented or recited from memory (the battle formula, a Deuteronomy verse, wrong numerals, seven month names dropped). The fluent English carries all of it, along with a wrong 'divine name' gloss. An expert would flag the page on sight."
+  }
+]

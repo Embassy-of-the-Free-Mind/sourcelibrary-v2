@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import crypto from 'crypto';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAuth, withInnerCircleAuth } from '@/lib/auth-helpers';
 
 interface OCRComparison {
   a: string;
@@ -10,7 +10,7 @@ interface OCRComparison {
 }
 
 // GET /api/experiments/ocr-quality/[id]/judge - Get next comparison to judge
-export const GET = withAuth(async (request, session, context) => {
+export const GET = withInnerCircleAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getDb();
@@ -181,4 +181,4 @@ export const POST = withAuth(async (request, session, context) => {
     console.error('Error saving judgment:', error);
     return NextResponse.json({ error: 'Failed to save judgment' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

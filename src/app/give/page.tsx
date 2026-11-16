@@ -118,7 +118,7 @@ export default async function GivePage() {
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_26rem] gap-10 lg:gap-14 items-start">
           {/* Headline: first on every screen */}
           <div className="lg:col-start-1 lg:row-start-1">
-            <h1 className="text-3xl md:text-4xl font-display text-stone-900 mb-4 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-serif text-stone-900 mb-4 leading-tight">
               The last time the world translated its ancient wisdom, it sparked
               the Renaissance
             </h1>
@@ -155,7 +155,7 @@ export default async function GivePage() {
               {STATS.map((s) => (
                 <div key={s.label}>
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="font-display text-2xl md:text-3xl text-stone-900">{s.value}</dd>
+                  <dd className="font-serif text-2xl md:text-3xl text-stone-900">{s.value}</dd>
                   <dd className="text-xs md:text-sm text-stone-600 leading-snug mt-1">{s.label}</dd>
                 </div>
               ))}
@@ -173,7 +173,7 @@ export default async function GivePage() {
                 />
               </Link>
               <figcaption className="text-stone-700 leading-relaxed">
-                <p className="font-display text-xl text-stone-900 mb-1">The Emperor&rsquo;s Astronomy</p>
+                <p className="font-serif text-xl text-stone-900 mb-1">The Emperor&rsquo;s Astronomy</p>
                 <p className="text-sm text-stone-500 mb-3">Peter Apian, Ingolstadt, 1540</p>
                 <p className="text-sm mb-3">
                   Apian printed paper dials that turn on silk threads, so a reader
@@ -189,7 +189,7 @@ export default async function GivePage() {
             </figure>
 
             <section>
-              <h2 className="text-xl font-display text-stone-900 mb-4">What your gift builds</h2>
+              <h2 className="text-xl font-serif text-stone-900 mb-4">What your gift builds</h2>
               <ul className="space-y-4">
                 {BUILDS.map((u) => (
                   <li key={u.title} className="border-l-2 border-accent-rust pl-4">
@@ -219,7 +219,7 @@ export default async function GivePage() {
                 page reads as their endorsement. */}
             <section className="rounded-lg border border-stone-300 bg-white/60 p-6 md:p-8">
               <p className="text-xs uppercase tracking-widest text-accent-rust mb-2">The scholars’ fund</p>
-              <h2 className="text-2xl font-display text-stone-900 leading-snug mb-3">
+              <h2 className="text-2xl font-serif text-stone-900 leading-snug mb-3">
                 Put the experts on the page
               </h2>
               <p className="text-stone-700 leading-relaxed mb-3">
@@ -258,7 +258,7 @@ export default async function GivePage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-display text-stone-900 mb-4">Where the rest goes</h2>
+              <h2 className="text-xl font-serif text-stone-900 mb-4">Where the rest goes</h2>
               <ul className="space-y-5">
                 <li>
                   <p className="font-semibold text-stone-900">Translating a book: about $5</p>

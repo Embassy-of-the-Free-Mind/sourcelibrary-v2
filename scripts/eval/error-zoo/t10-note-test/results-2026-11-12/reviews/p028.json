@@ -1,0 +1,163 @@
+[
+  {
+    "book_id": "69d5ad0c4dc55b8478ddf60b",
+    "slot": 1,
+    "title": "Book of Enoch (Ge'ez MS)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Ge'ez parchment manuscript of 1 Enoch, written in three columns in an Ethiopic hand. This leaf has the end of the Parables (chs. 70–71) and the opening of the Astronomical Book (ch. 72), which matches the title and the BnF/16th-century description.",
+    "rights_flag": null,
+    "structure_note": "The structure block shows pages_translated 0, but the pages_translated field says 310, so one of the two counters is wrong. The leaf carries a pencil folio number ('9') on the recto only, so the 17 backsteps and 14 repeats among 190 printed numbers most likely come from folio numbers being given to versos or misread, not from a scan splice. Page 21 = fol. 9 is consistent with a few leaves of front matter.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "printed_marker": "9",
+        "layout": "three columns of Ethiopic script; a red rubric line and red marginal sign open a new book in column 3; small red dot-and-dash marks between the columns",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "ወአይጸ፡ መንፈስየ፡ እምፍርሀት፡\nወወደቁ፡ በገጽየ፡ ወርኢኩ፡ ኵሎ፡\nምስሌሆሙ፡ በቃለ፡ መዐዛ፡ ይባ\nርኩ፡ ወይወድሱ፡ ወየሐውሩ፡",
+            "image": "about 13 more lines in the lower half of column 2 (1 En 71:11–16), which I read as including 'ወኵሉ፡ሥጋየ፡ተመስወ…', 'ወመጽአ፡ውእቱ፡ርእሰ፡መዋዕል፡ምስለ፡ሚካኤል፡ወገብርኤል…' and 'ወይቤለኒ፡አንተ፡ውእቱ፡ወልደ፡ብእሲ፡ዘተወለድከ፡ለጽድቅ…', then '…እምፍጥረተ፡ዓለም፡ወከመዝ፡ይከውን፡ለከ…'",
+            "problem": "A block is missing from column 2: the OCR's column 2 has 38 lines, while columns 1 and 3 have about 51 and the image's column 2 runs the full height. The missing lines are the Head of Days coming to Enoch and the address 'You are the Son of Man who is born unto righteousness'. They are replaced by a few short invented lines.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "ዘይሜንኖሙ፡ ወውእቱ፡ ወ",
+            "image": "ዘይማስን፡እስመ፡ውእቱ፡ወ",
+            "problem": "'that which is corruptible, for' is misread (the translation follows the image here, not the OCR)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ሉ፡ ሣልስ፡ ዘርኢኩ፡ ዘነበ፡ እ",
+            "image": "ሉ፡ሣልስ፡ዘሄኖክ፡ወኮነ፡እ",
+            "problem": "'the third parable of Enoch' is read as 'which I saw'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "በማእከለ፡ ውኄጥ፡ ወበረድ፡ በ",
+            "image": "በማእከለ፡መስዕ፡ወዐረብ፡",
+            "problem": "'between north and west' is misread (it becomes 'hail' in the English)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ከመ፡ ይነግሩኒ፡ ስመ፡ ዝኩ፡ ሰብ\nሩሃን፡ ወበጽያት፡ ወመህያይ፡ ር",
+            "image": "ከመ፡ይሰፍሩ፡ሊተ፡መካነ፡ለኅሩያን፡ወለጻድቃን፡ወበህየ፡ር(እኩ)",
+            "problem": "'to measure for me the place for the elect and the righteous' is garbled into 'tell me the name of…', and the elect and the righteous are lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ወመልአከ፡ ሣልስ፡\nሚካኤል፡",
+            "image": "ወመልአክ፡ሚካኤል፡አሐዱ፡እምአርእስተ፡መላእክት",
+            "problem": "the OCR invents 'third' for Michael",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ኢተሰባሕ\nኩ፡ በዓለም፡ ኵሉ፡",
+            "image": "ኢተሰሐብኩ፡በማእከሎሙ፡",
+            "problem": "'I was not drawn/numbered among them' is read as 'in all the world'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ወምሳ\nሬሆሙ፡ ይከውን፡ ክፋሎሙ፡",
+            "image": "ማኅደ/ሪሆሙ፡ወምስሌከ፡ክፍሎሙ፡",
+            "problem": "'with you their dwelling, with you their portion' is misread (it becomes 'their likeness' in the English)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "### መጽሐፈ፡ ስርዓተ፡ ብርሃናት፡ ሰማ\n### ይ፡ በከመ፡ ሀለዉ፡ በበ፡ ሕዝባ",
+            "image": "only the first line is in red (rubric); the overlined distributive numerals ፩፩ after each phrase are dropped",
+            "problem": "five lines tagged as headings where one rubric line opens the book; the ፩፩ marks are lost",
+            "severity": "minor"
+          },
+          {
+            "ocr": "ውእቱ፡ ቀዳሚ፡ ትእዛዝ፡ ፀሐይ፡ በህ\nርሃናተ፡ ሰማይ፡ በብርሃናተ፡ ሰመስ",
+            "image": "the lower half of column 3 (1 En 72:2–6, the first law of the luminaries: east and west gates and their numbers)",
+            "problem": "From here to the foot of column 3 the OCR is mostly garbled or repetitive ('በውእቱ፡' over and over) and does not follow the leaf. The gate numerals I can make out on the image are missing. I read the script poorly at this resolution.",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ወርኢኩ፡ ኵሎ፡\nምስሌሆሙ፡ በቃለ፡ መዐዛ፡ ይባ\nርኩ፡ ወይወድሱ፡",
+            "english": "And I saw all who were with them: with a sweet-sounding voice they bless and praise, and all walk with them in peace",
+            "problem": "This is fluent English built on the garbled replacement lines, and the leaf's real passage (1 En 71:11–16) is missing. That passage includes the angel's words to Enoch, 'You are the Son of Man…'. As a result, 'it shall be with you' at the top of column 3 has no one being addressed.",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "source": "በማእከለ፡ ውኄጥ፡ ወበረድ፡",
+            "english": "between <unclear>the north</unclear> and hail",
+            "problem": "the image reads 'between north and west'; 'hail' comes from the misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "በኀበ፡ ንሣእኩ፡ እኰበ፡ በላእክተ፡\nከመ፡ ይነግሩኒ፡ ስመ፡ ዝኩ፡ ሰብ",
+            "english": "where I took cords from the angels, so that they might tell me the name of those <unclear>who measure</unclear>",
+            "problem": "in the image the angels take cords to measure the place for the elect and righteous; the English makes Enoch the one taking the cords and invents 'tell me the name'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "ምስ\nሉ፡ ሣልስ፡ ዘርኢኩ፡",
+            "english": "This is the third parable which I saw.",
+            "problem": "the leaf says 'the third parable of Enoch'",
+            "severity": "minor"
+          },
+          {
+            "source": "ወምሳ\nሬሆሙ፡ ይከውን፡ ክፋሎሙ፡",
+            "english": "and their likeness shall be their portion",
+            "problem": "should be 'with you shall be their dwelling, and with you their portion'",
+            "severity": "moderate"
+          },
+          {
+            "source": "ውእቱ፡ ቀዳሚ፡ ትእዛዝ፡ ፀሐይ፡ በህ\nርሃናተ፡ ሰማይ፡",
+            "english": "This is the first command: the sun among the lights of heaven, <unclear>its rising in the gates</unclear> of heaven",
+            "problem": "From here on the English is a fluent stitching of <unclear> guesses over garbled OCR (T7). The first law of the luminaries cannot be followed.",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Raw '<column-break/>' appears twice in the English reading text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "The opening rubric of the Astronomical Book is rendered as four '###' heading lines, broken mid-phrase ('...each according to their classes, / ### each according to their dominions...')",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "note": "In several places the English follows the image or the standard text rather than the served OCR (e.g. 'from among those who dwell on the dry land' for OCR 'እምቅቅለ፡ የንደ፡ ዓዲ፡ በየብስ፡'; 'sons of the holy angels treading upon flames of fire' for OCR 'አውሎ፡ ስሙ፡ ለወለባ፡ እሳት'). These renderings are correct, but the two panes do not match.",
+            "severity": "minor",
+            "class": "T14"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"ምስሉ፡ ሣልስ\" — \"third parable\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"አፋኒን\", the \"wheels,\" a class of angels", "verdict": "ok", "helpful": true },
+            { "quote": "an epithet of God, \"the Ancient of Days\"", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "This is the third parable which I saw.", "why": "Nothing tells the reader that this ends the Book of Parables (Similitudes) of 1 Enoch and that the next section is a different book." },
+            { "english": "the Lord of Spirits", "why": "This is a distinctive divine title, characteristic of the Parables. It recurs on the page without explanation." },
+            { "english": "that Son of Man has appeared and has sat upon the throne of his glory", "why": "The messianic 'Son of Man' figure is central to the passage and to its history of interpretation, and a general reader gets no gloss on it." },
+            { "english": "The Book of the Order of the Lights of Heaven", "why": "Nothing says that this opens the Astronomical Book (chs. 72–82) and its calendar of solar 'gates'." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf (fol. 9) of a genuine Ge'ez Enoch manuscript. About 13 lines of column 2 (1 En 71:11–16, including 'You are the Son of Man') are silently missing from the OCR and the translation and replaced by fluent filler. The lower half of column 3 is mostly garbled, and the English carries raw <column-break/> tags. The three notes are accurate."
+  }
+]

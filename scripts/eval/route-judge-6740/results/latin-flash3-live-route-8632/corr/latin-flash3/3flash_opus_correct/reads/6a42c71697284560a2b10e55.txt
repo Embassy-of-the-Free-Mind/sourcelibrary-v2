@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<header>QVÆSTIO II.</header>
+<meta>catchword: debere</meta>
+<warning>Show-through from the reverse side of the leaf is visible, including faint reversed marginal numerals, but the text on this side is still legible.</warning>
+
+## An Concordatis Germaniæ opponi possit præscriptio.
+
+Pro affirmatiua parte videntur hæc argumenta. Primò, præscriptione possumus acquirere alienam iuris-<margin>1</margin>dictionem: ius conferendi beneficia indifferenter in omnibus mensibus est species iurisdictionis, ergò illud erit acquisibile per præscriptionem. Secundò: Quicquid possumus <margin>2</margin>obtinere priuilegio, vel indulti specialis concessione, id etiam possumus acquirere præscriptione; at priuilegia, & indulta huiusmodi passim à Summis Pontificibus conceduntur Electoribus Imperij, & magnis Principibus ecclesiasticis: ergò præscriptione idem consequi poterimus. Tertiò: quia Cassadorus super Reg. Cancel. decis. 11. Regulam de <margin>3</margin>triennali possessore extendit in fauorem prouisi ab Ordinario de præpositura, seu prima dignitate, non obstantibus <margin>4</margin>Concordatis. Verùm negatiua est vera, & tenenda; quia præscriptio non datur vbi deest titulus, & bona fides cum possessione, Abb. in c. cum nostris de conces. preben. sed nec titulum, nec possessionem, nec bonam fidem habere possunt, qui Concordatis se opponunt, igitur allegata præscriptio in fumum transit. Minor propositio est clara ex Decreto <margin>5</margin>irritante in textu ibi: *Et insuper quoque irritum & inane, si secus super his à quoquam quauis authoritate scienter, vel ignoranter contigerit attentari: Nulli ergò omninò hominum, &c.* <margin>6</margin>Decretum autem irritans inficit titulum, & possessionem Caputaquen. decis. 15. par. 3. Flam. Paris. de Resig. li. 6. q. 5. <margin>7</margin>nu. 57. Et Decretum irritans ligat ignorantes. idem Flam. lib. 5. q. 6. nu. 220. allegans ad hoc c. 1. de concess. præben. & c. dudum, eo. tit. lib. 6. glos. Clemen. 1. dicto tit. de conces. præben. Card. Zabarel. in 6. eod. tit. Butr. cons. 43. Gabriel <margin>8</margin>cons. 3. Vnde loco citato dictus Flam. concludit Episcopum
+
+<vocab>Concordata Germaniæ, præscriptio, iurisdictio, ius conferendi beneficia, indultum, Summi Pontifices, Electores Imperij, Cassadorus, Regulæ Cancellariæ, triennalis possessor, Decretum irritans, Caputaquensis, Flaminius Parisius, Zabarella, Butrio</vocab>

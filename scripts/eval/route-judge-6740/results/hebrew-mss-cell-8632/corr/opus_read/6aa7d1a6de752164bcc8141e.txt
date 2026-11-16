@@ -1,0 +1,38 @@
+<warning>Handwritten Ashkenazic semi-cursive Hebrew. The ink is faded and the resolution is low, so many readings are uncertain. Mirror-reversed show-through from the other side of the leaf is visible below the main block and has not been transcribed.</warning>
+<scan-quality>poor</scan-quality>
+<language>Hebrew</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>66</page-num>
+
+מספרים <unclear>מספר</unclear> <unclear>[illegible — 1 word]</unclear> שהם י״ב י״ב <unclear>כנגד</unclear> <unclear>[illegible — 1 word]</unclear> י״ב
+<unclear>[illegible — 1 word]</unclear> שהן <unclear>כוללות</unclear> סוד זמן <unclear>[illegible — 1 word]</unclear> <unclear>יהוה</unclear> <unclear>[illegible — 1 word]</unclear> <unclear>והיה</unclear>
+<unclear>[illegible — 1 word]</unclear> כך <unclear>[illegible — 1 word]</unclear> <unclear>[illegible — 1 word]</unclear> זה שמי לעלם וזה זכרי לדר דר
+<unclear>[illegible — 2 words]</unclear> <unclear>עולם</unclear> <unclear>[illegible — 2 words]</unclear> סוד דר דר <unclear>שסודם</unclear> <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 3 words]</unclear> <unclear>ושנה</unclear> <unclear>[illegible — 2 words]</unclear> כמאמרו דור הולך
+ודור בא והארץ לעולם עומדת <unclear>[illegible — 1 word]</unclear> לעולם <unclear>[illegible — 1 word]</unclear> זכרך לדור
+<unclear>ודור</unclear> <unclear>[illegible — 1 word]</unclear> חותם של <unclear>[illegible — 2 words]</unclear> <unclear>יחיה</unclear> <unclear>[illegible — 1 word]</unclear>
+
+<margin><unclear>[illegible marginal word, written vertically]</unclear></margin>
+<unclear>וזה</unclear> בן <unclear>[illegible — 2 words]</unclear> חול על קדש קדש על חול ויש
+שם קדש ויש שם חול שם קדש ושם חול <unclear>[illegible — 2 words]</unclear>
+קדש שם קדש חול שמן שם חול קדש שמן <unclear>לנקה</unclear> <unclear>[illegible — 1 word]</unclear>
+<unclear>[illegible — 1 word]</unclear> שמן <unclear>[illegible — 1 word]</unclear> חלק שמן
+
+| | |
+|---|---|
+| <unclear>שרי שלו</unclear> | <unclear>משמש שלו</unclear> |
+| <unclear>שלוש</unclear> <unclear>[illegible]</unclear> | <unclear>שרן שלו</unclear> |
+| <unclear>שלו שרי</unclear> | <unclear>שלי שרן</unclear> |
+| <unclear>רין</unclear> | שלש |
+
+<unclear>חלק שמן</unclear> <unclear>קו של מח</unclear>
+<unclear>שוקל מח</unclear>
+<unclear>שקל</unclear> <unclear>[illegible]</unclear>
+<unclear>מחשם</unclear> <unclear>שלו</unclear>
+<unclear>מחשם שלו</unclear> <unclear>מחל שמיר</unclear>
+
+<unclear>חש חל</unclear> <unclear>[illegible]</unclear> <unclear>בן</unclear>
+
+<meta>Folio number "66" is pencilled in the upper left corner. Ruled guide lines are visible. Below the main block there is mirror-reversed show-through from the verso.</meta>
+<vocab>שם קדש, שם חול, זה שמי לעלם וזה זכרי לדר דר, דור הולך ודור בא, חותם, שמן, צירופי אותיות, letter permutations, kabbalah</vocab>

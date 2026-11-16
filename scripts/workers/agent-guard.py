@@ -135,7 +135,9 @@ def rules_bash(full, env=os.environ, cwd=""):
     if SECRET_READ.search(sr): hits.append("secret-read")
     if FORCE_PUSH.search(cmd): hits.append("force-push")
     if PUBLIC_POST.search(cmd):
-        target_public = (not re.search(r"(-R|--repo)[=\s]+\S+", cmd)) or any(r in cmd for r in PUBLIC_REPOS)
+        # Since 2026-11-12 a gh post with no --repo goes to the private working repo (origin = v3);
+        # only a post that names the public mirror is public.
+        target_public = any(r in cmd for r in PUBLIC_REPOS)
         if re.search(r"repos/(?!Embassy-of-the-Free-Mind/sourcelibrary-v2)", cmd) and "gh api" in cmd:
             target_public = False
         body = full + "\n" + file_text(cmd)

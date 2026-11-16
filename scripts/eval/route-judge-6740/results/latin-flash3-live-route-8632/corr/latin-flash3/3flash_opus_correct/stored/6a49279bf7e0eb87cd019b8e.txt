@@ -1,0 +1,33 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>1.</page-num>
+<sig>A ij</sig>
+<meta>catchword: Illæ</meta>
+<vocab>Anima, actus primus, Aristoteles, essentia, τὸ τί ἦν εἶναι, συνωνύμως</vocab>
+
+<image-desc size="large" type="woodcut" significance="low">An ornamental header block spanning the width of the page, featuring scrolling acanthus leaves, putti (cherubs), and central grotesque masks.</image-desc>
+
+## THESES DE ANIMA.
+
+-> I. <-
+
+<image-desc size="small" type="woodcut" significance="low">Decorative initial 'A' featuring architectural elements and human figures.</image-desc>
+ANIMA est actus primus & substantialis corporis physici organici, vitam habentis in potentia. Est enim principium, quo vivimus, sentimus, movemur & intelligimus.
+
+-> II. <-
+
+Hæc definitio animam non tantum ab alijs omnibus formis tùm naturalibus tùm artificiosis discernit: sed etiam omnes eius species συνωνύμως continet.
+
+-> III. <-
+
+Dividitur anima in Vegetantem, Sentientem, Moventem & Rationalem: quæ ita sese habent, ut semper inferiores absque superioribus esse possint: sed superior nulla absque inferioribus subsistat.
+
+-> IIII. <-
+
+Itaque distinctas hasce animas non tantum in diversis specie viventibus, sed & in uno eodemque v. g. homine dicimus esse, licet subordinatas & invicem colligatas eâ ratione, quâ una ad aliam, ut potestas ad actum, refertur: qua complicatione una principalis efficitur.
+
+-> V. <-
+
+Et quid mirum, cùm secundum Aristotelem formæ rei nil aliud sint, quàm essentia eius, seu τὸ τί ἦν εἶναι: hominem, qui & vivens est, & animal, & homo, ex pluribus formis esse compositum?

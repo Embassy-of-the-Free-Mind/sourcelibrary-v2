@@ -13,9 +13,16 @@
  * when its words appear, in order, on one of those pages — so the notebook
  * never holds a quotation grounding could not place.
  *
+ * It reads a page the way grounding does (v3#249): the stored text with its
+ * markup read three ways (pageReadings), and an elided quotation one run of
+ * words at a time, in order, all on the same page. Matching the whole
+ * quotation against the raw stored text saved nothing for a thread whose
+ * answer held three quotations grounding had kept: two had an ellipsis, and
+ * the page text carries tags. (6af70498c205a9be6ed8c6bb, 2026-11-13.)
+ *
  * PRIOR ART: src/lib/embassy/notebook-claims.ts — strips a false "saved" claim, does not save; add_to_notebook in librarian.ts — model-driven, the gap this fills.
  */
-import { blockquoteWords, foldWords, inlineQuotes, plainText, type GroundingPage } from '@/lib/embassy/grounding';
+import { blockquoteWords, foldWords, inlineQuotes, pageReadings, plainText, quoteFragments, type GroundingPage } from '@/lib/embassy/grounding';
 
 export interface AutosaveFinding {
   quote: string;
@@ -30,10 +37,15 @@ export const AUTOSAVE_MIN_WORDS = 8;
 /** At most this many findings saved from one answer. */
 export const AUTOSAVE_MAX = 8;
 
-const contains = (hay: string[], needle: string[]): boolean => {
-  if (needle.length === 0 || needle.length > hay.length) return false;
-  const h = ` ${hay.join(' ')} `;
-  return h.includes(` ${needle.join(' ')} `);
+/** Every fragment of the quotation, in order, in ONE reading of the page (` w1 w2 … `). */
+const holds = (reading: string, fragments: string[][]): boolean => {
+  let from = 0;
+  for (const f of fragments) {
+    const at = reading.indexOf(` ${f.join(' ')} `, from);
+    if (at === -1) return false;
+    from = at + f.join(' ').length + 1;
+  }
+  return true;
 };
 
 /** Blockquote bodies (consecutive `>` lines joined), without the trailing citation. */
@@ -50,7 +62,7 @@ function blockquotes(text: string): string[] {
 }
 
 export function quotedFindings(text: string, pages: GroundingPage[], already: string[] = []): AutosaveFinding[] {
-  const folded = pages.map(p => ({ p, words: foldWords(p.text) }));
+  const folded = pages.map(p => ({ p, readings: pageReadings(p.text).map(r => ` ${foldWords(r).join(' ')} `) }));
   const seen = new Set(already.map(q => foldWords(q).join(' ')));
   const out: AutosaveFinding[] = [];
   const outside = text.split('\n').filter(l => !/^\s*>/.test(l)).join('\n');
@@ -61,7 +73,9 @@ export function quotedFindings(text: string, pages: GroundingPage[], already: st
     if (words.length < AUTOSAVE_MIN_WORDS) continue;
     const key = words.join(' ');
     if (seen.has(key)) continue;
-    const hit = folded.find(f => contains(f.words, words));
+    const fragments = quoteFragments(quote);
+    if (fragments.length === 0) continue;
+    const hit = folded.find(f => f.readings.some(r => holds(r, fragments)));
     if (!hit) continue;
     seen.add(key);
     out.push({

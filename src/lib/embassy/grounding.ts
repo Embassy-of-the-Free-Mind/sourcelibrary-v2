@@ -89,7 +89,7 @@ export interface GroundingImage {
 
 // 'notebook_claim' is not produced here: src/lib/embassy/notebook-claims.ts (#6255).
 // 'citation_page' is produced by src/lib/embassy/citation-pages.ts (#6946).
-export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim' | 'citation_page' | 'requested_rewrite';
+export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim' | 'citation_page' | 'requested_rewrite' | 'repeated_opening';
 
 export interface GroundingEdit {
   /** Exact substring of the streamed text. Edits are in document order. */
@@ -114,6 +114,12 @@ export interface GroundingReport {
   sentencesDropped: number;
   captionsChecked: number;
   captionsRewritten: number;
+  /** Sentences that only announced a removed quotation and went with it (v3#249). */
+  leadInsRemoved?: number;
+  /** Headings whose whole section was removed (v3#249). */
+  headingsRemoved?: number;
+  /** The opening written before the search was removed because the answer starts over (v3#249). */
+  openingRemoved?: boolean;
   /** What was removed or rewritten, for the monitoring trace. */
   details: string[];
 }
@@ -133,6 +139,12 @@ export interface GroundingInput {
   question: string;
   /** `https://sourcelibrary.org` or `https://sourcelibrary.org/es`. */
   siteBase: string;
+  /**
+   * Where the text the model wrote BEFORE its first tool call ends (0 or
+   * absent: it wrote none). That opening streams while the searches run; when
+   * the answer after them starts over on the same subject, the opening goes.
+   */
+  openingEnd?: number;
 }
 
 /**
@@ -261,12 +273,19 @@ type QuoteVerdict = 'exact' | 'near' | 'unsupported';
 /** Distinct 3+-letter words a quote needs before a near-verbatim match can stand in for an exact one. */
 const NEAR_MIN_WORDS = 6;
 
-function checkQuote(quote: string, idx: SupportIndex): QuoteVerdict {
-  // Square brackets inside a quotation are the quoter's own insertion
-  // ("vitriolum [vitriol]") — the scholarly convention — and are not checked.
-  const frags = quote.split(/\s*(?:\.{3,}|…|\[\s*\.\.\.\s*\])\s*/)
+/**
+ * A quotation as the folded word runs between its ellipses. Square brackets
+ * inside a quotation are the quoter's own insertion ("vitriolum [vitriol]") —
+ * the scholarly convention — and are not part of what the page must say.
+ */
+export function quoteFragments(quote: string): string[][] {
+  return quote.split(/\s*(?:\.{3,}|…|\[\s*\.\.\.\s*\])\s*/)
     .map(f => foldWords(f.replace(/\[[^\]]*\]/g, ' ')))
     .filter(f => f.length >= 2 || (f.length === 1 && f[0].length >= 5));
+}
+
+function checkQuote(quote: string, idx: SupportIndex): QuoteVerdict {
+  const frags = quoteFragments(quote);
   if (frags.length === 0) return 'exact';
   const seqs = [...idx.pageSeqs, idx.extraSeq];
   // Each fragment on its own, the verdict is the weakest: a quotation that
@@ -586,6 +605,89 @@ export function blockquoteWords(body: string): string {
 const LEAD_IN_COLON = /:(\s*)$/;
 
 /**
+ * A sentence that only ANNOUNCES a quotation goes with the quotation (v3#249).
+ * On 2026-11-13 a reader asked for Ficino's words on melancholy; both
+ * blockquotes were on no page and were removed, and what was left read "Ficino
+ * explains why scholars are particularly prone to this condition." and "He
+ * describes the dual nature of this temperament.", each followed by the next
+ * heading. A full stop on "he writes:" leaves the same thing: "he writes."
+ *
+ * An announcement names an act of saying and stops there: nothing after the
+ * verb ("he writes"), a short indirect question ("explains why scholars…"), or
+ * a short bare topic ("describes the dual nature of this temperament"). A
+ * sentence that reports what was said ("says that…", "describes the furnace as
+ * a tower") states something and stays, and so does one that cites a PAGE or
+ * carries a quotation of its own. A link to the book alone does not make it a
+ * claim: "In *[De Vita](…)*, he writes:" is the commonest lead-in there is.
+ * "…is rendered as follows:" and a short colon line with no verb at all ("The
+ * passage in full:") are announcements too.
+ *
+ * Read against the 49 distinct sentences that precede a blockquote in the
+ * recorded answers of scripts/eval/librarian-grounding/results (2026-11-13):
+ * were its quotation removed, 12 would go with it, 11 would keep their words
+ * and lose the colon, and 26 would be left alone. None of the 12 says anything
+ * beyond pointing at the quotation.
+ */
+const NOT_A_LETTER = String.raw`(?![\p{L}])`;
+const SAYING_VERB = new RegExp(
+  String.raw`(?<![\p{L}])(?:writes?|wrote|writing|says?|said|saying|states?|stated|stating|explains?|explained|explaining`
+  + String.raw`|describes?|described|describing|notes?|noted|noting|observes?|observed|observing|declares?|declared|declaring`
+  + String.raw`|remarks?|remarked|recounts?|recounted|reports?|reported|records?|recorded|tells?|told|warns?|warned`
+  + String.raw`|advises?|advised|instructs?|instructed|teaches|taught|puts?\s+it|continues?|continued|concludes?|concluded|adds?|added|adding`
+  + String.raw`|elaborates?|elaborated|details?|detailed|outlines?|outlined|summari[sz]e[sd]?|reads?|goes\s+on`
+  + String.raw`|defines?|defined|quotes?|quoted|quoting|cites?|cited|citing|calls?|called|labels?|labell?ed|titled|entitled`
+  + String.raw`|dice|dijo|escribe|escribi[oó]|explica|describe|se[nñ]ala|afirma|declara|observa|a[nñ]ade|advierte|relata)${NOT_A_LETTER}`,
+  'giu',
+);
+const PAGE_LINK = /(?<![\w.-])sourcelibrary\.org(?:\/es)?\/book\/[a-z0-9-]+(?:\/page-number\/|\?page=)\d+/;
+const POINTS_BELOW = /(?:as follows|the following(?:\s+\p{L}+)?|como sigue|lo siguiente)$/iu;
+/** Past this many words after the verb, the sentence says enough to stand without the quotation. */
+const ANNOUNCEMENT_MAX_WORDS_AFTER_VERB = 10;
+/**
+ * A sentence longer than this is never removed whole: it has clauses of its
+ * own before it reaches "…; he writes:", and losing them costs more than a
+ * full stop where the colon was. The longest real announcement read was 23.
+ */
+const ANNOUNCEMENT_MAX_WORDS = 30;
+const INDIRECT_QUESTION = new RegExp(String.raw`^(?:why|how|what|where|when|whether|which|who|por\s+qu[eé]|c[oó]mo|qu[eé]|d[oó]nde|cu[aá]ndo)${NOT_A_LETTER}`, 'iu');
+const STATES_SOMETHING = new RegExp(
+  String.raw`(?<![\p{L}])(?:that|as|is|are|was|were|be|has|have|had|can|could|must|should|will|would|because|by|so|que|como|es|son|era|fue|porque)${NOT_A_LETTER}`,
+  'iu',
+);
+/** A colon line this short with no verb of saying ("In his own words:") still only points at the quote. */
+const BARE_LEAD_IN_MAX_WORDS = 6;
+
+export function announcesQuotation(sentence: string): boolean {
+  if (PAGE_LINK.test(sentence) || /["“«]/.test(sentence)) return false;
+  const plain = plainText(sentence).replace(/^\s*(?:[*+-]|\d+\.)\s+/, '').trim().replace(/[.:!?…]+$/, '').trim();
+  if (plain.split(/\s+/).length > ANNOUNCEMENT_MAX_WORDS) return false;
+  if (POINTS_BELOW.test(plain)) return true;
+  const verbs = [...plain.matchAll(SAYING_VERB)];
+  const last = verbs[verbs.length - 1];
+  if (!last) return LEAD_IN_COLON.test(sentence) && plain.split(/\s+/).length <= BARE_LEAD_IN_MAX_WORDS;
+  const after = plain.slice((last.index ?? 0) + last[0].length).trim().replace(/^[,;]\s*/, '');
+  if (after === '') return true;
+  if (after.split(/\s+/).length > ANNOUNCEMENT_MAX_WORDS_AFTER_VERB) return false;
+  return INDIRECT_QUESTION.test(after) || !STATES_SOMETHING.test(after);
+}
+
+/**
+ * The opening and the answer start over on the same subject when their first
+ * two distinctive words are the same ("Marsilio Ficino, the Florentine…" /
+ * "Marsilio Ficino, the leading figure…"). Measured on stored answers in the
+ * 30 days to 2026-11-13: 81 of 1,404 multi-round answers (5.8%), and every one
+ * read was a true repeat. "In the…" / "In the…" does not count: the words
+ * must be distinctive.
+ */
+function startsOver(opening: string, answer: string): boolean {
+  const a = contentWords(plainText(opening)).slice(0, 2);
+  const b = contentWords(plainText(answer)).slice(0, 2);
+  return a.length === 2 && a[0] === b[0] && a[1] === b[1];
+}
+/** Below this much text after the opening, the opening may BE the answer and is left alone. */
+const ANSWER_MIN_CHARS = 200;
+
+/**
  * The reader asked for the model's OWN version of a text: modern English, an
  * adaptation, a paraphrase, a translation. That version is on no page by
  * construction, so the blockquote check below would delete exactly what was
@@ -623,12 +725,65 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
   const topicNames = new Set((input.question.match(/(?<=\s)\p{Lu}[\p{L}]{3,}/gu) ?? []).flatMap(n => foldWords(n)));
   const units = answerUnits(text);
 
+  // What happens to each blockquote, decided before the pass so the paragraph
+  // that introduces a removed quotation is repaired in its own single edit.
+  const quoteFate = new Map<number, { quote: string; fate: 'keep' | 'remove' | 'unquote' }>();
+  if (report.checkable) {
+    units.forEach((u, i) => {
+      if (u.kind !== 'blockquote') return;
+      const body = u.raw.split('\n')
+        .map(l => l.trim().replace(/^>\s?/, ''))
+        .filter(l => !/^[—–]\s/.test(l.trim()))
+        .join(' ');
+      const quote = plainText(blockquoteWords(body)).replace(/^[\s"“”«»]+|[\s"“”«»]+$/g, '').trim();
+      if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
+      const supported = checkQuote(quote, idx) !== 'unsupported';
+      quoteFate.set(i, { quote, fate: supported ? 'keep' : REWRITE_REQUEST.test(input.question) ? 'unquote' : 'remove' });
+    });
+  }
+  // A paragraph or list item whose quotations were ALL removed — every
+  // blockquote directly under it, with nothing but blank lines between — has
+  // its last sentence repaired. One kept quote and it still introduces something.
+  const leadInFix = new Map<number, 'sentence' | 'colon'>();
+  units.forEach((u, i) => {
+    if (u.kind !== 'prose' && u.kind !== 'list') return;
+    let j = i + 1;
+    while (units[j]?.kind === 'blockquote' && !text.slice(units[j - 1].end, units[j].start).trim()) {
+      if (quoteFate.get(j)?.fate !== 'remove') return;
+      j++;
+    }
+    if (j === i + 1) return;
+    const all = sentences(u.raw);
+    if (announcesQuotation(all[all.length - 1] ?? '')) leadInFix.set(i, 'sentence');
+    else if (LEAD_IN_COLON.test(u.raw)) leadInFix.set(i, 'colon');
+  });
+  // The opening written before the first search, when the answer starts over.
+  const openingEnd = input.openingEnd ?? 0;
+  const openingUnits = new Set<number>();
+  if (openingEnd > 0 && text.length - openingEnd >= ANSWER_MIN_CHARS) {
+    const before = units.filter(u => u.end <= openingEnd);
+    const first = units.find(u => u.start >= openingEnd && u.kind === 'prose');
+    if (before.length > 0 && before.every(u => u.kind === 'prose') && first && startsOver(before[0].raw, first.raw)) {
+      before.forEach(u => openingUnits.add(units.indexOf(u)));
+      report.openingRemoved = true;
+      report.details.push(`opening removed, the answer starts over: ${plainText(before[0].raw).slice(0, 120)}`);
+    }
+  }
+  /** Units removed whole: a heading with nothing else under it goes with them. */
+  const gone = new Set<number>();
+
   units.forEach((u, i) => {
     // Remove a whole unit together with the blank line after it.
     const removal = (): GroundingEdit['find'] => {
+      gone.add(i);
       const after = text.slice(u.end).match(/^\n+/)?.[0] ?? '';
       return text.slice(u.start, u.end) + after;
     };
+
+    if (openingUnits.has(i)) {
+      edits.push({ find: removal(), replace: '', at: u.start, reasons: ['repeated_opening'] });
+      return;
+    }
 
     if (u.kind === 'image') {
       const e = u.embed!;
@@ -650,40 +805,53 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
     if (!report.checkable) return;
 
     if (u.kind === 'blockquote') {
-      const body = u.raw.split('\n')
-        .map(l => l.trim().replace(/^>\s?/, ''))
-        .filter(l => !/^[—–]\s/.test(l.trim()))
-        .join(' ');
-      const quote = plainText(blockquoteWords(body)).replace(/^[\s"“”«»]+|[\s"“”«»]+$/g, '').trim();
-      if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
+      const decided = quoteFate.get(i);
+      if (!decided) return;
       report.quotesChecked++;
-      if (checkQuote(quote, idx) !== 'unsupported') return;
-      if (REWRITE_REQUEST.test(input.question)) {
+      if (decided.fate === 'keep') return;
+      if (decided.fate === 'unquote') {
         edits.push({ find: u.raw, replace: unquoteBlock(u.raw), at: u.start, reasons: ['requested_rewrite'] });
         report.blockquotesUnquoted++;
-        report.details.push(`blockquote kept as the requested rewrite, unquoted: ${quote.slice(0, 120)}`);
+        report.details.push(`blockquote kept as the requested rewrite, unquoted: ${decided.quote.slice(0, 120)}`);
         return;
-      }
-      const prev = units[i - 1];
-      if (prev && (prev.kind === 'prose' || prev.kind === 'list')) {
-        const prevEdit = edits.length > 0 && edits[edits.length - 1].at === prev.start ? edits[edits.length - 1] : undefined;
-        if (prevEdit) {
-          if (prevEdit.replace && LEAD_IN_COLON.test(prevEdit.replace)) prevEdit.replace = prevEdit.replace.replace(LEAD_IN_COLON, '.$1');
-        } else if (LEAD_IN_COLON.test(prev.raw)) {
-          edits.push({ find: prev.raw, replace: prev.raw.replace(LEAD_IN_COLON, '.$1'), at: prev.start, reasons: ['drop_blockquote'] });
-        }
       }
       edits.push({ find: removal(), replace: '', at: u.start, reasons: ['drop_blockquote'] });
       report.blockquotesRemoved++;
-      report.details.push(`blockquote not on any page read: ${quote.slice(0, 120)}`);
+      report.details.push(`blockquote not on any page read: ${decided.quote.slice(0, 120)}`);
       return;
     }
 
     // Prose paragraph or list item.
     const plainStart = plainText(u.raw).replace(/^\s*(?:[*+-]|\d+\.)\s+/, '').trim();
-    if (SKIP_PROSE.test(plainStart)) return;
+    // A closing suggestion is not judged, but it can still introduce a quote that was removed.
+    const skipChecks = SKIP_PROSE.test(plainStart);
+    if (skipChecks && !leadInFix.has(i)) return;
     let next = u.raw;
     const reasons = new Set<GroundingEditReason>();
+    const marker = u.kind === 'list' ? (u.raw.match(/^\s*(?:[*+-]|\d+\.)\s+(?:\*\*[^*]+\*\*:?\s*)?/)?.[0] ?? '') : '';
+
+    // 0. The quotation this unit introduced was removed: its announcement goes
+    //    with it, or the colon that pointed at it becomes a full stop.
+    const fix = leadInFix.get(i);
+    if (fix === 'sentence') {
+      const all = sentences(next);
+      report.leadInsRemoved = (report.leadInsRemoved ?? 0) + 1;
+      report.details.push(`lead-in removed with its quotation: ${plainText(all[all.length - 1]).trim().slice(0, 120)}`);
+      next = all.slice(0, -1).join('').replace(/\s+$/, '');
+      // Nothing left but the list marker / bold lead-in → the unit goes.
+      if (!plainText(next.slice(marker.length)).trim()) {
+        edits.push({ find: removal(), replace: '', at: u.start, reasons: ['drop_blockquote'] });
+        return;
+      }
+      reasons.add('drop_blockquote');
+    } else if (fix === 'colon') {
+      next = next.replace(LEAD_IN_COLON, '.$1');
+      reasons.add('drop_blockquote');
+    }
+    if (skipChecks) {
+      if (next !== u.raw) edits.push({ find: u.raw, replace: next, at: u.start, reasons: [...reasons] });
+      return;
+    }
 
     // 1. Quantities: drop the sentence that carries an unsupported one.
     const kept: string[] = [];
@@ -707,7 +875,6 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       return;
     }
     if (reasons.has('drop_sentence')) {
-      const marker = u.kind === 'list' ? (u.raw.match(/^\s*(?:[*+-]|\d+\.)\s+(?:\*\*[^*]+\*\*:?\s*)?/)?.[0] ?? '') : '';
       next = kept.join('').replace(/\s+$/, '');
       // Nothing left but the list marker / bold lead-in → the unit goes.
       if (!plainText(next.slice(marker.length)).trim()) {
@@ -753,6 +920,24 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
 
     if (next !== u.raw) edits.push({ find: u.raw, replace: next, at: u.start, reasons: [...reasons] });
   });
+
+  // A heading left with nothing under it goes too: every paragraph, list item
+  // and quotation between it and the next heading (or rule, or the end) was
+  // removed above. A heading the model itself left empty is not touched.
+  if (gone.size > 0) {
+    const breaks = [...text.matchAll(/^(?:#{1,6}\s.*|-{3,}\s*)$/gm)].map(m => ({ at: m.index ?? 0, line: m[0] }));
+    breaks.forEach((h, k) => {
+      if (!h.line.startsWith('#')) return;
+      const sectionEnd = breaks[k + 1]?.at ?? text.length;
+      const under = units.map((u, i) => ({ u, i })).filter(({ u }) => u.start > h.at && u.start < sectionEnd);
+      if (under.length === 0 || !under.every(({ i }) => gone.has(i))) return;
+      const after = text.slice(h.at + h.line.length).match(/^\n+/)?.[0] ?? '';
+      edits.push({ find: h.line + after, replace: '', at: h.at, reasons: ['drop_blockquote'] });
+      report.headingsRemoved = (report.headingsRemoved ?? 0) + 1;
+      report.details.push(`heading removed with everything under it: ${h.line.slice(0, 120)}`);
+    });
+    edits.sort((a, b) => a.at - b.at);
+  }
 
   return { edits, report };
 }

@@ -41,6 +41,7 @@ import {
   History, Settings2,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
+import { readerSharePayload, readerCitePayload, readerShareLink, type ReaderShareMethod } from '@/lib/reader-share-events';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
@@ -618,7 +619,8 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
 }
 
 /**
- * Share. Copy a link, or post it.
+ * Share. The phone's own share sheet first where there is one, then copy a
+ * link (the page's /q/ shortlink on the main site), or post it.
  * Sharing only. Saving moved to its own panel, so this one is links and
  * posts; the share targets mirror the site's ShareButton, so a post from the
  * reader looks like a post from anywhere else and reports the same `share`
@@ -626,15 +628,45 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
  */
 function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }) {
   const [copied, setCopied] = useState<string | null>(null);
-  const t = getReaderStrings(useLocale()).share;
+  const locale = useLocale();
+  const t = getReaderStrings(locale).share;
+  const isEmbedded = useIsEmbedded();
+  // The phone's own share sheet, where the browser has one (#76). Read after
+  // mount so the server and first client render agree. Not inside an iframe:
+  // there navigator.share exists but refuses without the partner page's
+  // allow="web-share", and a button that does nothing is worse than none.
+  const [canShareNative, setCanShareNative] = useState(false);
+  useEffect(() => {
+    setCanShareNative(typeof navigator.share === 'function' && window.self === window.top);
+  }, []);
 
   const title = book.display_title || book.title;
   const citation = `${book.author ? `${book.author}, ` : ''}${title}${page.page_number != null ? `, p. ${page.page_number}` : ''}`;
-  const copy = (what: string, value: string) => {
+  // What a reader passes on: the /q/ shortlink on the main site, computed
+  // locally, so nothing waits on the network (readerShareLink).
+  const link = readerShareLink({
+    longUrl: url,
+    bookId: book.id,
+    pageNumber: page.page_number,
+    origin: typeof window !== 'undefined' ? window.location.origin : 'https://sourcelibrary.org',
+    embedded: isEmbedded,
+    lang: locale,
+  });
+  const copy = (what: string, value: string, method: ReaderShareMethod) => {
     navigator.clipboard?.writeText(value).then(() => {
+      trackEvent('share', readerSharePayload(method, { url: link, page: page.page_number }));
       setCopied(what);
       setTimeout(() => setCopied(null), 1600);
     });
+  };
+  const shareNative = async () => {
+    try {
+      await navigator.share({ title, text: citation, url: link });
+      // Counted only once the sheet resolves: a cancel throws and is not a share.
+      trackEvent('share', readerSharePayload('native_share', { url: link, page: page.page_number }));
+    } catch {
+      // Cancelled, or refused by the browser.
+    }
   };
   const open = (href: string, channel: string) => {
     trackEvent('share', { channel, url, page: page.page_number });
@@ -661,7 +693,16 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
   return (
     <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
 
-      <button type="button" onClick={() => copy('link', url)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+      {canShareNative && (
+        <button type="button" onClick={shareNative} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+          <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+            <Share2 size={16} style={{ color: 'var(--text-muted)' }} />
+            {t.shareNative}
+          </span>
+        </button>
+      )}
+
+      <button type="button" onClick={() => copy('link', link, 'copy_link')} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
           <LinkIcon size={16} style={{ color: 'var(--text-muted)' }} />
           {t.copyLink}
@@ -669,7 +710,7 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
         {copied === 'link' && <Check size={14} style={{ color: 'var(--accent-rust)' }} />}
       </button>
 
-      <button type="button" onClick={() => copy('ref', `${citation}. ${url}`)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+      <button type="button" onClick={() => copy('ref', `${citation}. ${link}`, 'copy_link_ref')} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
           <Quote size={16} style={{ color: 'var(--text-muted)' }} />
           {t.copyLinkWithReference}
@@ -3404,10 +3445,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
 
   const copyCitation = useCallback(() => {
     navigator.clipboard?.writeText(citation).then(() => {
+      trackEvent('cite', readerCitePayload('copy_citation', { bookId: r.book.id, page: r.currentPage?.page_number }));
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     });
-  }, [citation]);
+  }, [citation, r.book.id, r.currentPage?.page_number]);
 
   const pageNum = r.currentPage?.page_number ?? '–';
   const printedHere = r.currentPage ? printedNumbers?.[r.currentPage.id] : undefined;

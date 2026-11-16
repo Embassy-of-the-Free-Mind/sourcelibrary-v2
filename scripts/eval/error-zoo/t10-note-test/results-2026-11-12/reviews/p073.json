@@ -1,0 +1,73 @@
+[
+  {
+    "book_id": "69b525ce6be6046083032ac7",
+    "slot": 1,
+    "title": "Architecture, peinture et sculpture de la maison de ville d'Amsterdam, représentée en CIX figures en taille-douce ...",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1719 French description of the Amsterdam Town Hall's sculpture, plate by plate. It has no tradition or collection to test against, but nothing on the leaf contradicts the record (French, 18th-century print, architecture and sculpture).",
+    "rights_flag": null,
+    "structure_note": "The image is an unsplit opening (printed pp. 18–19). The record transcribes both pages in reading order, with each page's own page-num, header, signature and catchword, so neither page is lost. That likely explains why only 16 of 169 records carry a printed number. The 4 backsteps and 2 repeats are probably from spread records and misread numerals, not real disorder, but this one page cannot settle that. The counts disagree with each other: structure.pages_translated is 0 while the pages_translated field is 127.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "printed_marker": "\"18\" (left page), \"19\" and signature \"E 2\" (right page); catchwords \"che\" and \"Chien;\"",
+        "layout": "unsplit two-page opening, each page in two columns, centred 'PLANCHE' subheadings, running head across the spread",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "il ne\ns'enfuit pas",
+            "image": "il ne s'enſuit pas (long s, 'it does not follow'), as far as the resolution shows",
+            "problem": "long s read as f, which gives 'flees'. The translation correctly has 'it does not follow'",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "le\nChien;",
+            "image": "'Chien;' is the catchword printed below the last line, beside the signature E 2",
+            "problem": "catchword transcribed as body text as well as in the meta. The translation correctly leaves it out",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<header>ARCHITECTURE DE LA MAISON</header> … <header>DE VILLE D'AMSTERDAM.</header>",
+            "english": "<header>ARCHITECTURE OF THE TOWN HALL</header> … <header>OF THE TOWN HALL OF AMSTERDAM.</header>",
+            "problem": "a running head that runs across the spread is split, so 'Town Hall' appears twice. The second header also falls inside the sentence 'The Festoons represented in this Plate … serve as accompaniment'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "raw <column-break/> left in the reader text twice, once mid-sentence ('Proof that the greatest beauties are not <column-break/> themselves proof against tender feeling')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "turned into Stags: that is, given horns, the traditional sig", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"Semer\"", "verdict": "ok", "helpful": false },
+            { "quote": "original: \"Parques,\" the three goddesses who spin, measure a", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            {
+              "english": "that Goddess who was the Daughter of Jupiter and Diana",
+              "why": "The print says 'Diane'; the usual tradition names Dione as Venus's mother. A reader is puzzled to find Diana, who appeared just before as Apollo's virgin sister, named as Venus's mother, and needs a short note that the source says this."
+            },
+            {
+              "english": "No. 2 shows two Garlands in which the Emblems of this God are mingled",
+              "why": "'This God' is Mercury, who was named on the previous page. A reader starting here has only the caduceus and winged hat to go on."
+            }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of this spread is faithful, and the English is accurate and complete. Its three notes are correct and drawn from the words. A reader will see the raw <column-break/> markup and the split, duplicated running head."
+  }
+]

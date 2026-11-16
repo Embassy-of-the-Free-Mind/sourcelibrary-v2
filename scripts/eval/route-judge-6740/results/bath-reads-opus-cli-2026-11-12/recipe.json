@@ -1,0 +1,15 @@
+{
+  "question": "route",
+  "issue": "JDerekLomas/conceptual-histories#11",
+  "stage": "ocr+translation",
+  "languages": ["Church Slavonic", "Greek", "Polish", "German", "Latin", "French"],
+  "baseline": null,
+  "arms": ["opus-cli-ocr", "opus-cli-tr"],
+  "batch": { "pages_per_call": 3, "tested": "not tested — reads were 3 pages a call (claude-ocr.mjs / claude-translate.mjs --per-call=3); the judge reads one output a call" },
+  "noise_floor": { "repeat_kind": "repeat", "from": null },
+  "feeds": "cell-test",
+  "router_evidence": "opus-read (claude -p subscription) on seven hidden bath books, Derek 2026-11-12; a single-arm cell test, no baseline arm (agy out of quota)",
+  "waive": {
+    "R1": "the brief fixes 30 pages over seven named books (4-8 per language cell from 1-2 books); rates are reported with by-book intervals, not as 30 independent pages"
+  }
+}

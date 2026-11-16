@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>Japanese (Kanbun / Classical Chinese labels)</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<warning>Handwritten Japanese kaisho/semi-cursive labels on an ink-line (hakubyō) iconographic scroll. The abbreviation 卄 is expanded as 菩薩. Partial figures cut off at the left and right edges belong to neighbouring sections and are not transcribed.</warning>
+<meta>Hand-scroll section with four deities, two wrathful figures in the centre and two bodhisattvas on the right, each with a vertical label cartouche.</meta>
+
+<image-desc size="large" type="diagram" significance="high">The upper centre shows a wrathful deity with flaming hair and a halo. The deity sits on a rock or cloud seat with one leg pendant, holds a noose and has flames behind. The lower centre shows a wrathful, three-eyed deity with a crested headdress who holds a vajra-tipped staff and stands on clouds. The upper right shows a bodhisattva seated on a lotus pedestal, holding a tray of offerings, inside a body halo and a head halo. The lower right shows a bodhisattva seated on a lotus pedestal with one hand raised and the other holding a flowering stem, inside a body halo and a head halo.</image-desc>
+
+<insert>第二南門大<unclear>威</unclear>金剛青色</insert>
+
+<insert>第一大<unclear>覚</unclear>金剛東門白</insert>
+
+<insert>第四南門風蔵菩薩青色</insert>
+
+<insert>第一東門香蔵菩薩白色</insert>
+
+<image-desc size="small" type="diagram" significance="low">At the right edge, sketches of ritual offering stands with offerings and partial ritual implements, cut off by the frame.</image-desc>
+
+<vocab>金剛, 菩薩, 南門, 東門, 風蔵菩薩, 香蔵菩薩, 青色, 白色, gate guardians, iconographic scroll</vocab>

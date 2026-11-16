@@ -256,7 +256,7 @@ export default function CollectionAllBooks({
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
         <div>
           <div className="flex items-baseline gap-4">
-            <h2 className="text-2xl sm:text-3xl text-primary font-display">
+            <h2 className="text-2xl sm:text-3xl text-primary font-serif">
               All {isArt ? 'Works' : 'Books'}
             </h2>
             {isArt ? (

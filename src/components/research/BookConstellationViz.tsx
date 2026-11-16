@@ -413,7 +413,7 @@ export default function BookConstellationViz({ data, initialColorMode }: { data:
       if (!ctx) continue;
       canvas.width = 512;
       canvas.height = 64;
-      ctx.font = '26px Inter, system-ui, sans-serif';
+      ctx.font = '26px "Source Sans 3", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';

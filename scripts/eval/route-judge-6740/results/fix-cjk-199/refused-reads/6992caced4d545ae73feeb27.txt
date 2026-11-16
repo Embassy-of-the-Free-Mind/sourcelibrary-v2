@@ -1,0 +1,48 @@
+<scan-quality>fair</scan-quality>
+<language>Chinese</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<warning>Handwritten Chinese brush script (Dunhuang-type iconographic sketch scroll). Several labels have characters struck through, with corrections written beside them. The abbreviation 卄 / 艹艹 is expanded to 菩薩.</warning>
+<meta>Top-left corner mark: 下. Red library stamp in lower left: Bibliothèque Nationale, 4502, Manuscrits. Labels are read right to left within each row.</meta>
+
+<insert>下</insert>
+
+<image-desc size="large" type="diagram" significance="high">Ink outline drawings of eight Buddhist figures in two rows of four, each with a vertical cartouche label. The two right-hand figures are crowned buddhas seated on lotus pedestals. The top one holds a flaming jewel; the bottom one holds a vajra upright before the chest. Next come seated or kneeling bodhisattvas holding lotuses and other attributes. At the far left of each row is a standing wrathful guardian with flaming hair. The top guardian holds a noose and a trident; the bottom one stands in a lunging pose.</image-desc>
+
+<insert>寶生佛身青色</insert>
+
+<insert>弟三南門金光<unclear>淨戒</unclear>菩薩青色</insert>
+
+<insert>弟四南門藏菩薩青<unclear>月</unclear>色</insert>
+
+<gloss><unclear>林</unclear></gloss>
+
+<insert>弟二南門<unclear>[struck through — 2-3 characters]</unclear>金光青色</insert>
+
+<gloss>風藏菩薩</gloss>
+
+<insert>弟三西門大<unclear>喜</unclear>金光赤色</insert>
+
+<gloss>悲</gloss>
+
+---
+
+<insert>阿閦佛身白色</insert>
+
+<insert>弟一東門淨地菩薩黃色</insert>
+
+<insert>弟一東門<unclear>青</unclear>藏菩薩白色</insert>
+
+<gloss>淨地</gloss>
+
+<insert>弟一東門<unclear>[struck through — 3-4 characters]</unclear>白色</insert>
+
+<gloss>香藏菩薩</gloss>
+
+<insert>弟四北門大權金光<unclear>錄</unclear>色</insert>
+
+<gloss>慈</gloss>
+
+<insert>BIBLIOTHÈQUE NATIONALE · 4502 · MANUSCRITS</insert>
+
+<vocab>寶生佛, 阿閦佛, 南門, 西門, 東門, 北門, 金光, 大權金光, 風藏菩薩, 香藏菩薩, 淨地菩薩, 悲, 慈, 身色, 曼荼羅, 白畫, Dunhuang</vocab>

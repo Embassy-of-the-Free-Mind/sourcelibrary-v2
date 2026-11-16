@@ -1,0 +1,59 @@
+[
+  {
+    "book_id": "69a5e9fd787d6e9b8d42ea49",
+    "slot": 1,
+    "title": "Libro de los juegos de ajedrez, dados y tablas",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A photograph of an illuminated 13th-century Castilian manuscript of Alfonso X's book of games: a chess problem with a miniature. That matches the title, author, date and language. No tradition or collection is given to test it against.",
+    "rights_flag": null,
+    "structure_note": "The structure count of pages_translated (0) disagrees with the book field (189). Only 34 of 219 pages carry a printed number. The leaf numbers are small hand-written folio numerals in the top corner, so the 4 backsteps and 2 repeats are more likely misread numerals than a splice. This leaf shows folio '8' at page record 26, which fits a book with front matter or unfoliated leaves.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "printed_marker": "8",
+        "layout": "large miniature across the top (four players around a chessboard), two text columns below, red rubric, a decorated blue-and-red initial L, running head in red and blue capitals, and a strip of the facing leaf's text at the left edge",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "dara la xaque con el Roque\npuesto", "image": "dar la xaque con el Roque prieto (abbreviated 'pu̇eto')", "problem": "'prieto' (black) is read as 'puesto' (placed) every time it occurs on the page, about ten times: 'cauallo puesto', 'peon puesto', 'Rey puesto', 'alfferza puesta'. In the OCR the side is lost. The translation correctly gives 'black'.", "severity": "moderate", "class": "O6" },
+          { "ocr": "¶ Et si los p̃m-\neros en uez de dar xaque", "image": "E si los p(ri)etos erraren de dar xaque", "problem": "'prietos erraren' (if the blacks fail to give check) is read as 'primeros en uez de' (instead of). The translation recovers the sense ('fail to do so').", "severity": "moderate", "class": "O6" },
+          { "ocr": "Este es otro uuego departido", "image": "iuego", "problem": "'iuego' is transcribed as 'uuego' throughout, but the same OCR has 'iuegan' and 'iuego' elsewhere", "severity": "minor" },
+          { "ocr": "tomara el alfferza", "image": "tomando el alfferza", "problem": "the gerund is read as a future", "severity": "minor" },
+          { "ocr": "<header>HAE DREX</header>", "image": "running head in red/blue capitals, apparently 'AXE DREX' (axedrex)", "problem": "running head misread", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "en q̃ a xxxvi. uuegos", "english": "in which there are 36 moves", "problem": "'36 moves' contradicts the mate in four given below, and nothing explains it. I could not confirm the numeral on the rubric at this resolution; it may read xxvi.", "severity": "minor" },
+          { "source": "e la su qr-\nta casa", "english": "in his fourth square", "problem": "the OCR's 'e' is probably 'en', and the English does not say whose fourth square is meant", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "The OCR's <image-desc> of the miniature reappears in the English as a <note>, so a picture description is shown in the reading flow as editorial apparatus", "severity": "moderate", "class": "D1" },
+          { "note": "<column-break/> kept in the translation text", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "A rectangular miniature painting framed in grey, set agains", "verdict": "ok", "helpful": false },
+            { "quote": "a 'divided game,' a set chess problem", "verdict": "ok", "helpful": true },
+            { "quote": "arranged on the board", "verdict": "ok", "helpful": true },
+            { "quote": "checkmate", "verdict": "ok", "helpful": false },
+            { "quote": "check", "verdict": "ok", "helpful": false },
+            { "quote": "the rook or castle", "verdict": "ok", "helpful": false },
+            { "quote": "the counselor, precursor of the modern queen", "verdict": "ok", "helpful": true },
+            { "quote": "the 'elephant,' precursor of the modern bishop", "verdict": "ok", "helpful": true },
+            { "quote": "literally 'horse,' the knight", "verdict": "ok", "helpful": false },
+            { "quote": "pawn", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "that is in the third square of the white alfferza", "why": "medieval descriptive notation: squares are named by the file of a piece's starting square, counted from that side's back rank. Without a note a reader cannot place any move." },
+            { "english": "in which there are 36 moves", "why": "this contradicts the mate in four that follows. A reader needs to know what the number counts, or that the numeral is uncertain." },
+            { "english": "the white king must take it by force with his alffil", "why": "'the white king' here means the white side, not the king piece. Read literally, the sentence makes no sense." }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf, a real 13th-century manuscript, on the right shelf. The translation is faithful and recovers the sense where the OCR misreads 'prieto' as 'puesto' throughout. One embarrassment is visible on sight: the miniature's description is shown as an editorial <note>."
+  }
+]

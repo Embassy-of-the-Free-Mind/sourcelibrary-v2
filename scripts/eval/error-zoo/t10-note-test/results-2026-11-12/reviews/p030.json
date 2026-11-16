@@ -1,0 +1,58 @@
+[
+  {
+    "book_id": "69a5e9fd787d6e9b8d42ea49",
+    "slot": 1,
+    "title": "Libro de los juegos de ajedrez, dados y tablas",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Illuminated 13th-century Castilian manuscript of Alfonso X's chess book; the leaf (miniature of a chess game over two columns of Old Spanish problem text) matches the record. No tradition or collection given to contradict.",
+    "rights_flag": null,
+    "structure_note": "Record 26 carries folio '8' on the image, which fits rectos-only foliation after front matter. 34 printed numbers in 219 records is what a foliated manuscript gives; the 4 backsteps and 2 repeats are more likely misread or show-through folio numerals than a splice (cannot confirm from one leaf). structure.pages_translated = 0 contradicts pages_translated_field = 189 and this page, which has a translation: one of the counters is wrong (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "printed_marker": "8",
+        "layout": "framed miniature of a chess game across the top; red/blue running head split above it; two columns of Gothic text below with red rubric, large decorated initial L and red/blue paragraph marks; edge of the facing page visible at left",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Rey puesto", "image": "Rey p̃eto / pueto (prieto, 'black'), here and at every 'puesto' on the page", "problem": "'prieto' (black) read throughout as 'puesto' (placed), so the OCR panel never says which side the pieces belong to; the translator corrected it in its meta", "severity": "moderate", "class": "O6" },
+          { "ocr": "Los negros iuegan p̃mo.", "image": "[L]os prietos (abbreviated) iuegan p̃mo", "problem": "'prietos' normalised to modern 'negros'", "severity": "minor" },
+          { "ocr": "en q̃ a xxxvi. uuegos", "image": "the rubric's numeral looks like two x's ('xxvi' or similar); low-resolution red script", "problem": "36 pieces cannot be on a chessboard (32 at most); the numeral is very probably misread, and the English carries it", "severity": "moderate", "class": "O7" },
+          { "ocr": "¶ Et si los p̃m-\neros en uez de dar xaque", "image": "E si los prie-|tos errare(n) de dar xaque", "problem": "'prietos ... erraren' (if the blacks fail to give check) read as 'primeros ... en uez de' (the first ... instead of); sense roughly recoverable", "severity": "moderate", "class": "O6" },
+          { "ocr": "tomara el alfferza", "image": "tomādo el alfferza", "problem": "'tomando' read as 'tomara'", "severity": "minor" },
+          { "ocr": "<header>HAE DREX</header>", "image": "'ACE' (red/blue) left and 'DREX' right above the miniature, i.e. 'AÇEDREX'", "problem": "running head misread", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "en q̃ a xxxvi. uuegos", "english": "with thirty-six pieces", "problem": "carries the probable numeral misread; an impossible number of pieces for one board", "severity": "moderate", "class": "O7" },
+          { "source": "Et si los p̃meros en uez de dar xaque cada uez al Rey blanco", "english": "And if the first players, instead of giving check to the white king every time, do otherwise", "problem": "'the first players' for the blacks, and 'do otherwise' added; the source means 'if the blacks fail to give check each move'. Recoverable, and the summary states it correctly", "severity": "minor" },
+          { "source": "<header>HAE DREX</header>", "english": "<header>OF CHESS</header>", "problem": "the head reads 'Açedrex' ('Chess'); the 'Of' comes from the meta's guess 'DE AXEDREX'", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "The OCR's <image-desc> is carried into the English as a long <note> describing the miniature, so the reader text opens with an image description", "severity": "minor" },
+          { "note": "<meta> guesses that the running head is a fragment of 'DE AXEDREX'; both halves of the head ('ACE' + 'DREX') are on this leaf, so it is complete as 'AÇEDREX'", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "A rectangular miniature painting, framed in grey and set aga", "verdict": "ok", "helpful": false },
+            { "quote": "a set chess problem with a prescribed solution", "verdict": "ok", "helpful": true },
+            { "quote": "the arrangement of pieces on the board", "verdict": "ok", "helpful": true },
+            { "quote": "check", "verdict": "ok", "helpful": false },
+            { "quote": "the counselor or \"fers,\" precursor of the modern queen, whic", "verdict": "ok", "helpful": true },
+            { "quote": "the \"elephant,\" precursor of the bishop, which leapt exactl", "verdict": "ok", "helpful": true },
+            { "quote": "literally \"horse\"", "verdict": "ok", "helpful": false },
+            { "quote": "checkmate", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "placed in the fourth square of the white king", "why": "the medieval way of naming squares (counted along the file of a named piece, from that side's back rank) is never explained, so none of the move descriptions can be followed on a board" },
+            { "english": "they pledge mate to the white king in four of their moves, in his fourth square", "why": "'pledge mate ... in his fourth square' is the conventional problem stipulation (mate in N moves on a named square); a reader needs a note on what is being promised" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right leaf, and a good translation that correctly fixes the OCR's systematic 'puesto' for 'prieto' (black). The OCR panel is noticeably wrong, though, and both panes give an impossible 'thirty-six pieces', which is probably a misread numeral."
+  }
+]

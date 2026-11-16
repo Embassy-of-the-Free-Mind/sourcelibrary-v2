@@ -24,15 +24,16 @@ describe('rateLimitedFetch retry policy', () => {
       const n = hits.get(path)!;
       if (path === '/404') { res.statusCode = 404; return res.end('nope'); }
       if (path === '/403') { res.statusCode = 403; return res.end('forbidden'); }
-      // A large plate on a slow link, in miniature: ~600 ms total, never more
-      // than 60 ms of silence.
+      // A large plate on a slow link, in miniature: ~2.5 s total, never more than 100 ms of silence.
+      // The margins against the client's timers are wide on purpose: on a loaded CI runner the event loop
+      // can lag by hundreds of ms, and a 60 ms gap against a 150 ms stall timer read as a stall (#71).
       if (path === '/slow-plate') {
         res.writeHead(200, { 'Content-Type': 'image/jpeg' });
         let i = 0;
         const tick = setInterval(() => {
-          if (i++ >= 10) { clearInterval(tick); return res.end(); }
+          if (i++ >= 25) { clearInterval(tick); return res.end(); }
           res.write(Buffer.alloc(1024, 1));
-        }, 60);
+        }, 100);
         return;
       }
       // Headers and one chunk, then silence: a dead connection.
@@ -58,10 +59,9 @@ describe('rateLimitedFetch retry policy', () => {
   });
 
   it('a 404 is requested once and throws HTTP 404', async () => {
-    const t0 = Date.now();
     await expect(rateLimitedFetch(`${base}/404`)).rejects.toThrow('HTTP 404');
+    // the request count is the guard (a retry is a second hit); a wall-clock bound failed on loaded runners
     expect(hits.get('/404')).toBe(1);
-    expect(Date.now() - t0).toBeLessThan(400); // no 500 ms backoff taken
   });
 
   it('a 403 is requested once — a refusal is not a reason to ask again', async () => {
@@ -87,20 +87,21 @@ describe('rateLimitedFetch retry policy', () => {
    * request and left the body, where a master spends its time, unbounded.
    */
   describe('rateLimitedFetch timeout semantics', () => {
-    it('completes a body that takes 4x `timeout` while it keeps delivering', async () => {
-      const buf = await rateLimitedFetch(`${base}/slow-plate`, { timeout: 150, retries: 0 });
-      expect(buf.length).toBe(10 * 1024);
+    it('completes a body that takes 5x `timeout` while it keeps delivering', async () => {
+      const buf = await rateLimitedFetch(`${base}/slow-plate`, { timeout: 500, retries: 0 });
+      expect(buf.length).toBe(25 * 1024);
     });
 
     it('still fails fast on a connection that stops delivering, and says why', async () => {
       const t0 = Date.now();
-      await expect(rateLimitedFetch(`${base}/stalled`, { timeout: 150, retries: 0 }))
+      await expect(rateLimitedFetch(`${base}/stalled`, { timeout: 300, retries: 0 }))
         .rejects.toThrow(/stalled — no data/);
-      expect(Date.now() - t0).toBeLessThan(1000);
+      expect(Date.now() - t0).toBeLessThan(10_000);   // fast next to a hang; loose enough for a loaded runner
     });
 
     it('keeps an absolute backstop for a connection that trickles forever', async () => {
-      await expect(rateLimitedFetch(`${base}/slow-plate`, { timeout: 150, maxMs: 200, retries: 0 }))
+      // the stall timer is far above any gap, so only the cap can end this (#71: at 150 vs 200 ms they raced)
+      await expect(rateLimitedFetch(`${base}/slow-plate`, { timeout: 2000, maxMs: 400, retries: 0 }))
         .rejects.toThrow(/absolute cap/);
     });
   });

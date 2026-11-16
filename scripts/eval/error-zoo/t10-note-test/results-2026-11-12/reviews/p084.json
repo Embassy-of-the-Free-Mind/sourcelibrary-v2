@@ -1,0 +1,62 @@
+[
+  {
+    "book_id": "69c834666c6f3cc53c84e53b",
+    "slot": 1,
+    "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection given; the leaf is a 1613 German Lutheran devotional 'spiritual prognostication', consistent with the record.",
+    "rights_flag": null,
+    "structure_note": "The structure counts disagree with each other: pages_translated is 0 in the structure counts but 57 in the book field, which looks like a counting or field mismatch, not a missing translation (this page is translated). with_printed_number is 0, which fits a leaf with no printed page number (this one has only a running head and a catchword). No backsteps or repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "printed_marker": "wird",
+        "layout": "single column of Fraktur with Antiqua loanwords, running head 'Geistlich Prognosticon.' over a rule, scripture references in the outer (left) margin, catchword at the foot",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ein grosser unterscheid ist",
+            "image": "ein groſ-ſer vnterſcheid iſt",
+            "problem": "initial v silently normalised to u (the rest of the page keeps v, e.g. 'vnnd', 'vmb')",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "denn Er ist selbst unwandelbar",
+            "image": "denn Er iſt ſelbſt vnwandelbar",
+            "problem": "same v→u normalisation",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "original: \"vmb einen gutten Paurenschrit\", meaning by a wide m", "verdict": "ok", "helpful": true },
+            { "quote": "prognostication, forecast", "verdict": "ok", "helpful": false },
+            { "quote": "influence", "verdict": "ok", "helpful": true },
+            { "quote": "calculation", "verdict": "ok", "helpful": false },
+            { "quote": "presides over", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            {
+              "english": "Just ask the first world, which",
+              "why": "'the first world' means the world before the Flood; a general reader may not know that the examples to come are the Flood and Noah's warning"
+            },
+            {
+              "english": "the <term>influentz</term> <gloss>influence</gloss> of the heavenly stars",
+              "why": "the gloss gives only 'influence'; the astrological sense (the power the stars were thought to pour down on earthly events) is what the argument turns on"
+            }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The page reads cleanly: the Fraktur transcription is near-exact, apart from two silent v→u normalisations, and the translation is faithful, with sound glosses and a useful idiom note. Nothing here would draw an expert's flag on sight."
+  }
+]

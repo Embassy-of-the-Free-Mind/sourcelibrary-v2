@@ -10,6 +10,7 @@
 
 import { MongoClient } from 'mongodb';
 import { activePoolFingerprints, poolBanner } from '../lib/suspected-pool.mjs';
+import { createSourceTally, UTM_NOTE } from '../lib/pageview-source.mjs';
 
 const DAYS = (() => {
   const i = process.argv.indexOf('--days');
@@ -145,7 +146,7 @@ async function main() {
   const bookHits = new Map();        // book slug -> count
   const collectionHits = new Map();
   const libraryHits = new Map();
-  const referrers = new Map();
+  const sources = createSourceTally();  // utm tag first, then referrer; one source per row
   const countries = new Map();
   const dailyHits = new Map();       // YYYY-MM-DD -> count (human)
   const sessions = new Map();        // sessionKey -> [{ts, path, kind}]
@@ -166,14 +167,13 @@ async function main() {
     if (k.kind === 'collection' && k.slug) collectionHits.set(k.slug, (collectionHits.get(k.slug) || 0) + 1);
     if (k.kind === 'library' && k.slug) libraryHits.set(k.slug, (libraryHits.get(k.slug) || 0) + 1);
 
-    const refDomain = (d.referrer || 'direct').replace(/^https?:\/\//, '').split('/')[0] || 'direct';
-    referrers.set(refDomain, (referrers.get(refDomain) || 0) + 1);
     countries.set(d.country || 'unknown', (countries.get(d.country || 'unknown') || 0) + 1);
 
     const day = d.timestamp.toISOString().slice(0, 10);
     dailyHits.set(day, (dailyHits.get(day) || 0) + 1);
 
     const sessKey = `${d.ip}::${(d.userAgent || '').slice(0, 60)}`;
+    sources.add(d, sessKey, day);
     if (!sessions.has(sessKey)) sessions.set(sessKey, []);
     sessions.get(sessKey).push({ ts: d.timestamp, path: d.path, kind: kindStr });
   }
@@ -255,8 +255,17 @@ async function main() {
   print(table(topN(tenantHits, 10).map(([t, h]) => [h, t]), ['hits', 'tenant']));
   print(``);
 
-  print(`### Top 20 referrers`);
-  print(table(topN(referrers, 20).map(([r, h]) => [h, r]), ['hits', 'referrer']));
+  print(`### Top 20 sources, by visitors`);
+  print(UTM_NOTE);
+  print(``);
+  print(table(sources.rows().slice(0, 20).map((r) => [r.visitors, r.pageviews, r.assistant ? `${r.source} (assistant)` : r.source]), ['visitors', 'pageviews', 'source']));
+  print(``);
+
+  const fromAssistants = sources.assistants();
+  print(`### Readers arriving from assistants`);
+  print(`${fromAssistants.visitors.toLocaleString()} visitors in the window, with ${fromAssistants.pageviews.toLocaleString()} pageviews carrying the tag or referrer. Visitors are the count of arrivals; pageviews are not.`);
+  print(`Visitors by day (a visitor counts once on each day they came; the first and last day are partial): ${fromAssistants.byDay.map((d) => `${d.date.slice(5)}: ${d.visitors}`).join(', ') || 'none'}`);
+  print(table(fromAssistants.bySource.map((r) => [r.visitors, r.pageviews, r.source]), ['visitors', 'pageviews', 'assistant']));
   print(``);
 
   print(`### Countries (top 15)`);

@@ -1,0 +1,82 @@
+<scan-quality>good</scan-quality>
+<language>Hebrew and Aramaic</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<warning>Handwritten square Sephardic Hebrew, vocalized and accented. The masora magna at the top and bottom is written in a small cursive hand that is hard to read in places. The page has the Hebrew text of Jeremiah 32:36–33:1, with the Aramaic Targum after each verse. The text reads right to left, so the right column is transcribed before the left column to keep the text in reading order.</warning>
+
+<margin>על העיר ז׳ וסי׳ <unclear>כאבים מצור בבלה והנה בסכות בהלחמים וגם איש ודבריו</unclear> מה עשו <unclear>נכל ובנותי</unclear> על העיר הזאת <unclear>מותם</unclear> · וכתוב ה׳ מל׳ <unclear>בליש</unclear> וסימ׳ <unclear>וכתוב בספר וחתום</unclear> <unclear>ויעד את עדים וכתוב עטן ליהודה וכתוב לו רוב</unclear> ירמי׳</margin>
+
+אתם אמרים נתנה ביד מלך בבל בחרב
+וברעב ובדבר׃ וכען בכין כדנן אמר יי
+אלהא דישראל על קרתא הדא דאתון אמרין
+אתמסרת ביד מלכא דבבל בחרבא
+ובכפנא ובמותא׃ הנני מקבצם מכל
+<margin>סימן</margin>
+הארצות אשר הדחתים שם באפי ובחמתי
+ובקצף גדול והשבתים אל המקום הזה
+<margin>ב׳</margin>
+וישבתים לבטח׃ האנא מכניש להון מכל
+מכל מדינתא דאגליתנון לתמן ברגזי
+ובחמתי ובתקוף רב ואתיבנון לאתרא
+<margin>ל׳ בספ׳ <unclear>ובל יחזק כות</unclear> צג׳</margin>
+הדין ואשרינון לרוחצן׃ והיו לי לעם ואני
+אהיה להם לאלהים׃ ויהון קדמי לעם ואנא
+אהוי להון לאלה׃ ונתתי להם לב אחד
+<margin>ב׳ חד מל׳ <unclear>וישבתם בספ׳ בארץ</unclear></margin>
+ודרך אחד ליראה אותי כל הימים לטוב
+להם ולבניהם אחריהם׃ ואתין להון לבא
+חד ואורח חדא למדחל קדמי כל יומיא
+דייטב להון ולבניהון בתריהון׃ וכרתי
+להם ברית עולם אשר לא אשוב מאחריהם
+<margin>ב׳</margin>
+להיטיבי אותם ואת יראתי אתן בלבבם
+לבלתי סור מעלי׃ ואגזר להון קים עלם
+דלא יתוב מימרי מבתריהון לאיטבא להון
+וית דחלתי אתין בלבהון בדיל דלא יסטון
+<margin>ב׳ וחד <unclear>ששתי</unclear></margin>
+מבתר פלחני׃ וששתי עליהם להיטיב
+אותם ונטעתים בארץ הזאת באמת
+בכל לבי ובכל נפשי׃ ויחדי מימרי עליהון
+לאיטבא להון ואקיימנון בארעא הדא
+
+<column-break/>
+
+בקשוט במימרי וברעותי׃
+<margin>ו׳ בטע׳ בספ׳</margin>
+כי כה אמר יהוה כאשר הבאתי אל העם
+הזה את כל הרעה הגדולה הזאת כן
+אנכי מביא עליהם את כל הטובה אשר
+אנכי דבר עליהם׃ ארי כדנן אמר יי כמא
+דאיתיתי על עמא הדין ית כל בישתא
+<margin>ל׳</margin>
+רבתא הדא כין אנא מיתי עליהון ית כל
+טבתא דאנא ממליל עמהון׃ ונקנה השדה
+בארץ הזאת אשר אתם אמרים שממה
+היא מאין אדם ובהמה נתנה ביד הכשדים׃
+ויזדבנון חקלין בארעא הדא דאתון
+אמרין צדיא היא מבלי אנשא ובעירא
+אתמסרת בידא דכסדאי׃ שדות בכסף
+<margin>ל׳ <unclear>ומל׳ בליש</unclear></margin>
+יקנו וכתוב בספר וחתום והעד עדים
+<margin>ב׳ <unclear>ומל׳</unclear></margin>
+בארץ בנימן ובסביבי ירושלם ובערי
+<margin>בער׳</margin>
+יהודה ובערי ההר ובערי השפלה ובערי
+<margin>אשוב ק׳</margin>
+הנגב כי אשיב את שבותם נאם יהוה׃
+חקלין בכספא יזבנון ויכתבון בשטרא
+ויחתמון ויסהדון סהדין בארע שבט
+בנימן ובסחרני ירושלם ובקרויא דבית
+יהודה ובקרוי טורא ובקרוי שפילתא
+ובקרוי דרומא ארי אתיב ית גלותהון
+אמר יי׃ ויהי
+דבר יהוה אל ירמיהו שנית והוא עודנו
+עצור בחצר המטרה לאמר׃ והוה פתגם
+נבואה מן קדם יי עם ירמיה תנינות
+
+<margin>וחתום ה׳ מל׳ <unclear>בליש</unclear> וסימ׳ וחתום תורה <unclear>בלמודי</unclear> וכתוב בספר וחתום ביד כל אדם יחתום והחתום בטבעת המלך׃ · והושבתים ב׳ חד מל׳ וחד חס׳ וסימנה לבטח על <unclear>בתהם</unclear> קדמ׳ חס׳ דו׳ ושעתי ב׳ <unclear>נסימ׳ והלתי בירושלם וששתי עליהם וחד בדרך עדותיך ששתי</unclear>.</margin>
+
+<image-desc size="small" type="decorative" significance="low">Small ornamental line-filler strokes at the ends of several lines of the right column.</image-desc>
+
+<vocab>Jeremiah 32:36–33:1, Targum Jonathan, masora magna, masora parva, ירמיהו, בנימן, ירושלם, יהודה, כשדים, חצר המטרה, ברית עולם, שבותם</vocab>

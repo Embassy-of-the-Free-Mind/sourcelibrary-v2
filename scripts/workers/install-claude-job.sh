@@ -43,6 +43,8 @@ install_one claude-job.sh "$dst" || rc=1
 install_one box-rpc.sh "$bin/box-rpc.sh" || rc=1
 install_one box.sh "$bin/box.sh" || rc=1
 install_one job-ledger.sh "$bin/job-ledger.sh" || rc=1   # the job ledger (#8606)
+install_one situation.sh "$bin/situation" || rc=1         # one-read briefing of every box (scripts/maintenance/situation.mjs)
+node "$here/lanes-crontab.mjs" --check 2>&1 || true   # the lane table (#70): CHECK ONLY. Logs what this box's crontab block would change; writes nothing
 # agent-guard (#8614): project rules + a redacted log of every Claude tool call, as a PreToolUse hook in each Claude
 # config dir on the box. Shadow mode unless /etc/agent-guard.mode says enforce. `install` is idempotent.
 install_one agent-guard.py "$bin/agent-guard.py" && python3 "$bin/agent-guard.py" install || rc=1
@@ -56,5 +58,8 @@ mkdir -p /root/work && { cmp -s "$here/claude-rc-workspace.md" /root/work/CLAUDE
 # the link): it was hand-copied once on 2026-10-27 and never updated, so a fix to it reached no box.
 [ "$(readlink /usr/local/bin/claude 2>/dev/null)" = /root/claude-pace/claude-pace-guard.sh ] && \
   { install_one claude-pace-guard.sh /root/claude-pace/claude-pace-guard.sh || rc=1; }
+# agy-guard (#7075), only where `agy-guard.sh --install` has already put it: until v3 #70 it reached a box by hand,
+# so a merged change to it reached none. The copy is what /usr/local/bin/agy and the PATH line point at.
+[ -f /root/bin/agy-guard/agy ] && { install_one agy-guard.sh /root/bin/agy-guard/agy || rc=1; }
 [ "$(hostname)" = gex45-1 ] && { install_one gpu-queue.sh "$bin/gpu-queue.sh" || rc=1; }  # GPU task queue, gex45 only (#6871)
 exit $rc

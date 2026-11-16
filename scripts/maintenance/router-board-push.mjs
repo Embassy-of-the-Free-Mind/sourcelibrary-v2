@@ -57,8 +57,8 @@ export function servedByCrontab(text) {
     const flag = laneFlag(line);
     const correctLanguages = () => CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
     if (/\srun\s+--cohort=/.test(line)) served.push(...firstReadOf(flag));
-    // one pool's run in order (cli-ocr-lane.mjs latinFirstSteps): the Latin re-read at 4 a call, the German/French correction
-    else if (/\slatin-first\s+--/.test(line)) served.push(...servedByReread({ languages: ['Latin'], perCall: 4 }), ...servedByCorrect({ languages: correctLanguages() }));
+    // one pool's run in order (cli-ocr-lane.mjs latinFirstSteps): the Latin and the German/French re-read at 4 a call (#7853)
+    else if (/\slatin-first\s+--/.test(line)) served.push(...servedByReread({ languages: ['Latin'], perCall: 4 }), ...servedByReread({ languages: correctLanguages(), perCall: 4 }));
     // --reread-per-call=N (#7853): the same frame re-read, not corrected
     else if (/\scorrect\s+--/.test(line)) served.push(...(flag('reread-per-call') ? servedByReread({ languages: correctLanguages(), perCall: Number(flag('reread-per-call')) }) : servedByCorrect({ languages: correctLanguages() })));
     else if (/\sarmc\s+--frame=first-read/.test(line)) served.push(...servedByArmcFirstRead({ langs: (flag('langs') || 'la').split(',') }));
@@ -208,6 +208,37 @@ export function routeEvidence(row, routeId) {
   };
 }
 
+const r3s = (v) => (Array.isArray(v) ? v.map(r3) : null);
+// rates keep 4 decimals so the page's 2-decimal display rounds once, as the Markdown table does (0.8154 → 0.82, not 0.815 → 0.81)
+const r4 = (v) => (v == null ? null : Math.round(v * 1e4) / 1e4);
+const sig3 = (v) => (v == null || !Number.isFinite(v) ? null : Number(v.toPrecision(3)));
+/** What one cost unit is: Claude points or agy calls (build.py cost()); a route with no channel serves stored text. */
+const COST_UNIT = { claude: 'pts', agy: 'agy calls' };
+
+/**
+ * Every route of a table row (#240), so the page can answer "how did the other routes do here?". The same numbers
+ * the Markdown table prints (build.py): accepted k/n and the posterior [90%]; an untested route's rate is its PRIOR
+ * and is flagged so (tested: false), never shown as measured. cost = units per accepted page [low, mid, high], from
+ * build.py's cost triple (index 1 is the median). in_use = production runs it (a cron lane, or the live route when no
+ * lane serves the cell); decided = the route the router binds or picks.
+ */
+export function routeRows(row, { production = [], decided = null } = {}) {
+  const inUse = new Set(production.length ? production : [row.live || row.current].filter(Boolean));
+  return (row.routes || []).map((r) => {
+    const d = r.defects;
+    return {
+      id: r.id, stage: r.stage ?? null, lane: r.lane ?? null, tested: Boolean(r.tested ?? r.n),
+      k: r.k ?? null, n: r.n ?? null, rate: r4(r.mean), ci90: Array.isArray(r.ci90) ? r.ci90.map(r4) : null,
+      wrong_text: r.n ? r.wrong ?? null : null, invented_or_wrong_leaf: r.inv ?? null, hard_floor_block: Boolean(r.hard_floor_block),
+      written_of_drawn: r.written_of_drawn ?? null, paired: r.paired ?? null,
+      defects: d ? { books: d.books, words: d.words, misleads_per_1k: r3s(d.misleads_per_1k_posterior), wrong_text_per_1k: r3s(d.wrong_text_per_1k_posterior) } : null,
+      // three significant figures, not three decimals: an Opus page is ~0.004 points and its interval would vanish
+      cost: r.channel && Array.isArray(r.cost) ? { unit: COST_UNIT[r.channel] ?? r.channel, low: sig3(r.cost[0]), mid: sig3(r.cost[1]), high: sig3(r.cost[2]) } : null,
+      in_use: inUse.has(r.id), decided: r.id === decided,
+    };
+  });
+}
+
 /** The board, pure over its inputs (the test passes them). */
 export function routerBoard({ table, drift, lanes, today = new Date().toISOString().slice(0, 10) }) {
   const findings = checkBinding(table, lanes, { today }).map((f, i) => ({ ...f, box: lanes[i].box, schedule: lanes[i].schedule, comment: lanes[i].comment }));
@@ -216,6 +247,7 @@ export function routerBoard({ table, drift, lanes, today = new Date().toISOStrin
   for (const row of table.rows.values()) {
     const mine = findings.filter((f) => f.cell === row.id);
     const route = boundRoute(row), isDecided = Boolean(route);
+    const production = [...new Set(mine.map((f) => f.runs))];
     if (!isDecided && !mine.length && !(row.pages_waiting > 0)) continue;
     const jv = row.judge_validity;
     const waivers = (table.waivers || []).filter((w) => w.cell === row.id).map((w) => ({ lane: w.lane || null, set: w.set, until: w.until, live: Boolean(w.until && today <= w.until), reason: String(w.reason || '').slice(0, 300) }));
@@ -228,7 +260,8 @@ export function routerBoard({ table, drift, lanes, today = new Date().toISOStrin
       judge: jv ? { stratum: jv.stratum, valid: jv.self_preference_valid ?? null } : null,
       pages_waiting: row.pages_waiting ?? 0,
       lanes: mine.map((f) => ({ box: f.box.replace(/^infrastructure\//, ''), lane: f.lane, runs: f.runs, runs_kn: f.runs_kn, status: f.status, schedule: f.schedule, comment: f.comment, ...(f.waiver && { waiver_until: f.waiver.until }) })),
-      production: [...new Set(mine.map((f) => f.runs))],
+      production,
+      routes: routeRows(row, { production, decided: route ?? row.route }),
       waivers,
       routing_row: (status[row.id]?.routing_row || []).length > 0,
     });

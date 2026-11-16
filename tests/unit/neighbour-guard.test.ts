@@ -236,9 +236,6 @@ describe('the writers', () => {
     'scripts/maintenance/recover-uncollected-batches.mjs': /h\.neighbourGate\(/,
     'src/lib/translate-write.ts': /neighbourGate\(db, at, finalText/,                          // the TS door
     'src/workers/translation-processor-logic.ts': /neighbourGate\(/,                          // Lambda
-    'src/app/api/books/[id]/batch-translate-async/route.ts': /neighbourGate\(/,
-    'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts': /neighbourGate\(/,
-    'src/app/api/batch-save/route.ts': /neighbourGate\(/,
     'src/app/api/process/route.ts': /neighbourGate\(/,
     'src/app/api/contribute/process/route.ts': /neighbourGate\(/,
   };

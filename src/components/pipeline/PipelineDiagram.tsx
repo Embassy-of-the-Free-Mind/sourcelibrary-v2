@@ -195,7 +195,7 @@ export default function PipelineDiagram({ stages }: { stages: StageData[] }) {
 
       {/* ── Write Queue Pattern ── */}
       <div className="mt-6 pt-4 border-t border-border-light">
-        <div className="text-sm font-bold text-muted tracking-wide uppercase mb-3">Write Queue Pattern</div>
+        <div className="text-sm font-semibold text-muted tracking-wide uppercase mb-3">Write Queue Pattern</div>
         <div className="flex items-center gap-0 overflow-x-auto pb-1">
           {[
             { label: 'AI Workers (600+)', bg: 'bg-amber-50', border: 'border-amber-400', text: 'text-amber-800' },

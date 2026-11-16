@@ -1,0 +1,56 @@
+[
+  {
+    "book_id": "694f8d99efce46492e19fdad",
+    "slot": 1,
+    "title": "Conclusiones sive Theses DCCCC",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Latin incunable of Pico's 900 Theses (Rome 1486, roman type, paragraph marks). It belongs on the Latin language shelf.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree: structure.pages_translated is 0, but pages_translated_field is 76, and this page has a translation, so the structure count is wrong (E2-type instrument error). with_printed_number is 1 of 89, which fits an unfoliated incunable: this leaf shows no printed number or signature. There are no backsteps or repeats.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "printed_marker": "none visible",
+        "layout": "single column of theses, each opening with a paragraph mark; centred capital section headings; ink pen dashes in the left margin; heavy show-through from the verso; staining at the head",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ad pbandum", "image": "ad ꝓbandum (p with the pro-abbreviation stroke)", "problem": "the abbreviation mark was dropped, leaving a non-word; the sense (probandum) is clear", "severity": "minor" },
+          { "ocr": "quae in mundo", "image": "quæ in mundo", "problem": "æ ligature normalised to ae (also 'Methaphyſicae' for 'Methaphyſicæ'); inconsistent with the ſ that is kept", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Species rerum repreſentatiue ſunt reductiue in praedicamen\nto in quo ſunt res repreſentate.", "english": "The representative species of things belong, by reduction, to the category", "problem": "the adverb 'repraesentative' (representatively) is turned into an adjective on 'species', so the qualifier on how they belong to the category is lost", "severity": "minor" }
+        ],
+        "other": [],
+        "notes_audit": {
+          "items": [
+            { "quote": "The \"species\" are the likenesses or images that sensible obj", "verdict": "ok", "helpful": true },
+            { "quote": "the air or other material through which they travel", "verdict": "ok", "helpful": true },
+            { "quote": "the inner faculty that unites the reports of the separate se", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"phantasma\"", "verdict": "ok", "helpful": false },
+            { "quote": "Isaac of Narbonne is one of the Jewish thinkers Pico cites f", "verdict": "unsupported", "helpful": false },
+            { "quote": "original: \"intellectus agens,\" the active power that, in Ari", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"quiditas,\" literally \"whatness\"", "verdict": "ok", "helpful": true },
+            { "quote": "a quality, like shape or number, perceived by more than one ", "verdict": "ok", "helpful": true },
+            { "quote": "\"Abumaron\" probably renders the name of a medieval Arabic or", "verdict": "unsupported", "helpful": false },
+            { "quote": "\"Moses the Egyptian\" is Moses Maimonides (1138-1204), the Je", "verdict": "ok", "helpful": true },
+            { "quote": "that is, by God being the goal toward which things move, not", "verdict": "ok", "helpful": true },
+            { "quote": "Muhammad of Toledo is an obscure figure; Toledo was a major ", "verdict": "ok", "helpful": false },
+            { "quote": "Relations, such as \"larger than,\" exist only in the mind, no", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"praedicamentum,\" one of Aristotle's ten categorie", "verdict": "ok", "helpful": true },
+            { "quote": "the qualities perceived by one sense alone, such as color or", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "A first intention is the essence", "why": "'first intention' is a scholastic technical term (a concept of a thing itself, as opposed to a second intention, a concept of a concept); a general reader cannot follow the thesis without it" },
+            { "english": "proves something specific to the First", "why": "'the First' (the first mover, God) is left unexplained here; the note further down explains it only indirectly" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is accurate and the translation is faithful. Most notes are sound glosses of scholastic terms. Two identification notes (Isaac of Narbonne, Abumaron) hedge without adding anything the page supports, but nothing is serious and nothing is wrong on sight; the only structural oddity is the pages_translated count of 0."
+  }
+]

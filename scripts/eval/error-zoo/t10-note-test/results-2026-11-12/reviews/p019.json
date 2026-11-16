@@ -1,0 +1,153 @@
+[
+  {
+    "book_id": "69d5abf3d0bd3547a5654427",
+    "slot": 1,
+    "title": "Kitab al-Qanun fi al-Tibb",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Medici Press Arabic Canon of Ibn Sina (Rome 1593), held in the McGill Osler medical-history collection; the page is the end of the book on poisons and the opening of the seventh fann on adornment, as the record says.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 370 and printed_backsteps 89 are what this edition would produce: it carries two page numbers per leaf (an Arabic numeral at the head and a European numeral at the foot, here '150'), and its numbering restarts for each book of the Canon. That is not a scan splice. The structure count pages_translated = 0 disagrees with the field pages_translated = 1022, and this page is translated, so the count is broken, not the book.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 766,
+        "right_page": "yes",
+        "printed_marker": "150 (foot); a head numeral in Arabic digits at the top right, which I read as '١٤٥' with low confidence",
+        "layout": "one column of text inside a ruled frame, running head, centred chapter headings with star ornaments; a strip of the facing page's text and margin at the left edge; no marginal notes on this leaf",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>\n(في الهامش الأيمن):\nآفة الشعر\nالصلع\nالقرع\nاللحية\nالخصيان\nالنساء\nالرطوبة\nالبرد\nاليبس\nالحرارة\n</margin>",
+            "image": "the right margin of this leaf is blank; the only marginal text in the frame is the left-edge strip of the facing page, and none of it matches these words",
+            "problem": "a block of ten marginal keywords is invented. It looks like it was built from the body text and the <vocab> list. It is presented as marginalia on the leaf, and the translation renders it as '(In the right margin): Defect of the hair / Baldness …'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "وعلاجه التنبى البحري وقد قال",
+            "image": "وعلاجه علاج التنين البحري والرتيلا وقد قال",
+            "problem": "'علاج' and 'والرتيلا' are dropped and التنين is misread. The sentence now says the treatment IS the sea dragon, not that it is treated like the sea dragon's sting and the tarantula's bite",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "ليضمد بملح او رماد معجون بخل العنصل او بالسم المحرق",
+            "image": "ليضمد بملح او رماد بشراب او رماد معجون بخل العنصل او بالسمك المحرق",
+            "problem": "the alternative 'او رماد بشراب' (ash with wine) is dropped; بالسمك (fish) is read as بالسم (poison)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "اقول يشبه ان يكون علاجها بالترباق",
+            "image": "اقول يشبه ان يكون علاجها بالترياق الكبير وما يجانسه",
+            "problem": "'الكبير وما يجانسه' (the great theriac and the like) is dropped, including its whole last line",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ويشهد ان يكون علاجها الرتبلا ونحوها",
+            "image": "ويشبه ان يكون علاجها علاج الرتيلا ونحوها",
+            "problem": "'علاج' is dropped and ويشبه is misread as ويشهد",
+            "severity": "minor"
+          },
+          {
+            "ocr": "الفن السابع محمل في الزينة",
+            "image": "الفن السابع كلام مجمل في الزينة",
+            "problem": "'كلام' is dropped from the fann title",
+            "severity": "minor"
+          },
+          {
+            "ocr": "وفي اخر الجرم لما بمس المزاج",
+            "image": "وفي اخر العمر لما يبس المزاج",
+            "problem": "'old age, when the temperament dries' is misread as nonsense",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "للنفاقين",
+            "image": "للناقهين",
+            "problem": "convalescents misread (the translation silently corrects it)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "والاشعار لا يفتقر سريعا",
+            "image": "والاشفار لا ينتثر سريعا",
+            "problem": "eyelashes / fall out misread (the translation silently corrects it)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "وعلاجه التنبى البحري",
+            "english": "Its treatment is the sea dragon.",
+            "problem": "this carries the OCR omission into the English. The source (image) says the sting is treated as the sea dragon's (weever's) sting and the tarantula's bite are treated; the English makes the animal the remedy",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "source": "<margin> (في الهامش الأيمن): آفة الشعر الصلع القرع …</margin>",
+            "english": "(In the right margin):\nDefect of the hair\nBaldness",
+            "problem": "a translation of marginal notes that are not on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "source": "او بالسم المحرق",
+            "english": "or with burnt fish and wine",
+            "problem": "this silently corrects the OCR toward the image (fish). That is right, but the panes disagree, and 'or ash with wine' is missing from both",
+            "severity": "moderate"
+          },
+          {
+            "source": "علاجها بالترباق",
+            "english": "their treatment is probably with theriac",
+            "problem": "'the great theriac and the like' (on the image) is lost",
+            "severity": "moderate"
+          },
+          {
+            "source": "فصل في عض الضفادع البحرية الجر",
+            "english": "Chapter on the Bite of Red Sea Frogs",
+            "problem": "the OCR's 'الجر' is not a word. The English guesses 'red' and capitalises it so that it reads as frogs of the Red Sea. My confidence in the image word here is low",
+            "severity": "moderate"
+          },
+          {
+            "source": "وفي اخر الجرم لما بمس المزاج فضاق المسام",
+            "english": "On the other hand, tightness of the pores",
+            "problem": "the condition 'in old age, when the temperament dries' is dropped",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "an invented marginal-notes block is shown in both panes as if it were printed on the leaf (see ocr_errors)",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "note": "the <meta> 'continues from previous page: the account of the terrestrial and marine scolopendra' names a subject this page does not carry (it can be neither confirmed nor refuted from this leaf)",
+            "severity": "minor"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "section, division of the book", "verdict": "ok", "helpful": true },
+            { "quote": "tarantula, venomous spider", "verdict": "ok", "helpful": true },
+            { "quote": "dandruff, scurf", "verdict": "ok", "helpful": true },
+            { "quote": "a scalp disease causing bald patches", "verdict": "ok", "helpful": true },
+            { "quote": "\"snake disease,\" a winding form of hair loss", "verdict": "ok", "helpful": true },
+            { "quote": "\"fox disease,\" patchy hair loss, alopecia", "verdict": "ok", "helpful": true },
+            { "quote": "peoples of East Africa", "verdict": "ok", "helpful": true },
+            { "quote": "scalp disease", "verdict": "ok", "helpful": false }
+          ],
+          "missing": [
+            { "english": "Its treatment is the sea dragon.", "why": "'sea dragon' (al-tinnīn al-baḥrī, a venomous fish, the weever) means nothing to a general reader, and the sentence reads as if the animal were the remedy" },
+            { "english": "I say: their treatment is probably with theriac.", "why": "theriac, the compound antidote of Galenic medicine, is never explained, and this section depends on it" },
+            { "english": "this coldness reaches the noble organs and chills them", "why": "'noble organs' is a technical term for the principal organs (heart, brain, liver)" },
+            { "english": "When Hippocrates says that the bald, if varicose veins appear in them, grow their hair again", "why": "an allusion to a Hippocratic aphorism that the sentence depends on; a reader cannot place it" },
+            { "english": "Hair is generated from smoky vapour", "why": "'smoky vapour' is a term from humoral physiology that the whole chapter rests on" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf of a genuine 1593 Medici Canon. The OCR invents a marginal keyword block that is not on the page, and it drops words, so the English says the sea scorpion's sting is treated 'with the sea dragon'. The glosses are accurate and useful, but a few needed terms (theriac, sea dragon, noble organs) are left unexplained."
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "book_id": "69520516ab34727b1f04245b",
+    "slot": 1,
+    "title": "Musurgia universalis Tomus II",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Kircher's 1650 Musurgia, Lib. VIII 'Musurgia Mirifica' (combinatorial composition); a 17th-century Latin music-theory print. No tradition or collection is given, and nothing on the page argues against the shelf.",
+    "rights_flag": null,
+    "structure_note": "Image p.27 carries printed '15', so about 12 leaves of front matter. 4 backsteps and 17 repeats over 474 printed numbers are probably folio misreads and unnumbered plates or tables, not a splice; this one page cannot show which. The structure count pages_translated = 0 contradicts the book field pages_translated = 519 and this page's own translation, so it looks like a counting fault (E2).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "printed_marker": "15; catchword \"intra\"",
+        "layout": "one column of text above and below a large table: three vertical music staves with diamond notes, an Arabic column 22–1, a Roman column I–XXII, then a column of large numbers; running head with page number; a faint, cropped marginal note in the outer margin by lines 1–2; a strip of the facing page at the left edge",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Multiplica 20 in 462 paulo ante", "image": "paulò ante", "problem": "accent dropped (convention slip)", "severity": "minor" },
+          { "ocr": "a column of multipliers (labeled \"præſ\")", "image": "no 'præſ' label visible; the only labels are 'Notæ triſ-diapaſon.' and 'Notæ aſſumptæ'", "problem": "label invented in the image description", "severity": "minor" },
+          { "ocr": "(not transcribed)", "image": "faint marginal note in the outer margin beside lines 1–2, partly cut off at the frame edge (looks like 'Mutatio… / … vis')", "problem": "marginal note dropped; too faint and cropped to read reliably at this resolution", "severity": "minor" },
+          { "ocr": "A vertical diagram and table for calculating musical combinations. On the left is a vertical musical stave", "image": "three vertical staves with notated diamond notes", "problem": "the notation is only described, not transcribed (O14); the three staves are called one stave", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Multiplica 20 in 462 paulo ante ex 20\nin 22 ductorum ſummam", "english": "multiply 20 by 462, the sum obtained a little earlier from 21 multiplied by 22", "problem": "silently changes the printed '20' (image and OCR agree) to 21. The arithmetic is right (462 = 21 × 22), but the source's misprint is corrected without a mark", "severity": "minor" },
+          { "source": "(none on this page)", "english": "<meta>continues from previous page: \"if you desire to know how many times three notes within the interval...\"</meta>", "problem": "quotes previous-page content this page does not carry; cannot be verified here", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "the OCR's image description is turned into a <note> paragraph inside the English reading flow (\"A vertical diagram and table for calculating musical combinations…\")", "severity": "minor" },
+          { "note": "the model's own arithmetic check is shown as <meta> (\"Several figures in the table, as transcribed, do not follow exactly… 53,721,360 × 16 = 859,541,760\"). It is accurate, and the misprint is on the leaf (printed 85941760), but it is model commentary rather than source", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "By \"ordinary combination\" Kircher means what is now called t", "verdict": "ok", "helpful": true },
+            { "quote": "original: \"assumptas\"", "verdict": "ok", "helpful": false },
+            { "quote": "A vertical diagram and table for calculating musical combina", "verdict": "ok", "helpful": true },
+            { "quote": "triple octave", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "9,240 changes of three notes variously placed within a triple octave", "why": "'changes' (mutationes) means permutations or arrangements; a general reader may read it as alterations of the notes" },
+            { "english": "The first denotes the 22 notes running in order and by degrees through the triple octave.", "why": "why three octaves hold 22 notes (the diatonic degrees counted inclusively) is not explained" }
+          ]
+        },
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean page. The OCR follows the print closely, including the table's printed misprints, and the translation is faithful apart from silently fixing one misprinted multiplier. The notes are correct and the factorial note helps; the only blemishes are cosmetic model commentary and an image description shown in the reading text."
+  }
+]

@@ -145,7 +145,7 @@ export default async function LanguagesPage() {
 
       {minor.length > 0 && (
         <>
-          <h2 className="text-2xl font-display text-primary mb-4">Other Languages</h2>
+          <h2 className="text-2xl font-serif text-primary mb-4">Other Languages</h2>
           <div className="flex flex-wrap gap-2">
             {minor.map((lang) => (
               <Link

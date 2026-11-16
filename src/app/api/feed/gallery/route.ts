@@ -20,7 +20,7 @@ export async function GET() {
 
   // Find the 50 most recent high-quality gallery images from materialized collection
   const rawImages = await db.collection('gallery_images')
-    .find({ gallery_quality: { $gte: 0.7 } })
+    .find({ gallery_quality: { $gte: 0.7 }, book_visible: true })
     .sort({ updated_at: -1 })
     .limit(50)
     .project({

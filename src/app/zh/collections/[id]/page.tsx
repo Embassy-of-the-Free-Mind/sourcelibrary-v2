@@ -67,7 +67,7 @@ export default async function ZhCollectionPage({ params }: Props) {
             <ArrowLeft className="w-4 h-4" />
             {col.parent ? col.parent.name : '专题'}
           </Link>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{col.name}</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-serif">{col.name}</h1>
           <p className="text-sm text-white/50 tabular-nums">{nf(col.bookCount)} 册</p>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default async function ZhCollectionPage({ params }: Props) {
 
         {col.children.length > 0 && (
           <section className="mb-14">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-5">子专题</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-5">子专题</h2>
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {col.children.map((ch) => (
                 <Link key={ch.slug} href={`/zh/collections/${ch.slug}`} className="group block">
@@ -92,7 +92,7 @@ export default async function ZhCollectionPage({ params }: Props) {
                     {ch.imageCandidates.length > 0 && <CollectionCardImage candidates={ch.imageCandidates} alt="" sizes="(max-width: 1024px) 50vw, 25vw" />}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <div className="text-white font-display text-lg leading-tight group-hover:text-accent-rust transition-colors">{ch.name}</div>
+                      <div className="text-white font-serif text-lg leading-tight group-hover:text-accent-rust transition-colors">{ch.name}</div>
                       <div className="text-white/60 text-xs tabular-nums">{nf(ch.bookCount)} 册</div>
                     </div>
                   </div>
@@ -103,7 +103,7 @@ export default async function ZhCollectionPage({ params }: Props) {
         )}
 
         <section>
-          <h2 className="text-2xl sm:text-3xl font-display text-primary mb-5">著作</h2>
+          <h2 className="text-2xl sm:text-3xl font-serif text-primary mb-5">著作</h2>
           <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {col.works.map((w) => (
               <div key={w.id}>

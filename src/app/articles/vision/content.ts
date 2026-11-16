@@ -204,7 +204,8 @@ export const visionContent: VisionContent = {
     name: 'Derek Lomas, PhD',
     role: 'Founder, Source Library · Asst. Professor of Positive AI, TU Delft',
     email: 'derek@sourcelibrary.org',
-    photo: '/founder-derek.jpg',
+    // The portrait from dereklomas.me (1200×1350), brought in 2026-11-13.
+    photo: '/vision/derek-lomas.webp',
   },
   plan: {
     heading: 'The five-year budget: $2.9 million',

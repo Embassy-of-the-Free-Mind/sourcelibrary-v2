@@ -79,7 +79,7 @@ async function loadArtistData(db: Db, slug: string): Promise<{
   totalWorks: number;
   galleryImages: GalleryImage[];
   hasAuthorPage: boolean;
-} | null> {
+} | { authorOnly: true } | null> {
   // Look up from system_config author_slugs cache (artists share the same slug space)
   const config = await db.collection('system_config').findOne(
     { _id: 'author_slugs' as any },
@@ -106,7 +106,10 @@ async function loadArtistData(db: Db, slug: string): Promise<{
     { maxTimeMS: 10000 }
   );
 
-  if (visualCount === 0) return null;
+  // A known author with no visual works has an author page and no artist page.
+  // Only for a slug the shared author_slugs map names: the author page resolves
+  // the same map, so the redirect cannot land on a guess (#102).
+  if (visualCount === 0) return config?.slugs?.[slug] ? { authorOnly: true } : null;
 
   // Fetch visual works (limited to 60 for performance)
   const visualBooks = await db.collection('books').find(
@@ -181,6 +184,10 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
   const db = await getReadDb();
   const data = await loadArtistData(db, name);
   if (!data) notFound();
+  // Old links and the author page's former "artist page" link reach here for
+  // writers who made no pictures (Agrippa, Ficino, Kepler). Temporary: an
+  // artist page appears the day a visual work is catalogued under the name.
+  if ('authorOnly' in data) redirect(`/author/${name}`);
 
   const { artistName, entity, books, totalWorks, galleryImages, hasAuthorPage } = data;
 
@@ -236,7 +243,7 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
           )}
           <div className="flex-1 min-w-0">
             <p className="text-xs uppercase tracking-widest text-stone-400 mb-1">Artist</p>
-            <h1 className="text-3xl sm:text-4xl font-display font-bold">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold">
               {artistName}
             </h1>
             {lifeDates && (
@@ -322,7 +329,7 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
       {galleryImages.length > 0 && (
         <div className="border-b" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }}>
           <div className="max-w-6xl mx-auto px-6 md:px-12 py-8">
-            <h2 className="text-lg font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-lg font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
               Images
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -363,7 +370,7 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
         const remaining = books.length - shown.length;
         return (
           <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
-            <h2 className="text-lg font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="text-lg font-serif mb-4" style={{ color: 'var(--text-primary)' }}>
               Works in Collection
               {remaining > 0 && (
                 <span className="text-sm font-normal ml-2" style={{ color: 'var(--text-muted)' }}>

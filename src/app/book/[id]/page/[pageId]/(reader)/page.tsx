@@ -33,11 +33,12 @@ import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChap
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;
 
-// robots (index/noindex) is decided per-page in this route's layout.tsx
-// generateMetadata, gated on the page's `seo_indexable` flag (issue #2688).
-// Per-page URLs outnumber book URLs ~100:1, so they stay noindex by default;
-// only demand-proven pages (read >=5, or translated first-translations) open
-// to indexing. They remain crawlable + follow links regardless.
+// robots and canonical come from this route's layout.tsx generateMetadata.
+// Since #8536 every reader page is `index, follow` and names its book's front
+// page (/book/<slug>) as canonical: reader URLs outnumber book URLs ~100:1 and
+// Google crawls only ~150-250 HTML pages a day here, so the book is the URL
+// that should rank, while links and text on the leaf still count toward it.
+// `seo_indexable` no longer affects metadata (#3755, #78).
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;

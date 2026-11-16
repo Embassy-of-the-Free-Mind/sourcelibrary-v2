@@ -1,0 +1,14 @@
+{
+  "question": "route",
+  "issue": 106,
+  "stage": "translation",
+  "languages": ["la", "de", "fr"],
+  "baseline": "agy-text",
+  "arms": ["agy-text", "agy-text-again", "agy-image", "stored"],
+  "batch": { "pages_per_call": 1, "tested": null },
+  "noise_floor": { "repeat_kind": "repeat", "from": null },
+  "feeds": "route",
+  "router_evidence": ["latin-tr-image-106", "german-tr-image-106", "french-tr-image-106"],
+  "waive": {},
+  "notes": "agy-text-again is the arm noise floor (the same text call run twice); repeat rows are the judge noise floor. stored = the English the page already serves (mixed engines), judged for the step-9 write decision only."
+}

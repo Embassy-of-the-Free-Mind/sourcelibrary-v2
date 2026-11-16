@@ -32,16 +32,23 @@
  * eval-ledgers-regenerate.yml fails (four times, the last for 37 hours, #8031) every new
  * write-up is missing from the page while checks 1–4 still pass on the files.
  *
+ * A sixth (#197), with --issues: every issue on the open-work list must still be open. The
+ * list's date alone let ten of its 29 rows show finished work as "Running" for five weeks
+ * (closed issues, AS_OF 6 Oct 2026). Reads each issue's state with `gh api` (the v2 repo is
+ * public, so any token reads it); a state it cannot read is exit 2, never a pass.
+ *
  * No database, no secrets. Run weekly by .github/workflows/quality-center-watch.yml,
  * which files one issue when this fails and closes it when it passes again.
  *
- *   node scripts/audit/quality-center-freshness.mjs [--max-days 30] [--max-measured-days 7] [--max-index-lag-days 1] [--today YYYY-MM-DD]
+ *   node scripts/audit/quality-center-freshness.mjs [--issues] [--max-days 30] [--max-measured-days 7] [--max-index-lag-days 1] [--today YYYY-MM-DD]
  *
- * Exit 0: current. Exit 1: something is stale (printed). Exit 2: a date could not be read.
+ * Exit 0: current. Exit 1: something is stale (printed). Exit 2: a date (or, with --issues, an
+ * issue state) could not be read.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 import { readExperiment } from '../eval/lib/experiment-header.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -115,6 +122,26 @@ export function newestMeasured(dir, files) {
   return null;
 }
 
+/** The issue numbers on the open-work list (the `n:` of each row), in order, deduplicated. */
+export function listedIssues(text) {
+  return [...new Set([...text.matchAll(/^\s+n:\s*(\d+),/gm)].map((m) => Number(m[1])))];
+}
+
+/** Pure: given { number: 'OPEN' | 'CLOSED' }, one finding per listed issue that is closed. */
+export function closedFindings(states) {
+  return Object.entries(states)
+    .filter(([, s]) => String(s).toUpperCase() === 'CLOSED')
+    .map(([n]) => `Issue v2#${n} is closed but still listed as open work in src/app/research/quality/open/issues.ts. Drop the row, or point it at the issue that carries the work on, and move AS_OF.`);
+}
+
+function issueStates(numbers) {
+  const states = {};
+  for (const n of numbers) {
+    states[n] = execFileSync('gh', ['api', `repos/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/${n}`, '--jq', '.state'], { encoding: 'utf8' }).trim();
+  }
+  return states;
+}
+
 function readFeedbackOn(root) {
   return JSON.parse(fs.readFileSync(path.join(root, 'src/data/quality-feedback-themes.json'), 'utf8')).generated_on ?? null;
 }
@@ -141,6 +168,18 @@ if (isMain) {
   }
   console.log(`prose ${dates.proseAsOf} · open work ${dates.openWorkAsOf} · newest experiment ${dates.newestExperiment} · newest measured ${dates.newestMeasured} · newest indexed ${dates.newestIndexed} · feedback ${dates.feedbackOn} · today ${today}`);
   const findings = checkFreshness({ ...dates, today, maxDays, maxMeasuredDays, maxIndexLagDays });
+  if (args.includes('--issues')) {
+    const numbers = listedIssues(fs.readFileSync(path.join(ROOT, 'src/app/research/quality/open/issues.ts'), 'utf8'));
+    let states;
+    try {
+      states = issueStates(numbers);
+    } catch (e) {
+      console.error(`could not read an issue state: ${e.message.split('\n')[0]}`);
+      process.exit(2);
+    }
+    console.log(`open-work list: ${numbers.length} issues, ${Object.values(states).filter((s) => s === 'open').length} open`);
+    findings.push(...closedFindings(states));
+  }
   for (const f of findings) console.log(`STALE: ${f}`);
   if (!findings.length) console.log('/quality is current.');
   process.exit(findings.length ? 1 : 0);

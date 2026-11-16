@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 import { API_LIMITS } from '@/lib/api-limits';
 import toolManifest from '../../../scripts/audit/mcp-directory-contract.tools.json';
-import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { BOOK_CORPUS_STATS, IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 
 // One row per MCP tool, in the order the table shows them. The blurbs are
 // human one-liners — the agent-facing descriptions live in
@@ -44,7 +44,7 @@ const MCP_TOOLS: Array<{ name: string; blurb: string }> = [
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: `Open API over 15,000+ rare pre-modern texts translated to English: theology, philosophy, history, science, mysticism, literature. No auth required; call /api/mcp from curl, the browser, or any MCP client. ${MCP_TOOLS.length} research tools, REST endpoints, CLI.`,
+  description: `Open API over ${BOOK_CORPUS_STATS.readableInEnglish} rare pre-modern texts translated to English: theology, philosophy, history, science, mysticism, literature. No auth required; call /api/mcp from curl, the browser, or any MCP client. ${MCP_TOOLS.length} research tools, REST endpoints, CLI.`,
   alternates: {
     canonical: '/developers',
   },
@@ -56,7 +56,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Open API over 15,000+ rare pre-modern texts translated to English. No auth needed to start. Sign in for a free key to lift rate limits and help us see what you're building."
+          subtitle={`Open API over ${BOOK_CORPUS_STATS.readableInEnglish} rare pre-modern texts translated to English. No auth needed to start. Sign in for a free key to lift rate limits and help us see what you're building.`}
         />
       }
     >

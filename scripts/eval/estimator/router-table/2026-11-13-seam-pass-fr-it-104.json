@@ -1,0 +1,37 @@
+{
+ "_about": "v3#104: the built seam pass (scripts/lib/seam-pass.mjs seamStage, agy gemini-3.8-flash-low, edit-before on) over the STORED English of French and Italian 2-4 page blocks served by the agy @4 route, seed 104 (72 French blocks / 44 books, 27 Italian / 7 books). #7118 Opus seam judge, blind, both orders, every join (396 calls, all parsed); route-judge-6740 Opus page judge, image open, on every page the pass changed (60 items with controls). S = broken joins at a block start per 100, T = inside a block, lane = 0.75 T + 0.25 S. Rule pre-registered on v3#104 (the v2#8399 clauses, per language). Write-up: scripts/eval/experiments/2026-11-13-seam-pass-fr-it-104.md; verdicts: scripts/eval/results/seam-fr-it-104/report.json and scripts/eval/route-judge-6740/results/seam-fr-it-104/.",
+ "as_of": "2026-11-13",
+ "issue": 104,
+ "routes": {
+  "A": "stored English as served (agy Flash-low, 4 pages a call, previous-page English)",
+  "S": "A + the built seam pass, edits to the page before the block allowed (seam_pass 'edit-before')",
+  "L": "A + the built seam pass, page before the block locked (seam_pass true); reported, not in the rule"
+ },
+ "noise_floor": "v2#8399 A vs A2 swing on Latin/German: S 1.7, T 6.0, lane 4.9 per 100; no second production read here",
+ "cells": {
+  "french-cli-agy4": {
+   "blocks": 72, "books": 44,
+   "S_k_n": { "A": "15/72", "S": "6/72", "L": "14/72" },
+   "T_k_n": { "A": "6/72", "S": "6/72", "L": "6/72" },
+   "lane_per_100": { "A": 11.5, "S": 8.3, "L": 11.1 },
+   "S_paired_vs_A": { "better": 9, "worse": 0, "sign_p": 0.002, "books_better": 8, "delta_per_100": -12.5, "ci95": [-20.8, -5.6] },
+   "leaks_new_in_S": 0,
+   "pages_changed": { "pages": 18, "books": 11, "accept": { "A": "14/18", "S": "15/18" }, "gained": 2, "lost": 1, "wrong_text": { "A": 1, "S": 1, "new_in_S": 0 } },
+   "controls": { "same_text_twice_agree": "144/144", "plants_caught": "143/144", "wrong_page_accepted": "0/6", "repeat_flips": "0/3" },
+   "verdict": "pass",
+   "decision": "seam_pass 'edit-before' on french-cli-agy4"
+  },
+  "italian-cli-agy4": {
+   "blocks": 27, "books": 7, "primary_blocks": 14,
+   "S_k_n": { "A": "0/27", "S": "0/27", "L": "0/27" },
+   "T_k_n": { "A": "2/27", "S": "2/27", "L": "2/27" },
+   "lane_per_100": { "A": 5.6, "S": 5.6, "L": 5.6 },
+   "S_paired_vs_A": { "better": 0, "worse": 0, "sign_p": 1, "books_better": 0, "delta_per_100": 0 },
+   "leaks_new_in_S": 0,
+   "pages_changed": { "pages": 3, "books": 2, "accept": { "A": "2/3", "S": "1/3" }, "gained": 0, "lost": 1, "wrong_text": { "A": 0, "S": 1, "new_in_S": 1 } },
+   "controls": { "same_text_twice_agree": "54/54", "plants_caught": "52/52", "wrong_page_accepted": "0/6", "repeat_flips": "1/3" },
+   "verdict": "fail",
+   "decision": "no seam pass on italian-cli-agy4: the judge found no broken block start to repair in 27, and the pass broke one sound join (a word hyphenated across the page break read as a doubled catchword; confirmed by eye)"
+  }
+ }
+}

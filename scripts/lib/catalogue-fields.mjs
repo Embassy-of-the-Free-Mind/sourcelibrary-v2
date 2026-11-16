@@ -132,6 +132,38 @@ export async function setCatalogueFields(db, bookId, fields, stamp) {
 }
 
 /**
+ * The stamps for a NEW book's catalogue fields, to put in the insert document itself (#8024). setCatalogueFields()
+ * is an update: it reads the stored value and compares-and-sets on it, and an importer cannot insert first and
+ * title later, because the acquisition gate (insertBookIfNew) dedupes on the title it is given. So an importer
+ * stamps at birth with this instead. It has the same stamp rules (source and script required, no caller-supplied
+ * previous_value), and each entry is the one provenanceUpdate() would write, with `previous_value: null`.
+ *
+ * Pass only the fields whose value the source record gave. A placeholder the importer filled in ("Unknown",
+ * "<source> item") is not a catalogue claim, so leave it out; an empty value is refused.
+ *
+ *   const prov = catalogueStampsForInsert({ title, author }, { source: 'source_catalogue', script, record_url });
+ *   await insertBookIfNew(db, { ...fields, ...prov }, ctx);
+ *
+ * @returns {{field_provenance: object, field_provenance_history: object}}
+ */
+export function catalogueStampsForInsert(fields, stamp, now = new Date()) {
+  assertCatalogueStamp(stamp);
+  assertFields(fields);
+  const field_provenance = {};
+  const field_provenance_history = {};
+  for (const [f, v] of Object.entries(fields)) {
+    if (COMPANIONS.has(f)) continue;
+    if (v == null || (typeof v === 'string' && v.trim() === '')) {
+      throw new ProvenanceError(`catalogueStampsForInsert: '${f}' is empty; stamp only a value the record gave`);
+    }
+    const prov = provenanceUpdate(f, { ...stamp, date: stamp.date ?? now, previous_value: null });
+    field_provenance[f] = prov.$set[`field_provenance.${f}`];
+    field_provenance_history[f] = [prov.$push[`field_provenance_history.${f}`]];
+  }
+  return { field_provenance, field_provenance_history };
+}
+
+/**
  * Stamp a value that is ALREADY stored, after the fact, without changing it (#7673). For a field written before
  * stamping existed, where an independent record now shows where the value came from: the source catalogue's record
  * matches it. Refuses a stamp that does not say it was reconstructed and how, so an after-the-fact stamp can never

@@ -1,0 +1,11 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: tem</meta>
+
+quae habet *Augustinus* super *Psalmum CVIII*. *Poenitentia Judae pejus peccatum factum est. Quomodo pejus peccatum est poenitentia Judae? ivit et suspendio periit. Et qui proditor Domini factus, hic et interemptor sui exstitit.* Consentit qui vixit eodem Seculo *Synesius*, Episcopus *Ptolemaidis*, Vir admirandae sanctitatis, ut scribit *Bellarminus* et doctrinae *Epist. LVIII*. *Sceleratior omnibus Juda, quem non poenitentia revocavit ad Dominum, sed desperatio, traxit ad laqueum.* Ita antiquitas vocem hanc *ἀγχόνη* semper exposuit, de suffocatione quae fit laqueo. Quae *Oecumenius* ex *Papia Johannis Apostoli* discipulo refert, exiguam merentur fidem, nec satis sibi constant, modo suspendio, periisse negat, modo affirmat, per omnia loquitur dubitanter, et ambigue. *Eusebius*, hominem dicit fuisse vanissimum, qui omnium Traditionum fabulas, mirificè amplexus, scriptisque commiserit. *Judas* è suspendio non discessit; sed supervixit, ad magnum impietatis Exemplum, in hoc mundo permansit, in tantum corpore inflatus, ut progredi non posset, quum currus levi cursu pertransiret, curru compressus est, ita ut funderentur ejus intestina, imò non solum capitis tumor, sed et palpebras oculorum adeo intumuisse, ut lumen omnino videre non posset. Porro sanies et vermes, contumeliose confluentes, ex toto ipsius corpore ferebantur, egredientes per sola loca secretiora. Post multa verò tormenta et ultiones, cum in suo praedio mortuus esset, adeo tetrum foetorem, ex corpore ejus exhalasse, ut praedium, in quo infelicem spiritum emisit, nec habitari, nec coli, nec praeteriri, sine nausea et obturatis manu naribus, potuerit.
+
+§. IV. Ex quibus colligimus *Judam* primum quidem se ex loco edito, laqueo suspendisse, seque inde praecipi-
+
+<vocab>Augustinus, Judas Iscariot, Synesius, Bellarminus, Oecumenius, Papias, Eusebius, ἀγχόνη, poenitentia, suspendium</vocab>

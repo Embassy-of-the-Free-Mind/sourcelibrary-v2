@@ -211,7 +211,7 @@ export default async function GenericCatalogEntry({
   return (
     <div className="bg-cream">
       <div className="max-w-2xl mx-auto px-6 py-8">
-        <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
+        <h1 className="text-3xl sm:text-4xl text-primary font-serif leading-tight mb-2">
           {displayTitle}
         </h1>
         {row.parallel_title && row.parallel_title !== displayTitle && (
@@ -256,7 +256,7 @@ export default async function GenericCatalogEntry({
               )}
               <div className="flex-1 min-w-0">
                 {slBook.display_title && slBook.display_title !== row.title && (
-                  <p className="text-lg text-primary font-display leading-snug mb-1">
+                  <p className="text-lg text-primary font-serif leading-snug mb-1">
                     {slBook.display_title}
                   </p>
                 )}
@@ -351,7 +351,7 @@ export default async function GenericCatalogEntry({
               )}
               <div className="flex-1 min-w-0">
                 {externalBook.display_title && externalBook.display_title !== row.title && (
-                  <p className="text-lg text-primary font-display leading-snug mb-1">
+                  <p className="text-lg text-primary font-serif leading-snug mb-1">
                     {externalBook.display_title}
                   </p>
                 )}

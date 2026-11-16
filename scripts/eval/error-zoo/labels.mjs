@@ -11,7 +11,8 @@
  *   book_checks      page_findings per pages_read (image-opened model readers, 19 methods). serious = the page has
  *                    an entry in page_findings. text_provenance gives page_id and the text's updated_at at check time;
  *                    `stale` is set when the live page's ocr/translation updated_at is later (the label is of text
- *                    nobody serves any more).
+ *                    nobody serves any more). `notes` carries every defect from page_notes at the reader's own severity
+ *                    (cosmetic | misleads | wrong_text), null for methods that write no page_notes (#244).
  *   spare_audit      /root/jobs/spare-audit/<run>/ on gex45-1: the #6420 lane-D convergent audit, Opus reader. serious =
  *                    any finding with severity 'serious' or right_page = 'no' (convergent-audit-lib isSeriousPage).
  *                    Every finding is kept with its severity so the zoo can count the minor tail. The text judged is in
@@ -52,7 +53,7 @@ const iso = (d) => (d instanceof Date ? d.toISOString() : d ? String(d) : null);
 // ---- 1. book_checks -------------------------------------------------------------------------------------------
 {
   const cur = db.collection('book_checks').find({ page_findings: { $type: 'array' } }, {
-    projection: { book_id: 1, method_id: 1, run_id: 1, reader: 1, pages_read: 1, exposure: 1, frame: 1, checked_at: 1, page_findings: 1, text_provenance: 1, verdict: 1, reader_warning: 1 },
+    projection: { book_id: 1, method_id: 1, run_id: 1, reader: 1, pages_read: 1, exposure: 1, frame: 1, checked_at: 1, page_findings: 1, page_notes: 1, text_provenance: 1, verdict: 1, reader_warning: 1 },
   }).batchSize(1000);
   const pageIds = new Set();
   const rows = [];
@@ -60,6 +61,7 @@ const iso = (d) => (d instanceof Date ? d.toISOString() : d ? String(d) : null);
     const prov = new Map((c.text_provenance || []).map((t) => [t.page_number, t]));
     const expo = new Map((c.exposure || []).map((e) => [e.page_number, e.exposure]));
     const pf = new Map((c.page_findings || []).map((f) => [f.page_number, f]));
+    const noteOf = new Map((c.page_notes || []).map((n) => [n.page_number, n]));
     for (const pn of c.pages_read || []) {
       const t = prov.get(pn) || {};
       const f = pf.get(pn);
@@ -68,9 +70,16 @@ const iso = (d) => (d instanceof Date ? d.toISOString() : d ? String(d) : null);
       const row = {
         source: 'book_checks', method: c.method_id, run_id: c.run_id, reader: `${c.reader?.kind}:${c.reader?.model ?? c.reader?.role ?? '?'}`,
         book_id: c.book_id, page_id: t.page_id ?? null, page_number: pn, exposure: expo.get(pn) ?? 'unrecorded', selection: c.frame?.selection ?? null,
+        // How the BOOK was chosen, where the check says (spare-lane paired-fifths rounds, v3#197: uniform | risk);
+        // `selection` above is how the pages were chosen inside the book.
+        book_stratum: c.frame?.stratum ?? null, book_cell: c.frame?.cell ?? null,
         judged_at: iso(c.checked_at), serious: !!f, errors, scores: null, ocr_model_at_check: t.ocr_model ?? null, tr_model_at_check: t.translation_model ?? null,
         ocr_updated_at_check: iso(t.ocr_updated_at), tr_updated_at_check: iso(t.translation_updated_at), tr_hash_at_check: t.translation_content_hash ?? null,
         reader_warning: c.reader_warning ?? null, stale: null,
+        // Every defect the reader recorded, at its own severity (cosmetic | misleads | wrong_text), minor ones included;
+        // null when the method writes no page_notes. page_findings above keeps only what the method counted serious.
+        notes: noteOf.has(pn) ? (noteOf.get(pn).defects || []).map((d) => ({ severity: d.severity ?? null, class: d.class ?? null, what: d.what ?? null })) : null,
+        ocr_source_at_check: t.ocr_source ?? null, ocr_prompt_at_check: t.ocr_prompt_version ?? null,
       };
       rows.push(row);
       if (row.page_id) pageIds.add(row.page_id);

@@ -171,7 +171,7 @@ function Card({ icon, label, value, tone }: { icon: React.ReactNode; label: stri
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#8b949e', fontSize: 12, marginBottom: 6 }}>
         {icon}{label}
       </div>
-      <div style={{ fontSize: 22, fontWeight: 700, color: tone || '#f0f6fc' }}>{value}</div>
+      <div style={{ fontSize: 22, fontWeight: 600, color: tone || '#f0f6fc' }}>{value}</div>
     </div>
   );
 }

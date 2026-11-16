@@ -1,0 +1,48 @@
+[
+  {
+    "book_id": "6a4a8968393655740c43b2df",
+    "slot": 1,
+    "title": "Pappus, Johann: De Scriptura sacra",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A printed Strasbourg academic disputation (theses under Johann Pappus, respondent Nicolaus Herrenberger) on Scripture against the Schwenckfeldians, Papists and 'fanatici': a genuine early modern Lutheran primary source. No tradition or collection is set, so nothing contradicts it.",
+    "rights_flag": null,
+    "structure_note": "The pages_translated count (0) disagrees with the pages_translated field (19), yet this page carries a translation, so a count is wrong (E2). On this leaf the only number is a handwritten '59' in the top right corner, likely a later foliation of a bound volume of tracts, and the OCR took it as <page-num>. Mixing hand-written foliation with printed numbers (only 11 of 21 pages have one) probably explains the 2 backsteps and 1 repeat. They do not look like a scan splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "printed_marker": "signature \"C\" at the foot; handwritten folio \"59\" top right",
+        "layout": "one column of italic type, theses headed by centred numerals C–CVII, a handwritten marginal note in the right margin beside CIII, pen marks beside CI",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<script>handwritten</script>", "image": "printed italic type; only the marginal note and the folio number are handwritten", "problem": "self-reported script tag wrong, with an invented warning 'Handwritten [Humanist italic hand]'", "severity": "minor", "class": "O16" },
+          { "ocr": "secundum Diuinitatis personam", "image": "secundam Diuinitatis personam", "problem": "printer's misprint silently corrected", "severity": "minor", "class": "O8" },
+          { "ocr": "is sit error Schwenc-", "image": "a handwritten note whose first word looks like 'Quis' or 'Q[ui]s'; the first letter is dropped", "problem": "first word of the later-hand margin note truncated", "severity": "minor" },
+          { "ocr": "predicatum verò", "image": "prædicatum verò", "problem": "ligature æ normalised", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Hanc nos scrutari, eiusque solius sententia stare", "english": "It is fitting for us to search this out, to stand by His judgment alone", "problem": "'eius' refers back to 'Hanc' (Scripture), so it means 'its sense alone'. The capitalised 'His' moves the referent to God and blurs the sola-Scriptura point.", "severity": "moderate" },
+          { "source": "<unclear>Hst.</unclear>", "english": "<unclear>History</unclear>", "problem": "the translation expands an illegible abbreviation in the later-hand marginal note into a confident word", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "the signature 'C' loses its <sig> tag in the translation and stands as a bare 'C' line in the reading text", "severity": "minor" },
+          { "note": "the later reader's handwritten marginal note is transcribed and translated as if it were the page's own marginalia, with nothing to mark it as a later hand", "severity": "minor" }
+        ],
+        "notes_audit": {
+          "items": [
+            { "quote": "followers of Caspar Schwenckfeld, a Silesian reformer", "verdict": "unsupported", "helpful": true },
+            { "quote": "Word", "verdict": "ok", "helpful": true }
+          ],
+          "missing": [
+            { "english": "this is the Essential Word", "why": "'Essential Word' (Verbum essentiale, the eternal Word, Christ, as against the preached and written Word) is a technical theological term the argument turns on" }
+          ]
+        },
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR is good and the translation faithful. The defects are small: the script tag says handwritten on a printed page, 'its judgment' is rendered 'His judgment', and the later-hand margin note is treated as part of the text. The one note is true but brings in facts from outside the page."
+  }
+]

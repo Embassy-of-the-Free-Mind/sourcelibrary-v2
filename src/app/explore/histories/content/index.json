@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-04",
+ "generated": "2026-11-14",
  "audit": {
   "all": {
    "n": 175,
@@ -517,6 +517,874 @@
     "date": "2026-10-28",
     "corrected": true
    }
+  },
+  {
+   "slug": "bath",
+   "title": "The bath",
+   "question": "What did people seek in the bath, and what did they fear in it? The sweat house as a person, the spring with an owner, the physicians’ waters, purity measured by law, the city bath and its moralists, the inner bath, and the bath of rebirth, from the temazcalli and the mikveh to the hammam, the tirtha, the hot springs of China and Japan, and the alchemists’ balneum.",
+   "map": null,
+   "essays": [
+    {
+     "slug": "01-the-arc",
+     "title": "The arc: seven things sought in the bath, and whether they are stages"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "temazcalli",
+     "translit": "temazcalli",
+     "lang": "nah",
+     "gloss": "the Nahua sweat house; the word also means an oven",
+     "avoid": [
+      "sauna",
+      "steam bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#am-sahagun-temazcalli-also-an-oven"
+    },
+    {
+     "term": "temazcaltecitzin",
+     "translit": "temazcaltecitzin",
+     "lang": "nah",
+     "gloss": "'grandmother of the temazcal', Yoalticitl, who lies and keeps watch in it",
+     "avoid": [
+      "goddess of the baths"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#am-sahagun-nahuatl-grandmother-of-the-temazcal"
+    },
+    {
+     "term": "πυρία",
+     "translit": "pyria",
+     "lang": "grc",
+     "gloss": "a Greek vapour bath; Herodotus' measure for the Scythian tent",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#nor-herodotus-no-greek-pyria-could-beat-it"
+    },
+    {
+     "term": "λουτρόν",
+     "translit": "loutron",
+     "lang": "grc",
+     "gloss": "a wash or bath, and the water for it; also what a spring pours for the nymphs",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#nor-herodotus-instead-of-a-bath"
+    },
+    {
+     "term": "βαλανεῖον",
+     "translit": "balaneion",
+     "lang": "grc",
+     "gloss": "a bath-house, a building one pays to enter",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#gr-lucian-hippias-virtues-of-a-bath"
+    },
+    {
+     "term": "balneum",
+     "translit": "balneum",
+     "lang": "la",
+     "gloss": "a bath or bath-house, private or small public",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#rom-seneca-ep56-lodges-above-bath"
+    },
+    {
+     "term": "thermae",
+     "translit": "thermae",
+     "lang": "la",
+     "gloss": "the large public bathing complexes; also hot springs",
+     "avoid": [
+      "spa",
+      "thermal baths"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#rom-martial-nero-and-his-thermae"
+    },
+    {
+     "term": "caldarium",
+     "translit": "caldarium",
+     "lang": "la",
+     "gloss": "the hot room of a Roman bath",
+     "avoid": [
+      "hot bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#rom-vitruvius-mens-womens-caldaria-one-furnace"
+    },
+    {
+     "term": "טבילה",
+     "translit": "tevilah",
+     "lang": "he",
+     "gloss": "immersion of the whole body that removes a state of impurity",
+     "avoid": [
+      "baptism",
+      "washing"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#jew-womens-sermon-nothing-between-flesh-and-water"
+    },
+    {
+     "term": "מקוה",
+     "translit": "mikveh",
+     "lang": "he",
+     "gloss": "a 'gathering' of at least forty seah of water not drawn by hand",
+     "avoid": [
+      "ritual bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#jew-aboab-woman-immerses-forty-seah"
+    },
+    {
+     "term": "מים חיים",
+     "translit": "mayim hayyim",
+     "lang": "he",
+     "gloss": "'living water', flowing spring water",
+     "avoid": [
+      "fresh water"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#scr-leviticus-living-water"
+    },
+    {
+     "term": "حمام",
+     "translit": "hammam",
+     "lang": "ar",
+     "gloss": "the heated public bath-house",
+     "avoid": [
+      "Turkish bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/morals#isl-ghazali-good-house-evil-house"
+    },
+    {
+     "term": "عورة",
+     "translit": "'awra",
+     "lang": "ar",
+     "gloss": "the parts of the body that must be covered from others' sight",
+     "avoid": [
+      "nakedness",
+      "private parts"
+     ],
+     "evidence": "/explore/histories/bath/claims/morals#isl-ghazali-bath-duties-of-the-eyes"
+    },
+    {
+     "term": "حمة",
+     "translit": "hamma",
+     "lang": "ar",
+     "gloss": "a natural hot spring",
+     "avoid": [
+      "bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#isl-muqaddasi-hamma-three-days-cure"
+    },
+    {
+     "term": "स्नान",
+     "translit": "snana",
+     "lang": "sa",
+     "gloss": "bathing, daily or ritual",
+     "avoid": [
+      "ablution"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#ind-charaka-snana-benefits"
+    },
+    {
+     "term": "तीर्थ",
+     "translit": "tirtha",
+     "lang": "sa",
+     "gloss": "a ford; a holy bathing place where a bath bears 'fruit'",
+     "avoid": [
+      "shrine",
+      "pilgrimage site"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#ind-garuda-water-cleans-body-tirtha-gives-fruit"
+    },
+    {
+     "term": "स्वेद",
+     "translit": "sveda",
+     "lang": "sa",
+     "gloss": "induced sweating as a treatment; thirteen kinds in Charaka",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#ind-charaka-thirteen-sveda"
+    },
+    {
+     "term": "पाप",
+     "translit": "papa",
+     "lang": "sa",
+     "gloss": "wrongdoing and its residue",
+     "avoid": [
+      "sin"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#ind-garuda-ranking-of-waters"
+    },
+    {
+     "term": "溫泉",
+     "translit": "wenquan",
+     "lang": "zh",
+     "gloss": "a warm or hot spring",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#chn-shuijingzhu-hot-as-broth-cures-hundred-ills"
+    },
+    {
+     "term": "湯",
+     "translit": "tang",
+     "lang": "zh",
+     "gloss": "heated water; a hot spring or its pool (Japanese yu)",
+     "avoid": [
+      "soup",
+      "broth"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#chn-shuijingzhu-hot-as-broth-cures-hundred-ills"
+    },
+    {
+     "term": "沐浴",
+     "translit": "muyu",
+     "lang": "zh",
+     "gloss": "washing the hair (mu) and the body (yu)",
+     "avoid": [
+      "ablution"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#chn-yunji-inner-and-outer-clean"
+    },
+    {
+     "term": "禊",
+     "translit": "misogi",
+     "lang": "ja",
+     "gloss": "washing in water to remove kegare, defilement",
+     "avoid": [
+      "baptism",
+      "purification ritual"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#jpn-kojiki-izanagi-resolves-on-misogi"
+    },
+    {
+     "term": "神湯",
+     "translit": "kami no yu",
+     "lang": "ja",
+     "gloss": "'the gods' hot water', the people's name for the Izumo spring",
+     "avoid": [
+      "sacred spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#jpn-izumo-fudoki-gods-hot-water"
+    },
+    {
+     "term": "balneum Mariae",
+     "translit": "balneum Mariae",
+     "lang": "la",
+     "gloss": "the alchemists' water bath: vessels heated in a tub of hot water",
+     "avoid": [
+      "bain-marie"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#alch-brunschwig-balneum-mariae-in-a-bath-tub"
+    },
+    {
+     "term": "Numen",
+     "translit": "numen",
+     "lang": "la",
+     "gloss": "the divine power present in a place, here a spring",
+     "avoid": [
+      "divine presence",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#spa-fautsch-numen-in-the-spring"
+    },
+    {
+     "term": "湯治",
+     "translit": "tōji",
+     "lang": "ja",
+     "gloss": "the hot-spring cure: a stay of set rounds of days at a spring",
+     "avoid": [
+      "spa treatment",
+      "wellness"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#jpn-sb-atami-three-rounds-is-the-rule"
+    },
+    {
+     "term": "廻り",
+     "translit": "meguri",
+     "lang": "ja",
+     "gloss": "a 'round' of a cure, a set number of days; cures are counted in rounds",
+     "avoid": [
+      "cycle",
+      "session"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#jpn-sb-atami-three-rounds-is-the-rule"
+    },
+    {
+     "term": "産湯",
+     "translit": "ubuyu",
+     "lang": "ja",
+     "gloss": "the newborn's first bath",
+     "avoid": [
+      "baptism"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#jpn-sb-sodategusa-birth-bath-room-closed-to-wind"
+    },
+    {
+     "term": "菖蒲湯",
+     "translit": "shōbu-yu",
+     "lang": "ja",
+     "gloss": "the iris-leaf bath of the fifth day of the fifth month",
+     "avoid": [
+      "herbal spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#jpn-sb-saijiki-iris-bath-fifth-of-fifth"
+    },
+    {
+     "term": "湯屋",
+     "translit": "yuya",
+     "lang": "ja",
+     "gloss": "a bath-house, public or in a temple",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#jpn-sb-konjaku-temple-bath-heated-every-day"
+    },
+    {
+     "term": "風呂",
+     "translit": "furo",
+     "lang": "ja",
+     "gloss": "a bath, originally a steam room",
+     "avoid": [
+      "tub"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#jpn-sb-chomei-furo-is-not-poison"
+    },
+    {
+     "term": "混堂",
+     "translit": "hundang",
+     "lang": "zh",
+     "gloss": "a Ming-Qing city bathhouse, one shared hot pool",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#chn-sb-wu-hundang-bathhouse-build"
+    },
+    {
+     "term": "浴佛",
+     "translit": "yufo",
+     "lang": "zh",
+     "gloss": "bathing the image of the infant Buddha on his birthday",
+     "avoid": [
+      "baptism of Buddha"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#chn-sb-chan-buddha-birthday-bath"
+    },
+    {
+     "term": "溫井",
+     "translit": "onjŏng",
+     "lang": "ko",
+     "gloss": "'warm well', the Korean court's word for a hot spring",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#kor-sb-kumgang-onjong-two-roofed-baths-stone-benches"
+    },
+    {
+     "term": "chu tshan",
+     "translit": "chu tshan",
+     "lang": "bo",
+     "gloss": "a hot spring",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#tib-sb-hot-spring-defined-by-touch"
+    },
+    {
+     "term": "lums",
+     "translit": "lums",
+     "lang": "bo",
+     "gloss": "a medicinal bath (water or vapour) in Tibetan medicine",
+     "avoid": [
+      "sauna",
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#tib-sb-rgyud-bzhi-water-bath-and-steam-bath"
+    },
+    {
+     "term": "khrus khang",
+     "translit": "khrus khang",
+     "lang": "bo",
+     "gloss": "a bath-house",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#tib-sb-vinaya-bathhouse-brick-floor-drain"
+    },
+    {
+     "term": "sman chu",
+     "translit": "sman chu",
+     "lang": "bo",
+     "gloss": "'medicine water', a healing spring or decoction bath",
+     "avoid": [
+      "holy water"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#tib-sb-healer-labels-the-springs"
+    },
+    {
+     "term": "jantāghara",
+     "translit": "jantāghara",
+     "lang": "pi",
+     "gloss": "the monks' fire-room for sweating, in the Vinaya",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#ind-sb-vinaya-jantaghara-fireplace-clay-face"
+    },
+    {
+     "term": "dhārāgṛha",
+     "translit": "dhārāgṛha",
+     "lang": "sa",
+     "gloss": "a 'shower-house' where water falls from pipes, in palace architecture",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#ind-sb-charaka-fever-cold-shower-house-and-lotus-ponds"
+    },
+    {
+     "term": "puṣyasnāna",
+     "translit": "puṣyasnāna",
+     "lang": "sa",
+     "gloss": "the royal bath under the Puṣya asterism, an averting rite",
+     "avoid": [
+      "coronation"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#ind-sb-pushyasnana-bath-altar-four-pots-herbs"
+    },
+    {
+     "term": "avagāha",
+     "translit": "avagāha",
+     "lang": "sa",
+     "gloss": "immersion bath in a medicated liquid (Ayurveda)",
+     "avoid": [
+      "soak",
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#ind-sb-charaka-avagaha-sveda-tub"
+    },
+    {
+     "term": "tīrthayātrā",
+     "translit": "tīrthayātrā",
+     "lang": "sa",
+     "gloss": "a journey to bathing places (tīrthas)",
+     "avoid": [],
+     "evidence": "/explore/histories/bath/claims/cult#ind-sb-mbh-naimisha-month-stay-one-immersion"
+    },
+    {
+     "term": "دلاك",
+     "translit": "dallāk",
+     "lang": "ar",
+     "gloss": "the bath attendant who scrubs and kneads; Ottoman tellak; Lane calls the scrubber mukeyyisātee",
+     "avoid": [
+      "masseur"
+     ]
+    },
+    {
+     "term": "نورة",
+     "translit": "nūra",
+     "lang": "ar",
+     "gloss": "lime-and-arsenic depilatory paste used in the bath",
+     "avoid": [
+      "lime"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#isl-sb-maqrizi-solomon-first-bath-and-nura"
+    },
+    {
+     "term": "رسمه",
+     "translit": "rusma",
+     "lang": "ota",
+     "gloss": "the Ottoman name for the bath depilatory (Jost's 'Rosma')",
+     "avoid": [
+      "ointment"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#isl-sb-jost-turkish-bath-sole-stone-and-rusma"
+    },
+    {
+     "term": "مسلخ",
+     "translit": "maslakh",
+     "lang": "ar",
+     "gloss": "the undressing hall of the hammam (Lane's meslakh)",
+     "avoid": [
+      "changing room"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#isl-sb-lane-meslakh-beyt-owwal-hararah"
+    },
+    {
+     "term": "بيت اول",
+     "translit": "bayt awwal",
+     "lang": "ar",
+     "gloss": "'first chamber', the less warm room between the maslakh and the hot room",
+     "avoid": [
+      "tepidarium"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#isl-sb-lane-meslakh-beyt-owwal-hararah"
+    },
+    {
+     "term": "حرارة",
+     "translit": "ḥarāra",
+     "lang": "ar",
+     "gloss": "the principal hot room of the hammam",
+     "avoid": [
+      "sauna",
+      "caldarium"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#isl-sb-lane-meslakh-beyt-owwal-hararah"
+    },
+    {
+     "term": "خلوة",
+     "translit": "khilwa",
+     "lang": "ar",
+     "gloss": "a private side room of the hot room, hired by parties (Lane's khilweh; Ottoman halvet)",
+     "avoid": [
+      "private bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#isl-sb-lane-women-bath-mothers-choose-brides"
+    },
+    {
+     "term": "کیسه",
+     "translit": "kīsa",
+     "lang": "fa",
+     "gloss": "the coarse scrubbing mitt or bag (Ottoman kese)",
+     "avoid": [
+      "loofah",
+      "glove"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#isl-sb-qanun-nisa-women-kisa-soap-thrice"
+    },
+    {
+     "term": "ليف",
+     "translit": "līf",
+     "lang": "ar",
+     "gloss": "palm fibre used to lather with soap",
+     "avoid": [
+      "loofah",
+      "sponge"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#isl-sb-lane-woollen-bag-leef-soap-coffee"
+    },
+    {
+     "term": "گرمابه",
+     "translit": "garmāba",
+     "lang": "fa",
+     "gloss": "'warm water', the Persian word for the bath-house",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#isl-sb-nasir-khusraw-basra-bath-refused"
+    },
+    {
+     "term": "قار",
+     "translit": "qār",
+     "lang": "ar",
+     "gloss": "bitumen, used to coat bath floors and walls in Iraq",
+     "avoid": [
+      "tar",
+      "pitch"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#isl-sb-ibn-jubayr-baghdad-baths-coated-with-bitumen"
+    },
+    {
+     "term": "غطاس",
+     "translit": "ghiṭās",
+     "lang": "ar",
+     "gloss": "'immersion', the Coptic name of Epiphany (Lane's Gheetās)",
+     "avoid": [
+      "baptism"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#afr-sb-lane-copts-gheetas-plunge"
+    },
+    {
+     "term": "ጥምቀት",
+     "translit": "timqat",
+     "lang": "gez",
+     "gloss": "'immersion': baptism, and the Epiphany feast of immersion",
+     "avoid": [
+      "bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#afr-sb-oertel-baptism-called-timqat"
+    },
+    {
+     "term": "ἁγίασμα",
+     "translit": "hagiasma",
+     "lang": "grc",
+     "gloss": "holy water, and the holy spring or fountain that gives it",
+     "avoid": [
+      "spa",
+      "well"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#byz-sb-lectionary-theophany-sanctify-this-water"
+    },
+    {
+     "term": "λοῦσμα",
+     "translit": "lousma",
+     "lang": "grc",
+     "gloss": "the holy bath at Blachernai (De ceremoniis)",
+     "avoid": [
+      "swimming pool"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#byz-sb-de-cer-blachernai-emperors-holy-bath"
+    },
+    {
+     "term": "κολυμβός",
+     "translit": "kolymbos",
+     "lang": "grc",
+     "gloss": "the pool of the Blachernai lousma",
+     "avoid": [
+      "swimming pool"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#byz-sb-de-cer-blachernai-emperors-holy-bath"
+    },
+    {
+     "term": "λουσαί",
+     "translit": "lousai",
+     "lang": "grc",
+     "gloss": "bath attendants in De ceremoniis",
+     "avoid": [
+      "masseurs"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#byz-sb-de-cer-bath-attendants-paid"
+    },
+    {
+     "term": "λουτρὸν παλιγγενεσίας",
+     "translit": "loutron palingenesias",
+     "lang": "grc",
+     "gloss": "'bath of rebirth', a name of baptism (Titus 3:5; Gregory)",
+     "avoid": [
+      "spa"
+     ],
+     "evidence": "/explore/histories/bath/claims/transformation#byz-sb-gregory-baptism-bath-of-rebirth"
+    },
+    {
+     "term": "טבילת כלים",
+     "translit": "tevilat kelim",
+     "lang": "he",
+     "gloss": "immersion of vessels acquired from a gentile",
+     "avoid": [
+      "washing dishes"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#jew-sb-shaarei-dura-gentile-metal-vessel-purge-then-immerse"
+    },
+    {
+     "term": "מים שאובים",
+     "translit": "mayim she'uvim",
+     "lang": "he",
+     "gloss": "'drawn water', water that has passed through a vessel and cannot make a mikveh",
+     "avoid": [
+      "tap water"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#jew-sb-mishnah-vessels-under-conduit-invalidate"
+    },
+    {
+     "term": "pib",
+     "translit": "pib",
+     "lang": "yua",
+     "gloss": "the hot bath of a woman just delivered (Motul dictionary)",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#am-sb-motul-pib-hot-bath-after-childbirth"
+    },
+    {
+     "term": "temazcalixtli",
+     "translit": "temazcalixtli",
+     "lang": "nah",
+     "gloss": "the vent of the temazcalli (Molina)",
+     "avoid": [
+      "chimney"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#am-sb-molina-temazcalixtli-the-vent"
+    },
+    {
+     "term": "tetenqui",
+     "translit": "tetenqui",
+     "lang": "nah",
+     "gloss": "one who bathes another in the temazcalli, the bath attendant (Molina)",
+     "avoid": [
+      "masseur"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#am-sb-molina-tetenqui-one-who-bathes-another"
+    },
+    {
+     "term": "chigoh pibal",
+     "translit": "chigoh pibal",
+     "lang": "cak",
+     "gloss": "the sweating place in the bath (Solano, Kaqchikel)",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/building#am-sb-solano-chigoh-pibal-sweating-place"
+    },
+    {
+     "term": "Citua",
+     "translit": "Citua",
+     "lang": "qu",
+     "gloss": "Inca feast of expulsion of illness, with pre-dawn washing (Garcilaso)",
+     "avoid": [
+      "festival bath"
+     ],
+     "evidence": "/explore/histories/bath/claims/purity#am-sb-garcilaso-citua-washed-bodies-before-dawn"
+    },
+    {
+     "term": "sauna",
+     "translit": "sauna",
+     "lang": "fi",
+     "gloss": "the Finnish smoke- or steam-bath house",
+     "avoid": [
+      "spa",
+      "steam room"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#no-sb-kalevala-marjatta-asks-for-a-sauna"
+    },
+    {
+     "term": "löyly",
+     "translit": "löyly",
+     "lang": "fi",
+     "gloss": "the steam thrown off the stove stones, and its heat; löylyn lyöjä 'thrower of steam'",
+     "avoid": [
+      "steam (as vapour only)"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#no-sb-kalevala-loylyn-lyoja-thrower-of-steam"
+    },
+    {
+     "term": "wasta",
+     "translit": "wasta (vasta, vihta)",
+     "lang": "fi",
+     "gloss": "the bath whisk of leafy branches",
+     "avoid": [
+      "broom",
+      "brush"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#no-sb-kalevala-loylyn-lyoja-thrower-of-steam"
+    },
+    {
+     "term": "wiht",
+     "translit": "wiht (viht)",
+     "lang": "et",
+     "gloss": "the Estonian bath whisk",
+     "avoid": [
+      "broom"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#no-sb-wiedemann-no-sauna-without-a-whisk"
+    },
+    {
+     "term": "lawa",
+     "translit": "lawa (lava)",
+     "lang": "et",
+     "gloss": "the raised bench of the sauna, its hotter upper seat",
+     "avoid": [
+      "shelf"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#no-sb-wiedemann-beggar-in-sauna-wants-bench"
+    },
+    {
+     "term": "Badstube",
+     "translit": "Badstube",
+     "lang": "de",
+     "gloss": "bath-house (in the Baltic sources: the peasant steam bath-house)",
+     "avoid": [
+      "bathroom"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#no-sb-kreutzwald-birth-in-the-badstube"
+    },
+    {
+     "term": "Badordnung",
+     "translit": "Badordnung",
+     "lang": "de",
+     "gloss": "a bath-house's written rules for guests and staff",
+     "avoid": [
+      "spa policy"
+     ],
+     "evidence": "/explore/histories/bath/claims/company#eu-sb-grubenmann-badordnung-no-disputes-own-tub"
+    },
+    {
+     "term": "laconicum",
+     "translit": "laconicum",
+     "lang": "la",
+     "gloss": "the Roman dry sweating room",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#gr-sb-celsus-dry-heat-laconicum-baiae"
+    },
+    {
+     "term": "solium",
+     "translit": "solium",
+     "lang": "la",
+     "gloss": "the hot tub or basin of the caldarium, which one goes down into",
+     "avoid": [
+      "throne"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#gr-sb-celsus-tepidarium-solium-oil-solium"
+    },
+    {
+     "term": "tepidarium",
+     "translit": "tepidarium",
+     "lang": "la",
+     "gloss": "the warm intermediate room of the Roman bath",
+     "avoid": [
+      "lounge"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#gr-sb-celsus-tepidarium-solium-oil-solium"
+    },
+    {
+     "term": "vaporarium",
+     "translit": "vaporarium",
+     "lang": "la",
+     "gloss": "steam room (Comenius)",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#eu-sb-comenius-tub-or-sweat-bench-haircloth-warm-cold"
+    },
+    {
+     "term": "sudatorium",
+     "translit": "sudatorium",
+     "lang": "la",
+     "gloss": "sweating place; in Comenius the sweat-bench",
+     "avoid": [
+      "sauna"
+     ],
+     "evidence": "/explore/histories/bath/claims/pleasure#eu-sb-comenius-tub-or-sweat-bench-haircloth-warm-cold"
+    },
+    {
+     "term": "balneator",
+     "translit": "balneator",
+     "lang": "la",
+     "gloss": "bath-master, who also cups and barbers (Comenius)",
+     "avoid": [
+      "lifeguard"
+     ],
+     "evidence": "/explore/histories/bath/claims/medicine#eu-sb-comenius-bathmaster-cups-and-trims-beards"
+    },
+    {
+     "term": "Dessil",
+     "translit": "Dessil (deiseal)",
+     "lang": "gd",
+     "gloss": "going sunwise, east to west, round a well or person",
+     "avoid": [
+      "clockwise (alone)"
+     ],
+     "evidence": "/explore/histories/bath/claims/cult#eu-sb-martin-skye-well-dessil-sunways-offering"
+    }
+   ],
+   "domains": [
+    "cult",
+    "medicine",
+    "building",
+    "morals",
+    "company",
+    "pleasure",
+    "purity",
+    "critique",
+    "transformation"
+   ],
+   "counts": {
+    "verified": 504,
+    "partial": 2,
+    "dropped": 0,
+    "essays": 1
+   },
+   "audit": null
   },
   {
    "slug": "consciousness",
@@ -1840,6 +2708,36 @@
       "sorcery"
      ],
      "evidence": "/explore/histories/magic/claims/asian#lexa-siyi-zhoushu-dharani"
+    },
+    {
+     "term": "demon (Maxwell's)",
+     "translit": "demon",
+     "lang": "en",
+     "gloss": "Maxwell's sorting being as named by Thomson (1874): an intelligent being with no preternatural qualities that guides molecules without doing work",
+     "avoid": [
+      "daimon",
+      "devil",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/magic/claims/modern#md-thomson-1874-word-is-maxwells"
+    },
+    {
+     "term": "daemon (computing)",
+     "translit": "daemon",
+     "lang": "en",
+     "gloss": "a background process at CTSS/Project MAC (c. 1963) and later Unix; spelled with the classical ae on the OED's authority (Saltzer) or after Maxwell's demon (Corbató)",
+     "avoid": [
+      "demon"
+     ],
+     "evidence": "/explore/histories/magic/claims/ai#md-daemon-bailey-oed"
+    },
+    {
+     "term": "Pandemonium",
+     "translit": "Pandaemonium",
+     "lang": "en",
+     "gloss": "Milton's capital of Hell (Paradise Lost I), 'all the demons'; Selfridge's 1958 learning architecture of shrieking demons",
+     "avoid": [],
+     "evidence": "/explore/histories/magic/claims/ai#md-selfridge-1959-shriek"
     }
    ],
    "domains": [
@@ -1865,20 +2763,12 @@
     "music"
    ],
    "counts": {
-    "verified": 925,
-    "partial": 87,
-    "dropped": 33,
+    "verified": 958,
+    "partial": 96,
+    "dropped": 36,
     "essays": 20
    },
-   "audit": {
-    "n": 25,
-    "rejected": 6,
-    "pct": 24,
-    "lo": 11,
-    "hi": 43,
-    "date": "2026-10-28",
-    "corrected": true
-   }
+   "audit": null
   },
   {
    "slug": "markets",
@@ -3359,6 +4249,10 @@
     {
      "slug": "02-like-and-unlike",
      "title": "2. Like and unlike: the line between resonance and harmony is drawn again in every sense of sympathy"
+    },
+    {
+     "slug": "03-thugs-rje",
+     "title": "3. *Thugs rje*: is the Great Perfection's \"compassion\" a sympathetic resonance?"
     }
    ],
    "keepTerms": [
@@ -3666,6 +4560,107 @@
       "pity"
      ],
      "evidence": "/explore/histories/sympathy/claims/moral-philosophy#mor-rousseau-1755-pitie-precedes-reflection"
+    },
+    {
+     "term": "ཐུགས་རྗེ",
+     "translit": "thugs rje",
+     "lang": "bo",
+     "gloss": "honorific of snying rje, compassion; in rdzogs chen the third aspect of the ground (gzhi): its unobstructed, all-pervading responsiveness and self-display, named from the side of the union of emptiness and appearance",
+     "avoid": [
+      "compassion"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-yangtig-tibet-asks-padma-thugsrje"
+    },
+    {
+     "term": "ངོ་བོ",
+     "translit": "ngo bo",
+     "lang": "bo",
+     "gloss": "essence; in the ground triad the empty, primordially pure aspect",
+     "avoid": [
+      "essence"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-klongchen-rabbyams-triad-similes"
+    },
+    {
+     "term": "རང་བཞིན",
+     "translit": "rang bzhin",
+     "lang": "bo",
+     "gloss": "nature; in the ground triad the clear, luminous, spontaneously present aspect",
+     "avoid": [
+      "nature"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-klongchen-rabbyams-triad-similes"
+    },
+    {
+     "term": "ཀ་དག",
+     "translit": "ka dag",
+     "lang": "bo",
+     "gloss": "primordial purity, the essence's being empty and unstained from the start",
+     "avoid": [
+      "primordial purity"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-klongchen-rabbyams-triad-similes"
+    },
+    {
+     "term": "ལྷུན་གྲུབ",
+     "translit": "lhun grub",
+     "lang": "bo",
+     "gloss": "spontaneous presence: the nature's being present and complete without being made",
+     "avoid": [
+      "spontaneous presence"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-rgyud17-kunkhyab-rangshar"
+    },
+    {
+     "term": "ཀུན་ཁྱབ",
+     "translit": "kun khyab",
+     "lang": "bo",
+     "gloss": "all-pervading, the attribute given to thugs rje in the formula thugs rje kun khyab",
+     "avoid": [
+      "all-pervading"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-yangtig-klonggsal-rtsal-three-gnoses"
+    },
+    {
+     "term": "རྩལ",
+     "translit": "rtsal",
+     "lang": "bo",
+     "gloss": "dynamism, display-power of awareness, from which the three gnoses come",
+     "avoid": [
+      "power",
+      "energy"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-yangtig-klonggsal-rtsal-three-gnoses"
+    },
+    {
+     "term": "མ་འགགས་པ",
+     "translit": "ma 'gags pa",
+     "lang": "bo",
+     "gloss": "unobstructed, unceasing: the ground's display never stops",
+     "avoid": [
+      "unceasing"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-tshigdon-door-of-thugsrje-impure"
+    },
+    {
+     "term": "གཞི",
+     "translit": "gzhi",
+     "lang": "bo",
+     "gloss": "the ground: the primordial basis of samsara and nirvana, described by the triad",
+     "avoid": [
+      "ground"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-tshigdon-klongdrug-without-it-space"
+    },
+    {
+     "term": "གདངས",
+     "translit": "gdangs",
+     "lang": "bo",
+     "gloss": "radiance, glow, also tone or melody: the outward shining of awareness; SL's English renders it 'resonance' in places",
+     "avoid": [
+      "resonance"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/tibetan#bo-yangsgang-mkha-khyab-gdangs-resonance"
     }
    ],
    "domains": [
@@ -3684,13 +4679,14 @@
     "aesthetics",
     "neuro",
     "moral-philosophy",
-    "social-theory"
+    "social-theory",
+    "tibetan"
    ],
    "counts": {
-    "verified": 96,
-    "partial": 34,
+    "verified": 106,
+    "partial": 39,
     "dropped": 4,
-    "essays": 2
+    "essays": 3
    },
    "audit": {
     "n": 25,

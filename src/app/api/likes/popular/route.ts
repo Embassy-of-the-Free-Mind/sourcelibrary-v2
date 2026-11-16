@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
       // Batch fetch all books
       const bookIds = [...new Set(pagesData.map(p => p.book_id))];
       const booksData = await db.collection('books').find(
-        { id: { $in: bookIds } },
+        { id: { $in: bookIds }, visible: true },
         { projection: { id: 1, title: 1, author: 1, year: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
     if (targetType === 'book') {
       const bookIds = popularItems.map(item => item._id as string);
       const booksData = await db.collection('books').find(
-        { id: { $in: bookIds } },
+        { id: { $in: bookIds }, visible: true },
         { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1, content_type: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
@@ -225,7 +225,7 @@ export async function GET(request: NextRequest) {
       // Get book info for all pages
       const bookIds = [...new Set(pagesData.map(p => p.book_id))];
       const booksData = await db.collection('books').find(
-        { id: { $in: bookIds } },
+        { id: { $in: bookIds }, visible: true },
         { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
@@ -235,6 +235,7 @@ export async function GET(request: NextRequest) {
           const page = pagesMap.get(item._id as string);
           if (!page) return null;
           const book = booksMap.get(page.book_id);
+          if (!book) return null;
           const rawText = page.translation?.data || page.ocr?.data || '';
           // Strip XML tags (e.g. <meta>, <page-type>, <columns>) for clean excerpts
           const text = stripEditorialWrappers(rawText).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();

@@ -234,3 +234,26 @@ const ZERO_WIDTH_MARK = /[​-‏⁠-⁤﻿]/g;
 export function stripProvenanceMarks(text: string | null | undefined): string {
   return typeof text === 'string' ? text.replace(ZERO_WIDTH_MARK, '') : '';
 }
+
+/**
+ * Text bound for an EPUB carries NO zero-width mark (decision 2026-11-13, default
+ * taken, #90; finding on v2#8333).
+ *
+ * Kindle Publishing Guidelines v2026.3 §6.7 supports only the normal space, the
+ * no-break space and the zero-width non-joiner, and warns that any other space
+ * or Unicode format character can break selection, dictionary look-up and line
+ * wrapping. The mark is written in four zero-width characters (U+200B = 0,
+ * U+200C = 1, U+200D, U+FEFF), so in the Olaus Magnus EPUB it came to 690,361
+ * characters, 19.5% of the text, 187 of them inside headings. Cutting it down to
+ * the one character Kindle allows leaves a single symbol, and one symbol carries
+ * no bits: an unexplained character with the id gone. So the EPUB leaves it out.
+ * Its provenance is visible instead: the title page and every page marker link
+ * back to the book and its scans.
+ *
+ * Every other export keeps the mark: PDF, TXT, /text, the dataset, quotes and
+ * the reader. To put the mark back in EPUBs, return markForExport(text, bookId).
+ */
+export function markForEpub(text: string, bookId: string): string {
+  void bookId;
+  return text;
+}

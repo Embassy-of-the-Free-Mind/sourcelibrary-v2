@@ -1,0 +1,86 @@
+<warning>The page is in Arabic script (an Ottoman Turkish or Arabic astronomical table), not Hebrew. Handwritten naskh with abjad (letter-numeral) values. The table cells hold dense abjad numerals with overlines and ligatures that cannot be read reliably, so they are marked unclear and not reconstructed. Some later additions are in brown ink. Readings of the month labels and ordinal captions are tentative.</warning>
+<scan-quality>fair</scan-quality>
+<language>Arabic</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>7</columns>
+<page-num><unclear>١٢٢٩</unclear></page-num>
+<meta>Folio number "101" written at the top left margin. The page is a ruled astronomical table. It has nine horizontal sections, one for each lunar conjunction, and a wide left column with captions in Arabic script. To the right are six narrow columns of abjad numerals arranged vertically. Partial text at the right edge belongs to the facing page and is ignored.</meta>
+
+<margin>101</margin>
+
+اجتماع جمادى الاولى <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 2 lines]</unclear>
+->الاول<-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals), not transcribed</unclear>
+
+---
+
+اجتماع جمادى الآخرة <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 1 line]</unclear>
+->الثاني<-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals), not transcribed</unclear>
+
+---
+
+اجتماع رجب <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 1 line]</unclear>
+->~~الرابع~~ الثالث<-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals), not transcribed</unclear>
+
+<margin><unclear>ربع</unclear></margin>
+تبارك الله <unclear>[illegible — 1 word]</unclear> ما حكم <unclear>[illegible — 2 words]</unclear> <unclear>تعديل</unclear> <unclear>[illegible — 6–8 words]</unclear>
+
+---
+
+اجتماع شعبان <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 1 line]</unclear>
+->~~الخامس~~ الرابع<-
+<insert><unclear>[brown ink — 2 lines, about 8–10 words, illegible]</unclear></insert>
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals; brown-ink additions in the fourth column), not transcribed</unclear>
+
+---
+
+اجتماع رمضان <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 2 lines]</unclear>
+->الخامس<-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals), not transcribed</unclear>
+
+---
+
+<unclear>[abjad values]</unclear> <unclear>عند انتقال الشمس</unclear> <unclear>[illegible — 3 words]</unclear>
+<unclear>[abjad values — 1 line]</unclear>
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals written across the top line of each cell), not transcribed</unclear>
+
+---
+
+اجتماع شوال <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 1 line]</unclear>
+~~<unclear>[struck-through line]</unclear>~~
+->السابع<-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals), not transcribed</unclear>
+
+---
+
+اجتماع ذي القعدة <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 2 lines]</unclear>
+->~~الثامن~~ <unclear>السابع</unclear><-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals; brown-ink additions in the third column), not transcribed</unclear>
+
+---
+
+اجتماع ذي الحجة <unclear>[abjad values — about 1 line]</unclear>
+<unclear>[abjad values — 1 line]</unclear>
+->~~التاسع~~ الثامن<-
+
+<unclear>Numerical columns for this row (6 columns of abjad numerals), not transcribed</unclear>
+
+<vocab>اجتماع (conjunction), جمادى الاولى, جمادى الآخرة, رجب, شعبان, رمضان, شوال, ذي القعدة, ذي الحجة, abjad numerals, astronomical table, lunar conjunction</vocab>

@@ -1,0 +1,131 @@
+[
+  {
+    "book_id": "6953cc6d77f38f6761be20a9",
+    "slot": 1,
+    "title": "De Proprietatibus Rerum - Medieval Manuscript",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Gothic textualis manuscript of Bartholomaeus Anglicus, with rubricated and blue initials and paraphs. It belongs in the Smithsonian collection, and a late-13th/14th-century date fits the hand.",
+    "rights_flag": null,
+    "structure_note": "The counts disagree: structure.pages_translated is 0, but pages_translated_field is 511 and this page carries a translation, so the instruments disagree (E2). The 130 backsteps and 177 repeats among 336 printed numbers are far too many for a clean sequence. The likely cause is the <page-num> tag picking up a mix of the later-hand folio numbers and the marginal reference numerals (like the '80' and '81' on this leaf), plus misreads. Here the OCR's <page-num>208 sits on a leaf whose top right reads '209'. This looks like a furniture-tagging problem (O11), not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 483,
+        "right_page": "yes",
+        "printed_marker": "209",
+        "layout": "two columns of Gothic textualis; red-and-blue running head 'XIX'; red/blue flourished initials and a run of red/blue paraphs in column b; later-hand numerals '80' and '81' in the margins and a later-hand marginal note at right",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "allonc̃ iil t̃re sũistnet̃",
+            "image": "caloris ul' ī se ɔtinet",
+            "problem": "the abbreviated script is turned into non-words across most of the page. Line 2 is unreadable, as are most lines of both columns: the text is the right text in outline but cannot be read word for word.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "status s̃erit̃ ualeat̃ ad ad cerebrũ",
+            "image": "flatu aeris ualeat ad ad cerebrū",
+            "problem": "'flatu aeris' misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "vñ si m̃se p'onant̃ ĩ aqua",
+            "image": "Vn si rose ponant ī aqua",
+            "problem": "'rose' (roses) misread; the translation restores 'roses' from somewhere other than the transcription",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "# Post' ẽ de r'e corrupta. uã",
+            "image": "Fetor ē ex re corrupta. ua[por] (guide letter 'f' in the margin)",
+            "problem": "the rubric's first word 'Fetor' misread as 'Post''",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "**P**p' poz rẽsoluẽ aerẽ̃ ĩnf̃icet̃",
+            "image": "F[etor] p'or resolut' aerē inficit (blue F, guide letter 'F')",
+            "problem": "the initial F is read as P and the opening words are garbled",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<page-num>208</page-num>",
+            "image": "209 (top right, later hand)",
+            "problem": "the folio number does not match the leaf (I read the last digit as 9; it is in faint cursive)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "<the whole page; the OCR is largely unreadable>",
+            "english": "A good odor is so constituted, and so subtle in substance, that once its lightness has dissolved it, it is able to make its way to the brain.",
+            "problem": "the fluent English is reconstructed from the image or from knowledge of the text, not from the transcription beside it. The broad sense matches the leaf where I can check it (musk, roses in hot water, the nipple-shaped caruncles in the nostrils, Ylaoch, Galen). The <meta> does warn that 'many words are uncertain', so the reader is told.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "vidẽt̃' eĩ qđ n' ĩ sūit d' ig̃idat' & õtent̃ sūtc̃ wlac̃ q'daz nō aliũd null' ẽ d' odor' ut pip'. pũcat̃ive ruc' ĩ p̃te d'mosa aliq̃i p' odores",
+            "english": "They saw that some things, such as pepper, have no odor and yet are hot and sharp, and that some things smell sweet in part.",
+            "problem": "the image appears to contrast cold things that are fragrant (roses) with hot things that have no odour (pepper), and then says that they thought a thing could not be known at all by its odours. The English drops the cold/fragrant half and invents 'some things smell sweet in part'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "**D**einde sūmo pōnẽt' Dicẽdũ ẽ",
+            "english": "Next, concerning vapor, it must be said",
+            "problem": "the paragraph opening rests on a doubtful OCR reading of the decorated initial and its first words. The image seems to read '[O]doris ...', not 'Deinde sumo'.",
+            "severity": "minor"
+          },
+          {
+            "source": "sic̃ oc̃ul' claudũt̃ sũnt̃ mot̃ivũ colli rũ. n' nisi p̃ tactũ",
+            "english": "just as the eyes perceive an eye-salve only by touch",
+            "problem": "'clausi' (closed eyes) dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "raw markup in the reader text: '<column-break/>', '->¶ ... <-' centring arrows on ten lines, '<margin>80</margin>' and '<margin>81</margin>'",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "the running head 'XIX' is promoted to a heading, '# BOOK XIX', in the middle of the book",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "notes_audit": {
+          "items": [
+            {
+              "quote": "original: \"acetosatus\"",
+              "verdict": "ok",
+              "helpful": false
+            },
+            {
+              "quote": "original: \"species\"",
+              "verdict": "ok",
+              "helpful": true
+            }
+          ],
+          "missing": [
+            {
+              "english": "odor is a property perceptible by smell, as Ylaoch says",
+              "why": "'Ylaoch' is a medieval corruption of Isaac (Isaac Israeli, Isaac Judaeus), the cited authority; a general reader cannot identify him"
+            },
+            {
+              "english": "infects the air and likewise the animal spirit, which it corrupts",
+              "why": "'animal spirit' (spiritus animalis) is a technical term of Galenic physiology, not 'spirit' in the everyday sense"
+            },
+            {
+              "english": "By its heat it dissolves humor and restrains flux and motion.",
+              "why": "'humor' is the four-humour theory of the body and needs a short gloss"
+            }
+          ]
+        },
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "This is the right leaf of a genuine Bartholomaeus manuscript, but the transcription is mostly unreadable non-words. The fluent English was evidently made from the image or from knowledge of the text, and it drops or invents at least one clause. An expert would also see the raw markup and the 'BOOK XIX' heading at once."
+  }
+]

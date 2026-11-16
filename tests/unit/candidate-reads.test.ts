@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {
-  matchesRead, reuseHash, translationReuseKey, wantsFresh, reuseInto, promptKey, candidateKey, keepRead, findRead,
+  matchesRead, unseenImageRead, reuseHash, translationReuseKey, wantsFresh, reuseInto, promptKey, candidateKey, keepRead, findRead,
   // @ts-expect-error — .mjs lib, no types
 } from '../../scripts/lib/candidate-reads.mjs';
 // @ts-expect-error — .mjs lib, no types
@@ -40,6 +40,23 @@ describe('candidate-reads reuse', () => {
     expect(matchesRead(body({ meta: { exit: 0, wrapper: 'text outside the markers' } }), ask)).toBe(false);
     expect(matchesRead(body({ text: 'I cannot transcribe this image.' }), ask)).toBe(false);
     expect(matchesRead(body({ text: '' }), ask)).toBe(false);
+  });
+  it('never hands back an OCR read whose tool log shows the image was not read (v3#149)', () => {
+    const agy = (tool_calls: string[], over: Record<string, unknown> = {}) => body({ meta: { exit: 0, error_class: null, cli: 'agy', tool_calls, ...over } });
+    // The two shapes found on the reverted Kant pages, and a read that never opened the image.
+    expect(matchesRead(agy(['run_command:deny', 'read_file', 'run_command:deny', 'read_file:deny']), ask)).toBe(false);
+    expect(matchesRead(agy(['read_file', 'read_file:deny', 'run_command:deny', 'read_file']), ask)).toBe(false);
+    expect(matchesRead(agy(['run_command:deny', 'view_file:deny']), ask)).toBe(false);
+    // A clean read is still reused, and so is one with no tool log (before the gate, or another CLI).
+    expect(matchesRead(agy(['read_file', 'read_file']), ask)).toBe(true);
+    expect(matchesRead(agy(['run_command:deny', 'read_file']), ask)).toBe(true);
+    expect(matchesRead(body({ meta: { exit: 0, cli: 'claude' } }), ask)).toBe(true);
+    // Apply exempts a correction from the denied-read refusal, but not from never-opened.
+    expect(matchesRead(agy(['read_file', 'read_file:deny'], { mode: 'correct' }), ask)).toBe(true);
+    expect(matchesRead(agy(['read_file:deny'], { mode: 'correct' }), ask)).toBe(false);
+    // A translation has no image to open: its tool log is not judged.
+    expect(unseenImageRead('translation', { cli: 'agy', tool_calls: [] })).toBe(false);
+    expect(unseenImageRead('ocr', { cli: 'agy', tool_calls: [] })).toBe(true);
   });
   it('rebuilds the key from the meta of a read the sweep kept (no reuse block), model checked', () => {
     const meta = { cli: 'agy', model: 'gemini-3.8-flash-low', prompt_ref: { content_hash: 'abc' }, ocr_hash: 'ocr1', prompt_variant: 'sentinels-6523', exit: 0 };

@@ -35,6 +35,24 @@ export interface AdminSection {
   links: AdminLink[];
 }
 
+/**
+ * The error zoo (page judgments by language and half-century; experiment 2026-11-11-error-zoo-v2-all-labels-6420),
+ * on the site since #244 step 2. Its quoted specimens stay in the claude.ai artifact the page links to.
+ */
+export const ERROR_ZOO_URL = '/admin/quality/error-zoo';
+
+/**
+ * The quality loop's steps with the question each page answers (#244), for the line of links at the top of
+ * /admin/quality and /admin/router. Same order as the Quality section.
+ */
+export const QUALITY_LOOP: { href: string; label: string; question: string; gate?: AdminGate }[] = [
+  { href: '/admin/quality', label: 'Quality', question: 'is the served text good, and improving?' },
+  { href: ERROR_ZOO_URL, label: 'Error zoo', question: 'where is it worst, by language and period?' },
+  { href: '/admin/router', label: 'Router', question: 'which route each kind of page gets, and how every tested route scored' },
+  { href: '/platform/admin/ocr-evidence', label: 'OCR evidence', question: 'how each engine reads the reference panels', gate: 'superadmin' },
+  { href: '/quality/record#experiments', label: 'Experiments', question: 'every test and what it concluded' },
+];
+
 export const ADMIN_SECTIONS: AdminSection[] = [
   {
     // What is waiting and where things stand: shown flat, never in a dropdown.
@@ -81,13 +99,27 @@ export const ADMIN_SECTIONS: AdminSection[] = [
     links: [
       { href: '/admin/pipeline', label: 'Pipeline' },
       { href: '/admin/pipeline/now', label: 'Pipeline now' },
-      { href: '/admin/router', label: 'Router' },
       { href: '/admin/processing', label: 'Processing' },
-      { href: '/admin/quality', label: 'Quality' },
       { href: '/admin/scan-evaluation', label: 'Scan review' },
       { href: '/admin/realtime', label: 'Realtime' },
       { href: '/admin/bots', label: 'Bots' },
+      { href: '/admin/visitors', label: 'Who visits' },
       { href: '/admin/system-map', label: 'System map' },
+    ],
+  },
+  {
+    // The quality loop, in its order (#244): what readers get → where it is worst → which route fixes that kind
+    // of page → the evidence behind each route. QUALITY_LOOP above says what question each one answers.
+    label: 'Quality',
+    links: [
+      { href: '/admin/quality', label: 'Quality' },
+      { href: '/quality', label: 'Quality Center (public)' },
+      { href: ERROR_ZOO_URL, label: 'Error zoo' },
+      { href: '/admin/router', label: 'Router' },
+      { href: '/platform/admin/ocr-evidence', label: 'OCR evidence', gate: 'superadmin' },
+      { href: '/quality/record#experiments', label: 'Experiments' },
+      { href: '/platform/admin/quality-methods', label: 'Quality methods (2026-10-11)', gate: 'superadmin' },
+      { href: '/platform/admin/ocr-evidence/read-surface', label: 'Read settings surface (#6740)', gate: 'superadmin' },
     ],
   },
   {

@@ -271,7 +271,7 @@ export default function UploadPage() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-stone-900">Search Catalogues</h2>
-                  <p className="text-sm text-stone-500">~37k books from Internet Archive and BPH</p>
+                  <p className="text-sm text-stone-500">The Internet Archive and BPH catalogues</p>
                 </div>
               </div>
 

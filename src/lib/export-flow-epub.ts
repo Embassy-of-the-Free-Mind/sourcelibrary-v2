@@ -18,7 +18,7 @@ import path from 'path';
 import type { Db } from 'mongodb';
 import { joinPagesHtml, type FlowPage } from '@/lib/flow-join';
 import { markdownToHtml } from '@/lib/export-markdown-html';
-import { markForExport } from '@/lib/provenance';
+import { markForEpub, markForExport } from '@/lib/provenance';
 import { galleryFilter } from '@/lib/gallery-scope';
 import { fetchAndCompressImage } from '@/lib/export-page-images';
 import { EPub, type Options } from 'epub-gen-memory';
@@ -198,8 +198,10 @@ export async function buildFlowEpub(
   db: Db,
   book: FlowBookDoc,
   pages: FlowPageDoc[],
-  opts: { text: 'translation' | 'ocr'; baseUrl: string; includeImages: boolean },
+  /** `epub`: the text goes into an EPUB and carries no zero-width mark (markForEpub, #90). Unset: the TXT download, marked. */
+  opts: { text: 'translation' | 'ocr'; baseUrl: string; includeImages: boolean; epub?: boolean },
 ): Promise<FlowEpub> {
+  const mark = opts.epub ? markForEpub : markForExport;
   const readable = pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && p.page_number >= 0);
   const figures = await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)), opts.baseUrl, opts.includeImages);
 
@@ -218,7 +220,7 @@ export async function buildFlowEpub(
   const flowPage = (p: FlowPageDoc): FlowPage => {
     const raw = outOfLane(p) ? ''
       : opts.text === 'translation' && !printedEnglish(p)
-      ? (p.translation?.data ? markForExport(dropCarriedRunningHead(p.translation.data, p.ocr?.data), book.id) : '')
+      ? (p.translation?.data ? mark(dropCarriedRunningHead(p.translation.data, p.ocr?.data), book.id) : '')
       : (p.ocr?.data || '');
     // A page's own headings sit below the section's <h2>, ranked in the order the page uses them (h3, h4, …):
     // translators pick #-levels freely ("#" then "###"), and a heading that skips a level breaks the heading
