@@ -14,6 +14,7 @@
  */
 import type { CatalogFilters } from '@/lib/catalog/filters';
 import { textUsesName } from '@/lib/catalog/synonyms';
+import { expandLanguages } from '@/lib/language-utils';
 
 /** One hit from /api/search (book or page). Only the fields read here. */
 export interface SearchHit {
@@ -54,6 +55,8 @@ export function searchUrl(f: CatalogFilters, topic: string): string {
   const p = new URLSearchParams({ q: topic, limit: '100' });
   if (f.languages?.length === 1) p.set('language', f.languages[0]);
   else if (f.languages?.length) p.set('languages', f.languages.join(','));
+  // The lanes have taken this one since #5921; it is not a new contract.
+  if (f.excludeLanguages?.length) p.set('exclude_languages', f.excludeLanguages.join(','));
   if (f.category) p.set('category', f.category);
   if (f.yearMin != null) p.set('year_from', String(f.yearMin));
   if (f.yearMax != null) p.set('year_to', String(f.yearMax));
@@ -97,11 +100,24 @@ export function warmSearch(f: CatalogFilters, topic: string): void {
   if (topic.trim().length >= 3) search(searchUrl(f, topic)).catch(() => {});
 }
 
+/** Each excluded language under both its spellings, lowercased, cached per list. */
+const excludedCache = new Map<string, Set<string>>();
+function excluded(langs: string[]): Set<string> {
+  const key = langs.join('\u0000');
+  let set = excludedCache.get(key);
+  if (!set) {
+    set = new Set(expandLanguages(langs).map((l) => l.toLowerCase()));
+    excludedCache.set(key, set);
+  }
+  return set;
+}
+
 /** Does a hit contradict a filter the page is showing? */
 function breaksFilters(h: SearchHit, f: CatalogFilters, collectionIds: Set<string> | null): boolean {
   const y = yearOfHit(h);
   if ((f.yearMin != null || f.yearMax != null) && (y == null || (f.yearMin != null && y < f.yearMin) || (f.yearMax != null && y > f.yearMax))) return true;
   if (f.languages?.length && h.language && !f.languages.includes(h.language)) return true;
+  if (f.excludeLanguages?.length && h.language && excluded(f.excludeLanguages).has(h.language.toLowerCase())) return true;
   if (f.author && !(h.author ?? '').toLowerCase().includes(f.author.toLowerCase())) return true;
   if (collectionIds && !collectionIds.has(h.book_id || h.id)) return true;
   return false;
