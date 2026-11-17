@@ -94,7 +94,7 @@ function ofTheDay<T>(pool: readonly T[], n: number, offset = 0): T[] {
 }
 
 const CLEAR: Partial<CatalogState> = {
-  q: undefined, also: undefined, title: undefined, author: undefined, not: undefined, languages: undefined,
+  q: undefined, also: undefined, title: undefined, author: undefined, not: undefined, languages: undefined, excludeLanguages: undefined,
   category: undefined, collection: undefined, yearMin: undefined, yearMax: undefined,
   hasTranslation: undefined, firstTranslation: undefined, ask: undefined, topic: undefined,
 };
@@ -340,7 +340,8 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     const next: CatalogState = {
       ...s, ...CLEAR, view: 'grid',
       q: topic || undefined, also: also.length ? also : undefined, author: who?.surname,
-      languages: r.languages.length ? r.languages : undefined, category: r.category,
+      languages: r.languages.length ? r.languages : undefined,
+      excludeLanguages: r.excludedLanguages.length ? r.excludedLanguages : undefined, category: r.category,
       yearMin: r.yearMin, yearMax: r.yearMax, hasTranslation: r.hasTranslation, firstTranslation: r.firstTranslation,
       sort: 'popular',
     };
@@ -361,7 +362,8 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     const next: CatalogState = {
       ...s, ...CLEAR, view: 'grid', ask: text.trim(),
       topic: topic || undefined, also: topic && also.length ? also : undefined, author: who?.surname,
-      languages: r.languages.length ? r.languages : undefined, category: r.category,
+      languages: r.languages.length ? r.languages : undefined,
+      excludeLanguages: r.excludedLanguages.length ? r.excludedLanguages : undefined, category: r.category,
       yearMin: r.yearMin, yearMax: r.yearMax, hasTranslation: r.hasTranslation, firstTranslation: r.firstTranslation,
       sort: 'popular',
     };
@@ -377,13 +379,13 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     if (words.length < 2) return;
     const t = setTimeout(() => {
       const r = readRequest(askText, vocab);
-      if (r.topic && !r.authorQuery) warmSearch({ languages: r.languages, yearMin: r.yearMin, yearMax: r.yearMax, category: r.category, hasTranslation: r.hasTranslation, firstTranslation: r.firstTranslation }, r.topic);
+      if (r.topic && !r.authorQuery) warmSearch({ languages: r.languages, excludeLanguages: r.excludedLanguages, yearMin: r.yearMin, yearMax: r.yearMax, category: r.category, hasTranslation: r.hasTranslation, firstTranslation: r.firstTranslation }, r.topic);
     }, 600);
     return () => clearTimeout(t);
   }, [askText, vocab]);
   const warmExample = (text: string) => {
     const r = readRequest(text, vocab);
-    if (r.topic && !r.authorQuery) warmSearch({ languages: r.languages, yearMin: r.yearMin, yearMax: r.yearMax, category: r.category, hasTranslation: r.hasTranslation }, r.topic);
+    if (r.topic && !r.authorQuery) warmSearch({ languages: r.languages, excludeLanguages: r.excludedLanguages, yearMin: r.yearMin, yearMax: r.yearMax, category: r.category, hasTranslation: r.hasTranslation }, r.topic);
   };
 
   /* ---------------------------------------------------------- derived */
@@ -399,6 +401,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   if (s.author) chips.push({ key: 'author', label: `Author: ${authorName || s.author}`, remove: () => ({ ...s, author: undefined }) });
   if (s.not) chips.push({ key: 'not', label: `Leaving out: ${s.not}`, remove: () => ({ ...s, not: undefined }) });
   for (const l of s.languages ?? []) chips.push({ key: `lang:${l}`, label: l, remove: () => ({ ...s, languages: (s.languages ?? []).filter((x) => x !== l) }) });
+  for (const l of s.excludeLanguages ?? []) chips.push({ key: `notlang:${l}`, label: `Not ${l}`, remove: () => ({ ...s, excludeLanguages: (s.excludeLanguages ?? []).filter((x) => x !== l) }) });
   if (s.yearMin != null || s.yearMax != null) {
     const yrs = s.yearMin != null && s.yearMax != null ? `${s.yearMin}–${s.yearMax}` : s.yearMin != null ? `from ${s.yearMin}` : `until ${s.yearMax}`;
     chips.push({ key: 'years', label: `Printed ${yrs}`, remove: () => ({ ...s, yearMin: undefined, yearMax: undefined }) });

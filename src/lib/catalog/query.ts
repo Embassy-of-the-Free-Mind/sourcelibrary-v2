@@ -16,6 +16,7 @@ import { unstable_cache } from 'next/cache';
 import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
+import { expandLanguages } from '@/lib/language-utils';
 import { READABLE_RUNGS, ENGLISH_ORIGINAL_READABLE_RUNGS, type TranslationRung } from '@/lib/page-counts';
 import {
   READABLE_IN_ENGLISH_OR, applySort, attachCardVariants, bookSelect, canonicalizeCategory, catalogOrFilter,
@@ -80,6 +81,15 @@ export function applyCatalogFilters(query: any, f: CatalogFilters, opts: { ignor
   if (f.ids?.length) q = q.in('id', f.ids);
   if (f.languages?.length === 1) q = q.eq('language', f.languages[0]);
   else if (f.languages?.length) q = q.in('language', f.languages);
+  // "not in English". Both spellings of each name, since the column holds the
+  // code or the name depending on the import (expandLanguages, as
+  // /api/search's exclude_languages does). A book whose language is unknown is
+  // KEPT: it cannot contradict the request, and the Mongo lane's $nin keeps it
+  // too, so the asked results and the catalogue agree on the same set.
+  if (f.excludeLanguages?.length) {
+    const names = expandLanguages(f.excludeLanguages).map((l) => sanitizeFilterValue(l).trim()).filter(Boolean);
+    if (names.length) q = q.or(`language.is.null,language.not.in.(${names.map((n) => `"${n}"`).join(',')})`);
+  }
   if (f.category) q = q.contains('categories', [canonicalizeCategory(f.category)]);
   if (f.collection) q = q.contains('collections', [f.collection]);
   if (f.hasTranslation) q = q.or(READABLE_IN_ENGLISH_OR);

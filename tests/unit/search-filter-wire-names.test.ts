@@ -100,3 +100,21 @@ describe('search api-client work-date range (#6873)', () => {
     expect(captured[0]).toContain('work_to=0');
   });
 });
+
+describe('the catalogue ask bar, asking against a language', () => {
+  it('sends exclude_languages — the name /api/search reads', async () => {
+    const { searchUrl } = await import('@/lib/catalog/ask-client');
+    const url = searchUrl({ excludeLanguages: ['English'] }, 'mushrooms');
+    expect(url).toContain('exclude_languages=English');
+    // Never as a language to KEEP: that is the bug this filter came from.
+    expect(url).not.toMatch(/[?&]language=English/);
+    expect(url).not.toMatch(/[?&]languages=English/);
+  });
+
+  it('writes and reads not_language on the catalogue URL', async () => {
+    const { writeCatalogFilters, parseCatalogFilters } = await import('@/lib/catalog/filters');
+    const sp = writeCatalogFilters({ excludeLanguages: ['English', 'Latin'] });
+    expect(sp.getAll('not_language')).toEqual(['English', 'Latin']);
+    expect(parseCatalogFilters(sp).excludeLanguages).toEqual(['English', 'Latin']);
+  });
+});

@@ -26,6 +26,8 @@ export interface RequestVocabulary {
 
 export interface ReadRequest {
   languages: string[];
+  /** Languages asked AGAINST: "not in English", "non-English", "other than Latin". */
+  excludedLanguages: string[];
   yearMin?: number;
   yearMax?: number;
   category?: string;
@@ -52,7 +54,11 @@ const ERAS: [RegExp, number | undefined, number | undefined][] = [
 const STOP = new Set(('i im want wanted looking look find show give me some any anything all books book works work texts text ' +
   'at their its his her them these those my your our very many lots kinds kind sort sorts pictures picture images image ' +
   'writings writing treatises treatise on about of the a an in and or for to with from that which are is was were by printed ' +
-  'written published edition editions please something things stuff related regarding concerning have has been there what can you do').split(' '));
+  'written published edition editions please something things stuff related regarding concerning have has been there what can you do ' +
+  // The words that carry a filter and never a subject: left in the topic they
+  // searched the pages for "pre" and "non" ("About: mushrooms pre").
+  'not non no pre post other than except excluding excluded apart aside besides rather instead only just ' +
+  'until till since prior before after language languages').split(' '));
 const ALIASES: [RegExp, string][] = [
   [/\b(kabbal\w*|cabal\w*|qabal\w*)\b/, 'jewish-kabbalah'],
   [/\brosicrucian\w*\b/, 'rosicrucianism'],
@@ -60,15 +66,28 @@ const ALIASES: [RegExp, string][] = [
 /** A capitalised mid-sentence word only counts as a subject when it reads like one (Alchemical, Hermetic). */
 const SUBJECT_ENDING = /(al|ic|ics|y|ism|ist|ists|ian|ians|ies|ine|ing)$/;
 
+/** The ways a request says "not this language". */
+const NOT = '(?:not|non|no|other than|apart from|aside from|except(?: for)?|excluding|excluded|without|besides|rather than|instead of)';
+
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 export function readRequest(text: string, vocab: RequestVocabulary, opts: { stems?: boolean } = {}): ReadRequest {
   const stems = opts.stems !== false;
-  const out: ReadRequest = { languages: [], topic: '' };
+  const out: ReadRequest = { languages: [], excludedLanguages: [], topic: '' };
   // Punctuation is never part of a filter or a search word ("mushrooms, edible").
   let t = ` ${text.toLowerCase().replace(/[“”"?!,;:()]/g, ' ')} `;
   const cut = (re: RegExp | string) => { t = t.replace(re, ' '); };
   let m: RegExpMatchArray | null;
+
+  // What the reader does NOT want, read BEFORE anything else looks for a
+  // language name. "books about mushrooms not in english" used to come back as
+  // English books only: the status line read "in english" as "translated", and
+  // the language scan then read the bare name as a language to keep. Both
+  // halves of the request pointed the opposite way from the words.
+  for (const lang of vocab.languages) {
+    const re = new RegExp(`\\b${NOT}[- ]+(?:(?:written|printed|published|books?|texts?|works?)\\s+)?(?:(?:in|into)\\s+)?${escapeRe(lang.toLowerCase())}\\b`);
+    if (re.test(t)) { out.excludedLanguages.push(lang); cut(re); }
+  }
 
   // Reading status
   if ((m = t.match(/\b(first[- ]time translations?|first translations?|never (been )?translated before|translated for the first time)\b/))) {
@@ -81,10 +100,10 @@ export function readRequest(text: string, vocab: RequestVocabulary, opts: { stem
   // Dates
   if ((m = t.match(/\bbetween (\d{3,4}) and (\d{3,4})\b/)) || (m = t.match(/\b(\d{3,4})\s*(?:-|–|to)\s*(\d{3,4})\b/))) {
     out.yearMin = +m[1]; out.yearMax = +m[2]; cut(m[0]);
-  } else if ((m = t.match(/\b(before|until|prior to|earlier than|up to) (\d{3,4})\b/))) {
-    out.yearMax = +m[2]; cut(m[0]);
-  } else if ((m = t.match(/\b(after|since|later than|from) (\d{3,4})\b/))) {
-    out.yearMin = +m[2]; cut(m[0]);
+  } else if ((m = t.match(/\b(?:before|pre|until|till|prior to|earlier than|no later than|up to|by)[- ]?(\d{3,4})\b/)) || (m = t.match(/<\s*(\d{3,4})\b/))) {
+    out.yearMax = +m[1]; cut(m[0]);
+  } else if ((m = t.match(/\b(?:after|post|since|later than|no earlier than|from)[- ]?(\d{3,4})\b/)) || (m = t.match(/>\s*(\d{3,4})\b/))) {
+    out.yearMin = +m[1]; cut(m[0]);
   } else if ((m = t.match(/\b(\d{1,2})(?:st|nd|rd|th)[- ]?(?:c\.?|cent\.?|century)\b/))
     || (m = t.match(new RegExp(`\\b(${Object.keys(ORDINALS).join('|')})[- ]century\\b`)))) {
     const c = ORDINALS[m[1]] ?? +m[1];

@@ -108,6 +108,38 @@ describe('readRequest', () => {
     expect(readRequest('alchemical', vocab, { stems: false }).category).toBeUndefined();
   });
 
+  it('reads a language asked AGAINST, never as one to keep (the Nov 2026 report)', () => {
+    const notEnglish = readRequest('books about mushrooms not in english', vocab);
+    expect(notEnglish.excludedLanguages).toEqual(['English']);
+    expect(notEnglish.languages).toEqual([]);
+    // "in english" used to read as "translated into English" as well.
+    expect(notEnglish.hasTranslation).toBeUndefined();
+    expect(notEnglish.topic).toBe('mushrooms');
+
+    for (const phrase of ['non english', 'non-english', 'other than english', 'except english', 'excluding english']) {
+      const r = readRequest(`books about mushrooms ${phrase}`, vocab);
+      expect(r.excludedLanguages, phrase).toEqual(['English']);
+      expect(r.languages, phrase).toEqual([]);
+      expect(r.topic, phrase).toBe('mushrooms');
+    }
+  });
+
+  it('keeps the languages asked for beside the one asked against', () => {
+    const r = readRequest('german books about mushrooms, not in english', vocab);
+    expect(r.languages).toEqual(['German']);
+    expect(r.excludedLanguages).toEqual(['English']);
+  });
+
+  it('reads a date bound written short', () => {
+    expect(readRequest('books about mushrooms pre 1800', vocab)).toMatchObject({ yearMax: 1800, topic: 'mushrooms' });
+    expect(readRequest('books about mushrooms pre-1800', vocab)).toMatchObject({ yearMax: 1800, topic: 'mushrooms' });
+    expect(readRequest('mushrooms post 1800', vocab)).toMatchObject({ yearMin: 1800, topic: 'mushrooms' });
+    expect(readRequest('mushrooms by 1800', vocab)).toMatchObject({ yearMax: 1800, topic: 'mushrooms' });
+    expect(readRequest('mushrooms no later than 1800', vocab)).toMatchObject({ yearMax: 1800, topic: 'mushrooms' });
+    // A decade still reads as a decade, not as "by 1800" with an "s" left over.
+    expect(readRequest('mushrooms from the 1800s', vocab)).toMatchObject({ yearMin: 1800, yearMax: 1899, topic: 'mushrooms' });
+  });
+
   it('matches a language label with punctuation in it', () => {
     expect(readRequest('Hebrew and Aramaic in Hebrew script', vocab).languages).toEqual(['Hebrew and Aramaic in Hebrew script']);
   });

@@ -29,6 +29,11 @@ const hint = 'font-normal text-muted';
 const listOf = (s: string) => s.split(',').map((t) => t.trim()).filter(Boolean);
 const yearOf = (s: string) => (/^-?\d{1,4}$/.test(s.trim()) ? parseInt(s, 10) : undefined);
 const snapshot = (d: Draft) => JSON.stringify(d, Object.keys(d).sort());
+/** Exclusions the panel carries along, minus any language it has ticked. */
+const keepExclusions = (ex: string[] | undefined, langs: string[]): string[] | undefined => {
+  const kept = (ex ?? []).filter((l) => !langs.includes(l));
+  return kept.length ? kept : undefined;
+};
 
 /**
  * Advanced search, opened under the bars. Changes wait for "Show results" —
@@ -63,17 +68,22 @@ export default function AdvancedSearch({ applied, languages, categories, collect
     author: author.trim() || undefined,
     not: not.trim() || undefined,
     languages: langs.length ? langs : undefined,
+    // Read off the request ("not in English"), not editable here. A language
+    // ticked in this panel wins over an exclusion of the same language, so the
+    // two cannot contradict each other into an empty page.
+    excludeLanguages: keepExclusions(applied.excludeLanguages, langs),
     category: category || undefined,
     collection: collection || undefined,
     yearMin: yearOf(y1),
     yearMax: yearOf(y2),
     hasTranslation: hasTr || undefined,
     firstTranslation: firstTr || undefined,
-  }), [q, topic, also, title, author, not, langs, category, collection, y1, y2, hasTr, firstTr]);
+  }), [q, topic, also, title, author, not, langs, applied.excludeLanguages, category, collection, y1, y2, hasTr, firstTr]);
 
   const base = useMemo(() => snapshot({
     q: applied.q, topic: applied.topic, also: applied.also, title: applied.title, author: applied.author, not: applied.not,
-    languages: applied.languages, category: applied.category, collection: applied.collection,
+    languages: applied.languages, excludeLanguages: keepExclusions(applied.excludeLanguages, applied.languages ?? []),
+    category: applied.category, collection: applied.collection,
     yearMin: applied.yearMin, yearMax: applied.yearMax, hasTranslation: applied.hasTranslation, firstTranslation: applied.firstTranslation,
   }), [applied]);
   const dirty = snapshot(draft) !== base;

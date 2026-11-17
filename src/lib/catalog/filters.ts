@@ -28,6 +28,8 @@ export interface CatalogFilters {
   /** Words that must appear in neither title nor author. */
   not?: string;
   languages?: string[];
+  /** Languages asked against ("not in English"); every other language is kept, undated or not. */
+  excludeLanguages?: string[];
   category?: string;
   collection?: string;
   yearMin?: number;
@@ -85,6 +87,7 @@ export function parseCatalogFilters(sp: URLSearchParams): CatalogFilters {
     author: text(sp.get('author')),
     not: text(sp.get('not')),
     languages: list(sp.getAll('language')),
+    excludeLanguages: list(sp.getAll('not_language')),
     category: text(sp.get('category')),
     collection: text(sp.get('collection')),
     yearMin: year(sp.get('year_min')),
@@ -124,6 +127,7 @@ export function writeCatalogFilters(f: CatalogFilters, sp = new URLSearchParams(
   if (f.author) sp.set('author', f.author);
   if (f.not) sp.set('not', f.not);
   for (const l of f.languages ?? []) sp.append('language', l);
+  for (const l of f.excludeLanguages ?? []) sp.append('not_language', l);
   if (f.category) sp.set('category', f.category);
   if (f.collection) sp.set('collection', f.collection);
   if (f.yearMin != null) sp.set('year_min', String(f.yearMin));
@@ -147,8 +151,8 @@ export function writeCatalogState(s: CatalogState): URLSearchParams {
 
 /** Only the fields that narrow the catalogue: what the stats band counts over. */
 export function catalogFiltersOf(s: CatalogFilters): CatalogFilters {
-  const { q, also, title, author, not, languages, category, collection, yearMin, yearMax, hasTranslation, firstTranslation } = s;
-  return { q, also, title, author, not, languages, category, collection, yearMin, yearMax, hasTranslation, firstTranslation };
+  const { q, also, title, author, not, languages, excludeLanguages, category, collection, yearMin, yearMax, hasTranslation, firstTranslation } = s;
+  return { q, also, title, author, not, languages, excludeLanguages, category, collection, yearMin, yearMax, hasTranslation, firstTranslation };
 }
 
 /** Any words to rank by? Then "most relevant" is the sensible order. */
@@ -159,6 +163,7 @@ export function hasTextQuery(s: CatalogState | CatalogFilters): boolean {
 /** How many filters narrow the set (words not counted). */
 export function activeFilterCount(f: CatalogFilters): number {
   return (f.languages?.length ?? 0)
+    + (f.excludeLanguages?.length ?? 0)
     + [f.category, f.collection, f.hasTranslation, f.firstTranslation, f.not].filter(Boolean).length
     + (f.yearMin != null || f.yearMax != null ? 1 : 0);
 }
