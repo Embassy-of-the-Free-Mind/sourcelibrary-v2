@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { localeHref, localeFromPathname, localePath, useLocale, type Locale } from '@/lib/i18n';
+import { localeHref, localeFromPathname, localePath, useLocale, NAV_STRINGS, type Locale } from '@/lib/i18n';
 import { LOCALE_NATIVE_NAME, ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
 import { displayPublished } from '@/lib/publication-date';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
@@ -935,14 +935,20 @@ function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
   }, []);
 
   const isTenantHost = useIsEmbedded();
+  // The site's nav, from the site's own strings (NAV_STRINGS), in the site's
+  // order — not a second list that drifts. This menu kept Browse, Catalogue
+  // and Works for a month after the header dropped them (#6917), and never
+  // learned Library, Articles or About.
+  const nav = NAV_STRINGS[siteLocale];
   const destinations: Array<[string, string]> = [
-    [t.collections, '/collections'],
-    [t.gallery, '/gallery'],
-    [t.browse, '/browse'],
-    [t.catalogue, catalogueHref(isTenantHost)],
-    [t.works, '/works'],
-    [t.explore, '/explore'],
-    [t.librarian, '/librarian'],
+    // A partner reading room keeps /catalog; the main site reads /library.
+    [nav.library, catalogueHref(isTenantHost)],
+    [nav.gallery, '/gallery'],
+    [nav.collections, '/collections'],
+    [nav.articles, '/articles'],
+    [nav.explore, '/explore'],
+    [nav.about, '/about'],
+    [nav.askLibrarian, '/librarian'],
   ];
 
   // Every link is written through localeHref, so the menu keeps you on the
@@ -978,7 +984,7 @@ function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
         }}
         role="dialog"
         aria-modal="true"
-        aria-label={t.library}
+        aria-label={nav.menu}
       >
         {/* Phone header only. It stays ink so the bar it replaces does not
             flash from dark to cream while the menu opens; on desktop the real
@@ -1001,7 +1007,8 @@ function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
 
       <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
         <div className="w-full max-w-[44rem] mx-auto px-5 lg:px-5 pt-6 lg:pt-5 pb-10 lg:pb-6">
-          <CapsLabel className="block pb-1" style={{ color: 'var(--text-faint)' }}>{t.library}</CapsLabel>
+          {/* No heading over the links: the first one is called Library, and a
+              LIBRARY label above it said the same word twice. */}
           {/* Two columns above sm. Hairlines rather than gaps, which is how
               every other list on the site separates its rows. */}
           <nav className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-1">
@@ -1010,7 +1017,7 @@ function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
                 key={path}
                 href={href(path)}
                 onClick={onClose}
-                className="rv2-menu-item no-underline font-body text-[19px] lg:text-[21px] leading-none py-3.5 transition-colors hover:text-[var(--accent-rust)]"
+                className="rv2-menu-item no-underline font-body text-[19px] lg:text-[21px] leading-none py-3.5 transition-colors hover:underline underline-offset-[6px] decoration-1"
                 style={{
                   color: 'var(--text-primary)',
                   borderBottom: '1px solid var(--border-light)',
