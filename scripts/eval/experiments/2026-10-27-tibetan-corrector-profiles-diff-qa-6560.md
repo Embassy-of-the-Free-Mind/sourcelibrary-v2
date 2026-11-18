@@ -162,7 +162,7 @@ Recommend the **cheapest** variant that passes all four:
 - **The A arm is re-run.** Its outputs are not the lane's stored reads. The same prompt gives a different read on a
   re-run, so the g7477, g7479 and g7483 pages may not repeat their earlier failures.
 - **This box's Claude account meter is empty** (`/root/.claude-limits/latest.json` has no limits for
-  derek@playpowerlabs.com). The 89% weekly stop can only be honoured as "stop at the first limit reply".
+  account@example.com). The 89% weekly stop can only be honoured as "stop at the first limit reply".
 - `/root/agy-quota/status.json` lives on main and is not readable from this box. agy errors stop the runner (exit 3).
 
 ## Results (2026-10-27)

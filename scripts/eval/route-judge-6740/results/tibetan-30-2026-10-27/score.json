@@ -7,7 +7,7 @@
   "list_usd_equiv": 11.79
  },
  "meter": {
-  "account": "milolomas200921@gmail.com",
+  "account": "account@example.com",
   "reading": "/root/.claude-limits/latest.json (climits poll; integer percents)",
   "shared": "SHARED: other jobs (zh-translate-route-6871 Opus calls) ran on the same account throughout; no start reading was taken before the run. Not a per-call measure.",
   "start": {

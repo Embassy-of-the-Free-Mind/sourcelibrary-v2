@@ -3,6 +3,10 @@
 //     PATCH /api/feedback/[id] when an admin marks an item done, and by the lanes.
 //   'reply' — a plain "thanks for your note" with the admin's message; fired by
 //     the admin's Send reply button, which does not close the item (#7678).
+//   'introduction' — an answer to what a reader wrote about themselves on
+//     /welcome; sent from the /admin/introductions outbox (v3#405).
+// Every kind sets Reply-To to a person, so a reader who answers reaches someone
+// instead of noreply@ (v3#405).
 // Best-effort: returns false (never throws) if email can't be
 // sent so it never breaks the admin action.
 
@@ -28,23 +32,34 @@ interface FeedbackReplyParams {
   /** Optional public link to the change (e.g. a PR or the fixed page). */
   link?: string | null;
   /** 'reply' is a plain answer that claims no change was made. Default 'addressed'. */
-  kind?: 'addressed' | 'reply';
+  kind?: 'addressed' | 'reply' | 'introduction';
 }
 
+/** Where a reader's answer to any of these emails goes. Same address the donation and adoption emails use. */
+export const READER_REPLY_TO = 'derek@sourcelibrary.org';
+
 function wording(kind: FeedbackReplyParams['kind']) {
+  if (kind === 'introduction') {
+    return {
+      title: 'Thank you for introducing yourself',
+      intro: 'When you joined Source Library you told us a little about yourself. Here is our reply.',
+      linkLabel: 'Open the link',
+      subject: 'A reply from Source Library',
+    };
+  }
   return kind === 'reply'
     ? {
         title: 'About your note to Source Library',
         intro: 'Thank you for writing to Source Library. Here is our reply.',
         linkLabel: 'Open the link',
         subject: 'A reply to your note on Source Library',
-      }
+        }
     : {
         title: 'Thanks for your feedback',
         intro: 'A little while ago you sent us a note about Source Library. We wanted to let you know we read it and acted on it.',
         linkLabel: 'See the change',
         subject: 'We read your feedback on Source Library',
-      };
+        };
 }
 
 function buildHtml({ name, originalMessage, replyBody, link, kind }: FeedbackReplyParams): string {
@@ -124,6 +139,7 @@ export async function sendFeedbackReplyEmail(params: FeedbackReplyParams): Promi
     const result = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
       to: params.to,
+      replyTo: READER_REPLY_TO,
       subject: wording(params.kind).subject,
       html: buildHtml(params),
       text: buildText(params),

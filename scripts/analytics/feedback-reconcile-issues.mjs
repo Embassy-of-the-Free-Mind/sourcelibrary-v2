@@ -25,7 +25,7 @@
 //
 // Run (dry-run):  set -a; source .env.production.local; set +a; node scripts/analytics/feedback-reconcile-issues.mjs
 // Apply:          ... feedback-reconcile-issues.mjs --apply
-// Options:        --repo <owner/name>  (default: gh's current repo)
+// Options:        --repo <owner/name>  (default: both sourcelibrary-v3 and -v2)
 //                 --state closed|all   (default: closed — only resolved issues mark feedback done)
 //
 // Requires: `gh` authenticated. Safe to run repeatedly (idempotent — skips rows
@@ -57,14 +57,24 @@ function extractFeedbackIds(body) {
   return [...ids];
 }
 
+// Work moved from sourcelibrary-v2 to the private v3 on 2026-11-12, and the
+// issues opened before then (most Feedback-ID links) stayed on v2. With only
+// the current repo scanned, the reconciler read v3 alone and reported "0 closed
+// issues" while v2 held dozens. So by default it scans both.
+const DEFAULT_REPOS = ['Embassy-of-the-Free-Mind/sourcelibrary-v3', 'Embassy-of-the-Free-Mind/sourcelibrary-v2'];
+
 function ghIssues() {
-  const repoFlag = REPO ? `--repo ${REPO}` : '';
-  // gh caps --limit; 1000 is plenty for a feedback-linked issue set.
-  const raw = execSync(
-    `gh issue list ${repoFlag} --label user-feedback --state ${STATE} --limit 1000 --json number,title,body,state,url,closedAt`,
-    { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }
-  );
-  return JSON.parse(raw);
+  const issues = [];
+  for (const repo of REPO ? [REPO] : DEFAULT_REPOS) {
+    // gh caps --limit; 1000 is plenty for a feedback-linked issue set.
+    const raw = execSync(
+      `gh issue list --repo ${repo} --label user-feedback --state ${STATE} --limit 1000 --json number,title,body,state,url,closedAt`,
+      { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }
+    );
+    // ref: "v2#3895" for the old repo, "#406" for v3 (the bare-#N convention in CLAUDE.md).
+    for (const i of JSON.parse(raw)) issues.push({ ...i, ref: `${repo.endsWith('-v2') ? 'v2' : ''}#${i.number}` });
+  }
+  return issues;
 }
 
 await withMongo(async (db) => {
@@ -97,17 +107,17 @@ await withMongo(async (db) => {
   const emailWarn = [];
   for (const { fid, issue } of linked) {
     const row = await fb.findOne({ _id: new ObjectId(fid) });
-    if (!row) { console.log(`  #${issue.number}  ↳ ${fid}  — no such feedback row (skip)`); continue; }
-    if (row.addressed) { console.log(`  #${issue.number}  ↳ ${fid}  — already addressed (skip)`); continue; }
+    if (!row) { console.log(`  ${issue.ref}  ↳ ${fid}  — no such feedback row (skip)`); continue; }
+    if (row.addressed) { console.log(`  ${issue.ref}  ↳ ${fid}  — already addressed (skip)`); continue; }
     // Only closed issues resolve feedback. An open issue linked here (with --state all)
     // is informational — the work isn't done yet.
     if (issue.state.toLowerCase() !== 'closed') {
-      console.log(`  #${issue.number}  ↳ ${fid}  — issue still OPEN, leaving feedback open`);
+      console.log(`  ${issue.ref}  ↳ ${fid}  — issue still OPEN, leaving feedback open`);
       continue;
     }
     toMark.push({ fid, issue, row });
     if ((row.email || '').includes('@')) emailWarn.push({ fid, email: row.email });
-    console.log(`  #${issue.number} (${issue.title.slice(0, 60)})  ↳ ${fid}  — WILL MARK addressed`);
+    console.log(`  ${issue.ref} (${issue.title.slice(0, 60)})  ↳ ${fid}  — WILL MARK addressed`);
   }
 
   console.log(`\n${APPLY ? 'APPLYING' : 'DRY-RUN'}: ${toMark.length} feedback row(s) to mark addressed.`);
@@ -125,7 +135,7 @@ await withMongo(async (db) => {
           read: true, read_at: new Date(),
           addressed: true, addressed_at: new Date(),
           addressed_by: 'feedback-issue-reconciler',
-          addressed_action: `Resolved by closed issue #${issue.number}: ${issue.title}`.slice(0, 1000),
+          addressed_action: `Resolved by closed issue ${issue.ref}: ${issue.title}`.slice(0, 1000),
           addressed_link: issue.url,
           updated_at: new Date(),
         } }

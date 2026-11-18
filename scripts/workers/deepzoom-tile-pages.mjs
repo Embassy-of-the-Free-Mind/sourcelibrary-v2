@@ -5,7 +5,7 @@
  * Sibling of scripts/workers/deepzoom-tile-worker.mjs (which tiles artwork masters
  * on the `books` collection). This one tiles a PAGE's `fullres_master` — the
  * native-res master harvested by deepzoom-harvest-page-masters.mjs — into a DZI
- * pyramid on R2 under `deepzoom/page/<book_id>/<page_number>/`, then writes the
+ * pyramid on R2 under `deepzoom/page/<book_id>/<page id>/` (page_number before #411), then writes the
  * `deepzoom` manifest on the page doc. The book reader mounts OpenSeadragon when
  * the page it's showing has that manifest.
  *
@@ -142,7 +142,14 @@ async function tilePage(pages, page) {
 
     const tiles = walkTiles(`${outBase}_files`);
     const format = path.extname(tiles[0].file).slice(1);
-    const prefix = `deepzoom/page/${page.book_id}/${page.page_number}`;
+    // Keyed by page ID, like --own-leaf (#8096), not page_number. Tiles are written `immutable` for a year, so a
+    // --force re-tile at the old prefix would leave browsers and Cloudflare mixing the old pyramid's cached tiles
+    // with the new one's at the same level (#411: the Ripley Scroll re-tile from 2530 px to 6000 px). A new prefix
+    // per page ID also survives a renumber (#5699). Pages tiled earlier keep their manifest's prefix and still work.
+    const prefix = page.deepzoom?.prefix?.startsWith(`deepzoom/page/${page.book_id}/${page._id}`)
+      ? `deepzoom/page/${page.book_id}/${page._id}/r${Date.now().toString(36)}`
+      : `deepzoom/page/${page.book_id}/${page._id}`;
+    assertBookScopedKey(`${prefix}/0/0_0.${format}`, page.book_id, 'deepzoom-tile-pages');
 
     await pool(tiles, UPLOAD_CONCURRENCY, (t) =>
       s3.send(
@@ -223,7 +230,7 @@ if (BOOK_ID) {
 }
 
 let targets = await pages
-  .find(pageFilter, { projection: { book_id: 1, page_number: 1, fullres_master: 1 } })
+  .find(pageFilter, { projection: { book_id: 1, page_number: 1, fullres_master: 1, 'deepzoom.prefix': 1 } })
   .toArray();
 
 // Gallery-quality gate: keep only pages whose best illustration clears the bar.

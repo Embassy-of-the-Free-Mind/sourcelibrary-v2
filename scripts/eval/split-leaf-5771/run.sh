@@ -14,7 +14,7 @@ ROOT=$(cd "$(dirname "$0")/../../.." && pwd); S=$JOB_SCRATCH; cd "$ROOT"
 CB=$(for c in /usr/bin/claude /root/.local/bin/claude; do "$c" --help 2>/dev/null | grep -q -- --restricted && { echo "$c"; break; }; done)
 [ -n "$CB" ] || { echo "no claude with --restricted"; exit 6; }
 export PATH=$(dirname "$CB"):$PATH CLAUDE_SESSION_MAX_PCT=80 CLAUDE_WEEKLY_MAX_PCT=85
-G=root@65.108.136.89; J=/root/jobs/split-leaves-5771
+G=root@203.0.113.4; J=/root/jobs/split-leaves-5771
 P6948=$S/p6948/audit
 log() { echo "$(date -u +%FT%TZ) $*"; }
 state() { echo "$1" > "$S/run.state"; log "STEP $1"; }

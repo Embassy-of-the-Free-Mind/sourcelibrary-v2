@@ -109,6 +109,12 @@ const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
 const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
 const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
 const RUN_PHASE_7_7 = phaseArg === 'all' || phaseArg === '7.7';
+/**
+ * cron_runs name of a non-batch, non-agy run. The scheduler launches phases 7.5 and 7.6 alone as enrich-scoring and
+ * enrich-collections; each writes its own name so /admin/pipeline can tell them from the summary phase (v3#428).
+ */
+const runLogName = (phase) => ({ '7.5': 'hetzner-enrich-scoring', '7.6': 'hetzner-enrich-collections' })[phase] ?? 'hetzner-enrich-worker';
+const RUN_LOG = runLogName(phaseArg);
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
 const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 30;
@@ -1675,7 +1681,7 @@ async function main() {
     const reason = pause.reason;
     console.log(`[ENRICH] ${reason}, exiting`);
     await db.collection('cron_runs').insertOne({
-      cron: 'hetzner-enrich-worker', timestamp: new Date(),
+      cron: RUN_LOG, timestamp: new Date(),
       duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
       actions: { skip_reason: reason }, errors: [], error_count: 0,
       summary: `skipped: ${reason}`,
@@ -1764,7 +1770,7 @@ async function main() {
   }
   if (!DRY_RUN && !_gate.allowed) {
     await db.collection('cron_runs').insertOne({
-      cron: 'hetzner-enrich-worker', timestamp: new Date(),
+      cron: RUN_LOG, timestamp: new Date(),
       duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
       actions: { skip_reason: 'budget ceiling' }, errors: [], error_count: 0,
       summary: 'skipped: daily budget ceiling reached',
@@ -2379,7 +2385,7 @@ NO explanation, just the JSON array.`;
   }
 
   await db.collection('cron_runs').insertOne({
-    cron: 'hetzner-enrich-worker', timestamp: new Date(),
+    cron: RUN_LOG, timestamp: new Date(),
     duration_ms: durationMs,
     status: errors.length > 0 ? 'completed_with_errors' : 'success',
     failed: false,

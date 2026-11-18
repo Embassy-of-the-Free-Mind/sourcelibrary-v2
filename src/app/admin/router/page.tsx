@@ -5,6 +5,7 @@ import {
   ageMin, daysLeft, getRouterBoard, splitCells, ROUTER_BOARD_STALE_MIN,
   type CellStatus, type RouteRow, type RouterBoardDoc, type RouterCell,
 } from '@/lib/router-board';
+import { RULE_LABEL, groupStale } from '../../../../scripts/lib/stale-routes.mjs';
 
 /**
  * /admin/router — do the router's decisions reach production? (#7913). Per cell: the route production runs, the
@@ -181,6 +182,34 @@ function CellTable({ cells, today }: { cells: RouterCell[]; today: string }) {
   );
 }
 
+/** Stale routes (v3#460), one block at the top: what the 07:00 mail lists, grouped by rule, biggest queue first. */
+function Stale({ doc }: { doc: RouterBoardDoc }) {
+  if (!doc.stale) return <p className="text-sm text-stone-500">Stale routes: this push predates them (v3#460); the next hourly push adds them.</p>;
+  const groups = groupStale(doc.stale) as Record<string, NonNullable<RouterBoardDoc['stale']>>;
+  return (
+    <section className="grid gap-2 rounded border border-amber-200 bg-amber-50/50 p-3">
+      <h2 className="text-sm font-semibold text-stone-900">
+        Stale routes ({doc.stale.length}){doc.stale.length === 0 ? ': none' : ''}
+      </h2>
+      {Object.entries(groups).map(([rule, xs]) => (
+        <div key={rule} className="grid gap-0.5 text-sm">
+          <h3 className="text-xs uppercase tracking-wider text-stone-500">{(RULE_LABEL as Record<string, string>)[rule] ?? rule} ({xs.length})</h3>
+          <ul className="grid gap-0.5">
+            {xs.map((s, i) => (
+              <li key={`${s.cell}-${i}`} className="text-stone-700">
+                {s.cell && <code className="text-stone-900">{s.cell}</code>}{s.cell ? ': ' : ''}{s.why}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <p className="text-xs text-stone-500">
+        Rules and thresholds: <a className={LINK} href={`${REPO}/blob/main/scripts/lib/stale-routes.mjs`}>stale-routes.mjs</a> (v3#460). A stale route is one whose decision wants another look; it may still be the right route.
+      </p>
+    </section>
+  );
+}
+
 function Board({ doc, now }: { doc: RouterBoardDoc; now: Date }) {
   const { decided, undecided } = splitCells(doc.cells);
   const today = now.toISOString().slice(0, 10);
@@ -239,6 +268,7 @@ export default async function RouterPage() {
         </p>
       </header>
       {error && <p className="text-sm text-red-700">Could not read the router board: {error}</p>}
+      {doc && <Stale doc={doc} />}
       {doc && <Board doc={doc} now={now} />}
     </main>
   );

@@ -1,4 +1,4 @@
-# Page-vector service for semantic page search (#6821). Installed on l7a (earthai-l7a, 167.233.32.250)
+# Page-vector service for semantic page search (#6821). Installed on l7a (earthai-l7a, 203.0.113.1)
 # at /etc/systemd/system/vector-search.service:
 #
 #   cp infrastructure/systemd/vector-search.service /etc/systemd/system/

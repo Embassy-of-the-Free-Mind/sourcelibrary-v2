@@ -64,7 +64,13 @@ export const STAGE_RULES = Object.freeze([
   ['enrich', /enrich|geocode|thesaurus|hires-gallery|printed-page|extract-images|image-embed/],
   ['import', /acquire|import\/|archive-lanes|catalog-coverage/],
 ]);
-export const STAGES = Object.freeze([...STAGE_RULES.map(([s]) => s)]);
+/**
+ * Stage of a line whose executed script matches no rule (backfill-cover-cards.mjs, sync-worker.mjs, disk-alarm.sh …).
+ * Kept so the whole-line view can name every scheduled script (v3#428), and never judged: such a line gets no red
+ * verdict, so it cannot turn red or reach the weekly ntfy. A line that runs no script file is still left out.
+ */
+export const OTHER_STAGE = 'other';
+export const STAGES = Object.freeze([...STAGE_RULES.map(([s]) => s), OTHER_STAGE]);
 
 const SCRIPT_RE = /(?:^|[\s=])((?:\/[\w.-]+)*\/?scripts\/[\w./-]+\.(?:mjs|js|ts|sh|py)|\/root\/bin\/[\w.-]+)/g;
 /** A script path as shown: repo-relative when it lives in the checkout. */
@@ -176,7 +182,8 @@ export function isOneShot(schedule) {
 }
 
 /**
- * The pipeline lanes in a crontab: one row per job line whose script runs a stage. With `box`, each row also carries
+ * The pipeline lanes in a crontab: one row per job line that runs a script, under its stage, or OTHER_STAGE when no
+ * rule matches the script. With `box`, each row also carries
  * its registry row id (`registry`, null when unregistered) and its red verdicts (`red`, judgeCronLine, #8283); the
  * raw command is judged here and never stored.
  */
@@ -191,9 +198,9 @@ export function pipelineLines(text, { box = null, now = new Date(), laneTotals =
     logSchedules.set(lp, [...(logSchedules.get(lp) ?? []), p.schedule]);
   }
   for (const { schedule, cmd, comment, disabled, tag } of parsed) {
-    const stage = stageOf(cmd);
-    if (!stage) continue;
     const scripts = scriptsOf(cmd);
+    const stage = stageOf(cmd) ?? (scripts.length ? OTHER_STAGE : null);
+    if (!stage) continue;
     const row = {
       stage, schedule, one_shot: isOneShot(schedule), disabled, disabled_tag: tag,
       script: scripts[0] ?? null, scripts: scripts.slice(0, 4), mode: modeOf(cmd, scripts[0]),
@@ -204,7 +211,8 @@ export function pipelineLines(text, { box = null, now = new Date(), laneTotals =
       const reg = cronRowFor(box, line);
       Object.assign(row, {
         registry: reg ? { id: reg.id, status: reg.status, issue: reg.issue ?? null, route: reg.route ?? null, review_by: reg.review_by ?? null, open: reg.open ?? null } : null,
-        red: judgeCronLine(box, line, { now, laneTotals, logAt: row.log ? logAtOf(row.log) : null, logSchedules: logSchedules.get(row.log) ?? null }),
+        red: stage === OTHER_STAGE ? []
+          : judgeCronLine(box, line, { now, laneTotals, logAt: row.log ? logAtOf(row.log) : null, logSchedules: logSchedules.get(row.log) ?? null }),
       });
     }
     rows.push(row);
@@ -468,21 +476,59 @@ export function flaggedStops(docs) {
 
 // ───────────────────────────────────────────── corpus (main)
 
-/** Pages written per UTC day × lane × model since `since`, on one text field ('translation' | 'ocr'). */
+/**
+ * What names the job inside a lane (v3#460): an OCR page's `ocr.pipeline` (agy-first-read-7701, agy-reread-lite-7853),
+ * a translation's engine call site (scripts/batch/cli-translate.mjs, scripts/lib/seam-pass.mjs). The daily mail splits a
+ * facet by it (first reads, re-reads, seam repairs); null on rows that carry neither.
+ */
+const SUB_FIELD = { ocr: '$ocr.pipeline', translation: '$translation.engine.call_site' };
+
+/**
+ * Pages written per UTC day × lane × model since `since`, on one text field ('translation' | 'ocr'), and the same pages
+ * per day × lane × sub (SUB_FIELD) with distinct books (v3#460). One pass: the second shape costs a set of book ids per
+ * group, a few thousand a day. `rows` keeps the shape every reader of ocr_per_day / translated_per_day expects.
+ */
 async function perDay(db, field, since) {
-  const rows = await db.collection('pages').aggregate([
+  const run = (withWork) => db.collection('pages').aggregate([
     { $match: { [`${field}.updated_at`]: { $gte: since } } },
     { $group: {
       _id: {
         day: { $dateToString: { format: '%Y-%m-%d', date: `$${field}.updated_at` } },
         lane: { $ifNull: [`$${field}.lane`, { $ifNull: [`$${field}.source`, 'unlabelled'] }] },
         model: { $ifNull: [`$${field}.model`, 'unknown'] },
+        ...(withWork && { sub: { $ifNull: [SUB_FIELD[field], null] } }),
       },
       pages: { $sum: 1 },
+      ...(withWork && { books: { $addToSet: '$book_id' } }),
     } },
   ], { hint: { [`${field}.updated_at`]: -1 }, maxTimeMS: 300_000, allowDiskUse: true }).toArray();
-  return rows.map(r => ({ day: r._id.day, lane: String(r._id.lane), model: String(r._id.model), pages: r.pages }))
-    .sort((a, b) => a.day.localeCompare(b.day) || b.pages - a.pages);
+  try {
+    return splitPerDay(await run(true));
+  } catch (e) {
+    // The split is the mail's; the lane rows are everyone's (IDLE 7 DAYS, the whole line). Never lose them to it.
+    console.error(`perDay ${field}: work split failed (${redact(e.message, 120)}), lane rows only`);
+    return { ...splitPerDay(await run(false)), work: null };
+  }
+}
+
+/** Pure: the aggregation's day × lane × model × sub groups → { rows (day × lane × model), work (day × lane × sub, books) }. */
+export function splitPerDay(raw) {
+  const rows = new Map(), work = new Map();
+  for (const r of raw) {
+    const { day, lane, model, sub } = r._id;
+    const a = `${day}|${lane}|${model}`;
+    rows.set(a, { day, lane: String(lane), model: String(model), pages: (rows.get(a)?.pages ?? 0) + r.pages });
+    const b = `${day}|${lane}|${sub ?? ''}`;
+    const w = work.get(b) ?? { day, lane: String(lane), sub: sub == null ? null : String(sub), pages: 0, ids: new Set() };
+    w.pages += r.pages;
+    for (const id of r.books ?? []) w.ids.add(String(id));
+    work.set(b, w);
+  }
+  const byDay = (a, b) => a.day.localeCompare(b.day) || b.pages - a.pages;
+  return {
+    rows: [...rows.values()].sort(byDay),
+    work: [...work.values()].map(({ ids, ...w }) => ({ ...w, books: ids.size })).sort(byDay),
+  };
 }
 
 /** qg_translate_202610101657_… → 2026-10-10T16:57Z (gate documents carry no created_at). */
@@ -575,8 +621,9 @@ export async function collectCorpus(db, now = new Date()) {
     .sort({ _id: -1 }).limit(3).toArray();
   const errors = [];
   const safe = async (label, fn) => { try { return await fn(); } catch (e) { errors.push(`${label}: ${redact(e.message, 160)}`); return null; } };
-  const translatedPerDay = await safe('translation', () => perDay(db, 'translation', since));
-  const ocrPerDay = await safe('ocr', () => perDay(db, 'ocr', since));
+  const translatedSplit = await safe('translation', () => perDay(db, 'translation', since));
+  const ocrSplit = await safe('ocr', () => perDay(db, 'ocr', since));
+  const translatedPerDay = translatedSplit?.rows ?? null, ocrPerDay = ocrSplit?.rows ?? null;
   const ocrWin = await safe('ocr windows', () => ocrWindows(db, now));
   const bookRows = await safe('books by status', () => bookStatusPerDay(db, since, now));
   const ft = await safe('first_translation_attempts', () => ftAttempts(db, now, 14));
@@ -597,6 +644,9 @@ export async function collectCorpus(db, now = new Date()) {
     quality_gates: gates.map(g => ({ id: g.id ?? String(g._id), step: g.step ?? null, verdict: g.verdict ?? g.decision ?? null, window: g.window?.label ?? null, books: g.window?.books ?? null, at: g.created_at ?? gateTime(g.id) })),
     translated_per_day: translatedPerDay,
     ocr_per_day: ocrPerDay,
+    // the same pages by the job inside each lane, with distinct books: the daily mail's facets (v3#460)
+    translated_work_per_day: translatedSplit?.work ?? null,
+    ocr_work_per_day: ocrSplit?.work ?? null,
     handoffs_per_day: counts?.per_day ?? null,
     handoff_windows: counts?.windows ?? null,
     stalls,

@@ -355,7 +355,7 @@ if (PHASE === 'score') {
       for (const k of ARM_KEYS) for (const r of Object.values(page.arms[k] || {})) if (r.text) rows.push({ id: `${r.book_id}_${String(r.page_number).padStart(5, '0')}`, arm: `${k}${r.run}`, text: clean(r.text) });
     const tmp = R(`per-language-suitability-tibetan-${DATE}.jsonl`);
     fs.writeFileSync(tmp, rows.map(r => JSON.stringify(r)).join('\n') + '\n');
-    const host = process.env.CLAWDBOT || 'root@46.224.122.120';
+    const host = process.env.CLAWDBOT || 'root@203.0.113.2';
     try {
       // --tibetan-scores=<local jsonl> skips the ~10-min remote step (scp the pages
       // file up, run the scorer detached on clawdbot, scp pls-scores.jsonl back).

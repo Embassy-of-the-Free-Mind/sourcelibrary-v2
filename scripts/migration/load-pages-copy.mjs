@@ -19,7 +19,8 @@ import { createReadStream } from 'fs';
 import { createInterface } from 'readline';
 import pg from 'pg';
 
-const PGPASSWORD = process.env.PGPASSWORD || 'XfJasb4mx3@9PMD';
+const PGPASSWORD = process.env.PGPASSWORD;
+if (!PGPASSWORD) { console.error('PGPASSWORD is not set'); process.exit(2); }
 const args = process.argv.slice(2);
 const inputFile = args.find(a => !a.startsWith('--')) || '/tmp/pages-dump.jsonl';
 const SKIP = parseInt(args.find(a => a.startsWith('--skip='))?.split('=')[1] || '0', 10);

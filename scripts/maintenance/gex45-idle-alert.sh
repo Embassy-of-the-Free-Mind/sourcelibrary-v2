@@ -27,7 +27,7 @@
 # At most one per STEWARD_EVERY_H (24). $0, no Mongo writes: those rules are in the brief. STEWARD=0 turns it off.
 set -euo pipefail
 
-HOST=${GEX45_HOST:-root@65.108.136.89}
+HOST=${GEX45_HOST:-root@203.0.113.4}
 OUTPUT_DIRS=${OUTPUT_DIRS:-/root/pz/out /root/jobs}
 IDLE_HOURS=${IDLE_HOURS:-6}
 NAG_HOURS=${NAG_HOURS:-24}

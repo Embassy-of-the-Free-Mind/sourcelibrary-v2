@@ -13,7 +13,7 @@ categorical quality census.
 All scripts read/write `$SOL_DATA_DIR` (default `scripts/output/sol-harvest/`,
 untracked). The data is NOT in this repo: the SOL mirror and every file derived
 from it carry SOL's **CC BY-NC-SA** license and must not be committed to this
-AGPL repository. Snapshot backup: `root@46.224.122.120:/root/backups/sol-harvest-2026-08-11.tar.gz`.
+AGPL repository. Snapshot backup: `root@203.0.113.2:/root/backups/sol-harvest-2026-08-11.tar.gz`.
 
 ## Pipeline (run in order; each stage is resumable/idempotent)
 

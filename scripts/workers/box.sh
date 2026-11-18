@@ -12,7 +12,7 @@
 # on a connection failure (ssh exit 255) and none on a refusal, so a dead box costs seconds, never a hang.
 # Setup and key rotation: scripts/workers/mesh-setup.sh, run from the laptop. Doc: scripts/workers/JOB-HOSTS.md.
 set -u
-BOXES="main=46.224.122.120 cloudlayer=46.224.208.175 l7a=167.233.32.250 gex45=65.108.136.89"
+BOXES="main=203.0.113.2 cloudlayer=203.0.113.3 l7a=203.0.113.1 gex45=203.0.113.4"
 KEY=/root/.ssh/id_mesh; KH=/root/.ssh/known_hosts_mesh
 ip_of() { local b; for b in $BOXES; do [ "${b%%=*}" = "$1" ] && { echo "${b#*=}"; return 0; }; done; return 1; }
 self() {
@@ -101,7 +101,7 @@ PY
         n=$(( $(cat "$st/$b.fails" 2>/dev/null || echo 0) + 1 )); echo $n > "$st/$b.fails"
         # Page once, after 30 minutes of failures; the wrapper on $b treats a stale meter as "no check".
         [ $n -eq 6 ] && curl -s -m 10 -H "Title: Box mesh down: main -> $b (30 min)" -H "Priority: high" \
-          -d "box.sh cannot reach $b. Jobs there start without the weekly-limit check, and capped jobs cannot move. From the laptop: ssh root@$(ip_of "$b") tail /var/log/box-rpc.log; scripts/workers/mesh-setup.sh check" https://ntfy.sh/sourcelibrary-uptime >/dev/null 2>&1
+          -d "box.sh cannot reach $b. Jobs there start without the weekly-limit check, and capped jobs cannot move. From the laptop: read /var/log/box-rpc.log on $b; scripts/workers/mesh-setup.sh check" https://ntfy.sh/sourcelibrary-uptime >/dev/null 2>&1
       fi
     done ;;
   all|others)

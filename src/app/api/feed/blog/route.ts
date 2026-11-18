@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { posts, KIND_INFO } from '@/app/articles/posts';
+import { listedPosts as posts, KIND_INFO } from '@/app/articles/posts';
 
 // Atom feed for Articles (/articles). Reads the same `posts` array the index
 // renders, so the feed never drifts from the site.

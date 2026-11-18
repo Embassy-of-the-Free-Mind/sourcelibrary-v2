@@ -1,6 +1,6 @@
 {
  "issue": 6667,
- "account": "derek@playpowerlabs.com (cloudlayer)",
+ "account": "account@example.com (cloudlayer)",
  "source": "/root/.claude-limits/latest.json, polled every 5 min; integer percent",
  "weekly_all_models_pct": {
   "before_pilot_2026-10-13T11:50Z": 25,

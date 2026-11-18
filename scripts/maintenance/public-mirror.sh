@@ -57,6 +57,10 @@ done
 rsync -a --delete --exclude=/.git "$WORK/private/" "$WORK/public/"
 for ex in "${EXCLUDES[@]}"; do rm -rf "${WORK:?}/public/${ex%/}"; done
 
+# Remove box addresses and personal logins from the public copy, and refuse to publish a live secret.
+python3 -I "$(dirname "$(readlink -f "$0")")/mirror-scrub.py" "$WORK/public" "$WORK/private/scripts/workers/box.sh" \
+  "${MIRROR_ENV_FILE:-/root/sourcelibrary/.env.production.local}" || { log "REFUSED: mirror-scrub failed, nothing published"; exit 3; }
+
 cd "$WORK/public"
 git add -A
 if git diff --cached --quiet; then log "nothing changed since the last mirror (v3@${sha:0:9})"; exit 0; fi

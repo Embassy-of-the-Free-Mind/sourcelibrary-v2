@@ -1,0 +1,24 @@
+# Percona Backup for MongoDB storage config (#346). Rendered by pbm-setup.sh with the keys from
+# /etc/sl-mongo/s3.env, applied with `pbm config --file`, then the rendered copy is deleted.
+storage:
+  type: s3
+  s3:
+    region: nl-ams
+    endpointUrl: ${S3_ENDPOINT}
+    bucket: ${S3_BUCKET}
+    prefix: pbm
+    storageClass: ONEZONE_IA
+    # Scaleway allows 1,000 parts per multipart upload (AWS: 10,000). PBM's default 10 MB part caps an object at
+    # 10 GB, and bookstore.pages is ~20 GB compressed: the first backup failed on part 1,001 (2026-11-16).
+    maxUploadParts: 1000
+    uploadPartSize: 104857600   # 100 MB parts: objects up to ~100 GB
+    credentials:
+      access-key-id: ${AWS_ACCESS_KEY_ID}
+      secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+pitr:
+  enabled: false        # turned on by pbm-setup.sh --pitr once a full backup exists (PBM refuses PITR without one)
+  oplogSpanMin: 1
+  compression: zstd
+backup:
+  compression: zstd
+  compressionLevel: 9   # level 9: smaller nightly restore download (egress) for a little more CPU at backup time

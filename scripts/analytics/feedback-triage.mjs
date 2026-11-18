@@ -20,6 +20,7 @@
 // flags which rows have an email.
 
 import { withMongo } from '../lib/mongo.mjs';
+import { isTestProbe } from '../lib/feedback-test-probe.mjs';
 import { ObjectId } from 'mongodb';
 
 
@@ -78,6 +79,7 @@ function tenantOf(r) {
 }
 
 function classify(r) {
+  if (isTestProbe(r)) return 'test-probe';
   if (tenantOf(r)) return 'partner-cms';
   const m = (r.message || '');
   for (const [label, re] of CLASSIFIERS) if (re.test(m)) return label;
@@ -153,6 +155,11 @@ await withMongo(async (db) => {
         if (r.reply_draft) console.log(`    ✎ unsent reply draft: ${r.reply_draft.replace(/\s+/g, ' ').slice(0, 200)}`);
         if (r.reply_sent_at) console.log(`    ↩ already emailed ${new Date(r.reply_sent_at).toISOString().slice(0, 10)}`);
       }
+    }
+    const probes = groups['test-probe'];
+    if (probes?.length) {
+      console.log(`\n## test-probe  (${probes.length}): canary, SSRF-probe, fixture and blank rows; not reader feedback`);
+      console.log(`    clear: node scripts/analytics/feedback-triage.mjs --mark-addressed ${probes.map((r) => r._id).join(',')} --note "test/probe submission" --apply`);
     }
   };
 

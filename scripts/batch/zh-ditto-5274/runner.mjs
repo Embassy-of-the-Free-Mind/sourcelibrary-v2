@@ -142,7 +142,7 @@ async function runLoop() {
     if (m.weekly >= WEEKLY_STOP) {
       const until = new Date(m.weekly_reset).getTime() + 15 * 60e3;
       log(`weekly ${m.weekly}% >= ${WEEKLY_STOP}%: sleeping to the reset ${m.weekly_reset}`);
-      await ntfy('zh-ditto-5274 sleeping to the weekly reset', `weekly ${m.weekly}% on ${m.email}; resumes after ${m.weekly_reset}. ${status(false)}`, 'low');
+      await ntfy('zh-ditto-5274 sleeping to the weekly reset', `weekly ${m.weekly}%; resumes after ${m.weekly_reset}. ${status(false)}`, 'low');
       while (Date.now() < until && !fs.existsSync(F('STOP'))) await sleep(Math.min(30 * 60e3, Math.max(60e3, until - Date.now())));
       continue;
     }

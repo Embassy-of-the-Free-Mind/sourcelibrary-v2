@@ -1,0 +1,11 @@
+[Unit]
+Description=Restore test of the newest backup, Wed and Sun (#346)
+After=mongod.service network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sl-mongo/backup/restore-test.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+TimeoutStartSec=8h

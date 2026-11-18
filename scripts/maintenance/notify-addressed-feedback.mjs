@@ -44,7 +44,7 @@ const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/
 
 const SELF_ADDRESSES = new Set(
   (process.env.SELF_ADDRESSES ||
-    'dereklomas@gmail.com,derek@sourcelibrary.org,derek@playpowerlabs.com,julikalomas@gmail.com')
+    'account@example.com,derek@sourcelibrary.org,account@example.com,account@example.com')
     .split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
 );
 

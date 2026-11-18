@@ -16,7 +16,7 @@
 # Requires /root/bin/box-rpc.sh on every box (the installer puts it there after a pull); refuses otherwise,
 # because an authorized command that does not exist locks the key out with a confusing error.
 set -u
-BOXES="main=46.224.122.120 cloudlayer=46.224.208.175 l7a=167.233.32.250 gex45=65.108.136.89"
+BOXES="main=203.0.113.2 cloudlayer=203.0.113.3 l7a=203.0.113.1 gex45=203.0.113.4"
 SSH="ssh -o BatchMode=yes -o ConnectTimeout=10"
 names() { for b in $BOXES; do echo "${b%%=*}"; done; }
 peers() { echo $(( $(names | wc -l) - 1 )); }  # mesh entries each box should hold: one per other box

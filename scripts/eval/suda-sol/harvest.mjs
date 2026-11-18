@@ -7,7 +7,7 @@ import path from 'node:path';
 
 const BASE = 'https://www.cs.uky.edu/~raphael/sol/sol-entries/';
 const OUT = path.join(process.env.SOL_DATA_DIR ?? 'scripts/output/sol-harvest', 'raw');
-const UA = 'SourceLibrary-research-harvest/1.0 (sourcelibrary.org; contact derek@playpowerlabs.com; single-thread, throttled)';
+const UA = 'SourceLibrary-research-harvest/1.0 (sourcelibrary.org; contact account@example.com; single-thread, throttled)';
 const DELAY_MS = 250;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

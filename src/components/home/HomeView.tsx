@@ -8,7 +8,7 @@ import EditorialSpread, { featuredBookHref } from '@/components/prototype/Editor
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
-import { posts as ARTICLES } from '@/app/articles/posts';
+import { listedPosts as ARTICLES } from '@/app/articles/posts';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
 import SubjectIndex from '@/components/home/SubjectIndex';

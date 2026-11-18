@@ -1,4 +1,4 @@
-import React, { Suspense, cache } from 'react';
+import React, { Fragment, Suspense, cache } from 'react';
 import Link from 'next/link';
 import { renderInlineProse, stripInlineMarkup } from '@/lib/inline-prose';
 import Image from 'next/image';
@@ -28,6 +28,7 @@ import { isTranslationReadable } from '@/lib/first-translation/derive';
 import { ftRenderProps, type FtRenderSource } from '@/lib/first-translation/render';
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
+import { collectionArticles } from '@/app/articles/posts';
 import { authorUrl } from '@/lib/slugify';
 import { localizedEditionFilter } from '@/lib/localized';
 import {
@@ -409,12 +410,21 @@ const COMPACT_LIMIT = 14;
 // Paragraphs of the introduction shown before "Read more" (#7897).
 const INTRO_LEAD_PARAGRAPHS = 2;
 
-// A reading page that belongs to one collection and is written in code, not in
-// the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
-// meta row and is never shown inside a partner room.
-const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }> = {
-  drebbel: { href: '/articles/beeckman-on-drebbel', label: 'Beeckman on Drebbel, in his own words' },
+// Reading pages that belong to one collection and are written in code, not in
+// the `collections` doc (#5936). Keyed by slug; the links sit in the hero's
+// meta row and are never shown inside a partner room. Articles marked with a
+// `collection` in posts.ts are added after these, and are linked only from
+// here, not from /articles (#437).
+const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }[]> = {
+  drebbel: [{ href: '/articles/beeckman-on-drebbel', label: 'Beeckman on Drebbel, in his own words' }],
 };
+
+function readingPagesFor(slug: string): { href: string; label: string }[] {
+  return [
+    ...(COLLECTION_READING_PAGES[slug] ?? []),
+    ...collectionArticles(slug).map((p) => ({ href: `/articles/${p.slug}`, label: p.title.split(':')[0] })),
+  ];
+}
 
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
@@ -1088,7 +1098,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
 
   // The band self-gates on empty, but the hero anchor needs to know in advance.
   const hasFurtherReading = furtherReading.length > 0 || readingListGaps.length > 0;
-  const readingPage = COLLECTION_READING_PAGES[collection.slug || id];
+  const readingPages = readingPagesFor(collection.slug || id);
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1362,17 +1372,17 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 <span>{languages.map((l: { lang: string }) => l.lang).join(', ')}</span>
               </>
             )}
-            {!tenantSlug && readingPage && (
-              <>
+            {!tenantSlug && readingPages.map((page) => (
+              <Fragment key={page.href}>
                 <span className="w-px h-4 bg-white/20" />
                 <Link
-                  href={readingPage.href}
+                  href={page.href}
                   className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
                 >
-                  {readingPage.label}
+                  {page.label}
                 </Link>
-              </>
-            )}
+              </Fragment>
+            ))}
             {/* The bridge only ran one way: the Spanish twin links here ("Ver esta
                 colección … en inglés") and this page had NO reference to
                 /es/collections at all, so a Spanish reader was told to go read

@@ -43,7 +43,27 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'what-the-bath-does',
+    collection: 'bathing',
+    title: 'What the Bath Does: Bathing in Historical Sources',
+    subtitle:
+      "Holy springs, cures, shared baths, physicians' rules and ideas that came in the bath, in the words of the sources.",
+    summary:
+      'Holy springs, cures at hot springs, shared baths, physicians’ rules and ideas that came in the bath, from Pausanias and Caraka to Paracelsus and Descartes.',
+    date: '16 November 2026',
+    readTime: '13 min read',
+    kind: 'stories',
+    image: '/articles/what-the-bath-does-doctors-of-water/sudatorium.jpg',
+    imageAlt:
+      'Manuscript painting of naked bathers crowded in a vaulted sweating chamber beside a stream, one filling a jug from the stream, while two haloed figures sit in a cave in the rock above.',
+    epub: {
+      colour: { href: 'https://images.sourcelibrary.org/article-epubs/what-the-bath-does-e091bc87.epub', mb: 7 },
+      eink: { href: 'https://images.sourcelibrary.org/article-epubs/what-the-bath-does-bw-cd0b30c3.epub', mb: 3 },
+    },
+  },
+  {
     slug: 'sacred-baths',
+    collection: 'bathing',
     title: 'Sacred Baths',
     subtitle:
       'A goddess who spat on an emperor, a grandmother who lives in the Nahua sweat house, Scythians howling in hemp steam, Seneca lodging over a bathhouse, forty seah measured in Amsterdam beer mugs, the sun born from a washed eye, and a dinner table afloat at Baden: what people sought in hot water, in their own words.',
@@ -1427,3 +1447,12 @@ export const posts: BlogPost[] = [
     imageAlt: 'Chakra diagram from the Shaiva tantric tradition, Wellcome Collection',
   },
 ];
+
+// Posts that appear in the article lists. A post with `collection` set is read
+// from that collection's page instead (see BlogPost.collection).
+export const listedPosts: BlogPost[] = posts.filter((p) => !p.collection);
+
+// The articles a collection page links in its hero, oldest first.
+export function collectionArticles(slug: string): BlogPost[] {
+  return posts.filter((p) => p.collection === slug).reverse();
+}

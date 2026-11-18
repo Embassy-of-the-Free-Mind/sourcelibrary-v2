@@ -9,7 +9,7 @@ import { BASE_URL } from '@/components/seo/schema-utils';
 import revisions from '@/generated/blog-revisions.json';
 import ArticleBooks from './ArticleBooks';
 import { ArticleCard } from './BlogIndex';
-import { posts, LINKED_PAGES, type BlogPost } from './posts';
+import { posts, listedPosts, LINKED_PAGES, type BlogPost } from './posts';
 
 // Articles that render their own BlogPostSchema with hand-written fields.
 const OWN_SCHEMA = new Set([
@@ -35,7 +35,7 @@ const newestFirst = (a: BlogPost, b: BlogPost) => (Date.parse(b.date) || 0) - (D
 
 // Same category first, newest first, then the newest from the others.
 function relatedTo(post: BlogPost): BlogPost[] {
-  const pool = [...posts, ...LINKED_PAGES].filter((p) => p.slug !== post.slug).sort(newestFirst);
+  const pool = [...listedPosts, ...LINKED_PAGES].filter((p) => p.slug !== post.slug).sort(newestFirst);
   const same = pool.filter((p) => p.kind === post.kind);
   const rest = pool.filter((p) => p.kind !== post.kind);
   return [...same, ...rest].slice(0, RELATED_COUNT);

@@ -69,7 +69,7 @@ Applied, those pages would lose their whole body. Across the five languages it h
   - **C sometimes emends toward the expected text instead of the print.** In wave 1 the cases were the Lotus Sutra lacunae and the Homeric cento. Here they are चिन्तनविधानात् and الختم.
   - **C keeps what L dropped only when it notices the gap.**
 
-**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed)
+**Cost** (Claude subscription, box account account@example.com; $0 billed)
 
 | Language | Pages | Calls | Output tokens | List price | Per 1K pages |
 |---|---|---|---|---|---|

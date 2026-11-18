@@ -34,6 +34,10 @@
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id>            # dry run
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id> --apply
  *   … --book <id> --text-matches-source-by-eye S1,S2   finish a half-done text repair (#8266)
+ *   … --source erara_pdf --unread   a book nothing was ever read from (v3#466): no text witness exists and none is
+ *                  needed; refused unless scripts/lib/erara-recut-plan.mjs finds no text or leaf-derived field on
+ *                  any page and every sampled page is shifted. Run it through erara-recut-466.mjs, which also
+ *                  moves the cover.
  *   … --no-purge   skip the per-book Cloudflare purge (#8277); otherwise --apply refuses to start
  *                  without CLOUDFLARE_ZONE_ID + a purge-capable CLOUDFLARE_API_TOKEN
  */
@@ -47,6 +51,7 @@ import { uploadPageVariants } from '../workers/lib/display-image.mjs';
 import { preserveObjectVersion } from '../lib/r2-version.mjs';
 import { checkAlignment, halfRepairWitness, hashBuffer, readerVisibleShift } from '../lib/page-alignment.mjs';
 import { assertPurgeCredentials, purgeUrls } from '../lib/cloudflare-purge.mjs';
+import { unreadRecutRefusal } from '../lib/erara-recut-plan.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../..');
@@ -65,6 +70,8 @@ const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a
 // Finish a book repair-bulkjp2-text-shift.mjs left half done (#8266): the slots whose source leaf
 // was opened and showed the stored text. See halfRepairWitness() in page-alignment.mjs.
 const BY_EYE = flag('text-matches-source-by-eye')?.split(',').map(Number) ?? null;
+// A book with no text at all (v3#466): see the --unread branch in repairBook and scripts/lib/erara-recut-plan.mjs.
+const UNREAD = args.includes('--unread');
 // Page fetches per book, against archive.org. Kept modest deliberately: this
 // sweep pulls a quarter-million full-res images and a 429 storm helps nobody.
 const CONCURRENCY = Math.max(1, parseInt(flag('concurrency', '6'), 10));
@@ -232,7 +239,20 @@ async function repairBook(db, bookId) {
   } else {
     console.log(`  pages: ${split.visible} pre-archival (text agrees with IIIF), ${split.consistent} post-archival (text agrees with the shifted image)`);
     if (split.visible === 0) {
-      return console.log('  [REFUSE] no pre-archival pages — cannot establish which side is correct; repairing would CREATE a misalignment');
+      // --unread (v3#466): a book nothing was ever read or measured from. There is no text to witness which side
+      // is right, and none to strand: the rows come from the manifest, so each row's own canvas is the right image.
+      // The proviso (no key on any page beyond identity and image pointers) is unreadRecutRefusal's.
+      if (!UNREAD) return console.log('  [REFUSE] no pre-archival pages — cannot establish which side is correct; repairing would CREATE a misalignment');
+      if (SOURCE !== 'erara_pdf') return console.log('  [REFUSE] --unread is for the e-rara PDF set only (v3#466)');
+      // Whole documents: the plan refuses on any key it does not know, so it must see every key.
+      const whole = await db.collection('pages').find({ book_id: bookId }).toArray();
+      const wholeBook = await db.collection('books').findOne({ _id: book._id }, { projection: { id: 1, pages_ocr: 1, pages_translated: 1, archive_metadata: 1, summary: 1, chapters: 1, index: 1, reading_summary: 1 } });
+      const events = await db.collection('book_events').find({ book_id: book.id, type: { $in: ['text_shift_repair', 'text_shift_repair_undo'] } }).toArray();
+      const why = unreadRecutRefusal({ book: wholeBook, pages: whole, events });
+      if (why) return console.log(`  [REFUSE] --unread: ${why}`);
+      if (v.shift !== v.checked) return console.log(`  [REFUSE] --unread wants every sampled page shifted (${v.shift} of ${v.checked})`);
+      console.log('  unread book: no text or leaf-derived field on any page; each row is re-cut from its own canvas');
+      split = { ...split, visible: 0, consistent: 0, unread: true };
     }
   }
 
@@ -272,7 +292,9 @@ async function repairBook(db, bookId) {
         }
         // Record what we stored (#4406). Free — the buffer is already decoded —
         // and without it nothing downstream can tell what this repair produced.
-        const dims = {};
+        // The stored size is the size of what is stored (v3#466: a re-archive that left the old leaf's byte count
+        // made every later size check on the page wrong).
+        const dims = { 'archive_metadata.bytes': buf.length };
         if (urls.width) dims.image_width = urls.width;
         if (urls.height) dims.image_height = urls.height;
         if (Object.keys(dims).length) {

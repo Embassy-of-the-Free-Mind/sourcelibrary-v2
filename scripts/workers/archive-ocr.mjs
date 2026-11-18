@@ -19,6 +19,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { writeCronRun } from '../lib/cron-run.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
@@ -268,11 +269,13 @@ async function main() {
   // The archive step pause (scripts/lib/pause.mjs, #5492) is absolute, like every step pause.
   if (isPaused(control, 'archive')) {
     console.log(`[archive-ocr] archive step paused. Exiting.`);
+    await writeCronRun(db, { cron: 'archive-ocr', start, status: 'skipped', summary: 'skipped: archive step paused' });
     await client.close();
     process.exit(0);
   }
   if (!shouldBypassPause(control)) {
     console.log(`[archive-ocr] Pipeline paused. Exiting.`);
+    await writeCronRun(db, { cron: 'archive-ocr', start, status: 'skipped', summary: 'skipped: pipeline paused' });
     await client.close();
     process.exit(0);
   }
@@ -379,6 +382,7 @@ async function main() {
 
   if (books.length === 0) {
     console.log(`[archive-ocr] No books with pages found`);
+    await writeCronRun(db, { cron: 'archive-ocr', start, status: 'success', actions: { archived: 0, failed: 0 }, summary: 'no books with unarchived pages' });
     await client.close();
     return;
   }
@@ -421,6 +425,7 @@ async function main() {
 
   if (pages.length === 0) {
     console.log(`[archive-ocr] No unarchived pages found across ${books.length} books`);
+    await writeCronRun(db, { cron: 'archive-ocr', start, status: 'success', actions: { archived: 0, failed: 0, books_checked: books.length }, summary: `no unarchived pages across ${books.length} books` });
     await client.close();
     return;
   }
@@ -555,15 +560,12 @@ async function main() {
     console.log(`[archive-ocr] Synced pages_archived on ${synced} books`);
   }
 
-  // Log to cron_runs for monitoring
-  await db.collection('cron_runs').insertOne({
-    cron: 'archive-ocr',
-    source: 'hetzner',
-    started_at: new Date(start),
-    finished_at: new Date(),
-    duration_ms: Date.now() - start,
+  // Log to cron_runs, with the timestamp /admin/pipeline reads (v3#428).
+  await writeCronRun(db, {
+    cron: 'archive-ocr', start,
     status: failed === 0 ? 'success' : 'partial',
     actions: { archived, failed, bytes: totalBytes, domainStats },
+    summary: `pages ${archived} archived, ${failed} failed`,
   });
 
   await client.close();

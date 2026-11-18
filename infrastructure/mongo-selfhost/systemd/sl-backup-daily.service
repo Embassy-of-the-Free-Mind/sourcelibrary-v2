@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily PBM full backup + manifest + retention (#346)
+After=mongod.service network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sl-mongo/backup/backup-daily.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+TimeoutStartSec=6h

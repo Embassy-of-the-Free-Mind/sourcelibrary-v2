@@ -1,0 +1,10 @@
+[Unit]
+Description=Self-hosted MongoDB alarms (#346)
+
+[Timer]
+OnCalendar=*:0/5
+Persistent=true
+RandomizedDelaySec=0
+
+[Install]
+WantedBy=timers.target

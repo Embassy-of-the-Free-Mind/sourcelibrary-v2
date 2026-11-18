@@ -40,6 +40,11 @@ export const preferredRegion = 'fra1';
  */
 const NAV_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
   'concepts.term', 'people.term', 'places.term', 'keywords.term',
+  // The reader's guide panel (Reader2C GuidePanel) reads these off a nav
+  // response. Without them every book whose guide lives in the index showed
+  // "no reading guide yet" and a request button (#408). Measured on a
+  // 300-doc sample: bookSummary p95 3.8 KB, sectionSummaries p95 9 KB.
+  'bookSummary', 'sectionSummaries',
 ];
 const DEFAULT_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
   'bookSummary', 'sectionSummaries', 'entries', 'people', 'places', 'concepts', 'keywords',
@@ -108,6 +113,10 @@ export const GET = withApiAuth(async (
       // Spanish edition by accident (#4095).
       ...EDITION_COUNTER_PROJECTION,
       categories: 1, reading_summary: 1,
+      // Older books keep the summary inline on the book doc, not in
+      // book_indexes, often beside an empty reading_summary.overview (1,460
+      // live books, 2026-11-16). The guide panel falls back to it (#408).
+      'index.bookSummary': 1,
       chapters: 1,
       // Cover art (all four fields of the cover-write contract, see
       // src/lib/cover-fields.ts) — the MCP get_book tool attaches the cover

@@ -29,6 +29,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { writeCronRun } from '../lib/cron-run.mjs';
 import { checkR2Ceiling } from '../lib/r2-storage-ceiling.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
@@ -702,11 +703,13 @@ async function main() {
   // one-off bypasses it for the same reason it bypasses the global pause.
   if (!TARGET_BOOK_ID && isPaused(control, 'archive')) {
     console.log(`[archive-bulk] archive step paused. Exiting.`);
+    await writeCronRun(db, { cron: 'archive-bulk', start, status: 'skipped', summary: 'skipped: archive step paused' });
     await client.close();
     process.exit(0);
   }
   if (!shouldBypassPause(control, { bookOverride: !!TARGET_BOOK_ID })) {
     console.log(`[archive-bulk] Pipeline paused. Exiting.`);
+    await writeCronRun(db, { cron: 'archive-bulk', start, status: 'skipped', summary: 'skipped: pipeline paused' });
     await client.close();
     process.exit(0);
   }
@@ -715,7 +718,11 @@ async function main() {
   if (!TARGET_BOOK_ID) {
     const ceiling = await checkR2Ceiling(db);
     console.log(`[archive-bulk] ${ceiling.reason}`);
-    if (!ceiling.ok) { await client.close(); process.exit(0); }
+    if (!ceiling.ok) {
+      await writeCronRun(db, { cron: 'archive-bulk', start, status: 'skipped', summary: `skipped: ${ceiling.reason}` });
+      await client.close();
+      process.exit(0);
+    }
   }
   // Selective unpause: when globally paused but a scope is configured (and this
   // isn't an explicit --book-id one-off), proceed but confine archiving to the
@@ -805,15 +812,12 @@ async function main() {
   console.log(`  Pages: ${stats.pagesArchived} archived, ${stats.pagesFailed} failed`);
   console.log(`  Data: ${(stats.bytesDownloaded / (1024 * 1024 * 1024)).toFixed(1)}GB down, ${(stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(1)}GB up`);
 
-  // Log to cron_runs
-  await db.collection('cron_runs').insertOne({
-    cron: 'archive-bulk',
-    source: 'hetzner',
-    started_at: new Date(start),
-    finished_at: new Date(),
-    duration_ms: Date.now() - start,
+  // Log to cron_runs, with the timestamp /admin/pipeline reads (v3#428).
+  await writeCronRun(db, {
+    cron: 'archive-bulk', start,
     status: stats.booksFailed === 0 ? 'success' : 'partial',
     actions: { ...stats },
+    summary: `books ${stats.booksProcessed} done, ${stats.booksFailed} failed, ${stats.booksSkipped} skipped; pages ${stats.pagesArchived} archived, ${stats.pagesFailed} failed`,
   });
 
   await client.close();

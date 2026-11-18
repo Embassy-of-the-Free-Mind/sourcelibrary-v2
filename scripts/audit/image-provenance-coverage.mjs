@@ -49,6 +49,12 @@
  *   ... --close-issue=4406     close the issue when books AND pages are both at or above --min
  *   ... --json=/path/out.json
  *   ... --robustness=30        marked pages put through the copier row (0 turns it off)
+ *   ... --no-record            do not store the report (an ad-hoc or small-sample run)
+ *
+ * RECORD. A run whose controls passed replaces ONE ops_reports document, _id 'image-provenance-coverage'
+ * (without the example lists), unless --no-record. The nightly stage snapshot reads it for the "Reader images"
+ * and "Trithemian marks" rows of /admin/pipeline (scripts/lib/stage-coverage.mjs provenanceStages, #428),
+ * and reports both rows broken when the document is older than 15 days. Nothing else reads it.
  */
 import { writeFileSync } from 'fs';
 import { execFileSync } from 'child_process';
@@ -74,6 +80,8 @@ const CONCURRENCY = Number(arg('concurrency', 8));
 const NTFY = has('ntfy');
 const CLOSE_ISSUE = arg('close-issue', null);
 const JSON_OUT = arg('json', null);
+const RECORD = !has('no-record');
+const REPORT_ID = 'image-provenance-coverage';
 const NTFY_TOPIC = process.env.PROVENANCE_AUDIT_TOPIC || 'https://ntfy.sh/sourcelibrary-uptime';
 
 /** A sl-v5 object baked 2026-08 and measured by hand on #4406. The backfill never rewrites it. */
@@ -299,8 +307,6 @@ async function main() {
     rowsRecent.push(...got.filter((r) => r.lastModified && r.lastModified >= SINCE && !r.era?.startsWith('backfill')));
   }
 
-  await client.close();
-
   const robust = N_ROBUST > 0 ? await robustness(rowsPages) : null;
 
   const report = {
@@ -324,6 +330,17 @@ async function main() {
     }
   }
   if (JSON_OUT) writeFileSync(JSON_OUT, JSON.stringify(report, null, 1));
+  if (RECORD) {
+    // Examples name R2 keys for a person to open; the stored row keeps the figures.
+    const strip = (f) => { const { unmarkedExamples, ...rest } = f; return rest; };
+    const stored = { ...report, books: strip(report.books), pages: strip(report.pages), recent: strip(report.recent),
+      args: { books: N_BOOKS, pages: N_PAGES, recent: N_RECENT, recent_days: RECENT_DAYS } };
+    try {
+      await db.collection('ops_reports').replaceOne({ _id: REPORT_ID }, stored, { upsert: true });
+      console.log(`ops_reports/${REPORT_ID} written`);
+    } catch (e) { console.error(`[image-provenance-coverage] could not record the report: ${e.message}`); }
+  }
+  await client.close();
   console.log(`\nRESULT ${JSON.stringify({ at: report.at, books: report.books.rate, pages: report.pages.rate, recent: report.recent.rate, recent_n: report.recent.n })}`);
 
   // A rate over too few objects is a guess; below 30 the recent frame reports but cannot page.

@@ -23,7 +23,7 @@ import { LITE_MODELS } from '../../batch/cli-ocr-lane.mjs';
 import { textHash } from '../../lib/page-text-writer.mjs';
 import { verdictQuery } from '../lib/judge-rows.mjs';
 
-export const GEX45 = 'root@65.108.136.89';
+export const GEX45 = 'root@203.0.113.4';
 export const LANE_DIR = '/root/jobs/cli-ocr-correct';
 export const LEDGER_CUTOFF = '2026-10-30T12:00:00Z';
 export const PER_LANGUAGE = 60;

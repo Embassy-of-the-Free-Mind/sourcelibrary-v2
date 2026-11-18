@@ -24,3 +24,11 @@ export const ZH_SHI_JI_HOLD = 'zh-shi-ji-8053';
 // SIKU_LANE_HOLDS: the Siku translation lane is stopped (#7914). Release only by decision ("release
 // zh-complete-sets-8053"), with --to ocr_complete.
 export const ZH_COMPLETE_SETS_HOLD = 'zh-complete-sets-8053';
+
+// The holds that mean "published as scans, OCR not read yet": the first-read lanes (cli-ocr-lane.mjs run
+// --cohort=visible-unread) and `cli-translate-lane.mjs finish --frame=first-read` read these books while the hold stays,
+// so the priority queue (priority-queue.mjs) ranks them. Here, not in cli-ocr-lane.mjs, so a reader of the list does
+// not import that lane's writers (v3#461). preview-stub-first-read-8181 (#8181): a book the pipeline marked `complete`
+// on its 25-page sample before the #4719 guard; holding one is how a wave reaches the first-read lane.
+export const PREVIEW_STUB_FIRST_READ_HOLD = 'preview-stub-first-read-8181';
+export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270', PREVIEW_STUB_FIRST_READ_HOLD]);

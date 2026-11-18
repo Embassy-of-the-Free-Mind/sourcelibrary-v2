@@ -22,6 +22,7 @@ export const CHECK_METHODS: Record<string, CheckMethodInfo> = {
   'lane-spot-check': { label: 'Lane spot check: a random page from a translation batch, read by an AI reviewer against the page image' },
   'lane-paired-retranslation-check': { label: 'Re-translation lane check: a random page from a re-translation batch, the new and the old English each read by an AI reviewer against the page image' },
   'stub-books-8181-by-eye': { label: 'Wave check: one random page from a batch of newly read pages, read by an AI reviewer against the page image' },
+  'reader-report-410': { label: 'Reader report: a page a reader reported as wrong, read by an AI reviewer against the page image and corrected' },
   'kangyur-finish-8482-by-eye': { label: 'Spot check: one page of new English, read by an AI reviewer against the page image and the Tibetan' },
   'paired-arm-stored-english': { label: 'Quality study: one page of English, read by an AI reviewer against the page image, as the baseline of a test of repair passes' },
   'judged-pages': { label: 'Judged pages: an AI reviewer read pages of the transcription against their images, for a quality study or a routing test' },

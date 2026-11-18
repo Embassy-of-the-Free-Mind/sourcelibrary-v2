@@ -30,7 +30,7 @@ the digests and turns a pattern seen in two or more weeks into at most one teste
 
 Runs on every job box, each spending the account that box is logged in as
 (main: team@sourcelibrary; cloudlayer: derek@playpowerlabs; l7a: derek@sourcelibrary;
-gex45: dereklomas@gmail.com once Derek logs it in). A box with no Claude login stays idle.
+gex45: account@example.com once Derek logs it in). A box with no Claude login stays idle.
 Only main polls usage (climits, every 5 min). Main can't reach the guest boxes and they
 can't reach it, so each run on main publishes its poll to Mongo (ops_reports
 `claude-limits:latest`, scripts/workers/claude-limits-share.mjs) and the guests read it.

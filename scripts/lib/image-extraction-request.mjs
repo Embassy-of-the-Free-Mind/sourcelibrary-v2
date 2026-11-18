@@ -408,6 +408,38 @@ export function normalizeScanQuality(raw) {
 
 // Backwards-compatible parser: accepts the new {extracted_images, scan_quality}
 // object form, and falls back to bare-array form if the model regresses.
+/**
+ * The agy (subscription CLI) path sends the same request text with this line after it (#437). There is no
+ * responseSchema on the CLI, so the shape is asked for in words; agy answers in a ```json fence.
+ */
+// The show-through line (#437 pilot): on a microfilmed book (Pennant, Tour in Wales) agy boxed a plate's faint mirror
+// image from the next leaf, with the body text over it, as an engraving.
+export const AGY_IMAGE_EXTRACTION_SUFFIX = '\n\nA faint mirror-image of a picture showing through from the other side of the leaf is not a picture.\n\nReturn only the JSON object {"extracted_images": [...], "scan_quality": {...}} described above, in one ```json block. Do not use any tool except to view the attached page image.';
+
+/**
+ * An agy reply → { extracted_images, scan_quality }, or null when it holds no JSON object with an
+ * `extracted_images` array. Unlike parseImageExtractionResponse, an unreadable reply is null, never "no pictures":
+ * the worker must not stamp a page as extracted from a reply it could not read. Takes the text between
+ * <<<BEGIN>>>/<<<END>>> when the model used them, else the first ```json fence, else the whole reply.
+ */
+export function parseAgyImageExtractionReply(text) {
+  let s = String(text || '');
+  const marked = s.match(/<<<BEGIN>>>([\s\S]*?)(?:<<<END>>>|$)/);
+  if (marked) s = marked[1];
+  const fenced = s.match(/```(?:json)?\s*\n?([\s\S]*?)```/);
+  if (fenced) s = fenced[1];
+  const start = s.indexOf('{');
+  const end = s.lastIndexOf('}');
+  if (start < 0 || end <= start) return null;
+  let parsed;
+  try { parsed = JSON.parse(s.slice(start, end + 1)); } catch { return null; }
+  if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.extracted_images)) return null;
+  return {
+    extracted_images: parsed.extracted_images.filter((x) => x && typeof x === 'object'),
+    scan_quality: normalizeScanQuality(parsed.scan_quality),
+  };
+}
+
 export function parseImageExtractionResponse(text) {
   const empty = { extracted_images: [], scan_quality: null };
   if (!text || typeof text !== 'string') return empty;

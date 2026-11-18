@@ -70,13 +70,27 @@ describe('parseCrontab / pipelineLines', () => {
       ['*/15 * * * *', false, null], ['50 * * * *', true, 'OCRFIRST-7701'], ['*/30 * * * *', false, null], ['5 22 30 10 *', false, null],
     ]);
   });
-  it('rows only pipeline stages, in stage order; a dated sed on a lane is kept as a one-shot', () => {
+  it('rows every script line in stage order, a script no rule matches under other; a dated sed on a lane is kept as a one-shot', () => {
     const rows = pipelineLines(text);
     expect(rows.map(r => [r.stage, r.script, r.disabled, r.one_shot])).toEqual([
       ['translate', 'scripts/batch/siku-translate-lane.mjs', false, false],
       ['ocr', 'scripts/batch/cli-ocr-lane.mjs', true, false],
       ['enrich', null, false, true],
+      ['other', 'scripts/workers/spare-lane.py', false, false],
     ]);
+  });
+  it('leaves out a line that runs no script file', () => {
+    expect(pipelineLines('*/5 * * * * find /tmp -name "*.lock" -mmin +60 -delete')).toEqual([]);
+  });
+  it('never judges an other line: a silent log and no registry row leave it without a red verdict (v3#428)', () => {
+    const now = new Date('2026-11-16T12:00:00Z');
+    const rows = pipelineLines('0 3 * * * node scripts/maintenance/backfill-cover-cards.mjs >> /var/log/cards.log 2>&1',
+      { box: 'hetzner', now, logAtOf: () => '2026-10-01T00:00:00Z' });
+    expect(rows.map(r => [r.stage, r.red])).toEqual([['other', []]]);
+    // Positive control: the same silent log on a staged line is red.
+    const staged = pipelineLines('0 3 * * * node scripts/workers/enrich-worker.mjs >> /var/log/cards.log 2>&1',
+      { box: 'hetzner', now, logAtOf: () => '2026-10-01T00:00:00Z' });
+    expect(staged[0].red.map((r: { flag: string }) => r.flag)).toContain('LOG SILENT');
   });
   it('flags a dated line as one-shot', () => {
     expect(isOneShot('5 22 30 10 *')).toBe(true);

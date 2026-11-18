@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 /**
- * Pipeline Health Alert
+ * Pipeline Health Alert — and, since v3#460, the daily pipeline mail by facet.
  *
- * Runs daily via cron. Checks if batch OCR is making progress.
- * Logs warnings to console (captured in cron log) and writes
- * to system_config for dashboard visibility.
+ * Runs daily via cron (main, 07:00 UTC). Sends ONE mail a UTC day: per facet of the pipeline (import, archive, OCR first
+ * reads / GPU drafts / re-reads, translation, seam repairs, enrichment, FT search, pictures, QA, books finished) what
+ * moved yesterday against the week, who moved it and one state word (scripts/lib/facet-day.mjs); then where live books
+ * wait, the stale routes (scripts/lib/stale-routes.mjs, stored on router-board:latest) and the checks below. Writes the
+ * checks to system_config.pipeline_health as before.
+ *
+ * Retired (v3#460), because they measured lanes that no longer run and were red every day:
+ *   ocr_throughput    counted saved batch_jobs; OCR runs on the subscription CLIs (agy, paddle) and writes no batch_jobs,
+ *                     so it read "0 OCR jobs, pipeline may be broken" on days agy read 134K pages. The OCR facets replace it.
+ *   gemini_key_drift  compared paid Gemini keys with Vercel's; the agy lanes use no key, and the one paid lane
+ *                     (flash-lite) is metered by the spend dial, not by this.
  *
  * Checks:
- *   1. Pages OCR'd in last 24h (should be >0 if pipeline is active)
  *   2. Gemini File API storage usage (should be <15GB of 20GB)
  *   3. Batch jobs stuck in pending >6h
  *   4. Books stuck in ocr_submitted >48h
@@ -18,15 +25,31 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs
+ *     --dry-run   print the mail's text, send nothing, write nothing
+ *     --html      with --dry-run, print the HTML instead
+ *     --force     send even if today's mail has gone (one a UTC day, system_config.pipeline_alert_state.last_daily_day)
+ *     --corpus-json=FILE / --board-json=FILE   with --dry-run: preview from `pipeline-now-push.mjs --corpus --dry-run` /
+ *                 `router-board-push.mjs --dry-run` output instead of the stored documents
  */
 
 // usage-ok: queries the Gemini API for batch job STATE to decide whether to
 // alert. It never generates, so it spends nothing to record.
 
-import { statfsSync } from 'node:fs';
+import { statfsSync, readFileSync } from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { computeIndexDrift } from '../maintenance/ensure-indexes.mjs';
 import { checkWorkerDrift } from '../audit/worker-code-drift.mjs';
+import { facetsOf, queueOf, subjectOf, formatText, formatHtml } from '../lib/facet-day.mjs';
+import { RULE_LABEL } from '../lib/stale-routes.mjs';
+
+const DRY = process.argv.includes('--dry-run');
+const FORCE = process.argv.includes('--force');
+const AS_HTML = process.argv.includes('--html');
+const RETIRED = ['ocr_throughput', 'gemini_key_drift'];
+// --corpus-json=FILE (with --dry-run): read the corpus report from a `pipeline-now-push.mjs --corpus --dry-run` file, to preview a mail before the nightly push.
+const CORPUS_JSON = process.argv.find((x) => x.startsWith('--corpus-json='))?.split('=').slice(1).join('=') || null;
+// --board-json=FILE (with --dry-run): the same for the router board (`router-board-push.mjs --dry-run`).
+const BOARD_JSON = process.argv.find((x) => x.startsWith('--board-json='))?.split('=').slice(1).join('=') || null;
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -50,29 +73,7 @@ async function run() {
   const sixHoursAgo = new Date(now - 6 * 60 * 60 * 1000);
   const twoDaysAgo = new Date(now - 48 * 60 * 60 * 1000);
 
-  // 1. Check OCR throughput
-  // Use batch_jobs (indexed, fast) instead of scanning pages collection
-  const recentSavedJobs = await db.collection('batch_jobs').countDocuments({
-    type: 'ocr',
-    status: 'saved',
-    completed_at: { $gte: oneDayAgo },
-  });
-
-  const archiveComplete = await db.collection('books').countDocuments({
-    'pipeline_auto.status': 'archive_complete',
-  });
-
-  const pagesOcrd = recentSavedJobs > 0 ? '(jobs completed)' : 0;
-
-  if (recentSavedJobs === 0 && archiveComplete > 0) {
-    alerts.push({
-      level: 'critical',
-      check: 'ocr_throughput',
-      message: `0 OCR jobs completed in 24h but ${archiveComplete} books waiting. Pipeline may be broken.`,
-    });
-  } else {
-    console.log(`[health] OCR throughput: ${recentSavedJobs} jobs completed in 24h, ${archiveComplete} books waiting`);
-  }
+  // 1. OCR throughput: retired (v3#460), see the header. The OCR facets in the mail measure it.
 
   // 2. Check Gemini File API storage
   for (let ki = 0; ki < ALL_KEYS.length; ki++) {
@@ -280,41 +281,7 @@ async function run() {
     console.error(`[health] pause-age check failed: ${e.message}`);
   }
 
-  // 9. Gemini key parity (#2455): batch jobs are visible only to their creating
-  // key. If Vercel holds a key this box lacks, the collector falsely fails every
-  // job that key submits (the 2026-06-05 key-drift incident). Compare SHA-256
-  // fingerprints with the production deployment.
-  try {
-    const { createHash } = await import('crypto');
-    const localFps = new Map();
-    for (const [name, value] of Object.entries(process.env)) {
-      if (!name.startsWith('GEMINI_API_KEY') || !value) continue;
-      localFps.set(createHash('sha256').update(value).digest('hex').slice(0, 12), name);
-    }
-    const res = await fetch('https://sourcelibrary.org/api/admin/key-fingerprints', {
-      headers: { Authorization: `Bearer ${process.env.CRON_SECRET}` },
-      signal: AbortSignal.timeout(15000),
-    });
-    if (res.ok) {
-      const { fingerprints: remote } = await res.json();
-      const missingHere = Object.entries(remote || {}).filter(([, fp]) => !localFps.has(fp));
-      if (missingHere.length > 0) {
-        alerts.push({
-          level: 'critical',
-          check: 'gemini_key_drift',
-          message: `Vercel holds ${missingHere.length} Gemini key(s) absent from this box (${missingHere.map(([n]) => n).join(', ')}). Batch jobs submitted with them will 404 for the collector and be falsely failed. Mirror them into /root/sourcelibrary/.env.production.local (see memory/pipeline-ops.md 2026-06-05 lesson).`,
-        });
-      } else {
-        console.log(`[health] Gemini key parity OK (${localFps.size} local keys cover all ${Object.keys(remote || {}).length} Vercel keys)`);
-      }
-    } else if (res.status === 404) {
-      console.log('[health] key-fingerprints endpoint not deployed yet — skipping parity check');
-    } else {
-      console.error(`[health] key parity check HTTP ${res.status}`);
-    }
-  } catch (e) {
-    console.error(`[health] key parity check failed: ${e.message}`);
-  }
+  // 9. Gemini key parity: retired (v3#460), see the header.
 
   // 10. Index drift check (#2978): compare the checked-in index manifest
   // (scripts/maintenance/ensure-indexes.mjs) against what's actually live.
@@ -397,7 +364,9 @@ async function run() {
     const drift = await checkWorkerDrift(db, { repo: process.cwd() });
     if (drift.exit === 3) {
       alerts.push({
-        level: 'critical',
+        // warning, not critical (v3#460): a loop worker behind main is a fact to act on, not an outage; auto-pull.sh
+        // pages it hourly on ntfy, and a critical here made the daily subject red for weeks on one long-lived mirror.
+        level: 'warning',
         check: 'worker_code_drift',
         message: `${drift.lines.filter(l => !l.startsWith('UNVERIFIED')).join(' | ')}. Restart is a human decision: check open batch runs and the lock it holds first. Re-check: node scripts/audit/worker-code-drift.mjs`,
       });
@@ -432,78 +401,112 @@ async function run() {
   });
   console.log(`[health] Pipeline: ${ocrSubmitted} books in ocr_submitted, ${pendingJobs} active batch jobs`);
 
-  // Write alerts to system_config for dashboard
-  if (alerts.length > 0) {
-    console.log('\n=== ALERTS ===');
-    for (const alert of alerts) {
-      console.log(`[${alert.level.toUpperCase()}] ${alert.check}: ${alert.message}`);
-    }
-
+  // Write the checks to system_config for the dashboards, as before.
+  const status = alerts.some(a => a.level === 'critical') ? 'critical' : alerts.some(a => a.level === 'warning') ? 'warning' : 'healthy';
+  for (const alert of alerts) console.log(`[${alert.level.toUpperCase()}] ${alert.check}: ${alert.message}`);
+  if (!DRY) {
     await db.collection('system_config').updateOne(
       { _id: 'pipeline_health' },
-      {
-        $set: {
-          alerts,
-          last_check: now,
-          status: alerts.some(a => a.level === 'critical') ? 'critical' : 'warning',
-        },
-      },
-      { upsert: true },
-    );
-
-    // Email critical alerts via Resend (with 4h cooldown)
-    const hasCritical = alerts.some(a => a.level === 'critical');
-    if (hasCritical && process.env.RESEND_API_KEY) {
-      const COOLDOWN_MS = 4 * 60 * 60 * 1000;
-      const lastAlert = await db.collection('system_config').findOne({ _id: 'pipeline_alert_state' });
-      const elapsed = lastAlert?.last_sent_at ? (Date.now() - new Date(lastAlert.last_sent_at).getTime()) : Infinity;
-      if (elapsed >= COOLDOWN_MS) {
-        try {
-          const { Resend } = await import('resend');
-          const resend = new Resend(process.env.RESEND_API_KEY);
-          const criticalAlerts = alerts.filter(a => a.level === 'critical');
-          await resend.emails.send({
-            from: 'Source Library <noreply@sourcelibrary.org>',
-            to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
-            subject: `[PIPELINE] ${criticalAlerts.map(a => a.check).join(', ')}`,
-            html: [
-              '<h2>Pipeline Health Alert</h2>',
-              `<p><strong>Time:</strong> ${now.toISOString()}</p>`,
-              '<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse">',
-              '<tr><th>Check</th><th>Level</th><th>Detail</th></tr>',
-              ...alerts.map(a => `<tr><td>${a.check}</td><td style="color:${a.level === 'critical' ? 'red' : 'orange'}">${a.level}</td><td>${a.message}</td></tr>`),
-              '</table>',
-            ].join('\n'),
-          });
-          await db.collection('system_config').updateOne(
-            { _id: 'pipeline_alert_state' },
-            { $set: { last_sent_at: new Date(), last_alerts: criticalAlerts } },
-            { upsert: true },
-          );
-          console.log('[health] Email alert sent');
-        } catch (emailErr) {
-          console.error('[health] Email alert failed:', emailErr.message);
-        }
-      } else {
-        console.log(`[health] Email cooldown: ${((COOLDOWN_MS - elapsed) / 3600000).toFixed(1)}h remaining`);
-      }
-    }
-  } else {
-    console.log('\n[health] All checks passed');
-    await db.collection('system_config').updateOne(
-      { _id: 'pipeline_health' },
-      {
-        $set: {
-          alerts: [],
-          last_check: now,
-          status: 'healthy',
-        },
-      },
+      { $set: { alerts, last_check: now, status } },
       { upsert: true },
     );
   }
 
+  // The daily mail (v3#460): one a UTC day, every day, whatever the checks say.
+  const day = new Date(now.getTime() - 864e5).toISOString().slice(0, 10);
+  const today = now.toISOString().slice(0, 10);
+  const inputs = await readFacetInputs(db, day);
+  const facets = facetsOf(inputs, day);
+  const board = inputs.board;
+  const stale = Array.isArray(board?.stale) ? board.stale : null;
+  const boardAge = board?.generated_at ? Math.round((now - new Date(board.generated_at)) / 60000) : null;
+  const view = { day, facets, queue: queueOf(inputs.nextDaily), stale, staleLabel: RULE_LABEL, boardAge, alerts, retired: RETIRED };
+  const subject = subjectOf({ day, facets, stale, critical: alerts.filter(a => a.level === 'critical') });
+  if (DRY) {
+    console.log(`\nSubject: ${subject}\n`);
+    console.log(AS_HTML ? formatHtml(view) : formatText(view));
+    await client.close();
+    return;
+  }
+  const state = await db.collection('system_config').findOne({ _id: 'pipeline_alert_state' });
+  if (state?.last_daily_day === today && !FORCE) {
+    console.log(`[health] daily mail for ${day} already sent at ${state.last_sent_at?.toISOString?.() ?? state.last_sent_at}`);
+  } else if (!process.env.RESEND_API_KEY) {
+    console.error('[health] RESEND_API_KEY not set: daily mail not sent');
+  } else {
+    try {
+      const { Resend } = await import('resend');
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const res = await resend.emails.send({
+        from: 'Source Library <noreply@sourcelibrary.org>',
+        to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
+        subject,
+        html: formatHtml(view),
+        text: formatText(view),
+      });
+      if (res?.error) throw new Error(res.error.message || JSON.stringify(res.error));
+      await db.collection('system_config').updateOne(
+        { _id: 'pipeline_alert_state' },
+        { $set: { last_sent_at: new Date(), last_daily_day: today, last_subject: subject, last_alerts: alerts.filter(a => a.level === 'critical') } },
+        { upsert: true },
+      );
+      console.log(`[health] daily mail sent: ${subject}`);
+    } catch (emailErr) {
+      console.error('[health] daily mail failed:', emailErr.message);
+    }
+  }
+
   await client.close();
+}
+
+/**
+ * Everything the facet mail reads, each read on its own: one that fails leaves its facets "not measured" and the
+ * mail still goes. All small: one document each, ~9 snapshot rows, book_checks (~3K rows), books created in 8 days on
+ * the {visible, created_at} index.
+ */
+async function readFacetInputs(db, day) {
+  const from = new Date(Date.parse(`${day}T00:00:00Z`) - 7 * 864e5);
+  const ops = db.collection('ops_reports');
+  const got = await Promise.allSettled([
+    CORPUS_JSON ? JSON.parse(readFileSync(CORPUS_JSON, 'utf8')) : ops.findOne({ _id: 'pipeline-now:corpus' }, { projection: { since: 1, generated_at: 1, ocr_per_day: 1, translated_per_day: 1, ocr_work_per_day: 1, translated_work_per_day: 1, handoffs_per_day: 1 } }),
+    db.collection('stage_coverage_snapshots').find({}, { projection: { timestamp: 1, 'stages.stage': 1, 'stages.delta': 1, 'stages.status': 1 } }).sort({ timestamp: -1 }).limit(9).maxTimeMS(20_000).toArray(),
+    ops.find({ type: 'pipeline_next_daily' }, { projection: { day: 1, steps: 1 } }).sort({ day: -1 }).limit(9).maxTimeMS(20_000).toArray(),
+    db.collection('book_checks').aggregate([
+      { $project: { book_id: 1, method_id: 1, d: { $substrBytes: [{ $toString: '$checked_at' }, 0, 10] } } },
+      { $match: { d: { $gte: from.toISOString().slice(0, 10) } } },
+      { $group: { _id: { d: '$d', m: '$method_id' }, rows: { $sum: 1 }, books: { $addToSet: '$book_id' } } },
+    ], { maxTimeMS: 30_000 }).toArray(),
+    db.collection('books').aggregate([
+      { $match: { visible: { $in: [true, false] }, created_at: { $gte: from } } },
+      { $group: { _id: { d: { $dateToString: { format: '%Y-%m-%d', date: '$created_at' } }, p: { $ifNull: ['$image_source.provider', 'unknown'] } }, books: { $sum: 1 }, pages: { $sum: { $ifNull: ['$pages_count', 0] } } } },
+    ], { maxTimeMS: 60_000 }).toArray(),
+    BOARD_JSON ? JSON.parse(readFileSync(BOARD_JSON, 'utf8')) : ops.findOne({ _id: 'router-board:latest' }, { projection: { stale: 1, generated_at: 1 } }),
+  ]);
+  const [corpus, snapshots, nextDaily, checkRows, importRows, board] = got.map((r, i) => {
+    if (r.status === 'fulfilled') return r.value;
+    console.error(`[health] facet read ${i} failed: ${r.reason?.message}`);
+    return null;
+  });
+  const fold = (rows, key, nameOf, count) => {
+    if (!rows) return null;
+    const by = {};
+    for (const r of rows) {
+      const d = (by[r._id.d] ??= { day: r._id.d, books: 0, pages: 0, rows: 0, [key]: {} });
+      const n = count(r);
+      d.books += n; d.pages += r.pages || 0; d.rows += r.rows || 0;
+      d[key][nameOf(r)] = (d[key][nameOf(r)] ?? 0) + n;
+    }
+    return Object.values(by);
+  };
+  // Books checked: distinct per day across methods (a book read by two methods counts once in the total).
+  let checks = null;
+  if (checkRows) {
+    checks = fold(checkRows, 'methods', (r) => r._id.m || 'unknown', (r) => r.books.length);
+    for (const c of checks) c.books = new Set(checkRows.filter((r) => r._id.d === c.day).flatMap((r) => r.books.map(String))).size;
+    for (const c of checks) c.pages = null;
+  }
+  const imports = fold(importRows, 'providers', (r) => r._id.p, (r) => r.books);
+  return { corpus, snapshots, nextDaily, checks, imports, board };
 }
 
 run().catch(err => { console.error(err); process.exit(1); });

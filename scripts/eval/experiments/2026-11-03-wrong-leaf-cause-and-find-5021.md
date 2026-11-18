@@ -202,7 +202,7 @@ two-leaf; Han 10, Tibetan 4, the rest readers' books in Latin, French, German, G
 - 2026-11-03 · Gemini API, replay (698 calls: 129 gemini-3.1-flash-lite-preview, 569 gemini-3.1-flash-lite) · #5021 ·
   2.51M tokens in, 0.93M out · ≈ $2.0 at Flash-Lite list prices; the gemini_usage rows meter $6.2, because the preview
   model is not in `model-pricing.mjs` and falls to the $1.5/$9 default.
-- 2026-11-03 · `claude -p` sonnet + opus on milolomas200921@gmail.com (gex45) · #5021 · 3,617 Sonnet screen calls, 148
+- 2026-11-03 · `claude -p` sonnet + opus on account@example.com (gex45) · #5021 · 3,617 Sonnet screen calls, 148
   Opus confirmations with scans · weekly meter 81% → 85% (integer; this session on the same login) · about 1.1 points
   per 1,000 Sonnet pages; fee × share, at $200 a month for Max 20x (the plan is not recorded), about $0.50 per 1,000.
 - 2026-11-03 · agy gemini-3.8-flash-low on /root/.agy-milo · #5021 · 2,736 calls · weekly Gemini 76% → 70% · about 2.2

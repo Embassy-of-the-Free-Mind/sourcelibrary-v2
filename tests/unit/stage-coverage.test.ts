@@ -372,3 +372,193 @@ describe('identity queue = what identity-worker and the nightly minter take (#36
     expect(findStalled(computeStageDeltas([m], [{ ...m }]))).toEqual([]);
   });
 });
+
+// ── #428: the book-level rows of the whole line ────────────────────────────
+// @ts-expect-error — plain .mjs helper, no types
+import * as bs from '../../scripts/lib/stage-coverage.mjs';
+
+describe('book-level steps (#428)', () => {
+  it('a per-day row reports the last FULL UTC day, never the day still running', () => {
+    expect(bs.lastFullUtcDay(new Date('2026-11-16T04:20:00Z'))).toEqual({
+      day: '2026-11-15', start: new Date('2026-11-15T00:00:00Z'), end: new Date('2026-11-16T00:00:00Z'),
+    });
+    expect(bs.lastFullUtcDay(new Date('2026-11-16T00:00:00Z')).day).toBe('2026-11-15');
+    // the publication event of 2026-11-16T18:18:41Z has _id 6afb49013595fc69f8057028
+    expect(bs.objectIdHexAt(new Date('2026-11-16T18:18:41Z'))).toBe('6afb49010000000000000000');
+  });
+
+  it('a stage marked stall_watch:false never pages STALLED; the same stage without the mark does', () => {
+    const s = { ...ok('catalogue', 10, 100, 90), delta: 0 };
+    expect(findStalled([s])).toEqual(['catalogue']); // positive control: the detector still fires
+    expect(findStalled([{ ...s, stall_watch: false }])).toEqual([]);
+    // The mark survives a broken probe, so the stage stays out when it recovers.
+    expect(finalizeMeasurement({ stage: 'x', stall_watch: false }, false).stall_watch).toBe(false);
+  });
+
+  const rows = [
+    { _id: 'o1', id: 'a', catalogue: true, quality_score: true, collections: true, cover_page: true, cover_selected: true, place: true, author_place: false, split: true, pictures_count: true, pictures_stamp: true },
+    { _id: 'o2', id: 'b', catalogue: false, quality_score: true, collections: false, cover_page: false, cover_selected: true, place: false, author_place: true, pictures_count: true },
+    { _id: 'o3', id: 'c', catalogue: false, quality_score: false, collections: false, cover_page: false, cover_selected: false, place: false, author_place: false },
+    { _id: 'o4', id: 'd', catalogue: false, quality_score: false, collections: false, cover_page: false, cover_selected: false, place: false, author_place: false },
+  ];
+  const allOk = { catalogue: true, quality_score: true, cover: true, place: true, coverQueue: 1, pictures: true };
+  const sets = { ftBooks: new Set(['a', 'zz']), checkedBooks: new Set(['o2']), pageNumberBooks: new Set(['c', 'd']) };
+  const byStage = (ms: Stage[]) => Object.fromEntries(ms.map((m) => [m.stage, m]));
+
+  it('counts each step from its own field, over live books', () => {
+    const m = byStage(bs.bookStepStages(rows, sets, allOk));
+    expect(m.catalogue).toMatchObject({ status: 'ok', covered: 1, total: 4, stall_watch: false });
+    expect(m.quality_score).toMatchObject({ covered: 2, also: [{ label: 'placed in collections by score', n: 1 }] });
+    // a kept manual cover is a cover decision (phase 8.9 stamps cover_selected_at for it)
+    expect(m.cover).toMatchObject({ covered: 2, queue_depth: 1, detail: { with_cover_page: 1 } });
+    expect(m.places).toMatchObject({ covered: 1, also: [{ label: 'with an author birth or death place', n: 1 }, { label: 'with printed page numbers fitted', n: 2 }] });
+    // ids from other collections match a book by `id` or by `_id` (16K books carry a re-minted _id)
+    expect(m.ft_search).toMatchObject({ status: 'ok', covered: 1 });
+    expect(m.book_checks).toMatchObject({ status: 'ok', covered: 1 });
+    // a picture count from an older run counts as searched; the stamp the waiting count reads rides beside it (#425)
+    expect(m.image_books).toMatchObject({ status: 'ok', covered: 2, total: 4, also: [{ label: 'with the done or skip stamp the waiting count reads', n: 1 }] });
+    expect(findStalled(computeStageDeltas(Object.values(m), Object.values(m)))).toEqual([]);
+  });
+
+  it('an empty id set, or one that names no live book, is a broken probe, never 0 coverage', () => {
+    const m = byStage(bs.bookStepStages(rows, { ...sets, ftBooks: new Set(), checkedBooks: new Set(['not-a-book']) }, allOk));
+    expect(m.ft_search).toMatchObject({ status: 'probe_broken', covered: null });
+    expect(m.book_checks).toMatchObject({ status: 'probe_broken', covered: null });
+  });
+
+  it('a failed field control breaks that stage only; a broken page-number log drops that figure, not the row', () => {
+    const m = byStage(bs.bookStepStages(rows, { ...sets, pageNumberBooks: new Set() }, { ...allOk, catalogue: false }));
+    expect(m.catalogue.status).toBe('probe_broken');
+    expect(m.quality_score.status).toBe('ok');
+    expect(byStage(bs.bookStepStages(rows, sets, { ...allOk, pictures: false })).image_books.status).toBe('probe_broken');
+    expect(m.places).toMatchObject({ status: 'ok', covered: 1, also: [{ label: 'with an author birth or death place', n: 1 }] });
+  });
+
+  it('the live-book pass starts at the live filter and projects booleans only', () => {
+    const [match, project] = bs.buildBookStepPipeline();
+    expect(match).toEqual({ $match: { visible: true, pages_count: { $gt: 0 } } });
+    expect(Object.keys(project.$project)).toEqual(['_id', 'id', 'catalogue', 'quality_score', 'collections', 'cover_page', 'cover_selected', 'place', 'split', 'author_place', 'pictures_stamp', 'pictures_count']);
+  });
+
+  it('pins the hold reason and the fitter log to the scripts that write them', () => {
+    expect(fs.readFileSync('scripts/audit/pre-ocr-duplicate-screen.ts', 'utf8')).toContain(`const HOLD_REASON = '${bs.COPY_HOLD_REASON}'`);
+    const fitter = fs.readFileSync('scripts/maintenance/backfill-printed-page-4291.mjs', 'utf8');
+    expect(fitter).toContain(`export const SWEEP = '${bs.PRINTED_PAGE_SWEEP.sweep}'`);
+    expect(fitter).toContain(`action: '${bs.PRINTED_PAGE_SWEEP.action}'`);
+    expect(fs.readFileSync('scripts/workers/pipeline-orchestrator.mjs', 'utf8')).toContain("'ai_metadata.enriched_at': { $exists: false }");
+  });
+
+  /** A db whose collections answer findOne with `control` and aggregate with `groups`, recording the pipeline. */
+  const fakeDb = (control: boolean, groups: unknown[]) => {
+    const seen: unknown[] = [];
+    return { seen, db: { collection: () => ({
+      findOne: async () => (control ? { _id: 'x' } : null),
+      aggregate: (p: unknown) => { seen.push(p); return { toArray: async () => groups }; },
+    }) } };
+  };
+
+  it('imports: the last full day, split into books and artwork records, through the {visible, created_at} index', async () => {
+    const { db, seen } = fakeDb(true, [{ _id: true, n: 1100 }, { _id: false, n: 20 }]);
+    const m = await bs.measureImports(db, { now: new Date('2026-11-16T04:20:00Z') });
+    expect(m).toMatchObject({ stage: 'imported', status: 'ok', covered: null, total: null, stall_watch: false,
+      per_day: { day: '2026-11-15', n: 1120, parts: [{ label: 'artwork records', n: 1100 }, { label: 'books', n: 20 }] } });
+    expect((seen[0] as { $match: Record<string, unknown> }[])[0].$match.visible).toEqual(bs.ANY_VISIBILITY);
+    const quiet = await bs.measureImports(fakeDb(true, []).db, { now: new Date('2026-11-16T04:20:00Z') });
+    expect(quiet.per_day).toEqual({ day: '2026-11-15', n: 0, parts: [] }); // a quiet day is a measured zero
+    expect((await bs.measureImports(fakeDb(false, []).db)).status).toBe('probe_broken');
+  });
+
+  it('published: books made public on the day, by writer, the day bounded by _id', async () => {
+    const { db, seen } = fakeDb(true, [{ _id: 'claude:bathing-collection', n: 24 }, { _id: 'derek', n: 2 }]);
+    const m = await bs.measurePublished(db, { now: new Date('2026-11-17T04:20:00Z') });
+    expect(m.per_day).toEqual({ day: '2026-11-16', n: 26, parts: [{ label: 'claude:bathing-collection', n: 24 }, { label: 'derek', n: 2 }] });
+    const match = (seen[0] as { $match: Record<string, unknown> }[])[0].$match;
+    expect(match.to).toBe('public');
+    expect(match._id).toBeDefined();
+    expect((await bs.measurePublished(fakeDb(false, []).db)).status).toBe('probe_broken');
+  });
+
+  it('day parts keep the three largest and sum the rest', () => {
+    expect(bs.dayPartsOf([{ label: 'a', n: 1 }, { label: 'b', n: 5 }, { label: 'c', n: 3 }, { label: 'd', n: 2 }, { label: 'e', n: 0 }]))
+      .toEqual([{ label: 'b', n: 5 }, { label: 'c', n: 3 }, { label: 'd', n: 2 }, { label: 'other', n: 1 }]);
+  });
+
+  it('the log line prints a flow as its day and a count as a number', () => {
+    const line = formatSummaryLine({ stages: [
+      { stage: 'imported', status: 'ok', covered: null, total: null, queue_depth: null, per_day: { day: '2026-11-15', n: 7 } },
+      { stage: 'copy_holds', status: 'ok', covered: 194, total: null, queue_depth: null },
+    ], stalled: [], dial: {}, duration_ms: 1 });
+    expect(line).toContain('imported 7 on 2026-11-15');
+    expect(line).toContain('copy_holds 194');
+  });
+});
+
+describe('page-level steps (#428)', () => {
+  const rows = [
+    { _id: 'o1', id: 'a', split: true }, { _id: 'o2', id: 'b', split: false }, { _id: 'o3', id: 'c' },
+  ];
+  const sets = { ftBooks: new Set(['a']), checkedBooks: new Set(['a']), pageNumberBooks: new Set(['a']) };
+  const controls = { catalogue: true, quality_score: true, cover: true, place: true, coverQueue: 0 };
+  const split = (c: Record<string, unknown>) => bs.bookStepStages(rows, sets, { ...controls, split: c }).find((m: Stage) => m.stage === 'split');
+
+  it('split: books cut, phase 1.3 queue as waiting, pages cut and books not yet checked beside it', () => {
+    expect(split({ control: true, flagged: 479, flaggedVisible: 3, unchecked: 17740, pagesCut: 111291 })).toMatchObject({
+      status: 'ok', covered: 1, total: null, queue_depth: 479, queue_visible: 3, stall_watch: false,
+      also: [{ label: 'pages cut from spreads, hidden books included', n: 111291 }, { label: 'books at archive_complete not yet checked for spreads', n: 17740 }],
+    });
+    // a failed side count drops that figure, not the row; a failed control breaks the row
+    expect(split({ control: true, flagged: null, unchecked: null, pagesCut: null })).toMatchObject({ status: 'ok', covered: 1, queue_depth: null, also: [] });
+    expect(split({ control: false, flagged: 1 })).toMatchObject({ status: 'probe_broken', covered: null });
+  });
+
+  it('seams: pages repaired on the day, by run family, with rows and books beside', () => {
+    expect(bs.runFamily('seam-pass-8399-20261115041200')).toBe('seam-pass-8399');
+    expect(bs.runFamily(undefined)).toBe('unnamed run');
+    const d = bs.seamDay([
+      { book_id: 'a', run: 'seam-pass-8399-20261115041200', pages: 2 },
+      { book_id: 'a', run: 'seam-pass-8399-20261115051200', pages: 1 },
+      { book_id: 'b', run: 'seam-repair-6742-20261115', pages: 4 },
+    ], '2026-11-15');
+    expect(d).toEqual({ per_day: { day: '2026-11-15', n: 7, parts: [{ label: 'seam-repair-6742', n: 4 }, { label: 'seam-pass-8399', n: 3 }] },
+      detail: { repair_rows: 3, books: 2 } });
+    expect(bs.seamDay([], '2026-11-15').per_day).toEqual({ day: '2026-11-15', n: 0, parts: [] });
+  });
+
+  it('search: pages copied on the day, failures and capped runs beside', () => {
+    const d = bs.searchCopyDay([
+      { status: 'success', actions: { seen: 700, synced: 700, failed: 0 } },
+      { status: 'failed', actions: { seen: 50000, synced: 49990, failed: 10 } },
+    ], '2026-11-15');
+    expect(d).toEqual({ per_day: { day: '2026-11-15', n: 50690, parts: [{ label: 'copied', n: 50690 }, { label: 'failed to copy', n: 10 }] },
+      detail: { runs: 2, failed_runs: 1, capped_runs: 1 } });
+  });
+
+  const report = (over: Record<string, unknown> = {}) => ({
+    at: '2026-11-16T07:30:00.000Z', controls: { pass: true },
+    pages: { sampled: 400, n: 350, marked: 300, noR2Display: 20 }, books: { rate: 0.8 }, recent: { rate: 0.95, n: 120 }, ...over,
+  });
+  const now = new Date('2026-11-17T04:20:00Z');
+
+  it('display and marks: read from the weekly sample, its date carried, never differenced', () => {
+    const [display, marks] = bs.provenanceStages(report(), { now });
+    expect(display).toMatchObject({ stage: 'display', status: 'ok', covered: 380, total: 400, sampled_at: '2026-11-16T07:30:00.000Z', stall_watch: false });
+    expect(marks).toMatchObject({ stage: 'marks', status: 'ok', covered: 300, total: 350, detail: { by_book_rate: 0.8, recent_rate: 0.95, recent_n: 120 } });
+    expect(findStalled(computeStageDeltas([display, marks], [{ ...display, covered: 380 }, { ...marks, covered: 300 }]))).toEqual([]);
+  });
+
+  it('a missing, stale or uncontrolled report breaks both rows, never 0', () => {
+    for (const r of [null, report({ at: '2026-10-20T00:00:00Z' }), report({ controls: { pass: false } }), report({ pages: { sampled: 0 } })]) {
+      const ms = bs.provenanceStages(r, { now });
+      expect(ms.map((m: Stage) => [m.stage, m.status, m.covered])).toEqual([['display', 'probe_broken', null], ['marks', 'probe_broken', null]]);
+    }
+  });
+
+  it('pins the event, run record and report names to the scripts that write them', () => {
+    expect(fs.readFileSync('scripts/maintenance/seam-repair-6742/seam-repair.mjs', 'utf8')).toContain(`type: '${bs.SEAM_EVENT}'`);
+    const sync = fs.readFileSync('scripts/workers/sync-pages-content.mjs', 'utf8');
+    expect(sync).toContain(`cron: '${bs.SEARCH_COPY_CRON}'`);
+    expect(sync).toContain(`'--max='))?.split('=')[1] || '${bs.SEARCH_COPY_MAX_PAGES}'`);
+    expect(fs.readFileSync('scripts/audit/image-provenance-coverage.mjs', 'utf8')).toContain(`const REPORT_ID = '${bs.PROVENANCE_REPORT_ID}'`);
+    expect(fs.readFileSync('scripts/workers/lib/trailing-dedup.mjs', 'utf8')).toContain("hidden_reason: 'ia_trailing_dupe'");
+  });
+});

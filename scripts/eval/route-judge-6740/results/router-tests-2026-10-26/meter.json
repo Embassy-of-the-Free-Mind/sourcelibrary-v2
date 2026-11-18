@@ -1,5 +1,5 @@
 {
- "account": "dereklomas@gmail.com",
+ "account": "account@example.com",
  "reading": "/root/.claude-limits/latest.json (climits poll; integer percents)",
  "shared": "SHARED: this orchestrating claude -p session ran throughout, and a #6420 spare-audit round (4 Opus readers) ran on the same account 09:05-09:55Z; the deltas are NOT this run's alone",
  "start": {

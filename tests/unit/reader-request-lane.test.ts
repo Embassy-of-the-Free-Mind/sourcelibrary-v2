@@ -4,7 +4,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { parseRequestUrl, requestTitle, replyText, judgeRequest, requestedFirst, LANE_HOLDS, BOOK_CEILING, rereadSkip, rereadArgs, rereadRows, rereadTake, REREAD_CHUNK, stalled, blockers, STALL_DAYS } from '../../scripts/batch/reader-request-lane.mjs';
+import { parseRequestUrl, requestTitle, replyText, judgeRequest, requestedFirst, LANE_HOLDS, BOOK_CEILING, rereadSkip, rereadArgs, rereadRows, rereadTake, REREAD_CHUNK, stalled, blockers, STALL_DAYS, cannotServe, readerHold, scopeIds, waitingLines, WAIT_HOURS, underway, feedbackNote } from '../../scripts/batch/reader-request-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { latinFirstSteps, firstPagesFirst } from '../../scripts/batch/cli-ocr-lane.mjs';
@@ -64,6 +64,77 @@ describe('the OCR-first gate sends the book to the re-read (#8395)', () => {
   });
 });
 
+describe('a request the lane can never serve is a refusal with its reason, not work (#406)', () => {
+  const text = Array.from({ length: 80 }, (_, i) => `शिव${i} sutra${i}`).join(' ');
+  const lite = (o = {}) => ({ id: 'p7', page_number: 7, page_type: 'text', ocr: { model: 'gemini-3.1-flash-lite', data: text }, ...o });
+  const book = (o = {}) => ({ id: 'b1', title: 'T', language: 'Sanskrit', visible: true, pages_count: 51, pipeline_auto: { status: 'held', hold: { reason: 'scans-only-publish-7270' } }, ...o });
+  const judge = (o: Record<string, unknown>) => judgeRequest({ book: book(), page: lite(), tail: 48, ceiling: BOOK_CEILING, ...o });
+
+  it('refuses a Flash-Lite page in a language the re-read does not serve, naming why', () => {
+    const v = judge({});
+    expect(v.verdict).toBe('refuse');
+    expect(v.reason).toMatch(/^lane cannot serve: .*not Sanskrit/);
+  });
+  it('works the same page in a language the re-read serves, and a Sanskrit page that is not Flash-Lite or was checked by a person', () => {
+    expect(judge({ book: book({ language: 'German' }) }).verdict).toBe('auto');
+    expect(judge({ page: lite({ ocr: { model: 'gemini-3-flash-preview', data: text } }) }).verdict).toBe('auto');
+    expect(judge({ page: lite({ ocr: { model: 'gemini-3.1-flash-lite', data: text, edited_by: 'someone' } }) }).verdict).toBe('auto');
+    expect(cannotServe({ book: book(), page: lite(), lane: { row: { adoption: { ocr_checked: 'checked 3 pages by eye' } } } })).toBeNull();
+  });
+  it('refuses a Flash-Lite page in a book the re-read cannot read (not visible) only when the gates let it through', () => {
+    expect(cannotServe({ book: book({ language: 'German', visible: false }), page: lite(), lane: null })).toMatch(/visible books only/);
+  });
+  it('serves a tail over the ceiling on the requested pages instead of sending it to a person', () => {
+    const v = judge({ book: book({ language: 'Polish', pipeline_auto: { status: 'failed' } }), page: lite({ ocr: { model: 'gemini-3-flash-preview', data: text } }), tail: 849 });
+    expect(v).toMatchObject({ verdict: 'auto', scope: 'requested' });
+    expect(judge({ book: book({ language: 'German' }), tail: 40 }).scope).toBeUndefined();
+  });
+  it('asks the re-read to admit a held book only for a hold outside its frame, on the requested pages only', () => {
+    expect(readerHold(book())).toBe('scans-only-publish-7270');
+    expect(readerHold(book({ pipeline_auto: { status: 'held', hold: { reason: 'translate-cli-7075' } } }))).toBeNull();
+    expect(readerHold(book({ pipeline_auto: { status: 'complete' } }))).toBeNull();
+    const args = rereadArgs({ id: 'b1', language: 'German' }, { maxPages: 5, first: ['p31', 'p33'], date: '2026-11-16', apply: true, readerHold: 'scans-only-publish-7270' });
+    expect(args).toEqual(expect.arrayContaining(['--reader-hold=scans-only-publish-7270', '--first-only', '--first=p31,p33']));
+    expect(rereadArgs({ id: 'b1', language: 'German' }, { maxPages: 5, date: '2026-11-16', apply: true })).not.toContain('--first-only');
+  });
+  it('never tells a reader the rest of a held book is underway: only the asked pages are served', () => {
+    expect(underway({ translated: 5, note: null, reader_hold: null })).toBe(true);
+    expect(underway({ translated: 5, note: null, reader_hold: 'scans-only-publish-7270' })).toBe(false);
+    expect(underway({ translated: 5, note: 'OCR-first gate: x', reader_hold: null })).toBe(false);
+    expect(underway({ translated: 0, ocr: 0, note: null, reader_hold: null })).toBe(false);
+  });
+  it('names the feedback rows behind every write, and passes them to the re-read', () => {
+    expect(feedbackNote(new Set(['f1', 'f2']))).toBe('; from reader feedback f1, f2');
+    expect(feedbackNote(new Set())).toBe('');
+    expect(rereadArgs({ id: 'b1', language: 'German' }, { maxPages: 1, first: ['p1'], date: '2026-11-16', apply: true, note: 'from reader feedback f1' })).toContain('--reason-note=from reader feedback f1');
+  });
+  it('scopes to the requested pages and their neighbours by page number', () => {
+    const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({ id: `p${n}`, page_number: n }));
+    expect([...scopeIds(pages, new Set(['p5']))].sort()).toEqual(['p3', 'p4', 'p5', 'p6', 'p7']);
+    expect([...scopeIds(pages, new Set(['p1', 'p10']), 1)].sort()).toEqual(['p1', 'p10', 'p2', 'p9']);
+  });
+});
+
+describe('a request open over a day with no English is named with its blocker (#406)', () => {
+  const now = Date.parse('2026-11-16T12:00:00Z');
+  const req = (id: string, hoursAgo: number, o = {}) => ({ row: { _id: id }, at: new Date(now - hoursAgo * 3_600_000), book: { id: `b-${id}`, title: `Book ${id}` }, page: { id: `pg-${id}`, page_number: 7 }, verdict: { verdict: 'auto', reason: null }, translated: false, ...o });
+
+  it('names each request over the wait with its verdict reason or what the run said about its book', () => {
+    const summary = { books: [{ book: 'b-a', note: 'OCR waits for a person: spread' }] };
+    const lines = waitingLines({ now, summary, reqs: [req('a', 30), req('b', 50, { verdict: { verdict: 'refuse', reason: 'book is on pipeline hold' } }), req('c', 26)] });
+    expect(lines.map((l: { id: string }) => l.id)).toEqual(['a', 'b', 'c']);
+    expect(lines[0].line).toMatch(/^a Book a p7 \(30 h\) — OCR waits for a person: spread$/);
+    expect(lines[1].line).toMatch(/refuse: book is on pipeline hold$/);
+    expect(lines[2].line).toMatch(/not reached this run$/);
+  });
+  it('stays quiet under the wait, once the page has English, and within a day of naming it', () => {
+    expect(waitingLines({ now, summary: { books: [] }, reqs: [req('a', WAIT_HOURS - 1), req('b', 40, { translated: true }), req('c', 40, { verdict: { verdict: 'done' } })] })).toEqual([]);
+    expect(waitingLines({ now, summary: { books: [] }, paged: { a: new Date(now - 3_600_000).toISOString() }, reqs: [req('a', 40)] })).toEqual([]);
+    expect(waitingLines({ now, summary: { books: [] }, reqs: [req('a', 40, { row: { _id: 'a', reply_draft: 'Not yet.' } })] })).toEqual([]);
+    expect(waitingLines({ now, summary: { books: [] }, paged: { a: new Date(now - 25 * 3_600_000).toISOString() }, reqs: [req('a', 40)] })).toHaveLength(1);
+  });
+});
+
 describe('the stall page (#8395)', () => {
   const now = Date.parse('2026-11-08T12:00:00Z');
   const run = (daysAgo: number, emailed = 0) => ({ at: new Date(now - daysAgo * 86_400_000).toISOString(), notify: { emailed } });
@@ -116,6 +187,10 @@ describe('reader-request-lane', () => {
       for (const r of ['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'zh-histories-7546']) {
         expect(judge({ book: held(r) }).verdict).toBe('siku');
       }
+    });
+    it('says when the Siku lane is paused, so a waiting line does not read as moving (#406)', () => {
+      expect(judge({ book: held('gpu-backlog-5660'), sikuPaused: 'STOP: spot check' }).reason).toMatch(/paused \(STOP: spot check\)$/);
+      expect(judge({ book: held('gpu-backlog-5660') }).reason).not.toMatch(/paused/);
     });
     it('still refuses a hold that is not a lane\'s, and a dark Siku book', () => {
       expect(judge({ book: held('jabir-ocr-gate-7341') })).toMatchObject({ verdict: 'refuse', reason: 'book is on pipeline hold' });

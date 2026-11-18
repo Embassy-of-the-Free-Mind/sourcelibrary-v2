@@ -43,15 +43,15 @@ Updated [/api/admin/sync-page-counts](src/app/api/admin/sync-page-counts/route.t
 Edit [src/lib/auth.ts](src/lib/auth.ts#L11-L14):
 ```typescript
 const ADMIN_EMAILS = [
-  'your-email@gmail.com',
-  'another-admin@gmail.com',
+  'account@example.com',
+  'account@example.com',
 ];
 ```
 
 **Option B: Environment variable (for production)**
 Add to `.env.local`:
 ```bash
-ADMIN_EMAILS="your-email@gmail.com,another-admin@gmail.com"
+ADMIN_EMAILS="account@example.com,account@example.com"
 ```
 
 ### Step 2: Ensure Google OAuth Credentials
@@ -177,8 +177,8 @@ Wrap with `withAuth` to protect administrative operations.
 ### Add Individual Emails
 ```typescript
 const ADMIN_EMAILS = [
-  'user1@gmail.com',
-  'user2@gmail.com',
+  'account@example.com',
+  'account@example.com',
   'user3@yourdomain.com',
 ];
 ```

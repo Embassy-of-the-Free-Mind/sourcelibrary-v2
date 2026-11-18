@@ -7,6 +7,7 @@ import ErrorReporter from './ErrorReporter';
 import MigrateOnSignIn from '@/components/auth/MigrateOnSignIn';
 import PostHogIdentify from '@/components/auth/PostHogIdentify';
 import WelcomeGate from '@/components/auth/WelcomeGate';
+import ReaderNotes from '@/components/auth/ReaderNotes';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export default function Providers({ children, siteMode }: ProvidersProps) {
           <MigrateOnSignIn />
           <PostHogIdentify />
           <WelcomeGate />
+          <ReaderNotes />
           {children}
         </ErrorReporter>
       </SiteModeProvider>

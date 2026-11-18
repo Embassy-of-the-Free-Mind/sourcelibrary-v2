@@ -5,7 +5,7 @@
   "stop": null,
   "meter_before": {
    "source": "climits",
-   "email": "dereklomas@gmail.com",
+   "email": "account@example.com",
    "weekly": 88,
    "session": 9,
    "weekly_reset": "2026-11-03T11:00:00.401501+00:00",
@@ -14,7 +14,7 @@
   },
   "meter_after": {
    "source": "climits",
-   "email": "dereklomas@gmail.com",
+   "email": "account@example.com",
    "weekly": 88,
    "session": 13,
    "weekly_reset": "2026-11-03T11:00:00.917524+00:00",

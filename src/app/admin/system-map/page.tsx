@@ -385,7 +385,7 @@ const serviceData: Record<string, ServiceInfo> = {
     url: 'https://sourcelibrary.org/admin/pipeline',
     summary: 'The central pipeline that moves books from raw imports through OCR, translation, enrichment, and image extraction. Runs on a Hetzner cax31 ARM server (pipeline-orchestrator.mjs, ~2,900 lines). 21 cron entries handle different phases independently.',
     details: [
-      'The orchestrator runs every 2 minutes on Hetzner (46.224.122.120). Individual phases also run as separate cron entries so a slow phase doesn\'t block others. Crontab is versioned at scripts/workers/crontab.production.',
+      'The orchestrator runs every 2 minutes on Hetzner (203.0.113.2). Individual phases also run as separate cron entries so a slow phase doesn\'t block others. Crontab is versioned at scripts/workers/crontab.production.',
       'OCR: Submitted directly to Gemini Batch API from Hetzner (50% cost discount). Results collected by batch-collector.mjs every 10 min. Lambda is only used for preview OCR (first 25 pages).',
       'Translation: Hetzner translate-worker.mjs calls Gemini API directly (no SQS, no Lambda). 15 concurrent books, self-dispatches from metadata_enriched (no Phase 4 wait). Each book gets 200 pages then is parked as translate_partial, so fresh books are always prioritized. ~14K pages/hr peak, ~7K sustained. Model routing: gemini-3-flash-preview for BPH, gemini-3.1-flash-lite for others.',
       'Enrichment: Summary, index, chapters, transliteration, all orchestrated from Hetzner, calling Vercel API routes for summary/index/chapters and running transliteration inline.',

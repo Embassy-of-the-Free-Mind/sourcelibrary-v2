@@ -41,7 +41,7 @@ const { Client } = createRequire(import.meta.url)('pg');
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const IMG = path.join(REPO, 'scripts', 'output', 'identify-bench', 'wall-photos');
 import { embedAuthHeaders } from '../workers/lib/embed-auth.mjs';
-const CLIP = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+const CLIP = process.env.CLIP_URL || 'http://203.0.113.2:3456/clip';
 const input = process.argv[2];
 if (!input || !process.env.SUPABASE_DB_URL) { console.error('usage: node clip-index-recall.mjs <bench results.json>  (needs SUPABASE_DB_URL)'); process.exit(1); }
 const opt = (name, dflt) => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1] || dflt;

@@ -115,7 +115,7 @@ measurable gap appears in ≥ 2 of the 5 scripts for at least one model. If it a
 justified only for that script family (reported as a recommendation). If none, the full run is not justified: memory
 is not a measurable share of these models' reading at this n, and the decision says so.
 
-**Budget and stops.** Opus on this box's subscription (dereklomas@gmail.com, 26% weekly at the start): every runner
+**Budget and stops.** Opus on this box's subscription (account@example.com, 26% weekly at the start): every runner
 stops when the weekly meter reaches 70% and the run reports what it has. Gemini on the shared agy pool (about 600
 calls). No production writes; Mongo read-only.
 
@@ -273,7 +273,7 @@ At this pilot's rate the full run is about 20× the Opus calls: several account-
 *Grade.* Pilot-grade throughout. Directional for "Opus remembers famous Latin, Hebrew and Sanskrit pages without the
 image, and at full resolution that memory does not raise its reading accuracy". *Replicated?* The RECITATION null
 replicates #7271; the rest has not been run twice. *Cost.* $0 marginal, all on subscriptions:
-- 898 Opus calls (402 blind keys, 496 arm calls), on dereklomas@gmail.com via `claude -p`. Weekly meter 26% → 40%;
+- 898 Opus calls (402 blind keys, 496 arm calls), on account@example.com via `claude -p`. Weekly meter 26% → 40%;
   other jobs on that account also ran in the window.
 - 496 Gemini 3.8 Flash low calls on the agy pool (Gemini weekly remaining 60% → 54%).
 - 7 Sonnet search subagents for the abandoned web check.

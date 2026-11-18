@@ -70,7 +70,7 @@ async function github(phrase, owner = null) {
 }
 async function wikisource(phrase, script) {
   const u = `https://${WS[script]}.wikisource.org/w/api.php?action=query&list=search&format=json&srlimit=3&srsearch=${encodeURIComponent(`"${phrase}"`)}`;
-  try { const j = await (await fetch(u, { headers: { 'User-Agent': 'SourceLibrary-eval/7570 (dereklomas@gmail.com)' }, signal: AbortSignal.timeout(30_000) })).json();
+  try { const j = await (await fetch(u, { headers: { 'User-Agent': 'SourceLibrary-eval/7570 (account@example.com)' }, signal: AbortSignal.timeout(30_000) })).json();
     return (j.query?.search || []).map((s) => ({ url: `https://${WS[script]}.wikisource.org/wiki/${encodeURIComponent(s.title.replace(/ /g, '_'))}` })); } catch (e) { return { error: String(e.message || e).slice(0, 200) }; }
 }
 async function sefaria(phrase) {

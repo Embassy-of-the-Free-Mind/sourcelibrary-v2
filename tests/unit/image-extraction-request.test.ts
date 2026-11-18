@@ -7,6 +7,7 @@ import {
   buildImageExtractionBatchRequest,
   buildImageExtractionText,
   parseImageExtractionResponse,
+  parseAgyImageExtractionReply,
 } from '../../scripts/lib/image-extraction-request.mjs';
 
 // The orchestrator's Batch API path kept its own copy of the image-extraction request.
@@ -96,5 +97,39 @@ describe('every image-extraction writer builds from the shared module', () => {
 
   it("the orchestrator's image advance counts cross-book jobs by book_ids", () => {
     expect(orchestrator).toMatch(/\$or: \[\{ book_id: book\.id \}, \{ book_ids: book\.id \}\],\s*\n\s*type: 'image_extraction'/);
+  });
+});
+
+// The agy engine (#437): agy has no responseSchema and answers in a ```json fence, sometimes with a line of
+// prose around it. An unreadable reply must be null, never "no pictures", or the page is stamped as extracted.
+describe('agy reply parse', () => {
+  const body = {
+    extracted_images: [{ description: 'map', type: 'map', bbox: { x: 0.1, y: 0.2, width: 0.5, height: 0.4 }, gallery_quality: 0.8 }],
+    scan_quality: { scan_score: 80, scan_class: 'color_photo', illustration_fidelity: 'good', page_completeness: 'full_page', readable_text: true, concerns: [] },
+  };
+
+  it('strips the json fence and the prose around it', () => {
+    const r = parseAgyImageExtractionReply('Here is the analysis.\n```json\n' + JSON.stringify(body, null, 2) + '\n```\nDone.');
+    expect(r?.extracted_images).toHaveLength(1);
+    expect(r?.extracted_images[0].bbox.width).toBe(0.5);
+    expect(r?.scan_quality?.scan_class).toBe('color_photo');
+  });
+
+  it('reads a bare object and one between markers', () => {
+    expect(parseAgyImageExtractionReply(JSON.stringify(body))?.extracted_images).toHaveLength(1);
+    expect(parseAgyImageExtractionReply('<<<BEGIN>>>\n' + JSON.stringify(body) + '\n<<<END>>>')?.extracted_images).toHaveLength(1);
+  });
+
+  it('an empty picture list is a read, not a failure', () => {
+    const r = parseAgyImageExtractionReply('```json\n{"extracted_images": [], "scan_quality": {"scan_score": 70}}\n```');
+    expect(r).not.toBeNull();
+    expect(r?.extracted_images).toEqual([]);
+  });
+
+  it('a cut, prose-only or wrong-shape reply is null', () => {
+    expect(parseAgyImageExtractionReply('```json\n{"extracted_images": [{"description": "a')).toBeNull();
+    expect(parseAgyImageExtractionReply('I could not open the image.')).toBeNull();
+    expect(parseAgyImageExtractionReply('{"figures": []}')).toBeNull();
+    expect(parseAgyImageExtractionReply('')).toBeNull();
   });
 });

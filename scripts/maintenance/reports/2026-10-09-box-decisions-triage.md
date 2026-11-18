@@ -4,7 +4,7 @@ Job `alert-owners-6360`, for #6360 (Hetzner jobs drift). Read-only: nothing belo
 
 ## 1. Decisions in `/root/claude-jobs/decisions.txt` (main box, clawdbot)
 
-**Scope.** All 176 lines in the file at 2026-10-09 06:10Z (2026-10-04 → 2026-10-09). The earthai-live copy (`/data/scratch/sl/claude-jobs/decisions.txt` on 46.224.208.175) was **not read**: that box refuses this box's ssh keys (`Permission denied (publickey)`), so it needs a session that can reach it.
+**Scope.** All 176 lines in the file at 2026-10-09 06:10Z (2026-10-04 → 2026-10-09). The earthai-live copy (`/data/scratch/sl/claude-jobs/decisions.txt` on 203.0.113.3) was **not read**: that box refuses this box's ssh keys (`Permission denied (publickey)`), so it needs a session that can reach it.
 
 **Classes.** (a) already answered or overtaken: the named issue, a later comment, PR or commit, or a later line settles it. (b) unanswered, but under the $10 spend floor and off the hold list (data deletions/migrations, money/crons, auth/security, public copy Derek has not seen, doctrine/hooks/workflows, anything irreversible), so the job could have taken its own default. (c) a real decision that is still open.
 

@@ -36,6 +36,21 @@ interface Payload {
   language_unmatched: string[];
 }
 
+interface ReaderMsg {
+  _id: string;
+  source: { kind: 'introduction'; id: string };
+  to_email: string;
+  to_name: string | null;
+  body: string;
+  by: string;
+  status: 'queued' | 'sent' | 'failed';
+  created_at: string;
+  sent_at: string | null;
+  /** When the reader dismissed it as a note on the site. */
+  read_at?: string | null;
+  error: string | null;
+}
+
 type Filter = 'all' | 'help' | 'substantial' | 'volunteered' | 'awaiting';
 
 function fmtDate(s: string | null) {
@@ -58,6 +73,89 @@ export default function IntroductionsPage() {
   // Overlay of contacted flips made in this session, so the list responds at
   // once instead of waiting on a refetch that would also reshuffle the filter.
   const [contactedOverride, setContactedOverride] = useState<Record<string, boolean>>({});
+  // Replies written from this screen (v3#405). Writing one keeps it in the
+  // outbox; sending is a separate click, here or in the outbox.
+  const [messages, setMessages] = useState<ReaderMsg[]>([]);
+  const [replyDraft, setReplyDraft] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState(false);
+  const [outboxNote, setOutboxNote] = useState<string | null>(null);
+
+  const loadMessages = async () => {
+    const r = await fetch('/api/admin/reader-messages?kind=introduction');
+    if (r.ok) setMessages((await r.json()).messages || []);
+  };
+  useEffect(() => { loadMessages(); }, []);
+
+  const messagesFor = useMemo(() => {
+    const m = new Map<string, ReaderMsg[]>();
+    // The API returns newest first; a card reads oldest first, like a thread.
+    for (const msg of [...messages].reverse()) {
+      const list = m.get(msg.source.id) ?? [];
+      list.push(msg);
+      m.set(msg.source.id, list);
+    }
+    return m;
+  }, [messages]);
+  const outbox = messages.filter(m => m.status !== 'sent');
+  const queuedCount = outbox.filter(m => m.status === 'queued').length;
+
+  const writeReply = async (intro: Introduction, sendNow: boolean) => {
+    const text = (replyDraft[intro.id] || '').trim();
+    if (!text) return;
+    if (sendNow && !confirm(`Email this to ${intro.email} now?`)) return;
+    setBusy(true);
+    try {
+      const r = await fetch('/api/admin/reader-messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'introduction', source_id: intro.id, body: text, send_now: sendNow }),
+      });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok) { alert(`Could not save the reply: ${res.error || r.status}`); return; }
+      if (sendNow && res.sent === false) alert('Saved, but the email failed. It is in the outbox to try again.');
+      setReplyDraft(d => { const n = { ...d }; delete n[intro.id]; return n; });
+      await loadMessages();
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const sendQueued = async (ids?: string[]) => {
+    const n = ids ? ids.length : queuedCount;
+    if (!n || !confirm(`Email ${n} repl${n === 1 ? 'y' : 'ies'} now?`)) return;
+    setBusy(true);
+    setOutboxNote(null);
+    try {
+      const r = await fetch('/api/admin/reader-messages/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ids ? { ids } : {}),
+      });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok) { setOutboxNote(`Send failed: ${res.error || r.status}`); return; }
+      setOutboxNote(`Sent ${res.sent}${res.failed ? `, ${res.failed} failed` : ''}${res.remaining ? ` · ${res.remaining} still queued` : ''}.`);
+      await loadMessages();
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const editQueued = async (msg: ReaderMsg, body: string) => {
+    if (!body.trim() || body.trim() === msg.body) return;
+    const r = await fetch(`/api/admin/reader-messages/${msg._id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body }),
+    });
+    if (!r.ok) alert('Could not save the edit.');
+    await loadMessages();
+  };
+
+  const discardQueued = async (msg: ReaderMsg) => {
+    if (!confirm(`Discard the unsent reply to ${msg.to_email}?`)) return;
+    await fetch(`/api/admin/reader-messages/${msg._id}`, { method: 'DELETE' });
+    await loadMessages();
+  };
 
   const markContacted = async (email: string | null, contacted: boolean) => {
     if (!email) return;
@@ -93,12 +191,13 @@ export default function IntroductionsPage() {
       if (filter === 'substantial' && i.about.trim().length < 120) return false;
       if (filter === 'volunteered' && !i.volunteered) return false;
       // The queue that actually needs working: raised a hand, no reply yet.
-      if (filter === 'awaiting' && (!i.volunteered || (contactedOverride[i.email ?? ''] ?? i.contacted))) return false;
+      // A reply written here, sent or still queued, takes them out of it.
+      if (filter === 'awaiting' && (!i.volunteered || (contactedOverride[i.email ?? ''] ?? i.contacted) || messagesFor.has(i.id))) return false;
       if (!q) return true;
       return [i.name, i.email, i.about, i.help, i.language]
         .some(f => (f || '').toLowerCase().includes(q));
     });
-  }, [data, query, filter, contactedOverride]);
+  }, [data, query, filter, contactedOverride, messagesFor]);
 
   function exportCsv() {
     if (!data) return;
@@ -184,6 +283,56 @@ export default function IntroductionsPage() {
               Not recognised: {data.language_unmatched.join(' · ')}
             </p>
           )}
+        </section>
+      )}
+
+      {(outbox.length > 0 || outboxNote) && (
+        <section className="mb-6 border border-amber-200 bg-amber-50/40 rounded-lg p-4">
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="font-serif text-lg text-stone-900">Outbox</h2>
+            {queuedCount > 0 && (
+              <button
+                onClick={() => sendQueued()}
+                disabled={busy}
+                className="px-3 py-1.5 rounded-lg text-sm bg-accent-rust text-white hover:bg-accent-rust/90 disabled:opacity-50"
+              >
+                Send queued ({queuedCount})
+              </button>
+            )}
+          </div>
+          <p className="text-xs text-stone-500 mb-3">
+            Replies you have written that have not gone out. Edit or discard them here; nothing is emailed until you press send.
+            A sent reply also appears as a note the next time the reader is signed in on the site. A reader who answers reaches derek@sourcelibrary.org.
+          </p>
+          {outboxNote && <p className="text-sm text-stone-700 mb-3">{outboxNote}</p>}
+          <ul className="space-y-2">
+            {outbox.map(m => (
+              <li key={m._id} className="bg-white border border-stone-200 rounded p-3">
+                <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs text-stone-500 mb-1">
+                  <span>
+                    To <span className="text-stone-800">{m.to_name || m.to_email}</span>
+                    {m.to_name && <> &lt;{m.to_email}&gt;</>} · written {fmtDate(m.created_at)}
+                    {m.status === 'failed' && <span className="ml-2 text-status-error">failed: {m.error}</span>}
+                  </span>
+                  <span className="flex gap-3">
+                    <button onClick={() => sendQueued([m._id])} disabled={busy} className="text-accent-rust hover:underline disabled:opacity-50">
+                      {m.status === 'failed' ? 'Try again' : 'Send'}
+                    </button>
+                    <button onClick={() => discardQueued(m)} disabled={busy} className="text-stone-500 hover:underline disabled:opacity-50">
+                      Discard
+                    </button>
+                  </span>
+                </div>
+                <textarea
+                  key={m.body}
+                  defaultValue={m.body}
+                  onBlur={e => editQueued(m, e.target.value)}
+                  rows={Math.min(6, m.body.split('\n').length + 1)}
+                  className="w-full text-sm px-2 py-1.5 border border-stone-200 rounded focus:outline-none focus:border-accent-rust"
+                />
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -280,6 +429,59 @@ export default function IntroductionsPage() {
                 <span className="text-stone-400">Would help by </span>
                 {i.help}
               </p>
+            )}
+
+            {(messagesFor.get(i.id) ?? []).length > 0 && (
+              <ul className="mt-3 space-y-1.5">
+                {(messagesFor.get(i.id) ?? []).map(m => (
+                  <li
+                    key={m._id}
+                    className={`text-xs rounded px-3 py-2 border ${
+                      m.status === 'sent' ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'
+                    }`}
+                  >
+                    <span className={m.status === 'sent' ? 'text-emerald-700' : 'text-amber-700'}>
+                      {m.status === 'sent'
+                        ? `↩ Emailed ${fmtDate(m.sent_at)} · ${m.read_at ? `seen on the site ${fmtDate(m.read_at)}` : 'not yet seen on the site'}`
+                        : m.status === 'failed'
+                          ? 'Failed, in the outbox'
+                          : 'In the outbox, not sent yet'}
+                      {' · '}
+                      {m.by}
+                    </span>
+                    <p className="mt-0.5 whitespace-pre-wrap text-stone-700">{m.body}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {i.email && (
+              <div className="mt-3 pt-3 border-t border-stone-100 flex gap-2 items-start">
+                <textarea
+                  rows={2}
+                  placeholder={`Reply to ${i.name || i.email}`}
+                  value={replyDraft[i.id] || ''}
+                  onChange={e => setReplyDraft(d => ({ ...d, [i.id]: e.target.value }))}
+                  className="flex-1 text-sm px-2 py-1.5 border border-stone-200 rounded resize-y focus:outline-none focus:border-accent-rust"
+                />
+                <div className="flex flex-col gap-1">
+                  <button
+                    onClick={() => writeReply(i, false)}
+                    disabled={busy || !(replyDraft[i.id] || '').trim()}
+                    className="text-xs px-3 py-1.5 bg-stone-900 text-white rounded disabled:opacity-40"
+                    title="Keep it in the outbox and send later"
+                  >
+                    Queue
+                  </button>
+                  <button
+                    onClick={() => writeReply(i, true)}
+                    disabled={busy || !(replyDraft[i.id] || '').trim()}
+                    className="text-xs px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded disabled:opacity-40"
+                  >
+                    Send now
+                  </button>
+                </div>
+              </div>
             )}
           </article>
         ))}

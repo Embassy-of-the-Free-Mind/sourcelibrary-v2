@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { gallery, likes } from '@/lib/api-client';
 import { useIdentity } from '@/hooks/useIdentity';
 import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
+import { readJsonOrStatus, shrinkImage } from '@/lib/shrink-image';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 // Profile photo editor for /account. Two sources:
@@ -264,8 +265,13 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
     try {
       let res: Response;
       if (cropSource.file) {
+        // Shrink before sending: Vercel refuses a body over 4.5 MB with a
+        // plain-text 413 before the route runs, so a 5–10 MB camera photo
+        // used to fail here with a JSON parse error and no photo (#411).
+        // The bbox is normalized, so it survives the resize unchanged.
+        const upload = await shrinkImage(cropSource.file, { maxEdge: 3200 });
         const form = new FormData();
-        form.append('file', cropSource.file);
+        form.append('file', upload);
         form.append('x', String(bbox.x));
         form.append('y', String(bbox.y));
         form.append('w', String(bbox.w));
@@ -278,8 +284,8 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
           body: JSON.stringify({ source_url: cropSource.url, bbox }),
         });
       }
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to save photo');
+      const data = await readJsonOrStatus(res);
+      if (!res.ok || typeof data.url !== 'string') throw new Error(data.error || 'Failed to save photo');
       setCurrent(data.url);
       setImgError(false);
       close();

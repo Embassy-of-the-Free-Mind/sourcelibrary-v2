@@ -35,6 +35,7 @@
 
 import { buildVisiblePageCountPipeline, pageCountersFromStats, PAGE_COUNTERS } from './page-counts.mjs';
 import { PAGES_MATERIALIZED_FILTER } from './pages-state.mjs';
+import { ObjectId } from 'mongodb';
 
 const COUNT_MAX_TIME_MS = 10 * 60_000; // nightly job
 const CONTROL_MAX_TIME_MS = 60_000;
@@ -48,7 +49,9 @@ export const LIVE_BOOK_MATCH = { visible: true, pages_count: { $gt: 0 } };
  * so its counts are untrustworthy — report the probe broken, never 0 coverage.
  */
 export function finalizeMeasurement(measurement, controlOk) {
-  const { stage, covered, total, queue_depth, residue, detail } = measurement;
+  const { stage, covered, total, queue_depth, queue_visible, residue, detail, per_day, also, stall_watch, sampled_at } = measurement;
+  // stall_watch:false keeps a stage out of findStalled; it is a property of the stage, so it survives a broken probe.
+  const watch = stall_watch === false ? { stall_watch: false } : {};
   if (!controlOk) {
     return {
       stage,
@@ -56,6 +59,7 @@ export function finalizeMeasurement(measurement, controlOk) {
       covered: null,
       total: total ?? null,
       queue_depth: null,
+      ...watch,
       ...(detail !== undefined ? { detail } : {}),
     };
   }
@@ -65,7 +69,12 @@ export function finalizeMeasurement(measurement, controlOk) {
     covered,
     total,
     queue_depth,
+    ...watch,
+    ...(queue_visible !== undefined ? { queue_visible } : {}),
     ...(residue !== undefined ? { residue } : {}),
+    ...(per_day !== undefined ? { per_day } : {}),
+    ...(also !== undefined ? { also } : {}),
+    ...(sampled_at !== undefined ? { sampled_at } : {}),
     ...(detail !== undefined ? { detail } : {}),
   };
 }
@@ -90,12 +99,17 @@ export function computeStageDeltas(currentStages, previousStages) {
  * Pure: the I54 "quietly stops advancing" detector — stages with work waiting
  * (queue_depth > 0) whose coverage did not move (delta === 0). Broken probes
  * and stages without a comparable delta are excluded: null is not zero.
+ * A stage marked stall_watch:false is excluded too: its queue is not one a
+ * worker drains every night (a paid phase behind the shut dial, a step done by
+ * hand), so a still night there is not a stall, and paging on it would be a
+ * false alarm (#428).
  */
 export function findStalled(stagesWithDeltas) {
   return (stagesWithDeltas ?? [])
     .filter(
       (s) =>
         s.status === 'ok' &&
+        s.stall_watch !== false &&
         typeof s.queue_depth === 'number' &&
         s.queue_depth > 0 &&
         s.delta === 0,
@@ -516,6 +530,428 @@ export async function measureIdentity(db, { now = new Date() } = {}) {
   );
 }
 
+// ── Book-level steps (#428) ─────────────────────────────────────────────────
+//
+// The rows of "The whole line" (/admin/pipeline) that read NOT MEASURED until
+// v3#428, each counted from the field its own writer sets (named per stage
+// below, verified against the writer's code on 2026-11-16). Three shapes:
+//
+//   stock  covered of total visible books (catalogue, quality_score, cover,
+//          places, ft_search, book_checks)
+//   count  covered with total null: a number with no denominator (copy_holds)
+//   flow   covered/total null, per_day = { day, n, parts } for the last FULL
+//          UTC day (imported, published)
+//
+// None of them is stall-watched (stall_watch:false): catalogue and scoring are
+// paid phases behind the spend dial, publishing is by hand, and a quiet night
+// in any of them is not a stalled worker. A new false alarm is worse than a
+// missing number.
+//
+// Cost: one pass over the ~71K live books (one aggregation, booleans only,
+// 12.6 s on 2026-11-16), two small distincts (first_translation_attempts 97K
+// rows, book_checks 3K), one distinct over sweep_log for the page-number
+// fitter (10.6 s; sweep_log has no index but _id), and indexed counts. No query
+// touches `pages`.
+
+/** Pure: the last full UTC day before `now`: { day: 'YYYY-MM-DD', start, end } with end exclusive. */
+export function lastFullUtcDay(now = new Date()) {
+  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const start = new Date(end.getTime() - 86400_000);
+  return { day: start.toISOString().slice(0, 10), start, end };
+}
+
+/** Pure: an ObjectId-shaped hex lower bound for a time (the first 4 bytes of an ObjectId are its seconds). */
+export function objectIdHexAt(date) {
+  return Math.floor(date.getTime() / 1000).toString(16).padStart(8, '0') + '0000000000000000';
+}
+
+/** `{visible: {$in: [true, false, null]}}` lets the {visible, created_at} index serve a created_at range over every book. */
+export const ANY_VISIBILITY = { $in: [true, false, null] };
+
+/** Pure: does a projected value count as present (the writers' own `!= null` tests). */
+const present = (path) => ({ $ne: [{ $ifNull: [`$${path}`, null] }, null] });
+
+/**
+ * Pure: the one aggregation over live books. Each flag is the field the step's writer sets:
+ *   catalogue      ai_metadata.enriched_at — orchestrator phase 1.6, and the phase selects on its absence
+ *   quality_score  quality_score            — enrich-worker phase 7.5
+ *   collections    collection_scores        — enrich-worker phase 7.6
+ *   cover          cover_page, or cover_selected_at (phase 8.9 stamps it also when it keeps a manual cover)
+ *   place          locations[] with type 'publication' — geocode-publication-places.mjs
+ *   author_place   locations[] with type author_birth / author_death — backfill-*-author-locations.mjs
+ *   split          split_completed — orchestrator phase 1.3 (split-book.mjs) and phase 3.1 set it after the cut
+ *   pictures       detected_images_count, pipeline_auto.images_done_at or .images_skipped_reason — the extraction
+ *                  writers (image-extract-worker.mjs, orchestrator phase 8); runs before ~2026-10 set only the count
+ *   pictures_stamp images_done_at or images_skipped_reason only: what pipeline-next-step.mjs reads as done (#425)
+ */
+export function buildBookStepPipeline() {
+  const types = { $ifNull: ['$locations.type', []] };
+  return [
+    { $match: LIVE_BOOK_MATCH },
+    {
+      $project: {
+        _id: 1,
+        id: 1,
+        catalogue: present('ai_metadata.enriched_at'),
+        quality_score: present('quality_score'),
+        collections: present('collection_scores'),
+        cover_page: present('cover_page'),
+        cover_selected: present('cover_selected_at'),
+        place: { $in: ['publication', types] },
+        split: { $eq: ['$split_completed', true] },
+        author_place: { $or: [{ $in: ['author_birth', types] }, { $in: ['author_death', types] }] },
+        pictures_stamp: { $or: [present('pipeline_auto.images_done_at'), present('pipeline_auto.images_skipped_reason')] },
+        pictures_count: present('detected_images_count'),
+      },
+    },
+  ];
+}
+
+/** Hold reason the pre-OCR duplicate screen writes (scripts/audit/pre-ocr-duplicate-screen.ts HOLD_REASON). */
+export const COPY_HOLD_REASON = 'same-edition-copy-unread';
+/** sweep_log rows the printed-page fitter writes, one per book it fitted (backfill-printed-page-4291.mjs). */
+export const PRINTED_PAGE_SWEEP = { sweep: 'backfill-printed-page-4291', action: 'printed-page-fitted' };
+
+/**
+ * Pure: the book-level stock stages from the projected live books.
+ *
+ * `sets` are book ids read from other collections. A set is a positive control on itself: an empty
+ * set, or a set none of whose ids is a live book, is a broken probe (a renamed collection or field,
+ * or book ids written in another shape — 16K books carry a re-minted _id, so both `id` and `_id` are
+ * tried), never 0 coverage. `controls` are findOne results for the field stages, true when a live
+ * book carrying the field was found independently of the aggregation.
+ */
+export function bookStepStages(rows, { ftBooks, checkedBooks, pageNumberBooks }, controls) {
+  const split = controls.split ?? {};
+  const total = rows.length;
+  const n = (pred) => rows.reduce((a, r) => a + (pred(r) ? 1 : 0), 0);
+  const inSet = (set) => (r) => set.has(String(r.id)) || set.has(String(r._id));
+  const setOk = (set) => set.size > 0 && rows.some(inSet(set));
+  const stock = (stage, covered, ok, rest = {}) =>
+    finalizeMeasurement({ stage, covered, total, queue_depth: null, stall_watch: false, ...rest }, ok && total > 0);
+
+  return [
+    stock('catalogue', n((r) => r.catalogue), controls.catalogue),
+    stock('quality_score', n((r) => r.quality_score), controls.quality_score, {
+      also: [{ label: 'placed in collections by score', n: n((r) => r.collections) }],
+    }),
+    stock('cover', n((r) => r.cover_page || r.cover_selected), controls.cover, {
+      queue_depth: controls.coverQueue ?? null,
+      detail: { with_cover_page: n((r) => r.cover_page) },
+    }),
+    // The page-number figure rides beside the places one; a broken fitter log drops that figure, not the row.
+    stock('places', n((r) => r.place), controls.place, {
+      also: [
+        { label: 'with an author birth or death place', n: n((r) => r.author_place) },
+        ...(setOk(pageNumberBooks) ? [{ label: 'with printed page numbers fitted', n: n(inSet(pageNumberBooks)) }] : []),
+      ],
+      ...(setOk(pageNumberBooks) ? {} : { detail: { printed_page: 'probe_broken: no fitter rows match a live book' } }),
+    }),
+    // Books, beside the pictures stage's count of pictures cut out (#425). Done: the book's pages were searched.
+    stock('image_books', n((r) => r.pictures_count || r.pictures_stamp), controls.pictures, {
+      also: [{ label: 'with the done or skip stamp the waiting count reads', n: n((r) => r.pictures_stamp) }],
+    }),
+    stock('ft_search', n(inSet(ftBooks)), setOk(ftBooks)),
+    stock('book_checks', n(inSet(checkedBooks)), setOk(checkedBooks)),
+    // A count (total null): a book has spreads or it does not, and nothing stored says which until phase 1.25 looks.
+    // Waiting is phase 1.3's queue: flagged as spreads at archive_complete and not yet cut.
+    finalizeMeasurement({
+      stage: 'split', covered: n((r) => r.split), total: null, queue_depth: split.flagged ?? null, queue_visible: split.flaggedVisible ?? null, stall_watch: false,
+      also: [
+        ...(typeof split.pagesCut === 'number' ? [{ label: 'pages cut from spreads, hidden books included', n: split.pagesCut }] : []),
+        ...(typeof split.unchecked === 'number' ? [{ label: 'books at archive_complete not yet checked for spreads', n: split.unchecked }] : []),
+      ],
+    }, !!split.control && total > 0),
+  ];
+}
+
+/** catalogue, quality_score, cover, places, image_books, ft_search, book_checks, split — one pass over live books (#428). */
+export async function measureBookSteps(db) {
+  const books = db.collection('books');
+  const opts = { maxTimeMS: CONTROL_MAX_TIME_MS };
+  const has = { $exists: true, $ne: null };
+  const [rows, ftIds, checkIds, pageNumberIds, catalogue, quality_score, cover, place, coverQueue, splitControl, splitQueue, pagesCut, pictures] = await Promise.all([
+    books.aggregate(buildBookStepPipeline(), { maxTimeMS: COUNT_MAX_TIME_MS }).toArray(),
+    // first_translation_attempts: one row per search, written by every search lane (ft-search/ingest.mjs and the verifiers).
+    db.collection('first_translation_attempts').distinct('book_id', {}, { maxTimeMS: COUNT_MAX_TIME_MS }),
+    // book_checks: one row per book read by a check (paired-fifths daily, v3#381; reader reports).
+    db.collection('book_checks').distinct('book_id', {}, { maxTimeMS: COUNT_MAX_TIME_MS }),
+    db.collection('sweep_log').distinct('book_id', PRINTED_PAGE_SWEEP, { maxTimeMS: COUNT_MAX_TIME_MS }),
+    controlFound(books, { ...LIVE_BOOK_MATCH, 'ai_metadata.enriched_at': has }),
+    controlFound(books, { ...LIVE_BOOK_MATCH, quality_score: has }),
+    controlFound(books, { ...LIVE_BOOK_MATCH, cover_page: has }),
+    controlFound(books, { ...LIVE_BOOK_MATCH, 'locations.type': 'publication' }),
+    // What phase 8.9 takes: books at images_complete (indexed on pipeline_auto.status).
+    books.countDocuments({ ...LIVE_BOOK_MATCH, 'pipeline_auto.status': 'images_complete' }, opts).catch(() => null),
+    controlFound(books, { ...LIVE_BOOK_MATCH, split_completed: true }),
+    // Phases 1.25 and 1.3 select at archive_complete (indexed on pipeline_auto.status; ~40K books, 12 s on 2026-11-16).
+    books.aggregate([
+      { $match: { 'pipeline_auto.status': 'archive_complete' } },
+      { $group: {
+        _id: null,
+        unchecked: { $sum: { $cond: [{ $eq: ['$pipeline_auto.split_checked', true] }, 0, 1] } },
+        flagged: { $sum: { $cond: [{ $and: [{ $eq: ['$pipeline_auto.split_checked', true] }, { $eq: ['$needs_splitting', true] }, { $ne: ['$split_completed', true] }] }, 1, 0] } },
+        flaggedVisible: { $sum: { $cond: [{ $and: [{ $eq: ['$visible', true] }, { $eq: ['$pipeline_auto.split_checked', true] }, { $eq: ['$needs_splitting', true] }, { $ne: ['$split_completed', true] }] }, 1, 0] } },
+      } },
+    ], { maxTimeMS: COUNT_MAX_TIME_MS }).next().catch(() => null),
+    // Each half page a split writes carries split_from_spread (indexed).
+    db.collection('pages').countDocuments({ split_from_spread: true }, opts).catch(() => null),
+    controlFound(books, { ...LIVE_BOOK_MATCH, 'pipeline_auto.images_done_at': has }),
+  ]);
+  const set = (ids) => new Set(ids.filter((x) => x != null).map(String));
+  return bookStepStages(
+    rows,
+    { ftBooks: set(ftIds), checkedBooks: set(checkIds), pageNumberBooks: set(pageNumberIds) },
+    { catalogue, quality_score, cover, place, coverQueue, pictures,
+      split: { control: splitControl, flagged: splitQueue?.flagged ?? null, flaggedVisible: splitQueue?.flaggedVisible ?? null, unchecked: splitQueue?.unchecked ?? null, pagesCut } },
+  );
+}
+
+/**
+ * copy_holds — books the pre-OCR duplicate screen holds out of paid OCR as the same printing as a
+ * copy we hold (pipeline_auto.hold.reason; status `held` is indexed). A count, not a share: hidden
+ * queued books included, and there is no denominator a hold is "of". The control is the hold field
+ * itself (any held book with a reason), so a screen that has released every hold still reads 0, not
+ * broken.
+ */
+export async function measureCopyHolds(db) {
+  const books = db.collection('books');
+  const held = { 'pipeline_auto.status': 'held' };
+  if (!(await controlFound(books, { ...held, 'pipeline_auto.hold.reason': { $type: 'string' } }))) {
+    return finalizeMeasurement({ stage: 'copy_holds', stall_watch: false }, false);
+  }
+  // pages_count > 0 lets the planner walk the pages_count index (~190K books) instead of every `held`
+  // book (~480K, nearly all manifest-only holds): 54 s on 2026-11-16. The screen compares page images,
+  // so a book it holds has pages.
+  const [g] = await books.aggregate(
+    [
+      { $match: { pages_count: { $gt: 0 }, ...held, 'pipeline_auto.hold.reason': COPY_HOLD_REASON } },
+      { $group: { _id: null, n: { $sum: 1 }, visible: { $sum: { $cond: [{ $eq: ['$visible', true] }, 1, 0] } } } },
+    ],
+    { maxTimeMS: COUNT_MAX_TIME_MS },
+  ).toArray();
+  const covered = g?.n ?? 0;
+  const visible = g?.visible ?? 0;
+  // The other half of the row. Repeat captures (#5056) carry repeat_of, served by a partial index (42 ms). The
+  // end pages phase 1.97 hides get page_number < 0 and hidden_reason 'ia_trailing_dupe', which no index serves,
+  // so they are not counted; its queue is (archive_complete, not dedup_complete, on the status index).
+  const pages = db.collection('pages');
+  const opts = { maxTimeMS: CONTROL_MAX_TIME_MS };
+  const [repeatControl, repeats, dedupQueue] = await Promise.all([
+    controlFound(pages, { repeat_of: { $type: 'string' } }),
+    pages.countDocuments({ repeat_of: { $type: 'string' } }, { ...opts, hint: { book_id: 1, repeat_of: 1, page_number: 1 } }).catch(() => null),
+    books.aggregate([
+      { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.dedup_complete': { $ne: true } } },
+      { $group: { _id: null, n: { $sum: 1 }, visible: { $sum: { $cond: [{ $eq: ['$visible', true] }, 1, 0] } } } },
+    ], opts).toArray().then(([q]) => q ?? { n: 0, visible: 0 }).catch(() => null),
+  ]);
+  return finalizeMeasurement(
+    { stage: 'copy_holds', covered, total: null, queue_depth: dedupQueue?.n ?? null, queue_visible: dedupQueue?.visible ?? null, stall_watch: false, detail: { visible },
+      also: repeatControl && typeof repeats === 'number' ? [{ label: 'pages hidden as repeat captures', n: repeats }] : [] },
+    true,
+  );
+}
+
+/** Pure: parts of a per-day figure, largest first, at most `max` with the rest summed as "other". */
+export function dayPartsOf(groups, max = 3) {
+  const sorted = [...groups].filter((g) => g.n > 0).sort((a, b) => b.n - a.n);
+  const head = sorted.slice(0, max);
+  const rest = sorted.slice(max).reduce((a, g) => a + g.n, 0);
+  return rest > 0 ? [...head, { label: 'other', n: rest }] : head;
+}
+
+/**
+ * imported — book records created on the last full UTC day, hidden included (books.created_at;
+ * every importer stamps it, through insertBookIfNew). Split into books and artwork records,
+ * because a museum harvest creates thousands of one-image records in a day. Served by the
+ * {visible, created_at} index. The control: a book whose created_at is a date.
+ */
+export async function measureImports(db, { now = new Date() } = {}) {
+  const books = db.collection('books');
+  if (!(await controlFound(books, { visible: ANY_VISIBILITY, created_at: { $type: 'date' } }))) {
+    return finalizeMeasurement({ stage: 'imported', stall_watch: false }, false);
+  }
+  const { day, start, end } = lastFullUtcDay(now);
+  const groups = await books.aggregate(
+    [
+      { $match: { visible: ANY_VISIBILITY, created_at: { $gte: start, $lt: end } } },
+      { $group: { _id: { $eq: ['$content_type', 'artwork'] }, n: { $sum: 1 } } },
+    ],
+    { maxTimeMS: COUNT_MAX_TIME_MS },
+  ).toArray();
+  const parts = groups.map((g) => ({ label: g._id ? 'artwork records' : 'books', n: g.n }));
+  return finalizeMeasurement(
+    { stage: 'imported', covered: null, total: null, queue_depth: null, stall_watch: false,
+      per_day: { day, n: parts.reduce((a, p) => a + p.n, 0), parts: dayPartsOf(parts) } },
+    true,
+  );
+}
+
+/**
+ * published — books made public on the last full UTC day through the publication writer
+ * (publication_events rows with to:'public', one per transition; src/lib/publication.ts and its
+ * .mjs twin). A writer that sets `visible` directly leaves no event and is not counted. The
+ * collection has no index on `at`, so the day is bounded by _id (an ObjectId carries its insert
+ * time) and then filtered on `at`. Parts are the writers (`by`).
+ */
+export async function measurePublished(db, { now = new Date() } = {}) {
+  const events = db.collection('publication_events');
+  if (!(await controlFound(events, { to: 'public', at: { $type: 'date' } }))) {
+    return finalizeMeasurement({ stage: 'published', stall_watch: false }, false);
+  }
+  const { day, start, end } = lastFullUtcDay(now);
+  const slack = 3600_000; // client clocks: an _id may be minted a little before or after `at`
+  const groups = await events.aggregate(
+    [
+      { $match: {
+        _id: { $gte: new ObjectId(objectIdHexAt(new Date(start.getTime() - slack))), $lt: new ObjectId(objectIdHexAt(new Date(end.getTime() + slack))) },
+        to: 'public', at: { $gte: start, $lt: end },
+      } },
+      { $group: { _id: '$book_id', by: { $last: '$by' } } },
+      { $group: { _id: '$by', n: { $sum: 1 } } },
+    ],
+    { maxTimeMS: COUNT_MAX_TIME_MS },
+  ).toArray();
+  const parts = groups.map((g) => ({ label: String(g._id ?? 'unnamed'), n: g.n }));
+  return finalizeMeasurement(
+    { stage: 'published', covered: null, total: null, queue_depth: null, stall_watch: false,
+      per_day: { day, n: parts.reduce((a, p) => a + p.n, 0), parts: dayPartsOf(parts) } },
+    true,
+  );
+}
+
+// ── Page-level steps (#428) ─────────────────────────────────────────────────
+//
+// seams and search are flows (per_day, the last full UTC day), each read from the record its own writer leaves:
+// book_events for the seam pass, cron_runs for the search copy. display and marks are SAMPLES: nothing stored
+// counts pages without a reader-sized copy, and a mark can only be read from the image bytes, so both come from
+// the weekly image-provenance audit, which draws random visible pages and reads each from R2. A sampled stage
+// carries `sampled_at` and its sample size as the total; it is never differenced night to night.
+
+/** book_events type the seam pass and seam-repair.mjs write, one row per write call (scripts/maintenance/seam-repair-6742). */
+export const SEAM_EVENT = 'translation_seam_repaired';
+
+/** Pure: a seam run id's family: 'seam-pass-8399-20261115…' → 'seam-pass-8399'. */
+export function runFamily(run) {
+  return typeof run === 'string' && run ? run.replace(/-\d{8,}.*$/, '') : 'unnamed run';
+}
+
+/**
+ * seams — pages whose page-turn edge was rewritten on the last full UTC day. Joins the pass checked and left
+ * alone are not stored (only seam-pass.jsonl on the box holds them), so this counts repairs, not checks.
+ * book_events has no index on type or at; the day is bounded by _id, as in measurePublished.
+ */
+export async function measureSeams(db, { now = new Date() } = {}) {
+  const events = db.collection('book_events');
+  if (!(await controlFound(events, { type: SEAM_EVENT, at: { $type: 'date' } }))) {
+    return finalizeMeasurement({ stage: 'seams', stall_watch: false }, false);
+  }
+  const { day, start, end } = lastFullUtcDay(now);
+  const slack = 3600_000;
+  const rows = await events.aggregate(
+    [
+      { $match: {
+        _id: { $gte: new ObjectId(objectIdHexAt(new Date(start.getTime() - slack))), $lt: new ObjectId(objectIdHexAt(new Date(end.getTime() + slack))) },
+        type: SEAM_EVENT, at: { $gte: start, $lt: end },
+      } },
+      { $project: { _id: 0, book_id: 1, run: '$details.run', pages: '$details.pages' } },
+    ],
+    { maxTimeMS: COUNT_MAX_TIME_MS },
+  ).toArray();
+  return finalizeMeasurement(
+    { stage: 'seams', covered: null, total: null, queue_depth: null, stall_watch: false, ...seamDay(rows, day) },
+    true,
+  );
+}
+
+/** Pure: the seams per-day figure from that day's book_events rows. */
+export function seamDay(rows, day) {
+  const by = new Map();
+  for (const r of rows) {
+    const f = runFamily(r.run);
+    by.set(f, (by.get(f) ?? 0) + (Number(r.pages) || 0));
+  }
+  const parts = [...by.entries()].map(([label, n]) => ({ label, n }));
+  return {
+    per_day: { day, n: parts.reduce((a, p) => a + p.n, 0), parts: dayPartsOf(parts) },
+    detail: { repair_rows: rows.length, books: new Set(rows.map((r) => String(r.book_id))).size },
+  };
+}
+
+/** cron_runs name sync-pages-content writes, one row per run that saw pages (scripts/workers/sync-pages-content.mjs). */
+export const SEARCH_COPY_CRON = 'sync-pages-content';
+/** sync-pages-content --max default: a run that saw this many pages did not cover its window. */
+export const SEARCH_COPY_MAX_PAGES = 50000;
+
+/**
+ * search — pages copied to the search database on the last full UTC day, and pages that failed to copy. The gap
+ * (pages whose text has not reached Supabase) is not stored anywhere; a capped run (one that saw --max pages) is
+ * the record that the copy fell behind, so it is reported beside the figure. cron_runs {cron, timestamp} is indexed.
+ */
+export async function measureSearchCopy(db, { now = new Date() } = {}) {
+  const runs = db.collection('cron_runs');
+  if (!(await controlFound(runs, { cron: SEARCH_COPY_CRON, 'actions.synced': { $type: 'number' } }))) {
+    return finalizeMeasurement({ stage: 'search', stall_watch: false }, false);
+  }
+  const { day, start, end } = lastFullUtcDay(now);
+  const [rows, last] = await Promise.all([
+    runs.find({ cron: SEARCH_COPY_CRON, timestamp: { $gte: start, $lt: end } }, { projection: { _id: 0, status: 1, actions: 1 }, maxTimeMS: CONTROL_MAX_TIME_MS }).toArray(),
+    runs.find({ cron: SEARCH_COPY_CRON, status: 'success' }, { projection: { _id: 0, timestamp: 1 }, maxTimeMS: CONTROL_MAX_TIME_MS }).sort({ timestamp: -1 }).limit(1).next(),
+  ]);
+  const { per_day, detail } = searchCopyDay(rows, day);
+  const last_success_at = last?.timestamp ? new Date(last.timestamp).toISOString() : null;
+  return finalizeMeasurement(
+    { stage: 'search', covered: null, total: null, queue_depth: null, stall_watch: false, per_day, detail: { ...detail, last_success_at } },
+    true,
+  );
+}
+
+/** Pure: the search per-day figure from that day's sync-pages-content run rows. */
+export function searchCopyDay(rows, day) {
+  const sum = (k) => rows.reduce((a, r) => a + (Number(r.actions?.[k]) || 0), 0);
+  const synced = sum('synced'), failed = sum('failed');
+  const parts = [{ label: 'copied', n: synced }, { label: 'failed to copy', n: failed }].filter((p) => p.n > 0);
+  return {
+    per_day: { day, n: synced, parts },
+    detail: { runs: rows.length, failed_runs: rows.filter((r) => r.status !== 'success').length,
+      capped_runs: rows.filter((r) => (Number(r.actions?.seen) || 0) >= SEARCH_COPY_MAX_PAGES).length },
+  };
+}
+
+/** ops_reports _id image-provenance-coverage.mjs writes each week (#428). */
+export const PROVENANCE_REPORT_ID = 'image-provenance-coverage';
+/** A weekly report older than this is a stopped audit, not a measurement. */
+export const PROVENANCE_MAX_AGE_DAYS = 15;
+
+/**
+ * Pure: display and marks from the stored provenance report, page-weighted frame. display: sampled visible pages
+ * whose display_photo is an object on R2 (`noR2Display` is the rest). marks: of the sampled pages that are served
+ * and can carry the mark, those the keyed detector found it on. A missing, stale or uncontrolled report is a broken
+ * probe for both, never 0.
+ */
+export function provenanceStages(report, { now = new Date() } = {}) {
+  const at = report?.at ? new Date(report.at) : null;
+  const fresh = at && !Number.isNaN(at.getTime()) && now.getTime() - at.getTime() <= PROVENANCE_MAX_AGE_DAYS * 86400_000;
+  const p = report?.pages;
+  const ok = !!(fresh && report?.controls?.pass === true && p && typeof p.sampled === 'number' && p.sampled > 0);
+  const why = !report ? 'no stored report' : !fresh ? `report older than ${PROVENANCE_MAX_AGE_DAYS} days` : 'controls failed or empty sample';
+  const sampled_at = ok ? at.toISOString() : undefined;
+  const broken = (stage) => ({ ...finalizeMeasurement({ stage, stall_watch: false }, false), detail: { reason: why, ...(report?.at ? { report_at: String(report.at) } : {}) } });
+  if (!ok) return [broken('display'), broken('marks')];
+  return [
+    finalizeMeasurement({ stage: 'display', covered: p.sampled - (p.noR2Display ?? 0), total: p.sampled, queue_depth: null,
+      stall_watch: false, sampled_at, detail: { without_r2_display: p.noR2Display ?? 0 } }, true),
+    finalizeMeasurement({ stage: 'marks', covered: p.marked, total: p.n, queue_depth: null, stall_watch: false, sampled_at,
+      detail: { by_book_rate: report.books?.rate ?? null, recent_rate: report.recent?.rate ?? null, recent_n: report.recent?.n ?? null } }, true),
+  ];
+}
+
+/** display, marks — read from the weekly provenance report (ops_reports), not measured here. */
+export async function measureProvenance(db, { now = new Date() } = {}) {
+  const report = await db.collection('ops_reports').findOne({ _id: PROVENANCE_REPORT_ID }, { maxTimeMS: CONTROL_MAX_TIME_MS });
+  return provenanceStages(report, { now });
+}
+
 // ── Reporting (#359) ─────────────────────────────────────────────────────────
 //
 // A broken probe says nothing about the pipeline; a stalled stage says the
@@ -587,6 +1023,8 @@ export function formatSummaryLine(doc, { dryRun = false } = {}) {
   const stages = doc.stages ?? [];
   const cell = (s) =>
     s.status !== 'ok' ? 'n/a'
+      : s.per_day ? `${s.per_day.n} on ${s.per_day.day}`
+      : s.total == null && typeof s.covered === 'number' ? String(s.covered)
       : (s.total ? `${((100 * s.covered) / s.total).toFixed(1)}%` : '—') +
         (typeof s.residue === 'number' && s.residue > 0 ? ` (queue ${s.queue_depth}, residue ${s.residue} no worker takes)` : '');
   const broken = describeBroken(stages);
@@ -610,6 +1048,15 @@ export async function measureAllStages(db, { fetchImpl = fetch } = {}) {
     ['images', () => measureImages(db)],
     ['embeddings', () => measureEmbeddings(db, { fetchImpl })],
     ['identity', () => measureIdentity(db)],
+    // Book-level steps of the whole line (#428); none is stall-watched.
+    ['imported', () => measureImports(db)],
+    [['catalogue', 'quality_score', 'cover', 'places', 'image_books', 'ft_search', 'book_checks', 'split'], () => measureBookSteps(db)],
+    ['copy_holds', () => measureCopyHolds(db)],
+    ['published', () => measurePublished(db)],
+    // Page-level steps (#428).
+    ['seams', () => measureSeams(db)],
+    ['search', () => measureSearchCopy(db)],
+    [['display', 'marks'], () => measureProvenance(db)],
   ];
   const out = [];
   for (const [stage, fn] of measurements) {

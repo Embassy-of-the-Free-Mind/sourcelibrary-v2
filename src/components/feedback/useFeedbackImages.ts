@@ -14,6 +14,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MAX_FEEDBACK_IMAGES, MAX_FEEDBACK_IMAGE_BYTES } from '@/lib/feedback-limits';
+import { shrinkImage } from '@/lib/shrink-image';
 
 export interface AttachedImage {
   id: string;
@@ -27,35 +28,9 @@ export interface AttachedImage {
 /** Longest edge for the client-side shrink; the server caps again at 2000. */
 const SHRINK_EDGE = 2400;
 
-/**
- * Bring an oversized file under the request cap. A phone photo is 3–8 MB; the
- * route refuses over 4 MB and Vercel refuses over 4.5 MB before the route
- * runs, so the shrink has to happen here. Draws to a canvas and re-encodes as
- * JPEG, stepping quality down once if the first pass is still too big.
- */
-async function shrinkImage(file: File): Promise<File> {
-  if (file.size <= MAX_FEEDBACK_IMAGE_BYTES) return file;
-  const bitmap = await createImageBitmap(file);
-  const scale = Math.min(1, SHRINK_EDGE / Math.max(bitmap.width, bitmap.height));
-  const canvas = document.createElement('canvas');
-  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
-  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Could not shrink image');
-  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  bitmap.close?.();
-  for (const quality of [0.88, 0.7]) {
-    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
-    if (blob && blob.size <= MAX_FEEDBACK_IMAGE_BYTES) {
-      return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' });
-    }
-  }
-  throw new Error('Image is too large');
-}
-
 async function upload(file: File): Promise<string> {
   const form = new FormData();
-  form.append('file', await shrinkImage(file));
+  form.append('file', await shrinkImage(file, { maxBytes: MAX_FEEDBACK_IMAGE_BYTES, maxEdge: SHRINK_EDGE }));
   const res = await fetch('/api/feedback/upload', { method: 'POST', body: form });
   const data = await res.json().catch(() => ({}));
   if (!res.ok || typeof data.url !== 'string') {

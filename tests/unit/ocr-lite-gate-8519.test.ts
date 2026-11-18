@@ -38,10 +38,13 @@ describe('liteReadAllowed: the router cell decides', () => {
     }
   });
 
-  it('allows a cell that binds the route `lite` itself (sanskrit-lite/print, a keep)', () => {
-    const row = OCR_ROUTING_TABLE.router_cells.find((r: { cell: string }) => r.cell === 'sanskrit-lite/print');
-    expect(row?.route).toBe('lite');
-    expect(liteReadAllowed({ language: 'Sanskrit', script_type: 'printed' })).toMatchObject({ ok: true, cell: 'sanskrit-lite/print' });
+  it('allows a cell that binds the route `lite` itself (a keep), and follows the table when it moves to HOLD (#360)', () => {
+    // A fixture, not the live table: the nightly bind (#8283) moves cells, and a gate test pinned to one cell's live
+    // decision fails whenever the bind changes it (sanskrit-lite/print keep -> HOLD on 2026-11-16, PR #17).
+    const table = { router_cells: [{ cell: 'sanskrit-lite/print', decision: 'keep', route: 'lite' }] };
+    expect(liteReadAllowed({ language: 'Sanskrit', script_type: 'printed' }, table)).toMatchObject({ ok: true, cell: 'sanskrit-lite/print' });
+    const held = { router_cells: [{ ...table.router_cells[0], decision: 'HOLD' }] };
+    expect(liteReadAllowed({ language: 'Sanskrit', script_type: 'printed' }, held)).toMatchObject({ ok: false, cell: 'sanskrit-lite/print', route: 'lite' });
   });
 
   it('a lite DRAFT a corrector rewrites is not a Flash-Lite route', () => {

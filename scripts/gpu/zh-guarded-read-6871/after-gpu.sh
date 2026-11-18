@@ -9,7 +9,7 @@
 # It never runs the writer with --apply; the apply command is printed at the end.
 #   JOB_SCRATCH=/data/scratch/sl/jobs/<job> bash scripts/gpu/zh-guarded-read-6871/after-gpu.sh
 set -euo pipefail
-GPU=root@65.108.136.89; SRC=/root/jobs/gpu-queue/50-zh-guarded-read
+GPU=root@203.0.113.4; SRC=/root/jobs/gpu-queue/50-zh-guarded-read
 D=${JOB_SCRATCH:?set JOB_SCRATCH}/zh-guarded-read; ENVF=${ENVF:-/data/scratch/sl/sourcelibrary/.env.production.local}
 mkdir -p "$D"
 if ! ssh "$GPU" "test -f $SRC/finished.json" && [ "${PARTIAL:-0}" != 1 ]; then

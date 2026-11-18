@@ -1,4 +1,4 @@
-# TLS in front of the keyword page service on cloudlayer (earthai-live, 46.224.208.175), #6852.
+# TLS in front of the keyword page service on cloudlayer (earthai-live, 203.0.113.3), #6852.
 # The same shape as l7a's vector front (Caddyfile.l7a, #6843). Installed at /etc/caddy/Caddyfile
 # (Ubuntu's caddy package; its unit runs `caddy run --config` on it):
 #
@@ -10,7 +10,7 @@
 # Before installing: the live Cloud Layer globe runs on this box. Check `ss -ltnp` for 80/443 first; if
 # either is taken, this file does not apply as is.
 #
-# DNS: keywords.sourcelibrary.org A 46.224.208.175, Cloudflare DNS-only (grey cloud), created 2026-10-17.
+# DNS: keywords.sourcelibrary.org A 203.0.113.3, Cloudflare DNS-only (grey cloud), created 2026-10-17.
 # A proxied record would put the edge hop in front of a ~20 ms service, and Let's Encrypt would see
 # Cloudflare, not this box.
 #

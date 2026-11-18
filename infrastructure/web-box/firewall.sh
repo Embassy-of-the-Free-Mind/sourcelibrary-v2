@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Host firewall for a reader-origin box (#8384). Idempotent; safe to re-run.
 #
-# - ssh (22) from ADMIN_IPS only (default: main, 46.224.122.120).
+# - ssh (22) from ADMIN_IPS only (default: main, 203.0.113.2).
 # - https (443) from Cloudflare's published ranges only, fetched live. Nothing else.
 #   The Hetzner cloud firewall (sl-web-fw) sits in front of this and, until Derek opens
 #   it, allows 22 from main and nothing more, so this rule is the second lock, not the first.
@@ -9,7 +9,7 @@
 #
 # Re-run monthly or when Cloudflare announces a range change.
 set -euo pipefail
-ADMIN_IPS="${ADMIN_IPS:-46.224.122.120}"
+ADMIN_IPS="${ADMIN_IPS:-203.0.113.2}"
 
 v4="$(curl -fsS --max-time 20 https://www.cloudflare.com/ips-v4)"
 v6="$(curl -fsS --max-time 20 https://www.cloudflare.com/ips-v6)"

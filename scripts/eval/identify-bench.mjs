@@ -78,7 +78,7 @@ const IMG_DIR = path.join(DIR, 'wall-photos');
 fs.mkdirSync(IMG_DIR, { recursive: true });
 
 import { embedAuthHeaders } from '../workers/lib/embed-auth.mjs';
-const CLIP = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+const CLIP = process.env.CLIP_URL || 'http://203.0.113.2:3456/clip';
 const GK = process.env.GEMINI_API_KEY;
 if (!GK || !process.env.MONGODB_URI) { console.error('missing GEMINI_API_KEY or MONGODB_URI'); process.exit(1); }
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Self-hosted MongoDB alarms (#346)
+After=mongod.service network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sl-mongo/alarms/check.sh
+Nice=0
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+TimeoutStartSec=5min

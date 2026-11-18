@@ -131,6 +131,66 @@
    }
   ]
  },
+ "/articles/what-the-bath-does-doctors-of-water/sudatorium.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/210762e54fd5-1280.avif",
+    "w": 1151
+   },
+   {
+    "src": "/articles/heroes/210762e54fd5-1920.avif",
+    "w": 1151
+   }
+  ]
+ },
+ "/articles/what-the-bath-does-held-by-others/public-bath-japan.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/a46ac2883cda-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/a46ac2883cda-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
+ "/articles/what-the-bath-does-spring-that-heals/bursa-yeni-kaplica.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/db5da1552560-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/db5da1552560-1920.avif",
+    "w": 1458
+   }
+  ]
+ },
+ "/articles/what-the-bath-does-water-is-someone/forum-vulcani.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/f31162512552-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/f31162512552-1920.avif",
+    "w": 1620
+   }
+  ]
+ },
+ "/articles/what-the-bath-does-where-insight-comes/archimedes-tub.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/fc8afb78c6af-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/fc8afb78c6af-1920.avif",
+    "w": 1458
+   }
+  ]
+ },
  "/memoriam/joost-ritman.jpg": {
   "srcset": [
    {

@@ -433,6 +433,7 @@ export const OFF_REPO_CRON = [
   { match: '/root/bin/atlas-egress-meter.sh', reason: 'cost alarm: hand-placed copy of scripts/workers/atlas-egress-meter.sh, the cron fallback until the checkout has it; counts bytes from Atlas, no step work (#5189)' },
   { match: '/root/bin/disk-steward.sh', reason: 'disk: hand-placed copy of scripts/workers/disk-steward.sh, the cron fallback until the checkout has cold-r2.mjs (#6223)' },
   { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
+  { match: '/root/jobs/cold-copy/chain-watchdog.sh', reason: 'gex45 watchdog for the v2#7708 cold copy chain: pages ntfy if the chain dies or stalls, exits at once when chain.pid is gone; no step work' },
   { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
 ];
 

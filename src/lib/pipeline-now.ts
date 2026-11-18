@@ -16,11 +16,12 @@ export const BOX_STALE_MIN = 150;
 /** The corpus section runs nightly. */
 export const CORPUS_STALE_MIN = 26 * 60;
 
-export type Stage = 'qc' | 'research' | 'orchestrator' | 'embed' | 'translate' | 'ocr' | 'enrich' | 'import';
-export const STAGE_ORDER: Stage[] = ['ocr', 'translate', 'enrich', 'embed', 'import', 'orchestrator', 'qc', 'research'];
+/** `other`: a line whose script matches no stage rule (pipeline-now-push.mjs OTHER_STAGE). It is never judged red. */
+export type Stage = 'qc' | 'research' | 'orchestrator' | 'embed' | 'translate' | 'ocr' | 'enrich' | 'import' | 'other';
+export const STAGE_ORDER: Stage[] = ['ocr', 'translate', 'enrich', 'embed', 'import', 'orchestrator', 'qc', 'research', 'other'];
 export const STAGE_LABEL: Record<Stage, string> = {
   ocr: 'OCR', translate: 'Translation', enrich: 'Enrichment', embed: 'Embeddings', import: 'Import',
-  orchestrator: 'Orchestrator', qc: 'Quality checks', research: 'First-translation search',
+  orchestrator: 'Orchestrator', qc: 'Quality checks', research: 'First-translation search', other: 'Other scheduled scripts',
 };
 
 export interface CronLine {

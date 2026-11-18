@@ -156,13 +156,6 @@
 .ai-partners .cta a.primary { background: var(--rust); color: var(--cream); }
 .ai-partners .cta a:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
 .ai-partners .hero .cta a:not(.primary) { color: var(--night-text); border-color: var(--night-muted); }
-/* The opening statement, in Derek's words: edit it only with him. */
-.ai-partners .hook { background: var(--ink); color: var(--night-text); border-top: 1px solid #3a322a; padding-block: 64px; }
-.ai-partners .hook .wrap { max-width: 820px; }
-.ai-partners .hook p { font-size: 21px; line-height: 1.55; margin: 0 0 20px; }
-.ai-partners .hook p:last-child { margin-bottom: 0; }
-.ai-partners .hook .hook-lead { font-family: var(--serif); font-size: clamp(32px, 4vw, 46px); font-weight: 600; line-height: 1.12; color: #fff; margin-bottom: 26px; text-wrap: balance; }
-.ai-partners .hook .hook-q { font-family: var(--serif); font-size: clamp(26px, 3vw, 34px); font-style: italic; line-height: 1.2; color: var(--gold); margin-block: 30px; text-wrap: balance; }
 /* The dataset card: a technical spec box in the manner of a Hugging Face dataset page. */
 .ai-partners .dsband { background: var(--warm); padding-block: 36px; scroll-margin-top: 60px; }
 .ai-partners .ds { --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: #fff; border: 1px solid var(--rule); border-radius: 8px; font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink); overflow: hidden; }
@@ -213,16 +206,6 @@
 .ai-partners .ds-mini { width: 100%; border-collapse: collapse; font-size: 13px; }
 .ai-partners .ds-mini td { padding: 5px 0; border-top: 1px solid var(--warm); vertical-align: top; }
 .ai-partners .ds-mini td:first-child { width: 232px; padding-right: 12px; font-weight: 600; color: var(--muted); font-size: 12px; }
-.ai-partners .ds-bands { display: flex; height: 14px; border-radius: 2px; overflow: hidden; }
-.ai-partners .ds-bands i, .ai-partners .ds-bandkey i { display: block; }
-.ai-partners .ds-bandkey { display: flex; flex-wrap: wrap; gap: 3px 14px; font-size: 12px; margin: 8px 0 4px !important; }
-.ai-partners .ds-bandkey span { display: inline-flex; align-items: center; gap: 5px; }
-.ai-partners .ds-bandkey i { width: 10px; height: 10px; border-radius: 2px; }
-.ai-partners .ds i.q1 { background: #4d6b4f; }
-.ai-partners .ds i.q2 { background: #93a886; }
-.ai-partners .ds i.q3 { background: var(--gold); }
-.ai-partners .ds i.q4 { background: #c47f4f; }
-.ai-partners .ds i.q5 { background: var(--rust); }
 .ai-partners .ds-main .cta { margin: 12px 0 6px; }
 .ai-partners .ds-main .cta a { font-size: 13px; padding: 8px 12px; }
 /* Crops are shown whole, never re-cropped: what is here is what the record holds. */

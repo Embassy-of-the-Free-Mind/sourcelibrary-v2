@@ -49,6 +49,22 @@ const STAGE_LABELS: Record<string, string> = {
   images: 'Images (gallery rows materialized)',
   embeddings: 'Embeddings (book_embeddings vs live books)',
   identity: 'Identity (work_id + edition_key, live books)',
+  // Book-level steps of the whole line (#428). The flows (imported, published) have no stock: their figure is per day, on /admin/pipeline.
+  imported: 'Imported (records created per day; see /admin/pipeline)',
+  catalogue: 'Catalogue details (ai_metadata.enriched_at, live books)',
+  quality_score: 'Quality score (live books)',
+  cover: 'Cover picked (cover_page or cover_selected_at, live books)',
+  places: 'Printing place on the map (live books)',
+  ft_search: 'First-translation search (live books with a search row)',
+  book_checks: 'Quality checks (live books with a book_checks row)',
+  copy_holds: 'Held as same-printing copies (count, hidden included)',
+  published: 'Published (per day, publication writer; see /admin/pipeline)',
+  // Page-level steps (#428). display and marks are a weekly sample (image-provenance-coverage.mjs), not a count.
+  split: 'Split (live books cut into single leaves; count)',
+  seams: 'Page joins repaired (pages per day; see /admin/pipeline)',
+  search: 'Search copy (pages copied per day; see /admin/pipeline)',
+  display: 'Reader images (weekly sample of visible pages)',
+  marks: 'Trithemian marks (weekly sample of served pages)',
 };
 
 const num = (n: number | null | undefined) => (n == null ? '–' : n.toLocaleString('en-US'));

@@ -49,7 +49,7 @@ page() { curl -s -m 10 -H "Title: $1" -d "$2" "$NTFY" >/dev/null || true; }
 # and ntfy is paged. A silent stop locked ~6,400 unsearched ids for ten days (#8482).
 blind_stop() {
   echo "meter blind $(date -u +%Y-%m-%dT%H:%M:%SZ): $1" > STOP; echo "$1" >> meter.log
-  page "ft-search meter BLIND: $NAME" "$1. Batch stopped; searched verdicts stay on disk ($DIR). Re-login: climits add $EMAIL (#8482)"
+  page "ft-search meter BLIND: $NAME" "$1. Batch stopped; searched verdicts stay on disk ($DIR). Re-login this batch's account with climits add (#8482)"
   pkill -f "run-batch.sh $DIR"; pkill -f "search-one.sh"; exit 1
 }
 stop() { touch STOP; echo "$1" >> meter.log; pkill -f "run-batch.sh $DIR"; pkill -f "search-one.sh"; exit "$2"; }

@@ -163,16 +163,16 @@ async function t3Pero() {
   const R = '/root/jobs/fraktur-7835/t3';
   let device = fs.existsSync(path.join(dir, 'collect.json')) ? J('t3/pero/collect.json').device : null;
   if (!fs.existsSync(path.join(dir, 'pero-drafts.json'))) {
-  const sh = (cmd) => spawnSync('ssh', ['-o', 'ConnectTimeout=20', 'root@65.108.136.89', cmd], { encoding: 'utf8', maxBuffer: 1 << 26 });
+  const sh = (cmd) => spawnSync('ssh', ['-o', 'ConnectTimeout=20', 'root@203.0.113.4', cmd], { encoding: 'utf8', maxBuffer: 1 << 26 });
   sh(`mkdir -p ${R}/img`);
-  spawnSync('scp', ['-q', '-r', `${img}/.`, `root@65.108.136.89:${R}/img/`]);
+  spawnSync('scp', ['-q', '-r', `${img}/.`, `root@203.0.113.4:${R}/img/`]);
   const util = sh("nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader,nounits").stdout.trim();
   const [u, mem] = util.split(',').map(Number);
   device = u < 10 && mem < 2000 ? 'gpu' : 'cpu';
   console.log(`gex45 card: ${util} -> --device=${device}`);
   const r = sh(`cd /root/sourcelibrary && python3 scripts/batch/pero-draft.py ${R}/img ${R}/pero-drafts.json --device=${device} > ${R}/pero.log 2>&1; echo exit $?; tail -3 ${R}/pero.log`);
   console.log(r.stdout, r.stderr);
-  spawnSync('scp', ['-q', `root@65.108.136.89:${R}/pero-drafts.json`, path.join(dir, 'pero-drafts.json')]);
+  spawnSync('scp', ['-q', `root@203.0.113.4:${R}/pero-drafts.json`, path.join(dir, 'pero-drafts.json')]);
   }
   const d = JSON.parse(fs.readFileSync(path.join(dir, 'pero-drafts.json'), 'utf8'));
   let n = 0, short = 0, mism = 0;

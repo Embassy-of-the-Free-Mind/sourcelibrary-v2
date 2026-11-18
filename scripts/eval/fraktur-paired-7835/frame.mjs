@@ -26,7 +26,7 @@ import { verdictQuery } from '../lib/judge-rows.mjs';
 
 export const T4_N = 300, T1_STRATA = { fraktur: 40, antiqua: 20 }, T2_STRATA = { fraktur: 40 }, T3_N = 40;
 export const T1_CAP = 450, T2_CAP = 120;   // candidates drawn; tagging stops when the strata are full
-export const GEX45 = 'root@65.108.136.89';
+export const GEX45 = 'root@203.0.113.4';
 const DTA = (k) => path.join(ROOT, `scripts/eval/output/typed-refs-6012-2026-10-06.dta.${k}.jsonl.gz`);
 const gz = (f) => zlib.gunzipSync(fs.readFileSync(f)).toString('utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const PAGE_PROJ = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, crop: 1, page_type: 1 };

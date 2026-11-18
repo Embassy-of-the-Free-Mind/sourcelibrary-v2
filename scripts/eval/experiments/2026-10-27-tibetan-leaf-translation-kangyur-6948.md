@@ -75,7 +75,7 @@ Reported, not gated: FRESH alone (the unbiased rate) and PAIRED-BAD alone (befor
 **Stage 2 (only if Stage 1 passes; still files only).** `draw.mjs stage2`, seed 69482: 30 blocks of 10 consecutive
 frame pages from 30 CANON books not in Stage 1; same translator settings. 20 of the 30 blocks (seeded) get one
 audited page, same auditor, 6 controls. Metered: the climits meter (`/root/.claude-limits/latest.json`, this box's
-account dereklomas@gmail.com) before and after, every other job on the account listed (`claude-job.sh list`), and
+account account@example.com) before and after, every other job on the account listed (`claude-job.sh list`), and
 list-$ from each call's `cost_usd_equiv`. Reported: weekly-meter points and list-$ per 1,000 pages, with the
 concurrency caveat (job tib-concept-opus-6948 reads on the same account at the same time). Stage 2's audit is
 reported against the same ≤ 5% bar; it decides the recommendation, not a write.
@@ -149,7 +149,7 @@ neighbours. 20 audited frame pages, one per volume; the audit ran 01:40–02:20Z
   a page bad. This is the lane's own failure mode: the note looks like evidence, so a reader trusts the error more.
 - Leaf notes: 107 on 68 of the 300 pages (Stage 1: 175 on 83 of 200).
 
-### Metering (this box's account, dereklomas@gmail.com)
+### Metering (this box's account, account@example.com)
 
 | | pages | calls | list-$ | list-$ per 1,000 pages | s per page | weekly meter over the window |
 |---|---|---|---|---|---|---|

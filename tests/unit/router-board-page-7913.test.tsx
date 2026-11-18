@@ -53,6 +53,22 @@ describe('/admin/router page', () => {
     expect(html).not.toContain('pusher (router-board-push.mjs) is down');
   });
 
+  it('stale routes (v3#460): one block at the top, grouped by rule; a push from before says so', async () => {
+    const base = {
+      _id: 'router-board:latest', type: 'router-board', generated_at: new Date(Date.now() - 5 * 60000), commit: 'abc123', as_of: '2026-11-17',
+      table: '2026-11-01-validated-7263', pointer_set: '2026-11-01', crontabs: [], tally: {}, routing_tables: [], cells: [cell('latin-lite/print', 'served')],
+    };
+    state.doc = { ...base, stale: [{ cell: 'latin-lite/print', rule: 'thin', why: '835K pages waiting on 20/30 judged pages', pages_waiting: 835238 }] };
+    const { default: Page } = await import('@/app/admin/router/page');
+    const html = renderToStaticMarkup(await Page());
+    expect(html).toContain('Stale routes (1)');
+    expect(html).toContain('thin evidence for a big queue (1)');
+    expect(html).toContain('835K pages waiting on 20/30 judged pages');
+    expect(html.indexOf('Stale routes (1)')).toBeLessThan(html.indexOf('Decided cells'));
+    state.doc = base;
+    expect(renderToStaticMarkup(await Page())).toContain('this push predates them');
+  });
+
   it('no push: says so in red', async () => {
     const { default: Page } = await import('@/app/admin/router/page');
     const html = renderToStaticMarkup(await Page());

@@ -1,0 +1,17 @@
+[Unit]
+Description=MongoDB Search (mongot community) for Source Library (#346)
+After=network-online.target mongod.service
+Wants=mongod.service
+
+[Service]
+User=mongot
+Group=mongot
+WorkingDirectory=/opt/mongot
+ExecStart=/opt/mongot/mongot --config /etc/mongot/config.yml --jvm-flags "-Xmx6g -Xms2g"
+Restart=always
+RestartSec=10
+LimitNOFILE=1048576
+TimeoutStopSec=120
+
+[Install]
+WantedBy=multi-user.target

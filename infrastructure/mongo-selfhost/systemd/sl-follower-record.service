@@ -1,0 +1,20 @@
+[Unit]
+Description=Source Library follower: Atlas change stream -> journal (#346)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=slfollow
+Group=slfollow
+WorkingDirectory=/opt/sl-follower
+Environment=ATLAS_URI_FILE=/etc/sl-mongo/atlas.uri JOURNAL_DIR=/var/lib/sl-follower/journal
+ExecStart=/usr/bin/node --max-old-space-size=512 /opt/sl-follower/record.mjs
+Restart=always
+RestartSec=10
+# 3 = history lost (gap): stay down and let the alarm page
+RestartPreventExitStatus=3
+StandardOutput=append:/var/log/sl-follower/record.log
+StandardError=append:/var/log/sl-follower/record.log
+
+[Install]
+WantedBy=multi-user.target

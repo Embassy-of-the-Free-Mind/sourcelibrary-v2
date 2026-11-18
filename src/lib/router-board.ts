@@ -50,6 +50,15 @@ export interface RouterCell {
   routes?: RouteRow[];
   waivers: { lane: string | null; set: string; until: string; live: boolean; reason: string }[];
   routing_row: boolean;
+  /** the newest build after the pointer, as it sees this cell (v3#460); absent in a document pushed before it */
+  newest_build?: { table: string; decision: string | null; route: string | null; n: number | null } | null;
+}
+/** One stale-route finding (scripts/lib/stale-routes.mjs, v3#460): the decision behind the route wants another look. */
+export interface StaleRoute {
+  cell: string | null;
+  rule: 'production' | 'waiver' | 'evidence' | 'thin' | 'undecided' | 'tables' | 'pointer';
+  why: string;
+  pages_waiting: number;
 }
 export interface RouterBoardDoc {
   _id: string; type: typeof ROUTER_BOARD_TYPE; generated_at: Date | string; commit: string | null;
@@ -57,6 +66,10 @@ export interface RouterBoardDoc {
   tally: Partial<Record<CellStatus, { cells: number; pages_waiting: number }>>;
   routing_tables: { file: string; as_of: string | null; changed: string | null; days_behind_pointer: number | null }[];
   cells: RouterCell[];
+  /** dated builds set after the pointer (v3#460) */
+  builds_since_pointer?: string[];
+  /** stale routes, computed by the push (v3#460); absent in a document pushed before it */
+  stale?: StaleRoute[];
 }
 
 export async function getRouterBoard(): Promise<RouterBoardDoc | null> {

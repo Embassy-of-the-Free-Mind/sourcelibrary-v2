@@ -599,8 +599,17 @@ move_by_hand() {  # $1 name, [$2 box]
 # ntfy page for job outcomes (Derek 2026-10-04: "not getting notifications any more").
 # Same topic as the box alerts. Never fails the job: a dead ntfy is not a dead job.
 NTFY_TOPIC="${NTFY_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}"
+# The topic can be read by anyone and a page can quote a job's log, so credentials, addresses and IPs are removed first.
+ntfy_scrub() {
+  printf '%s' "$1" | sed -E \
+    -e 's#://[^/[:space:]]+@#://[credentials]@#g' \
+    -e 's/[[:alnum:]._%+-]+@[[:alnum:].-]+\.[[:alpha:]]{2,}/[email]/g' \
+    -e 's/(^|[^0-9.])([0-9]{1,3}\.){3}[0-9]{1,3}($|[^0-9.])/\1[ip]\3/g' \
+    -e 's/((password|passwd|secret|token|api[_-]?key)[[:space:]]*[=:][[:space:]]*)[^[:space:]]+/\1[redacted]/Ig' \
+    -e 's/(sk-[[:alnum:]_-]{10,}|gh[pousr]_[[:alnum:]]{10,}|AKIA[0-9A-Z]{12,}|AIza[[:alnum:]_-]{20,})/[redacted]/g'
+}
 ntfy_job() {  # $1 priority (min|low|default|high|urgent)  $2 tags  $3 title  $4 message
-  curl -s -m 10 -H "Title: $3" -H "Priority: $1" -H "Tags: $2" -d "$4" "$NTFY_TOPIC" >/dev/null 2>&1 || true
+  curl -s -m 10 -H "Title: $(ntfy_scrub "$3")" -H "Priority: $1" -H "Tags: $2" -d "$(ntfy_scrub "$4")" "$NTFY_TOPIC" >/dev/null 2>&1 || true
 }
 
 # Auth preflight (#5627). On 2026-10-02 two cloudlayer jobs hit "Not logged in · Please run /login": the

@@ -16,7 +16,7 @@
 // commit the diff.
 //
 // Usage (SUPABASE_DB_URL lives on Hetzner, not in the local env file):
-//   SUPABASE_DB_URL=$(ssh root@46.224.122.120 "grep '^SUPABASE_DB_URL=' /root/sourcelibrary/.env.production.local | cut -d= -f2-") \
+//   SUPABASE_DB_URL=$(ssh root@203.0.113.2 "grep '^SUPABASE_DB_URL=' /root/sourcelibrary/.env.production.local | cut -d= -f2-") \
 //     node scripts/analytics/ustc-year-counts.mjs
 
 import fs from 'node:fs';

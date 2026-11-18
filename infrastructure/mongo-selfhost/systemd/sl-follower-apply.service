@@ -1,0 +1,20 @@
+[Unit]
+Description=Source Library follower: journal -> local bookstore (#346)
+After=network-online.target mongod.service
+Wants=mongod.service
+
+[Service]
+User=slfollow
+Group=slfollow
+WorkingDirectory=/opt/sl-follower
+Environment=ATLAS_URI_FILE=/etc/sl-mongo/atlas.uri LOCAL_PW_FILE=/etc/sl-mongo/follower.pw JOURNAL_DIR=/var/lib/sl-follower/journal STATE_DIR=/var/lib/sl-follower
+ExecStart=/usr/bin/node --max-old-space-size=2048 /opt/sl-follower/apply.mjs
+Restart=always
+RestartSec=10
+# 2 = stopped on an event it must not guess at: stay down and let the alarm page
+RestartPreventExitStatus=2
+StandardOutput=append:/var/log/sl-follower/apply.log
+StandardError=append:/var/log/sl-follower/apply.log
+
+[Install]
+WantedBy=multi-user.target

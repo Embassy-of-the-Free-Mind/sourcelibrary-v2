@@ -7,7 +7,7 @@
   "list_usd_equiv": 26.54
  },
  "meter": {
-  "account": "derek@playpowerlabs.com",
+  "account": "account@example.com",
   "reading": "api.anthropic.com/api/oauth/usage (the Claude Code usage endpoint; integer percents)",
   "shared": "SHARED: this orchestrating claude -p session (same account) ran throughout the window; no other job was seen on the account",
   "judge_window": {

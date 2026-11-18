@@ -62,6 +62,13 @@
    "reason": "#6740 read-surface, Derek 2026-11-01: German first reads at 8 a call (agy-flash-low@8-written) on the pooled paired evidence (78 queue books, 8 a call won 8-1, fewer wrong-text pages, about half the quota a accepted page) although neither preregistered rule passed. A decision, not a pass. Stop: back to 4 (FIRST_READ_PER_CALL_BY_LANGUAGE in cli-ocr-lane.mjs) if the lane's acceptance k/n falls below live's. Re-decide by 11-15 with the cell's k/n under @8."
   },
   {
+   "cell": "german-blank/print",
+   "lane": "first-read",
+   "set": "2026-11-16",
+   "until": "2026-11-30",
+   "reason": "Renews the 2026-11-01 #6740 waiver above, which lapsed 11-15 with nothing re-decided and turned main's `test` red (v3 #398). Derek's default on the v3 #360 DECISION line: renew 14 days on the #6740 evidence. Its stop rule (back to 4 a call if the lane's acceptance k/n falls below live's 63/68) is not met because it is not measured: the nightly lane judge (ops_reports router-table:lane-judge, 2026-11-16) has no German first-read item verdicts at all, only 8 wrong-page controls; lane-judge-sampler.mjs files German first reads under the @4 route id (FIRST_READ_ROUTE_AT4 has French only, FIRST_READ_CELLS gives @4). The only @8 number is still the decision-time 18/22 in 2026-10-31-correction-pass-7818. Before this lapses, get the lane's own k/n under @8 from the lane judge and decide the cell; do not renew a third time on the same evidence. Set by job main-test-red-398."
+  },
+  {
    "cell": "latin-blank/print",
    "lane": "first-read",
    "set": "2026-11-11",

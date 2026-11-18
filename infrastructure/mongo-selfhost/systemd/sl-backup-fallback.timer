@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily mongodump --oplog fallback backup (#346)
+
+[Timer]
+OnCalendar=*-*-* 22:30:00 UTC
+Persistent=true
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

@@ -530,6 +530,12 @@ const nextConfig: NextConfig = {
       { source: '/blog/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
       { source: '/articles/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
       { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      // The five-part "What the Bath Does" became one article (2026-11-16).
+      { source: '/articles/what-the-bath-does-water-is-someone', destination: '/articles/what-the-bath-does', permanent: true },
+      { source: '/articles/what-the-bath-does-spring-that-heals', destination: '/articles/what-the-bath-does', permanent: true },
+      { source: '/articles/what-the-bath-does-held-by-others', destination: '/articles/what-the-bath-does', permanent: true },
+      { source: '/articles/what-the-bath-does-doctors-of-water', destination: '/articles/what-the-bath-does', permanent: true },
+      { source: '/articles/what-the-bath-does-where-insight-comes', destination: '/articles/what-the-bath-does', permanent: true },
       // Pages moved under /articles (2026-10-18). /in-memoriam is redirected in
       // src/proxy.ts instead, on the main site only: partner reading rooms keep it.
       { source: '/vision', destination: '/articles/vision', permanent: true },

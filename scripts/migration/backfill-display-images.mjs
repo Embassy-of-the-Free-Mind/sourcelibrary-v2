@@ -60,6 +60,7 @@ import { createClient } from '@supabase/supabase-js';
 import { generateDisplayVariants, displayKeyFor } from '../workers/lib/display-image.mjs';
 import { getPageSource, isUsableImageUrl } from '../lib/page-image-url.mjs';
 import { repairIiifV3Size } from '../lib/iiif-utils.mjs';
+import { writeCronRun } from '../lib/cron-run.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -414,6 +415,21 @@ async function main() {
     console.log(`  DRY RUN — no writes. Get the source-selection diff reviewed before a prod run (#1814).`);
   } else {
     console.log(`  Uploaded: ${gb} GB`);
+  }
+
+  // The run record /admin/pipeline reads (v3#428): bulk runs only, which is what the scheduler launches as
+  // display-backfill. A single-book or dry run is a hand run and leaves none.
+  if (!DRY_RUN && !BOOK_ID) {
+    await writeCronRun(db, {
+      cron: 'display-backfill', start: stats.startTime,
+      status: stats.failed === 0 ? 'success' : stats.succeeded > 0 ? 'partial' : 'failed',
+      actions: {
+        books_scanned: stats.booksScanned, books_with_gap: stats.booksWithGap, pages_processed: stats.processed,
+        pages_made: stats.succeeded, pages_failed: stats.failed, skip_legacy_split: stats.skip_legacy_split,
+        skip_no_source: stats.skip_no_source, skip_already_present: stats.skip_already_present, gb,
+      },
+      summary: `pages ${stats.succeeded} made, ${stats.failed} failed, ${stats.skip_legacy_split + stats.skip_no_source} skipped; books ${stats.booksScanned} scanned`,
+    });
   }
 
   // Stats for the monitoring dashboard (display_backfill_stats).

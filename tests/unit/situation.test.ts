@@ -105,6 +105,13 @@ describe('situation: lanes (#368 item 1)', () => {
     expect(out).not.toMatch(/SILENT bph-access-probes/); // daily, wrote 18 h ago: inside its gap
   });
 
+  it('leaves an other line (a script no stage rule names) out of the lanes, silent or not (v3#428)', () => {
+    const silentLine = pnGex45.lines.find((l: { script: string }) => l.script === 'scripts/catalog-coverage/archive-lanes-revive.sh')!;
+    const s = laneSummary({ ...pnGex45, lines: [...pnGex45.lines, { ...silentLine, stage: 'other', script: 'scripts/workers/disk-alarm.sh' }] })!;
+    expect(s.on).toBe(4);
+    expect(s.silent.map((x) => x.script)).toEqual(['scripts/catalog-coverage/archive-lanes-revive.sh']);
+  });
+
   it('prints the fleet pages per day from complete days only', () => {
     const r = corpusRate(fixtureReports()['pipeline-now:corpus'])!;
     expect(r.ocr).toEqual([{ day: '2026-11-13', pages: 50501 }]);

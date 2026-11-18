@@ -100,6 +100,6 @@ They are listed on #6740 for a by-eye check.
   gex45. They would also have needed about 1.6 more Claude points than the cap left.
 - Latin 3 Flash > Opus and French lite > Opus: not in the brief's test 7.
 
-**Spend.** Account dereklomas@gmail.com went from 80% to 88% weekly, shared with this session and a #6420 audit round.
+**Spend.** Account account@example.com went from 80% to 88% weekly, shared with this session and a #6420 audit round.
 Calls: 507 Opus judge calls (60 more were reused from the pilot), 93 Opus corrections, 30 Opus CLI translations,
 27 name checks, 182 agy calls (Flash low and high only).

@@ -125,6 +125,11 @@ describe('the committed pointer', () => {
     const served = [...servedByFirstRead({ languages: ['deu', 'fra'], perCall: 4, perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }), ...servedByArmcFirstRead({ langs: ['la'] })];
     expect(checkBinding(loadCurrentTable(), served).map((f: { status: string }) => f.status)).toEqual(['waived', 'ok', 'ok']);
   });
+  it('the German first-read waiver (#6740), renewed once to 11-30 (#398): waived on its set date, a mismatch after it', () => {
+    const served = servedByFirstRead({ languages: ['deu'], perCall: 4, perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE });
+    expect(checkBinding(loadCurrentTable(), served, { today: '2026-11-16' })[0]).toMatchObject({ status: 'waived', waiver: { lane: 'first-read', until: '2026-11-30' } });
+    expect(checkBinding(loadCurrentTable(), served, { today: '2026-12-01' })[0].status).toBe('mismatch');
+  });
   it('the re-read mode (#7853): French read@4 is the decided route; German runs on the dated reread waiver (the Opus bar keeps lite>opus)', () => {
     const f = checkBinding(loadCurrentTable(), servedByReread({ languages: ['German', 'French'], perCall: 4 }), { today: '2026-11-01' });
     expect(f.map((x: { cell: string; status: string }) => [x.cell, x.status])).toEqual([['german-lite/print', 'waived'], ['french-lite/print', 'ok']]);

@@ -26,6 +26,19 @@
  * prior status) so "attempted, found nothing" is a row, not silence.
  * Env overrides for a long operator run: IMAGE_EXTRACT_BOOKS_PER_RUN, IMAGE_EXTRACT_DEADLINE_MIN.
  *
+ * Subscription engine (#437, plan #425): `--engine agy` (explicit-list mode only) sends the same request
+ * text through `agy -p` (gemini-3.8-flash-low, the page image resized to 1600 px) instead of the paid API.
+ * No paid spend, so the dial / envelope gate does not apply; there is never an API fallback. A quota reply,
+ * or the account's weekly Gemini pool under `--agy-floor` (default 0.12; set AGY_HOME to pick the account),
+ * stops the run with exit 3. Pages are written as they come back, and a page already extracted (any engine)
+ * is never sent again, so re-running the same command resumes; `--since` is not needed. No book's
+ * `pipeline_auto.status` is written. Detections keep `detection_source: 'vision_model'` (the gallery, the
+ * crops cron and the sync paths list that value by name) and carry the engine in `model: 'agy:…'`; no
+ * gemini_usage cost row is written, the call count goes in the sweep_log row.
+ *   --all-pages        also send the pages with no OCR text yet (the candidate filter reads OCR markup, so an
+ *                      unread book has no candidates even when it is all plates). Read pages still need markup.
+ *   --agy-concurrency  pages in flight (default 3).
+ *
  * Batch routing (#4747): when IMAGE_EXTRACTION_USE_BATCH is anything but 'false' (set in
  * /root/sourcelibrary/.env.production.local on Hetzner), this worker stands down on the
  * status-driven selection and the orchestrator's Phase 8 submits those books to the Gemini
@@ -47,6 +60,7 @@ import sharp from 'sharp';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { writeCronRun } from '../lib/cron-run.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
@@ -54,6 +68,8 @@ import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'fs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { gatedImageRead, agyQuota, imageNeverOpened } from '../lib/agy-cli.mjs';
+import { AGY_IMAGE_EXTRACTION_SUFFIX, parseAgyImageExtractionReply } from '../lib/image-extraction-request.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -66,6 +82,15 @@ const SINCE = argVal('since') ? new Date(argVal('since')) : null;
 const SWEEP_TAG = argVal('sweep-tag');
 if (SINCE && Number.isNaN(SINCE.getTime())) { console.error('--since must be an ISO date'); process.exit(2); }
 if ((SINCE || SWEEP_TAG) && !BOOKS_FILE) { console.error('--since / --sweep-tag need --books-file'); process.exit(2); }
+const ENGINE = argVal('engine') || 'api';
+const AGY = ENGINE === 'agy';
+const ALL_PAGES = ARGV.includes('--all-pages');
+if (!['api', 'agy'].includes(ENGINE)) { console.error('--engine must be api or agy'); process.exit(2); }
+if ((AGY || ALL_PAGES) && !BOOKS_FILE) { console.error('--engine agy / --all-pages need --books-file'); process.exit(2); }
+if (ALL_PAGES && !AGY) { console.error('--all-pages is for --engine agy only'); process.exit(2); }
+const AGY_MODEL = 'gemini-3.8-flash-low';
+const AGY_FLOOR = Number(argVal('agy-floor') ?? 0.12);
+const AGY_CONCURRENCY = Number(argVal('agy-concurrency')) || 3;
 // Routing (#4747, decided 2026-09-30): the orchestrator's Phase 8 reads the same flag and submits
 // status-driven extraction to the Gemini Batch API (same model, half the price, boxes matched the
 // realtime noise floor in PR #5238). Same default as the orchestrator: anything but 'false' = batch.
@@ -131,7 +156,7 @@ const API_KEYS = [
   process.env.GEMINI_API_KEY_TIER3,
 ].filter(Boolean);
 
-if (API_KEYS.length === 0) {
+if (API_KEYS.length === 0 && !AGY) {
   console.error('[IMAGE-EXTRACT] No Gemini API keys configured');
   process.exit(1);
 }
@@ -326,17 +351,201 @@ async function extractImagesFromPage(page, book, groundingCtx) {
   };
 }
 
+// ── agy engine (#437) ──
+class AgyQuotaStop extends Error {}
+let agyCalls = 0;
+let agyQuotaCheckedAt = 0;
+/** Throws AgyQuotaStop when the account's weekly Gemini pool is under the floor (read at most every 5 min). */
+function checkAgyPool() {
+  if (Date.now() - agyQuotaCheckedAt < 5 * 60_000) return;
+  agyQuotaCheckedAt = Date.now();
+  const q = agyQuota(process.env.AGY_HOME || '');
+  const weekly = q?.gemini?.weekly;
+  if (weekly == null) throw new AgyQuotaStop('agy quota unreadable');
+  if (weekly < AGY_FLOOR) throw new AgyQuotaStop(`weekly Gemini pool ${(weekly * 100).toFixed(0)}% < floor ${(AGY_FLOOR * 100).toFixed(0)}%`);
+}
+
+/** One page through agy. Resolves { ...same shape as extractImagesFromPage, parsed } or { failed: reason }. */
+async function extractImagesFromPageAgy(page, book, groundingCtx) {
+  const url = getPageImageUrl(page);
+  if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return { failed: 'no_image_url' };
+  const image = await fetchImage(url);
+  if (!image) return { failed: 'image_fetch' };
+  let jpeg;
+  try {
+    jpeg = await sharp(image.buffer).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer();
+  } catch {
+    return { failed: 'not_an_image' };
+  }
+  const characteristicsPromise = computeImageCharacteristics(image.buffer);
+  const requestText = buildImageExtractionText({
+    book,
+    page,
+    pagesByNumber: groundingCtx?.pagesByNumber,
+    bookSummary: groundingCtx?.bookSummary || '',
+  }) + AGY_IMAGE_EXTRACTION_SUFFIX;
+
+  // A malformed or empty reply gets one more ask; a quota reply never does (agyCall kills a call at 360 s).
+  let lastFail = null;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    checkAgyPool();
+    const r = await gatedImageRead(requestText, jpeg, { model: AGY_MODEL, task: 'ocr', attempts: 1 });
+    agyCalls++;
+    if (r.cls === 'quota') throw new AgyQuotaStop(`quota reply: ${(r.err || r.text || '').slice(-160)}`);
+    if (r.cls) { lastFail = r.cls; continue; }
+    // #5274: a reply from a call that never opened its image is not a look at the page.
+    if (imageNeverOpened({ cli: 'agy', tool_calls: r.tool_calls })) { lastFail = 'image_not_opened'; continue; }
+    const parsed = parseAgyImageExtractionReply(r.text);
+    if (!parsed) { lastFail = 'unparsed_reply'; continue; }
+    return { pageId: page.id, page, parsed, characteristics: await characteristicsPromise, inputTokens: 0, outputTokens: 0 };
+  }
+  await characteristicsPromise;
+  return { failed: lastFail || 'unknown' };
+}
+
+/**
+ * One extracted page → its `pages` update and its gallery docs. Shared by both engines so the
+ * written shape stays the same; `parsed` is { extracted_images, scan_quality }.
+ */
+function buildPageWrites({ pageId, page, parsed, characteristics }, book, now) {
+  const model = AGY ? `agy:${AGY_MODEL}` : MODEL;
+  // Same source label for both engines: a new value would be filtered out of the gallery and the crops
+  // cron (#437). `model` says which engine.
+  const detectionSource = 'vision_model';
+  const { extracted_images: extractedRaw, scan_quality: scanQualityRaw } = parsed;
+
+  // Build the page-level scan_quality object that will land on `pages` and
+  // be inherited by each gallery_image extracted from this page.
+  const pageScanQuality = scanQualityRaw
+    ? {
+        ...scanQualityRaw,
+        model,
+        version: SCAN_QUALITY_VERSION,
+        assessed_at: now,
+      }
+    : null;
+
+  const pageSet = {
+    image_extraction_updated_at: now,
+    updated_at: now,
+  };
+  if (characteristics) pageSet.image_characteristics = characteristics;
+  if (pageScanQuality) pageSet.scan_quality = pageScanQuality;
+
+  const galleryDocs = [];
+  let images = 0;
+  if (extractedRaw.length > 0) {
+    const detectedImages = extractedRaw.map(img => ({
+      description: img.description || '',
+      type: img.type || 'unknown',
+      bbox: normalizeBbox(img.bbox) ?? undefined,
+      rotation: normalizeRotation(img.rotation),
+      confidence: img.confidence,
+      gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
+      gallery_rationale: img.gallery_rationale || undefined,
+      metadata: img.metadata || undefined,
+      museum_description: img.museum_description || undefined,
+      detected_at: now,
+      detection_source: detectionSource,
+      model,
+    }));
+
+    images = detectedImages.length;
+    pageSet.detected_images = detectedImages;
+
+    // Filter matches src/workers/image-extraction-processor-logic.ts (SQS path):
+    //  - bbox required (skips malformed responses / zombie rows)
+    //  - gallery_quality must be present and >= QUALITY_THRESHOLD
+    // Threshold is under review; coordinate any change with the SQS path
+    // and scripts/workers/batch-collector.mjs.
+    const QUALITY_THRESHOLD = 0.5;
+    // Inherit page-level scan quality so the gallery_image carries it standalone.
+    // Per-crop sharpness can be added later in a separate pass on extracted_url.
+    const inheritedScanQuality = pageScanQuality
+      ? {
+          score: pageScanQuality.scan_score,
+          scan_class: pageScanQuality.scan_class,
+          illustration_fidelity: pageScanQuality.illustration_fidelity,
+          page_completeness: pageScanQuality.page_completeness,
+          concerns: pageScanQuality.concerns,
+          source: 'page_inherited',
+          version: SCAN_QUALITY_VERSION,
+          assessed_at: now,
+        }
+      : null;
+    const pageImageCharacteristics = characteristics
+      ? {
+          megapixels: characteristics.megapixels,
+          sharpness_var: characteristics.sharpness_var,
+          chroma_spread: characteristics.chroma_spread,
+          flags: characteristics.flags,
+        }
+      : null;
+    for (let di = 0; di < detectedImages.length; di++) {
+      const img = detectedImages[di];
+      if (!img.bbox) continue;
+      if (typeof img.gallery_quality !== 'number') continue;
+      if (img.gallery_quality < QUALITY_THRESHOLD) continue;
+      // A small decorative or an initial is not gallery content whatever its
+      // quality score — the prompt's SKIP list was never enforced (#4780).
+      if (isTrivialGalleryDetection(img)) continue;
+      // Build the fully-denormalized doc via the shared helper so the field
+      // set stays identical across all writers (#2531). `page` is the source
+      // page doc with photo fields + page_number; `book` carries visible/
+      // hidden/provider so the image is gallery-visible without a sync pass.
+      galleryDocs.push(buildGalleryDoc({
+        page,
+        book,
+        detectedImage: img,
+        index: di,
+        now,
+        scanQuality: inheritedScanQuality,
+        pageImageCharacteristics,
+      }));
+    }
+  }
+
+  return {
+    pageOp: { updateOne: { filter: { id: pageId }, update: { $set: pageSet } } },
+    galleryDocs,
+    images,
+  };
+}
+
+async function writeGalleryDocs(db, galleryDocs) {
+  if (galleryDocs.length === 0) return;
+  try {
+    await db.collection('gallery_images').bulkWrite(
+      galleryDocs.map(doc => ({
+        updateOne: {
+          filter: { id: doc.id },
+          update: { $set: doc },
+          upsert: true,
+        },
+      })),
+      { ordered: false }
+    );
+  } catch (err) {
+    console.error(`  Gallery write error: ${err.message}`);
+  }
+}
+
 // ── Process one book ──
 async function processBook(db, book) {
   // Find candidate pages
+  const candidateOr = [
+    { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+    { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+  ];
+  // --all-pages: a page with no OCR text yet is a candidate too (its markup cannot say "no picture").
+  if (ALL_PAGES) candidateOr.push({ 'ocr.data': { $in: [null, ''] } });
   const rawCandidates = await db.collection('pages')
     .find({
       book_id: book.id,
       ...VISIBLE_PAGE_MATCH, // Skip hidden/deduped pages (page_number ≤ 0) and hidden repeat captures (#5056)
-      $or: [
-        { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-        { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
-      ],
+      $or: candidateOr,
+      // agy: a page already extracted (by any engine) is never sent again, so a rerun resumes mid-book.
+      ...(AGY && { image_extraction_updated_at: { $exists: false }, 'detected_images.0': { $exists: false } }),
     }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1 } })
     .toArray();
 
@@ -360,6 +569,8 @@ async function processBook(db, book) {
   }
 
   if (candidatePages.length === 0) {
+    // agy: the candidates may all be pages already extracted; that is not "no candidates", so nothing is written.
+    if (AGY) return { title: book.title, pages: 0, images: 0, skipped: true, sent: 0, failures: {}, agy_calls: 0 };
     // The skip is a fact about the book, so it is recorded even when the status is preserved (#5477).
     if (!book._preserveStatus) await setPipelineStatus(db, book.id, 'images_complete', { images_skipped_reason: 'no_candidates' });
     else await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.images_skipped_reason': 'no_candidates' } });
@@ -394,6 +605,37 @@ async function processBook(db, book) {
   let pagesProcessed = 0;
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
+  const failures = {};
+  let quotaStop = null;
+  const callsBefore = agyCalls;
+
+  if (AGY) {
+    // Pages are written as they come back, so a quota stop mid-book keeps what was read.
+    const queue = [...candidatePages];
+    await Promise.all(Array.from({ length: Math.min(AGY_CONCURRENCY, queue.length) }, async () => {
+      while (queue.length > 0 && !quotaStop) {
+        const page = queue.shift();
+        let r;
+        try {
+          r = await extractImagesFromPageAgy(page, book, groundingCtx);
+        } catch (err) {
+          if (err instanceof AgyQuotaStop) { quotaStop = err.message; break; }
+          r = { failed: `error: ${String(err.message).slice(0, 60)}` };
+        }
+        if (r.failed) {
+          failures[r.failed] = (failures[r.failed] || 0) + 1;
+          console.log(`    p${page.page_number}: failed (${r.failed})`);
+          continue;
+        }
+        const w = buildPageWrites(r, book, now);
+        await db.collection('pages').bulkWrite([w.pageOp], { ordered: false });
+        await writeGalleryDocs(db, w.galleryDocs);
+        pagesProcessed++;
+        totalImages += w.images;
+        console.log(`    p${page.page_number}: ${w.images} picture(s), ${w.galleryDocs.length} gallery row(s)`);
+      }
+    }));
+  } else {
   const galleryDocs = [];
   const bulkOps = [];
 
@@ -412,108 +654,15 @@ async function processBook(db, book) {
         continue;
       }
 
-      const { pageId, page, text, characteristics, inputTokens, outputTokens } = settled.value;
+      const { text, inputTokens, outputTokens } = settled.value;
       totalInputTokens += inputTokens;
       totalOutputTokens += outputTokens;
       pagesProcessed++;
 
-      const { extracted_images: extractedRaw, scan_quality: scanQualityRaw } = parseImageExtractionResponse(text);
-
-      // Build the page-level scan_quality object that will land on `pages` and
-      // be inherited by each gallery_image extracted from this page.
-      const pageScanQuality = scanQualityRaw
-        ? {
-            ...scanQualityRaw,
-            model: MODEL,
-            version: SCAN_QUALITY_VERSION,
-            assessed_at: now,
-          }
-        : null;
-
-      const pageSet = {
-        image_extraction_updated_at: now,
-        updated_at: now,
-      };
-      if (characteristics) pageSet.image_characteristics = characteristics;
-      if (pageScanQuality) pageSet.scan_quality = pageScanQuality;
-
-      if (extractedRaw.length > 0) {
-        const detectedImages = extractedRaw.map(img => ({
-          description: img.description || '',
-          type: img.type || 'unknown',
-          bbox: normalizeBbox(img.bbox) ?? undefined,
-          rotation: normalizeRotation(img.rotation),
-          confidence: img.confidence,
-          gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
-          gallery_rationale: img.gallery_rationale || undefined,
-          metadata: img.metadata || undefined,
-          museum_description: img.museum_description || undefined,
-          detected_at: now,
-          detection_source: 'vision_model',
-          model: MODEL,
-        }));
-
-        totalImages += detectedImages.length;
-        pageSet.detected_images = detectedImages;
-
-        // Filter matches src/workers/image-extraction-processor-logic.ts (SQS path):
-        //  - bbox required (skips malformed responses / zombie rows)
-        //  - gallery_quality must be present and >= QUALITY_THRESHOLD
-        // Threshold is under review; coordinate any change with the SQS path
-        // and scripts/workers/batch-collector.mjs.
-        const QUALITY_THRESHOLD = 0.5;
-        // Inherit page-level scan quality so the gallery_image carries it standalone.
-        // Per-crop sharpness can be added later in a separate pass on extracted_url.
-        const inheritedScanQuality = pageScanQuality
-          ? {
-              score: pageScanQuality.scan_score,
-              scan_class: pageScanQuality.scan_class,
-              illustration_fidelity: pageScanQuality.illustration_fidelity,
-              page_completeness: pageScanQuality.page_completeness,
-              concerns: pageScanQuality.concerns,
-              source: 'page_inherited',
-              version: SCAN_QUALITY_VERSION,
-              assessed_at: now,
-            }
-          : null;
-        const pageImageCharacteristics = characteristics
-          ? {
-              megapixels: characteristics.megapixels,
-              sharpness_var: characteristics.sharpness_var,
-              chroma_spread: characteristics.chroma_spread,
-              flags: characteristics.flags,
-            }
-          : null;
-        for (let di = 0; di < detectedImages.length; di++) {
-          const img = detectedImages[di];
-          if (!img.bbox) continue;
-          if (typeof img.gallery_quality !== 'number') continue;
-          if (img.gallery_quality < QUALITY_THRESHOLD) continue;
-          // A small decorative or an initial is not gallery content whatever its
-          // quality score — the prompt's SKIP list was never enforced (#4780).
-          if (isTrivialGalleryDetection(img)) continue;
-          // Build the fully-denormalized doc via the shared helper so the field
-          // set stays identical across all writers (#2531). `page` is the source
-          // page doc with photo fields + page_number; `book` carries visible/
-          // hidden/provider so the image is gallery-visible without a sync pass.
-          galleryDocs.push(buildGalleryDoc({
-            page,
-            book,
-            detectedImage: img,
-            index: di,
-            now,
-            scanQuality: inheritedScanQuality,
-            pageImageCharacteristics,
-          }));
-        }
-      }
-
-      bulkOps.push({
-        updateOne: {
-          filter: { id: pageId },
-          update: { $set: pageSet },
-        },
-      });
+      const w = buildPageWrites({ ...settled.value, parsed: parseImageExtractionResponse(text) }, book, now);
+      totalImages += w.images;
+      galleryDocs.push(...w.galleryDocs);
+      bulkOps.push(w.pageOp);
     }
   }
 
@@ -521,23 +670,8 @@ async function processBook(db, book) {
   if (bulkOps.length > 0) {
     await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
   }
-
-  if (galleryDocs.length > 0) {
-    try {
-      await db.collection('gallery_images').bulkWrite(
-        galleryDocs.map(doc => ({
-          updateOne: {
-            filter: { id: doc.id },
-            update: { $set: doc },
-            upsert: true,
-          },
-        })),
-        { ordered: false }
-      );
-    } catch (err) {
-      console.error(`  Gallery write error: ${err.message}`);
-    }
-  }
+  await writeGalleryDocs(db, galleryDocs);
+  } // end engine branch
 
   // Update book detected_images_count
   const imgCount = await db.collection('pages').countDocuments({
@@ -546,7 +680,10 @@ async function processBook(db, book) {
   });
   // `images_done_at` records that extraction ran, whatever the status does below; it is the
   // `images` input of pipeline_next (#5477).
-  const bookUpdate = { detected_images_count: imgCount, updated_at: now, 'pipeline_auto.images_done_at': now };
+  const bookUpdate = { detected_images_count: imgCount, updated_at: now };
+  // An agy run cut by quota, or with pages that failed, has not finished the book: it is not marked done.
+  const unfinished = quotaStop || Object.keys(failures).length > 0;
+  if (!unfinished) bookUpdate['pipeline_auto.images_done_at'] = now;
 
   // Phase 2: roll up page-level scan_quality (v2) into book.scan_quality so downstream
   // use cases (dedupe, re-source queue, dashboards) don't have to aggregate on the fly.
@@ -569,6 +706,12 @@ async function processBook(db, book) {
   if (!book._preserveStatus) await setPipelineStatus(db, book.id, 'images_complete');
   revalidateBookPage(book.id).catch(() => {});
 
+  const agyCallsHere = agyCalls - callsBefore;
+  if (AGY) {
+    // Subscription calls: no gemini_usage cost row; the call count goes in the sweep_log row.
+    return { title: book.title, pages: pagesProcessed, images: totalImages, skipped: false, sent: candidatePages.length, failures, agy_calls: agyCallsHere, quotaStop };
+  }
+
   // Log usage
   await logUsage({
     type: 'extract_images', mode: 'realtime', model: MODEL,
@@ -585,7 +728,8 @@ async function processBook(db, book) {
 async function main() {
   const startTime = Date.now();
   console.log(`[IMAGE-EXTRACT] Worker starting — ${new Date().toISOString()}`);
-  console.log(`[IMAGE-EXTRACT] Keys: ${API_KEYS.length}, concurrency: ${CONCURRENCY}, page-concurrency: ${PAGE_CONCURRENCY}`);
+  if (AGY) console.log(`[IMAGE-EXTRACT] Engine agy (${AGY_MODEL}, AGY_HOME=${process.env.AGY_HOME || 'default'}), pages in flight: ${AGY_CONCURRENCY}, weekly floor ${AGY_FLOOR}${ALL_PAGES ? ', --all-pages' : ''}`);
+  else console.log(`[IMAGE-EXTRACT] Keys: ${API_KEYS.length}, concurrency: ${CONCURRENCY}, page-concurrency: ${PAGE_CONCURRENCY}`);
 
   const client = new MongoClient(process.env.MONGODB_URI, {
     maxPoolSize: 5,
@@ -603,11 +747,13 @@ async function main() {
   // the documented form — stopped nothing here.
   if (isPaused(ctrl, 'images')) {
     console.log('[IMAGE-EXTRACT] images step paused, exiting');
+    await writeCronRun(db, { cron: 'image-extract-worker', start: startTime, status: 'skipped', summary: 'skipped: images step paused' });
     await client.close();
     return;
   }
   if (!shouldBypassPause(ctrl)) {
     console.log('[IMAGE-EXTRACT] Pipeline paused, exiting');
+    await writeCronRun(db, { cron: 'image-extract-worker', start: startTime, status: 'skipped', summary: 'skipped: pipeline paused' });
     await client.close();
     return;
   }
@@ -621,8 +767,10 @@ async function main() {
   // The dial caps money regardless of pause/scope state (#3826): a scope
   // confines WHICH books, the budget caps HOW MUCH. Vision calls are paid work.
   // A scope envelope (#4540) can open a confined lane when the dial is closed.
-  const _gate = await budgetAllowsDispatchScoped(db, 'image-extract-worker', { control: ctrl });
+  // The agy engine spends nothing on the API, so the dial does not gate it (and it never falls back to the API).
+  const _gate = AGY ? { allowed: true } : await budgetAllowsDispatchScoped(db, 'image-extract-worker', { control: ctrl });
   if (!_gate.allowed) {
+    await writeCronRun(db, { cron: 'image-extract-worker', start: startTime, status: 'skipped', summary: 'skipped: spend dial closed and no envelope open' });
     await client.close();
     return;
   }
@@ -654,7 +802,8 @@ async function main() {
     books = runnable.map(id => byId.get(id)).filter(Boolean).slice(0, BOOKS_PER_RUN);
     for (const b of books) {
       b._priorStatus = b.pipeline_auto?.status ?? null;
-      b._preserveStatus = !STATUS_ADVANCEABLE.has(b._priorStatus);
+      // agy runs are an operator side lane: no book's status is written (#437).
+      b._preserveStatus = AGY || !STATUS_ADVANCEABLE.has(b._priorStatus);
     }
     const preserved = books.filter(b => b._preserveStatus).length;
     console.log(`[IMAGE-EXTRACT] Explicit list: ${books.length} to run this invocation (${skippedDone} already run, ${runnable.length - found.length} ids not found, ${preserved} keep their status)`);
@@ -699,6 +848,10 @@ async function main() {
 
   if (books.length === 0) {
     console.log('[IMAGE-EXTRACT] No books ready, exiting');
+    // Standing down for the orchestrator's Batch API path is a skip: this worker did nothing, by design.
+    const stoodDown = BATCH_ROUTED && !BOOKS_FILE;
+    await writeCronRun(db, { cron: 'image-extract-worker', start: startTime, status: stoodDown ? 'skipped' : 'success', actions: { books: 0, pages: 0, images: 0 },
+      summary: stoodDown ? 'skipped: extraction routed to the orchestrator Batch API (phase 8)' : 'no books ready' });
     await client.close();
     return;
   }
@@ -709,25 +862,32 @@ async function main() {
   let totalImages = 0;
   let totalPages = 0;
   let errors = 0;
+  let quotaStop = null;
   const deadline = startTime + RUN_DEADLINE_MS;
 
-  const workers = Array.from({ length: Math.min(CONCURRENCY, queue.length) }, async () => {
-    while (queue.length > 0 && Date.now() < deadline) {
+  // agy: one book at a time (its pages run AGY_CONCURRENCY at once), stopping at the first quota stop.
+  const workers = Array.from({ length: Math.min(AGY ? 1 : CONCURRENCY, queue.length) }, async () => {
+    while (queue.length > 0 && Date.now() < deadline && !quotaStop) {
       const book = queue.shift();
       try {
         const result = await processBook(db, book);
         processed++;
         totalImages += result.images;
         totalPages += result.pages;
+        if (result.quotaStop) quotaStop = result.quotaStop;
         if (result.skipped) {
-          console.log(`  [skip] ${result.title} — no candidates`);
+          console.log(`  [skip] ${result.title} — no candidates${AGY ? ' left' : ''}`);
         } else {
-          console.log(`  [done] ${result.title} — ${result.pages}pp, ${result.images} images`);
+          const fails = Object.entries(result.failures || {}).map(([k, v]) => `${k} ${v}`).join(', ');
+          console.log(`  [done] ${result.title} — ${result.pages}pp, ${result.images} images${AGY ? ` (sent ${result.sent}, agy calls ${result.agy_calls}${fails ? `, failed: ${fails}` : ''}${result.quotaStop ? ', STOPPED on quota' : ''})` : ''}`);
         }
         if (SWEEP_TAG) {
           await recordSweepAction(db, {
             sweep: SWEEP_TAG, book_id: book.id, action: 'image-extract-explicit',
-            detail: { pages_sent: result.pages, images: result.images, no_candidates: !!result.skipped, prior_status: book._priorStatus, status_preserved: !!book._preserveStatus },
+            detail: {
+              pages_sent: result.pages, images: result.images, no_candidates: !!result.skipped, prior_status: book._priorStatus, status_preserved: !!book._preserveStatus,
+              ...(AGY && { engine: 'agy', model: AGY_MODEL, candidates: result.sent, agy_calls: result.agy_calls, failures: result.failures, all_pages: ALL_PAGES, quota_stop: result.quotaStop || null }),
+            },
           }).catch(e => console.error(`  sweep_log write failed for ${book.id}: ${e.message}`));
         }
       } catch (err) {
@@ -743,9 +903,18 @@ async function main() {
   await Promise.all(workers);
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-  console.log(`[IMAGE-EXTRACT] Done — ${processed} books, ${totalPages} pages, ${totalImages} images, ${errors} errors, ${elapsed}s`);
+  console.log(`[IMAGE-EXTRACT] Done — ${processed} books, ${totalPages} pages, ${totalImages} images, ${errors} errors, ${elapsed}s${AGY ? `, agy calls ${agyCalls}` : ''}`);
+  await writeCronRun(db, {
+    cron: 'image-extract-worker', start: startTime, status: errors === 0 && !quotaStop ? 'success' : processed > 0 ? 'partial' : 'failed',
+    actions: { books: processed, pages: totalPages, images: totalImages, errors, left_in_queue: queue.length, ...(AGY && { engine: 'agy', agy_calls: agyCalls }) },
+    summary: `${AGY ? 'agy: ' : ''}books ${processed}, pages ${totalPages}, pictures ${totalImages}, errors ${errors}${quotaStop ? `, stopped: ${quotaStop}` : ''}`,
+  });
 
   await client.close();
+  if (quotaStop) {
+    console.log(`[IMAGE-EXTRACT] QUOTA STOP: ${quotaStop}. Run the same command after the reset; extracted pages are skipped.`);
+    process.exitCode = 3;
+  }
 }
 
 main().catch(err => {

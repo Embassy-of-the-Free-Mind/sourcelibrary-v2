@@ -1,0 +1,7 @@
+{
+  "name": "sl-follower",
+  "private": true,
+  "type": "module",
+  "description": "Atlas -> self-hosted MongoDB follower (#346). Installed on the database box under /opt/sl-follower.",
+  "dependencies": { "mongodb": "6.21.0" }
+}

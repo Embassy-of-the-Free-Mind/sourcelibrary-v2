@@ -90,7 +90,7 @@ issue: [7568]
   - Proclus *in Rempublicam* MS `6993898ace15387065947977`: 15/25 pages.
 - **Chinese:** Kunqu `69de98851b234a773e438912`, pp. 269 and 341 serve another leaf's text.
 
-**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed. agy: plan fee)
+**Cost** (Claude subscription, box account account@example.com; $0 billed. agy: plan fee)
 - **Corrections (list-price equivalent of the tokens):**
 
   | Language | Pages | Calls | Output tokens | List price | Per 1K pages |

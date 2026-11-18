@@ -128,6 +128,13 @@
  * `read --image-prep=gnu` (Amendment 6) sends each image, after the long-edge fit, as grayscale + normalise + unsharp
  * (scripts/lib/image-long-edge.mjs prepImage, #5250's arms); the meta's `image_fit` records `prep`.
  *
+ * IMAGE-SET GATE (v3#466, scripts/lib/image-set-gate.mjs; on by default, `--no-image-set-gate` for an eval that reads a
+ * known-shifted book on purpose): before `read` sends a book's pages, and again before `apply` writes them, the stored
+ * images of the pages a shift-prone archiver wrote (Internet Archive bulk JP2, e-rara PDF) are compared with their own
+ * source leaves (five sampled pages, dHash). A book whose images sit one leaf off their rows, or follow two mappings, is
+ * not read and not written; the verdict is kept in DIR/image-set.json and recorded in `engine.input.image_set`. A book
+ * whose source cannot be reached is read and recorded as `unverified`.
+ *
  * STRANDED BY THE IMAGE REPAIR (#5309): `apply --stranded=FILE` (JSONL {page_id, stored_hash}, the pages
  * scripts/audit/stranded-image-repair-text.mjs lists, as scripts/eval/offleaf-5309/diagnose.mjs writes them). Their
  * stored text was read from the shifted image, so the 40% floor compares the read with another leaf's text. For a listed
@@ -167,6 +174,7 @@ import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/can
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
+import { bookImageSet, imageSetReadRefusal, imageSetRecord } from '../lib/image-set-gate.mjs';
 import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
 import { fitLongEdge, prepImage } from '../lib/image-long-edge.mjs';
 import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../lib/correction-diff-guard.mjs';
@@ -178,6 +186,8 @@ const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=')
 const OUT = arg('out') && path.resolve(arg('out'));
 const MODEL = arg('model') || 'gemini-3.8-flash-low';
 const APPLY = process.argv.includes('--apply');
+// The image-set gate (v3#466) is on for read and apply. --no-image-set-gate is for an eval that reads a known-shifted book on purpose.
+const IMAGE_SET_GATE = !process.argv.includes('--no-image-set-gate');
 const CORRECT_PROMPT = arg('correct-prompt');
 const LANE = arg('lane');
 const INSTRUCTION_FILE = arg('instruction-file');
@@ -300,7 +310,22 @@ if (STAGE === 'read') {
   const found = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, photo: 1, enhanced_photo: 1, photo_original: 1, ...(CORRECT_PROMPT && { 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.pipeline': 1 }) } }).toArray();
   // Split before read (#7605): a page of an unsplit spread book is never sent; the lane's book list is not the only caller.
   const spreadBooks = new Map((await db.collection('books').find({ id: { $in: [...new Set(found.map((p) => p.book_id))] } }, { projection: { id: 1, needs_splitting: 1, split_completed: 1 } }).toArray()).map((b) => [b.id, b]));
-  const pages = found.filter((p) => { const why = unsplitReadRefusal(spreadBooks.get(p.book_id), p); if (why) console.log(`  ${p.book_id} p.${p.page_number} not read: ${why}`); return !why; });
+  const split = found.filter((p) => { const why = unsplitReadRefusal(spreadBooks.get(p.book_id), p); if (why) console.log(`  ${p.book_id} p.${p.page_number} not read: ${why}`); return !why; });
+  // The image-set gate (v3#466): a book whose stored images sit one leaf off their page rows is not read. The verdict
+  // is kept beside the reads (image-set.json), so a resumed run does not fetch the sample images again, and it goes
+  // into each page's meta for apply to record.
+  const setFile = path.join(OUT, 'image-set.json');
+  const imageSets = IMAGE_SET_GATE && fs.existsSync(setFile) ? JSON.parse(fs.readFileSync(setFile, 'utf8')) : {};
+  if (IMAGE_SET_GATE) {
+    for (const id of new Set(split.map((p) => p.book_id))) {
+      const v = await bookImageSet(db, id, imageSets);
+      const why = imageSetReadRefusal(v);
+      if (why) console.log(`  ${id} not read: ${why} (${JSON.stringify(v.writers)})`);
+    }
+    fs.writeFileSync(setFile, JSON.stringify(imageSets));
+  }
+  const imageSetOf = (p) => imageSetRecord(imageSets[p.book_id]);
+  const pages = split.filter((p) => !imageSetReadRefusal(imageSets[p.book_id]));
   if (DRAFT_FILE) {
     const drafts = JSON.parse(fs.readFileSync(DRAFT_FILE, 'utf8'));
     for (const p of pages) p.ocr = drafts[p.id] ? { data: drafts[p.id], model: `file:${path.basename(DRAFT_FILE)}`, pipeline: null, content_hash: contentHash(drafts[p.id]), updated_at: null, source: 'file' } : null;
@@ -423,7 +448,7 @@ if (STAGE === 'read') {
       chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
       prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), wrapper, tool_calls: gateCalls(gateLog),
-      image_url: src, image_bytes: buf.length, image_sha256: imageSha, ...(fit && { image_fit: fit }),
+      image_url: src, image_bytes: buf.length, image_sha256: imageSha, ...(fit && { image_fit: fit }), ...(imageSetOf(p) && { image_set: imageSetOf(p) }),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: draftMeta(p) }),
@@ -535,7 +560,7 @@ if (STAGE === 'read') {
         started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: null, ...(r.hung_after_reply && { hung_after_reply: true }),
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
         prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id), ...(cut && { call_cut_after: cut.length }),
-        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
+        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }), ...(imageSetOf(first) && { image_set: imageSetOf(first) }),
         prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
         ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
       };
@@ -709,6 +734,7 @@ if (arg('by-eye')) for (const l of fs.readFileSync(arg('by-eye'), 'utf8').split(
 const EXTRA_PATH = path.join(OUT, 'prompt-extra.txt');
 const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : '';
 const bookCache = new Map();
+const applyImageSets = new Map();
 const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1, needs_splitting: 1, split_completed: 1 } })); return bookCache.get(id); };
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
 const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [], write_guard_repaired: 0, write_guard_refused: [], skipped_pages: {}, contain_claims: [] };
@@ -765,6 +791,10 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (!page) { skip(m, 'page not found'); continue; }
   const unsplit = unsplitReadRefusal(await bookOf(page.book_id), page);
   if (unsplit) { skip(m, 'unsplit spread book (#7605)'); continue; }
+  // The image-set gate (v3#466), again at the write: reads made by another reader (claude-ocr.mjs) or before the gate
+  // carry no verdict, so it is taken here, once a book.
+  const imageSet = IMAGE_SET_GATE ? await bookImageSet(db, page.book_id, applyImageSets) : null;
+  if (imageSetReadRefusal(imageSet)) { skip(m, 'image set off its page rows (image-set gate, v3#466)'); continue; }
   if (page.ocr?.edited_by || page.ocr?.source === 'manual') { skip(m, 'human-edited page'); continue; }
   const fitted = fittedTextReason(page.ocr);
   if (fitted) { skip(m, fitted); continue; }
@@ -916,6 +946,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
+      ...(imageSetRecord(imageSet) && { image_set: imageSetRecord(imageSet) }),
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }), ...(change && change) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
       ...(byEye && { by_eye: byEye }),

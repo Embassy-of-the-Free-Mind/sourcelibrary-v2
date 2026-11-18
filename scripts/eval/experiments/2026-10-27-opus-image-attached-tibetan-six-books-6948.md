@@ -96,7 +96,7 @@ transcribed.
 - **Reads:** 290 calls (38 refused by the strict splitter and retried; mostly a preamble or a single block-level
   summary outside the page tags), $210.86 list-equivalent, about $11.5 per 100 pages.
 - **Audits:** about 75 calls in all (61 audit replies, plus plants and attribution).
-- **Meter:** the week on dereklomas@gmail.com went 1% → 27%. The 5-hour window capped the run at 80% twice, and
+- **Meter:** the week on account@example.com went 1% → 27%. The 5-hour window capped the run at 80% twice, and
   read-loop waited each time.
 - **Pacing:** Derek's pacing note (15:23Z) halved concurrency from 4 calls to 2.
 - **Paid spend:** $0; no Gemini.

@@ -407,8 +407,9 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
   const [overviewOpen, setOverviewOpen] = useState(false);
   const t = getReaderStrings(useLocale()).guide;
 
-  // Requests ride the same queue as every other reader request (translation,
-  // corrections): the feedback collection, which is triaged into issues.
+  // A request is a feedback row with this exact message shape. The enrichment
+  // lane reads them (enrich-agy-lane.mjs requestedGuideBookIds) and builds
+  // requested books first, so no triage step stands between the two (#408).
   const requestGuide = async () => {
     setRequesting(true);
     try {
@@ -447,7 +448,9 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
         themes: book.reading_summary?.themes,
         sections: book.index?.sectionSummaries,
       };
-      setGuide(overview || data.sections?.length ? data : null);
+      // Themes alone are a guide too: a book with an empty overview and a
+      // themes list used to offer "request a guide" for one it had (#408).
+      setGuide(overview || data.sections?.length || data.themes?.length ? data : null);
       setLoading(false);
     }).catch(() => { if (!cancelled) { setGuide(null); setLoading(false); } });
     return () => { cancelled = true; };

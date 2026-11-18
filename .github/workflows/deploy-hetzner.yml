@@ -42,7 +42,7 @@ jobs:
         run: |
           key=$(mktemp); trap 'rm -f "$key"' EXIT
           printf '%s\n' "$SSH_KEY" > "$key"; chmod 600 "$key"
-          ssh -i "$key" -o StrictHostKeyChecking=accept-new -o BatchMode=yes root@46.224.122.120 "SHA=$SHA bash -s" <<'REMOTE'
+          ssh -i "$key" -o StrictHostKeyChecking=accept-new -o BatchMode=yes root@203.0.113.2 "SHA=$SHA bash -s" <<'REMOTE'
           set -euo pipefail
           cd /root/sourcelibrary
           git fetch origin main

@@ -22,6 +22,8 @@
  *
  * WHICH BOOKS. The batch lane's gap (gapFilter: live, translated, not held, not in a realtime-lane status, missing a
  * summary, an index or chapters), minus books with a withheld translation, minus books that lane has in flight.
+ * Books with an open reader request ("Request a reading guide", a feedback row) go first; the write closes the
+ * request (requestedGuideBookIds / answerGuideRequests, #408).
  * CLAIM BEFORE THE CALL: a row in the batch lane's own state collection (enrich_batch_books, stage `agy_claimed`) is
  * what its admission skips, so the API lane never pays for a book this lane is reading. Done → stage `done`, lane
  * `agy`. A failed book → stage `failed`: the batch lane may then admit it, which is the fallback. A quota stop releases
@@ -162,6 +164,62 @@ export function needsChapters(b, { retryEmpty = false } = {}) {
   return retryEmpty || !b.chapters_extracted_at;
 }
 
+/**
+ * Reading-guide requests (#408). The reader's "Request a reading guide" button (Reader2C GuidePanel) posts a feedback
+ * row whose message is exactly `Reading guide requested for "<title>" (book <id>)`; this lane is what answers them.
+ * Feedback is untrusted input, so all a row can do is move a book that is already in the gap to the front of the
+ * queue. Oldest first, at most MAX_GUIDE_REQUESTS books per run, so a flood of rows cannot starve the rest.
+ */
+export const GUIDE_REQUEST_RE = /^Reading guide requested for .* \(book ([A-Za-z0-9-]{8,64})\)$/s;
+export const MAX_GUIDE_REQUESTS = 50;
+export async function requestedGuideBookIds(db) {
+  const rows = await db.collection('feedback')
+    .find({ message: /^Reading guide requested for /, addressed: { $ne: true } }, { projection: { message: 1 } })
+    .sort({ created_at: 1 }).limit(1000).toArray();
+  const ids = [];
+  for (const r of rows) {
+    const id = GUIDE_REQUEST_RE.exec(r.message || '')?.[1];
+    if (id && !ids.includes(id)) ids.push(id);
+    if (ids.length >= MAX_GUIDE_REQUESTS) break;
+  }
+  return ids;
+}
+
+/** Close the open requests for a book whose guide this run wrote. Returns the number of rows closed. */
+export async function answerGuideRequests(db, bookId, run) {
+  const now = new Date();
+  const rows = await db.collection('feedback')
+    .find({ message: /^Reading guide requested for /, addressed: { $ne: true } }, { projection: { message: 1 } }).toArray();
+  const mine = rows.filter(r => GUIDE_REQUEST_RE.exec(r.message || '')?.[1] === bookId).map(r => r._id);
+  if (!mine.length) return 0;
+  const res = await db.collection('feedback').updateMany({ _id: { $in: mine }, addressed: { $ne: true } }, {
+    $set: {
+      read: true, read_at: now, addressed: true, addressed_at: now, addressed_by: 'enrich-agy-lane',
+      addressed_action: `Reading guide written by enrich-agy run ${run} (#408)`, updated_at: now,
+    },
+    $push: { notes: { text: `Reading guide written by enrich-agy run ${run}; the request closed itself (#408).`, by: 'enrich-agy-lane', at: now } },
+  });
+  return res.modifiedCount;
+}
+
+/** Read several cursors in order as one, skipping a book an earlier cursor already gave. */
+export function chainCursors(sources) {
+  const seen = new Set();
+  return {
+    async next() {
+      while (sources.length) {
+        const b = await sources[0].next();
+        if (!b) { await sources.shift().close().catch(() => {}); continue; }
+        if (seen.has(b.id)) continue;
+        seen.add(b.id);
+        return b;
+      }
+      return null;
+    },
+    async close() { for (const s of sources.splice(0)) await s.close().catch(() => {}); },
+  };
+}
+
 async function releaseClaim(states, bookId, me, how) {
   if (how === 'new') await states.deleteOne({ _id: bookId, stage: 'agy_claimed', agy_run: me.run });
   else await states.updateOne({ _id: bookId, stage: 'agy_claimed', agy_run: me.run }, { $set: { stage: 'failed', updated_at: new Date() }, $unset: { lane: '', agy_run: '' } });
@@ -179,7 +237,7 @@ async function releaseClaim(states, bookId, me, how) {
  */
 export async function runEnrichAgyLane(o) {
   const { db, phases, args, dryRun } = o;
-  const report = { written: 0, chaptersWritten: 0, calls: 0, failed: 0, dropped: 0, released: 0, considered: 0, skipped: {}, admittedWithWithheld: 0, admittedHeld: 0, stop: null, pool: null, errors: [], books: [] };
+  const report = { written: 0, chaptersWritten: 0, calls: 0, failed: 0, dropped: 0, released: 0, considered: 0, skipped: {}, admittedWithWithheld: 0, admittedHeld: 0, requestsAnswered: 0, stop: null, pool: null, errors: [], books: [] };
   const pause = enrichPauseMode(o.control, { batchMode: false });
   if (pause.mode !== 'run') { report.stop = pause.reason; console.log(`[ENRICH-AGY] ${pause.reason}: nothing called`); return report; }
 
@@ -229,8 +287,16 @@ export async function runEnrichAgyLane(o) {
   const filter = compareDir ? { id: { $in: o.bookIds } } : retryEmpty ? retryEmptyFilter(gapFilter(o.scopeFilter)) : gapFilter(o.scopeFilter, { allowHeld: true });
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
   const known = new Map((await states.find({}, { projection: { stage: 1, lane: 1, attempts: 1 } }).toArray()).map(r => [r._id, r]));
-  const cursor = db.collection('books').find(filter).batchSize(1000).sort({ read_count: -1, pages_translated: -1 })
-    .project({ id: 1, 'pipeline_auto.hold': 1, pages_translatable: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: { $size: { $ifNull: ['$chapters', []] } }, chapters_extracted_at: 1, pages_count: 1 });
+  const projection = { id: 1, 'pipeline_auto.hold': 1, pages_translatable: 1, 'translation_state.english_original': 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: { $size: { $ifNull: ['$chapters', []] } }, chapters_extracted_at: 1, pages_count: 1 };
+  // Books a reader asked a guide for go first (#408), then the rest by read_count. Only a book already in the gap is
+  // read either way: a request reorders the queue, it never admits a book the filter would not.
+  const requested = (compareDir || retryEmpty || o.bookIds?.length) ? [] : await requestedGuideBookIds(db);
+  const requestedSet = new Set(requested);
+  if (requested.length) console.log(`[ENRICH-AGY] ${requested.length} book(s) with an open reading-guide request go first`);
+  const cursor = chainCursors([
+    ...(requested.length ? [db.collection('books').find({ $and: [filter, { id: { $in: requested } }] }).project(projection)] : []),
+    db.collection('books').find(filter).batchSize(1000).sort({ read_count: -1, pages_translated: -1 }).project(projection),
+  ]);
 
   let stop = null, claimed = 0;
   const work = [];
@@ -289,6 +355,7 @@ export async function runEnrichAgyLane(o) {
         } else {
           report.written += r.written ? 1 : 0; report.chaptersWritten += r.chapters != null ? 1 : 0;
           await states.updateOne({ _id: c.id, agy_run: run }, { $set: { stage: 'done', lane: 'agy', agy: r.row, chapters: r.chapters, updated_at: new Date() } });
+          if (r.written && requestedSet.has(c.id)) report.requestsAnswered += await answerGuideRequests(db, c.id, run);
         }
       } catch (e) {
         report.failed++; report.errors.push(`${c.id}: ${e.message}`);
@@ -304,7 +371,7 @@ export async function runEnrichAgyLane(o) {
   // One line that says why a run is small: how many candidates were considered and why each skipped one was (#8482 B).
   const skips = Object.entries(report.skipped).sort((x, y) => y[1] - x[1]).map(([k, n]) => `${k} ${n}`).join(', ') || 'none';
   console.log(`[ENRICH-AGY] run ${run} skips: considered ${report.considered}; skipped ${skips}; admitted ${report.admittedWithWithheld} with withheld pages left out, ${report.admittedHeld} held; failed ${report.failed}`);
-  console.log(`[ENRICH-AGY] run ${run} ended (${report.stop}): ${report.written} written, ${report.chaptersWritten} chapters, ${report.calls} calls, ${report.failed} failed, ${report.released} released, ${report.dropped} dropped`);
+  console.log(`[ENRICH-AGY] run ${run} ended (${report.stop}): ${report.written} written, ${report.chaptersWritten} chapters, ${report.calls} calls, ${report.failed} failed, ${report.released} released, ${report.dropped} dropped, ${report.requestsAnswered} guide request(s) answered`);
   return report;
 }
 

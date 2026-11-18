@@ -1,0 +1,11 @@
+[Unit]
+Description=Restore test of the newest backup, Wed+Sun (#346)
+
+[Timer]
+# Wednesdays and Sundays: each restore of the fallback downloads the whole ~40 GB archive (egress); nightly is a #346 decision
+OnCalendar=Wed,Sun *-*-* 03:30:00 UTC
+Persistent=true
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

@@ -177,6 +177,83 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-17 · Stage 2: does the layout-flip flag find bad Paddle pages in Chinese print? (#6871)
+
+PRIOR ART: stage 1, `2026-11-17-paddle-self-agree-6871.md` (Siku against Kanripo: PASS, layout off as the flip).
+Preregistration `scripts/eval/paddle-self-agree-6871/PREREG-print.md`, committed before the GPU arms ran.
+Data: `scripts/eval/results/paddle-self-agree-6871/print/` (flags, judge key, Opus replies, results).
+
+**Design.** 1,053 random interior pages (≤ 3 per book) of the 357 Chinese books of the #6101 print lane, leaves cut as
+the lane cut them. Signal d = symmetric Han CER between the stored layout-off read and a layout-on re-read; flagged
+= d ≥ 0.05. 40 flagged + 40 unflagged pages (one per book, text still the lane's) and 5 planted controls, judged blind
+by Opus against the image (#6388 rubric adapted to print). GPU 30 min on gex45, Opus 85 calls on the subscription, $0.
+
+**Result.**
+
+| | pages | clean | minor | material | unusable | material or worse |
+|---|---|---|---|---|---|---|
+| flagged (d ≥ 0.05) | 40 | 12 | 16 | 12 | 0 | 30% (18–45%) |
+| unflagged | 40 | 17 | 18 | 5 | 0 | 12.5% (5–26%) |
+| planted controls | 5 | | | 5 | | 5/5 caught |
+
+- Pass rules: half of flagged bad **FAIL** (30%); ratio ≥ 2x **pass** (2.4x); controls **pass**. Overall **FAIL**.
+- **Flag rate: 509 of 1,053 pages (48%).** Median d is 4.8%: on print, layout on and off disagree far more than on Siku
+  manuscripts, mostly by reading order and block splitting rather than characters, so 5% is near the median.
+- Stack drift is nil: the fresh layout-off read matches the stored read (median 0), and d from fresh reads gives the same flags.
+- **Descriptive, not preregistered (small n):** within the flagged pages, material rate by d band: 0.05–0.10, 6/27;
+  0.10–0.20, 1/6; ≥ 0.20, 5/7. 121 pages (11.5%) have d ≥ 0.20.
+
+**Reading it.** The layout flip carries some signal on print (flagged pages are 2.4x as often bad), but at the
+Siku threshold it flags half the corpus and most flagged pages are fine. It is not a routing flag for print as
+preregistered. A higher threshold (≈ 0.20) looks promising but needs its own preregistered test on fresh pages; an
+order-insensitive (bag-of-characters) disagreement may separate layout noise from misreads better. Until then a second
+engine (Flash-low) remains the flag for print with no reference text, and Kanripo remains the flag for the Siku.
+
+**Also seen.** On print, Opus judged 12% of unflagged and 30% of flagged pages material: about 21% material overall on
+this sample, near the Siku random QA's 22% (#6388).
+
+## 2026-11-17 · Does Paddle disagreeing with itself flag its own errors? (#6871)
+
+PRIOR ART: `2026-10-12-paddle-zh-correct-vs-redo-6561.md` (the flag-signal table this extends: Kanripo dice and a
+3.8 Flash-low second read). Code and preregistration: `scripts/eval/paddle-self-agree-6871/`; per-page rows: `scripts/eval/results/paddle-self-agree-6871/`.
+
+**Why.** Pages with no Kanripo text (Chinese print, non-Siku) have no free flag. A second engine read costs agy quota.
+A Paddle re-read under other settings costs only owned GPU time: 258 pages × 3 extra arms took 6.6 min on gex45.
+
+**Design** (PREREG.md, committed before the run). 150 random zh-shi-ji-8053 pages (R), 50 with lane dice 0.6–0.9 (L),
+58 #6561 set-B pages with a stored Flash-low read (F); every page has a trusted own Kanripo WYG leaf. Arms: P production
+(layout on, server, width 2400), R = P again, L = layout off, S = long side 1600 px. Truth: P's Han CER against the leaf;
+wrong = CER > 5%. Signal: symmetric Han CER between P and another read; flag at ≥ 5%.
+
+**Result.**
+
+| set | signal | Spearman | AUROC | flagged | precision | recall |
+|---|---|---|---|---|---|---|
+| R+L (200, 124 wrong) | dL layout off | 0.80 | 0.90 | 69 | 1.00 | 0.56 |
+| | dMax (primary) | 0.77 | 0.89 | 76 | 0.96 | 0.59 |
+| | dS 1600 px | 0.55 | 0.77 | 41 | 0.93 | 0.31 |
+| | dR same settings | 0.24 | 0.56 | 1 | 1.00 | 0.01 |
+| | lane Kanripo dice (drew the pages; reference only) | 0.77 | 0.88 | 165 | 0.73 | 0.97 |
+| F (58, 28 wrong) | dL | 0.48 | 0.74 | 10 | 1.00 | 0.36 |
+| | dMax | 0.42 | 0.72 | 11 | 0.91 | 0.36 |
+| | 3.8 Flash-low second read | 0.29 | 0.65 | 33 | 0.61 | 0.71 |
+| | Kanripo dice | 0.77 | 0.92 | 36 | 0.69 | 0.89 |
+
+**Reading it.**
+- The preregistered bars pass: usable (AUROC 0.89 ≥ 0.75, ρ 0.77 ≥ 0.5) and as good as Flash-low on F (0.72 vs 0.65).
+- **Layout off is the signal; same-settings repeats are worthless.** Paddle on vLLM is near-deterministic (dR > 0 on
+  27 of 258 pages, tiny). The image-size change adds little beyond layout off.
+- **High precision, about half recall.** A flagged page is almost always wrong; an unflagged page may still be wrong.
+  Where Kanripo exists, its dice remains the better flag (it catches ~95% of wrong pages).
+- **The 5% truth line is near the median.** Random-page median CER against Kanripo is 5.5% (q75 7.7%; 22/150 > 10%,
+  10/150 > 20%). Part of that is edition difference between our scan and Kanripo's text (#6388: pages Opus called clean
+  had median CER 2.9%), so "wrong" here means "materially off the leaf", not necessarily misread.
+- Not tested: corpora with no Kanripo text (woodblock print, Japanese, non-Siku manuscripts), where this flag would be
+  used. A by-eye or Opus-judged check of flagged vs unflagged pages there is the next step before routing on it.
+
+**Proposed use.** For Paddle pages with no reference text: a layout-off second Paddle pass (~0.45 s/page on gex45),
+route pages with dis ≥ 5% to correction (Opus, per #6561) — a cheap, high-precision first cut that saves agy quota.
+
 ## 2026-11-14 · Is the error zoo's critical rule too harsh, and does softening it make two judges agree? (#244)
 
 **Question.** Derek: some severity calls have looked too harsh. The calibration set (#6420, `calibration-report-2026-11-12.md`) found the same rubric read by Opus and Gemini on identical frozen text agrees at κ 0.51, while each model re-reading its own pages agrees at 0.84–0.86. Does a softer critical rule close that gap, and is a yes/no page flag the right instrument at all?
@@ -8341,7 +8418,7 @@ Between 09:50 and 10:35 no paced call ran at all, yet the account rose from 18% 
 
 **main, `burn-unknown` for team@.** The cause is the same sparse sampling. team@ reads 0% all day, and its samples sit at 01:30 and then 10:30.
 
-**cloudlayer, `meter-error`.** In climits on main, the grant for derek@playpowerlabs.com is revoked: `HTTP 400 … invalid_grant, Refresh token not found or invalid`. The account therefore reaches the meter as `ok: false`. The old guard looked for the account and its `ok` flag in one expression, so a missing account and an unreadable one gave the same bare `meter-error`. Code cannot fix this. Someone has to run `climits add derek@playpowerlabs.com` on main. The climits log also warns that the team@ and derek@sourcelibrary.org grants expire in under 3 days.
+**cloudlayer, `meter-error`.** In climits on main, the grant for account@example.com is revoked: `HTTP 400 … invalid_grant, Refresh token not found or invalid`. The account therefore reaches the meter as `ok: false`. The old guard looked for the account and its `ok` flag in one expression, so a missing account and an unreadable one gave the same bare `meter-error`. Code cannot fix this. Someone has to run `climits add account@example.com` on main. The climits log also warns that the team@ and derek@sourcelibrary.org grants expire in under 3 days.
 
 **Does a home chosen with `JOB_CLAUDE_HOME` / `CLAUDE_CONFIG_DIR` get metered under its own account?** Yes. The guard reads `$CLAUDE_CONFIG_DIR/.claude.json`, and `claude-job.sh` exports the job's recorded home before every call. Two cases show it: on gex45, the milolomas jobs keep their own `.slots` beside dereklomas's, and this job on main is metered as team@. On the guests, though, that applied only to children until now, because the main session bypassed the guard whatever its home.
 
@@ -10771,7 +10848,7 @@ two-leaf; Han 10, Tibetan 4, the rest readers' books in Latin, French, German, G
 - 2026-11-03 · Gemini API, replay (698 calls: 129 gemini-3.1-flash-lite-preview, 569 gemini-3.1-flash-lite) · #5021 ·
   2.51M tokens in, 0.93M out · ≈ $2.0 at Flash-Lite list prices; the gemini_usage rows meter $6.2, because the preview
   model is not in `model-pricing.mjs` and falls to the $1.5/$9 default.
-- 2026-11-03 · `claude -p` sonnet + opus on milolomas200921@gmail.com (gex45) · #5021 · 3,617 Sonnet screen calls, 148
+- 2026-11-03 · `claude -p` sonnet + opus on account@example.com (gex45) · #5021 · 3,617 Sonnet screen calls, 148
   Opus confirmations with scans · weekly meter 81% → 85% (integer; this session on the same login) · about 1.1 points
   per 1,000 Sonnet pages; fee × share, at $200 a month for Max 20x (the plan is not recorded), about $0.50 per 1,000.
 - 2026-11-03 · agy gemini-3.8-flash-low on /root/.agy-milo · #5021 · 2,736 calls · weekly Gemini 76% → 70% · about 2.2
@@ -24165,7 +24242,7 @@ Applied, those pages would lose their whole body. Across the five languages it h
   - **C sometimes emends toward the expected text instead of the print.** In wave 1 the cases were the Lotus Sutra lacunae and the Homeric cento. Here they are चिन्तनविधानात् and الختم.
   - **C keeps what L dropped only when it notices the gap.**
 
-**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed)
+**Cost** (Claude subscription, box account account@example.com; $0 billed)
 
 | Language | Pages | Calls | Output tokens | List price | Per 1K pages |
 |---|---|---|---|---|---|
@@ -24262,7 +24339,7 @@ Files: `scripts/eval/flash-reread-5924/results-7568/{sa,ar}/` and the `w-*.mjs` 
   - Proclus *in Rempublicam* MS `6993898ace15387065947977`: 15/25 pages.
 - **Chinese:** Kunqu `69de98851b234a773e438912`, pp. 269 and 341 serve another leaf's text.
 
-**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed. agy: plan fee)
+**Cost** (Claude subscription, box account account@example.com; $0 billed. agy: plan fee)
 - **Corrections (list-price equivalent of the tokens):**
 
   | Language | Pages | Calls | Output tokens | List price | Per 1K pages |
@@ -24743,7 +24820,7 @@ Reported, not gated: FRESH alone (the unbiased rate) and PAIRED-BAD alone (befor
 **Stage 2 (only if Stage 1 passes; still files only).** `draw.mjs stage2`, seed 69482: 30 blocks of 10 consecutive
 frame pages from 30 CANON books not in Stage 1; same translator settings. 20 of the 30 blocks (seeded) get one
 audited page, same auditor, 6 controls. Metered: the climits meter (`/root/.claude-limits/latest.json`, this box's
-account dereklomas@gmail.com) before and after, every other job on the account listed (`claude-job.sh list`), and
+account account@example.com) before and after, every other job on the account listed (`claude-job.sh list`), and
 list-$ from each call's `cost_usd_equiv`. Reported: weekly-meter points and list-$ per 1,000 pages, with the
 concurrency caveat (job tib-concept-opus-6948 reads on the same account at the same time). Stage 2's audit is
 reported against the same ≤ 5% bar; it decides the recommendation, not a write.
@@ -24817,7 +24894,7 @@ neighbours. 20 audited frame pages, one per volume; the audit ran 01:40–02:20Z
   a page bad. This is the lane's own failure mode: the note looks like evidence, so a reader trusts the error more.
 - Leaf notes: 107 on 68 of the 300 pages (Stage 1: 175 on 83 of 200).
 
-### Metering (this box's account, dereklomas@gmail.com)
+### Metering (this box's account, account@example.com)
 
 | | pages | calls | list-$ | list-$ per 1,000 pages | s per page | weekly meter over the window |
 |---|---|---|---|---|---|---|
@@ -25187,7 +25264,7 @@ Recommend the **cheapest** variant that passes all four:
 - **The A arm is re-run.** Its outputs are not the lane's stored reads. The same prompt gives a different read on a
   re-run, so the g7477, g7479 and g7483 pages may not repeat their earlier failures.
 - **This box's Claude account meter is empty** (`/root/.claude-limits/latest.json` has no limits for
-  derek@playpowerlabs.com). The 89% weekly stop can only be honoured as "stop at the first limit reply".
+  account@example.com). The 89% weekly stop can only be honoured as "stop at the first limit reply".
 - `/root/agy-quota/status.json` lives on main and is not readable from this box. agy errors stop the runner (exit 3).
 
 ## Results (2026-10-27)
@@ -25513,7 +25590,7 @@ measurable gap appears in ≥ 2 of the 5 scripts for at least one model. If it a
 justified only for that script family (reported as a recommendation). If none, the full run is not justified: memory
 is not a measurable share of these models' reading at this n, and the decision says so.
 
-**Budget and stops.** Opus on this box's subscription (dereklomas@gmail.com, 26% weekly at the start): every runner
+**Budget and stops.** Opus on this box's subscription (account@example.com, 26% weekly at the start): every runner
 stops when the weekly meter reaches 70% and the run reports what it has. Gemini on the shared agy pool (about 600
 calls). No production writes; Mongo read-only.
 
@@ -25671,7 +25748,7 @@ At this pilot's rate the full run is about 20× the Opus calls: several account-
 *Grade.* Pilot-grade throughout. Directional for "Opus remembers famous Latin, Hebrew and Sanskrit pages without the
 image, and at full resolution that memory does not raise its reading accuracy". *Replicated?* The RECITATION null
 replicates #7271; the rest has not been run twice. *Cost.* $0 marginal, all on subscriptions:
-- 898 Opus calls (402 blind keys, 496 arm calls), on dereklomas@gmail.com via `claude -p`. Weekly meter 26% → 40%;
+- 898 Opus calls (402 blind keys, 496 arm calls), on account@example.com via `claude -p`. Weekly meter 26% → 40%;
   other jobs on that account also ran in the window.
 - 496 Gemini 3.8 Flash low calls on the agy pool (Gemini weekly remaining 60% → 54%).
 - 7 Sonnet search subagents for the abandoned web check.
@@ -25874,7 +25951,7 @@ transcribed.
 - **Reads:** 290 calls (38 refused by the strict splitter and retried; mostly a preamble or a single block-level
   summary outside the page tags), $210.86 list-equivalent, about $11.5 per 100 pages.
 - **Audits:** about 75 calls in all (61 audit replies, plus plants and attribution).
-- **Meter:** the week on dereklomas@gmail.com went 1% → 27%. The 5-hour window capped the run at 80% twice, and
+- **Meter:** the week on account@example.com went 1% → 27%. The 5-hour window capped the run at 80% twice, and
   read-loop waited each time.
 - **Pacing:** Derek's pacing note (15:23Z) halved concurrency from 4 calls to 2.
 - **Paid spend:** $0; no Gemini.
@@ -27472,7 +27549,7 @@ They are listed on #6740 for a by-eye check.
   gex45. They would also have needed about 1.6 more Claude points than the cap left.
 - Latin 3 Flash > Opus and French lite > Opus: not in the brief's test 7.
 
-**Spend.** Account dereklomas@gmail.com went from 80% to 88% weekly, shared with this session and a #6420 audit round.
+**Spend.** Account account@example.com went from 80% to 88% weekly, shared with this session and a #6420 audit round.
 Calls: 507 Opus judge calls (60 more were reused from the pilot), 93 Opus corrections, 30 Opus CLI translations,
 27 name checks, 182 agy calls (Flash low and high only).
 
@@ -37726,7 +37803,7 @@ On the 396 pages where every error part was located, gain scores 0.62 and image 
 
 **Cost.** gemini-3.1-flash-lite for the word plants: three draws while the quota was fixed, 41,232 input + 7,725 output tokens, **$0.022**, logged through `gemini-script-client.mjs`. GPU: about 60 min of gex45, in a 2-min pilot and 3 holds of 18 min. An inbox note asked for holds of ≤ 10 min; I read it after the holds had run. No Claude model was used and nothing was written to `pages` or any store.
 
-**State.** gex45 gpu-queue task `50-grounding-6871` (`scripts/eval/grounding-6871/queue-task.sh`, timeout 4 h). It runs after `10-mongol-synth-train` and `20-latin-mineru-olmocr`. It scores the remaining 1,504 items (plants included), the 300-page rerun and the 1,200 px pass, then runs `score.py` and `explore.py`. To read it: `ssh root@65.108.136.89 'cat /root/jobs/gpu-queue/50-grounding-6871/task.log; python3 -m json.tool /root/jobs/grounding-6871/results.json | head -150'`.
+**State.** gex45 gpu-queue task `50-grounding-6871` (`scripts/eval/grounding-6871/queue-task.sh`, timeout 4 h). It runs after `10-mongol-synth-train` and `20-latin-mineru-olmocr`. It scores the remaining 1,504 items (plants included), the 300-page rerun and the 1,200 px pass, then runs `score.py` and `explore.py`. To read it: `ssh root@203.0.113.4 'cat /root/jobs/gpu-queue/50-grounding-6871/task.log; python3 -m json.tool /root/jobs/grounding-6871/results.json | head -150'`.
 
 *Replicated?* No.
 

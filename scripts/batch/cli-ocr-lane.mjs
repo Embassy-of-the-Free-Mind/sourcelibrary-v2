@@ -59,6 +59,10 @@
  *        [--first=PAGE_ID,PAGE_ID] [--apply | --dry-run]
  *
  * `--first` reads those pages of a book before its others (reader-request-lane.mjs: the pages a reader asked for, #8395).
+ * `--first-only` reads those pages and no others; `--reader-hold=REASON` (only with `--book`) admits that book while it is
+ * held with exactly REASON (reader-request-lane.mjs READER OVERRIDE, #406: a reader's request reads the asked pages of a
+ * book held scans-only; the hold stays). Without it a held book is "0 books in frame", every run. `--reason-note=TEXT`
+ * is appended to every write's --reason (reader-request-lane.mjs: the feedback rows that asked for the pages).
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
  * French book, idle in the pipeline and not held (or held for the CLI translation lane, whose OCR-first gate waits on this
@@ -240,6 +244,8 @@
  * German translation failed the test (4/30 marker failures) and Tibetan translation was not tested: neither is here.
  */
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { FIRST_READ_HOLDS, PREVIEW_STUB_FIRST_READ_HOLD } from '../lib/hold-reasons.mjs';
+import { FINISH_MIN_SHARE, queueRankOrder, readQueueRanks } from '../lib/priority-queue.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -535,7 +541,7 @@ export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'fai
 
 // ── finish books first (#8482, agy-pools.mjs FINISH FIRST) ──
 /** A book at or over this share of its translatable pages translated is a FINISH book (tier 1). */
-export const FINISH_MIN_SHARE = 0.8;
+export { FINISH_MIN_SHARE } from '../lib/priority-queue.mjs';   // one copy, v3#461
 /** Share of translatable pages translated, from the stored translation_state (page-counts.mjs); 0 when unknown. */
 export function translatedShare(book) {
   const s = book?.translation_state;
@@ -804,7 +810,8 @@ async function correctMain(mode, arg) {
   if (FLAGGED) console.log(`correct --flagged: ${FLAGGED.size} book(s) carry a book_checks OCR finding; only those pages are read`);
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },
-      $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] },
+      $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason },
+        ...(arg('book') && arg('reader-hold') ? [{ id: arg('book'), 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': arg('reader-hold') }] : [])] },
     { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1, ...(LATIN && { year: 1, published: 1, publisher: 1, image_source: 1, human_read_count: 1, pages_translated: 1 }) } },
   ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k)
       && (!FLAGGED || FLAGGED.has(b.id))
@@ -826,6 +833,8 @@ async function correctMain(mode, arg) {
   }
   const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40);
   const FIRST = arg('first') ? new Set(arg('first').split(',').filter(Boolean)) : null;
+  const FIRST_ONLY = process.argv.includes('--first-only');
+  if (FIRST_ONLY && !FIRST?.size) { console.error('--first-only needs --first'); process.exit(2); }
   const CONCURRENCY = Number(arg('concurrency') || 1);
   // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
@@ -853,7 +862,7 @@ async function correctMain(mode, arg) {
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
       ledgerTail(LEDGER, ledger, tailState);
-      const open = firstPagesFirst((await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id) && (!FLAGGED || flaggedLive(FLAGGED, b.id, p))), FIRST);
+      const open = firstPagesFirst((await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id) && (!FLAGGED || flaggedLive(FLAGGED, b.id, p)) && (!FIRST_ONLY || FIRST.has(p.id))), FIRST);
       if (open.length) return { book: b, open };
       releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
     }
@@ -889,10 +898,11 @@ async function correctMain(mode, arg) {
         : [CLI, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = LATIN ? `#7263 Latin re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-03; V4, PR #8000: 20/30 accepted against the served 9/30); lane run ${LANE_RUN}`
+      const reason = (LATIN ? `#7263 Latin re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-03; V4, PR #8000: 20/30 accepted against the served 9/30); lane run ${LANE_RUN}`
         : REREAD ? `#7853 re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-01: re-read, not correct; read@4 accepted 0.82 German / 0.91 French against the correction's 0.72 / 0.78); lane run ${LANE_RUN}`
         : M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
-        : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
+        : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`)
+        + (arg('reason-note') ? `; ${arg('reason-note')}` : '');
       const t0 = Date.now();
       const applied = await run(REREAD ? rereadApplyArgs({ cli: CLI, ids, dir, reason, apply: APPLY })
         : [CLI, 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${M.lane}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
@@ -1779,9 +1789,10 @@ export const FIRST_READ_CORRECT_REASON = '#7701 first-read lane correction';
  * #8181: a book the pipeline marked `complete` on its 25-page sample before the #4719 guard. Nothing revisits those, and
  * without a hold this lane skips them as "the pipeline owns it". Holding one here is how a wave reaches this lane.
  */
-export const PREVIEW_STUB_FIRST_READ_HOLD = 'preview-stub-first-read-8181';
+// Defined in scripts/lib/hold-reasons.mjs (v3#461: the priority queue reads it without importing this lane's writers).
+export { PREVIEW_STUB_FIRST_READ_HOLD } from '../lib/hold-reasons.mjs';
 /** The holds that mean "published as scans, OCR not read yet" (the brief's four, less the wave-b hold, plus the stubs above). */
-export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270', PREVIEW_STUB_FIRST_READ_HOLD]);
+export { FIRST_READ_HOLDS } from '../lib/hold-reasons.mjs';
 /** The routed models that mean a print route: flash-lite (Latin-script print) and Flash (print in the flash families). */
 export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH, OCR_MODEL_AGY]);
 /** Languages read 4 pages a call (#7522 held quality on German and Latin print; French by the #7701 cheap-routes cell test,
@@ -1850,7 +1861,7 @@ export const FIRST_READ_BOOKS = Object.freeze({
  * FINISH COHORT (#8482): `run --cohort=finish` is the first read above on the books closest to done: visible, not an
  * English original, >= FINISH_MIN_SHARE of their translatable pages translated and not complete (isFinishBook), idle
  * and unheld or held for the CLI translation lane, never pipeline_auto.held, with unread pages. finishReadSkip's book
- * rules are firstReadSkip's without the hold rule. Order byFinishFirst. Same reader, writer (--first-read-only
+ * rules are firstReadSkip's without the hold rule. Order: the priority queue's ranks (v3#461), else byFinishFirst. Same reader, writer (--first-read-only
  * --print-only), lane stamp and guards; its own --out (ledger, claims). A finish book is not held, so nothing here
  * changes a hold; the CLI translation lane (cli-translate-lane.mjs finish) translates what this writes.
  */
@@ -1952,6 +1963,13 @@ async function firstReadMain(mode, arg) {
   const books = (await db.collection('books').find(FINISH ? FINISH_READ_BOOKS : FIRST_READ_BOOKS, { projection: FIRST_READ_PROJECTION }).toArray())
     .filter((b) => (!ONLY || ONLY.has(b.id)) && !skippedBooks.has(b.id) && !(FINISH ? finishReadSkip : firstReadSkip)(b, { languages: LANGS }))
     .sort(FINISH ? byFinishFirst : byFirstReadOrder);
+  if (FINISH) {
+    // The finish cohort takes books in the priority queue's order (v3#461); without a fresh ranks document it keeps
+    // byFinishFirst, and the log says which.
+    const q = queueRankOrder(await readQueueRanks(db), byFinishFirst);
+    if (q.order) books.sort(q.order);
+    console.log(`${q.note}${q.order ? `; ${books.filter((b) => q.rank.has(b.id)).length} of ${books.length} books ranked` : ''}`);
+  }
   const MAX = Number(arg('max-pages') || 400), MAX_BOOKS = Number(arg('max-books') || Infinity), CHUNK = Number(arg('book-chunk') || 40);
   const QF = quotaFlags(arg);
   const int = (name, dflt, hi) => { const v = Number(arg(name) || dflt); if (!(Number.isInteger(v) && v >= 1 && v <= hi)) { console.error(`--${name} must be 1 to ${hi}`); process.exit(2); } return v; };

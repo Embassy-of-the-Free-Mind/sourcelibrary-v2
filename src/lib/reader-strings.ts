@@ -969,7 +969,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     guide: {
       noGuideYet: 'This book does not have a reading guide yet.',
       requestGuide: 'Request a reading guide',
-      requestGuideThanks: 'Thanks. This book is queued for a guide, and it will appear here once the pass runs.',
+      requestGuideThanks: 'Thanks. Requested books go first in the next guide pass. A guide is written from the English text, so a book still waiting for its translation gets one after that.',
       requestFailed: 'That request did not go through. Try again in a moment.',
       showLess: 'Show less',
       readFullOverview: (more) => `Read the full overview (${more} more)`,
@@ -1482,7 +1482,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     guide: {
       noGuideYet: 'Este libro todavía no tiene una guía de lectura.',
       requestGuide: 'Solicitar una guía de lectura',
-      requestGuideThanks: 'Gracias. Este libro está en la cola para recibir una guía, y aparecerá aquí en cuanto se procese.',
+      requestGuideThanks: 'Gracias. Los libros solicitados pasan primero en la próxima ronda de guías. La guía se escribe a partir del texto en inglés, así que un libro que aún espera su traducción la recibirá después.',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
       showLess: 'Mostrar menos',
       readFullOverview: (more) => `Leer el resumen completo (${more} más)`,
@@ -2020,7 +2020,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     guide: {
       noGuideYet: 'Hic liber ducem legendi nondum habet.',
       requestGuide: 'Ducem legendi pete',
-      requestGuideThanks: 'Gratias agimus. Hic liber in ordinem relatus est; dux hic apparebit cum confectus erit.',
+      requestGuideThanks: 'Gratias agimus. Libri petiti primi tractabuntur. Dux ex textu Anglico scribitur, itaque liber nondum conversus ducem postea accipiet.',
       requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
       showLess: 'Pauciora ostende',
       readFullOverview: (more) => `Totum conspectum lege (${more} plura)`,
@@ -2541,7 +2541,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     guide: {
       noGuideYet: 'Dit boek heeft nog geen leeswijzer.',
       requestGuide: 'Vraag een leeswijzer aan',
-      requestGuideThanks: 'Bedankt. Dit boek staat in de wachtrij voor een leeswijzer, die hier verschijnt zodra hij klaar is.',
+      requestGuideThanks: 'Bedankt. Aangevraagde boeken gaan voor in de volgende ronde. Een leeswijzer wordt geschreven uit de Engelse tekst, dus een boek dat nog op zijn vertaling wacht, krijgt er daarna een.',
       requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
       showLess: 'Minder tonen',
       readFullOverview: (more) => `Lees het volledige overzicht (nog ${more})`,
@@ -3057,7 +3057,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     guide: {
       noGuideYet: '本书还没有阅读指南。',
       requestGuide: '申请阅读指南',
-      requestGuideThanks: '谢谢。本书已排入生成队列，生成后会显示在这里。',
+      requestGuideThanks: '谢谢。已请求的书会在下一轮优先生成导读。导读依据英文文本撰写，尚待翻译的书会在翻译完成后获得导读。',
       requestFailed: '申请未能提交，请稍后再试。',
       showLess: '收起',
       readFullOverview: (more) => `阅读完整概述（还有 ${more}）`,

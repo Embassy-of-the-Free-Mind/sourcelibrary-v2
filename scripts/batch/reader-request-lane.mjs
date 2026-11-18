@@ -29,7 +29,7 @@
  * The pipeline pause and the spend dial govern paid Batch work; this lane spends subscription quota only, like
  * cli-translate-lane, so the brake is not read. Its gate is laneQuota('agy-flash-translate') and the readers' exit 3.
  *
- * WHAT IT DOES TO A BOOK. Requested pages first, then the rest of the book in page order, inside the run's page
+ * WHAT IT DOES TO A BOOK. Requested pages first, then the rest of the book in page order (a scoped book: its scoped pages only, SCOPE), inside the run's page
  * budget:
  *   1. pages with no OCR → agy 3.8 Flash-low fresh read. #7517 measured a fresh Flash-low read on German below the
  *      lite>agy-flash-low route (16/30 accepted, 12 cut by Gemini's filter) but, with lite where it was cut, above
@@ -57,6 +57,21 @@
  *
  * Writes DIR/summary.json and, when anything happened, one ntfy line to sourcelibrary-uptime.
  *
+ * SCOPE (#406). Two kinds of book are served for the asked pages only, each with NEIGHBOURS pages either side, in every
+ * step: a book whose untranslated tail is over --max-book-pages (it used to go to a person, so an 849-page book's one page
+ * waited on the whole tail), and a book held for anything but the CLI translation lane (READER OVERRIDE: Derek
+ * 2026-11-16, a reader's request overrides a scans-only hold for the requested pages only; the hold stays). The re-read
+ * gets `--reader-hold=<reason> --first=<scope> --first-only`, so the held book is in its frame for those pages.
+ *
+ * CANNOT SERVE (#406). A gate that can never pass for a request is a refusal with its reason, not `work` retried every
+ * two hours: a requested page on an unchecked Flash-Lite transcription in a language the re-read does not serve (and no
+ * ocr_checked on the translation row), or in a book the re-read cannot read (not visible). cannotServe() names it.
+ * A spread suspect (#523) stops the book's OCR only: pages that already have OCR are still translated.
+ *
+ * WAITING (#406). Every request open more than WAIT_HOURS whose page still has no English is named in one ntfy line
+ * with what blocks it (waitingLines), each request at most once a day (DIR/../request-paged.json). The STALL page below
+ * only fires when the whole lane emails no one; one reader answered hid six waiting (v2#8395, then #406).
+ *
  * STALL (#8395). The lane emailed no one from 30 Oct to 8 Nov and nobody knew. When requests are open (Siku-lane rows
  * aside) and every run of the last STALL_DAYS (summary.json in DIR's siblings) emailed no one, it sends one high-priority
  * ntfy line naming each blocked book and its reason (blockers), at most once a day (DIR/../stall-paged.json).
@@ -78,6 +93,7 @@ import { isReadableInEnglish, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs'
 import { UNTRANSLATED, readerArgs } from './cli-translate-lane.mjs';
 import { UNREAD, spreadReason, CORRECT_LANGUAGES, LATIN_FIRST_ROOT, rereadOutDir } from './cli-ocr-lane.mjs';
 import { uncheckedLite } from '../lib/ocr-first-gate.mjs';
+import { HOLD_STATUS } from '../lib/pipeline-hold.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -106,6 +122,9 @@ export const LANE_HOLDS = Object.freeze([
 ]);
 // RFC 2606 / 6761 reserved names (notify-addressed-feedback.mjs): mail there cannot be delivered.
 const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/i;
+
+/** The provenance suffix naming the feedback rows behind a write: "; from reader feedback <id>, <id>", or ''. */
+export const feedbackNote = (ids) => (ids?.size ? `; from reader feedback ${[...ids].join(', ')}` : '');
 
 /** The title as the request message quotes it, shortened the way the hand run did. */
 export function requestTitle(message) {
@@ -159,10 +178,10 @@ export function rereadSkip(book) {
  * LATIN RE-READ): 4 pages a call, the same day folder under the same root (so its ledger and claims), the lane's pool
  * (AGY_HOME on the cron line) and its own quota floor. `first`: the requested page ids, read before the others.
  */
-export function rereadArgs(book, { maxPages, first = [], date, apply, home = process.env.AGY_HOME, root = LATIN_FIRST_ROOT, deadlineMin = 60 }) {
+export function rereadArgs(book, { maxPages, first = [], date, apply, home = process.env.AGY_HOME, root = LATIN_FIRST_ROOT, deadlineMin = 60, readerHold = null, note = '' }) {
   return [path.join(HERE, 'cli-ocr-lane.mjs'), 'correct', '--reread-per-call=4', ...(/^Latin/.test(String(book.language || '')) ? ['--reread-languages=Latin'] : []),
-    `--book=${book.id}`, ...(first.length ? [`--first=${first.join(',')}`] : []), `--out=${rereadOutDir(root, date)}`, `--max-pages=${maxPages}`,
-    '--concurrency=1', '--book-chunk=40', `--deadline-min=${deadlineMin}`, `--agy-home=${home || 'default'}`, ...(apply ? ['--apply'] : [])];
+    `--book=${book.id}`, ...(first.length ? [`--first=${first.join(',')}`] : []), ...(readerHold && first.length ? [`--reader-hold=${readerHold}`, '--first-only'] : []), `--out=${rereadOutDir(root, date)}`, `--max-pages=${maxPages}`,
+    '--concurrency=1', '--book-chunk=40', `--deadline-min=${deadlineMin}`, `--agy-home=${home || 'default'}`, ...(note ? [`--reason-note=${note}`] : []), ...(apply ? ['--apply'] : [])];
 }
 
 /** Pages a book's re-read may take in one run: one re-read chunk, or every requested page, inside the run's budget. */
@@ -180,16 +199,59 @@ export function rereadRows(file, bookId, since) {
     .filter((r) => r.book_id === bookId && String(r.at) >= since);
 }
 
-/** One request's verdict with this lane's options. A Siku-held book the gates would pass becomes `siku`, never `auto`. */
-export function judgeRequest({ book, page, tail, repeat, ceiling }) {
+/** Pages either side of a requested page that a scoped book is served with (SCOPE). */
+export const NEIGHBOURS = 2;
+
+/** The page ids a scoped book is served on: each requested page and NEIGHBOURS either side, by page number. */
+export function scopeIds(pages, wanted, n = NEIGHBOURS) {
+  const nums = pages.filter((p) => wanted.has(p.id)).map((p) => p.page_number);
+  return new Set(pages.filter((p) => wanted.has(p.id) || nums.some((x) => Math.abs(p.page_number - x) <= n)).map((p) => p.id));
+}
+
+/** The hold the re-read must be told to admit for a reader's pages (READER OVERRIDE), or null when it is in frame anyway. */
+export function readerHold(book) {
+  const pa = book?.pipeline_auto;
+  if (pa?.status !== HOLD_STATUS || !pa.hold?.reason) return null;
+  return pa.hold.reason === CLI_TRANSLATE_HOLD.reason ? null : pa.hold.reason;
+}
+
+/**
+ * Why this lane can never serve a request whose gates otherwise pass (CANNOT SERVE), or null. `lane`: the book's
+ * translation lane (translateLaneForBook). Only a page that rests on an unchecked Flash-Lite transcription can be
+ * stuck this way: the translation reader refuses it (the OCR-first gate) and only the re-read can lift it.
+ */
+export function cannotServe({ book, page, lane }) {
+  if (!page || !uncheckedLite(page) || lane?.row?.adoption?.ocr_checked) return null;
+  const skip = rereadSkip(book);
+  if (skip) return `the page rests on an unchecked Flash-Lite transcription and ${skip}: the OCR-first gate cannot pass without a person (check the page by eye and translate with --ocr-checked, or answer "not yet")`;
+  if (!book.visible) return 'the page rests on an unchecked Flash-Lite transcription and the re-read reads visible books only';
+  return null;
+}
+
+/**
+ * One request's verdict with this lane's options. A Siku-held book the gates would pass becomes `siku`, never `auto`.
+ * A tail over the ceiling is served on the requested pages (`scope: 'requested'`), not sent to a person (SCOPE), and a
+ * request the lane can never serve is refused with the reason (CANNOT SERVE).
+ */
+export function judgeRequest({ book, page, tail, repeat, ceiling, sikuPaused = null }) {
   const hold = book?.pipeline_auto?.hold?.reason;
   const siku = SIKU_LANE_HOLDS.includes(hold);
-  const verdict = requestVerdict({ book, page, tail, repeat, ceiling, holdAllowed: siku || LANE_HOLDS.includes(hold), ocrPending: !siku });
-  return siku && verdict.verdict === 'auto' ? { ...verdict, verdict: 'siku', reason: 'waits at the front of the Siku lane (#7690)' } : verdict;
+  const verdict = requestVerdict({ book, page, tail, repeat, ceiling: Infinity, holdAllowed: siku || LANE_HOLDS.includes(hold), ocrPending: !siku });
+  if (siku && verdict.verdict === 'auto') return { ...verdict, verdict: 'siku', reason: `waits at the front of the Siku lane (#7690)${sikuPaused ? `, which is paused (${sikuPaused})` : ''}` };
+  if (verdict.verdict !== 'auto') return verdict;
+  const routed = translateLaneForBook(book);
+  const never = cannotServe({ book, page, lane: routed.channel === 'cli' ? routed : null });
+  if (never) return { verdict: 'refuse', reason: `lane cannot serve: ${never}`, pages: 0 };
+  return tail > ceiling ? { ...verdict, scope: 'requested', reason: `book tail ${tail} pages > ceiling ${ceiling}: the requested pages only` } : verdict;
 }
+
+/** The Siku lane's pause file on its cron's default state dir (siku-translate-lane.mjs STATE_DIR; PAUSE / RESUME). */
+export const SIKU_STOP = '/mnt/HC_Volume_105839809/siku-lane-5600/STOP';
+const sikuPausedWhy = () => { try { return `STOP: ${fs.readFileSync(SIKU_STOP, 'utf8').split('\n')[0].slice(0, 120)}`; } catch { return null; } };
 
 /** Every open request, resolved and judged. */
 export async function judgeRequests(db, { ceiling = BOOK_CEILING, since = null } = {}) {
+  const sikuPaused = sikuPausedWhy();
   const filter = since ? { message: REQUEST_MESSAGE, created_at: { $gte: since } } : { addressed: { $ne: true }, message: REQUEST_MESSAGE };
   const rows = await db.collection('feedback').find(filter).sort({ created_at: 1 }).toArray();
   const reqs = rows.map((row) => ({ row, ...(parseRequestUrl(row.page) ?? {}), at: row.created_at, email: row.email, ip_hash: row.ip_hash }));
@@ -204,7 +266,7 @@ export async function judgeRequests(db, { ceiling = BOOK_CEILING, since = null }
     if (r.book && !tails.has(r.book.id)) {
       tails.set(r.book.id, await db.collection('pages').countDocuments({ book_id: r.book.id, ...VISIBLE_PAGE_MATCH, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }] }));
     }
-    r.verdict = judgeRequest({ book: r.book, page: r.page, tail: r.book ? tails.get(r.book.id) : 0, repeat: r.repeat, ceiling });
+    r.verdict = judgeRequest({ book: r.book, page: r.page, tail: r.book ? tails.get(r.book.id) : 0, repeat: r.repeat, ceiling, sikuPaused });
   }
   return reqs;
 }
@@ -223,9 +285,15 @@ export const requestedFirst = (pages, wanted) => [...pages.filter((p) => wanted.
 export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
   const { book } = w;
   const label = `${book.id} ${String(book.title || '').slice(0, 40)}`;
+  // Every write names the feedback rows that asked for it (Derek 2026-11-16: mark what reader feedback changed; no names).
+  const fromFeedback = feedbackNote(w.feedback);
   const dir = path.join(OUT, book.id);
   const ledger = readLedger(LEDGER);
-  const out = { book: book.id, ocr: 0, translated: 0, stopped: null, note: null };
+  const out = { book: book.id, ocr: 0, translated: 0, stopped: null, note: null, reader_hold: readerHold(book) };
+  // SCOPE: a scoped book's pages are the requested ones and their neighbours, in every step: a tail over the ceiling,
+  // or a book held out of the lanes (READER OVERRIDE: the request overrides the hold for the asked pages only).
+  const scope = w.scope === 'requested' || out.reader_hold ? scopeIds(await db.collection('pages').find({ book_id: book.id }, { projection: { id: 1, page_number: 1 } }).toArray(), w.wanted) : null;
+  const inScope = (p) => !scope || scope.has(p.id);
   const ledgerLeft = async (take, filter, stage) => {
     const left = new Set((await db.collection('pages').find({ id: { $in: take.map((p) => p.id) }, ...filter }, { projection: { id: 1 } }).toArray()).map((p) => p.id));
     for (const p of take.filter((x) => left.has(x.id))) {
@@ -238,28 +306,34 @@ export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
   };
 
   // 1. OCR what has none.
-  const unread = (await db.collection('pages').find({ book_id: book.id, ...UNREAD }, { projection: { id: 1, page_number: 1, crop: 1, cropped_photo: 1 } }).sort({ page_number: 1 }).toArray()).filter((p) => !ledger.has(p.id));
-  if (unread.length) {
-    const spread = spreadReason(book, unread);
-    if (spread) { out.note = `OCR waits for a person: ${spread}`; console.log(`\n${label}: ${out.note}`); return out; }
-    const take = requestedFirst(unread, w.wanted).slice(0, budget.left);
-    if (!take.length) { out.stopped = 'page budget spent'; return out; }
-    budget.left -= take.length;
-    const sub = path.join(dir, 'ocr');
-    fs.mkdirSync(sub, { recursive: true });
-    const ids = path.join(sub, 'page-ids.json');
-    fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
-    console.log(`\n${label}: OCR ${take.length} of ${unread.length} unread page(s) on ${OCR_MODEL}`);
-    const read = run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${sub}`, `--model=${OCR_MODEL}`, `--job=${job}`, '--stop-on-quota']);
-    if (read === 3) { out.stopped = 'quota'; return out; }
-    if (read !== 0) { out.note = `OCR reader exited ${read}`; return out; }
-    const applied = run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${sub}`, `--reason=#7599 reader-request lane: a reader asked for this book; fresh ${OCR_MODEL} read through agy (#7517)`, ...(APPLY ? ['--apply'] : [])]);
-    if (!APPLY || applied !== 0) { out.note = APPLY ? `OCR apply exited ${applied}` : 'dry run: OCR not written, so nothing to translate yet'; return out; }
-    out.ocr = await ledgerLeft(take, UNREAD, 'ocr');
+  const unread = (await db.collection('pages').find({ book_id: book.id, ...UNREAD }, { projection: { id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray()).filter((p) => !ledger.has(p.id) && inScope(p));
+  // A spread suspect stops the OCR, not the translation of pages already read (#406: a title page waited on it).
+  const spread = unread.length ? spreadReason(book, unread) : null;
+  if (spread) { out.note = `OCR waits for a person: ${spread}`; console.log(`\n${label}: ${out.note}`); }
+  if (unread.length && !spread) {
+    // Keep budget for requested pages that are read already and wait for English only (#406: an already-read title page
+    // waited while the OCR of the book's other 167 pages spent the run).
+    const readAsked = (await translatablePages(db, book.id)).filter((p) => w.wanted.has(p.id) && !ledger.has(p.id)).length;
+    const take = requestedFirst(unread, w.wanted).slice(0, Math.max(0, budget.left - readAsked));
+    if (!take.length && !readAsked) { out.stopped = 'page budget spent'; return out; }
+    if (take.length) {
+      budget.left -= take.length;
+      const sub = path.join(dir, 'ocr');
+      fs.mkdirSync(sub, { recursive: true });
+      const ids = path.join(sub, 'page-ids.json');
+      fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
+      console.log(`\n${label}: OCR ${take.length} of ${unread.length} unread page(s) on ${OCR_MODEL}`);
+      const read = run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${sub}`, `--model=${OCR_MODEL}`, `--job=${job}`, '--stop-on-quota']);
+      if (read === 3) { out.stopped = 'quota'; return out; }
+      if (read !== 0) { out.note = `OCR reader exited ${read}`; return out; }
+      const applied = run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${sub}`, `--reason=#7599 reader-request lane: a reader asked for this book; fresh ${OCR_MODEL} read through agy (#7517)${fromFeedback}`, ...(APPLY ? ['--apply'] : [])]);
+      if (!APPLY || applied !== 0) { out.note = APPLY ? `OCR apply exited ${applied}` : 'dry run: OCR not written, so nothing to translate yet'; return out; }
+      out.ocr = await ledgerLeft(take, UNREAD, 'ocr');
+    }
   }
 
   // 2. Translate what has no English.
-  const untranslated = (await translatablePages(db, book.id)).filter((p) => !ledger.has(p.id));
+  const untranslated = (await translatablePages(db, book.id)).filter((p) => !ledger.has(p.id) && inScope(p));
   if (!untranslated.length) return out;
   const routed = translateLaneForBook(book);
   const lane = routed.channel === 'cli' ? routed : { engine: DEFAULT_TRANSLATE_ENGINE, ...CLI_TRANSLATE_LANES[DEFAULT_TRANSLATE_ENGINE], row: null };
@@ -277,7 +351,7 @@ export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
     if (read === 3) { out.stopped = 'quota'; return 'stop'; }
     if (read === 2) { budget.left += take.length; return 'gate'; }
     if (read !== 0) { out.note = `translation reader exited ${read}`; return 'stop'; }
-    const reason = `#7599 reader-request lane: a reader asked for this book; ${lane.engine}${lane.row ? ` (row ${lane.row.id})` : ' (no cli row)'}`;
+    const reason = `#7599 reader-request lane: a reader asked for this book; ${lane.engine}${lane.row ? ` (row ${lane.row.id})` : ' (no cli row)'}${fromFeedback}`;
     const applied = run([path.join(HERE, 'cli-translate.mjs'), 'apply', `--out=${sub}`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])]);
     if (!APPLY || applied !== 0) { out.note = APPLY ? `translation apply exited ${applied}` : 'dry run: nothing written'; return 'stop'; }
     out.translated += await ledgerLeft(take, UNTRANSLATED, 'tr');
@@ -292,20 +366,22 @@ export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
   out.reread = 0;
   out.reread_skip = rereadSkip(book);
   const lite = untranslated.filter((p) => p.lite);
+  // READER OVERRIDE: a book held out of the re-read's frame is re-read on its scoped pages only (`untranslated` is scoped).
+  const override = out.reader_hold;
   if (!out.reread_skip && lite.length && budget.left > 0) {
-    const first = lite.filter((p) => w.wanted.has(p.id)).map((p) => p.id);
-    const n = rereadTake({ left: budget.left, lite: lite.length, requested: first.length });
+    const first = lite.filter((p) => (override ? true : w.wanted.has(p.id))).map((p) => p.id);
+    const n = override ? Math.min(budget.left, first.length) : rereadTake({ left: budget.left, lite: lite.length, requested: first.length });
     const date = new Date().toISOString().slice(0, 10);
     const since = new Date().toISOString();
     console.log(`\n${label}: OCR-first gate: re-read up to ${n} of ${lite.length} Flash-Lite page(s), requested first`);
-    const code = run(rereadArgs(book, { maxPages: n, first, date, apply: APPLY }));
+    const code = n > 0 ? run(rereadArgs(book, { maxPages: n, first, date, apply: APPLY, readerHold: override, note: fromFeedback.replace(/^; /, '') })) : 0;
     const rows = rereadRows(path.join(path.dirname(rereadOutDir(LATIN_FIRST_ROOT, date)), 'reread-ledger.jsonl'), book.id, since);
     out.reread = rows.filter((r) => r.outcome === 'written').length;
     // The re-read ledgers every page it tried, written or not; a dry run ledgers nothing, so count what it was allowed.
     budget.left -= APPLY ? rows.length : n;
     if (code !== 0) out.reread_note = `re-read exited ${code}`;
   }
-  const after = (await translatablePages(db, book.id)).filter((p) => !ledger.has(p.id));
+  const after = (await translatablePages(db, book.id)).filter((p) => !ledger.has(p.id) && inScope(p));
   const waiting = after.filter((p) => p.lite);
   const waitingAsked = waiting.filter((p) => w.wanted.has(p.id)).map((p) => p.page_number);
   if (waiting.length) {
@@ -317,6 +393,13 @@ export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
   else if (waitingAsked.length && !out.note) out.note = `OCR-first gate: ${out.lite_waiting}`;
   return out;
 }
+
+/**
+ * May the reply say the rest of the book is underway? Only for a book this lane is still working on: it did something
+ * this run, no gate stopped it, and it is not a held book served on the asked pages only (READER OVERRIDE): no lane
+ * translates the rest of that one (#406: a reader of a scans-only book was told the rest was underway).
+ */
+export const underway = (b) => !b.note && !b.reader_hold && !!(b.ocr || b.translated || b.stopped);
 
 /** Days of runs that emailed no one, with requests open, before the lane pages (#8395). */
 export const STALL_DAYS = 3;
@@ -348,6 +431,32 @@ export function blockers(summary, reqs) {
     if (['human', 'refuse'].includes(r.verdict.verdict) && !out.has(id)) out.set(id, `${String(r.book?.title || r.row.page || '').slice(0, 50)} — ${r.verdict.verdict}: ${r.verdict.reason}`);
   }
   return [...out.values()];
+}
+
+/** Hours a request may wait with no English before it is named (WAITING, #406). */
+export const WAIT_HOURS = 24;
+
+/**
+ * The requests to name this run (WAITING): open over WAIT_HOURS, page still without English (`translated` false), not
+ * named in the last day (`paged`: { feedbackId: ISO }), no reply drafted or sent by a person. Each line names the request, the book and page, and the blocker:
+ * the verdict's reason, else what this run's work on the book said, else "no page written yet".
+ */
+export function waitingLines({ reqs, summary, paged = {}, now = Date.now() }) {
+  const byBook = new Map((summary?.books ?? []).map((b) => [b.book, b]));
+  const out = [];
+  for (const r of reqs) {
+    const id = String(r.row._id);
+    if (r.translated || r.verdict?.verdict === 'done') continue;
+    if (r.row.reply_draft || r.row.reply_sent_at) continue;   // a person has answered it, or drafted the answer
+    if (!r.at || now - new Date(r.at).getTime() < WAIT_HOURS * 3_600_000) continue;
+    if (paged[id] && now - Date.parse(paged[id]) < DAY_MS) continue;
+    const b = r.book ? byBook.get(r.book.id) : null;
+    const work = b && (b.note ?? b.lite_waiting ?? b.reread_note ?? (b.stopped ? `stopped: ${b.stopped}` : null));
+    const blocker = r.verdict?.verdict !== 'auto' ? `${r.verdict.verdict}: ${r.verdict.reason}` : work ?? (b ? 'worked this run, no page written yet' : 'not reached this run');
+    const hours = Math.floor((now - new Date(r.at).getTime()) / 3_600_000);
+    out.push({ id, line: `${id} ${String(r.book?.title || r.row.page || '').slice(0, 40)} p${r.page?.page_number ?? '?'} (${hours} h) — ${blocker}` });
+  }
+  return out;
 }
 
 /** Earlier runs' summaries in the lane's folder (one subfolder a run), the last few days only. */
@@ -431,11 +540,12 @@ async function main() {
   // Books to work: one entry per book, visible first, then the oldest request.
   const work = new Map();
   for (const r of by.auto ?? []) {
-    if (!work.has(r.book.id)) work.set(r.book.id, { book: r.book, wanted: new Set(), first: r.at, pages: r.verdict.pages });
+    if (!work.has(r.book.id)) work.set(r.book.id, { book: r.book, wanted: new Set(), feedback: new Set(), first: r.at, pages: r.verdict.pages, scope: r.verdict.scope ?? null });
     work.get(r.book.id).wanted.add(r.page.id);
+    work.get(r.book.id).feedback.add(String(r.row._id));
   }
   const queue = [...work.values()].sort((a, b) => (b.book.visible ? 1 : 0) - (a.book.visible ? 1 : 0) || new Date(a.first) - new Date(b.first));
-  for (const w of queue) console.log(`  work   ${w.book.id} ${String(w.book.title || '').slice(0, 50)} — ${w.pages} page(s) without English, ${w.wanted.size} requested`);
+  for (const w of queue) console.log(`  work   ${w.book.id} ${String(w.book.title || '').slice(0, 50)} — ${w.pages} page(s) without English, ${w.wanted.size} requested${w.scope ? ` (${w.scope} pages only: tail over the ceiling)` : ''}`);
   if (mode === 'count') { await client.close(); return; }
 
   const summary = { at: new Date().toISOString(), apply: APPLY, requests: reqs.length, verdicts: Object.fromEntries(Object.entries(by).map(([k, v]) => [k, v.length])), books: [], notify: null, stopped: null };
@@ -451,8 +561,7 @@ async function main() {
       if (res.stopped) { summary.stopped = res.stopped; break; }
     }
   }
-  // "Underway" only for books this lane is still working on: it did something this run, and no gate stopped it.
-  const underwayBooks = new Set(summary.books.filter((b) => !b.note && (b.ocr || b.translated || b.stopped)).map((b) => b.book));
+  const underwayBooks = new Set(summary.books.filter(underway).map((b) => b.book));
   summary.notify = await notify(db, { underwayBooks, APPLY });
   fs.writeFileSync(path.join(OUT, 'summary.json'), JSON.stringify(summary, null, 2));
   const pages = summary.books.reduce((s, b) => s + b.ocr + b.translated, 0);
@@ -462,6 +571,22 @@ async function main() {
   console.log(`\n${line}`);
   if (APPLY && (pages || reread || summary.notify.ready || summary.notify.failed)) {
     spawnSync('curl', ['-s', '-m', '20', '-H', 'Title: Reader-request lane', '-d', `${line} — ${OUT}/summary.json`, 'https://ntfy.sh/sourcelibrary-uptime'], { stdio: 'ignore' });
+  }
+  // A request that waits over WAIT_HOURS with no English is named, with its blocker, once a day each (WAITING, #406).
+  const WAITED = path.join(path.dirname(OUT), 'request-paged.json');
+  let waited = {};
+  try { waited = JSON.parse(fs.readFileSync(WAITED, 'utf8')); } catch { /* never paged */ }
+  const englished = new Set((await db.collection('pages').find({ id: { $in: reqs.map((r) => r.page?.id).filter(Boolean) } }, { projection: { id: 1, 'translation.data': 1 } }).toArray())
+    .filter((p) => (p.translation?.data || '').trim().length > TRANSLATED_MIN_CHARS).map((p) => p.id));
+  const waiting = waitingLines({ reqs: reqs.map((r) => ({ ...r, translated: englished.has(r.page?.id) })), summary, paged: waited });
+  if (waiting.length) {
+    console.log(`waiting over ${WAIT_HOURS} h:\n  ${waiting.map((x) => x.line).join('\n  ')}`);
+    if (APPLY) {
+      spawnSync('curl', ['-s', '-m', '20', '-H', 'Title: Reader requests waiting', '-H', 'Tags: hourglass', '-d', `${waiting.length} reader request(s) open > ${WAIT_HOURS} h with no English:\n${waiting.map((x) => x.line).join('\n')}`, 'https://ntfy.sh/sourcelibrary-uptime'], { stdio: 'ignore' });
+      const at = new Date().toISOString();
+      for (const x of waiting) waited[x.id] = at;
+      fs.writeFileSync(WAITED, JSON.stringify(waited, null, 1));
+    }
   }
   // A lane that answers no one for days pages once a day, naming what blocks each book (#8395). Siku-lane rows are that lane's.
   const PAGED = path.join(path.dirname(OUT), 'stall-paged.json');

@@ -67,6 +67,11 @@ export interface BlogPost {
   // CSS object-position for the crop, e.g. 'center 30%'. Set it when the
   // default centre crop cuts off what the picture is of.
   imagePosition?: string;
+  // A collection slug: the article is read from that collection's page only.
+  // It is left off /articles, the category pages, the feed, the home slider
+  // and the "more articles" rail, and keeps everything else (share card, save,
+  // EPUB, sitemap). The collection page lists it in its hero (#437).
+  collection?: string;
   // Only on LINKED_PAGES: the page lives at its own address, outside /articles.
   href?: string;
   // Offline editions: the article with every page it cites (text and scan) at the back, built by

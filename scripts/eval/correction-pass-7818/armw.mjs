@@ -130,7 +130,7 @@ async function correct() {
   }
 }
 
-export const GEX45 = 'root@65.108.136.89', WG_REMOTE = '/root/jobs/correction-pass-7818/wg';
+export const GEX45 = 'root@203.0.113.4', WG_REMOTE = '/root/jobs/correction-pass-7818/wg';
 /** The PERO drafts (scripts/batch/pero-draft.py <img dir> <out> --device=cpu, run on gex45 over OUT/wg/img). */
 async function gpuCollect() {
   const f = path.join(OUT, 'wg', 'pero-drafts.json');

@@ -30,7 +30,7 @@ page() { curl -s -m 10 -H "Title: $1" -d "$2" "$NTFY" >/dev/null || true; }
 
 # Which account is this really? A CLI's login is often not the account you think.
 WHO=$(CLAUDE_CONFIG_DIR="$CFG" claude auth status 2>/dev/null | grep -i '"email"' | head -1)
-case "$WHO" in *"$EMAIL"*) ;; *) page "ft-search nightly NOT started" "claude auth status under $CFG is '$WHO', not $EMAIL (#7598)"; exit 1;; esac
+case "$WHO" in *"$EMAIL"*) ;; *) page "ft-search nightly NOT started" "the Claude login under $CFG is not the account this batch expects (#7598)"; exit 1;; esac
 
 if [ -s "$ROOT/last-nightly.txt" ]; then
   LAST=$(cat "$ROOT/last-nightly.txt")

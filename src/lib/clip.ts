@@ -7,7 +7,7 @@
 // find every copy. It now lives here: override with the CLIP_URL env var, or
 // fall back to the default host.
 
-const DEFAULT_CLIP_URL = 'http://46.224.122.120:3456/clip';
+const DEFAULT_CLIP_URL = 'http://203.0.113.2:3456/clip';
 
 /** Resolved CLIP service base URL. Append `/embed-text` or `/embed-image`. */
 export const CLIP_URL = process.env.CLIP_URL || DEFAULT_CLIP_URL;

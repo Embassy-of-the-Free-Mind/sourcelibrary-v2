@@ -7,6 +7,7 @@ import { toUserId } from '@/lib/user-id';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client';
 import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
+import { MAX_UPLOAD_BODY_BYTES } from '@/lib/shrink-image';
 
 // POST /api/me/avatar — set, replace, or remove the signed-in reader's profile
 // photo. Three body shapes:
@@ -33,7 +34,11 @@ import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 // via token.picture). The jwt callback in src/lib/auth.ts mirrors exactly that
 // three-state read.
 
-const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
+// The client shrinks to this before sending (src/lib/shrink-image.ts);
+// Vercel would refuse a body over 4.5 MB before this route ran anyway.
+const MAX_UPLOAD_BYTES = MAX_UPLOAD_BODY_BYTES;
+// A library scan is fetched server-side, so the body cap does not apply.
+const MAX_LIBRARY_SOURCE_BYTES = 30 * 1024 * 1024;
 const AVATAR_SIZE = 512;
 const MIN_SOURCE_CROP_PX = 40; // refuse crops smaller than this per side
 
@@ -98,7 +103,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Only image files are accepted' }, { status: 400 });
       }
       if (file.size > MAX_UPLOAD_BYTES) {
-        return NextResponse.json({ error: 'Image must be under 10 MB' }, { status: 400 });
+        return NextResponse.json({ error: 'Image must be under 4 MB' }, { status: 400 });
       }
       sourceBuffer = Buffer.from(await file.arrayBuffer());
       bbox = parseBbox({
@@ -121,7 +126,7 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ error: 'bbox { x, y, w, h } (normalized 0–1) is required' }, { status: 400 });
         }
         sourceBuffer = await images.fetchBuffer(sourceUrl, { timeout: 20000 });
-        if (sourceBuffer.length > MAX_UPLOAD_BYTES * 3) {
+        if (sourceBuffer.length > MAX_LIBRARY_SOURCE_BYTES) {
           return NextResponse.json({ error: 'Source image is too large' }, { status: 400 });
         }
       }

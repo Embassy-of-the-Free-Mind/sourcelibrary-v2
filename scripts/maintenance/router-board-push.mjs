@@ -36,6 +36,7 @@ import { fileURLToPath } from 'node:url';
 import { loadCurrentTable, checkBinding, boundRoute, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead, ROUTER_DIR, testWriteShare, ledgerYield, checkYield } from '../lib/router-binding.mjs';
 import { FIRST_READ_PER_CALL_LANGUAGES, FIRST_READ_PER_CALL_BY_LANGUAGE, CORRECT_LANGUAGES } from '../batch/cli-ocr-lane.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
+import { staleRoutes } from '../lib/stale-routes.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const COLLECTION = 'ops_reports';
@@ -239,8 +240,37 @@ export function routeRows(row, { production = [], decided = null } = {}) {
   });
 }
 
-/** The board, pure over its inputs (the test passes them). */
-export function routerBoard({ table, drift, lanes, today = new Date().toISOString().slice(0, 10) }) {
+/**
+ * The dated full builds in the router directory (a JSON with rows[]) set after `pointerSet`, oldest first, and the
+ * newest of them read as { name, rows: Map }: what the stale-route rules compare a decision with (v3#460). A build is
+ * dated by its file name; one that does not parse is skipped, never fatal (the board must still push).
+ */
+export function newerBuilds(pointerSet, dir = ROUTER_DIR, fsApi = fs) {
+  const set = String(pointerSet || '').slice(0, 10);
+  const names = fsApi.readdirSync(dir).filter((f) => /^\d{4}-\d{2}-\d{2}.*\.json$/.test(f) && f.slice(0, 10) > set).map((f) => f.replace(/\.json$/, '')).sort();
+  const builds = [];
+  for (const name of names) {
+    try {
+      const d = JSON.parse(fsApi.readFileSync(path.join(dir, `${name}.json`), 'utf8'));
+      if (Array.isArray(d.rows)) builds.push({ name, rows: d.rows });
+    } catch { /* not a build */ }
+  }
+  const last = builds[builds.length - 1];
+  return { names: builds.map((b) => b.name), newest: last ? { name: last.name, rows: new Map(last.rows.map((r) => [r.id, r])) } : null };
+}
+
+/** One cell as the newest build sees it: its decision, its route, and the judged pages on the cell's decided route. */
+function newestOf(newest, cellId, decidedRoute) {
+  const row = newest?.rows.get(cellId);
+  if (!row) return null;
+  return {
+    table: newest.name, decision: String(row.decision || '').split(' (')[0] || null, route: boundRoute(row) ?? row.route ?? null,
+    n: (row.routes || []).find((x) => x.id === decidedRoute)?.n ?? null,
+  };
+}
+
+/** The board, pure over its inputs (the test passes them). `builds` (newerBuilds) is optional: without it no newer-build rule runs. */
+export function routerBoard({ table, drift, lanes, today = new Date().toISOString().slice(0, 10), builds = null }) {
   const findings = checkBinding(table, lanes, { today }).map((f, i) => ({ ...f, box: lanes[i].box, schedule: lanes[i].schedule, comment: lanes[i].comment }));
   const status = Object.fromEntries(drift.cells.map((c) => [c.cell, c]));
   const cells = [];
@@ -264,12 +294,15 @@ export function routerBoard({ table, drift, lanes, today = new Date().toISOStrin
       routes: routeRows(row, { production, decided: route ?? row.route }),
       waivers,
       routing_row: (status[row.id]?.routing_row || []).length > 0,
+      newest_build: newestOf(builds?.newest, row.id, route ?? row.route),
     });
   }
   const rank = { mismatch: 0, unshipped: 1, waived: 2, served: 3, stored: 4, undecided: 5, idle: 6 };
   cells.sort((a, b) => rank[a.status] - rank[b.status] || b.pages_waiting - a.pages_waiting || a.cell.localeCompare(b.cell));
-  return { _id: DOC_ID, type: TYPE, as_of: today, table: drift.table, pointer_set: drift.pointer_set, crontabs: drift.crontabs,
-    tally: drift.tally, routing_tables: drift.routing_tables, cells };
+  const doc = { _id: DOC_ID, type: TYPE, as_of: today, table: drift.table, pointer_set: drift.pointer_set, crontabs: drift.crontabs,
+    tally: drift.tally, routing_tables: drift.routing_tables, builds_since_pointer: builds?.names ?? [], cells };
+  // Stale routes (v3#460): computed here once, read by /admin/router and the 07:00 mail.
+  return { ...doc, stale: staleRoutes(doc, { today }) };
 }
 
 function yieldMain(argv) {
@@ -290,7 +323,8 @@ async function main() {
   const crontabs = Object.fromEntries(defaultCrontabs(ROOT).map((f) => [f, fs.readFileSync(path.join(ROOT, f), 'utf8')]));
   let commit = null;
   try { commit = execFileSync('git', ['-C', ROOT, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim(); } catch { /* not a checkout */ }
-  const doc = { ...routerBoard({ table, drift, lanes: cronLanes(crontabs) }), generated_at: new Date(), commit };
+  const builds = newerBuilds(table.pointer?.set);
+  const doc = { ...routerBoard({ table, drift, lanes: cronLanes(crontabs), builds }), generated_at: new Date(), commit };
   if (dry) { console.log(JSON.stringify(doc, null, 1)); return; }
   if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set — use node --env-file=…/.env.production.local'); process.exit(2); }
   const { MongoClient } = await import('mongodb');

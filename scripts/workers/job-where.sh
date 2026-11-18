@@ -4,7 +4,7 @@
 # Asks each box for `claude-job.sh where`, reads every account's Claude limits, and names the box to use.
 #
 #   scripts/workers/job-where.sh
-#   SL_JOB_BOXES="main=root@46.224.122.120 cloudlayer=root@46.224.208.175" scripts/workers/job-where.sh
+#   SL_JOB_BOXES="main=root@203.0.113.2 cloudlayer=root@203.0.113.3" scripts/workers/job-where.sh
 #
 # Why: on 2026-10-09 the main box sat at load 17 on 16 cores with its root disk 86% full while cloudlayer
 # ran no jobs at all. Nothing told a dispatching session where there was room.
@@ -25,11 +25,11 @@
 # (published by spare-lane.py on main), else this machine's /root/.claude-limits/latest.json; the box ->
 # account map comes from each box's `where` (account=), else the logins in JOB-HOSTS.md.
 set -u
-BOXES=${SL_JOB_BOXES:-"main=root@46.224.122.120 cloudlayer=root@46.224.208.175 l7a=root@167.233.32.250 gex45=root@65.108.136.89"}
+BOXES=${SL_JOB_BOXES:-"main=root@203.0.113.2 cloudlayer=root@203.0.113.3 l7a=root@203.0.113.1 gex45=root@203.0.113.4"}
 MIN_MEM_MB=${MIN_MEM_MB:-4096}; MIN_DISK_GB=${MIN_DISK_GB:-15}; MIN_ROOT_FREE_PCT=${MIN_ROOT_FREE_PCT:-15}; MAX_LOAD_PER_CORE=${MAX_LOAD_PER_CORE:-1.5}
 MAX_SESSION_PCT=${MAX_SESSION_PCT:-80}; MAX_WEEK_PCT=${MAX_WEEK_PCT:-90}
 # Used only while a box's installed wrapper predates `account=` in `where` (logins change: check JOB-HOSTS.md).
-DEFAULT_ACCOUNTS="main=milolomas200921@gmail.com cloudlayer=derek@playpowerlabs.com l7a=derek@sourcelibrary.org"
+DEFAULT_ACCOUNTS="main=account@example.com cloudlayer=account@example.com l7a=derek@sourcelibrary.org"
 
 # The shared limits doc. The env file lives in the main checkout, not in a worktree.
 here=$(cd "$(dirname "$0")" && pwd); limits=""

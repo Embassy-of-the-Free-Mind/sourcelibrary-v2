@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { posts, LINKED_PAGES, KIND_INFO, type BlogPost } from './posts';
+import { listedPosts, LINKED_PAGES, KIND_INFO, type BlogPost } from './posts';
 import { PAGE_SIZE, listingHref, type Listing } from './post-kinds';
 
 export { PAGE_SIZE, listingHref, isKind, type Listing } from './post-kinds';
@@ -8,7 +8,7 @@ export { PAGE_SIZE, listingHref, isKind, type Listing } from './post-kinds';
 // metadata. The client list (BlogIndex) pages the same way, so page N of a
 // route here is the page N a reader sees before searching or sorting.
 
-export const ALL_ARTICLES: BlogPost[] = [...posts, ...LINKED_PAGES];
+export const ALL_ARTICLES: BlogPost[] = [...listedPosts, ...LINKED_PAGES];
 
 const newestFirst = (a: BlogPost, b: BlogPost) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
 

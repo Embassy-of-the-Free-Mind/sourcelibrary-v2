@@ -7,7 +7,8 @@
 // laptop-only ssh sweep: it reaches two of the four boxes and takes minutes. Nothing printed these reports
 // as text for a session, so each one rebuilt the picture by hand or trusted RUNNING.md.
 //
-// Read-only: one ops_reports read plus the latest stage_coverage_snapshots row, one ntfy poll, and RUNNING.md /
+// Read-only: one ops_reports read plus the latest stage_coverage_snapshots row, the ages of the newest
+// pipeline_next_daily and image-provenance-coverage reports (v3#452), one ntfy poll, and RUNNING.md /
 // DECISIONS-PENDING.md from the ops repo's origin/main (after a fetch). Writes nothing, calls no model, costs $0.
 //
 // What it prints, in order (#368): alarms with STANDING ones first (an alarm that fired in this window AND in the
@@ -73,7 +74,8 @@ export const silentAfterMin = (gap) => gap + Math.max(30, gap / 2);
 export function laneSummary(pn) {
   if (!pn?.lines) return null;
   const at = new Date(pn.generated_at).getTime();
-  const on = pn.lines.filter((l) => !l.disabled && !l.one_shot);
+  // `other` lines (a script no stage rule names, v3#428) are listed for the whole-line page and judged nowhere.
+  const on = pn.lines.filter((l) => !l.disabled && !l.one_shot && l.stage !== 'other');
   const wrote = [], silent = [], nolog = [];
   for (const l of on) {
     if (!l.log) { nolog.push(l); continue; }
@@ -162,8 +164,47 @@ export function parseOpenDecisionRows(text) {
   });
 }
 
-export function summarize({ reports, live = {}, ops = { dir: null }, snapshot = null }, { now = Date.now(), hours = 12, only = null } = {}) {
-  const out = { generated_at: new Date(now).toISOString(), hours, boxes: [], pools: [], accounts: [], stalls: [], alarms: [], alarms_error: live.error || null, alarm_log: null, ops, infra_flags: [], decisions: [], stages: null };
+/**
+ * The documents "The whole line" (/admin/pipeline, src/lib/pipeline-line.ts) is joined from, and how old each may be
+ * before the page is showing a stopped source as if it were current (v3#452). The box reports (pipeline-now:<box>,
+ * 150 min) are judged per box above, as "report push stopped", and are not repeated here.
+ */
+export const LINE_SOURCES = [
+  { key: 'snapshot', what: 'nightly stage snapshot (stage_coverage_snapshots)', maxMin: 26 * 60 },
+  { key: 'nextDaily', what: 'daily next-step report (pipeline_next_daily)', maxMin: 26 * 60 },
+  { key: 'corpus', what: 'corpus report (pipeline-now:corpus)', maxMin: 26 * 60 },
+  { key: 'imageProv', what: 'weekly image audit (image-provenance-coverage)', maxMin: 8 * 24 * 60 },
+];
+export const LINE_OWNER = 'v3#452';
+
+/**
+ * Broke items for the whole line's sources: one per source that is stale, missing or unreadable, and one naming the
+ * stages whose nightly probe reported probe_broken. Pure, and judged afresh on every run, so a source that recovers
+ * drops off the next brief. `docs` maps each LINE_SOURCES key to its document, null (none written) or { failed }.
+ */
+export function lineSourceItems(docs, now) {
+  const at = {
+    snapshot: (d) => d.timestamp, nextDaily: (d) => d.generated_at, corpus: (d) => d.generated_at, imageProv: (d) => d.at,
+  };
+  const out = [];
+  for (const src of LINE_SOURCES) {
+    const d = docs[src.key];
+    if (d?.failed) { out.push({ what: `whole line: ${src.what} could not be read (${d.failed})`, owner: LINE_OWNER }); continue; }
+    const t = d ? at[src.key](d) : null;
+    const m = ageMin(t, now);
+    if (!t || Number.isNaN(m)) out.push({ what: `whole line: ${src.what} missing, so /admin/pipeline shows no figure from it`, owner: LINE_OWNER });
+    else if (m > src.maxMin) out.push({ what: `whole line: ${src.what} stopped, last written ${ago(t, now)} (allowed ${fmtMin(src.maxMin)})`, owner: LINE_OWNER });
+  }
+  const snap = docs.snapshot;
+  const broken = snap && !snap.failed ? (snap.stages || []).filter((x) => x.status && x.status !== 'ok').map((x) => x.stage) : [];
+  if (broken.length) {
+    out.push({ what: `whole line: last night's probe could not measure ${broken.join(', ')} (probe_broken: the monitor failed, not the stage)`, owner: LINE_OWNER });
+  }
+  return out;
+}
+
+export function summarize({ reports, live = {}, ops = { dir: null }, snapshot = null, sources = null }, { now = Date.now(), hours = 12, only = null } = {}) {
+  const out = { generated_at: new Date(now).toISOString(), hours, boxes: [], pools: [], accounts: [], stalls: [], alarms: [], alarms_error: live.error || null, alarm_log: null, ops, infra_flags: [], decisions: [], stages: null, line_sources: [] };
 
   for (const b of BOXES) {
     const wb = reports[`work-board:${b}`];
@@ -217,7 +258,9 @@ export function summarize({ reports, live = {}, ops = { dir: null }, snapshot = 
   out.rate = corpusRate(corpus);
   out.stalls = (corpus?.stalls || []).filter((s) => s.stalled || s.unknown);
   out.dial = corpus?.dial || null;
-  if (snapshot) out.stages = { at: snapshot.timestamp, stalled: snapshot.stalled ?? [], stages: snapshot.stages ?? [] };
+  if (snapshot && !snapshot.failed) out.stages = { at: snapshot.timestamp, stalled: snapshot.stalled ?? [], stages: snapshot.stages ?? [] };
+  // Only when the caller read them (readReports does); a fixture without `sources` judges nothing.
+  if (sources) out.line_sources = lineSourceItems({ snapshot, corpus: corpus ?? null, nextDaily: sources.nextDaily ?? null, imageProv: sources.imageProv ?? null }, now);
   for (const id of ['work-board:infra-scaleway', 'work-board:infra-hetzner']) out.infra_flags.push(...(reports[id]?.flags || []));
   return out;
 }
@@ -294,6 +337,10 @@ export function format(s) {
   if (s.stages) {
     const parts = s.stages.stages.map((x) => {
       if (x.status !== 'ok') return `${x.stage} PROBE BROKEN`;
+      // Book-level steps (#428): a flow is per day, a count has no denominator.
+      if (x.per_day) return `${x.stage} ${num(x.per_day.n)} on ${x.per_day.day.slice(5)}`;
+      if (x.total == null) return `${x.stage} ${num(x.covered)}`;
+      if (x.sampled_at) return `${x.stage} ${num(x.covered)}/${num(x.total)} sampled ${x.sampled_at.slice(5, 10)}`;
       const dl = x.delta == null ? '' : ` ${x.delta >= 0 ? '+' : ''}${num(x.delta)}`;
       const res = x.residue != null ? `, residue ${num(x.residue)} no worker takes` : '';
       return `${x.stage} ${num(x.covered)}/${num(x.total)}${dl}${x.queue_depth ? ` (queue ${num(x.queue_depth)}${res})` : res ? ` (${res.slice(2)})` : ''}${s.stages.stalled.includes(x.stage) ? ' STALLED' : ''}`;
@@ -301,6 +348,7 @@ export function format(s) {
     L.push(`== stage snapshot ${ago(s.stages.at, now)} (nightly; the "Pipeline line" alarm reads it; change since the snapshot before):`);
     L.push(`   ${parts.join(' · ')}`);
   } else L.push('== stage snapshot: none readable (stage_coverage_snapshots)');
+  for (const x of s.line_sources || []) L.push(`   STALE ${x.what} · owner ${x.owner}`);
   if (s.infra_flags.length) L.push(`== infra: ${s.infra_flags.length} flag(s): ${s.infra_flags.map((f) => `${f.provider} ${cut(f.name, 30)} (${f.kind})`).join(', ')}`);
 
   // ── ops repo and decisions
@@ -414,6 +462,8 @@ export function briefOf(s, extra = {}) {
     broke.push({ what: `${x.stalled ? 'stalled' : 'cannot tell'}: ${x.label} (corpus report ${ago(s.corpus_read_at, Date.parse(s.generated_at))})`, owner: ownerOf({ issue, keys: [issue] }, running) });
   }
   for (const a of s.accounts) if (!a.ok) broke.push({ what: `Claude account ${who(a.email)} unreadable`, owner: null });
+  // The whole line's sources (v3#452): stale, missing or unreadable, and last night's broken probes.
+  broke.push(...(s.line_sources || []));
   const hi = s.alarms.filter((a) => a.priority >= 4 && !ALARM_COVERED.test(a.title || a.key));
   for (const a of hi.filter((x) => !ALARM_WATCH.test(x.title || x.key))) {
     broke.push({ what: `${a.standing ? 'standing ' : ''}alarm: ${a.title}`, owner: ownerOf({ issue: issueIn(`${a.title} ${a.message}`) }, running) });
@@ -484,14 +534,19 @@ async function readReports() {
   await client.connect();
   try {
     const db = client.db('bookstore');
-    const [docs, snapshot] = await Promise.all([
+    // A read that fails is recorded as such, so the brief says "could not read" rather than "missing" (v3#452).
+    const failed = (what) => (e) => ({ failed: `${what}: ${cut(e.message, 80)}` });
+    const [docs, snapshot, nextDaily, imageProv] = await Promise.all([
       db.collection('ops_reports')
         .find({ _id: { $in: [...BOXES.flatMap((b) => [`work-board:${b}`, `pipeline-now:${b}`]), 'pipeline-now:corpus', 'claude-limits:latest', 'work-board:infra-scaleway', 'work-board:infra-hetzner'] } })
         .toArray(),
       // The nightly stage-coverage snapshot (#368 item 6): the newest row only.
-      db.collection('stage_coverage_snapshots').find({}, { projection: { timestamp: 1, stages: 1, stalled: 1 } }).sort({ timestamp: -1 }).limit(1).maxTimeMS(15_000).next().catch(() => null),
+      db.collection('stage_coverage_snapshots').find({}, { projection: { timestamp: 1, stages: 1, stalled: 1 } }).sort({ timestamp: -1 }).limit(1).maxTimeMS(15_000).next().catch(failed('stage_coverage_snapshots')),
+      // The sources the whole line (/admin/pipeline) is joined from, for their age only (v3#452).
+      db.collection('ops_reports').find({ type: 'pipeline_next_daily' }, { projection: { generated_at: 1, day: 1 } }).sort({ day: -1 }).limit(1).maxTimeMS(15_000).next().catch(failed('pipeline_next_daily')),
+      db.collection('ops_reports').findOne({ _id: 'image-provenance-coverage' }, { projection: { at: 1 }, maxTimeMS: 15_000 }).catch(failed('image-provenance-coverage')),
     ]);
-    return { reports: Object.fromEntries(docs.map((d) => [d._id, d])), snapshot };
+    return { reports: Object.fromEntries(docs.map((d) => [d._id, d])), snapshot, sources: { nextDaily, imageProv } };
   } finally {
     await client.close();
   }
@@ -595,16 +650,16 @@ async function main() {
   // --at-local=7 --tz=Europe/Amsterdam: cron fires at 05:23Z and 06:23Z; only the run that is 07:xx there does anything.
   const at = arg('at-local', null), tz = arg('tz', 'Europe/Amsterdam');
   if (send && at != null && localHour(now, tz) !== Number(at)) { console.log(`[brief] not sent: it is ${localHour(now, tz)}h in ${tz}, not ${at}h`); return; }
-  let reports, snapshot, live;
+  let reports, snapshot, sources, live;
   try {
-    [{ reports, snapshot }, live] = await Promise.all([readReports(), readAlarms()]);
+    [{ reports, snapshot, sources }, live] = await Promise.all([readReports(), readAlarms()]);
   } catch (e) {
     // A brief that cannot be built still tells the phone so, rather than not arriving.
     if (send) await sendBrief(`The morning brief could not be built on main: ${cut(e.message, 200)}. Log: /var/log/sourcelibrary/morning-brief.log (v3#379)`, 'Morning brief FAILED').catch(() => {});
     throw e;
   }
   // The brief reads the night: 24 h of alarms unless --hours says otherwise.
-  const s = summarize({ reports, live, ops: readOps(), snapshot }, { now, hours: Number(arg('hours', brief ? 24 : 12)), only: arg('box', null) });
+  const s = summarize({ reports, live, ops: readOps(), snapshot, sources }, { now, hours: Number(arg('hours', brief ? 24 : 12)), only: arg('box', null) });
   if (!brief) {
     if (process.argv.includes('--json')) console.log(JSON.stringify(s, null, 2));
     else console.log(format(s));
