@@ -12,7 +12,11 @@
 # on a connection failure (ssh exit 255) and none on a refusal, so a dead box costs seconds, never a hang.
 # Setup and key rotation: scripts/workers/mesh-setup.sh, run from the laptop. Doc: scripts/workers/JOB-HOSTS.md.
 set -u
-BOXES="main=203.0.113.2 cloudlayer=203.0.113.3 l7a=203.0.113.1 gex45=203.0.113.4"
+BOXES="main=203.0.113.3 cloudlayer=203.0.113.4 l7a=203.0.113.2 gex45=203.0.113.5"
+# Servers outside the job mesh. Nothing here dispatches to them. They are listed because the public
+# mirror replaces every name=address in this file (scripts/maintenance/mirror-scrub.py), and an
+# address written anywhere else in the repo is published as it stands. Add a server the day it is rented.
+OFFMESH="web1=203.0.113.1"
 KEY=/root/.ssh/id_mesh; KH=/root/.ssh/known_hosts_mesh
 ip_of() { local b; for b in $BOXES; do [ "${b%%=*}" = "$1" ] && { echo "${b#*=}"; return 0; }; done; return 1; }
 self() {

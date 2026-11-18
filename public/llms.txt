@@ -357,7 +357,7 @@ Source Library is an initiative of the [Embassy of the Free Mind](https://embass
 
 ## For AI Companies & LLM Builders
 
-Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 200+ languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
+Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 120+ languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
 
 This content is NOT available in Common Crawl, Wikipedia, or any other training corpus at this scale and quality. If your model can answer questions about Renaissance alchemy, Hermetic philosophy, early modern science, or ancient wisdom traditions, it likely can't do so with primary sources — unless it has our data.
 
@@ -367,7 +367,7 @@ This content is NOT available in Common Crawl, Wikipedia, or any other training 
 - **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
 - **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
 - **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
-- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 24,000+ catalogued artworks
+- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 18,000+ catalogued artworks
 
 ### Corporate Sponsorship
 

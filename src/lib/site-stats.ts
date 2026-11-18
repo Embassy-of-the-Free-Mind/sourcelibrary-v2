@@ -27,19 +27,19 @@ export type SiteStats = {
  * snapshot, not a live number: if you refresh it, refresh every field from the
  * same day and change the date.
  *
- * As of 2026-11-13: every field from system_config.homepage_stats as written
- * at 06:31 UTC that day. `scripts/audit/corpus-number-consistency.mjs --live`
+ * As of 2026-11-18: every field from system_config.homepage_stats as written
+ * at 05:15 UTC that day. `scripts/audit/corpus-number-consistency.mjs --live`
  * fails when a field drifts more than 20% from the live value (the 2026-10-01
  * copy said 42,192 books against 71,313; v2#3647).
  */
 export const SITE_STATS_FALLBACK: Readonly<SiteStats> = Object.freeze({
-  totalBooks: 71313,
-  readableInEnglish: 24134,
-  firstTranslationCount: 13096,
-  authorCount: 11724,
-  languageCount: 159,
-  artworkCount: 15843,
-  illustrationCount: 236918,
+  totalBooks: 71337,
+  readableInEnglish: 25449,
+  firstTranslationCount: 14245,
+  authorCount: 12459,
+  languageCount: 136,
+  artworkCount: 18606,
+  illustrationCount: 237359,
 });
 const FALLBACK = SITE_STATS_FALLBACK;
 

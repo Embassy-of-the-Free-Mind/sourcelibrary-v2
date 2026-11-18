@@ -39,7 +39,7 @@ jobs:
           # so the input can never be spliced into the command itself.
           EXTRA_ARGS: ${{ inputs.extra_args }}
         with:
-          host: 203.0.113.2
+          host: 203.0.113.3
           username: root
           key: ${{ secrets.HETZNER_SSH_KEY }}
           envs: EXTRA_ARGS

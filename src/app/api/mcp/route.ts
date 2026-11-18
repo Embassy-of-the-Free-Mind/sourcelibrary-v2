@@ -5,7 +5,7 @@ import { countToolResults, logMcpToolCall, logMcpInitialize, mintMcpSessionId, r
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
-import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { BOOK_CORPUS_STATS, IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
@@ -2367,7 +2367,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
   server.setRequestHandler('tools/list', async () => ({
     tools: TOOLS,
     _meta: {
-      about: 'Source Library — 15,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org',
+      about: `Source Library — ${BOOK_CORPUS_STATS.readableInEnglish} rare pre-modern texts readable in English, from originals in Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org`,
       read_first: 'https://sourcelibrary.org/llms.txt — a guide to this corpus and its search tools, also exposed as an MCP resource. Worth reading once before a long research session; it costs one call and documents the failure modes that otherwise cost many.',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
       research_strategy: [
@@ -2530,7 +2530,7 @@ export async function GET(req: Request) {
   return new Response(JSON.stringify({
     name: 'source-library',
     version: SERVER_VERSION,
-    description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
+    description: `Source Library MCP Server — search, read, and cite ${BOOK_CORPUS_STATS.readableInEnglish} rare pre-modern texts readable in English. Connect via POST to this endpoint.`,
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
   }), {

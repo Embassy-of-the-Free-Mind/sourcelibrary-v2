@@ -118,7 +118,7 @@ export default async function TimelinePage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Timeline"
-          subtitle="10,000+ texts from antiquity to the Enlightenment. Browse the tradition by era"
+          subtitle={`${data.summary.total > 0 ? `${data.summary.total.toLocaleString('en-US')} dated texts` : 'Texts'} from antiquity to the Enlightenment. Browse the tradition by era`}
         >
           <div className="mt-5">
             <ExploreTabBar />

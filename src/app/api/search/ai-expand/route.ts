@@ -3,6 +3,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { logAiUsage } from '@/lib/log-ai-usage';
 import { outputTokensFrom } from '@/lib/gemini-logger';
 import { clientCountry } from '@/lib/client-ip';
+import { BOOK_CORPUS_STATS, IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 
 export const preferredRegion = 'fra1';
 
@@ -69,7 +70,7 @@ export async function POST(request: NextRequest) {
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a search guide for Source Library (16K+ books across 150+ languages, 24K+ artworks).
+              text: `You are a search guide for Source Library (${BOOK_CORPUS_STATS.books} books across ${BOOK_CORPUS_STATS.languages} languages, ${IMAGE_CORPUS_STATS.artworks} artworks).
 
 LIBRARY SCOPE — a global library of premodern thought. Strongest from antiquity through the 19th century; ancient and medieval sources are well represented and there are real (not sparse) holdings into the early 20th century. Western esoterica is the historic core, but the collection is much broader now — when a subject sits near one we hold, guide toward the nearest rich tradition rather than calling it out of scope. What's actually here:
 - Western esoterica (the founding core): alchemy (Dorn, Khunrath, Ripley, Maier, Mylius, Trismosin, Flamel), Hermetica (Corpus Hermeticum, Ficino, Bruno, Trismegistus), Kabbalah (Zohar, Luria, Reuchlin, Knorr von Rosenroth), Renaissance natural magic (Agrippa, Della Porta, Dee, Paracelsus), Rosicrucian and Masonic texts, gnostic and apocryphal sources.

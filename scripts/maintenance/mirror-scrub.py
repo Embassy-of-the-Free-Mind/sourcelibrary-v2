@@ -16,7 +16,24 @@ import re
 import sys
 from urllib.parse import unquote
 
-SECRET_KEY = re.compile(r'(PASSWORD|PASSWD|SECRET|TOKEN|PRIVATE|_KEY$|_URI$|_DB_URL$|DATABASE_URL)')
+# Every setting in the env file is a secret unless its NAME is on the public list below.
+# The first version listed secret names instead, and `_KEY$` skipped GEMINI_API_KEY_2 to _10 and
+# both access key ids: a list of secret names fails open on the next name nobody thought of.
+# A public value that is missing from this list stops the mirror (exit 3), which is the safe way
+# to be wrong: add the name here once you have checked that the value is not a credential.
+SECRET_NAME = re.compile(r'(PASSWORD|PASSWD|SECRET|TOKEN|PRIVATE|KEY|_URI$|_DB_URL$|DATABASE_URL)')
+PUBLIC_NAME = re.compile(
+    r'^(VERCEL|VERCEL_.*|TURBO_.*|NX_.*)$'                                 # build flags
+    r'|(_MODEL|_REGION|_DOMAIN|_BUCKET_NAME|_QUEUE_URL|_DB|_METHOD_ON_UPLOAD)$'  # names of things
+    r'|^(BASE_URL|SUPABASE_URL|R2_PUBLIC_URL|GOOGLE_CLIENT_ID)$'           # sent to every browser
+    r'|^(R2_ACCOUNT_ID|CLOUDFLARE_ZONE_ID)$'                               # identifiers, not credentials
+    r'|^(ENRICHMENT_INLINE|IMAGE_EXTRACTION_USE_BATCH|TRIGGER_SOURCE|TRANSLATE_ILLEGIBLE_GATE)$')
+
+
+def is_secret(key):
+    if key.startswith('NEXT_PUBLIC_'):  # shipped to every browser by definition
+        return False
+    return bool(SECRET_NAME.search(key)) or not PUBLIC_NAME.search(key)
 OPS_PATH = re.compile(r'^(scripts|infrastructure|docs|\.github)/|^[^/]+\.md$')
 PERSONAL = re.compile(r'[A-Za-z0-9._%+-]+@(?:gmail\.com|playpowerlabs\.com)')
 
@@ -34,10 +51,11 @@ def read_env(path):
 def secret_values(env):
     found = {}
     for key, value in env.items():
-        if not SECRET_KEY.search(key) or len(value) < 8:
+        if len(value) < 8:
             continue
-        found[value] = key
-        if '://' in value and '@' in value:
+        if is_secret(key):
+            found[value] = key
+        if '://' in value and '@' in value:  # a password inside a URL is a secret under any name
             cred = value.split('://', 1)[1].rsplit('@', 1)[0]
             if ':' in cred:
                 password = cred.split(':', 1)[1]
@@ -90,6 +108,8 @@ def main():
     if leaks:
         for key, rel in sorted(set(leaks)):
             print(f'mirror-scrub: LIVE SECRET {key} in {rel}', file=sys.stderr)
+        print('mirror-scrub: nothing published. Remove the value from the file and reset the secret, '
+              'or, if the setting is not a credential, add its name to PUBLIC_NAME.', file=sys.stderr)
         sys.exit(3)
 
 

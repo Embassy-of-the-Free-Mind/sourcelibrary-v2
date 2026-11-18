@@ -1,6 +1,6 @@
-# GEX45-1 crontab (root@203.0.113.4, hostname gex45-1): the fourth job box (#5660).
+# GEX45-1 crontab (root@203.0.113.5, hostname gex45-1): the fourth job box (#5660).
 # The live crontab is the source of truth; this file is its snapshot. Re-snapshot after a change:
-#   ssh root@203.0.113.4 crontab -l > infrastructure/gex45-crontab   (then PR it)
+#   ssh root@203.0.113.5 crontab -l > infrastructure/gex45-crontab   (then PR it)
 # Back up before editing: crontab -l > /root/crontab.bak-$(date -u +%Y%m%dT%H%M)
 #
 # Dedicated x86_64 box (i5-13500, 20 threads, 62 GB, RTX PRO 4000 Blackwell 24 GB). No volume: everything is

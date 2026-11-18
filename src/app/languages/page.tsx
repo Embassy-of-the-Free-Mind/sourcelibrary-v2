@@ -5,6 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import type { Metadata } from 'next';
 import languageCardImages from '@/data/language-card-images.json';
 import { languageSlug } from '@/lib/language-utils';
+import { BOOK_CORPUS_STATS } from '@/lib/public-stats';
 
 // Card images chosen by eye from each language's gallery illustrations
 // (gallery_quality >= 0.85, one per book). Languages not listed fall back to
@@ -15,12 +16,12 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Languages | Source Library',
-  description: 'Browse Source Library by language: Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
+  description: `Browse Source Library by language: Latin, German, French, Greek, Hebrew, Arabic and more, ${BOOK_CORPUS_STATS.languages} languages spanning 5,000 years of human thought.`,
   alternates: { canonical: '/languages' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Languages | Source Library',
-    description: 'Browse Source Library by language: Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
+    description: `Browse Source Library by language: Latin, German, French, Greek, Hebrew, Arabic and more, ${BOOK_CORPUS_STATS.languages} languages spanning 5,000 years of human thought.`,
     type: 'website',
   },
 };

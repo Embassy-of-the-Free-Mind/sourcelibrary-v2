@@ -45,6 +45,12 @@ describe('checkYield', () => {
     const t = [ledger(3, 1, 'la'), ledger(5, 5, 'it'), JSON.stringify({ page_id: 'x', lang: 'la', outcome: 'has_ocr_now' })].join('\n');
     expect(ledgerYield(t, { lang: 'la' })).toEqual({ tried: 4, written: 3 });
   });
+  it('ledgerYield does not count a page the image-set gate released (v3#466)', () => {
+    const row = (page_id: string, outcome: string) => JSON.stringify({ page_id, outcome });
+    // p1 was written off when its book was refused, then released; p2 was released and later read; p3 is a real failure.
+    const t = [row('p1', 'failed'), row('p1', 'released'), row('p2', 'failed'), row('p2', 'released'), row('p2', 'written'), row('p3', 'failed')].join('\n');
+    expect(ledgerYield(t)).toEqual({ tried: 2, written: 1 });
+  });
 });
 
 describe('ledgersByCrontab / yieldFindings', () => {

@@ -89,7 +89,7 @@ describe('agent-guard.py rules added 2026-11-11 (shadow)', () => {
     expect(judge('curl https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro:generateContent?key=$GEMINI_API_KEY')).toMatch(/paid-gemini-not-lite/);
     expect(judge('hcloud server create --name x')).toMatch(/cloud-create/);
     expect(judge('systemctl enable foo')).toMatch(/persistence/);
-    expect(judge('ssh root@203.0.113.4 uptime')).toMatch(/raw-ssh/);
+    expect(judge('ssh root@203.0.113.5 uptime')).toMatch(/raw-ssh/);
     expect(judge('git reset --hard origin/main', '/root/sourcelibrary')).toMatch(/live-checkout/);
     expect(judge('git push origin HEAD:main', '/mnt/HC_Volume_1/worktrees/job-x')).toMatch(/push-main-or-release/);
     expect(judge("node - <<'EOF'\nawait db.collection('pages').updateMany({}, {$set: {x: 1}})\nEOF")).toMatch(/db-mass-write/);

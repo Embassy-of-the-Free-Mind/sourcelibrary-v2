@@ -13,7 +13,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Dataset | Source Library',
   description:
-    `Structured parallel-text training data from ${BOOK_CORPUS_STATS.books} historical texts in more than 50 languages. Page-aligned OCR, English translations, and scholarly metadata.`,
+    `Structured parallel-text training data from ${BOOK_CORPUS_STATS.books} historical texts in ${BOOK_CORPUS_STATS.languages} languages. Page-aligned OCR, English translations, and scholarly metadata.`,
   alternates: { canonical: '/dataset' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],

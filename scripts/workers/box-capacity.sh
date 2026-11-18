@@ -12,7 +12,7 @@
 # Why (2026-10-26): cloudlayer's 492 GB scratch volume was at 98% and main's 150 GB root at 85% on the same
 # morning, and nobody had the sizes written down: dispatchers read "free disk" as one number per box.
 set -u
-BOXES=${SL_JOB_BOXES:-"main=root@203.0.113.2 cloudlayer=root@203.0.113.3 l7a=root@203.0.113.1 gex45=root@203.0.113.4"}
+BOXES=${SL_JOB_BOXES:-"main=root@203.0.113.3 cloudlayer=root@203.0.113.4 l7a=root@203.0.113.2 gex45=root@203.0.113.5"}
 probe='
 printf "cpu: %s x %s | " "$(nproc)" "$(lscpu | sed -n "s/^Model name: *//p" | head -1)"
 free -g | awk "/Mem/{printf \"ram: %s GB | \", \$2} /Swap/{printf \"swap: %s GB\n\", \$2}"

@@ -277,15 +277,25 @@ export function testWriteShare(rules, cell, route) {
 /**
  * A lane ledger (jsonl, one row a page tried, `outcome: 'written'` when the page was written): pages tried and written.
  * `lang` keeps the rows of one language (rows with no lang are kept: a one-language lane writes none). A page that
- * got OCR from elsewhere before the read (`has_ocr_now`) was not the route's to write and is left out.
+ * got OCR from elsewhere before the read (`has_ocr_now`) was not the route's to write and is left out. A `released`
+ * row (v3#466) cancels the rows counted so far for its page: the book was refused by the image-set gate, so the route
+ * never tried the page.
  */
 export function ledgerYield(text, { lang = null, sinceIso = null } = {}) {
   let tried = 0, written = 0;
+  const counted = new Map();   // page_id → [tried, written] counted so far
   for (const line of text.split('\n')) {
     if (!line.trim()) continue;
     let r; try { r = JSON.parse(line); } catch { continue; }
+    if (r.outcome === 'released') {
+      const c = counted.get(r.page_id);
+      if (c) { tried -= c[0]; written -= c[1]; counted.delete(r.page_id); }
+      continue;
+    }
     if ((lang && r.lang && r.lang !== lang) || (sinceIso && r.at && r.at < sinceIso) || r.outcome === 'has_ocr_now') continue;
-    tried++; if (r.outcome === 'written') written++;
+    const w = r.outcome === 'written' ? 1 : 0;
+    tried++; written += w;
+    if (r.page_id) { const c = counted.get(r.page_id) ?? [0, 0]; c[0]++; c[1] += w; counted.set(r.page_id, c); }
   }
   return { tried, written };
 }

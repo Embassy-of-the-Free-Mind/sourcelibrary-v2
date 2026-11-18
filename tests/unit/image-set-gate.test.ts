@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import { describe, it, expect } from 'vitest';
 // @ts-ignore -- plain .mjs
-import { imageSetVerdict, imageSetReadRefusal, imageSetRecord, verdictOfVotes, combineVerdicts, bookImageSet, SHIFT_PRONE_WRITERS } from '../../scripts/lib/image-set-gate.mjs';
+import { imageSetVerdict, imageSetReadRefusal, imageSetRecord, verdictOfVotes, combineVerdicts, bookImageSet, SHIFT_PRONE_WRITERS, imageSetLaneStep, imageSetRepaired, gateWriteOffs, shiftPronePageMatch, isSettledVerdict, IMAGE_SET_RECHECK_DAYS } from '../../scripts/lib/image-set-gate.mjs';
 
 // A 64-bit hash per leaf, far apart from every other leaf's (random 64-bit values differ in ~32 bits).
 const leafHash = (n: number) => ((BigInt(n + 1) * 0x9e3779b97f4a7c15n) & 0xffffffffffffffffn).toString(16).padStart(16, '0');
@@ -143,5 +143,92 @@ describe('every reader that writes through cli-ocr.mjs passes the gate', () => {
     expect(src.match(/imageSetReadRefusal\(/g)?.length).toBeGreaterThanOrEqual(3);
     expect(src).toContain("skip(m, 'image set off its page rows (image-set gate, v3#466)')");
     expect(src).toContain('image_set: imageSetRecord(imageSet)');
+  });
+});
+
+// The lane side (v3#466, 2026-11-18): the Latin first-read lane drew the same refused books every hour, charged their
+// pages to the run and wrote them off in its ledger. These pin the rule that a refused book costs nothing.
+describe('imageSetLaneStep: what a lane does before it draws a book', () => {
+  const NOW = Date.parse('2026-11-18T12:00:00Z');
+  const at = (daysAgo: number) => new Date(NOW - daysAgo * 86_400_000).toISOString();
+  const step = (o: any) => imageSetLaneStep({ shiftProne: true, checksLeft: 5, now: NOW, ...o });
+
+  it('reads a book the gate has nothing to sample in, whatever is on record', () => {
+    expect(step({ shiftProne: false, known: { verdict: 'shifted', at: at(0) } })).toBe('read');
+  });
+  it('does not draw a book refused within the recheck window', () => {
+    expect(step({ known: { verdict: 'shifted', at: at(1) } })).toBe('wait');
+    expect(step({ known: { verdict: 'mixed', at: at(IMAGE_SET_RECHECK_DAYS - 1) } })).toBe('wait');
+    expect(step({ known: { verdict: 'shifted', at: at(1) }, checksLeft: 0 })).toBe('wait');
+  });
+  it('reads a refused book at once when a repair has stamped it', () => {
+    const repaired = { archive_metadata: { jp2_offset_repaired: true, jp2_offset_post_verdict: 'aligned' } };
+    expect(imageSetRepaired(repaired)).toBe(true);
+    expect(step({ book: repaired, known: { verdict: 'shifted', at: at(0) } })).toBe('read');
+    expect(imageSetRepaired({ archive_metadata: { jp2_offset_repaired: true, jp2_offset_post_verdict: 'shifted' } })).toBe(false);
+  });
+  it('samples a refused book again after the window', () => {
+    expect(step({ known: { verdict: 'shifted', at: at(IMAGE_SET_RECHECK_DAYS + 1) } })).toBe('check');
+  });
+  it('reads a book a recent check found aligned without sampling it again', () => {
+    expect(step({ known: { verdict: 'aligned', at: at(2) }, checksLeft: 0 })).toBe('read');
+  });
+  it('checks an unchecked book while the run has checks left, and leaves it for later when it has none', () => {
+    expect(step({ known: null })).toBe('check');
+    expect(step({ known: null, checksLeft: 0 })).toBe('later');
+  });
+  it('reads a book whose source did not answer, and asks again after a day, not every run', () => {
+    expect(isSettledVerdict('unknown')).toBe(false);
+    expect(step({ known: { verdict: 'unknown', at: at(0.5) }, checksLeft: 0 })).toBe('read');
+    expect(step({ known: { verdict: 'unknown', at: at(2) } })).toBe('check');
+    expect(step({ known: { verdict: 'unknown', at: at(2) }, checksLeft: 0 })).toBe('later');
+  });
+});
+
+describe('gateWriteOffs: the ledger rows a refusal wrote off', () => {
+  const row = (page_id: string, book_id: string, outcome: string, why: string) => JSON.stringify({ page_id, book_id, page_number: 1, outcome, why });
+  const ledger = [
+    row('p1', 'shifted-book', 'failed', 'not_read'),
+    row('p2', 'shifted-book', 'failed', 'reply wrapper: text outside the markers'),   // the model was called: a real attempt
+    row('p3', 'shifted-book', 'written', 'written'),
+    row('p4', 'good-book', 'failed', 'not_read'),                                     // another book's failed fetch
+    row('p5', 'shifted-book', 'failed', 'not_read'),
+    row('p5', 'shifted-book', 'released', 'image-set gate'),                          // already released
+    row('p6', 'shifted-book', 'failed', 'not_read'),
+    row('p6', 'shifted-book', 'written', 'written'),                                  // read later
+    'not json',
+  ].join('\n');
+
+  it('releases only the pages of refused books whose last row is an empty read', () => {
+    expect(gateWriteOffs(ledger, new Set(['shifted-book']))).toEqual([{ page_id: 'p1', book_id: 'shifted-book', page_number: 1 }]);
+  });
+  it('releases nothing when no book was refused', () => {
+    expect(gateWriteOffs(ledger, new Set())).toEqual([]);
+  });
+});
+
+describe('the first-read lane asks the gate before it charges a page', () => {
+  const lane = fs.readFileSync('scripts/batch/cli-ocr-lane.mjs', 'utf8');
+  const main = lane.slice(lane.indexOf('async function firstReadMain'));
+  it('decides wait / later / check before the book is claimed or its pages are taken', () => {
+    const stepAt = main.indexOf('const step = imageSetLaneStep({ shiftProne: shiftProne.has(b.id)');
+    expect(stepAt).toBeGreaterThan(0);
+    expect(stepAt).toBeLessThan(main.indexOf('if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;'));
+    expect(stepAt).toBeLessThan(main.indexOf('budget -= take.length;'));
+  });
+  it('gives the pages back and ledgers nothing when the reader itself refuses the book', () => {
+    const refund = main.indexOf('budget += take.length; tally.books--; booksTaken--;');
+    expect(main.lastIndexOf('if (imageSetReadRefusal(readerSet)) {', refund)).toBeGreaterThan(0);
+    expect(refund).toBeGreaterThan(0);
+    expect(refund).toBeLessThan(main.indexOf('fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id'));
+  });
+  it('a released ledger row takes its page out of the ledger', () => {
+    expect(lane).toContain("if (r.outcome === 'released') set.delete(r.page_id); else set.add(r.page_id);");
+  });
+  it('the frame query stays on three early rows of each book', () => {
+    const m = shiftPronePageMatch(['a', 'b']);
+    expect(m.book_id).toEqual({ $in: ['a', 'b'] });
+    expect(m.page_number).toEqual({ $in: [2, 3, 4] });
+    expect([...m['archive_metadata.source'].$in].sort()).toEqual(Object.keys(SHIFT_PRONE_WRITERS).sort());
   });
 });

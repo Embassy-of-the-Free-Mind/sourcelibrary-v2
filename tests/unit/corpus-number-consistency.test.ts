@@ -26,14 +26,14 @@ import path from 'node:path';
 // quoted past a week, and a count typed into served copy fails here.
 
 const DAY = 86_400_000;
-const NOW = Date.parse('2026-11-13T08:00:00Z');
-// The cache document as production held it on 2026-11-13.
-const CACHE = { totalBooks: 71313, languageCount: 159, illustrationCount: 236918, readableInEnglish: 24134, firstTranslationCount: 13096, artworkCount: 15843 };
+const NOW = Date.parse('2026-11-18T08:00:00Z');
+// The cache document as production held it on 2026-11-18.
+const CACHE = { totalBooks: 71337, languageCount: 136, illustrationCount: 237359, readableInEnglish: 25449, firstTranslationCount: 14245, artworkCount: 18606 };
 
 describe('homepage stats freshness guard', () => {
   it('serves a cache written today', () => {
     const s = libraryStatsFromCache({ ...CACHE, updatedAt: new Date(NOW - 2 * 3_600_000) }, NOW);
-    expect(s).toMatchObject({ books: 71313, readableInEnglish: 24134, languages: 159 });
+    expect(s).toMatchObject({ books: 71337, readableInEnglish: 25449, languages: 136 });
   });
 
   it('withholds the counts once the cache is older than the limit', () => {
@@ -166,7 +166,7 @@ describe('corpus-number live checks', () => {
     fs.readFileSync(path.join(root, 'src/lib/public-stats.ts'), 'utf8'),
     fs.readFileSync(path.join(root, 'src/lib/site-stats.ts'), 'utf8'),
   );
-  const live = { ...CACHE, artworksByResourceType: 24829, updatedAt: new Date(NOW - 2 * 3_600_000) };
+  const live = { ...CACHE, artworksByResourceType: 18614, updatedAt: new Date(NOW - 2 * 3_600_000) };
   const run = (over: Record<string, unknown> = {}, c = constants) => checkLive({ live: { ...live, ...over }, constants: c, hardcoded: [], now: NOW });
 
   it('reads the floors and the fallback out of the real files', () => {
@@ -175,7 +175,7 @@ describe('corpus-number live checks', () => {
     expect(() => parseConstants('export const X = {}', 'SITE_STATS_FALLBACK = {}')).toThrow();
   });
 
-  it('passes the constants as committed against the 2026-11-13 cache', () => {
+  it('passes the constants as committed against the 2026-11-18 cache', () => {
     expect(run().problems).toEqual([]);
   });
 

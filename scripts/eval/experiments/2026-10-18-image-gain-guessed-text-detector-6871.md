@@ -101,7 +101,7 @@ On the 396 pages where every error part was located, gain scores 0.62 and image 
 
 **Cost.** gemini-3.1-flash-lite for the word plants: three draws while the quota was fixed, 41,232 input + 7,725 output tokens, **$0.022**, logged through `gemini-script-client.mjs`. GPU: about 60 min of gex45, in a 2-min pilot and 3 holds of 18 min. An inbox note asked for holds of ≤ 10 min; I read it after the holds had run. No Claude model was used and nothing was written to `pages` or any store.
 
-**State.** gex45 gpu-queue task `50-grounding-6871` (`scripts/eval/grounding-6871/queue-task.sh`, timeout 4 h). It runs after `10-mongol-synth-train` and `20-latin-mineru-olmocr`. It scores the remaining 1,504 items (plants included), the 300-page rerun and the 1,200 px pass, then runs `score.py` and `explore.py`. To read it: `ssh root@203.0.113.4 'cat /root/jobs/gpu-queue/50-grounding-6871/task.log; python3 -m json.tool /root/jobs/grounding-6871/results.json | head -150'`.
+**State.** gex45 gpu-queue task `50-grounding-6871` (`scripts/eval/grounding-6871/queue-task.sh`, timeout 4 h). It runs after `10-mongol-synth-train` and `20-latin-mineru-olmocr`. It scores the remaining 1,504 items (plants included), the 300-page rerun and the 1,200 px pass, then runs `score.py` and `explore.py`. To read it: `ssh root@203.0.113.5 'cat /root/jobs/gpu-queue/50-grounding-6871/task.log; python3 -m json.tool /root/jobs/grounding-6871/results.json | head -150'`.
 
 *Replicated?* No.
 

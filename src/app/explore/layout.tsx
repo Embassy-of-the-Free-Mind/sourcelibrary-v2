@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Explore | Source Library',
     description:
-      'Interactive visualizations of people, places, and concepts from 1,200+ digitized historical texts.',
+      'Interactive visualizations of people, places, and concepts from the library\'s historical texts.',
     url: 'https://sourcelibrary.org/explore',
     siteName: 'Source Library',
     type: 'website',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Explore | Source Library',
     description:
-      'Interactive visualizations of people, places, and concepts from 1,200+ digitized historical texts.',
+      'Interactive visualizations of people, places, and concepts from the library\'s historical texts.',
   },
 };
 

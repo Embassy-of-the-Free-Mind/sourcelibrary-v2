@@ -240,6 +240,7 @@ export function parseConstants(publicStatsSrc, siteStatsSrc) {
     floors: {
       books: str(publicStatsSrc, 'books'),
       readableInEnglish: str(publicStatsSrc, 'readableInEnglish'),
+      languages: str(publicStatsSrc, 'languages'),
       illustrations: str(publicStatsSrc, 'illustrations'),
       artworks: str(publicStatsSrc, 'artworks'),
     },
@@ -274,11 +275,12 @@ export function checkLive({ live, constants, hardcoded, now = Date.now(), maxAge
   };
   floor('BOOK_CORPUS_STATS.books', constants.floors.books, live.totalBooks, 'totalBooks');
   floor('BOOK_CORPUS_STATS.readableInEnglish', constants.floors.readableInEnglish, live.readableInEnglish, 'readableInEnglish');
+  floor('BOOK_CORPUS_STATS.languages', constants.floors.languages, live.languageCount, 'languageCount');
   floor('IMAGE_CORPUS_STATS.illustrations', constants.floors.illustrations, live.illustrationCount, 'illustrationCount');
-  floor('IMAGE_CORPUS_STATS.artworks', constants.floors.artworks, live.artworksByResourceType, 'books with resource_type');
+  floor('IMAGE_CORPUS_STATS.artworks', constants.floors.artworks, live.artworksByResourceType, 'visible books with resource_type');
   if (Number.isFinite(live.artworksByResourceType) && Number.isFinite(live.artworkCount)
     && Math.abs(live.artworksByResourceType - live.artworkCount) > 0.1 * live.artworkCount) {
-    notes.push(`"artworks" has two definitions: books with resource_type = ${fmt(live.artworksByResourceType)} (public-stats.ts), content_type 'artwork' = ${fmt(live.artworkCount)} (homepage_stats.artworkCount).`);
+    notes.push(`"artworks" has two definitions: visible books with resource_type = ${fmt(live.artworksByResourceType)} (public-stats.ts), content_type 'artwork' = ${fmt(live.artworkCount)} (homepage_stats.artworkCount).`);
   }
   for (const [k, v] of Object.entries(constants.fallback)) {
     const lv = Number(live[k]);
@@ -340,7 +342,7 @@ async function main() {
       try {
         const db = client.db('bookstore');
         const doc = await db.collection('system_config').findOne({ _id: 'homepage_stats' });
-        const artworksByResourceType = await db.collection('books').countDocuments({ resource_type: { $exists: true } });
+        const artworksByResourceType = await db.collection('books').countDocuments({ resource_type: { $exists: true }, visible: true });
         live = checkLive({
           live: doc ? { ...doc, artworksByResourceType } : null,
           constants,

@@ -46,7 +46,7 @@
  * Backups live on the Hetzner box at /root/backups/bph-catalog-{latest,weekly/<date>}
  * and are swept offsite nightly by restic (encrypted, 7 daily / 8 weekly / 12
  * monthly). Fetch one with:
- *   scp -r root@203.0.113.2:/root/backups/bph-catalog-latest /tmp/
+ *   scp -r root@203.0.113.3:/root/backups/bph-catalog-latest /tmp/
  */
 
 import { createClient } from '@supabase/supabase-js';

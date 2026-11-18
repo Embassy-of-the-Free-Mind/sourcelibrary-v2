@@ -8,20 +8,24 @@
  * constants instead of hand-writing a number; static files that cannot
  * import (public/llms.txt) must be re-synced by hand when these change.
  *
- * Measured 2026-08-27 (re-measure before updating — they drift):
- *   gallery_images:                       206,372
- *   books with resource_type (artworks):   24,819
+ * Measured 2026-11-18 (re-measure before updating — they drift). Both floors count
+ * what a reader can open, so hidden records stay out:
+ *   gallery_images, all rows:                      237,349
+ *     in visible books (joined to books by id):    219,215
+ *     with the stored book_visible flag true:      209,695  (4,729 rows lack the flag)
+ *   books with resource_type, visible (artworks):   18,614
+ *     all rows, hidden included:                    27,689  (what the old floor counted)
  * One-liner to re-measure:
- *   node --env-file=.env.production.local -e "import('mongodb').then(async({MongoClient})=>{const c=new MongoClient(process.env.MONGODB_URI);await c.connect();const db=c.db('bookstore');console.log(await db.collection('gallery_images').countDocuments({}),await db.collection('books').countDocuments({resource_type:{\$exists:true}}));await c.close()})"
+ *   node --env-file=.env.production.local -e "import('mongodb').then(async({MongoClient})=>{const c=new MongoClient(process.env.MONGODB_URI);await c.connect();const db=c.db('bookstore');console.log(await db.collection('gallery_images').countDocuments({book_visible:true}),await db.collection('books').countDocuments({resource_type:{\$exists:true},visible:true}));await c.close()})"
  *
  * Keep these as conservative rounded floors ("N+"), never live counts — copy
  * that overstates is worse than copy that lags.
  */
 export const IMAGE_CORPUS_STATS = {
-  /** Illustrations extracted from book pages (gallery_images collection). */
+  /** Illustrations extracted from book pages (gallery_images rows in visible books). */
   illustrations: '200,000+',
-  /** Standalone museum artworks (books rows with resource_type). */
-  artworks: '24,000+',
+  /** Standalone museum artworks (visible books rows with resource_type). */
+  artworks: '18,000+',
 } as const;
 
 /**
@@ -30,13 +34,18 @@ export const IMAGE_CORPUS_STATS = {
  * getLibraryStats() in src/lib/library-stats.ts; these are the floors for
  * everything else.
  *
- * Measured 2026-11-09 from system_config.homepage_stats:
- *   totalBooks (visible, pages_count > 0):  71,212
- *   readableInEnglish:                      22,683
+ * Measured 2026-11-18 from system_config.homepage_stats:
+ *   totalBooks (visible, pages_count > 0):  71,337
+ *   readableInEnglish:                      25,449
+ *   languageCount (source languages):          136
+ *     (the outage fallback in site-stats.ts held 159: the count falls when
+ *     language values are merged, so this floor keeps a margin)
  */
 export const BOOK_CORPUS_STATS = {
   /** Readable books (visible, with pages). */
   books: '70,000+',
   /** The readable_in_english view (translation-state.md). */
-  readableInEnglish: '22,000+',
+  readableInEnglish: '25,000+',
+  /** Distinct source languages across the readable books. */
+  languages: '120+',
 } as const;

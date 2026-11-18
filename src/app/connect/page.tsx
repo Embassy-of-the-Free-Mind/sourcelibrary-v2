@@ -12,6 +12,7 @@ export const revalidate = 86400;
 // the code blocks and the structured data can never disagree. Readers coming from
 // Claude never need it: the directory listing does the work.
 // DIRECTORY_URL is the address the listing's own "copy link" control gives (read 2026-11-13).
+// Opened by eye 2026-11-18: it redirects to claude.ai/plugins/id/plugin_…?via=directory and shows the listing.
 // The older /directory/connectors/source-library form now opens "This connector doesn't exist" (#305).
 const MCP_URL = 'https://sourcelibrary.org/api/mcp';
 const DIRECTORY_URL = 'https://claude.ai/directory/005aeb9a-a551-40d5-b3e9-77b860a48e06';
@@ -199,6 +200,20 @@ function StepCard({
   );
 }
 
+/** The one-click route: the Claude directory listing, where one more click connects it. */
+function AddToClaudeButton({ children }: { children: ReactNode }) {
+  return (
+    <a
+      href={DIRECTORY_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block px-6 py-3 bg-accent-rust text-white rounded-full font-medium hover:opacity-90 transition-opacity whitespace-nowrap text-center"
+    >
+      {children}
+    </a>
+  );
+}
+
 function UrlBox() {
   return (
     <div className="bg-stone-900 rounded-lg px-4 py-3 inline-block max-w-full">
@@ -213,7 +228,16 @@ export default function ConnectPage() {
       header={
         <ContentHeader
           title={`Let Claude read ${BOOK_CORPUS_STATS.readableInEnglish} rare books for you`}
-          subtitle="Connect Source Library to Claude in five clicks. Free, no account, about a minute. Then ask it anything about alchemy, Hermetica, early science, theology and the rest of pre-modern thought, and it answers from the original books, with a link to every page."
+          subtitle="Free, no account, about a minute. Then ask it anything about alchemy, Hermetica, early science, theology and the rest of pre-modern thought, and it answers from the original books, with a link to every page."
+          actions={
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+              <AddToClaudeButton>Add Source Library to Claude &rarr;</AddToClaudeButton>
+              <p className="text-stone-300 max-w-sm">
+                Opens our listing in Claude. Add it there and you are done.{' '}
+                <a href="#chatgpt" className="underline hover:text-white">Using ChatGPT?</a>
+              </p>
+            </div>
+          }
           image={HERO_IMAGE}
           imageAlt="Ouroboros dragon, engraving by Matthäus Merian from the Musaeum Hermeticum, 1678"
           heightClass="min-h-[340px] md:min-h-[460px]"
@@ -284,14 +308,7 @@ export default function ConnectPage() {
             Claude renamed its menus in November 2026 (the sidebar item is now <strong>Plugins</strong>), so the
             pictures below show the older screens.
           </p>
-          <a
-            href={DIRECTORY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-accent-rust text-white rounded-full font-medium hover:opacity-90 transition-opacity whitespace-nowrap text-center"
-          >
-            Open Source Library in Claude &rarr;
-          </a>
+          <AddToClaudeButton>Open Source Library in Claude &rarr;</AddToClaudeButton>
         </div>
         <ol className="space-y-8 list-none">
           <StepCard

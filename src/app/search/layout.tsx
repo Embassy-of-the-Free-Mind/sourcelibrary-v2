@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
+import { BOOK_CORPUS_STATS } from '@/lib/public-stats';
 
 export const metadata: Metadata = {
   title: 'Search - Source Library',
-  description: 'Search over 10,000 translated primary sources: alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
+  description: `Search ${BOOK_CORPUS_STATS.readableInEnglish} primary sources readable in English: alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.`,
   alternates: {
     canonical: '/search',
     languages: { en: '/search', es: '/es/search', la: '/la/search', zh: '/zh/search', 'x-default': '/search' },
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Search - Source Library',
-    description: 'Search over 10,000 translated primary sources: alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
+    description: `Search ${BOOK_CORPUS_STATS.readableInEnglish} primary sources readable in English: alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.`,
     type: 'website',
     siteName: 'Source Library',
     locale: 'en_US',
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: 'Search - Source Library',
-    description: 'Search over 10,000 translated primary sources: alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
+    description: `Search ${BOOK_CORPUS_STATS.readableInEnglish} primary sources readable in English: alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.`,
   },
 };
 

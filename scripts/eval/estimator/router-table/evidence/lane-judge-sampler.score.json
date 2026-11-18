@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-02T04:20:09.643Z",
+ "generated_at": "2026-11-16T04:20:13.136Z",
  "source": "lane-judge-sampler (#7611)",
  "file": "scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json",
  "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
@@ -10,11 +10,11 @@
  ],
  "frame": "pages a live lane WROTE, by its own stamps; one page per book per run, at most two per book; books weighted by 1 + ln(1 + human_read_count); every book until a route has 60 books judged in its cell, then 5%. The lane writes only pages its corrector CHANGED (an UNCHANGED answer leaves no stamp), so a route's rate is over changed pages: the router tests' unchanged share was 0/30 German, 3/29 French.",
  "calls": {
-  "records": 1223,
+  "records": 1990,
   "malformed_not_counted": 0,
-  "judged": 1220,
-  "unparsed": 3,
-  "list_usd_equiv": 78.68
+  "judged": 1986,
+  "unparsed": 4,
+  "list_usd_equiv": 144.21
  },
  "cells": {
   "french-blank": {
@@ -31,7 +31,7 @@
    "lang": "French",
    "controls": {
     "lite>agy-flash-low": {
-     "n": 2,
+     "n": 4,
      "passed": true,
      "wrong_page_passed": true,
      "verdicts": [
@@ -44,28 +44,40 @@
        "accept": false,
        "fidelity": 1,
        "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
       }
      ],
      "planted": {
-      "n": 2,
-      "caught": "2/2",
+      "n": 4,
+      "caught": "4/4",
       "rate": 1,
       "ci95": [
-       0.342,
+       0.51,
        1
       ],
-      "named": "2/2",
+      "named": "4/4",
       "by_kind": {
        "B": "1/1",
-       "C": "1/1"
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
       },
       "rolling": {
        "days": 56,
-       "n": 2,
-       "caught": "2/2",
+       "n": 4,
+       "caught": "4/4",
        "rate": 1,
        "ci95": [
-        0.342,
+        0.51,
         1
        ]
       },
@@ -115,14 +127,14 @@
      "counts": true,
      "served": "the live lane's applied output (served)",
      "judge_planted": {
-      "caught": "2/2",
+      "caught": "4/4",
       "rate": 1,
       "ci95": [
-       0.342,
+       0.51,
        1
       ],
       "validated": null,
-      "all": "2/2"
+      "all": "4/4"
      },
      "evidence_rule": "print cell: print pages only",
      "by_script": {
@@ -240,7 +252,7 @@
    "lang": "German",
    "controls": {
     "lite>agy-flash-low": {
-     "n": 2,
+     "n": 4,
      "passed": true,
      "wrong_page_passed": true,
      "verdicts": [
@@ -253,28 +265,40 @@
        "accept": false,
        "fidelity": 1,
        "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
       }
      ],
      "planted": {
-      "n": 2,
-      "caught": "2/2",
+      "n": 4,
+      "caught": "4/4",
       "rate": 1,
       "ci95": [
-       0.342,
+       0.51,
        1
       ],
-      "named": "2/2",
+      "named": "4/4",
       "by_kind": {
        "B": "1/1",
-       "C": "1/1"
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
       },
       "rolling": {
        "days": 56,
-       "n": 2,
-       "caught": "2/2",
+       "n": 4,
+       "caught": "4/4",
        "rate": 1,
        "ci95": [
-        0.342,
+        0.51,
         1
        ]
       },
@@ -331,14 +355,14 @@
      "counts": true,
      "served": "the live lane's applied output (served)",
      "judge_planted": {
-      "caught": "2/2",
+      "caught": "4/4",
       "rate": 1,
       "ci95": [
-       0.342,
+       0.51,
        1
       ],
       "validated": null,
-      "all": "2/2"
+      "all": "4/4"
      },
      "evidence_rule": "print cell: print pages only",
      "by_script": {
@@ -524,7 +548,7 @@
    "lang": "Latin",
    "controls": {
     "pero>agy-flash-low-written": {
-     "n": 2,
+     "n": 4,
      "passed": true,
      "wrong_page_passed": true,
      "verdicts": [
@@ -537,6 +561,16 @@
        "accept": false,
        "fidelity": 1,
        "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
       }
      ]
     }
@@ -570,60 +604,67 @@
      "evidence_rule": "print cell: print pages only",
      "by_script": {
       "print": {
-       "accept": "35/72",
-       "wrong_text_pages": "31/72",
-       "books": 4
+       "accept": "244/454",
+       "wrong_text_pages": "127/454",
+       "books": 18
       }
      },
      "flagged_stratum": {
-      "n": 72,
-      "books": 4,
-      "accept": "35/72",
-      "accept_rate": 0.486,
+      "n": 454,
+      "books": 18,
+      "accept": "244/454",
+      "accept_rate": 0.537,
       "accept_ci": {
        "ci95": [
-        0.125,
-        0.607
+        0.385,
+        0.647
        ],
        "unit": "book",
-       "units": 4
+       "units": 18
       },
-      "wrong_text_pages": "31/72",
+      "wrong_text_pages": "127/454",
       "wrong_text_ci": {
        "ci95": [
-        0.318,
-        0.813
+        0.217,
+        0.367
        ],
        "unit": "book",
-       "units": 4
+       "units": 18
       },
       "wrong_text_classes": {
-       "O7": "13/72",
-       "O5": "11/72",
-       "O6": "7/72",
-       "O1": "3/72",
-       "O4": "3/72",
-       "O3": "1/72"
+       "O6": "69/454",
+       "O7": "40/454",
+       "O5": "14/454",
+       "O1": "7/454",
+       "O4": "4/454",
+       "O3": "4/454",
+       "O11": "2/454",
+       "E2": "1/454",
+       "O8": "1/454",
+       "O12": "1/454"
       },
       "classes_k_of_n": {
-       "O6": "40/72",
-       "E2": "26/72",
-       "O8": "26/72",
-       "O7": "19/72",
-       "O5": "15/72",
-       "O12": "14/72",
-       "O14": "12/72",
-       "O1": "9/72",
-       "O16": "5/72",
-       "O17": "5/72",
-       "O11": "5/72",
-       "O4": "4/72",
-       "D1": "3/72",
-       "T6": "2/72",
-       "O13": "1/72",
-       "O3": "1/72"
+       "O6": "322/454",
+       "E2": "196/454",
+       "O7": "159/454",
+       "O8": "123/454",
+       "O12": "53/454",
+       "O5": "46/454",
+       "O11": "45/454",
+       "O16": "29/454",
+       "D1": "18/454",
+       "O1": "15/454",
+       "O14": "14/454",
+       "T6": "10/454",
+       "O17": "6/454",
+       "O4": "6/454",
+       "O9": "6/454",
+       "O3": "5/454",
+       "O13": "3/454",
+       "O10": "2/454",
+       "I4": "2/454"
       },
-      "fidelity_mean": 3.67,
+      "fidelity_mean": 3.79,
       "note": "pages the lane check-flagged (>= 27% of the draft changed), judged always; not evidence"
      }
     }
@@ -3430,12 +3471,747 @@
    "drafts_conditioned": {},
    "made_worse": {}
   },
+  "study-zh-print-arms-7263/one": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "controls": {
+    "gemini-stored": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    },
+    "gemini>opus": {
+     "n": 6,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "opus-read": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    },
+    "paddle>agy-flash-low": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    },
+    "paddle>agy-flash-medium": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    }
+   },
+   "routes": {
+    "gemini>opus": {
+     "n": 60,
+     "books": 30,
+     "accept": "50/60",
+     "accept_rate": 0.833,
+     "accept_ci": {
+      "ci95": [
+       0.7,
+       0.95
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "8/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.25
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "4/60",
+      "I1": "4/60",
+      "O5": "3/60",
+      "O1": "1/60",
+      "O12": "1/60",
+      "O10": "1/60"
+     },
+     "classes_k_of_n": {
+      "O6": "14/60",
+      "O8": "12/60",
+      "O5": "10/60",
+      "O12": "6/60",
+      "E2": "6/60",
+      "O11": "5/60",
+      "O16": "5/60",
+      "O10": "4/60",
+      "I1": "4/60",
+      "T10": "2/60",
+      "O7": "1/60",
+      "O1": "1/60"
+     },
+     "fidelity_mean": 4.27,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "50/60",
+       "wrong_text_pages": "8/60",
+       "books": 30
+      }
+     }
+    }
+   },
+   "routes_not_counted": {
+    "gemini-stored": {
+     "n": 25,
+     "books": 25,
+     "accept": "1/25",
+     "accept_rate": 0.04,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0.12
+      ],
+      "unit": "book",
+      "units": 25
+     },
+     "wrong_text_pages": "21/25",
+     "wrong_text_ci": {
+      "ci95": [
+       0.68,
+       0.96
+      ],
+      "unit": "book",
+      "units": 25
+     },
+     "wrong_text_classes": {
+      "O6": "15/25",
+      "O5": "8/25",
+      "O1": "4/25",
+      "O7": "2/25",
+      "O12": "2/25",
+      "E2": "1/25",
+      "O4": "1/25",
+      "I6": "1/25"
+     },
+     "classes_k_of_n": {
+      "O6": "20/25",
+      "O5": "13/25",
+      "O11": "9/25",
+      "O12": "8/25",
+      "O8": "8/25",
+      "O1": "6/25",
+      "O16": "5/25",
+      "O7": "4/25",
+      "E2": "4/25",
+      "O10": "1/25",
+      "O15": "1/25",
+      "O4": "1/25",
+      "I6": "1/25"
+     },
+     "fidelity_mean": 3.16,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "1/25",
+       "wrong_text_pages": "21/25",
+       "books": 25
+      }
+     }
+    },
+    "opus-read": {
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.967,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "7/30",
+      "O6": "3/30",
+      "E2": "2/30",
+      "O10": "2/30",
+      "O15": "1/30"
+     },
+     "fidelity_mean": 4.67,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "29/30",
+       "wrong_text_pages": "0/30",
+       "books": 30
+      }
+     }
+    },
+    "paddle>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "14/30",
+     "accept_rate": 0.467,
+     "accept_ci": {
+      "ci95": [
+       0.3,
+       0.633
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "11/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.2,
+       0.533
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "11/30",
+      "O5": "2/30",
+      "O12": "1/30",
+      "O3": "1/30",
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "19/30",
+      "O8": "10/30",
+      "O11": "10/30",
+      "O12": "8/30",
+      "O5": "5/30",
+      "O7": "5/30",
+      "E2": "4/30",
+      "O10": "2/30",
+      "O16": "1/30",
+      "O3": "1/30",
+      "O1": "1/30"
+     },
+     "fidelity_mean": 3.93,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "14/30",
+       "wrong_text_pages": "11/30",
+       "books": 30
+      }
+     }
+    },
+    "paddle>agy-flash-medium": {
+     "n": 30,
+     "books": 30,
+     "accept": "20/30",
+     "accept_rate": 0.667,
+     "accept_ci": {
+      "ci95": [
+       0.5,
+       0.833
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "8/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.1,
+       0.433
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "8/30",
+      "O5": "2/30",
+      "O1": "1/30",
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "14/30",
+      "O11": "12/30",
+      "O8": "10/30",
+      "O5": "7/30",
+      "O12": "7/30",
+      "E2": "4/30",
+      "O10": "3/30",
+      "O7": "3/30",
+      "O1": "2/30",
+      "O16": "2/30"
+     },
+     "fidelity_mean": 3.9,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "20/30",
+       "wrong_text_pages": "8/30",
+       "books": 30
+      }
+     }
+    }
+   },
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "study-zh-print-arms-7263/ten": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "controls": {
+    "gemini-stored": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    },
+    "gemini>opus": {
+     "n": 6,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "opus-read": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    },
+    "paddle>agy-flash-low": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    },
+    "paddle>agy-flash-medium": {
+     "n": 0,
+     "passed": false,
+     "wrong_page_passed": false,
+     "verdicts": []
+    }
+   },
+   "routes": {
+    "gemini>opus": {
+     "n": 60,
+     "books": 30,
+     "accept": "48/60",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.633,
+       0.933
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "8/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0.033,
+       0.267
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "8/60",
+      "O5": "4/60",
+      "O1": "2/60",
+      "O4": "2/60",
+      "I6": "1/60",
+      "O8": "1/60"
+     },
+     "classes_k_of_n": {
+      "O6": "17/60",
+      "O8": "11/60",
+      "O5": "6/60",
+      "E2": "5/60",
+      "O16": "4/60",
+      "O12": "3/60",
+      "O10": "2/60",
+      "O1": "2/60",
+      "O4": "2/60",
+      "I6": "2/60",
+      "O11": "1/60",
+      "D1": "1/60",
+      "O7": "1/60"
+     },
+     "fidelity_mean": 4.43,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "48/60",
+       "wrong_text_pages": "8/60",
+       "books": 30
+      }
+     }
+    }
+   },
+   "routes_not_counted": {
+    "gemini-stored": {
+     "n": 27,
+     "books": 27,
+     "accept": "1/27",
+     "accept_rate": 0.037,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0.111
+      ],
+      "unit": "book",
+      "units": 27
+     },
+     "wrong_text_pages": "20/27",
+     "wrong_text_ci": {
+      "ci95": [
+       0.556,
+       0.889
+      ],
+      "unit": "book",
+      "units": 27
+     },
+     "wrong_text_classes": {
+      "O6": "19/27",
+      "O5": "8/27",
+      "O7": "4/27",
+      "O1": "3/27",
+      "O4": "2/27",
+      "O17": "1/27"
+     },
+     "classes_k_of_n": {
+      "O6": "25/27",
+      "O5": "16/27",
+      "O11": "13/27",
+      "O7": "13/27",
+      "O12": "9/27",
+      "O8": "8/27",
+      "E2": "7/27",
+      "O16": "5/27",
+      "O1": "5/27",
+      "O14": "2/27",
+      "O4": "2/27",
+      "I6": "1/27",
+      "O13": "1/27",
+      "O17": "1/27",
+      "O10": "1/27"
+     },
+     "fidelity_mean": 3.15,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "1/27",
+       "wrong_text_pages": "20/27",
+       "books": 27
+      }
+     }
+    },
+    "opus-read": {
+     "n": 30,
+     "books": 30,
+     "accept": "29/30",
+     "accept_rate": 0.967,
+     "accept_ci": {
+      "ci95": [
+       0.9,
+       1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "1/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.1
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "3/30",
+      "O6": "2/30",
+      "O8": "2/30",
+      "O11": "2/30",
+      "O10": "1/30",
+      "O12": "1/30"
+     },
+     "fidelity_mean": 4.8,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "29/30",
+       "wrong_text_pages": "1/30",
+       "books": 30
+      }
+     }
+    },
+    "paddle>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "15/30",
+     "accept_rate": 0.5,
+     "accept_ci": {
+      "ci95": [
+       0.333,
+       0.667
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "10/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.167,
+       0.5
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "8/30",
+      "O5": "2/30",
+      "O17": "1/30",
+      "O10": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "15/30",
+      "O8": "10/30",
+      "O5": "8/30",
+      "O11": "8/30",
+      "O7": "7/30",
+      "O12": "6/30",
+      "E2": "4/30",
+      "O16": "3/30",
+      "O10": "2/30",
+      "O1": "1/30",
+      "O17": "1/30",
+      "O14": "1/30",
+      "D1": "1/30"
+     },
+     "fidelity_mean": 3.87,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "15/30",
+       "wrong_text_pages": "10/30",
+       "books": 30
+      }
+     }
+    },
+    "paddle>agy-flash-medium": {
+     "n": 30,
+     "books": 30,
+     "accept": "10/30",
+     "accept_rate": 0.333,
+     "accept_ci": {
+      "ci95": [
+       0.167,
+       0.5
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "16/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.367,
+       0.7
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "12/30",
+      "O5": "5/30",
+      "O1": "2/30",
+      "O7": "1/30",
+      "O8": "1/30",
+      "O3": "1/30",
+      "O12": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "18/30",
+      "O8": "11/30",
+      "O11": "11/30",
+      "O7": "7/30",
+      "O12": "7/30",
+      "O5": "6/30",
+      "O16": "4/30",
+      "E2": "4/30",
+      "O1": "2/30",
+      "O10": "1/30",
+      "O3": "1/30",
+      "O17": "1/30",
+      "D1": "1/30"
+     },
+     "fidelity_mean": 3.77,
+     "lane": [
+      "zh-print-arms-7263"
+     ],
+     "counts": false,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "not_counted_because": [
+      "wrong-page control not passed"
+     ],
+     "evidence_rule": "all pages",
+     "by_script": {
+      "print": {
+       "accept": "10/30",
+       "wrong_text_pages": "16/30",
+       "books": 30
+      }
+     }
+    }
+   },
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
   "zh-siku-first-tr": {
    "task": "translation",
    "lang": "Classical Chinese",
    "controls": {
     "agy-flash-low@1": {
-     "n": 2,
+     "n": 4,
      "passed": true,
      "wrong_page_passed": true,
      "verdicts": [
@@ -3448,6 +4224,16 @@
        "accept": false,
        "fidelity": 1,
        "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W46"
       }
      ]
     }
@@ -3650,6 +4436,141 @@
      "what": "A northern constellation name that does not appear on this southern plate"
     }
    ]
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b631e51c1c21a37380b859",
+   "book_id": "69b631e51c1c21a37380b84d",
+   "page_number": 12,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "unde dicit beatus bernardus quod sicut aliquis",
+     "severity": "wrong_text",
+     "what": "The page reads 'vn dicit bo.ven.' (Bonaventura). The candidate replaces this with 'beatus bernardus', so the authority being cited is wrong."
+    }
+   ],
+   "note": "Both columns are complete and in order, and the text is mostly accurate. However, the last line credits the citation to St Bernard, while the page cites Bonaventura ('bo.ven.')."
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b631e51c1c21a37380b8a8",
+   "book_id": "69b631e51c1c21a37380b84d",
+   "page_number": 91,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "Vn sequitur ille meret maius",
+     "severity": "wrong_text",
+     "what": "the page has 'Non sequitur' (rubricated N plus 'on'); the candidate gives 'Vn'"
+    },
+    {
+     "class": "O1",
+     "quote": "pensanda est secundum iusticiam",
+     "severity": "wrong_text",
+     "what": "the last line ends at 'est secundum'; the candidate adds 'iusticiam', which is not on the page"
+    }
+   ],
+   "note": "All the lines are there, but the three rubricated-N entries are garbled ('Vn', 'Mon', 'Mull' for Non/Non/Null'), several cross-reference letters are wrong, and an extra word ('iusticiam') has been added to the last line."
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b632111c1c21a37380cddf",
+   "book_id": "69b632111c1c21a37380cd46",
+   "page_number": 153,
+   "defects": [
+    {
+     "class": "O5",
+     "quote": "equalis o",
+     "severity": "wrong_text",
+     "what": "'deo' is truncated to 'o'"
+    },
+    {
+     "class": "O1",
+     "quote": "incipe a principio",
+     "severity": "wrong_text",
+     "what": "the page reads 'incipe & p⁹ per totum'; 'a principio' is not on the page"
+    }
+   ],
+   "note": "The headwords and running text are mostly right, but many chapter and section references are garbled (iiij comes out as 'nij', ti. as 'ni.'), 'deo' is truncated to 'o', and the phrase 'a principio' does not appear on the page."
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b6321c1c1c21a37380d9e6",
+   "book_id": "69b6321c1c1c21a37380d92e",
+   "page_number": 184,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "humida in secundo secundum\nSerapionem.",
+     "severity": "wrong_text",
+     "what": "page reads 'in secundo gradu.' ('scdo g-/du'); the Serapion attribution is invented"
+    }
+   ],
+   "note": "Most of the text matches the page, but the first two lines replace 'in secundo gradu' with an invented 'secundum Serapionem', and the folio number is lxxxvi, not lxx."
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b6322b1c1c21a37380e03a",
+   "book_id": "69b6322b1c1c21a37380dfd7",
+   "page_number": 99,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Ad .v. quod patet ex predictis in responsione primi articuli",
+     "severity": "wrong_text",
+     "what": "The last line is made up. The page reads 'Ad .v. dicendum quod anima est pars humane speci[ei]', the start of the reply about the separated soul."
+    }
+   ]
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b632111c1c21a37380ce7d",
+   "book_id": "69b632111c1c21a37380cd46",
+   "page_number": 311,
+   "defects": [
+    {
+     "class": "O7",
+     "quote": "Ex.nij.capitulo.\nExiguo ligno",
+     "severity": "wrong_text",
+     "what": "page heading reads Ex.xiiij (ch. 14); candidate gives ch. 4"
+    },
+    {
+     "class": "O3",
+     "quote": "Timor domini expellit peccatum",
+     "severity": "wrong_text",
+     "what": "page reads 'expellit quinqз'; candidate swaps in the Vulgate wording"
+    },
+    {
+     "class": "O7",
+     "quote": "Ex.xxi.capitulo\nOmnis mulier",
+     "severity": "wrong_text",
+     "what": "page reads Ex.xxiij; candidate repeats xxi"
+    }
+   ],
+   "note": "All the text is here and in order, but many chapter and reference numbers are wrong or garbled (xiiij keeps turning into nij, and xxiij becomes xxi), and a few words are changed, e.g. 'expellit peccatum' where the page has 'expellit quinqз'."
+  },
+  {
+   "cell": "latin-blank",
+   "route": "pero>agy-flash-low-written",
+   "page_id": "69b632211c1c21a37380db8f",
+   "book_id": "69b632211c1c21a37380daa8",
+   "page_number": 231,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<margin><unclear>De templis</unclear></margin>",
+     "severity": "wrong_text",
+     "what": "invented margin note; the faint marks in the left margin are reversed show-through from the other side of the leaf, not a note on this page"
+    }
+   ],
+   "note": "The main text is complete and in the right order, but there is a made-up margin note 'De templis' where the page only shows bleed-through from the other side, and 'iterum atque iterum' is given as 'iter atque iter'."
   },
   {
    "cell": "latin-gpu-7263",
@@ -5075,6 +5996,822 @@
     }
    ],
    "note": "All columns are present and in order, but a reader would hit several wrong characters (談 for 謨, 運 for 連, 褒 for 衮, 第 for the cited variant form) and a stray '書法' added at the end that is not on the page."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini-stored",
+   "page_id": "699249f2a2d53df4853c179d",
+   "book_id": "699249f1a2d53df4853c1665",
+   "page_number": 312,
+   "defects": [
+    {
+     "class": "E2",
+     "quote": "黍以豚，稻以鴈。\n黍冬，薦稻韭。\n以卵，麥以魚，",
+     "severity": "wrong_text",
+     "what": "Chinese lines out of order: the page reads 黍冬薦稻韭 / 以卵麥以魚 / 黍以豚稻以鴈, but the last line is moved to the front, breaking the text before (10)"
+    },
+    {
+     "class": "O1",
+     "quote": "故不殺。",
+     "severity": "wrong_text",
+     "what": "added line not on the page: the Chinese block ends at 犬豕庶人無, and these characters and the full stop are invented to complete the sentence"
+    }
+   ],
+   "note": "The romanisation, French, notes and Latin match the page, but the opening Chinese lines are out of order and the Chinese block ends with an invented line, 故不殺。, that is not on the leaf."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini-stored",
+   "page_id": "69e728a5a409200ea79f045c",
+   "book_id": "69e728a5a409200ea79f0406",
+   "page_number": 86,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<header>敗毒集卷三</header>",
+     "severity": "wrong_text",
+     "what": "The title 敗毒集 is not on the page; the centre strip reads 聊齋志異新評卷三, so the header misnames the book."
+    },
+    {
+     "class": "O12",
+     "quote": "<margin>聞說其醜\n更有甚於索此物者</margin>",
+     "severity": "wrong_text",
+     "what": "The second red marginal comment, 形容絕肖, is dropped entirely."
+    },
+    {
+     "class": "O5",
+     "quote": "門斗入掘取而去",
+     "severity": "wrong_text",
+     "what": "Drops the last characters of the column, 過二一, so the text stops before its run-on to the next leaf."
+    }
+   ],
+   "note": "The main text is close, but the header names the wrong book, one red comment (形容絕肖) is missing, the other is altered, and the last characters of the page (過二一) are lost."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini-stored",
+   "page_id": "69e7287fa409200ea79effe9",
+   "book_id": "69e7287fa409200ea79eff4b",
+   "page_number": 158,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<header>四庫全書 詩七</header>",
+     "severity": "wrong_text",
+     "what": "invented header; the centre column reads as 聊齋志異新評 with a juan number, not 四庫全書"
+    },
+    {
+     "class": "O6",
+     "quote": "恨漬泥沙",
+     "severity": "wrong_text",
+     "what": "page reads 淚漬泥沙 (tears), not 恨"
+    },
+    {
+     "class": "O6",
+     "quote": "賣恨重泉",
+     "severity": "wrong_text",
+     "what": "page reads 賫恨 (carrying regret), not 賣 (selling)"
+    },
+    {
+     "class": "O6",
+     "quote": "人兒異類",
+     "severity": "wrong_text",
+     "what": "page reads 人鬼異類 (human and ghost), not 兒"
+    }
+   ],
+   "note": "All lines are present, including the red commentary, but the header is invented, several misread characters (恨 for 淚, 賣 for 賫, 兒 for 鬼) change the sense, and some commas break compounds."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini-stored",
+   "page_id": "69af123e0092756351e44888",
+   "book_id": "69af123e0092756351e44874",
+   "page_number": 20,
+   "defects": [
+    {
+     "class": "I6",
+     "quote": "<gloss>外旦</gloss> 衷腸 <column-break/> 停望故里有魂長",
+     "severity": "wrong_text",
+     "what": "Half-leaves are in the wrong order. The right half (停望故里…分飛哥) comes first and runs into 哥你奉雙親…時消息 and then 餘文 on the left half. The candidate starts at 餘文, moves the left half's first two columns to the end, and creates a false join 衷腸/停望."
+    },
+    {
+     "class": "O1",
+     "quote": "簫韶笛子",
+     "severity": "wrong_text",
+     "what": "This line of the upper-margin comment is not on the page, which has only four lines."
+    },
+    {
+     "class": "O6",
+     "quote": "欲上畫闌",
+     "severity": "wrong_text",
+     "what": "The page reads 欲上 / 晝閒 (or 畫閒) 無事, not 畫闌, and the candidate's punctuation breaks the phrase wrongly."
+    },
+    {
+     "class": "O6",
+     "quote": "是珎兒歸時消",
+     "severity": "wrong_text",
+     "what": "The page appears to read 孩兒, so 珎兒 turns 'child' into a false name, and the vocab list repeats it."
+    },
+    {
+     "class": "O6",
+     "quote": "則我兩兒\n弟",
+     "severity": "wrong_text",
+     "what": "The page reads 兩兄弟 ('two brothers'), not 兩兒弟."
+    },
+    {
+     "class": "O6",
+     "quote": "無倚匹",
+     "severity": "wrong_text",
+     "what": "The page reads 無儔匹 ('no companion'), not 倚."
+    }
+   ],
+   "note": "The scene heading comes before text that should precede it, a margin line is invented and a tune label dropped, and about a dozen misread characters make this unreliable beside the image."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini>opus",
+   "page_id": "69e787e04a6785cfd60cdf66",
+   "book_id": "69e787e04a6785cfd60cdf64",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "博<gloss>ハク</gloss>多<gloss>オホシ</gloss>識<gloss>シキ</gloss>其<gloss>ソノ</gloss>名<gloss>ナ</gloss>而已<gloss>ノミ</gloss>也",
+     "severity": "wrong_text",
+     "what": "page reads 奚啻多識其名已也 ('not merely'); 博 replaces 奚啻, reversing the rhetoric, and 而 is added"
+    },
+    {
+     "class": "O6",
+     "quote": "擬<gloss>キ</gloss>於目<gloss>マナコニ</gloss>逼真",
+     "severity": "wrong_text",
+     "what": "page has only 擬月逼真 or similar; 於 is added and the graph is 月-like, not read as written"
+    },
+    {
+     "class": "O1",
+     "quote": "絢飾<gloss>ケンシキ</gloss>為<gloss>ナシ</gloss>工<gloss>タクミノ</gloss>",
+     "severity": "wrong_text",
+     "what": "full-reading katakana glosses such as this are invented; the leaf has only sparse okurigana and return marks"
+    },
+    {
+     "class": "O6",
+     "quote": "武林睦鷲隱",
+     "severity": "wrong_text",
+     "what": "misreads the credit line, apparently 武林陸喆寫圖, and invents an artist name"
+    },
+    {
+     "class": "O5",
+     "quote": "A rectangular woodcut illustration showing a steep, craggy cliff face",
+     "severity": "wrong_text",
+     "what": "the printed credit 武林項南洲刊 in this panel is omitted"
+    }
+   ],
+   "note": "The title and general sense are recognisable, but the preface has several misread characters, including a wrong closing clause. The furigana-style glosses are mostly invented, and printed labels and credits are wrong or missing."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini>opus",
+   "page_id": "6a23f362cf679bf73b474e69",
+   "book_id": "6a1d81af5afc14a085e6d7e6",
+   "page_number": 270,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "陳泥丸云真陰真陽是真道只在眼前何遠討",
+     "severity": "wrong_text",
+     "what": "All 11 lines are from another passage, probably a neighbouring leaf of this anthology on the same 'before the eyes' theme. None match this page, which begins 玄奧集云青牛人去幾多年此道分明在目前."
+    },
+    {
+     "class": "O5",
+     "quote": "翠虛篇云莫謂金丹事等閑切須勤苦力鑽研",
+     "severity": "wrong_text",
+     "what": "All of the page's real text is missing, including 玄奧集, 陳泥丸云大道分明在眼前, 玄學統宗, 觀吾判惑歌 and 金丹賦 (龍呼虎吸…), plus the margin 利 and folio 三十二."
+    }
+   ],
+   "note": "The transcription does not match the image: the leaf reads 玄奧集云青牛人去幾多年… through 金丹賦 …之主母子包羅於匡廓育養因依於鼎釜 (folio 三十二), while the candidate gives a different set of quotations (劉海蟾, 王子真, 蕭紫虛, 翠虛篇…)."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini>opus",
+   "page_id": "69e72c83a409200ea79f4c11",
+   "book_id": "69e72c83a409200ea79f4c01",
+   "page_number": 16,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "管仲勉齊桓公因游遼口俱之其國幾尅舉隰朋",
+     "severity": "wrong_text",
+     "what": "All nine body lines belong to the passage that follows this page. The image shows the Zhongbei country passage of Liezi, Tangwen, 於山下經營一國…數月乃復, and none of it is transcribed."
+    },
+    {
+     "class": "I1",
+     "quote": "駱丞檄喑嗚則山嶽崩頽叱咤則風雲變色何法本此",
+     "severity": "wrong_text",
+     "what": "This marginal note is not on the leaf and comes from another page."
+    },
+    {
+     "class": "I1",
+     "quote": "大意謂禮俗無常各隨其鄉未必目覩者卽為是也",
+     "severity": "wrong_text",
+     "what": "This second marginal note is also absent from the leaf, whose only red note is different."
+    },
+    {
+     "class": "O12",
+     "quote": "<margin>",
+     "severity": "wrong_text",
+     "what": "The page's actual red top-margin note, approximately 排亦是法第總不如錯綜之渾妙, is not transcribed."
+    }
+   ],
+   "note": "The transcription does not match the image: the leaf (folio 49 of Liezi, Tangwen) describes the land of Zhongbei and King Mu's visit, while the text gives the following Guan Zhong and Duke Huan passage with marginal notes not on this page."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini>opus",
+   "page_id": "6a23f362cf679bf73b474e69",
+   "book_id": "6a1d81af5afc14a085e6d7e6",
+   "page_number": 270,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "陳泥丸云真陰真陽是真道只在眼前何遠討",
+     "severity": "wrong_text",
+     "what": "Whole transcription is on a similar theme but not this leaf's text, probably from a neighbouring leaf. The page opens 玄奧集云青牛人去幾多年此道分明在目前."
+    },
+    {
+     "class": "O5",
+     "quote": "翠虛篇云莫謂金丹事等閑切須勤苦力鑽研",
+     "severity": "wrong_text",
+     "what": "All of the page's actual text is missing, including the 玄奧集, 陳泥丸 (大道分明在眼前), 玄學統宗, 觀吾判惑歌 and 金丹賦 quotations, and the margin 利 and 三十二."
+    }
+   ],
+   "note": "The transcription doesn't match the image: the leaf (margin 利, 三十二) begins 玄奧集云青牛人去幾多年 and ends 因依於鼎釜, while the candidate gives different quotations from other authors."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "gemini>opus",
+   "page_id": "69e72c83a409200ea79f4c11",
+   "book_id": "69e72c83a409200ea79f4c01",
+   "page_number": 16,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "管仲勉齊桓公因游遼口俱之其國幾尅舉隰朋",
+     "severity": "wrong_text",
+     "what": "All body text is from the following Liezi passage, which continues after this leaf's final 數月乃復. The page's nine lines, 於山下經營一國亡不悉徧 through 其國�païs然自失…數月乃復, are entirely absent."
+    },
+    {
+     "class": "I1",
+     "quote": "駱丞檄喑嗚則山嶽崩頽叱咤則風雲變色何法本此",
+     "severity": "wrong_text",
+     "what": "Neither margin note in the candidate is on this leaf. The page's only top note, in red, reads 排亦是法第總不如錯綜之渾妙, and it is not transcribed."
+    }
+   ],
+   "note": "The transcription beside the image is a different passage (Guan Zhong and Duke Huan) from the leaf shown, which describes the land where King Mu of Zhou stayed three years (於山下經營一國…數月乃復), so none of the page's text or its red note can be found in it."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "paddle>agy-flash-low",
+   "page_id": "699249f2a2d53df4853c179d",
+   "book_id": "699249f1a2d53df4853c1665",
+   "page_number": 312,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "黍以黍，冬薦稻，韭以卵",
+     "severity": "wrong_text",
+     "what": "The leaf opens 黍、冬薦稻。韭以卵. The first 以黍 is not there; the 黍以 seems to be displaced from the 黍以豚 column."
+    },
+    {
+     "class": "O6",
+     "quote": "麥以魚，鴈。豚，稻以⑩",
+     "severity": "wrong_text",
+     "what": "The columns are scrambled. The page reads 麥以魚、黍以豚、稻以鴈。⑩; here 鴈 comes too early and 黍以 is lost, breaking the pairing of millet with pork and rice with goose."
+    },
+    {
+     "class": "O5",
+     "quote": "祭天地之牛繭栗",
+     "severity": "wrong_text",
+     "what": "Drops 角: the page has 祭天地之牛角繭栗, the horns that the French and Latin describe."
+    },
+    {
+     "class": "O3",
+     "quote": "庶人無故不食珍。",
+     "severity": "wrong_text",
+     "what": "The Chinese block ends at 庶人無 on this leaf. 故不食珍 is added from the known text or the next page."
+    }
+   ],
+   "note": "The romanisation, French and Latin match the page, but the Chinese block is garbled: its opening and the 黍以豚、稻以鴈 clauses are scrambled, 角 is missing, and the final 故不食珍 is not on this leaf."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/one",
+   "route": "paddle>agy-flash-medium",
+   "page_id": "69e787e04a6785cfd60cdf66",
+   "book_id": "69e787e04a6785cfd60cdf64",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "絢飾<gloss>ケンシキ</gloss>為<gloss>ナシ</gloss>工<gloss>タクミノ</gloss>",
+     "severity": "wrong_text",
+     "what": "Sino-Japanese readings and glosses throughout are not on the leaf, which has only small kunten and okurigana marks"
+    },
+    {
+     "class": "O6",
+     "quote": "按<gloss>アン</gloss>圖<gloss>ト</gloss>可<gloss>ヘシ</gloss>索<gloss>サク</gloss>矣。博<gloss>ハク</gloss>多<gloss>オホシ</gloss>識",
+     "severity": "wrong_text",
+     "what": "page reads 可索奚第多識 ('why merely know many names'); 奚 misread as 矣 and 第 as 博, which destroys the rhetorical question"
+    },
+    {
+     "class": "O6",
+     "quote": "其<gloss>ソノ</gloss>名<gloss>ナ</gloss>而已<gloss>ノミ</gloss>也",
+     "severity": "wrong_text",
+     "what": "page has 其名已也; 而 is added"
+    },
+    {
+     "class": "O5",
+     "quote": "<header>本草金石第一圖</header>",
+     "severity": "wrong_text",
+     "what": "block label 金石部金類 in the black cartouche at the top of the illustration is omitted"
+    },
+    {
+     "class": "O6",
+     "quote": "武林睦鷲隱",
+     "severity": "wrong_text",
+     "what": "credit reads about 武林陸喆寫圖 (Lu Zhe); this invents an artist 'Mu Jiuyin'"
+    },
+    {
+     "class": "O6",
+     "quote": "武林黃應洲刻",
+     "severity": "wrong_text",
+     "what": "carver credit reads about 武林…南洲刊; 應 and 刻 are misread and the name is wrong"
+    }
+   ],
+   "note": "The preface is broadly recognisable, but the katakana readings are invented, 奚第 is garbled into 矣。博, several characters are wrong, and the artist and carver credits and the column-centre title are misread."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "gemini-stored",
+   "page_id": "699df07e3430a1d77dc79184",
+   "book_id": "699df07e3430a1d77dc79099",
+   "page_number": 235,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<margin>而益遠者</margin>",
+     "severity": "wrong_text",
+     "what": "phrase appears nowhere on the page; invented"
+    },
+    {
+     "class": "O5",
+     "quote": "<margin>支無會合</margin>",
+     "severity": "wrong_text",
+     "what": "partner phrase 傷官刧妻 of the first left-half column is silently dropped"
+    },
+    {
+     "class": "O5",
+     "quote": "<margin>壬日亥月</margin>",
+     "severity": "wrong_text",
+     "what": "partner phrase 癸日寅提, above 壬日亥月 in the last lower column, is dropped"
+    },
+    {
+     "class": "O6",
+     "quote": "壬日戊提",
+     "severity": "wrong_text",
+     "what": "page reads 壬日戌提; a month-pillar 提 takes a branch, and 戊 is a stem"
+    },
+    {
+     "class": "O6",
+     "quote": "林下孤陋",
+     "severity": "wrong_text",
+     "what": "page appears to read 林下孤恓, not 孤陋"
+    }
+   ],
+   "note": "This spread of paired four-character chart verses is mostly legible, but it has an invented phrase, two dropped phrases, misread characters, likely the wrong juan number, and the two halves in reversed order."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "gemini-stored",
+   "page_id": "69e75e3acc48e59ad74ec369",
+   "book_id": "69e75e3acc48e59ad74ec35a",
+   "page_number": 15,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "范石湖集",
+     "severity": "wrong_text",
+     "what": "Block-edge title reads 笠翁詩集 (Li Yu), not Fan Chengda's collection; this misidentifies the book"
+    },
+    {
+     "class": "O6",
+     "quote": "茶子園",
+     "severity": "wrong_text",
+     "what": "Studio name at the foot of the centre column is 芥子園, not 茶子園"
+    },
+    {
+     "class": "O1",
+     "quote": "前過十八灘行 <gloss><unclear>亦得</unclear></gloss>",
+     "severity": "wrong_text",
+     "what": "No note is printed on this line; the gloss is invented"
+    }
+   ],
+   "note": "The nine poem titles match the leaf, but the book is named wrongly (笠翁詩集 and 芥子園 are on the page) and the 'glosses' are show-through or invented, not printed notes."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "gemini-stored",
+   "page_id": "69aebb3439a4307877772f95",
+   "book_id": "69aebb3439a4307877772f55",
+   "page_number": 64,
+   "defects": [
+    {
+     "class": "O4",
+     "quote": "又於其此，又於其此，又於其此，又於其此",
+     "severity": "wrong_text",
+     "what": "one four-character phrase looped hundreds of times until the text cuts off mid-phrase; this phrase is not on the page"
+    },
+    {
+     "class": "O5",
+     "quote": "有謂人也。然則命之不善則失之者",
+     "severity": "wrong_text",
+     "what": "starts at the left half of the opening; the entire right half, which is read first (失衆失國矣…有德而), is dropped"
+    },
+    {
+     "class": "O5",
+     "quote": "然非殺人之於其此",
+     "severity": "wrong_text",
+     "what": "real text stops here; the last columns of the left half (盜則罪不至死…夫彼此之勢…以禦魑魅…使不蒙其害) are mostly lost or replaced by the loop"
+    },
+    {
+     "class": "O6",
+     "quote": "有謂人也。然則命之不善則失之者，悖入而悖出者也。謂之善則失之者，謂其好引之泰誓何也",
+     "severity": "wrong_text",
+     "what": "page reads 有人之謂也。不善則失之者，悖入而悖出之謂也。然則命之不常…其引秦誓何也; order scrambled, words changed, 秦誓 misread as 泰誓, and the clause 乃人之所自為耳，可不謹哉 lost"
+    },
+    {
+     "class": "O6",
+     "quote": "亦由絮之可及，其孫子之惡，深至也",
+     "severity": "wrong_text",
+     "what": "page reads 言好善之利及其子孫，不好善之害流於後世，亦由絜矩與否之異也; 絜矩 is lost and the sense garbled"
+    },
+    {
+     "class": "O1",
+     "quote": "如萬端其無疾之已甚之然，仁人矩惡與之，小而為仁，千條萬端",
+     "severity": "wrong_text",
+     "what": "word salad not on the page, which reads 媢疾之人誠可惡矣，然仁人惡之深至於如此…小人為惡，千條萬端"
+    },
+    {
+     "class": "O1",
+     "quote": "流於其此，流於其此，又於其惡，念之所入，放之而地，人其遠，而民則復其何罪",
+     "severity": "wrong_text",
+     "what": "invented, jumbled text in place of 然又念夫彼此之勢雖殊…今此惡人放而不遠…所放之地其民復何罪焉"
+    }
+   ],
+   "note": "This is not a usable transcription: the right half of the opening is missing, the left half is garbled, and the text collapses into endless repetition of 又於其此 before cutting off mid-phrase."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "gemini>opus",
+   "page_id": "69b99f786ed9e0490990acd4",
+   "book_id": "69b99f786ed9e0490990abcf",
+   "page_number": 261,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "若提波羅蜜毘梨耶波羅蜜。檀那波羅蜜般若",
+     "severity": "wrong_text",
+     "what": "page has 羼提 and 禪那; misread as 若提 and 檀那, which changes which perfections are listed"
+    },
+    {
+     "class": "O5",
+     "quote": "般若波羅蜜菩薩摩訶薩大誓莊嚴。不齊。",
+     "severity": "wrong_text",
+     "what": "drops the page's preceding column 波羅蜜為一切眾生故住般若波羅蜜行"
+    },
+    {
+     "class": "O6",
+     "quote": "我當度。若千人。不足。餘人。不言。",
+     "severity": "wrong_text",
+     "what": "page reads 我當度若干人不度餘人; 不足 and 若千 are misreads that lose the sense"
+    },
+    {
+     "class": "O5",
+     "quote": "復作是念。我當具足尸羅檀那波",
+     "severity": "wrong_text",
+     "what": "page has 我當自具足檀那波羅蜜; 自 is dropped and 尸羅 is inserted"
+    },
+    {
+     "class": "O6",
+     "quote": "足尸羅波羅蜜提波羅蜜毘梨耶波羅蜜。亦令一",
+     "severity": "wrong_text",
+     "what": "drops 羼 and omits 禪那波羅蜜 and 自具足般若波羅蜜"
+    },
+    {
+     "class": "O1",
+     "quote": "諸施法信忍欲。是名行檀那波羅蜜。菩薩摩訶",
+     "severity": "wrong_text",
+     "what": "page has 是名行檀那波羅蜜時羼提波羅蜜大誓莊嚴; the 羼提 clause is lost and the wording garbled"
+    },
+    {
+     "class": "O6",
+     "quote": "時檀那波羅蜜大誓莊嚴。復次舍利弗。菩",
+     "severity": "wrong_text",
+     "what": "second register opening: page has 時禪那波羅蜜, not 檀那"
+    },
+    {
+     "class": "O6",
+     "quote": "薩應薩若心。不取不不得波羅蜜相。當",
+     "severity": "wrong_text",
+     "what": "page reads 應薩婆若心不取不得諸波羅蜜相; 婆 and 諸 are dropped and 不 is doubled"
+    },
+    {
+     "class": "O5",
+     "quote": "薩應薩若心。不取不不得波羅蜜相。當",
+     "severity": "wrong_text",
+     "what": "omits the following 知是菩薩摩訶薩大誓莊嚴。復次舍利弗 before 菩薩摩訶薩行尸羅"
+    },
+    {
+     "class": "O6",
+     "quote": "菩提。復次舍利弗。菩薩摩訶薩行尸羅",
+     "severity": "wrong_text",
+     "what": "page has 菩提。是名菩薩摩訶薩行尸羅波羅蜜時檀那波羅蜜 before 復次; the conclusion is lost"
+    },
+    {
+     "class": "O6",
+     "quote": "薩行尸羅波羅蜜時。復次舍利弗。菩薩摩訶",
+     "severity": "wrong_text",
+     "what": "page has 行尸羅波羅蜜時羼提波羅蜜; the perfection named is dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "羅蜜時。不受聲聞辟支佛心是名尸",
+     "severity": "wrong_text",
+     "what": "the 尸羅 and 禪那 passage is reworked; page's 是名 clause differs from the following 羅波羅蜜行尸羅波羅蜜時。應薩婆若心"
+    },
+    {
+     "class": "O4",
+     "quote": "般若波羅蜜時。應薩婆若心布施。是故",
+     "severity": "wrong_text",
+     "what": "repeated formula lines replace the page's 攝諸波羅蜜。以是故名大誓莊嚴"
+    },
+    {
+     "class": "O6",
+     "quote": "薩行尸羅波羅蜜時檀那波羅蜜。復次舍利",
+     "severity": "wrong_text",
+     "what": "the page has moved on to 羼提波羅蜜 here; 尸羅 is substituted"
+    },
+    {
+     "class": "O6",
+     "quote": "薩行尸羅波羅蜜時尸羅波羅蜜。復次舍利",
+     "severity": "wrong_text",
+     "what": "third register: page has 行羼提波羅蜜時尸羅波羅蜜; 羼提 is replaced by 尸羅 throughout this section"
+    },
+    {
+     "class": "O5",
+     "quote": "行尸羅波羅蜜時不散亂。是名菩薩摩訶薩",
+     "severity": "wrong_text",
+     "what": "page reads 攝心一處。雖有苦事心不散亂; the phrase is lost and filler inserted"
+    },
+    {
+     "class": "O1",
+     "quote": "若有阿毘",
+     "severity": "wrong_text",
+     "what": "page reads 若有呵罵割截者; 阿毘跋致 is invented"
+    },
+    {
+     "class": "O1",
+     "quote": "薩婆若心修忍辱。是名菩薩摩訶薩行尸羅",
+     "severity": "wrong_text",
+     "what": "page reads 修行忍辱。是名菩薩摩訶薩行毘梨耶波羅蜜時羼提波羅蜜; 行 is dropped and the following lines are garbled"
+    },
+    {
+     "class": "O1",
+     "quote": "波羅蜜時尸羅波羅蜜時。應薩婆若心修毘",
+     "severity": "wrong_text",
+     "what": "not on the page; replaces 復次舍利弗…應薩婆若心攝心離欲入諸禪定"
+    },
+    {
+     "class": "O1",
+     "quote": "行尸羅波羅蜜時。應薩婆若心布施。應薩",
+     "severity": "wrong_text",
+     "what": "page has 行毘梨耶波羅蜜時禪那波羅蜜。復次舍利弗…應薩婆若心不取; the 禪那 conclusion is lost"
+    }
+   ],
+   "note": "Beside the image, the text departs often: 羼提 and 禪那 are repeatedly replaced by 尸羅 and 檀那, clauses are dropped or duplicated, 阿毘跋致 is invented in place of 呵罵割截, and all collation footnotes are missing."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "gemini>opus",
+   "page_id": "69b99f786ed9e0490990acd4",
+   "book_id": "69b99f786ed9e0490990abcf",
+   "page_number": 261,
+   "defects": [
+    {
+     "class": "O5",
+     "quote": "檀那波羅蜜般若\n般若波羅蜜菩薩摩訶薩大誓莊嚴",
+     "severity": "wrong_text",
+     "what": "Drops the page's line 波羅蜜為一切眾生故。住般若波羅蜜行, so the 住/行 clause for 般若 is lost"
+    },
+    {
+     "class": "O6",
+     "quote": "提波羅蜜毘梨耶波羅蜜。檀那波羅蜜般若",
+     "severity": "wrong_text",
+     "what": "Page has 羼提波羅蜜…禪那波羅蜜: 羼 is lost and 禪那 is misread as 檀那, which changes the perfection"
+    },
+    {
+     "class": "O6",
+     "quote": "我當度。若千人。不足。餘人。",
+     "severity": "wrong_text",
+     "what": "Page reads 我當度若干人。不度餘人; 不足 and 若千 are misreads that break the sense"
+    },
+    {
+     "class": "O6",
+     "quote": "我當具足尸羅檀那波\n羅蜜。亦令一切眾生行檀那波羅蜜自具\n足尸羅波羅蜜提波羅蜜毘梨耶波羅蜜。亦令一\n切眾生行般若波羅蜜",
+     "severity": "wrong_text",
+     "what": "Page reads 我當自具足檀那…; candidate invents 尸羅 here and omits 羼, 禪那波羅蜜 and 自具足般若波羅蜜"
+    },
+    {
+     "class": "O5",
+     "quote": "諸施法信忍欲。是名行檀那波羅蜜。菩薩摩訶\n薩行檀那波羅蜜時。復次舍利弗。菩薩摩訶",
+     "severity": "wrong_text",
+     "what": "Loses 時羼提波羅蜜大誓莊嚴 and scrambles the phrase order, so the 羼提 item vanishes"
+    },
+    {
+     "class": "O6",
+     "quote": "不起。聲聞辟支佛意是名行檀那波羅蜜\n時檀那波羅蜜大誓莊嚴",
+     "severity": "wrong_text",
+     "what": "Page has 時禪那波羅蜜; candidate names 檀那 instead"
+    },
+    {
+     "class": "O5",
+     "quote": "當\n菩薩摩訶薩行尸羅波羅蜜時",
+     "severity": "wrong_text",
+     "what": "Drops the page's line 知是菩薩摩訶薩大誓莊嚴。復次舍利弗"
+    },
+    {
+     "class": "O5",
+     "quote": "菩提。復次舍利弗。菩薩摩訶薩行尸羅\n波羅蜜時。是諸法信忍欲",
+     "severity": "wrong_text",
+     "what": "Drops 是名菩薩摩訶薩行尸羅波羅蜜時檀那波羅蜜"
+    },
+    {
+     "class": "O5",
+     "quote": "是諸法信忍欲。是名菩薩摩訶\n薩行尸羅波羅蜜時。復次舍利弗",
+     "severity": "wrong_text",
+     "what": "Drops 羼提波羅蜜 after 時"
+    },
+    {
+     "class": "O1",
+     "quote": "應薩婆若心布施。懃\n不息",
+     "severity": "wrong_text",
+     "what": "Page reads 尸羅波羅蜜時懃修不息; 應薩婆若心布施 is not on the page and 修 is dropped"
+    },
+    {
+     "class": "O6",
+     "quote": "不受聲聞辟支佛心是名尸\n羅波羅蜜行尸羅波羅蜜時。應薩婆若心\n布施。復次舍利弗。菩薩摩訶薩行尸羅波羅\n蜜時。觀一切法",
+     "severity": "wrong_text",
+     "what": "Page reads 是名菩薩摩訶薩行尸羅波羅蜜時禪那波羅蜜。復次舍利弗…; candidate replaces this with invented wording"
+    },
+    {
+     "class": "O4",
+     "quote": "行尸羅波羅蜜時。應薩婆若心布施。是故\n般若波羅蜜時。應薩婆若心布施。是故\n波羅蜜時。應薩婆若心布施。",
+     "severity": "wrong_text",
+     "what": "A looping phrase replaces 時攝諸波羅蜜。以是故名大誓莊嚴。復次舍利弗。菩薩摩訶薩行羼提波羅蜜時"
+    },
+    {
+     "class": "O8",
+     "quote": "薩行尸羅波羅蜜時檀那波羅蜜。復次舍利\n弗。菩薩摩訶薩行尸羅波羅蜜時。不受聲",
+     "severity": "wrong_text",
+     "what": "Page has 羼提波羅蜜; 尸羅 is substituted throughout, attributing the section to the wrong perfection"
+    },
+    {
+     "class": "O8",
+     "quote": "薩行尸羅波羅蜜時尸羅波羅蜜。復次舍利\n弗。菩薩摩訶薩行尸羅波羅蜜時。應薩婆\n若心身心精進不休息。是名菩薩摩訶薩\n行尸羅波羅蜜時毘梨耶波羅蜜",
+     "severity": "wrong_text",
+     "what": "All these spans read 行羼提波羅蜜時 on the page"
+    },
+    {
+     "class": "O6",
+     "quote": "攝心一\n行尸羅波羅蜜時不散亂。是名菩薩摩訶薩\n行尸羅波羅蜜時尸羅波羅蜜",
+     "severity": "wrong_text",
+     "what": "Page reads 攝心一處。雖有苦事心不散亂。是名…行羼提波羅蜜時禪那波羅蜜"
+    },
+    {
+     "class": "O1",
+     "quote": "若有阿毘\n跋致者。心如幻如夢",
+     "severity": "wrong_text",
+     "what": "Page reads 若有呵罵割截者; 阿毘跋致 is invented"
+    },
+    {
+     "class": "O8",
+     "quote": "尸羅波羅蜜時般若波羅蜜復次舍利弗",
+     "severity": "wrong_text",
+     "what": "Page reads 羼提波羅蜜時般若波羅蜜"
+    },
+    {
+     "class": "O6",
+     "quote": "婆若心修忍辱。是名菩薩摩訶薩行尸羅\n波羅蜜時尸羅波羅蜜時。應薩婆若心修毘\n梨耶波羅蜜時。是名菩薩摩訶薩行毘梨\n耶波羅蜜時。欲入諸禪定。是名菩薩摩訶薩\n行尸羅波羅蜜時。應薩婆若心布施。應薩",
+     "severity": "wrong_text",
+     "what": "Garbles 修行忍辱…行毘梨耶波羅蜜時羼提波羅蜜…攝心離欲入諸禪定…時禪那波羅蜜 and adds wording not on the page"
+    }
+   ],
+   "note": "The text looks like the right page but is badly unreliable: lines are missing, phrases loop, 羼提 and 禪那 become 尸羅 and 檀那, 阿毘跋致 is invented, and the collation notes are gone."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "paddle>agy-flash-medium",
+   "page_id": "69b99f786ed9e0490990acd4",
+   "book_id": "69b99f786ed9e0490990abcf",
+   "page_number": 261,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "住尸羅波羅蜜行尸羅波羅蜜爲一切衆生故。住羼提波羅蜜行羼提波羅蜜爲一切衆生故。",
+     "severity": "wrong_text",
+     "what": "Invents a parallel clause. The page reads 行*尸羅波羅蜜。羼提波羅蜜毘梨耶波羅蜜禪那波羅蜜般若波羅蜜。爲一切衆生故, so 毘梨耶 and 禪那 are lost."
+    },
+    {
+     "class": "O5",
+     "quote": "住般若波羅蜜行般若波羅蜜。我當度若干人。",
+     "severity": "wrong_text",
+     "what": "Silently drops 菩薩摩訶薩大*誓莊嚴。不齊限衆生。 from between these two sentences."
+    },
+    {
+     "class": "O6",
+     "quote": "若干人度、餘人言：我令若干人至",
+     "severity": "wrong_text",
+     "what": "The page has 若干人。不度餘人。不言我令若干人至. Losing both negatives inverts the vow not to limit beings."
+    },
+    {
+     "class": "O6",
+     "quote": "是諸施法信疑¹欲",
+     "severity": "wrong_text",
+     "what": "The page reads 信忍欲. 疑 ('doubt') replaces 忍 ('forbearance') in the 羼提 passage."
+    },
+    {
+     "class": "O6",
+     "quote": "是諸法信疑¹欲",
+     "severity": "wrong_text",
+     "what": "Same misread in the 尸羅 section. The page reads 是諸法信忍欲."
+    },
+    {
+     "class": "O3",
+     "quote": "觀諸法空。無作者、無受者。若有阿罵辱、毀辱。心如幻如夢。",
+     "severity": "wrong_text",
+     "what": "The page has 觀一切法如幻。亦不念有是戒。用無所得故。 The candidate substitutes wording modelled on the 羼提 passage in the third register."
+    },
+    {
+     "class": "O5",
+     "quote": "行尸*羅波羅蜜時⁸諸波羅蜜。是名大*誓莊嚴。",
+     "severity": "wrong_text",
+     "what": "The page reads 時攝諸波羅蜜。以是故名大*誓莊嚴. 攝 is dropped, 以是故名 is altered, and a stray note marker is inserted."
+    },
+    {
+     "class": "O6",
+     "quote": "復次舍利弗。菩薩摩訶薩行尸*羅波羅蜜時。應薩婆若心布施。共一切衆生迴向",
+     "severity": "wrong_text",
+     "what": "The page reads 行羼提波羅蜜時 here, so the wrong perfection is named."
+    },
+    {
+     "class": "O6",
+     "quote": "不時⁷不身心懈怠",
+     "severity": "wrong_text",
+     "what": "The page reads ❼時不令身心懈怠. The sequence is garbled, with 不時 for 時 and 令 lost."
+    },
+    {
+     "class": "O6",
+     "quote": "應薩婆若心修精進",
+     "severity": "wrong_text",
+     "what": "The page reads 應薩婆若心修行忍辱. The content is changed, since this clause defines 羼提."
+    },
+    {
+     "class": "O6",
+     "quote": "應薩婆若心攝心。雖欲入諸禪定",
+     "severity": "wrong_text",
+     "what": "The page reads 心攝心離欲入諸禪定. 雖 ('although') replaces 離 ('free from')."
+    },
+    {
+     "class": "O12",
+     "quote": "❶〔疑〕－【宋】【元】【明】＊",
+     "severity": "wrong_text",
+     "what": "The page's note ❶ is 〔羅〕, not 〔疑〕. The sigla are also misread: the page uses circled 宋/明/宮-type sigla."
+    }
+   ],
+   "note": "The page frame and most formulaic text are right, but several sentences are rewritten or dropped (不度餘人, 不言, 不齊限衆生, 亦不念有是戒), key words are changed (忍→疑, 離→雖, 修行忍辱→修精進), and the critical notes are misplaced and partly wrong."
+  },
+  {
+   "cell": "study-zh-print-arms-7263/ten",
+   "route": "paddle>agy-flash-medium",
+   "page_id": "69bd0b0bb01b17638a098a07",
+   "book_id": "69bd0b0bb01b17638a098903",
+   "page_number": 260,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<header>楞嚴蒙鈔卷七上</header>",
+     "severity": "wrong_text",
+     "what": "Running title on the leaf reads 首楞嚴經要解卷十三; the candidate names a different work and juan not printed here"
+    }
+   ],
+   "note": "All twenty lines of body text match the page, but the header gives the wrong book title, juan and folio (the margins read 首楞嚴經要解卷十三, folios 三 and 四)."
   }
  ],
  "by_script_cells": {
@@ -5175,30 +6912,33 @@
   "latin-blank|print": {
    "routes": {
     "pero>agy-flash-low-written": {
-     "n": 72,
-     "books": 4,
-     "accept": "35/72",
-     "wrong_text_pages": "31/72",
+     "n": 454,
+     "books": 18,
+     "accept": "244/454",
+     "wrong_text_pages": "127/454",
      "classes_k_of_n": {
-      "O6": "40/72",
-      "E2": "26/72",
-      "O8": "26/72",
-      "O7": "19/72",
-      "O5": "15/72",
-      "O12": "14/72",
-      "O14": "12/72",
-      "O1": "9/72",
-      "O16": "5/72",
-      "O17": "5/72",
-      "O11": "5/72",
-      "O4": "4/72",
-      "D1": "3/72",
-      "T6": "2/72",
-      "O13": "1/72",
-      "O3": "1/72"
+      "O6": "322/454",
+      "E2": "196/454",
+      "O7": "159/454",
+      "O8": "123/454",
+      "O12": "53/454",
+      "O5": "46/454",
+      "O11": "45/454",
+      "O16": "29/454",
+      "D1": "18/454",
+      "O1": "15/454",
+      "O14": "14/454",
+      "T6": "10/454",
+      "O17": "6/454",
+      "O4": "6/454",
+      "O9": "6/454",
+      "O3": "5/454",
+      "O13": "3/454",
+      "O10": "2/454",
+      "I4": "2/454"
      },
      "script_basis": {
-      "page": 72
+      "page": 454
      }
     }
    }
@@ -5486,6 +7226,61 @@
     }
    }
   },
+  "study-zh-print-arms-7263/one|print": {
+   "routes": {
+    "gemini>opus": {
+     "n": 60,
+     "books": 30,
+     "accept": "50/60",
+     "wrong_text_pages": "8/60",
+     "classes_k_of_n": {
+      "O6": "14/60",
+      "O8": "12/60",
+      "O5": "10/60",
+      "O12": "6/60",
+      "E2": "6/60",
+      "O11": "5/60",
+      "O16": "5/60",
+      "O10": "4/60",
+      "I1": "4/60",
+      "T10": "2/60",
+      "O7": "1/60",
+      "O1": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    }
+   }
+  },
+  "study-zh-print-arms-7263/ten|print": {
+   "routes": {
+    "gemini>opus": {
+     "n": 60,
+     "books": 30,
+     "accept": "48/60",
+     "wrong_text_pages": "8/60",
+     "classes_k_of_n": {
+      "O6": "17/60",
+      "O8": "11/60",
+      "O5": "6/60",
+      "E2": "5/60",
+      "O16": "4/60",
+      "O12": "3/60",
+      "O10": "2/60",
+      "O1": "2/60",
+      "O4": "2/60",
+      "I6": "2/60",
+      "O11": "1/60",
+      "D1": "1/60",
+      "O7": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    }
+   }
+  },
   "zh-siku-first-tr|print": {
    "routes": {
     "agy-flash-low@1": {
@@ -5538,10 +7333,10 @@
   }
  },
  "meter": {
-  "runs": 4,
-  "calls": 338,
-  "weekly_points_delta": 9,
-  "points_per_call": 0.0266,
+  "runs": 5,
+  "calls": 741,
+  "weekly_points_delta": 11,
+  "points_per_call": 0.0148,
   "note": "upper bound: integer meter, and the account is shared with the box's other sessions"
  }
 }

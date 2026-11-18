@@ -70,14 +70,14 @@ Proposed Atlas custom role `sl-web-reader` (Database Access → Custom Roles), o
 | `bookstore.analytics_agent_requests` | `find`, `insert`, `update` |
 
 Nothing else: no `remove`, no `dropCollection`, no other database. Then make a user
-`sl-web-1` with only that role, restricted to the box's address (157.180.78.233/32),
+`sl-web-1` with only that role, restricted to the box's address (203.0.113.1/32),
 and pass its URI as `BOX_MONGODB_URI` to `make-env.mjs`. After that, `guard.cjs` can come
 out of `NODE_OPTIONS`; keep its log for the first 48 hours to confirm the counts in
 `api_usage` and `analytics_agent_requests` stay continuous (the plan's check).
 
 ## Needs Derek
 
-1. A DNS record `box1.sourcelibrary.org` → 157.180.78.233, **proxied**.
+1. A DNS record `box1.sourcelibrary.org` → 203.0.113.1, **proxied**.
 2. A Cloudflare Origin CA certificate for `box1.sourcelibrary.org`, saved as `/etc/sl-web/origin.pem` / `origin.key` (mode 0640, group caddy).
 3. Open 443 on the Hetzner cloud firewall `sl-web-fw` to Cloudflare's ranges (the host firewall already allows only those).
 4. The Mongo user above.

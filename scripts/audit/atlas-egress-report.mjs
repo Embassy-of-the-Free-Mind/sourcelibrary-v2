@@ -31,7 +31,7 @@ const TOP = Number(arg('top', '25'));
 if (!IN) { console.error('--in <sample.jsonl> required'); process.exit(2); }
 
 const HOSTS = {
-  '203.0.113.2': 'hetzner-main', '203.0.113.3': 'cloudlayer', '203.0.113.1': 'earthai-l7a',
+  '203.0.113.3': 'hetzner-main', '203.0.113.4': 'cloudlayer', '203.0.113.2': 'earthai-l7a',
 };
 const hostLabel = (ip) => HOSTS[ip] || (/^(3|18|35|52|54|63|65|99)\./.test(ip) ? `aws:${ip}` : ip);
 
@@ -143,7 +143,7 @@ const rowsA = [...byJob.entries()].sort((a, b) => b[1].bytes - a[1].bytes).map((
   // shapes within a job; it is not a per-query meter.
   const shapes = new Map();
   for (const p of jobPorts.get(job) || []) {
-    const m = opShapes.get(`203.0.113.2:${p}`);
+    const m = opShapes.get(`203.0.113.3:${p}`);
     const sockBytes = portBytes.get(p) || 0;
     if (!m) { shapes.set('(no op sighted)', (shapes.get('(no op sighted)') || 0) + sockBytes); continue; }
     const tot = [...m.values()].reduce((x, y) => x + y, 0);
@@ -166,7 +166,7 @@ for (const c of cursors.values()) {
   const ip = client.split(':')[0];
   const k = `${hostLabel(ip)}|${c.ns}|${c.orig?.op}|${c.orig?.filter || c.orig?.pipeline || ''}|proj=${c.orig?.projection || '-'}`.slice(0, 600);
   const e = byClientShape.get(k) || { docs: 0, cursors: 0, sizeKey: sizeKey(c), host: hostLabel(ip), ports: new Set() };
-  e.docs += docs; e.cursors++; if (ip === '203.0.113.2') e.ports.add(Number(client.split(':')[1]));
+  e.docs += docs; e.cursors++; if (ip === '203.0.113.3') e.ports.add(Number(client.split(':')[1]));
   byClientShape.set(k, e);
 }
 const rowsB = [...byClientShape.entries()].map(([k, e]) => {

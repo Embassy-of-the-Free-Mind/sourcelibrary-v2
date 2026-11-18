@@ -83,7 +83,7 @@ export async function imageSetVerdict(pages, book = null, { hashUrl = defaultHas
   const sorted = [...pages].sort((a, b) => a.page_number - b.page_number);
   const cache = new Map();
   const hashOnce = (url) => { if (!cache.has(url)) cache.set(url, hashUrl(url)); return cache.get(url); };
-  const repaired = book?.archive_metadata?.jp2_offset_repaired === true && book.archive_metadata.jp2_offset_post_verdict === 'aligned';
+  const repaired = imageSetRepaired(book);
   const writers = {};
   for (const [name, w] of Object.entries(SHIFT_PRONE_WRITERS)) {
     const mine = sorted.filter((p) => p.archive_metadata?.source === name && !hasVerifiedMapping(p));
@@ -121,6 +121,72 @@ export function imageSetReadRefusal(v) {
   if (v?.verdict === 'shifted') return 'the stored page images sit one leaf off their page rows (image-set gate, v3#466): re-archive the book from its source before it is read';
   if (v?.verdict === 'mixed') return 'the stored page images follow two mappings in one book (image-set gate, v3#466): re-archive the book from its source before it is read';
   return null;
+}
+
+/** Pure: the book carries the repair stamp `imageSetVerdict` trusts without sampling. */
+export const imageSetRepaired = (book) => book?.archive_metadata?.jp2_offset_repaired === true && book.archive_metadata.jp2_offset_post_verdict === 'aligned';
+
+/*
+ * THE LANE SIDE (v3#466, 2026-11-18). The gate above refuses inside the reader, after a lane has drawn the book, charged
+ * its pages to the run's page budget and, when the reader comes back with nothing, written them into its "tried, never
+ * tried again" ledger. The Latin first-read lane drew the same 26 to 40 shifted e-rara books first every hour, spent
+ * its whole budget on refusals for 21 runs on two pools, and wrote off about 42,000 pages of books that will be
+ * readable once their images are re-cut. So a lane asks before it draws: `imageSetLaneStep` says read, wait or check,
+ * the lane keeps each verdict in one file beside its ledger, and a refused book costs neither budget nor ledger rows.
+ */
+
+/** A recorded refusal is honoured this long, then the book is sampled again. A repair stamps the book, which lifts it at once. */
+export const IMAGE_SET_RECHECK_DAYS = 7;
+
+/**
+ * The Mongo match of the books the gate would sample, among `bookIds`: one of rows 2 to 4 written by a shift-prone
+ * writer with no count-checked mapping (`hasVerifiedMapping`). Three early rows stand for the book, so the query stays
+ * on pages_book_pagenum_idx; a book it misses is still refused by the reader, as before.
+ */
+export const shiftPronePageMatch = (bookIds) => ({
+  book_id: { $in: bookIds }, page_number: { $in: [2, 3, 4] },
+  'archive_metadata.source': { $in: Object.keys(SHIFT_PRONE_WRITERS) }, 'archive_metadata.pdf_leaf_offset': null,
+});
+
+/** Pure: a verdict that decides for IMAGE_SET_RECHECK_DAYS. `unknown` is kept too, but only for a day (imageSetLaneStep). */
+export const isSettledVerdict = (verdict) => ['shifted', 'mixed', 'aligned', 'not_applicable'].includes(verdict);
+
+/**
+ * Pure: what a lane does with a book before it draws it.
+ *   read   the gate has nothing to sample, the book is repaired, or a recent check found it aligned
+ *   wait   a recent check refused it: not drawn, nothing fetched, nothing charged
+ *   check  ask the gate now (`checksLeft` > 0)
+ *   later  the run has made its checks: the book waits for a later run, unread and unledgered
+ * `known`: the last kept verdict `{ verdict, at }`, or null. The cap on checks is what keeps a lane with ten thousand
+ * unchecked books from fetching fifteen sample images for each of them from the source in one hour.
+ */
+export function imageSetLaneStep({ shiftProne, book = null, known = null, checksLeft = 0, now = Date.now(), days = IMAGE_SET_RECHECK_DAYS }) {
+  if (!shiftProne || imageSetRepaired(book)) return 'read';
+  const age = known?.at ? now - Date.parse(known.at) : Infinity;
+  if (age < days * 86_400_000 && imageSetReadRefusal(known)) return 'wait';
+  if (age < days * 86_400_000 && isSettledVerdict(known.verdict)) return 'read';
+  // `unknown` (source unreachable, or pages too alike to tell): the reader reads the book as unverified, as it always
+  // has. Asked again after a day, not every run, or forty such books at the head of the order would take every check.
+  if (age < 86_400_000 && known.verdict === 'unknown') return 'read';
+  return checksLeft > 0 ? 'check' : 'later';
+}
+
+/**
+ * Pure: the ledger rows a refusal wrote off, to be released. `ledgerText`: a lane ledger (jsonl; rows carry page_id,
+ * book_id, outcome, why). `refusedBooks`: a Set of book ids the gate refused. A page counts when its LAST row is
+ * `failed` / `not_read` (the reader returned nothing for it) and its book is in the set: a later `written`, another
+ * failure or an earlier release leaves it alone. Returns one `{ page_id, book_id, page_number }` a page.
+ */
+export function gateWriteOffs(ledgerText, refusedBooks) {
+  const last = new Map();
+  for (const line of String(ledgerText).split('\n')) {
+    if (!line.trim()) continue;
+    let r; try { r = JSON.parse(line); } catch { continue; }
+    if (r.page_id) last.set(r.page_id, r);
+  }
+  return [...last.values()]
+    .filter((r) => r.outcome === 'failed' && r.why === 'not_read' && refusedBooks.has(r.book_id))
+    .map((r) => ({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number ?? null }));
 }
 
 /** What a page's read records about the gate (engine.input.image_set): small, and enough to audit. */

@@ -190,6 +190,11 @@
  * translation, the chained Batch enrolment, which refuses a held book) selects it because it now has text.
  * Ledger DIR/../first-read-ledger.jsonl (every page tried, never tried again), claims DIR/../claims-first-read/, quota
  * floor and pools as the correction lane's (QUOTA FLOOR, POOL above).
+ * IMAGE-SET GATE (v3#466): a book whose stored images sit off their page rows is asked about BEFORE it is drawn
+ * (imageSetLaneStep): refused, it costs no page of the budget and no ledger row, and its verdict is kept in
+ * DIR/../first-read-image-sets.jsonl so it is not drawn again for seven days or until it is repaired. A run samples at
+ * most `--gate-checks=N` (default 40) unchecked books; the rest wait for a later run. A ledger row with outcome
+ * `released` takes its page out of the ledger again (the pages written off before this rule).
  *
  * ARMC (#7567 arm c, Derek 2026-10-29): the CORRECT frame (a stored Flash-Lite draft of 300+ characters, visible idle
  * unheld book, interior page, not handwritten, edited or withheld; plus E5's: `year` 1450-1800, no manuscript tag, and
@@ -262,6 +267,7 @@ import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName, weeklyReserve, pullFinishQueue, finishQueueNote } from '../lib/agy-pools.mjs';
 import { laneRouteCheck, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead } from '../lib/router-binding.mjs';
+import { bookImageSet, imageSetReadRefusal, imageSetRepaired, imageSetLaneStep, isSettledVerdict, shiftPronePageMatch, gateWriteOffs, IMAGE_SET_RECHECK_DAYS } from '../lib/image-set-gate.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -691,7 +697,8 @@ function ledgerTail(file, set, state) {
   const text = buf.toString('utf8');
   const cut = text.lastIndexOf('\n') + 1;      // a line still being written waits for the next call
   state.offset += Buffer.byteLength(text.slice(0, cut));
-  for (const l of text.slice(0, cut).split('\n').filter(Boolean)) { try { set.add(JSON.parse(l).page_id); } catch { /* skip */ } }
+  // A `released` row takes its page out again: the attempt it cancels was a book the image-set gate refused (v3#466).
+  for (const l of text.slice(0, cut).split('\n').filter(Boolean)) { try { const r = JSON.parse(l); if (r.outcome === 'released') set.delete(r.page_id); else set.add(r.page_id); } catch { /* skip */ } }
 }
 
 /**
@@ -1884,7 +1891,7 @@ export function finishReadSkip(book, { languages = null } = {}) {
   if (languages && !languages.includes(firstReadLanguage(book))) return 'language not in --languages';
   return null;
 }
-const FIRST_READ_PROJECTION = { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
+const FIRST_READ_PROJECTION = { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, translation_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1, 'archive_metadata.jp2_offset_repaired': 1, 'archive_metadata.jp2_offset_post_verdict': 1 };
 
 /** The quota flags every agy lane here shares (QUOTA FLOOR and POOL in the header), validated; exits 2 on a bad one. */
 function quotaFlags(arg) {
@@ -1999,14 +2006,86 @@ async function firstReadMain(mode, arg) {
   }
   console.log(`run --cohort=${COHORT}: pool ${POOL}; ${books.length} books in frame${LANGS ? ` (${LANGS.join(',')})` : ''}, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk, ${FIRST_READ_PER_CALL_LANGUAGES.map((l) => `${l} ${firstReadPerCall(l, PER_CALL)}`).join(', ')} a call${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0, booksTaken = 0;
-  const tally = { written: 0, handwritten: 0, has_ocr_now: 0, failed: 0, other: 0, books: 0, books_skipped_handwritten: 0, spread_wait: 0, corrected: 0, correct_unchanged: 0, correct_other: 0 };
+  const tally = { written: 0, handwritten: 0, has_ocr_now: 0, failed: 0, other: 0, books: 0, books_skipped_handwritten: 0, spread_wait: 0, corrected: 0, correct_unchanged: 0, correct_other: 0, image_set_refused: 0, image_set_wait: 0, image_set_later: 0, released: 0 };
   const rungs = rungTracker(db);
+
+  // IMAGE-SET GATE, LANE SIDE (v3#466; scripts/lib/image-set-gate.mjs). The reader refuses a book whose stored images sit
+  // off their page rows, but only after this lane has charged the pages to the run and, on an empty read, ledgered
+  // them. So the lane asks first. Verdicts are kept in DIR/../first-read-image-sets.jsonl (one row a check, the last
+  // row a book decides): a refused book is not drawn again for IMAGE_SET_RECHECK_DAYS or until it is repaired, and a
+  // run samples at most --gate-checks unchecked books, so the source is not asked for every book of the frame at once.
+  const LANE_DIR = path.dirname(LEDGER);
+  const IMAGE_SETS = path.join(LANE_DIR, 'first-read-image-sets.jsonl');
+  const GATE_CHECKS = Number(arg('gate-checks') ?? 40);
+  const imageSets = new Map();
+  const releasePage = (r, why) => {
+    fs.appendFileSync(LEDGER, JSON.stringify({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number ?? null, outcome: 'released', why, pool: POOL, at: new Date().toISOString() }) + '\n');
+    ledger.delete(r.page_id); tally.released++;
+  };
+  const noteImageSet = (bookId, v, { write = APPLY } = {}) => {   // a dry run keeps what it learns to itself
+    if (!isSettledVerdict(v?.verdict) && v?.verdict !== 'unknown') return null;
+    const row = { book_id: bookId, verdict: v.verdict, writers: v.writers ?? null, at: v.checked_at ?? v.at ?? new Date().toISOString() };
+    imageSets.set(bookId, row);
+    if (write) fs.appendFileSync(IMAGE_SETS, JSON.stringify(row) + '\n');
+    return row;
+  };
+  // Once, by an --apply run that finds no verdict file: take the verdicts the reader left in the day folders, and
+  // release the pages this lane wrote off for the books it refused (41,871 between 2026-11-17 and 11-18). The verdict
+  // file is written last, so a run that dies part-way is done again by the next one; a page already released is not
+  // owed a second row (gateWriteOffs reads each page's last row), and two runs seeding at once only repeat rows.
+  if (APPLY && !fs.existsSync(IMAGE_SETS)) {
+    const days = fs.readdirSync(LANE_DIR).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort().slice(-IMAGE_SET_RECHECK_DAYS);
+    for (const d of days) for (const id of fs.readdirSync(path.join(LANE_DIR, d))) {
+      let v = null;
+      try { v = JSON.parse(fs.readFileSync(path.join(LANE_DIR, d, id, 'image-set.json'), 'utf8'))[id]; } catch { /* no verdict kept for this book that day */ }
+      if (v) noteImageSet(id, v, { write: false });
+    }
+    const refused = new Set([...imageSets.values()].filter((r) => imageSetReadRefusal(r)).map((r) => r.book_id));
+    const owed = fs.existsSync(LEDGER) ? gateWriteOffs(fs.readFileSync(LEDGER, 'utf8'), refused) : [];
+    for (const r of owed) releasePage(r, 'image-set gate (v3#466): the book was refused, so the page was never tried');
+    // Appended, never truncated: another run may have seeded and added its own checks in the meantime.
+    fs.appendFileSync(IMAGE_SETS, [...imageSets.values()].map((r) => JSON.stringify(r) + '\n').join(''));
+    console.log(`image-set verdicts taken from ${days.length} day folder(s): ${imageSets.size} book(s), ${refused.size} refused; ${owed.length} ledgered page(s) released`);
+  } else if (fs.existsSync(IMAGE_SETS)) {
+    for (const l of fs.readFileSync(IMAGE_SETS, 'utf8').split('\n').filter(Boolean)) { try { const r = JSON.parse(l); imageSets.set(r.book_id, r); } catch { /* a line still being written */ } }
+  }
+  const shiftProne = new Set();
+  const unrepaired = books.filter((b) => !imageSetRepaired(b)).map((b) => b.id);
+  for (let i = 0; i < unrepaired.length; i += 1000) for (const id of await db.collection('pages').distinct('book_id', shiftPronePageMatch(unrepaired.slice(i, i + 1000)))) shiftProne.add(id);
+  let gateChecks = 0;
+  /** The gate's verdict for a book, kept in the file the reader reads (DIR/<book>/image-set.json), so it is fetched once a day. */
+  const laneImageSet = async (b) => {
+    const f = path.join(OUT, b.id, 'image-set.json');
+    let kept = {};
+    try { kept = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* not checked today */ }
+    const v = await bookImageSet(db, b.id, kept);
+    fs.mkdirSync(path.dirname(f), { recursive: true });
+    fs.writeFileSync(f, JSON.stringify(kept));
+    return v;
+  };
+  const refuseBook = (b, v, tag = '') => {
+    noteImageSet(b.id, v);
+    tally.image_set_refused++;
+    console.log(`${tag}${b.id} ${String(b.title || '').slice(0, 40)} not drawn: ${imageSetReadRefusal(v)} (${JSON.stringify(v.writers)}); no page charged or ledgered`);
+  };
+  console.log(`image-set gate: ${shiftProne.size} of ${books.length} books in frame need a check; ${[...shiftProne].filter((id) => imageSetLaneStep({ shiftProne: true, known: imageSets.get(id) }) === 'wait').length} wait on a refusal, up to ${GATE_CHECKS} new check(s) this run`);
+
   const nextChunk = async () => {
     while (bi < books.length) {
       if (booksTaken >= MAX_BOOKS) return null;
       const b = books[bi++];
+      // A book the reader refused is the gate's business even when the three-row sample did not name it.
+      const step = imageSetLaneStep({ shiftProne: shiftProne.has(b.id) || !!imageSetReadRefusal(imageSets.get(b.id)), book: b, known: imageSets.get(b.id), checksLeft: GATE_CHECKS - gateChecks });
+      if (step === 'wait') { tally.image_set_wait++; continue; }
+      if (step === 'later') { tally.image_set_later++; continue; }
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
+      if (step === 'check') {
+        gateChecks++;   // before the await, so two workers never both take the last check
+        const v = await laneImageSet(b);
+        if (imageSetReadRefusal(v)) { refuseBook(b, v); releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id); continue; }
+        noteImageSet(b.id, v);
+      }
       ledgerTail(LEDGER, ledger, tailState);
       const pages = await unreadPages(b);
       const spread = spreadReason(b, pages);
@@ -2044,6 +2123,19 @@ async function firstReadMain(mode, arg) {
         ...(perCall > 1 ? [`--per-call=${perCall}`] : [])], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
+      // The reader's own gate refused a book the lane let through (not in the three-row sample, or a kept verdict that
+      // no longer holds): nothing was read, so the pages go back to the budget and stay out of the ledger.
+      let readerSet = null;
+      try { readerSet = JSON.parse(fs.readFileSync(path.join(dir, 'image-set.json'), 'utf8'))[book.id]; } catch { /* the reader kept no verdict */ }
+      if (imageSetReadRefusal(readerSet)) {
+        budget += take.length; tally.books--; booksTaken--;   // the book cost nothing: not the page budget, not a --max-books place
+        if (stop === 'page budget spent') stop = null;       // another worker stopped on the pages this one just gave back
+        // A book repaired since the reader kept that verdict today: drop the kept verdict, so the next run samples the
+        // new images. Without this the reader answers from its day file until midnight.
+        if (imageSetRepaired(book)) { fs.rmSync(path.join(dir, 'image-set.json'), { force: true }); console.log(`${tag}  the reader refused from a verdict kept before the repair: verdict dropped, read on the next run`); }
+        else refuseBook(book, readerSet, tag);
+        release(); continue;
+      }
       const reason = `${FIRST_READ_REASON}: ${FINISH ? `finish cohort (#8482): visible book ${Math.floor(100 * translatedShare(book))}% translated` : `visible book held ${book.pipeline_auto.hold.reason} (the hold stays)`}, routed ${routed}, first read by ${FIRST_READ_MODEL} through agy${perCall > 1 ? `, ${perCall} pages a call (#7522)` : ''}`;
       const t0 = Date.now();
       const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only', ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);

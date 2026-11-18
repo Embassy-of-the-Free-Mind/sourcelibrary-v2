@@ -12,6 +12,9 @@ interface ContentHeaderProps {
   title: string;
   subtitle?: string;
   children?: ReactNode; // extra hero content (badges, etc.)
+  /** The page's main action (a button), shown inside the hero under the subtitle,
+   *  with or without an image. Unlike `children`, it never drops below the hero. */
+  actions?: ReactNode;
   /** Optional background image URL for the hero section */
   image?: string;
   imageAlt?: string;
@@ -33,7 +36,7 @@ interface ContentHeaderProps {
   backLabel?: string;
 }
 
-export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false, backHref = '/articles', backLabel = 'All articles' }: ContentHeaderProps) {
+export function ContentHeader({ title, subtitle, children, actions, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false, backHref = '/articles', backLabel = 'All articles' }: ContentHeaderProps) {
   if (feature) heightClass = 'min-h-[400px] md:min-h-[70vh]';
   const headerWidthClass =
     maxWidth === 'full'
@@ -94,6 +97,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, imag
           {subtitle && (
             <p className={`text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed ${image ? 'drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]' : ''}`}>{subtitle}</p>
           )}
+          {actions && <div className="mt-6">{actions}</div>}
           {!image && !feature && children}
         </div>
       </div>
