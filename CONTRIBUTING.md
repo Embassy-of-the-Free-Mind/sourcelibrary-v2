@@ -10,8 +10,9 @@ that one file is the single source of truth, deliberately not duplicated across
 
 ## The shape of collaboration
 
-- **`main` is production.** Every merge to `main` auto-deploys sourcelibrary.org
-  within ~6 minutes. There is no staging branch.
+- **`main` is the integration branch; `release` serves production.** Merges wait
+  for a scheduled release (07:00, 13:00 and 19:00 UTC). There is no staging branch.
+  See [How deploys work](#how-deploys-work-and-what-not-to-set-up) below.
 - **All changes go through PRs.** Never push directly to `main`, even for one-liners.
 - **Prod data is shared.** The MongoDB Atlas cluster and Supabase project behind your
   local dev server are the *live production stores*. Reading is fine; destructive
@@ -49,19 +50,28 @@ that one file is the single source of truth, deliberately not duplicated across
    of wasted deploy cycles) and `npm test`.
 4. **Open the PR:** `gh pr create --base main`. Keep PRs focused — one concern per
    PR; state what's in scope *and* what you deliberately left out.
-5. **Pushing the branch gives you a preview URL automatically** (a Vercel Preview
-   deployment builds from Derek's Vercel project). Use that to test and share —
-   you do not need any Vercel setup of your own.
+5. **Previews are opt-in.** For a branch in this repository, add the `preview`
+   label to the PR or run `npm run preview`. The label workflow pushes the PR
+   head to `preview/pr-<number>` and keeps it updated while the label remains.
+   Fork PRs are excluded from that workflow; ask a maintainer to arrange a preview
+   rather than connecting the upstream repo to your own Vercel project.
+   See [preview-label.yml](./.github/workflows/preview-label.yml).
 6. **After merge, delete the branch.**
 
 Details, conventions, and the reasoning behind them: [CLAUDE.md → PR Conventions](./CLAUDE.md#pr-conventions).
 
 ## How deploys work (and what NOT to set up)
 
-- **Merging to `main` deploys production.** The repo's Git integration builds on
-  Derek's Vercel team (`dereklomas-projects`), and a GitHub Action
-  (`post-deploy-warm.yml`) then purges the Cloudflare CDN and re-warms pages.
-  You never run a deploy yourself.
+- **A release deploys production, not an ordinary merge to `main`.**
+  [release.yml](./.github/workflows/release.yml) advances `release` to `main`
+  at 07:00, 13:00 and 19:00 UTC when build inputs have changed, after its
+  safety checks. It also handles the post-deploy purge and warm.
+  [vercel.json](./vercel.json) enables Git deployments only for `release`
+  and `preview/**`, not ordinary feature branches or `main`.
+- **Do not deploy a merged PR yourself.** Maintainers can request an exceptional
+  release for a reader-facing breakage or a failed scheduled release; use a
+  preview to see other changes sooner. The current release and verification
+  procedure lives in [CLAUDE.md](./CLAUDE.md#development-workflow--critical).
 - **Do NOT connect this repo to your own Vercel account.** A second Vercel project
   watching the same repo posts its own (failing) deploy statuses onto every commit
   and PR. This is not hypothetical — as of Aug 2026 a project under the `frondular`
@@ -85,11 +95,15 @@ Details, conventions, and the reasoning behind them: [CLAUDE.md → PR Conventio
 
 ## Reading the checks on your PR
 
-- **`test` and `DCO` are the truth.** Green there = mergeable in principle.
-- **The Vercel check is currently unreliable** (see above): it can show "fail" from
-  the stray integration, or stay "fail" after a successful retry. Judge the real
-  build by the preview URL on your branch, or `npx vercel ls sourcelibrary-v2
-  --meta githubCommitRef=<your-branch>` if you have CLI access to Derek's scope.
+- **Read the current checks, not just their colour.** `test` and `DCO` matter,
+  and `next-build` is the PR build check (compile-only; non-build changes are
+  skipped). An absent check is not a pass. See
+  [the checks guide](./.claude/docs/invariants/pr-checks.md) for the full procedure.
+- **A Vercel preview check is not guaranteed on every PR.** Previews are opt-in,
+  and a Vercel check can also stay red after a successful retry. When a preview
+  was requested, verify the deployment for the exact PR head commit, not another
+  branch's latest build: `npx vercel ls sourcelibrary-v2
+  --meta githubCommitSha=<head-sha>` if you have CLI access to Derek's scope.
 - **To block a PR** (yours or anyone's) with a real finding, add the `blocked`
   label — review comments scroll away; the label is what automated sweeps respect.
 
