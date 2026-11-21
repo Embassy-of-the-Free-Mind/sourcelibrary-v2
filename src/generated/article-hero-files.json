@@ -35,6 +35,18 @@
    }
   ]
  },
+ "/articles/how-europe-read-mesoamerican-books/humboldt-plate-45.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/3b21cfc5dd70-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/3b21cfc5dd70-1920.avif",
+    "w": 1920
+   }
+  ]
+ },
  "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
   "srcset": [
    {
