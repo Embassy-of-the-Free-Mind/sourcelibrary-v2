@@ -77,6 +77,11 @@ export const ARCHIVABLE_SOURCE_HOSTS = [
   // Hetzner datacenter IP before relying on this in production. If it 429s or
   // 403s a datacenter IP it must be removed (per the invariant above).
   'museumsofindia.gov.in',
+  // Verified 200 (2MB JPEG, 3-9s) from a residential IP, 2026-11-06. Vercel
+  // fetched 5 of 5 at low concurrency but dropped most of 43 at the OCR route's
+  // 20-way concurrency; the archive route's 5-way batches should stay under it.
+  // PENDING: probe a REAL page url against the Hetzner datacenter IP.
+  'kokusho.nijl.ac.jp',
 ] as const;
 
 /**
