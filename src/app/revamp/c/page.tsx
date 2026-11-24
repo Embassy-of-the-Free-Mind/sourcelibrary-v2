@@ -12,8 +12,9 @@ const MICRO = 'uppercase tracking-[0.16em] text-[10.5px] md:text-[11px]';
 
 interface Sorted { source: string; slug: string; name: string; proposed: string; proposed_subject?: string | null }
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string }> }) {
-  const { subject } = await searchParams;
+export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string; maker?: string }> }) {
+  const { subject, maker } = await searchParams;
+  const initialMaker = maker === 'reader' || maker === 'source-library' ? maker : 'all';
   const filters = 'menus' as const;
   const sched = dataFile<{ entries: { collection: string }[] }>('schedule');
   const lead = sched?.entries[0] ? collectionModel(sched.entries[0].collection) : null;
@@ -42,7 +43,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
         </div>
         <CollectionBars strip live works={items.length} placeholder="Search collections or ask a question" scope={`all ${items.length} collections`} />
       </section>
-      <CollectionsBrowser barSearch items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
+      <CollectionsBrowser key={initialMaker} initialMaker={initialMaker} barSearch items={items} featured={lead?.slug} subjects={subjects} initialSubject={subjects.some((x) => x.name === subject) ? subject : ''} hideTitle filters={filters} />
       <section className="bg-warm border-t border-border-light">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10 grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-center">
           <div>

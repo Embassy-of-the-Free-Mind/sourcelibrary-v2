@@ -23,6 +23,9 @@ export function navData(): NavData {
     Places: 'https://images.sourcelibrary.org/gallery/69a5d8d3a63a00aaae8aab0d/69a5d8d3a63a00aaae8aac70-0-thumb.jpg',
     'Types of texts': 'https://images.sourcelibrary.org/cropped/699ef9fe16733aa5a290e3d6/699efb4e39bee1d6074dc4d8.jpg',
     'Types of pictures': 'https://images.sourcelibrary.org/gallery/6a21984bf11c08f10b202651/6a21984bf11c08f10b202677-0-thumb.jpg?v=1790911979129',
+    // A Source Library collection, and one a reader made (Slime Moulds, by Symcyto).
+    Collections: picks[0]?.img ?? '',
+    "Readers' collections": 'https://images.sourcelibrary.org/gallery/6abeeb5c53b9aa5a21af89cc/6abeeb5c53b9aa5a21af89df-0-thumb.jpg?v=1792198914648',
   };
   return {
     subjects, picks, ways,

@@ -38,7 +38,9 @@ const PLACES: Way = ['Places', 'Where it comes from', '/revamp/places'];
 const TEXT_TYPES: Way = ['Types of texts', 'Treatises, letters…', '/revamp/types/texts'];
 const PIC_TYPES: Way = ['Types of pictures', 'Maps, portraits…', '/revamp/types/pictures'];
 const WAYS: Way[] = [SUBJECTS, CENTURIES, LANGUAGES, PLACES, TEXT_TYPES, PIC_TYPES];
-const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ['From readers', '/revamp/c#readers'], ['Libraries', '/libraries']];
+// Source Library's collections and readers' collections sit beside the ways in, at the same size.
+const COLLECTION_TILES: Way[] = [['Collections', 'By Source Library', '/revamp/c?maker=source-library'], ["Readers' collections", 'By readers', '/revamp/c?maker=reader']];
+const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ["Readers' collections", '/revamp/c?maker=reader'], ['Libraries', '/libraries']];
 
 const LINKS = [['Articles', '/articles'], ['Explore', '/explore'], ['About', '/about'], ['Ask the librarian', '/librarian']];
 const linkCls = 'py-2 text-[13.5px] whitespace-nowrap text-white/70 hover:text-white transition-colors';
@@ -69,6 +71,8 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
   const enter = (k: Menu) => { if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(k), 120); };
   const leave = () => { if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(null), 200); };
 
+  // A picture already in the cache never fires onLoad after hydration, so check on mount too.
+  const shown = (el: HTMLImageElement | null) => { if (el?.complete && el.naturalWidth) el.classList.replace('opacity-0', 'opacity-100'); };
   const small = 'text-[12.5px] text-muted mb-2';
   const rowLink = 'block py-1 text-[14.5px] hover:underline underline-offset-2';
 
@@ -94,9 +98,12 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
       </span>
     </Link>
   );
-  const panel = (k: Menu, body: ReactNode) => open === k && variant !== 'dropdown' && (
-    <div className="absolute left-0 right-0 top-full z-50 bg-white text-primary border-b border-border-medium shadow-lg hidden lg:block" onMouseEnter={() => enter(k)} onMouseLeave={leave}>
-      <div className="max-w-[1500px] mx-auto px-10 py-7">{body}</div>
+  // Panels stay in the page, hidden, so their pictures have loaded before anyone opens a menu;
+  // opening only fades the panel in. Contents sit in the same container as the page below.
+  const PANEL_OF: Record<Menu, NavVariant> = { browse: 'browse', library: 'menus', gallery: 'menus', collections: 'menus' };
+  const panel = (k: Menu, body: ReactNode) => variant === PANEL_OF[k] && (
+    <div aria-hidden={open !== k} className={`absolute left-0 right-0 top-full z-50 bg-white text-primary border-b border-border-medium shadow-lg hidden lg:block transition-opacity duration-150 ${open === k ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`} onMouseEnter={() => enter(k)} onMouseLeave={leave}>
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-7">{body}</div>
     </div>
   );
   const col = 'border-l border-border-light pl-10';
@@ -149,35 +156,20 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
 
       {/* A: one Browse menu holding every way in and the collections. */}
       {panel('browse', (
-        <div className="max-w-[1240px] mx-auto flex gap-10">
-          <ul className="flex-1 m-0 p-0 list-none grid grid-cols-6 gap-5">
-            {WAYS.map(([a, b, h]) => (
-              <li key={a} className="m-0">
-                <Link href={h} className="group block">
-                  <span className="flex items-center justify-center h-[150px] bg-warm border border-border-light group-hover:border-primary p-2.5">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    {nav.ways?.[a] && <img src={nav.ways[a]} alt="" className="max-w-full max-h-full object-contain" />}
-                  </span>
-                  <span className="block mt-2.5 text-[15.5px] group-hover:underline underline-offset-2">{a}</span>
-                  <span className="block text-[13px] text-muted leading-snug">{b}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="w-[210px] shrink-0 border-l border-border-light pl-8">
-            {nav.featured && (
-              <Link href={colHref(nav.featured.slug)} className="group block mb-4">
-                <span className="flex items-center justify-center h-[100px] bg-warm border border-border-light group-hover:border-primary p-2">
+        <ul className="m-0 p-0 list-none grid grid-cols-8 gap-5">
+          {[...WAYS, ...COLLECTION_TILES].map(([a, b, h]) => (
+            <li key={a} className="m-0">
+              <Link href={h} className="group block">
+                <span className="flex items-center justify-center aspect-square bg-warm border border-border-light group-hover:border-primary p-2.5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  {nav.featured.img && <img src={nav.featured.img} alt="" className="max-w-full max-h-full object-contain" />}
+                  {nav.ways?.[a] && <img src={nav.ways[a]} alt="" decoding="async" ref={shown} onLoad={(e) => e.currentTarget.classList.replace('opacity-0', 'opacity-100')} className="max-w-full max-h-full object-contain opacity-0 transition-opacity duration-300" />}
                 </span>
-                <span className="block mt-2 text-[13px] text-muted">Featured collection</span>
-                <span className="block text-[15.5px] group-hover:underline underline-offset-2">{nav.featured.name}</span>
+                <span className="block mt-2.5 text-[15.5px] group-hover:underline underline-offset-2">{a}</span>
+                <span className="block text-[13px] text-muted leading-snug">{b}</span>
               </Link>
-            )}
-            <ul className="m-0 p-0 list-none">{COLLECTION_LINKS.map(([l, h]) => <li key={h} className="m-0"><Link href={h} className={rowLink}>{l}</Link></li>)}</ul>
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       ))}
 
       {/* B: Library and Gallery each list the ways in that apply to them; Collections has its own menu. */}

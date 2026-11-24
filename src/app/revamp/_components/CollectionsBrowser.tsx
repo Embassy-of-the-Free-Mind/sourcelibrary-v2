@@ -62,11 +62,11 @@ const meta = (c: IndexItem) => [
   pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false }: { barSearch?: boolean; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
+export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false, initialMaker = 'all' }: { initialMaker?: 'all' | 'source-library' | 'reader'; barSearch?: boolean; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
-  const [maker, setMaker] = useState<'all' | 'source-library' | 'reader'>('all');
+  const [maker, setMaker] = useState<'all' | 'source-library' | 'reader'>(initialMaker);
   const [holds, setHolds] = useState<string[]>([]);
   const [lang, setLang] = useState('');
   const [subject, setSubject] = useState(initialSubject);
