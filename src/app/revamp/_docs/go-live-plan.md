@@ -105,7 +105,7 @@ Small, one concern each. Every PR says what is in scope and what is deliberately
 
 ## 7. Open decisions for Laura
 
-- **Shelved 24 November: eras and centuries.** The collection filter reads the old era tag (911 of 1,255 Alchemy works have none); the Centuries page reads the date written, so they disagree. Options when picked up: keep eras but work them out from the date written, with dates beside the names; or neutral date names. The era names are European.
+- **Shelved 24 November: eras and centuries.** The collection filter reads the old era tag (in one collection, 911 of 1,255 works have none); the Centuries page reads the date written, so they disagree. Options when picked up: keep eras but work them out from the date written, with dates beside the names; or neutral date names. The era names are European.
 - How a collection lists its works: A, B or C.
 - The first featured collection, and how often it changes.
 - Comments on collections: yes or no.
