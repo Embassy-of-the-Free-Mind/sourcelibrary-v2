@@ -220,13 +220,22 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
           ) : (
             <div>
               <button type="button" onClick={() => setPhone('root')} className="flex items-center gap-1 text-white/70 text-[16px] mb-3"><ChevronLeft className="w-4 h-4" /> Menu</button>
-              <div className="text-[19px] leading-[1.95]">
-                {WAYS.map(([a, , h]) => <Link key={a} href={h} className="block">{a}</Link>)}
-              </div>
-              <div className="text-[19px] leading-[1.95] mt-4 pt-4 border-t border-white/15">
-                {nav.featured && <Link href={colHref(nav.featured.slug)} className="block truncate">Featured: {nav.featured.name}</Link>}
-                {COLLECTION_LINKS.map(([l, h]) => <Link key={h} href={h} className="block">{l}</Link>)}
-              </div>
+              <ul className="m-0 p-0 list-none">
+                {[...WAYS, ...COLLECTION_TILES].map(([a, b, h]) => (
+                  <li key={a} className="m-0 border-b border-white/10 last:border-0">
+                    <Link href={h} className="flex items-center gap-4 py-2.5">
+                      <span className="flex items-center justify-center w-14 h-14 shrink-0 bg-white/5">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        {nav.ways?.[a] && <img src={nav.ways[a]} alt="" decoding="async" className="max-w-full max-h-full object-contain" />}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-[18px] leading-tight">{a}</span>
+                        <span className="block text-[14px] text-white/60 mt-0.5">{b}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
