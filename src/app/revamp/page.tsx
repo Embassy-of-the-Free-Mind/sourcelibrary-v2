@@ -101,7 +101,7 @@ export default function Page() {
   const SITE: Node[] = [
     { title: 'Homepage', href: '/revamp/home', note: 'Three full-height featured layouts, Popular this week below', kids: [{ title: 'Featured collection schedule', href: '/revamp/featured', note: 'One file drives the homepage, Library and Gallery' }] },
     { title: 'Subjects', href: '/revamp/subjects', note: 'What books and pictures are about. Every subject has a picture.', kids: [
-      { title: 'A subject: Alchemy', href: '/revamp/s/alchemy', note: 'Sub-subjects, then Works · Images · Collections · About' },
+      { title: 'A subject: Alchemy', href: '/revamp/s/alchemy', note: 'Sub-subjects, then Texts · Images · Collections · About' },
       { title: 'A subject: Yoga', href: '/revamp/s/yoga' },
       { title: 'Draft subject list', href: '/revamp/subjects/draft', note: 'The working list, linked to FAST and Wikidata' },
     ] },
@@ -112,7 +112,7 @@ export default function Page() {
       { title: 'The Forum of Conscience, by Derek Lomas', href: '/revamp/c/forum-of-conscience', note: 'Cornelis Drebbel is also by Derek' },
       { title: 'Choose Symcyto’s avatar', href: '/revamp/avatar', note: 'From the Slime Moulds pictures' },
     ] },
-    { title: 'Centuries', href: '/revamp/periods', note: 'When works were written', kids: [{ title: 'A century: 1900–1999', href: '/revamp/p/period-1900' }] },
+    { title: 'Centuries', href: '/revamp/periods', note: 'When texts were written', kids: [{ title: 'A century: 1900–1999', href: '/revamp/p/period-1900' }] },
     { title: 'Languages', href: '/revamp/languages', note: 'The language of the copy', kids: [{ title: 'A language: Latin', href: '/revamp/l/language-latin' }] },
     { title: 'Places', href: '/revamp/places', note: 'Where the texts come from, continent by continent. Structure only until the catalogue round.' },
     { title: 'Types of pictures', href: '/revamp/types/pictures', note: 'What it shows · How it was made · Where it sits in the book', kids: aType ? [{ title: `A type: ${typeOfSlug(aType)?.map.label ?? aType}`, href: `/revamp/t/${aType}` }] : [] },
@@ -193,14 +193,16 @@ export default function Page() {
             <li>Three kinds: Subjects, Collections, Libraries. Plus Centuries, Languages and Types as ways in.</li>
             <li>Collections are made by Source Library or readers.</li>
             <li>One hero height everywhere; pictures stop above the search bar.</li>
-            <li>Categories: heading tabs for Works, Images, Collections, About.</li>
+            <li>Categories: heading tabs for Texts, Images, Collections, About.</li>
             <li>Sub-subjects as picture boxes under the hero; every subject has a picture.</li>
             <li>Filters on one line; count, tags, sort and view on a fixed second line; menu numbers follow the other filters.</li>
             <li>One set of control styles for every search, filter and sort.</li>
             <li>Every type and era is linked to a standard: LCGFT or Getty, plus Wikidata for names in other languages.</li>
             <li>Types became two pages: Types of pictures (what it shows, how it was made, where it sits) and Types of texts (what it’s written on, what kind of writing).</li>
             <li>Catalogue fixes wait for one combined round.</li>
-            <li>New subjects are semi-automatic: proposed from new books, public only past a minimum.</li>
+            <li>New subjects are semi-automatic: proposed from new books, public only past a minimum of 10 texts.</li>
+            <li>Tabs and counts say Texts and Images.</li>
+            <li>Subject About text follows the intro rules and the anti-slop rules.</li>
           </ul>
         </div>
         <div>
@@ -209,7 +211,7 @@ export default function Page() {
             <li>How a collection lists its works: <Link className="underline underline-offset-[3px]" href="/revamp/c/music-of-the-spheres">compare A, B and C</Link>.</li>
             <li>The first featured collection, and how often it changes.</li>
             <li>Comments on collections: yes or no.</li>
-            <li>The navigation menu.</li>
+            <li>The navigation menu: <Link className="underline underline-offset-[3px]" href="/revamp/nav">compare A, B and C</Link>.</li>
           </ol>
         </div>
         <div>

@@ -34,7 +34,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
     m.quotes.length ? { id: 'quotes', label: 'Quotes' } : null,
     m.plates.length ? { id: 'gallery', label: m.platesLabel } : null,
     m.ask ? { id: 'librarian', label: 'Librarian' } : null,
-    hasWorks ? { id: 'works', label: 'Works' } : null,
+    hasWorks ? { id: 'works', label: 'Texts' } : null,
   ].filter(Boolean) as { id: string; label: string }[];
   const mosaic = m.heroTiles.length >= 8;
 
@@ -77,7 +77,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
           {m.deck && <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{m.deck}</p>}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
             {[
-              m.stats.works > 0 ? `${n(m.stats.works)} works` : '',
+              m.stats.works > 0 ? `${n(m.stats.works)} texts` : '',
               m.stats.images > 0 ? `${n(m.stats.images)} ${m.opensOn === 'artworks' ? 'artworks' : 'images'}` : '',
               m.pages.length > 0 ? `${m.pages.length} pages` : '',
               m.quotes.length > 0 ? `${m.quotes.length} quotes` : '',
@@ -138,7 +138,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
               <h2 className={H2}>First translations</h2>
               <span className="text-sm text-muted whitespace-nowrap">{m.firstTranslations.length} {m.firstTranslations.length === 1 ? 'title' : 'titles'}</span>
             </div>
-            <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
+            <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Texts appearing in a modern, readable translation for the first time.</p>
             <BookSlider books={m.firstTranslations} />
           </div>
         </section>
@@ -193,8 +193,8 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
         <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className={WRAP}>
             <div className="flex items-end justify-between gap-4 mb-6">
-              <h2 className={H2}>Works in this collection</h2>
-              <span className="text-sm text-muted whitespace-nowrap">{n(m.stats.works)} works</span>
+              <h2 className={H2}>Texts in this collection</h2>
+              <span className="text-sm text-muted whitespace-nowrap">{n(m.stats.works)} texts</span>
             </div>
             <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.listed || m.books.length} slug={m.slug} />
           </div>

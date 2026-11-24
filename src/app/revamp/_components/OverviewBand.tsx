@@ -31,11 +31,11 @@ export default function OverviewBand({ o }: { o: Overview }) {
   const kinds = (im?.kinds ?? []).map((k) => ({ ...k, value: label(k.value) }));
   return (
     <div className="grid grid-cols-2 lg:grid-cols-[1fr_1fr_1.6fr_1.6fr] gap-2.5 sm:gap-3">
-      {hasBooks && <Number_ value={b.total} word={b.total === 1 ? 'work' : 'works'} note={b.translated ? `${fmt(b.translated)} translated into English` : undefined} />}
+      {hasBooks && <Number_ value={b.total} word={b.total === 1 ? 'text' : 'texts'} note={b.translated ? `${fmt(b.translated)} translated into English` : undefined} />}
       {hasImages && <Number_ value={im.total} word="images" note={im.artworks ? `plus ${fmt(im.artworks)} artworks` : `from ${fmt(im.books)} books`} />}
       {!hasBooks && hasImages && <Number_ value={im.books} word="books illustrated" />}
       {!hasImages && hasBooks && <Number_ value={b.languageCount} word={b.languageCount === 1 ? 'language' : 'languages'} />}
-      <PrintedBox printed={printed.printed} onYears={nothing} what={hasBooks ? 'works' : 'images'} first={yearLabel(printed.yearFirst)} last={yearLabel(printed.yearLast)} />
+      <PrintedBox printed={printed.printed} onYears={nothing} what={hasBooks ? 'texts' : 'images'} first={yearLabel(printed.yearFirst)} last={yearLabel(printed.yearLast)} />
       {hasBooks
         ? <ShareBox title={`${fmt(b.languageCount)} ${b.languageCount === 1 ? 'language' : 'languages'}`} parts={b.languages} selected={[]} onPick={nothing} />
         : <ShareBox title={`${kinds.length} kinds of image`} parts={kinds} selected={[]} onPick={nothing} />}

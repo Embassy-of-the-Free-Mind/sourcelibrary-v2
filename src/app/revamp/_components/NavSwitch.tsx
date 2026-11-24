@@ -1,17 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { setNavVariant, type NavVariant } from './RevampHeader';
+import { readNavVariant, setNavVariant, type NavVariant } from './RevampHeader';
 
 const OPTIONS: [NavVariant, string, string][] = [
-  ['panel', 'A. Mega panel', 'Collections opens a full-width panel. Hover a subject to see what\'s inside it, with the featured collection on the right.'],
-  ['dropdown', 'B. Small dropdown', 'Collections opens five plain rows. The least to build and the least to learn.'],
-  ['split', 'C. Two links', 'Subjects and Collections each get a place in the bar, making eight links. Subjects opens the whole map, Collections opens picture cards.'],
+  ['browse', 'A. One Browse menu (recommended)', 'Collections in the bar becomes Browse. One big menu holds every way in (subjects, centuries, languages, places, types), the subject list and the collections. Same number of links as today.'],
+  ['menus', 'B. Library and Gallery menus', 'Library opens the ways into texts, Gallery the ways into images, Collections its own picture cards. Three menus to learn; Subjects and Centuries appear twice.'],
+  ['dropdown', 'C. Small list', 'Collections opens one plain list of everything. The least to build, but nothing visual and a long list.'],
 ];
 
 export default function NavSwitch() {
-  const [v, setV] = useState<NavVariant>('plain');
-  useEffect(() => { setV((localStorage.getItem('revamp-nav-2') as NavVariant) || 'plain'); }, []);
+  const [v, setV] = useState<NavVariant>('browse');
+  useEffect(() => { const read = () => setV(readNavVariant()); read(); window.addEventListener('revamp-nav', read); return () => window.removeEventListener('revamp-nav', read); }, []);
   return (
     <div className="grid gap-3 md:grid-cols-3 mt-6">
       {OPTIONS.map(([k, t, note]) => (

@@ -59,14 +59,14 @@ export default function AskPanel({ books, plates, byBook, scope, name }: { books
         </div>
 
         <div className="mt-6 max-w-3xl border border-border-light bg-warm px-5 py-4 text-[15px] text-secondary leading-relaxed">
-          The librarian&apos;s answer appears here, written from the works in {here} only, with links to the pages it quotes.
-          <span className="block text-[13px] text-muted mt-1.5">Prototype: no question is sent, so there is no answer. The works below match the words of your question.</span>
+          The librarian&apos;s answer appears here, written from the texts in {here} only, with links to the pages it quotes.
+          <span className="block text-[13px] text-muted mt-1.5">Prototype: no question is sent, so there is no answer. The texts below match the words of your question.</span>
         </div>
 
         <div className="mt-12 md:mt-16">
           <div className="flex items-end justify-between gap-4 mb-6">
             <h3 className="font-serif text-2xl md:text-[32px] text-primary leading-tight">From {here}</h3>
-            {found.length > 0 && <span className="text-sm text-muted">{scored.length > SHOW ? `${SHOW} of ${scored.length.toLocaleString('en-GB')}` : scored.length} {scored.length === 1 ? 'work' : 'works'}</span>}
+            {found.length > 0 && <span className="text-sm text-muted">{scored.length > SHOW ? `${SHOW} of ${scored.length.toLocaleString('en-GB')}` : scored.length} {scored.length === 1 ? 'text' : 'texts'}</span>}
           </div>
           {found.length === 0 ? (
             <p className="text-[15px] text-secondary">Nothing in {here} matches those words. Live, the librarian would say so and offer to ask the whole library.</p>
@@ -79,7 +79,7 @@ export default function AskPanel({ books, plates, byBook, scope, name }: { books
 
         {pics.length > 0 && (
           <div className="mt-12 md:mt-16">
-            <h3 className="font-serif text-2xl md:text-[32px] text-primary leading-tight mb-6">Pictures</h3>
+            <h3 className="font-serif text-2xl md:text-[32px] text-primary leading-tight mb-6">Images</h3>
             <GalleryMasonry plates={pics} />
           </div>
         )}

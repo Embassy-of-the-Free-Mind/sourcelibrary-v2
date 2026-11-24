@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
   // The same coloured counts as a collection's hero; a subject has no maker, so no "Curated by".
-  const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : ''].filter(Boolean) as string[];
+  const counts = [works && `${n(works)} texts`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : ''].filter(Boolean) as string[];
   const narrower = self ? subjects.filter((s) => s.parents.includes(self.id)) : [];
   // The same boxes as the Subjects page: a picture at the left, the name beside it.
   const subPics = subjectPictures();

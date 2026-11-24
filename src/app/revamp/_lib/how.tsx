@@ -4,10 +4,10 @@ import type { ReactNode } from 'react';
 /** The "How we …" panels, one per kind of page, so a century, language or type page only explains its own category. */
 export type How = { title: string; items: ReactNode[] };
 
-export const HOW_PERIODS: How = { title: 'How we date works', items: [
-        'Each work sits in the century it was written, not the century of the copy we hold: a 1502 printing of Herodotus is in 500–401 BCE.',
+export const HOW_PERIODS: How = { title: 'How we date texts', items: [
+        'Each text sits in the century it was written, not the century of the copy we hold: a 1502 printing of Herodotus is in 500–401 BCE.',
         'Centuries are plain date spans, the way library catalogues give dates (FAST). Named eras such as Renaissance mean different years in different places, so they are subjects, not dates.',
-        'Some dates come from a record (Wikidata, the author’s dates, the book’s own title page); the rest are estimates, marked as such on the work.',
+        'Some dates come from a record (Wikidata, the author’s dates, the book’s own title page); the rest are estimates, marked as such on the text.',
         <span key="made">When the copy itself was made is a separate filter, Date made, on every list. <Link href="/revamp/standards" className="text-primary underline underline-offset-[3px]">Every term against its standard</Link></span>,
 ] };
 

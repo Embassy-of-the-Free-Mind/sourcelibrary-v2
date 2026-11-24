@@ -222,7 +222,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   // Collections still offer the mixed layouts while their listing is being decided.
   const chaptersLook = curated && listing === 'a';
   const tabs = !chaptersLook && (((!small || !curated) && imagesHere && pics === 'tab') || (!curated && extraTabs.length > 0));
-  const headTabs: [string, string, number][] = [['works', 'Works', n], ...(imagesHere ? [['images', 'Images', imagesTotal] as [string, string, number]] : []), ...extraTabs.map((t) => [t.key, t.label, t.count] as [string, string, number])];
+  const headTabs: [string, string, number][] = [['works', 'Texts', n], ...(imagesHere ? [['images', 'Images', imagesTotal] as [string, string, number]] : []), ...extraTabs.map((t) => [t.key, t.label, t.count] as [string, string, number])];
   const chips = [q && { key: 'q', label: `“${q}”` }, lang !== 'all' && { key: 'lang', label: lang },
     fmtPick !== 'all' && { key: 'format', label: fmtPick === NONE ? 'Format not recorded' : FORMATS[fmtPick] },
     ttype !== 'all' && { key: 'type', label: ttype === NONE ? 'Type not recorded' : TEXT_TYPES[ttype] },
@@ -261,7 +261,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
   if (n === 0 && !curated && imagesHere) return (
     <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-12" id="works">
       {protoNote && <p className="border border-dashed border-border-medium bg-white px-4 py-3 mb-10 text-[13px] text-muted">Prototype only. {protoNote}</p>}
-      <h2 className={`${H2} mb-5`}>Pictures</h2>
+      <h2 className={`${H2} mb-5`}>Images</h2>
       {images}
     </div>
   );
@@ -299,7 +299,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               ))}
             </div>
           )
-        ) : group === 'sections' && !mixed ? null /* the sections' own headings lead */ : <h2 className={`${H2} mb-5`}>{mixed && imagesHere ? "Works and images" : "Works"}</h2>}
+        ) : group === 'sections' && !mixed ? null /* the sections' own headings lead */ : <h2 className={`${H2} mb-5`}>{mixed && imagesHere ? "Texts and images" : "Texts"}</h2>}
 
         {(!tabs || tab === 'works') && <>
           {!small && (
@@ -320,7 +320,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                 </div>
               </>}
               {/* The filter menus have the first line to themselves. The second line is always there: how many and what is applied on the left, group, sort and view on the right. Filtering never moves anything. */}
-              <div className="basis-full order-last flex flex-wrap items-center gap-2 sm:gap-3 min-h-8 [&>div]:basis-auto"><span className={COUNT}>{fmt(list.length)} {list.length === 1 ? 'work' : 'works'}{list.length < n ? ` of ${fmt(n)}` : ''}</span><FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
+              <div className="basis-full order-last flex flex-wrap items-center gap-2 sm:gap-3 min-h-8 [&>div]:basis-auto"><span className={COUNT}>{fmt(list.length)} {list.length === 1 ? 'text' : 'texts'}{list.length < n ? ` of ${fmt(n)}` : ''}</span><FilterChips chips={chips} onRemove={clear} onClearAll={() => chips.forEach((c) => clear(c.key))} />
               <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
                 {group !== 'sections' && !mixed && (canPeriod || canMade || canType || canLang) && <SortSelect label="Group" value={groupPick} onChange={reset(setGroup)} options={[['none', 'Not grouped'], ...(canType ? [['type', 'By type'] as [string, string]] : []), ...(canPeriod ? [['period', 'By period written'] as [string, string]] : []), ...(canMade ? [['made', 'By date made'] as [string, string]] : []), ...(canLang ? [['language', 'By language'] as [string, string]] : [])]} />}
                 <SortSelect value={sort} onChange={reset(setSort)} options={sorts} />
@@ -334,7 +334,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
               </div>
             </div>
           )}
-          {list.length === 0 && <p className="py-10 text-muted">No works match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
+          {list.length === 0 && <p className="py-10 text-muted">No texts match. <button type="button" className="underline underline-offset-[3px]" onClick={() => chips.forEach((c) => clear(c.key))}>Clear the search</button></p>}
           {mixed && columns(pageEntries)}
           {(() => { const rail = curated && listing === 'c' && group === 'sections' && blocks.length > 1; return (
           <div className={rail ? 'lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12' : ''}>
@@ -352,7 +352,7 @@ export default function CollectionItems({ slug, books, notes, plates, imagesTota
                 <header className="mb-8 md:mb-10 max-w-3xl">
                   <h3 className="font-serif text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.02em] text-primary">{group === 'sections' ? (sections.get(g.k)?.heading || 'Untitled section') : group === 'made' ? (g.k === NONE ? 'Undated' : centuryLabel(Number(g.k))) : group === 'period' ? (g.k === NONE ? 'Period not recorded' : periodLabel(g.k)) : group === 'type' ? (g.k === NONE ? 'Type not recorded' : TEXT_TYPES[g.k]) : g.k}</h3>
                   {group === 'sections' && sections.get(g.k)?.text && <p className="mt-3 md:mt-4 text-[17px] md:text-[19px] text-secondary leading-relaxed">{sections.get(g.k)!.text}</p>}
-                  <p className="mt-3 text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'work' : 'works'}</p>
+                  <p className="mt-3 text-[13px] text-muted">{groupSize.get(g.k)} {groupSize.get(g.k) === 1 ? 'text' : 'texts'}</p>
                 </header>
               )}
               {chaptersLook && (() => { const ps = g.items.flatMap((b) => byBook[b.id!] ?? []).slice(0, 8); return ps.length > 0 && (

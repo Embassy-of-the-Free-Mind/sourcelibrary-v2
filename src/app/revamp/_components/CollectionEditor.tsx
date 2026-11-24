@@ -83,7 +83,7 @@ export default function CollectionEditor({ start, original, books, onDone, onCan
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
           <h2 className="text-2xl sm:text-3xl text-primary font-display">Edit collection</h2>
-          <p className="text-[14px] text-muted mt-1">{works.toLocaleString('en-GB')} works. Drag by the handle or use the arrows to change the order. The first arrow moves a work straight to the top.</p>
+          <p className="text-[14px] text-muted mt-1">{works.toLocaleString('en-GB')} texts. Drag by the handle or use the arrows to change the order. The first arrow moves a work straight to the top.</p>
         </div>
         <div className="flex items-center gap-3">
           <button type="button" onClick={() => setDoc(original)} className="text-[13.5px] text-muted underline underline-offset-[3px] hover:text-primary">Back to the original</button>
@@ -99,7 +99,7 @@ export default function CollectionEditor({ start, original, books, onDone, onCan
           <p className="text-[13px] text-muted mt-2">They can still change it. Sections show in your order only.</p>
         </div>
         <form onSubmit={(e) => { e.preventDefault(); find(); }}>
-          <label htmlFor="ed-find" className="block text-[13.5px] font-semibold text-primary mb-2">Add works</label>
+          <label htmlFor="ed-find" className="block text-[13.5px] font-semibold text-primary mb-2">Add texts</label>
           <div className="flex items-stretch h-11 border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary" data-catalog-bar>
             <input id="ed-find" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Title or author in the Library" className="flex-1 min-w-0 px-3 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
             <button type="submit" className="relative -my-px -mr-px px-4 bg-primary text-cream text-sm">{busy ? 'Finding…' : 'Find'}</button>

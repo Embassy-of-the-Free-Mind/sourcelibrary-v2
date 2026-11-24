@@ -37,7 +37,7 @@ export default function CollectionBasic({ m, tone = 'ink', hero = 'wall', maker 
   const langs = new Set(m.all.map((b) => b.language).filter(Boolean)).size;
   const years = m.all.map((b) => b.year).filter((y): y is number => !!y && y > 0);
   const span = years.length ? `${Math.min(...years)} – ${Math.max(...years)}` : '';
-  const counts = [works && `${n(works)} works`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, span].filter(Boolean) as string[];
+  const counts = [works && `${n(works)} texts`, m.stats.images && `${n(m.stats.images)} images`, langs > 1 && `${langs} languages`, span].filter(Boolean) as string[];
   return (
     <div className="min-h-screen bg-cream">
       <section className={`relative overflow-hidden text-white flex items-end ${HERO_H}`} style={{ backgroundColor: '#1a1612' }}>

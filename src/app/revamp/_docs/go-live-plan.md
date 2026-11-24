@@ -45,6 +45,7 @@ The rule behind the sorting: a grouping becomes a subject only if it matches a s
 - **Types of pictures.** What it shows, how it was made, where it sits in the book. Needs all three answers on every picture.
 - **Types of texts.** What kind of writing, and what it is written on (form). Form is not recorded yet.
 - **Places (planned).** Where a text comes from, as a way in, with where the copy was printed as a filter. Needs place recorded. Six region-only groupings wait for it.
+- **Subject About text.** Most subjects have no About yet: only a handful of the 261 come from a collection that already has one. Each About is written to the collection intro rules (.claude/docs/collection-intro-writing-rules.md) and the anti-slop rules: no em dashes, no stock phrases, facts only from the books and the standard records, and checked by a script before it goes live.
 - **Standards page.** Lists every subject, type and era against its standard. Built from the same tables, so no extra data.
 - **Featured schedule.** One small table saying which collection is featured and when. It drives the homepage, Library and Gallery.
 - **Shared search, filter and sort controls.** Already one shared set of styles (search-kit/controls), used by /library and /gallery too.
@@ -79,7 +80,7 @@ Total model spend: about $100 to $150, up to about $300 if prices are higher tha
 ## 5. After the round
 
 - **New books** get subjects and types from the lists automatically, and counts update.
-- **New subjects are semi-automatic.** When new books point to a FAST heading with no subject yet, it becomes a proposed subject. It goes public only once it holds a minimum number of items (10 suggested, kept as a setting) and someone has checked the name.
+- **New subjects are semi-automatic.** When new books point to a FAST heading with no subject yet, it becomes a proposed subject. It goes public only once it holds a minimum number of items (10 texts, agreed 24 November; kept as a setting) and someone has checked the name.
 - **Publish the standard terms** in each book and picture page's hidden data (schema.org genre, linking the Library of Congress, Getty and Wikidata entries), so search engines and other libraries read them exactly.
 
 ## 6. Order of pull requests
@@ -96,11 +97,16 @@ Small, one concern each. Every PR says what is in scope and what is deliberately
 8. Catalogue round scripts, with the holding table.
 9. Places.
 
+## Decided 24 November
+
+- Tabs and counts say **Texts** and **Images**, not Works.
+- A new subject appears once it holds at least 10 texts.
+- Subject About text follows the intro rules and the anti-slop rules.
+
 ## 7. Open decisions for Laura
 
 - How a collection lists its works: A, B or C.
 - The first featured collection, and how often it changes.
 - Comments on collections: yes or no.
-- The navigation menu.
+- The navigation menu: A (one Browse menu, recommended), B (Library, Gallery and Collections menus) or C (a small list). Compare at /revamp/nav.
 - Sign-off on the summary rules.
-- The minimum before a new subject goes public (10 suggested).

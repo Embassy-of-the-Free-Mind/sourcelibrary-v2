@@ -19,7 +19,7 @@ export const SORTS: [string, string][] = [['maker', 'Maker’s order'], ['year_a
 const OLD_SECTIONS: [number | 'start', string, string][] = [
   ['start', 'Start here', ''],
   [1, 'Essential reading', 'The foundational texts of this tradition'],
-  [2, 'Important works', 'Significant texts that deepen understanding'],
+  [2, 'Important texts', 'Significant texts that deepen understanding'],
   [3, 'Also notable', ''],
 ];
 

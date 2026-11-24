@@ -14,7 +14,7 @@ export default function Page() {
   const tiles = [...new Set(groups.flatMap((g) => g.narrower.flatMap((x) => x.pics.slice(0, 2).map((p) => p.src))))].slice(0, 48);
   const how = HOW_PERIODS;
   return (
-    <AxisIndex title="Centuries" intro="Browse the library by when its works were written, century by century."
+    <AxisIndex title="Centuries" intro="Browse the library by when its texts were written, century by century."
       counts={[`${count} centuries`, `${n(books)} books with a date`]} tiles={tiles}
       featured={f ? { name: f.name, href: `/revamp/p/${f.slug}` } : null}
       groups={groups} noun={['century', 'centuries']} group={['Span', 'All spans']} placeholder="Search centuries or ask a question"

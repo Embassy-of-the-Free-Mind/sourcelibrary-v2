@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { Search, ChevronDown, ChevronRight, ChevronLeft, Menu, X } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
@@ -13,28 +13,45 @@ export interface NavData {
   featured: NavCollection | null;
   libraries: { name: string; count: number }[];
 }
-export type NavVariant = 'plain' | 'panel' | 'dropdown' | 'split';
-const KEY = 'revamp-nav-2';
+/** A: one Browse menu. B: Library, Gallery and Collections each open their own menu. C: Collections opens a short list. */
+export type NavVariant = 'browse' | 'menus' | 'dropdown';
+const KEY = 'revamp-nav-3';
+const DEFAULT: NavVariant = 'browse';
 
 export function setNavVariant(v: NavVariant) {
   localStorage.setItem(KEY, v);
   window.dispatchEvent(new Event('revamp-nav'));
 }
+export function readNavVariant(): NavVariant {
+  const v = localStorage.getItem(KEY);
+  return v === 'browse' || v === 'menus' || v === 'dropdown' ? v : DEFAULT;
+}
+
+type Way = [label: string, note: string, href: string];
+// Every way in, with what it answers. Library and Gallery menus take the ones that apply to them.
+const SUBJECTS: Way = ['Subjects', 'What it is about', '/revamp/subjects'];
+const CENTURIES: Way = ['Centuries', 'When it was written', '/revamp/periods'];
+const LANGUAGES: Way = ['Languages', 'What it is written in', '/revamp/languages'];
+const PLACES: Way = ['Places', 'Where it comes from', '/revamp/places'];
+const TEXT_TYPES: Way = ['Types of texts', 'Treatises, letters, scrolls…', '/revamp/types/texts'];
+const PIC_TYPES: Way = ['Types of pictures', 'Maps, portraits, engravings…', '/revamp/types/pictures'];
+const WAYS: Way[] = [SUBJECTS, CENTURIES, LANGUAGES, PLACES, TEXT_TYPES, PIC_TYPES];
+const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ['From readers', '/revamp/c#readers'], ['Libraries', '/libraries']];
 
 const LINKS = [['Articles', '/articles'], ['Explore', '/explore'], ['About', '/about'], ['Ask the librarian', '/librarian']];
 const linkCls = 'py-2 text-[13.5px] whitespace-nowrap text-white/70 hover:text-white transition-colors';
 const colHref = (s: string) => `/revamp/c/${s}`;
+type Menu = 'browse' | 'library' | 'gallery' | 'collections';
 
 export default function RevampHeader({ nav }: { nav: NavData }) {
-  const [variant, setVariant] = useState<NavVariant>('plain');
-  const [open, setOpen] = useState<null | 'collections' | 'subjects'>(null);
-  const [hot, setHot] = useState(nav.subjects[0]?.id);
-  const [phone, setPhone] = useState<null | 'root' | 'collections'>(null);
+  const [variant, setVariant] = useState<NavVariant>(DEFAULT);
+  const [open, setOpen] = useState<null | Menu>(null);
+  const [phone, setPhone] = useState<null | 'root' | 'browse'>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const read = () => setVariant((localStorage.getItem(KEY) as NavVariant) || 'plain');
+    const read = () => setVariant(readNavVariant());
     read();
     window.addEventListener('revamp-nav', read);
     return () => window.removeEventListener('revamp-nav', read);
@@ -47,32 +64,67 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
     return () => { document.removeEventListener('keydown', key); document.removeEventListener('mousedown', down); };
   }, []);
 
-  const enter = (k: 'collections' | 'subjects') => { if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(k), 120); };
+  const enter = (k: Menu) => { if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(k), 120); };
   const leave = () => { if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setOpen(null), 200); };
 
-  const dropdown = open === 'collections' && variant === 'dropdown' && (
-        <div className="absolute left-0 top-full z-50 w-[300px] bg-white text-primary border border-border-medium shadow-lg hidden lg:block">
-          {[
-            ['Featured', nav.featured?.name ?? '', nav.featured ? colHref(nav.featured.slug) : '/revamp/c'],
-            ['All collections', 'Chosen by Source Library', '/revamp/c'],
-            ['Subjects', 'The map of the whole library', '/revamp/subjects'],
-            ['Centuries', 'When the works were written', '/revamp/periods'],
-            ['Languages', 'What the books are written in', '/revamp/languages'],
-            ['Places', 'Where the texts come from', '/revamp/places'],
-            ['Types of pictures', 'Maps, portraits, engravings…', '/revamp/types/pictures'],
-            ['Types of texts', 'Treatises, letters, scrolls…', '/revamp/types/texts'],
-            ['From readers', 'Collections people have made', '/revamp/c#readers'],
-            ['Libraries', 'Who holds the books', '/libraries'],
-          ].map(([a, b, h]) => (
-            <Link key={a} href={h} className="block px-4 py-2.5 border-b border-border-light last:border-0 hover:bg-warm">
-              <span className="block text-[14.5px]">{a}</span>
-              <span className="block text-[12.5px] text-muted">{b}</span>
-            </Link>
-          ))}
-        </div>
+  const small = 'text-[12.5px] text-muted mb-2';
+  const rowLink = 'block py-1 text-[14.5px] hover:underline underline-offset-2';
+
+  const wayList = (ways: Way[]) => (
+    <ul className="m-0 p-0 list-none">
+      {ways.map(([a, b, h]) => (
+        <li key={a} className="m-0">
+          <Link href={h} className="group block py-1.5">
+            <span className="block text-[15px] group-hover:underline underline-offset-2">{a}</span>
+            <span className="block text-[12.5px] text-muted">{b}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+  const featuredBlock = nav.featured && (
+    <Link href={colHref(nav.featured.slug)} className="group block mb-4">
+      <p className={small}>Featured collection</p>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {nav.featured.img && <img src={nav.featured.img} alt="" className="w-full h-36 object-cover mb-2 bg-warm" />}
+      <span className="text-[15px] font-medium group-hover:underline underline-offset-2">{nav.featured.name}</span>
+    </Link>
+  );
+  const collectionsBlock = (
+    <>
+      {featuredBlock}
+      <ul className="m-0 p-0 list-none">{COLLECTION_LINKS.map(([l, h]) => <li key={h} className="m-0"><Link href={h} className={rowLink}>{l}</Link></li>)}</ul>
+    </>
+  );
+  const subjectGrid = (
+    <>
+      <p className={small}>Subjects</p>
+      <ul className="m-0 p-0 list-none columns-3 gap-6">
+        {nav.subjects.map((s) => <li key={s.id} className="m-0 break-inside-avoid"><Link href={`/revamp/subjects#${s.id}`} className="block py-0.5 text-[14px] hover:underline underline-offset-2">{s.label}</Link></li>)}
+      </ul>
+      <Link href="/revamp/subjects" className="inline-block mt-3 text-[13.5px] underline underline-offset-2">All subjects</Link>
+    </>
   );
 
-  const trigger = (k: 'collections' | 'subjects', label: string, href: string) => (
+  const panel = (k: Menu, body: ReactNode) => open === k && variant !== 'dropdown' && (
+    <div className="absolute left-0 right-0 top-full z-50 bg-white text-primary border-b border-border-medium shadow-lg hidden lg:block" onMouseEnter={() => enter(k)} onMouseLeave={leave}>
+      <div className="max-w-[1500px] mx-auto px-10 py-7">{body}</div>
+    </div>
+  );
+  const col = 'border-l border-border-light pl-10';
+
+  const dropdown = open === 'collections' && variant === 'dropdown' && (
+    <div className="absolute left-0 top-full z-50 w-[300px] bg-white text-primary border border-border-medium shadow-lg hidden lg:block">
+      {[...(nav.featured ? [['Featured', nav.featured.name, colHref(nav.featured.slug)]] : []), ['All collections', 'Chosen by Source Library and readers', '/revamp/c'], ...WAYS, ['Libraries', 'Who holds the books', '/libraries']].map(([a, b, h]) => (
+        <Link key={a} href={h} className="block px-4 py-2.5 border-b border-border-light last:border-0 hover:bg-warm">
+          <span className="block text-[14.5px]">{a}</span>
+          <span className="block text-[12.5px] text-muted">{b}</span>
+        </Link>
+      ))}
+    </div>
+  );
+
+  const trigger = (k: Menu, label: string, href: string) => (
     <div className="relative flex items-center h-14 lg:h-16" onMouseEnter={() => enter(k)} onMouseLeave={leave}>
       <Link href={href} className={`${linkCls} ${open === k ? 'text-white' : ''}`}>{label}</Link>
       <button type="button" aria-label={`Open ${label} menu`} aria-expanded={open === k} onClick={() => setOpen(open === k ? null : k)} className="text-white/60 hover:text-white pl-0.5">
@@ -81,10 +133,7 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
       {k === 'collections' && dropdown}
     </div>
   );
-
-  const hotSubject = nav.subjects.find((s) => s.id === hot);
-  const panelShell = 'absolute left-0 right-0 top-full z-50 bg-white text-primary border-b border-border-medium shadow-lg';
-  const small = 'text-[11px] text-muted mb-2';
+  const plain = (label: string, href: string) => <Link href={href} className={linkCls}>{label}</Link>;
 
   return (
     <div ref={root} className="relative z-50">
@@ -92,10 +141,9 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
         <div className="flex items-center gap-6 h-14 lg:h-16 pl-5 pr-2.5 md:pl-10 md:pr-8 lg:pr-10">
           <Logo white />
           <nav aria-label="Site" className="hidden lg:flex flex-1 justify-end items-center gap-[22px]">
-            <Link href="/library" className={linkCls}>Library</Link>
-            <Link href="/gallery" className={linkCls}>Gallery</Link>
-            {variant === 'split' && trigger('subjects', 'Subjects', '/revamp/subjects')}
-            {variant === 'plain' ? <Link href="/revamp/c" className={linkCls}>Collections</Link> : trigger('collections', 'Collections', '/revamp/c')}
+            {variant === 'menus' ? trigger('library', 'Library', '/library') : plain('Library', '/library')}
+            {variant === 'menus' ? trigger('gallery', 'Gallery', '/gallery') : plain('Gallery', '/gallery')}
+            {variant === 'browse' ? trigger('browse', 'Browse', '/revamp/subjects') : trigger('collections', 'Collections', '/revamp/c')}
             {LINKS.map(([l, h]) => <Link key={h} href={h} className={linkCls}>{l}</Link>)}
           </nav>
           <div className="hidden lg:flex items-center gap-3 shrink-0 text-[13.5px]">
@@ -111,105 +159,70 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
         </div>
       </header>
 
-      {open === 'collections' && variant === 'panel' && (
-        <div className={`${panelShell} hidden lg:block`} onMouseEnter={() => enter('collections')} onMouseLeave={leave}>
-          <div className="grid grid-cols-[230px_1fr_300px] gap-10 max-w-[1500px] mx-auto px-10 py-7 min-h-[380px]">
-            <div>
-              <p className={small}>Subjects</p>
-              <ul className="m-0 p-0 list-none max-h-[420px] overflow-y-auto">
-                {nav.subjects.map((s) => (
-                  <li key={s.id} className="m-0">
-                    <Link href={`/revamp/subjects#${s.id}`} onMouseEnter={() => setHot(s.id)} onFocus={() => setHot(s.id)}
-                      className={`flex justify-between items-center py-1 text-[14.5px] ${hot === s.id ? 'text-accent-rust' : 'text-primary'}`}>
-                      {s.label}<ChevronRight className="w-3.5 h-3.5 opacity-40" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <Link href="/revamp/subjects" className="inline-block mt-3 text-[13px] underline underline-offset-2">All subjects</Link>
-            </div>
-            <div className="border-l border-border-light pl-10">
-              <p className={small}>{hotSubject?.label}</p>
-              <ul className="m-0 p-0 list-none columns-2 gap-8">
-                {hotSubject?.narrower.slice(0, 20).map((n) => (
-                  <li key={n.id} className="m-0 break-inside-avoid"><Link href={`/revamp/subjects#${n.id}`} className="block py-1 text-[14px] hover:underline underline-offset-2">{n.label}</Link></li>
-                ))}
-              </ul>
-            </div>
-            <div className="border-l border-border-light pl-10">
-              {nav.featured && (
-                <Link href={colHref(nav.featured.slug)} className="block mb-5">
-                  <p className={small}>Featured now</p>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  {nav.featured.img && <img src={nav.featured.img} alt="" className="w-full h-32 object-cover mb-2" />}
-                  <span className="text-[15px] font-medium">{nav.featured.name}</span>
-                </Link>
-              )}
-              <ul className="m-0 p-0 list-none text-[14px]">
-                <li className="m-0"><Link href="/revamp/c" className="block py-1 hover:underline underline-offset-2">All collections</Link></li>
-                <li className="m-0"><Link href="/revamp/c#readers" className="block py-1 hover:underline underline-offset-2">From readers</Link></li>
-                <li className="m-0"><Link href="/libraries" className="block py-1 hover:underline underline-offset-2">Libraries</Link></li>
-              </ul>
-            </div>
-          </div>
+      {/* A: one Browse menu holding every way in, the subjects and the collections. */}
+      {panel('browse', (
+        <div className="grid grid-cols-[230px_1fr_300px] gap-10 min-h-[340px]">
+          <div><p className={small}>Ways in</p>{wayList(WAYS)}</div>
+          <div className={col}>{subjectGrid}</div>
+          <div className={col}><p className={small}>Collections</p>{collectionsBlock}</div>
         </div>
-      )}
+      ))}
 
-      {open === 'subjects' && variant === 'split' && (
-        <div className={`${panelShell} hidden lg:block`} onMouseEnter={() => enter('subjects')} onMouseLeave={leave}>
-          <div className="max-w-[1500px] mx-auto px-10 py-7 columns-4 gap-10">
-            {nav.subjects.map((s) => (
-              <div key={s.id} className="break-inside-avoid mb-5">
-                <Link href={`/revamp/subjects#${s.id}`} className="block text-[14.5px] font-medium mb-1 hover:underline underline-offset-2">{s.label}</Link>
-                {s.narrower.slice(0, 5).map((n) => <Link key={n.id} href={`/revamp/subjects#${n.id}`} className="block text-[13px] text-secondary py-0.5 hover:underline underline-offset-2">{n.label}</Link>)}
-              </div>
-            ))}
+      {/* B: Library and Gallery each list the ways in that apply to them; Collections has its own menu. */}
+      {panel('library', (
+        <div className="grid grid-cols-[230px_230px_1fr] gap-10">
+          <div>
+            <p className={small}>Search</p>
+            <Link href="/library" className={rowLink}>Search all texts</Link>
+            <Link href="/revamp/library-search" className={rowLink}>Advanced search</Link>
           </div>
+          <div className={col}><p className={small}>Browse texts by</p>{wayList([SUBJECTS, CENTURIES, LANGUAGES, PLACES, TEXT_TYPES])}</div>
+          <div className={col}><div className="max-w-[300px]">{featuredBlock}</div></div>
         </div>
-      )}
-
-      {open === 'collections' && variant === 'split' && (
-        <div className={`${panelShell} hidden lg:block`} onMouseEnter={() => enter('collections')} onMouseLeave={leave}>
-          <div className="max-w-[1500px] mx-auto px-10 py-7 grid grid-cols-5 gap-5">
-            {nav.picks.slice(0, 4).map((c) => (
-              <Link key={c.slug} href={colHref(c.slug)} className="block">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                {c.img && <img src={c.img} alt="" className="w-full h-32 object-cover mb-2" />}
-                <span className="text-[14.5px]">{c.name}</span>
-              </Link>
-            ))}
-            <ul className="m-0 p-0 list-none text-[14px] border-l border-border-light pl-5">
-              <li className="m-0"><Link href="/revamp/c" className="block py-1 hover:underline underline-offset-2">All collections</Link></li>
-              <li className="m-0"><Link href="/revamp/c#readers" className="block py-1 hover:underline underline-offset-2">From readers</Link></li>
-              <li className="m-0"><Link href="/libraries" className="block py-1 hover:underline underline-offset-2">Libraries</Link></li>
-            </ul>
+      ))}
+      {panel('gallery', (
+        <div className="grid grid-cols-[230px_230px_1fr] gap-10">
+          <div>
+            <p className={small}>Search</p>
+            <Link href="/gallery" className={rowLink}>Search all images</Link>
           </div>
+          <div className={col}><p className={small}>Browse images by</p>{wayList([SUBJECTS, PIC_TYPES, CENTURIES])}</div>
+          <div className={col}><div className="max-w-[300px]">{featuredBlock}</div></div>
         </div>
-      )}
+      ))}
+      {panel('collections', (
+        <div className="grid grid-cols-5 gap-5">
+          {nav.picks.slice(0, 4).map((c) => (
+            <Link key={c.slug} href={colHref(c.slug)} className="group block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {c.img && <img src={c.img} alt="" className="w-full h-32 object-cover mb-2 bg-warm" />}
+              <span className="text-[14.5px] group-hover:underline underline-offset-2">{c.name}</span>
+            </Link>
+          ))}
+          <ul className="m-0 p-0 list-none border-l border-border-light pl-5">{COLLECTION_LINKS.map(([l, h]) => <li key={h} className="m-0"><Link href={h} className={rowLink}>{l}</Link></li>)}</ul>
+        </div>
+      ))}
 
+      {/* Phone: the same for every option. Browse slides to a second panel, so the menu never scrolls. */}
       {phone && (
         <div className="lg:hidden fixed inset-x-0 bottom-0 top-14 z-50 bg-dark text-white px-6 py-5 overflow-hidden">
           {phone === 'root' ? (
             <div className="text-[22px] leading-[2.05]">
               <Link href="/library" className="block">Library</Link>
               <Link href="/gallery" className="block">Gallery</Link>
-              <button type="button" onClick={() => setPhone('collections')} className="w-full flex items-center justify-between">Collections <ChevronRight className="w-5 h-5 opacity-60" /></button>
+              <button type="button" onClick={() => setPhone('browse')} className="w-full flex items-center justify-between">{variant === 'browse' ? 'Browse' : 'Collections'} <ChevronRight className="w-5 h-5 opacity-60" /></button>
               {LINKS.map(([l, h]) => <Link key={h} href={h} className="block">{l}</Link>)}
             </div>
           ) : (
             <div>
-              <button type="button" onClick={() => setPhone('root')} className="flex items-center gap-1 text-white/70 text-[15px] mb-3"><ChevronLeft className="w-4 h-4" /> Menu</button>
-              <div className="text-[18px] leading-[1.9]">
-                {nav.featured && <Link href={colHref(nav.featured.slug)} className="block">Featured: {nav.featured.name}</Link>}
-                <Link href="/revamp/c" className="block">All collections</Link>
-                <Link href="/revamp/c#readers" className="block">From readers</Link>
-                <Link href="/libraries" className="block">Libraries</Link>
+              <button type="button" onClick={() => setPhone('root')} className="flex items-center gap-1 text-white/70 text-[16px] mb-3"><ChevronLeft className="w-4 h-4" /> Menu</button>
+              <div className="text-[19px] leading-[1.95]">
+                {WAYS.map(([a, , h]) => <Link key={a} href={h} className="block">{a}</Link>)}
               </div>
-              <p className="text-white/60 text-[13px] mt-4 mb-1">Subjects</p>
-              <div className="grid grid-cols-2 gap-x-4 text-[15px] leading-[1.9]">
-                {nav.subjects.slice(0, 10).map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block truncate">{s.label}</Link>)}
+              <div className="text-[19px] leading-[1.95] mt-4 pt-4 border-t border-white/15">
+                {nav.featured && <Link href={colHref(nav.featured.slug)} className="block truncate">Featured: {nav.featured.name}</Link>}
+                {COLLECTION_LINKS.map(([l, h]) => <Link key={h} href={h} className="block">{l}</Link>)}
               </div>
-              <Link href="/revamp/subjects" className="inline-block mt-2 text-[15px] underline underline-offset-2">All subjects</Link>
             </div>
           )}
         </div>
