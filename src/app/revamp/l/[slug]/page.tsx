@@ -10,5 +10,5 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const m = axisSlugs().languages.includes(slug) ? collectionModel(slug) : null;
   if (!m) notFound();
   return <AxisPage m={m} scope="language" crumb={{ label: 'Languages', href: '/revamp/languages' }}
-    counts={[`${n(m.stats.works)} books`]} />;
+    counts={[`${n(m.stats.works)} texts`]} />;
 }

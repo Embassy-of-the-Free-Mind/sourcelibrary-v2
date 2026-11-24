@@ -76,7 +76,7 @@ export function languageGroups(): { groups: Group[]; books: number; named: numbe
     return {
       id: `lang-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, label: name, href: slug ? `/revamp/l/${slug}` : undefined, alt: e.from,
       pics: slug ? picsOf(slug) : [], home: true, bare: true, size: e.count,
-      note: [`${n(e.count)} ${e.count === 1 ? 'book' : 'books'}`, e.from.length ? `includes ${e.from.join(', ')}` : ''].filter(Boolean).join(' · '),
+      note: [`${n(e.count)} ${e.count === 1 ? 'text' : 'texts'}`, e.from.length ? `includes ${e.from.join(', ')}` : ''].filter(Boolean).join(' · '),
     };
   });
   const groups = [{ id: 'all', label: 'Languages', alt: [], pics: [], narrower: rows }];
@@ -112,7 +112,7 @@ export function typeGroups(): { groups: Group[]; pictureGroups: Group[]; bookGro
     if (!s) return [];
     const m = collectionModel(s.slug);
     const covers = (m?.all ?? []).map((b) => b.thumbnail_blob || b.thumbnail).filter(Boolean).map((src) => ({ src: src as string }));
-    return [{ id: s.slug, label: x.label, href: `/revamp/t/${s.slug}`, alt: x.terms.map((y) => y.label), pics: covers, note: `${n(s.total)} books`, home: true }];
+    return [{ id: s.slug, label: x.label, href: `/revamp/t/${s.slug}`, alt: x.terms.map((y) => y.label), pics: covers, note: `${n(s.total)} texts`, home: true }];
   });
   const band = (id: string, label: string, narrower: SubjectRow[]) => ({ id, label, alt: [], pics: narrower.flatMap((x) => x.pics.slice(0, 3)).slice(0, 14), narrower });
   // Two pages, each answering one question with question-named groups.

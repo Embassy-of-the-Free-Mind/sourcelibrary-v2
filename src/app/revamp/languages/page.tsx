@@ -10,7 +10,7 @@ export default function Page() {
   const f = featuredLanguage();
   return (
     <AxisIndex title="Languages" intro="Browse the library by the language its books are written in."
-      counts={[`${named} languages`, `${n(books)} books`]} tiles={f?.pages ?? []}
+      counts={[`${named} languages`, `${n(books)} texts`]} tiles={f?.pages ?? []}
       featured={f ? { name: f.name, href: `/revamp/l/${f.slug}` } : null}
       groups={groups} noun={['language', 'languages']} group={['', '']} placeholder="Search languages or ask a question" flat listOnly
       orders={[['size', 'Most books first'], ['size-asc', 'Fewest books first'], ['az', 'A to Z'], ['za', 'Z to A']]}

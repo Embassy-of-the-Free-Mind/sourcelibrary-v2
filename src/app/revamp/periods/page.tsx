@@ -15,7 +15,7 @@ export default function Page() {
   const how = HOW_PERIODS;
   return (
     <AxisIndex title="Centuries" intro="Browse the library by when its texts were written, century by century."
-      counts={[`${count} centuries`, `${n(books)} books with a date`]} tiles={tiles}
+      counts={[`${count} centuries`, `${n(books)} texts with a date`]} tiles={tiles}
       featured={f ? { name: f.name, href: `/revamp/p/${f.slug}` } : null}
       groups={groups} noun={['century', 'centuries']} group={['Span', 'All spans']} placeholder="Search centuries or ask a question"
       orders={[['rev', 'Newest first'], ['theme', 'Oldest first']]}

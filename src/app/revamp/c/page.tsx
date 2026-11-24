@@ -30,7 +30,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
         <div className={`max-w-[1500px] mx-auto px-6 md:px-12 relative w-full pt-12 md:pt-16 pb-20 md:pb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8`}>
           <div>
             <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">Collections</h1>
-            <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">Books, pages, plates and quotes chosen by Source Library and by readers.</p>
+            <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">Books, pages, plates and quotes chosen by readers.</p>
             <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[14px] md:text-[15px] font-medium">
               {[`${items.length} collections`, `${subjects.length} subjects`].map((l, i) => <span key={l} style={{ color: RAMP[i] }}>{l}</span>)}
             </div>

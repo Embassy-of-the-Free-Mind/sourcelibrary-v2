@@ -11,7 +11,7 @@ export default function Page() {
   const kinds = groups.reduce((a, g) => a + g.narrower.length, 0);
   return (
     <AxisIndex title="Types of texts" intro="Browse the texts by what kind of writing they are and what they are written on."
-      counts={[`${kinds} types`, `${n(texts)} books`]} tiles={tiles} featured={null}
+      counts={[`${kinds} types`, `${n(texts)} texts`]} tiles={tiles} featured={null}
       groups={groups} noun={['type', 'types']} group={['Type', 'All types']} placeholder="Search types of texts or ask a question"
       orders={[['theme', 'By group'], ['az', 'A to Z']]}
       how={HOW_TEXT_TYPES} />

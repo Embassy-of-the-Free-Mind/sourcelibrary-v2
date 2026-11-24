@@ -48,7 +48,7 @@ export default function CenturyList({ rows, how, thumbs = true }: { rows: (Subje
                 <span className="sm:hidden block mt-1.5 h-1.5 bg-border-light" aria-hidden><span className="block h-full bg-primary/70" style={{ width: `${Math.max(0.6, (100 * (r.size ?? 0)) / max)}%` }} /></span>
               </span>
               <span className="hidden sm:block h-2 bg-border-light" aria-hidden><span className="block h-full bg-primary/70" style={{ width: `${Math.max(0.6, (100 * (r.size ?? 0)) / max)}%` }} /></span>
-              <span className="text-[13.5px] text-secondary text-right tabular-nums">{n(r.size ?? 0)} {r.size === 1 ? 'book' : 'books'}</span>
+              <span className="text-[13.5px] text-secondary text-right tabular-nums">{n(r.size ?? 0)} {r.size === 1 ? 'text' : 'texts'}</span>
             </Link>
           </li>
         ))}
