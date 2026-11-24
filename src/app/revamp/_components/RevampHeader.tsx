@@ -84,10 +84,12 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
   );
   const featuredBlock = nav.featured && (
     <Link href={colHref(nav.featured.slug)} className="group block mb-4">
-      <p className={small}>Featured collection</p>
+      <p className={small}>Featured</p>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      {nav.featured.img && <img src={nav.featured.img} alt="" className="w-full h-36 object-cover mb-2 bg-warm" />}
-      <span className="text-[15px] font-medium group-hover:underline underline-offset-2">{nav.featured.name}</span>
+      <span className="flex items-center gap-4">
+        {nav.featured.img && <img src={nav.featured.img} alt="" className="w-28 h-20 shrink-0 object-cover bg-warm" />}
+        <span className="text-[15px] font-medium group-hover:underline underline-offset-2">{nav.featured.name}</span>
+      </span>
     </Link>
   );
   const collectionsBlock = (
@@ -96,16 +98,6 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
       <ul className="m-0 p-0 list-none">{COLLECTION_LINKS.map(([l, h]) => <li key={h} className="m-0"><Link href={h} className={rowLink}>{l}</Link></li>)}</ul>
     </>
   );
-  const subjectGrid = (
-    <>
-      <p className={small}>Subjects</p>
-      <ul className="m-0 p-0 list-none columns-3 gap-6">
-        {nav.subjects.map((s) => <li key={s.id} className="m-0 break-inside-avoid"><Link href={`/revamp/subjects#${s.id}`} className="block py-0.5 text-[14px] hover:underline underline-offset-2">{s.label}</Link></li>)}
-      </ul>
-      <Link href="/revamp/subjects" className="inline-block mt-3 text-[13.5px] underline underline-offset-2">All subjects</Link>
-    </>
-  );
-
   const panel = (k: Menu, body: ReactNode) => open === k && variant !== 'dropdown' && (
     <div className="absolute left-0 right-0 top-full z-50 bg-white text-primary border-b border-border-medium shadow-lg hidden lg:block" onMouseEnter={() => enter(k)} onMouseLeave={leave}>
       <div className="max-w-[1500px] mx-auto px-10 py-7">{body}</div>
@@ -159,11 +151,22 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
         </div>
       </header>
 
-      {/* A: one Browse menu holding every way in, the subjects and the collections. */}
+      {/* A: one Browse menu holding every way in and the collections. */}
       {panel('browse', (
-        <div className="grid grid-cols-[230px_1fr_300px] gap-10 min-h-[340px]">
-          <div><p className={small}>Ways in</p>{wayList(WAYS)}</div>
-          <div className={col}>{subjectGrid}</div>
+        <div className="grid grid-cols-[1fr_300px] gap-10">
+          <div>
+            <p className={small}>Ways in</p>
+            <ul className="m-0 p-0 list-none grid grid-cols-3 gap-x-10 gap-y-5">
+              {WAYS.map(([a, b, h]) => (
+                <li key={a} className="m-0">
+                  <Link href={h} className="group block py-1.5">
+                    <span className="block text-[17px] group-hover:underline underline-offset-2">{a}</span>
+                    <span className="block text-[13px] text-muted">{b}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className={col}><p className={small}>Collections</p>{collectionsBlock}</div>
         </div>
       ))}

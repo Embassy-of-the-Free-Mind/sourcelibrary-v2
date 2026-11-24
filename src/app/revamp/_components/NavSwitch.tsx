@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { readNavVariant, setNavVariant, type NavVariant } from './RevampHeader';
 
 const OPTIONS: [NavVariant, string, string][] = [
-  ['browse', 'A. One Browse menu (recommended)', 'Collections in the bar becomes Browse. One big menu holds every way in (subjects, centuries, languages, places, types), the subject list and the collections. Same number of links as today.'],
+  ['browse', 'A. One Browse menu (recommended)', 'Collections in the bar becomes Browse. One menu holds every way in (subjects, centuries, languages, places, types) and the collections. Same number of links as today.'],
   ['menus', 'B. Library and Gallery menus', 'Library opens the ways into texts, Gallery the ways into images, Collections its own picture cards. Three menus to learn; Subjects and Centuries appear twice.'],
   ['dropdown', 'C. Small list', 'Collections opens one plain list of everything. The least to build, but nothing visual and a long list.'],
 ];
