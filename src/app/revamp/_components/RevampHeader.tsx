@@ -38,9 +38,9 @@ const PLACES: Way = ['Places', 'Where it comes from', '/revamp/places'];
 const TEXT_TYPES: Way = ['Types of texts', 'Treatises, letters…', '/revamp/types/texts'];
 const PIC_TYPES: Way = ['Types of pictures', 'Maps, portraits…', '/revamp/types/pictures'];
 const WAYS: Way[] = [SUBJECTS, CENTURIES, LANGUAGES, PLACES, TEXT_TYPES, PIC_TYPES];
-// Source Library's collections and readers' collections sit beside the ways in, at the same size.
-const COLLECTION_TILES: Way[] = [['Collections', 'By Source Library', '/revamp/c?maker=source-library'], ["Readers' collections", 'By readers', '/revamp/c?maker=reader']];
-const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ["Readers' collections", '/revamp/c?maker=reader'], ['Libraries', '/libraries']];
+// One kind of collection, whoever made it, beside the ways in at the same size.
+const COLLECTION_TILES: Way[] = [['Collections', 'By Source Library and readers', '/revamp/c']];
+const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ['Libraries', '/libraries']];
 
 const LINKS = [['Articles', '/articles'], ['Explore', '/explore'], ['About', '/about'], ['Ask the librarian', '/librarian']];
 const linkCls = 'py-2 text-[13.5px] whitespace-nowrap text-white/70 hover:text-white transition-colors';
@@ -156,7 +156,7 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
 
       {/* A: one Browse menu holding every way in and the collections. */}
       {panel('browse', (
-        <ul className="m-0 p-0 list-none grid grid-cols-8 gap-5">
+        <ul className="m-0 p-0 list-none grid grid-cols-7 gap-5">
           {[...WAYS, ...COLLECTION_TILES].map(([a, b, h]) => (
             <li key={a} className="m-0">
               <Link href={h} className="group block">
