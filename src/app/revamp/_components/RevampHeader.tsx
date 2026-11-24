@@ -39,7 +39,7 @@ const TEXT_TYPES: Way = ['Types of texts', 'Treatises, letters…', '/revamp/typ
 const PIC_TYPES: Way = ['Types of pictures', 'Maps, portraits…', '/revamp/types/pictures'];
 const WAYS: Way[] = [SUBJECTS, CENTURIES, LANGUAGES, PLACES, TEXT_TYPES, PIC_TYPES];
 // One kind of collection, whoever made it, beside the ways in at the same size.
-const COLLECTION_TILES: Way[] = [['Collections', 'By Source Library and readers', '/revamp/c']];
+const COLLECTION_TILES: Way[] = [['Collections', 'Sets people chose', '/revamp/c']];
 const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ['Libraries', '/libraries']];
 
 const LINKS = [['Articles', '/articles'], ['Explore', '/explore'], ['About', '/about'], ['Ask the librarian', '/librarian']];
