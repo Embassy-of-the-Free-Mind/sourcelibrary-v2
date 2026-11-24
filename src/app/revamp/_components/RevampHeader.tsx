@@ -12,6 +12,8 @@ export interface NavData {
   picks: NavCollection[];
   featured: NavCollection | null;
   libraries: { name: string; count: number }[];
+  /** One picture per way in, by its label. */
+  ways?: Record<string, string>;
 }
 /** A: one Browse menu. B: Library, Gallery and Collections each open their own menu. C: Collections opens a short list. */
 export type NavVariant = 'browse' | 'menus' | 'dropdown';
@@ -33,8 +35,8 @@ const SUBJECTS: Way = ['Subjects', 'What it is about', '/revamp/subjects'];
 const CENTURIES: Way = ['Centuries', 'When it was written', '/revamp/periods'];
 const LANGUAGES: Way = ['Languages', 'What it is written in', '/revamp/languages'];
 const PLACES: Way = ['Places', 'Where it comes from', '/revamp/places'];
-const TEXT_TYPES: Way = ['Types of texts', 'Treatises, letters, scrolls…', '/revamp/types/texts'];
-const PIC_TYPES: Way = ['Types of pictures', 'Maps, portraits, engravings…', '/revamp/types/pictures'];
+const TEXT_TYPES: Way = ['Types of texts', 'Treatises, letters…', '/revamp/types/texts'];
+const PIC_TYPES: Way = ['Types of pictures', 'Maps, portraits…', '/revamp/types/pictures'];
 const WAYS: Way[] = [SUBJECTS, CENTURIES, LANGUAGES, PLACES, TEXT_TYPES, PIC_TYPES];
 const COLLECTION_LINKS: [string, string][] = [['All collections', '/revamp/c'], ['From readers', '/revamp/c#readers'], ['Libraries', '/libraries']];
 
@@ -85,18 +87,12 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
   const featuredBlock = nav.featured && (
     <Link href={colHref(nav.featured.slug)} className="group block mb-4">
       <p className={small}>Featured</p>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <span className="flex items-center gap-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         {nav.featured.img && <img src={nav.featured.img} alt="" className="w-28 h-20 shrink-0 object-cover bg-warm" />}
         <span className="text-[15px] font-medium group-hover:underline underline-offset-2">{nav.featured.name}</span>
       </span>
     </Link>
-  );
-  const collectionsBlock = (
-    <>
-      {featuredBlock}
-      <ul className="m-0 p-0 list-none">{COLLECTION_LINKS.map(([l, h]) => <li key={h} className="m-0"><Link href={h} className={rowLink}>{l}</Link></li>)}</ul>
-    </>
   );
   const panel = (k: Menu, body: ReactNode) => open === k && variant !== 'dropdown' && (
     <div className="absolute left-0 right-0 top-full z-50 bg-white text-primary border-b border-border-medium shadow-lg hidden lg:block" onMouseEnter={() => enter(k)} onMouseLeave={leave}>
@@ -153,21 +149,34 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
 
       {/* A: one Browse menu holding every way in and the collections. */}
       {panel('browse', (
-        <div className="grid grid-cols-[1fr_300px] gap-10">
-          <div>
-            <p className={small}>Ways in</p>
-            <ul className="m-0 p-0 list-none grid grid-cols-3 gap-x-10 gap-y-5">
-              {WAYS.map(([a, b, h]) => (
-                <li key={a} className="m-0">
-                  <Link href={h} className="group block py-1.5">
-                    <span className="block text-[17px] group-hover:underline underline-offset-2">{a}</span>
-                    <span className="block text-[13px] text-muted">{b}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className="max-w-[1240px] mx-auto flex gap-10">
+          <ul className="flex-1 m-0 p-0 list-none grid grid-cols-6 gap-5">
+            {WAYS.map(([a, b, h]) => (
+              <li key={a} className="m-0">
+                <Link href={h} className="group block">
+                  <span className="flex items-center justify-center h-[150px] bg-warm border border-border-light group-hover:border-primary p-2.5">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {nav.ways?.[a] && <img src={nav.ways[a]} alt="" className="max-w-full max-h-full object-contain" />}
+                  </span>
+                  <span className="block mt-2.5 text-[15.5px] group-hover:underline underline-offset-2">{a}</span>
+                  <span className="block text-[13px] text-muted leading-snug">{b}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="w-[210px] shrink-0 border-l border-border-light pl-8">
+            {nav.featured && (
+              <Link href={colHref(nav.featured.slug)} className="group block mb-4">
+                <span className="flex items-center justify-center h-[100px] bg-warm border border-border-light group-hover:border-primary p-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {nav.featured.img && <img src={nav.featured.img} alt="" className="max-w-full max-h-full object-contain" />}
+                </span>
+                <span className="block mt-2 text-[13px] text-muted">Featured collection</span>
+                <span className="block text-[15.5px] group-hover:underline underline-offset-2">{nav.featured.name}</span>
+              </Link>
+            )}
+            <ul className="m-0 p-0 list-none">{COLLECTION_LINKS.map(([l, h]) => <li key={h} className="m-0"><Link href={h} className={rowLink}>{l}</Link></li>)}</ul>
           </div>
-          <div className={col}><p className={small}>Collections</p>{collectionsBlock}</div>
         </div>
       ))}
 
