@@ -62,11 +62,13 @@ const meta = (c: IndexItem) => [
   pl(c.books, 'book'), pl(c.images, 'image'), pl(c.artworks, 'artwork'), pl(c.pages, 'page'), pl(c.quotes, 'quote'),
 ].filter(Boolean).join(' · ');
 
-export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false, initialMaker = 'all' }: { initialMaker?: 'all' | 'source-library' | 'reader'; barSearch?: boolean; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
+const makerName = (i: { makerName?: string }) => i.makerName ?? 'Source Library';
+
+export default function CollectionsBrowser({ items, subjects, initialSubject = '', hideTitle = false, filters = 'tiles', barSearch = false, initialMaker = 'all' }: { initialMaker?: string; barSearch?: boolean; items: IndexItem[]; featured?: string; subjects: { name: string; slugs: string[] }[]; initialSubject?: string; hideTitle?: boolean; filters?: FilterLayout }) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [ask, setAsk] = useState('');
-  const [maker, setMaker] = useState<'all' | 'source-library' | 'reader'>(initialMaker);
+  const [maker, setMaker] = useState<string>(initialMaker);
   const [holds, setHolds] = useState<string[]>([]);
   const [lang, setLang] = useState('');
   const [subject, setSubject] = useState(initialSubject);
@@ -90,7 +92,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
     const sub = subjects.find((s) => s.name === subject);
-    const r = items.filter((i) => (maker === 'all' || i.maker === maker)
+    const r = items.filter((i) => (maker === 'all' || makerName(i) === maker)
       && holds.every((h) => i.holds.includes(h))
       && (!lang || i.languages.includes(lang))
       && (!sub || sub.slugs.includes(i.slug))
@@ -111,7 +113,10 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
   const chip = pill;
   const active = [maker !== 'all', holds.length > 0, !!subject, !!lang].filter(Boolean).length;
   const toggleHold = (k: string) => setHolds(holds.includes(k) ? holds.filter((h) => h !== k) : [...holds, k]);
-  const makerOpts = [['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const;
+  // Every maker by name, Source Library among them: a collection is someone's choice, whoever made it.
+  const makerCounts = new Map<string, number>();
+  for (const i of items) makerCounts.set(makerName(i), (makerCounts.get(makerName(i)) ?? 0) + 1);
+  const makerOpts: [string, string, number][] = [['all', 'Anyone', items.length], ...[...makerCounts.entries()].sort((a, b) => b[1] - a[1]).map(([k, c]) => [k, k, c] as [string, string, number])];
 
   return (
     <div className={`max-w-[1500px] mx-auto px-6 md:px-12 ${barSearch ? TOP : 'py-8 md:py-10'} pb-16 md:pb-20`}>
@@ -130,7 +135,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
           <div className={tile}>
             <div className="text-sm text-muted mb-1.5">Made by</div>
             <div className="flex flex-wrap gap-x-3 gap-y-1">
-              {([['all', 'Anyone', items.length], ['source-library', 'Source Library', items.filter((i) => i.maker === 'source-library').length], ['reader', 'Readers', items.filter((i) => i.maker === 'reader').length]] as const).map(([k, l, c]) => (
+              {makerOpts.map(([k, l, c]) => (
                 <button key={k} type="button" aria-pressed={maker === k} onClick={() => setMaker(k)} className={pick(maker === k)}>{l} <span className="opacity-60">{n(c)}</span></button>
               ))}
             </div>
@@ -174,7 +179,7 @@ export default function CollectionsBrowser({ items, subjects, initialSubject = '
             <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
           </button>
           <div className={`${open ? 'flex' : 'hidden'} lg:contents order-last lg:order-none w-full flex-wrap gap-2`}>
-            <SortSelect label="Made by" value={maker} onChange={(v) => setMaker(v as typeof maker)} options={makerOpts.map(([k, l]) => [k, k === 'all' ? 'Made by anyone' : `By ${l === 'Readers' ? 'readers' : l}`] as const)} />
+            <SortSelect label="Made by" value={maker} onChange={setMaker} options={makerOpts.map(([k, l]) => [k, k === 'all' ? 'Made by anyone' : `By ${l}`] as const)} />
             <SortSelect label="Holds" value={holds[0] ?? ''} onChange={(v) => setHolds(v ? [v] : [])} options={[['', 'Holds anything'], ...HOLDS.map(([k, l]) => [k, `Holds ${l.toLowerCase()}`] as const)]} />
             {subjects.length > 0 && <SortSelect label="Subject" value={subject} onChange={setSubject} options={[['', 'All subjects'], ...subjects.map((x) => [x.name, x.name] as const)]} />}
             <SortSelect label="Language" value={lang} onChange={setLang} options={[['', 'All languages'], ...languages.map((l) => [l, l] as const)]} />

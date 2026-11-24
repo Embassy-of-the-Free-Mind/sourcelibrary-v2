@@ -14,7 +14,7 @@ interface Sorted { source: string; slug: string; name: string; proposed: string;
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ subject?: string; maker?: string }> }) {
   const { subject, maker } = await searchParams;
-  const initialMaker = maker === 'reader' || maker === 'source-library' ? maker : 'all';
+  const initialMaker = maker || 'all';
   const filters = 'menus' as const;
   const sched = dataFile<{ entries: { collection: string }[] }>('schedule');
   const lead = sched?.entries[0] ? collectionModel(sched.entries[0].collection) : null;
